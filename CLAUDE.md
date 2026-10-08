@@ -28,7 +28,7 @@ src/                 Server
                      auswertung, kata (= Warm-up-Trainer), backup
   content/           format.js, checker.js (Prüfer, serverseitig), validator.js, generators.js (Trainingsplatz)
 public/              Oberfläche: spiel.html (Schüler), lehrer.html (Lehrkraft + Superadmin), board.html,
-                     index.html, datenschutz.html (VORLAGE!), static/js/shared/baum.js (Klammerbäume, Server + Browser)
+                     index.html, datenschutz.html (Entwurf, Angaben der Schule fehlen), static/js/shared/baum.js (Klammerbäume, Server + Browser)
 seed/welten/         welt0–6.json = Lab-Aufgaben (Format: docs/AUFGABENFORMAT.md) – maßgeblich, nicht neu generieren
 seed/warmup/         Warm-up-Karten (Leitner-Trainer), {"version":1,"karten":[…]}
 scripts/validate.js  Inhalts-Validator
@@ -140,4 +140,3 @@ P9 Struktogramm nicht nach EH §5 · P10 Operator verfehlt.
 - Probelauf der Gerüste in der echten Online-IDE nach `docs/ONLINE-IDE_TESTPROTOKOLL.md` (bisher nur javac + Nachbau).
 - `public/datenschutz.html`: Angaben in `[…]` (Anschrift, Schulleitung, DSB, Rechtsgrundlage, Hoster, Löschfrist) von der
   Schule ergänzen lassen.
-- `materialien/WebApp/algoquest-webapp.tar` ist ein alter Stand (Deployment läuft über GitHub).
