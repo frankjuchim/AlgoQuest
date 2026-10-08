@@ -40,5 +40,7 @@ jobs:
         run: python3 werkzeuge/ide-pruefung/seed_code_pruefen.py
       - name: Online-IDE-Workspaces aktuell
         run: python3 werkzeuge/workspaces_erzeugen.py --pruefen
+      - name: Arbeitsblatt-PDFs vollständig
+        run: python3 werkzeuge/arbeitsblaetter_pdf.py --pruefen
       - name: Materialien (Begriffe, NI-Klassen, Zeichenketten-Operationen)
         run: python3 werkzeuge/materialien_pruefen.py

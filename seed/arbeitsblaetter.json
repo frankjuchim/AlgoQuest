@@ -1,0 +1,64 @@
+{
+  "_hinweis": "Verzeichnis der Arbeitsblätter (Schülerfassung, ohne Lösungen). Quelle der PDF-Namen in materialien/Arbeitsblaetter_PDF (python3 werkzeuge/arbeitsblaetter_pdf.py) und der Verweise auf der Themenseite /themen. 'nr' = AB-Nummer innerhalb der Welt (wie im Feld 'ab' der Level).",
+  "werkzeugkarten": {
+    "titel": "Werkzeugkarten: Abi-Check, Zeitbudget, Notation (Struktogramm, Klassendiagramm, Signaturen)",
+    "quelle": "Werkzeuge/AQ_Werkzeugkarten.docx",
+    "datei": "00_Werkzeugkarten/AQ_Werkzeugkarten_Abi-Check_und_Notation.pdf"
+  },
+  "welten": [
+    { "welt": 0, "ordner": "Welt_0_Akademie", "arbeitsblaetter": [
+      { "nr": 1, "titel": "Das Portal: Start ins Dungeon und Notation fürs Abitur", "ds": [1],
+        "quelle": "Welt0_Akademie/2_Arbeitsblaetter/AQ_W0_AB_Portal.docx", "datei": "AQ_W0-AB1_Das_Portal_Notation_fuers_Abitur.pdf" },
+      { "nr": 2, "titel": "Die Werkstatt: Datentypen, Operatoren, Verzweigungen, Schleifen", "ds": [2],
+        "quelle": "Welt0_Akademie/2_Arbeitsblaetter/AQ_W0_AB2_Werkstatt_Basics.docx", "datei": "AQ_W0-AB2_Die_Werkstatt_Datentypen_und_Kontrollstrukturen.pdf" },
+      { "nr": 3, "titel": "Die Vorratskammer: Reihungen und Zeichenketten", "ds": [3],
+        "quelle": "Welt0_Akademie/2_Arbeitsblaetter/AQ_W0_AB3_Vorratskammer_Reihungen.docx", "datei": "AQ_W0-AB3_Die_Vorratskammer_Reihungen_und_Zeichenketten.pdf" },
+      { "nr": 4, "titel": "Die Zauberschule: Eigene Methoden", "ds": [4, 5],
+        "quelle": "Welt0_Akademie/2_Arbeitsblaetter/AQ_W0_AB4_Zauberschule_Methoden.docx", "datei": "AQ_W0-AB4_Die_Zauberschule_Eigene_Methoden.pdf" },
+      { "nr": 5, "titel": "Die Methoden-Werkstatt: Von der Aufgabe zur Methode", "ds": [6],
+        "quelle": "Welt0_Akademie/2_Arbeitsblaetter/AQ_W0_AB5_Methoden-Werkstatt.docx", "datei": "AQ_W0-AB5_Die_Methoden-Werkstatt_Von_der_Aufgabe_zur_Methode.pdf" }
+    ] },
+    { "welt": 1, "ordner": "Welt_1_Heldenschmiede", "arbeitsblaetter": [
+      { "nr": 1, "titel": "Klassen und Objekte", "ds": [8, 9, 10],
+        "quelle": "Welt1_Heldenschmiede/2_Arbeitsblaetter/AQ_W1_AB1_Klassen_und_Objekte.docx", "datei": "AQ_W1-AB1_Klassen_und_Objekte.pdf" },
+      { "nr": 2, "titel": "Vererbung", "ds": [11],
+        "quelle": "Welt1_Heldenschmiede/2_Arbeitsblaetter/AQ_W1_AB2_Vererbung.docx", "datei": "AQ_W1-AB2_Vererbung.pdf" }
+    ] },
+    { "welt": 2, "ordner": "Welt_2_Rangliste", "arbeitsblaetter": [
+      { "nr": 1, "titel": "Standardbausteine und Suchen", "ds": [13],
+        "quelle": "Welt2_Rangliste/2_Arbeitsblaetter/AQ_W2_AB1_Standardbausteine_und_Suchen.docx", "datei": "AQ_W2-AB1_Standardbausteine_und_Suchen.pdf" },
+      { "nr": 2, "titel": "Sortieren", "ds": [14],
+        "quelle": "Welt2_Rangliste/2_Arbeitsblaetter/AQ_W2_AB2_Sortieren.docx", "datei": "AQ_W2-AB2_Sortieren.pdf" },
+      { "nr": 3, "titel": "Effizienz und binäre Suche", "ds": [15, 16],
+        "quelle": "Welt2_Rangliste/2_Arbeitsblaetter/AQ_W2_AB3_Effizienz_und_binaere_Suche.docx", "datei": "AQ_W2-AB3_Effizienz_und_binaere_Suche.pdf" }
+    ] },
+    { "welt": 3, "ordner": "Welt_3_Labyrinth", "arbeitsblaetter": [
+      { "nr": 1, "titel": "Rekursion", "ds": [18],
+        "quelle": "Welt3_Labyrinth/2_Arbeitsblaetter/AQ_W3_AB1_Rekursion.docx", "datei": "AQ_W3-AB1_Rekursion.pdf" },
+      { "nr": 2, "titel": "Die Dungeon-Karte: 2D-Reihungen, Flood-Fill und Backtracking", "ds": [19, 20],
+        "quelle": "Welt3_Labyrinth/2_Arbeitsblaetter/AQ_W3_AB2_Dungeon-Karte_Flood-Fill_Backtracking.docx", "datei": "AQ_W3-AB2_2D-Reihungen_Flood-Fill_und_Backtracking.pdf" },
+      { "nr": 3, "titel": "Teile und herrsche: Maximum, Mergesort, Quicksort", "ds": [21, 22],
+        "quelle": "Welt3_Labyrinth/2_Arbeitsblaetter/AQ_W3_AB3_Teile_und_herrsche.docx", "datei": "AQ_W3-AB3_Teile_und_herrsche.pdf" }
+    ] },
+    { "welt": 4, "ordner": "Welt_4_Hafen", "arbeitsblaetter": [
+      { "nr": 1, "titel": "Stapel und Schlange", "ds": [24, 25],
+        "quelle": "Welt4_Hafen/2_Arbeitsblaetter/AQ_W4_AB1_Stapel_und_Schlange.docx", "datei": "AQ_W4-AB1_Stapel_und_Schlange.pdf" },
+      { "nr": 2, "titel": "Struktur unverändert lassen und dynamische Reihung", "ds": [26, 27],
+        "quelle": "Welt4_Hafen/2_Arbeitsblaetter/AQ_W4_AB2_Unveraendert_und_DynArray.docx", "datei": "AQ_W4-AB2_Unveraendert_lassen_und_dynamische_Reihung.pdf" },
+      { "nr": 3, "titel": "Umformen und Anwendungen: Klammern, Postfix, Flood-Fill mit Schlange", "ds": [28, 29],
+        "quelle": "Welt4_Hafen/2_Arbeitsblaetter/AQ_W4_AB3_Umformen_und_Anwendungen.docx", "datei": "AQ_W4-AB3_Umformen_und_Anwendungen.pdf" }
+    ] },
+    { "welt": 5, "ordner": "Welt_5_Wald", "arbeitsblaetter": [
+      { "nr": 1, "titel": "Binärbäume: Begriffe, Traversierungen, rekursive Baumalgorithmen", "ds": [31, 32, 33],
+        "quelle": "Welt5_Wald/2_Arbeitsblaetter/AQ_W5_AB1_Binaerbaeume.docx", "datei": "AQ_W5-AB1_Binaerbaeume.pdf" },
+      { "nr": 2, "titel": "Binäre Suchbäume", "ds": [34, 35],
+        "quelle": "Welt5_Wald/2_Arbeitsblaetter/AQ_W5_AB2_Suchbaeume.docx", "datei": "AQ_W5-AB2_Binaere_Suchbaeume.pdf" },
+      { "nr": 3, "titel": "Transfer: Unbekannte Bäume erschließen (mit Mini-Abi)", "ds": [35],
+        "quelle": "Welt5_Wald/2_Arbeitsblaetter/AQ_W5_AB3_Transfer_unbekannte_Baeume.docx", "datei": "AQ_W5-AB3_Transfer_unbekannte_Baeume.pdf" }
+    ] },
+    { "welt": 6, "ordner": "Welt_6_Endgegner", "arbeitsblaetter": [
+      { "nr": 1, "titel": "Korrektur und Fehlerjagd: Top 10 Punktverluste (P1–P10) und Abi-Fahrplan", "ds": [38],
+        "quelle": "Welt6_Endgegner/2_Arbeitsblaetter/AQ_W6_AB1_Korrektur_und_Fehlerjagd.docx", "datei": "AQ_W6-AB1_Korrektur_und_Fehlerjagd.pdf" }
+    ] }
+  ]
+}

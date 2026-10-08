@@ -23,6 +23,8 @@ COPY public ./public
 COPY seed ./seed
 COPY scripts ./scripts
 COPY docs/AUFGABENFORMAT.md ./docs/AUFGABENFORMAT.md
+# Arbeitsblätter (Schülerfassung, PDF) für die Themenseite /themen
+COPY materialien/Arbeitsblaetter_PDF ./arbeitsblaetter
 # Datenverzeichnis (in CapRover als Persistent Directory /app/data einbinden)
 RUN mkdir -p /app/data && chown -R node:node /app/data
 # Port 80 ohne root-Rechte binden dürfen

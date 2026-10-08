@@ -497,3 +497,40 @@ body.board h1, body.board h2 { color: #fff; }
   * { transition: none !important; animation: none !important; }
 }
 body.board .muted { color: #b8c7d8; }
+
+/* ---------- Themenübersicht (/themen) ---------- */
+main.themen { max-width: 1100px; margin: 0 auto; padding: 1rem; }
+.themen .schritte { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 0.75rem; margin: 0.75rem 0 0; padding: 0; list-style: none; }
+.themen .schritte li { background: #fafbfd; border: 1px solid var(--line); border-radius: 10px; padding: 0.6rem 0.75rem; font-size: 0.93rem; }
+.themen .schritte b { display: block; color: var(--blue-dark); }
+.themen .welt-karte { margin-bottom: 1.25rem; scroll-margin-top: 4.5rem; }
+.themen .welt-inhalt { padding: 0.9rem 1.1rem 1.1rem; }
+.themen table.liste td { vertical-align: top; }
+.themen table.liste td.lvl-nr { font-weight: 700; white-space: nowrap; color: var(--welt); }
+.themen .ab-liste { margin: 0.4rem 0 0; padding-left: 1.2rem; }
+.themen .ab-liste li { margin-bottom: 0.2rem; }
+.themen .extras { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem; }
+.themen .ort-links { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.themen .ort-links a { text-decoration: none; }
+.themen .ort-links a:hover .pill { outline: 2px solid var(--blue-line); }
+.themen h2.abschnitt { margin-top: 2rem; scroll-margin-top: 4.5rem; }
+.themen .klein { font-size: 0.85rem; }
+.themen .pdf::before { content: '📄 '; }
+.themen table.levels td.ds { white-space: nowrap; }
+.themen table.levels td.lab { white-space: nowrap; }
+.themen table.levels td.lab .klein { display: block; }
+@media (max-width: 640px) {
+  .themen table.liste .hide-sm { display: none; }
+  /* Level-Tabelle auf dem Handy gestapelt: Nummer links, Thema, Arbeitsblatt und „Üben“ untereinander */
+  .themen table.levels thead { display: none; }
+  .themen table.levels tr { display: grid; grid-template-columns: 2.6rem 1fr; border-bottom: 1px solid var(--line); padding: 0.35rem 0; }
+  .themen table.levels td { border: 0; padding: 0.15rem 0.3rem; }
+  .themen table.levels td.lvl-nr { grid-row: span 3; }
+  .themen table.levels td.ab, .themen table.levels td.lab { grid-column: 2; }
+  .themen table.levels td.lab .klein { display: inline; }
+}
+@media print {
+  .topbar, .skip { display: none; }
+  main.themen { max-width: none; padding: 0; }
+  .themen .welt-karte, .themen .card { box-shadow: none; break-inside: avoid; }
+}

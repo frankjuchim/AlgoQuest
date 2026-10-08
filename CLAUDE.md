@@ -27,7 +27,7 @@ src/                 Server
   services/          Fachlogik: inhalte (Seed), konten, kurse, lernen, stand/Abzeichen, boss, training,
                      auswertung, kata (= Warm-up-Trainer), backup
   content/           format.js, checker.js (Prüfer, serverseitig), validator.js, generators.js (Trainingsplatz)
-public/              Oberfläche: spiel.html (Schüler), lehrer.html (Lehrkraft + Superadmin), board.html,
+public/              Oberfläche: spiel.html (Schüler), lehrer.html (Lehrkraft + Superadmin), board.html, themen.html,
                      index.html, datenschutz.html (Entwurf, Angaben der Schule fehlen), static/js/shared/baum.js (Klammerbäume, Server + Browser)
 seed/welten/         welt0–6.json = Lab-Aufgaben (Format: docs/AUFGABENFORMAT.md) – maßgeblich, nicht neu generieren
 seed/warmup/         Warm-up-Karten (Leitner-Trainer), {"version":1,"karten":[…]}
@@ -40,6 +40,8 @@ materialien/         00_Lehrerhinweise (Einstieg: AQ_Gesamtuebersicht_DS1-40.doc
 quellen/specs/       SPEC_AlgoLab.md (App), SPEC_AlgoQuest_W0_W1.md (Grundkonventionen, Welt-1-API), W0_Akademie, W2–W6,
                      SPEC_Materialanpassung.md, LAB_LEVELS.md
 quellen/lab-inhalte-generatoren/  historische Python-Generatoren der Lab-Aufgaben (nur Referenz, JSON ist maßgeblich)
+materialien/Arbeitsblaetter_PDF/  Arbeitsblätter + Werkzeugkarten als PDF je Welt – ERZEUGT (werkzeuge/arbeitsblaetter_pdf.py)
+                     aus seed/arbeitsblaetter.json; im Image /app/arbeitsblaetter, ausgeliefert unter /arbeitsblaetter/…
 materialien/Online-IDE/  Import-Dateien (JSON) für online-ide.de: je Welt ein Workspace je Gerüst; Lehrkraft/ = LSG
                      – ERZEUGT aus den .txt-Dateien (npm run workspaces), nicht von Hand ändern
 werkzeuge/           Prüf- und Erzeugungsskripte (Python 3 + javac, nicht im Docker-Image)
@@ -48,6 +50,7 @@ werkzeuge/           Prüf- und Erzeugungsskripte (Python 3 + javac, nicht im Do
   ide-pruefung/seed_code_pruefen.py Java-Blöcke der Lab-Aufgaben im Kontext der LSG kompilieren (seed_kontext/ = Klassen
                                     und Variablen, die nur im Aufgabentext stehen)
   workspaces_erzeugen.py            materialien/Online-IDE neu erzeugen (--pruefen: nur prüfen)
+  arbeitsblaetter_pdf.py            materialien/Arbeitsblaetter_PDF neu erzeugen (soffice; --pruefen: Vollständigkeit)
   materialien_pruefen.py            docx/pptx/txt: Altbegriffe, Generics, verbotene String-Operationen (--rendern: soffice → PDF)
 .github/workflows/pruefung.yml      GitHub-Prüfung: alles oben bei jedem Push/PR
 docs/ONLINE-IDE_TESTPROTOKOLL.md    Checkliste mit Sollwerten für den Probelauf in der echten Online-IDE
@@ -64,6 +67,7 @@ npm run dev         # lokal auf Port 3000, Superadmin admin / admin1234, Daten i
 WELT_DATEIEN=test/fixtures/welt_beispiel.json npm run dev   # mit Beispielwelt
 npm run pruefen     # ALLES: test, validate, IDE-Prüfstand, Lab-Code, Workspaces aktuell, Materialien
 npm run workspaces  # materialien/Online-IDE nach Änderungen an Gerüsten/LSG neu erzeugen
+npm run arbeitsblaetter  # materialien/Arbeitsblaetter_PDF nach Änderungen an Arbeitsblättern neu erzeugen
 python3 werkzeuge/materialien_pruefen.py --rendern --pdf-ordner <scratch>   # alle docx/pptx nach PDF
 ```
 Python-Abhängigkeiten der Werkzeuge: `pip install python-docx python-pptx`; Java 21 (javac) für die IDE-Prüfung.
@@ -115,6 +119,10 @@ P9 Struktogramm nicht nach EH §5 · P10 Operator verfehlt.
 - `npm test` **und** `npm run validate` müssen grün sein, bevor committet wird; bei Änderungen an Gerüsten, LSG,
   Lab-Code oder Materialien `npm run pruefen` (bzw. das passende Skript).
 - Nach jeder Änderung an einer `.txt` in `3_Online-IDE`/`5_Loesungen`: `npm run workspaces` und mitcommitten.
+- Nach jeder Änderung an einem Arbeitsblatt (`2_Arbeitsblaetter/*.docx`, Werkzeugkarten): `npm run arbeitsblaetter`
+  und die PDFs mitcommitten. Neue Arbeitsblätter in `seed/arbeitsblaetter.json` eintragen (Titel, DS, Dateiname
+  `AQ_W<n>-AB<k>_<Thema>.pdf` ohne Umlaute); das Feld `ab` der Level muss mit „AB <k>“ bzw. „AB W<n>·<k>“ beginnen.
+  In den PDF-Ordner nur Schülerfassungen – nie Lösungen, Bosse oder Klausuren (der Ordner ist öffentlich abrufbar).
 - Gerüst und LSG müssen (nach dem Freischalten der `/* LEVEL-x-START … -ENDE */`-Blöcke) identische Testklassen haben.
 - Der Prüfstand nutzt echtes Java: `==` bei Zeichenketten fällt dort auf, in der Online-IDE NICHT (Tests bleiben grün).
 - Neue Aufgaben im Format von `docs/AUFGABENFORMAT.md`; jede Aufgabe mit Erklärung (bei Fallen P-Nummer nennen).

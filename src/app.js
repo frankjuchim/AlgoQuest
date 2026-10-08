@@ -9,8 +9,10 @@ const S = require('./security');
 const { schuelerRoutes } = require('./routes/schueler');
 const { lehrerRoutes } = require('./routes/lehrer');
 const { adminRoutes } = require('./routes/admin');
+const { createThemen } = require('./services/themen');
 
 const PUBLIC_DIR = path.join(__dirname, '..', 'public');
+const ROOT_DIR = path.join(__dirname, '..');
 const LEHRKRAFT_SESSION_MS = 8 * 3600 * 1000; // 8 Stunden
 const SCHUELER_SESSION_MS = 30 * 24 * 3600 * 1000; // 30 Tage
 const VERSION = require('../package.json').version;
@@ -29,6 +31,8 @@ const VERSION = require('../package.json').version;
  * @param {Function} [opts.now]           Uhr (ms) – für Tests
  * @param {Function} [opts.random]        Zufall [0,1) für Boss-Ziehung – für Tests
  * @param {Function} [opts.trainingSeed]  Seed-Quelle für Generatoren – für Tests
+ * @param {string|null} [opts.arbeitsblaetterDir] Ordner mit den Arbeitsblatt-PDFs (Standard: ARBEITSBLAETTER_DIR,
+ *                                         sonst ./arbeitsblaetter im Image bzw. materialien/Arbeitsblaetter_PDF im Repo)
  */
 function createApp(opts) {
   const log = opts.log || (() => {});
@@ -40,6 +44,11 @@ function createApp(opts) {
 
   svc.konten.sichereSuperadmin(opts.adminEmail || 'admin', opts.adminPassword || '');
   ladeInhalte(svc, opts, log);
+  const abDir = arbeitsblaetterOrdner(opts);
+  const themen = createThemen(ctx, { inhalte: svc.inhalte }, {
+    verzeichnis: ladeVerzeichnis(opts, log),
+    pdfVorhanden: (datei) => !!abDir && fs.existsSync(path.join(abDir, datei))
+  });
 
   const app = express();
   app.disable('x-powered-by');
@@ -105,7 +114,13 @@ function createApp(opts) {
   app.get('/admin', (req, res) => res.redirect('/lehrer#/admin'));
   app.get('/board/:code', page('board.html'));
   app.get('/datenschutz', page('datenschutz.html'));
+  app.get('/themen', page('themen.html'));
   app.use('/static', express.static(path.join(PUBLIC_DIR, 'static'), { maxAge: '1h', index: false }));
+  // Arbeitsblätter (Schülerfassung, PDF) – nur .pdf, ohne Verzeichnislisten
+  if (abDir) {
+    app.use('/arbeitsblaetter', (req, res, next) => (req.path.toLowerCase().endsWith('.pdf') ? next() : res.status(404).end()));
+    app.use('/arbeitsblaetter', express.static(abDir, { maxAge: '1h', index: false, dotfiles: 'deny' }));
+  }
 
   /* ---------- API ---------- */
   const api = express.Router();
@@ -142,6 +157,9 @@ function createApp(opts) {
     res.json({ schueler, lehrkraft: l ? svc.konten.ansicht(l) : null, version: VERSION });
   });
 
+  /* Öffentliche Themenübersicht (ohne Lösungen) */
+  api.get('/themen', (req, res) => res.json(themen.uebersicht()));
+
   /* Öffentliches Beamer-Board (nur wenn im Kurs aktiviert) */
   api.get('/board/:code', (req, res) => {
     const b = svc.auswertung.board(req.params.code);
@@ -175,6 +193,25 @@ function createApp(opts) {
   app.locals.services = svc;
   app.locals.ctx = ctx;
   return app;
+}
+
+function arbeitsblaetterOrdner(opts) {
+  if (opts.arbeitsblaetterDir !== undefined) return opts.arbeitsblaetterDir;
+  const kandidaten = [process.env.ARBEITSBLAETTER_DIR, path.join(ROOT_DIR, 'arbeitsblaetter'), path.join(ROOT_DIR, 'materialien', 'Arbeitsblaetter_PDF')];
+  return kandidaten.find((d) => d && fs.existsSync(d)) || null;
+}
+
+/** seedDir/arbeitsblaetter.json (Verzeichnis der Arbeitsblätter); fehlt sie, zeigt /themen nur die Level. */
+function ladeVerzeichnis(opts, log) {
+  const seedDir = opts.seedDir === undefined ? path.join(ROOT_DIR, 'seed') : opts.seedDir;
+  const datei = seedDir && path.join(seedDir, 'arbeitsblaetter.json');
+  if (!datei || !fs.existsSync(datei)) return null;
+  try {
+    return JSON.parse(fs.readFileSync(datei, 'utf8'));
+  } catch (e) {
+    log(`arbeitsblaetter.json nicht lesbar: ${e.message}`);
+    return null;
+  }
 }
 
 /** Seed: seedDir/welten/*.json (+ opts.weltDateien) und seedDir/kata/*.json. Fehler werden nur protokolliert. */

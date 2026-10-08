@@ -1,9 +1,10 @@
-# Nur src/, public/, seed/, scripts/ und docs/AUFGABENFORMAT.md werden ins Image kopiert (siehe Dockerfile).
+# Ins Image kommen nur src/, public/, seed/, scripts/, docs/AUFGABENFORMAT.md und materialien/Arbeitsblaetter_PDF (siehe Dockerfile).
 .git
 node_modules
 data
 test
-materialien
+materialien/*
+!materialien/Arbeitsblaetter_PDF
 quellen
 docs/*.png
 *.log

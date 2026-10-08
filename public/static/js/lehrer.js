@@ -25,6 +25,7 @@
               { class: 'topnav', 'aria-label': 'Hauptnavigation' },
               link('#/', '📚 Kurse', 'kurse'),
               link('#/vorschau', '📖 Aufgaben', 'vorschau'),
+              h('a', { href: '/themen' }, '📚 Themen'),
               konto.rolle === 'superadmin' ? link('#/admin', '🛡️ Verwaltung', 'admin') : null,
               link('#/konto', '🔑 Konto', 'konto'),
               h('span', { class: 'who hide-sm' }, konto.name),

@@ -33,6 +33,14 @@ Ränge und Abzeichen. Lehrkräfte verwalten ihre Kurse und sehen Lernstand, Aufg
   freigeschalteten Welten), Abzeichen, Fortschritt je Welt, „Deine Fallen“ (Fehlversuche je P1–P10), eigener Code.
 - Scoreboard (falls aktiviert): gesamt oder je Welt, eigener Eintrag hervorgehoben.
 
+**Themen und Arbeitsblätter** (`/themen`, öffentlich, ohne Anmeldung)
+- Übersicht für die Abi-Vorbereitung: je Welt alle Level mit Thema, Doppelstunde, Arbeitsblatt (PDF-Link), Online-IDE-Datei
+  und „Üben →“ (Schüler: Level im Lab, Lehrkraft: Aufgaben-Vorschau), dazu Boss, Trainingsplatz und Warm-up.
+- Querschnitte „Nach Aufgabentyp“ (Tracetabelle, Rekursionstabelle, Struktogramm …) und „Nach Fallen P1–P10“ mit Links
+  auf die passenden Level. Verlinkt von Startseite, Schüler- und Lehrkraft-Navigation.
+- PDFs unter `/arbeitsblaetter/…` aus `materialien/Arbeitsblaetter_PDF` (im Image `/app/arbeitsblaetter`, abweichend:
+  `ARBEITSBLAETTER_DIR`); Zuordnung in `seed/arbeitsblaetter.json`. Nur Schülerfassungen – keine Lösungen.
+
 **Lehrkräfte**
 - Zugang auf Anfrage (Name, E-Mail, Schule, Passwort, Nachricht) → Freigabe durch den Superadmin.
 - Kurse anlegen (Kurscode 6 Zeichen), Beitritts-Link `/k/<KURSCODE>` + QR-Code (SVG).
@@ -75,6 +83,7 @@ Backup/Restore (JSON).
    | `PORT` | Standard 80 |
    | `DATA_DIR` | Standard `/app/data` |
    | `TRUST_PROXY` | Standard `1` (ein Proxy, z. B. CapRover/nginx); `false` ohne Proxy |
+   | `ARBEITSBLAETTER_DIR` | optional: Ordner mit den Arbeitsblatt-PDFs (Standard im Image `/app/arbeitsblaetter`) |
 
 3. HTTPS in CapRover aktivieren (Cookies werden dann automatisch `secure`).
 4. Deploy: Die App ist per GitHub-Webhook mit dem Branch `main` verbunden – **jeder Push auf `main` baut und startet die
@@ -139,6 +148,7 @@ Alle Antworten JSON; schreibende Anfragen mit `Content-Type: application/json` u
 | POST | `/api/schueler/anmelden` | `{kurscode, name, code}` |
 | POST | `/api/schueler/abmelden` | |
 | GET | `/api/board/:code` | Beamer-Board (nur wenn aktiviert) |
+| GET | `/api/themen` | Themenübersicht: Welten, Level, Arbeitsblätter, Aufgabentypen, Fallen (ohne Lösungen) |
 | POST | `/api/lehrer/registrieren` | `{name, email, schule, passwort, nachricht}` |
 | POST | `/api/lehrer/anmelden` / `abmelden` | `{email, passwort}` |
 

@@ -53,6 +53,7 @@
           link('#/profil', '👤 Profil', 'profil'),
           einstellungen.scoreboard ? link('#/scoreboard', '🏆 Scoreboard', 'scoreboard') : null,
           link('#/kata', '🔥 Warm-up', 'kata'),
+          h('a', { href: '/themen' }, '📚 Themen'),
           h('span', { class: 'who hide-sm' }, sitzung.schueler.name),
           h('button', { type: 'button', onclick: abmelden }, 'Abmelden')
         )
