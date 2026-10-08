@@ -40,6 +40,17 @@ materialien/         00_Lehrerhinweise (Einstieg: AQ_Gesamtuebersicht_DS1-40.doc
 quellen/specs/       SPEC_AlgoLab.md (App), SPEC_AlgoQuest_W0_W1.md (Grundkonventionen, Welt-1-API), W0_Akademie, W2–W6,
                      SPEC_Materialanpassung.md, LAB_LEVELS.md
 quellen/lab-inhalte-generatoren/  historische Python-Generatoren der Lab-Aufgaben (nur Referenz, JSON ist maßgeblich)
+materialien/Online-IDE/  Import-Dateien (JSON) für online-ide.de: je Welt ein Workspace je Gerüst; Lehrkraft/ = LSG
+                     – ERZEUGT aus den .txt-Dateien (npm run workspaces), nicht von Hand ändern
+werkzeuge/           Prüf- und Erzeugungsskripte (Python 3 + javac, nicht im Docker-Image)
+  ide-pruefung/ide_pruefen.py       Online-IDE-Dateien → Java 21, javac gegen Nachbau der NI-Bibliothek (java/aq/ni),
+                                    Grafik-Nachbau (java/aq/grafik), Testrunner; Gerüst ↔ LSG-Vergleich, Musterlösungs-Blöcke
+  ide-pruefung/seed_code_pruefen.py Java-Blöcke der Lab-Aufgaben im Kontext der LSG kompilieren (seed_kontext/ = Klassen
+                                    und Variablen, die nur im Aufgabentext stehen)
+  workspaces_erzeugen.py            materialien/Online-IDE neu erzeugen (--pruefen: nur prüfen)
+  materialien_pruefen.py            docx/pptx/txt: Altbegriffe, Generics, verbotene String-Operationen (--rendern: soffice → PDF)
+.github/workflows/pruefung.yml      GitHub-Prüfung: alles oben bei jedem Push/PR
+docs/ONLINE-IDE_TESTPROTOKOLL.md    Checkliste mit Sollwerten für den Probelauf in der echten Online-IDE
 ```
 
 ## Befehle
@@ -51,7 +62,11 @@ npm run validate    # Inhalts-Validator für seed/welten/*.json (auch: node scri
 npm run e2e         # Playwright-Durchlauf (Chromium; CHROMIUM_PATH/PLAYWRIGHT_BROWSERS_PATH), Screenshots nach docs/
 npm run dev         # lokal auf Port 3000, Superadmin admin / admin1234, Daten in ./data
 WELT_DATEIEN=test/fixtures/welt_beispiel.json npm run dev   # mit Beispielwelt
+npm run pruefen     # ALLES: test, validate, IDE-Prüfstand, Lab-Code, Workspaces aktuell, Materialien
+npm run workspaces  # materialien/Online-IDE nach Änderungen an Gerüsten/LSG neu erzeugen
+python3 werkzeuge/materialien_pruefen.py --rendern --pdf-ordner <scratch>   # alle docx/pptx nach PDF
 ```
+Python-Abhängigkeiten der Werkzeuge: `pip install python-docx python-pptx`; Java 21 (javac) für die IDE-Prüfung.
 
 In der Cloud-Umgebung: Chromium liegt unter `/opt/pw-browsers` (kein `playwright install`).
 docx/pptx rendern: `soffice --headless --convert-to pdf --outdir <scratch> <datei>`.
@@ -97,7 +112,11 @@ P9 Struktogramm nicht nach EH §5 · P10 Operator verfehlt.
 - **Jede Aufgabenlösung programmatisch prüfen:** Java-Code mit `javac`/`java` (+ Nachbau der NI-Bibliothek, nicht
   generisch), Traces/Rekursionstabellen per instrumentiertem Programm, Bäume/Sortierschritte per Skript.
   Prüfskripte ins Scratchpad, nicht ins Repo.
-- `npm test` **und** `npm run validate` müssen grün sein, bevor committet wird.
+- `npm test` **und** `npm run validate` müssen grün sein, bevor committet wird; bei Änderungen an Gerüsten, LSG,
+  Lab-Code oder Materialien `npm run pruefen` (bzw. das passende Skript).
+- Nach jeder Änderung an einer `.txt` in `3_Online-IDE`/`5_Loesungen`: `npm run workspaces` und mitcommitten.
+- Gerüst und LSG müssen (nach dem Freischalten der `/* LEVEL-x-START … -ENDE */`-Blöcke) identische Testklassen haben.
+- Der Prüfstand nutzt echtes Java: `==` bei Zeichenketten fällt dort auf, in der Online-IDE NICHT (Tests bleiben grün).
 - Neue Aufgaben im Format von `docs/AUFGABENFORMAT.md`; jede Aufgabe mit Erklärung (bei Fallen P-Nummer nennen).
 
 ### Datenschutz und Sicherheit
@@ -111,6 +130,14 @@ P9 Struktogramm nicht nach EH §5 · P10 Operator verfehlt.
 - Danach mit `soffice` nach PDF rendern und das Ergebnis prüfen (Layout, Seitenumbrüche, Sonderzeichen ← ≤ ≠).
 - Gestaltung: #1F4E79 primär, Gold #B8860B, Grün #548235, Rot #C00000, Kasten #DBE7F5; Calibri 11 pt, Consolas 10 pt.
 
+### Lab-Oberfläche
+- Antwortreihenfolgen nie fest vorgeben: Der Client mischt choice-Optionen, order-Teile, match-Elemente und Klapplisten
+  (ab 3 Optionen) bei jedem Anzeigen. Tree-„bauen“-Chips bleiben in Reihenfolge (Einfügereihenfolge ist Aufgabeninhalt).
+- Nach Änderungen an `public/static/**` die `?v=`-Version in `public/*.html` und `package.json` erhöhen (Browser-Cache 1 h).
+- Boss-Aufgaben: Rahmentext/Organisatorisches geduzt, Aufgabenstellungen gesiezt (Abitur-Stil).
+
 ## Offene Punkte
-- IDE-Gerüste sind nur mit `javac` + Nachbau der NI-Bibliothek getestet, noch nicht in der echten Online-IDE.
-- `public/datenschutz.html` ist eine Vorlage und muss von der Schule angepasst werden.
+- Probelauf der Gerüste in der echten Online-IDE nach `docs/ONLINE-IDE_TESTPROTOKOLL.md` (bisher nur javac + Nachbau).
+- `public/datenschutz.html`: Angaben in `[…]` (Anschrift, Schulleitung, DSB, Rechtsgrundlage, Hoster, Löschfrist) von der
+  Schule ergänzen lassen.
+- `materialien/WebApp/algoquest-webapp.tar` ist ein alter Stand (Deployment läuft über GitHub).

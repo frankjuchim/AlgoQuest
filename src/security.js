@@ -127,6 +127,10 @@ class Limiter {
     this.max = max;
     this.windowMs = windowMs;
     this.map = new Map();
+    // abgelaufene Einträge (Schlüssel enthalten u. a. IP-Adressen) spätestens nach einer Minute entfernen
+    // (Datenschutz: IP-Adressen werden nur für die Dauer des Zeitfensters gehalten)
+    this.aufraeumer = setInterval(() => this.prune(), 60 * 1000);
+    this.aufraeumer.unref();
   }
   _entry(key, now) {
     let e = this.map.get(key);

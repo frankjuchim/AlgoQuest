@@ -110,7 +110,9 @@ bei Bedarf mit jedem SQLite-Werkzeug geöffnet werden. Neue Schema-Version: 3.
   `X-Robots-Tag: noindex`.
 - Sitzungs-Cookies: signiert (HMAC-SHA256), `httpOnly`, `SameSite=Lax`, hinter HTTPS `secure`; Schüler 30 Tage, Lehrkräfte 8 h.
 - Löschfunktionen: einzelne Schüler, alle Schüler eines Kurses, Kurs, Lehrkraft (mit allen Kursen).
-- Datenschutzhinweise: `/datenschutz` – **Vorlage**, von der Schule anzupassen (`public/datenschutz.html`).
+- Datenschutzhinweise: `/datenschutz` (`public/datenschutz.html`) – beschreibt die tatsächliche Verarbeitung; Anschrift,
+  Schulleitung, Datenschutzbeauftragte:r, Rechtsgrundlage, Hoster und Löschfrist muss die Schule noch eintragen (`[…]`).
+- IP-Adressen werden nur im Arbeitsspeicher für die Rate-Limits gezählt und nach Ablauf des Zeitfensters (≤ 60 min) gelöscht.
 
 ## Sicherheit
 

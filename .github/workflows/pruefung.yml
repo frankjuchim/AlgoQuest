@@ -1,0 +1,44 @@
+# Prüfung bei jedem Push und Pull Request.
+# Hinweis: Die Live-App baut CapRover direkt bei jedem Push auf main – diese Prüfung blockiert das nicht.
+# Deshalb auf Feature-Branches arbeiten und erst nach grüner Prüfung nach main übernehmen.
+name: Prüfung
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  app:
+    name: App (Tests und Inhalts-Validator)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run validate
+
+  inhalte:
+    name: Online-IDE, Lab-Code, Workspaces, Materialien
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install python-docx python-pptx
+      - name: Online-IDE-Dateien (javac + Nachbau der Bibliothek Niedersachsen)
+        run: python3 werkzeuge/ide-pruefung/ide_pruefen.py
+      - name: Java-Code der Lab-Aufgaben
+        run: python3 werkzeuge/ide-pruefung/seed_code_pruefen.py
+      - name: Online-IDE-Workspaces aktuell
+        run: python3 werkzeuge/workspaces_erzeugen.py --pruefen
+      - name: Materialien (Begriffe, NI-Klassen, Zeichenketten-Operationen)
+        run: python3 werkzeuge/materialien_pruefen.py

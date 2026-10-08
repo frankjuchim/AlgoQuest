@@ -181,3 +181,17 @@ test('Keine Gilden/XP in Oberfläche und README', () => {
     assert.doesNotMatch(t, /gilde|guild|\bXP\b/i, f);
   }
 });
+
+test('Rate-Limiter: abgelaufene Einträge (IP-Adressen) werden entfernt, Aufräum-Timer hält den Prozess nicht offen', () => {
+  const { Limiter } = require('../src/security');
+  const l = new Limiter({ max: 2, windowMs: 1000 });
+  l.hit('ip:203.0.113.7', 0);
+  l.hit('ip:203.0.113.7', 0);
+  assert.equal(l.isBlocked('ip:203.0.113.7', 500), true);
+  l.prune(500);
+  assert.equal(l.map.size, 1, 'noch im Zeitfenster');
+  l.prune(1000);
+  assert.equal(l.map.size, 0, 'nach Ablauf des Zeitfensters gelöscht');
+  assert.equal(l.aufraeumer.hasRef(), false);
+  clearInterval(l.aufraeumer);
+});

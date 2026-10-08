@@ -8,10 +8,13 @@ ORDNER
 WeltN_.../1_Praesentation   PowerPoint mit Sprechernotizen
 WeltN_.../2_Arbeitsblaetter Schuelerblaetter (Word) - je Abschnitt ein Kasten "Im Lab ueben: Level x.y"
 WeltN_.../3_Online-IDE      Geruest-Dateien zum Austeilen (Inhalt in die Online-IDE kopieren, Tests im Reiter "Testrunner")
+Online-IDE                  Fertige Workspaces zum Importieren (JSON, je Welt eine Datei, ein Workspace je Geruest,
+                            Bibliothek "Niedersachsen" ab Welt 4 schon aktiviert); Lehrkraft/ = Musterloesungen
 WeltN_.../4_Boss            Papier-Boss (handschriftlich, Abi-Training, ohne Punkte); Welt 6: Probeklausur + Klausuren
 WeltN_.../5_Loesungen       NUR LEHRKRAFT: AB-Loesungen, Online-IDE-Musterloesungen, Erwartungshorizonte
 Werkzeuge                   Werkzeugkarten (laminieren) + Warm-up-Karten (Druck + JSON)
-WebApp                      algoquest-webapp.tar (direkt in CapRover hochladbar), README.md, AUFGABENFORMAT.md, Screenshots
+WebApp                      README.md, AUFGABENFORMAT.md, Screenshots; algoquest-webapp.tar = alter Stand zum manuellen
+                            Hochladen (der aktuelle Stand wird direkt aus GitHub gebaut, siehe unten)
 
 ALGO QUEST LAB (WebApp v2.0) - https://algoquest.frankjuchim.de - SO FUNKTIONIERT ES
 - Schueler melden sich selbst an: Kurscode + Name (Vorname + Initial) -> persoenlicher Code (notieren!).
@@ -30,11 +33,13 @@ INSTALLATION AUF CAPROVER (Details im README)
 1. Neue App anlegen, HTTP-Port 80, "Has Persistent Data" aktivieren, Persistent Directory /app/data.
 2. Umgebungsvariablen: ADMIN_EMAIL (= Benutzername des Superadmins; ohne Angabe "admin"), ADMIN_PASSWORD (mind. 10 Zeichen, besser 12+),
    SESSION_SECRET (lange Zufallszeichenkette, z. B. openssl rand -hex 32).
-3. Deployment -> "Upload tar file" -> algoquest-webapp.tar. Domain algoquest.frankjuchim.de verbinden, HTTPS aktivieren.
+3. Deployment: App mit dem GitHub-Repository (Branch main) verbinden - jeder Push auf main baut die App neu.
+   Domain algoquest.frankjuchim.de verbinden, HTTPS aktivieren.
 4. Anmelden unter https://algoquest.frankjuchim.de/lehrer, Kurs anlegen, QR-Code/Kurscode an die Klasse geben.
 UPGRADE VON DER ALTEN WEBAPP (v1.x): Die alte Datenbank (Gilden/XP) wird beim ersten Start automatisch als
 algoquest.v1-backup-<datum>.db gesichert, danach beginnt das Lab mit einer neuen, leeren Datenbank.
-Updates des Lab: neues tar hochladen - Lernstaende bleiben erhalten, neue Aufgaben werden ergaenzt.
+Updates des Lab: Push auf main (vorher npm test und npm run validate) - Lernstaende bleiben erhalten, neue Aufgaben
+werden ergaenzt.
 
 VOR DEM ERSTEN EINSATZ PRUEFEN
 - Datenschutzseite des Lab (/datenschutz, Datei public/datenschutz.html) an die Schule anpassen.
@@ -42,6 +47,7 @@ VOR DEM ERSTEN EINSATZ PRUEFEN
   Stack/Queue/DynArray/BinTree sind dort NICHT generisch (Casts, z. B. (Integer) s.pop()). Gerueste einmal in der echten
   Online-IDE laufen lassen (geprueft wurde mit javac + Nachbau der Bibliothek): assertEquals mit Kommazahlen,
   BinTree auf leeren Baeumen, destroy() auf Text im Baumzeichner, for-each ueber DynArray.
+  Schritt-fuer-Schritt-Protokoll mit den erwarteten Testzahlen: docs/ONLINE-IDE_TESTPROTOKOLL.md im Repository.
 - Die Online-IDE vergleicht Zeichenketten mit == inhaltlich: Tests erkennen "== statt equals" dort nicht (Code-Review).
 - QR-Code zur YouTube-Playlist eintragen. Notenschluessel in den Klausur-Erwartungshorizonten an die Schulvorgabe anpassen.
 

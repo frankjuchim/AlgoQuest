@@ -9,7 +9,9 @@
     "dev": "ADMIN_EMAIL=admin ADMIN_PASSWORD=admin1234 SESSION_SECRET=dev-secret-nur-lokal-123 DATA_DIR=./data PORT=3000 node src/server.js",
     "test": "node --test test/*.test.js",
     "validate": "node scripts/validate.js",
-    "e2e": "node test/e2e/e2e.js"
+    "e2e": "node test/e2e/e2e.js",
+    "pruefen": "npm test && npm run validate && python3 werkzeuge/ide-pruefung/ide_pruefen.py && python3 werkzeuge/ide-pruefung/seed_code_pruefen.py && python3 werkzeuge/workspaces_erzeugen.py --pruefen && python3 werkzeuge/materialien_pruefen.py",
+    "workspaces": "python3 werkzeuge/workspaces_erzeugen.py"
   },
   "engines": {
     "node": ">=20"
