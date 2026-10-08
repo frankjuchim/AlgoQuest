@@ -1,0 +1,10 @@
+# Nur src/, public/, seed/, scripts/ und docs/AUFGABENFORMAT.md werden ins Image kopiert (siehe Dockerfile).
+.git
+node_modules
+data
+test
+materialien
+quellen
+docs/*.png
+*.log
+.DS_Store

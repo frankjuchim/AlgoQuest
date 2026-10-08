@@ -77,7 +77,10 @@ Backup/Restore (JSON).
    | `TRUST_PROXY` | Standard `1` (ein Proxy, z. B. CapRover/nginx); `false` ohne Proxy |
 
 3. HTTPS in CapRover aktivieren (Cookies werden dann automatisch `secure`).
-4. Deploy: Ordner als tar hochladen (`captain-definition` + `Dockerfile` liegen bei) oder `caprover deploy`.
+4. Deploy: Die App ist per GitHub-Webhook mit dem Branch `main` verbunden – **jeder Push auf `main` baut und startet die
+   Live-Version** (`captain-definition` → `Dockerfile`). Deshalb auf Feature-Branches arbeiten; die GitHub Action
+   „Prüfung“ führt bei jedem Push und Pull Request `npm test`, `npm run validate` und die Inhaltsprüfungen aus.
+   Alternativ: Ordner als tar hochladen oder `caprover deploy`.
    Healthcheck: `GET /healthz`.
 
 Lokal: `npm install`, dann `npm run dev` (Port 3000, Superadmin `admin` / `admin1234`) bzw.
