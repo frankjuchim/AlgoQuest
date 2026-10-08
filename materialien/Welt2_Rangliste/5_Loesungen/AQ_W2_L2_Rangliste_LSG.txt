@@ -1,0 +1,1279 @@
+// =====================================================================
+//  WELT 2 – DIE RANGLISTE – MUSTERLÖSUNG (Lehrerexemplar)
+//  Informatik LK · Online-IDE · Algo Quest · Level 2.1 bis 2.3 (DS 13, 14, 16)
+//
+//  Das ist das ausgefuellte Geruest: Eintrag und der Vorgabe-Block der
+//  Rangliste sind unveraendert, alle TODO-Methoden sind geloest, die
+//  Testklassen sind unveraendert. Mit dieser Datei sind ALLE Tests im
+//  Reiter "Testrunner" gruen:
+//      L21StandardTest 16 · L22SortierTest 22 · L23SucheTest 13
+//      (zusammen 51 Tests; je Level basis/erweiterung/experte)
+//
+//  Die Klassen entsprechen exakt der Klassen-API von Welt 2 (gleiche
+//  Namen, Parameter und Randfaelle wie auf den Arbeitsblaettern, Folien
+//  und im Warm-up). Das Sortier-Duell (DS 15) ist eine eigene Datei:
+//  AQ_W2_SortierDuell_Geruest.txt / _LSG.txt.
+//
+//  ANLEITUNG FUER SCHUELER: siehe Geruest-Datei (Testrunner, Stufen
+//  basis_ / erweiterung_ / experte_ je Level, Zaehl-Regeln,
+//  Testklassen nicht veraendern).
+//
+//  DIDAKTISCHE ENTSCHEIDUNGEN IM GERÜST:
+//  - Eintrag ist komplett vorgegeben: In Welt 2 geht es um Algorithmen
+//    auf einer Reihung von Objekten, nicht mehr um Klassenbau.
+//  - In der Rangliste sind Attribute, Konstruktor, getAnzahl, getEintrag,
+//    hinzufuegen (= aufnehmen aus Welt 1), die Zaehler sowie besser(...)
+//    und vertausche(...) vorgegeben. Die Schueler arbeiten unterhalb der
+//    Linie "AB HIER ARBEITEST DU" (eine Klasse laesst sich in der
+//    Online-IDE nicht auf zwei Abschnitte verteilen).
+//  - vertausche ist VORGEGEBEN (nicht TODO): Die Tests in L2.2 pruefen
+//    exakte Vertauschungszahlen. Ein fehlerhaftes vertausche (z. B.
+//    ohne Hilfsvariable oder ohne Zaehler) wuerde ALLE Sortiertests mit
+//    irrefuehrenden Meldungen rot faerben. Der Dreieckstausch wird
+//    stattdessen auf Papier geuebt (Warm-up, Tracetabelle) und ist aus
+//    Welt 0 bekannt. Begruendung steht auch in der ANLEITUNG (Punkt 4).
+//  - besser(...) ist private und zaehlt jeden Aufruf. Level 2.1 und
+//    istSortiert vergleichen direkt ueber getPunkte() (zaehlt nicht);
+//    ab dem Sortieren gilt "nur besser(...)".
+//  - Exakte Zaehlwerte werden nur dort geprueft, wo sie fuer JEDE
+//    korrekte Implementierung gleich sind:
+//      Selectionsort: immer n(n-1)/2 Vergleiche; Vertauschungen nur bei
+//        maxIndex != i (Maximum-Auswahl von links, wie in der Spec).
+//      Insertionsort: bester Fall n-1 / 0, schlechtester Fall
+//        n(n-1)/2 / n(n-1)/2, ein Trace-Beispiel (8 / 6) - eindeutig,
+//        sobald die innere Schleife beim ersten "nicht besser" abbricht.
+//      Bubblesort: bester Fall n-1 (Abbruch); schlechtester Fall
+//        n(n-1)/2 (innere Schleife wird kuerzer) erst in der Stufe Experte.
+//      einfuegenSortiert: nur 0 Vertauschungen und mindestens 1 Vergleich
+//        (die Vergleichszahl haengt davon ab, ob von vorn oder von hinten
+//        gesucht wird - beides ist korrekt).
+//      Binaere Suche: Durchlaeufe exakt (mid = (lo + hi) / 2 ist in der
+//        Spec festgelegt), Maximum 7 bei n = 100, 8 bei n = 200.
+//  - Stabilitaet wird nur bei Insertion-/Bubblesort und einfuegenSortiert
+//    geprueft (Selectionsort ist nicht stabil - Thema fuer das AB).
+//  - Alle Testlisten haben Kapazitaet 10 bei 4 bis 6 Eintraegen (null-
+//    Eintraege hinter anzahl!) und je ein Test mit VOLLER Liste
+//    (Indexgrenze anzahl - 1 bzw. eintraege[i + 1]).
+//  - Hilfsklasse TestHilfe (im Testabschnitt): baut Listen aus zwei
+//    Reihungen und liest Namen/Punkte als Text aus - die Fehlermeldungen
+//    zeigen so die ganze Reihenfolge ("erwartet: Cyra,Aria,...").
+//  - Vorlaeufige return-Werte -1, -1.0, false, null: Im unbearbeiteten
+//    Geruest ist genau 1 von 51 Tests zufaellig gruen
+//    (experte_sortieren_leerUndEinEintrag). Faelle, in denen -1 oder
+//    false richtig waere, sind immer mit einem Treffer-Fall im selben
+//    Test kombiniert.
+//
+//  Lehrerhinweis: Keine Bibliothek noetig. Die Bibliothek "niedersachsen"
+//  wird erst ab Welt 4 pro Workspace aktiviert - vor Einsatz pruefen.
+// =====================================================================
+
+
+// ---------------------------------------------------------------------
+//  GERÜST – unveraendert
+// ---------------------------------------------------------------------
+
+// ---------------------------------------------------------------------
+//  Klassenkarte Eintrag (eine Zeile der Highscore-Liste):
+//
+//      Eintrag
+//      ---------------------------------------------------------------
+//      - name: Zeichenkette
+//      - punkte: Ganzzahl
+//      - zeit: Ganzzahl                          // Spielzeit in Sekunden
+//      ---------------------------------------------------------------
+//      + c Eintrag(name: Zeichenkette, punkte: Ganzzahl, zeit: Ganzzahl)
+//      + getName(): Zeichenkette
+//      + getPunkte(): Ganzzahl
+//      + getZeit(): Ganzzahl
+//      + beschreibung(): Zeichenkette            // "Aria: 1200 Punkte (95 s)"
+// ---------------------------------------------------------------------
+
+class Eintrag {
+
+    private String name;
+    private int punkte;
+    private int zeit;
+
+    public Eintrag(String name, int punkte, int zeit) {
+        this.name = name;
+        this.punkte = punkte;
+        this.zeit = zeit;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPunkte() {
+        return punkte;
+    }
+
+    public int getZeit() {
+        return zeit;
+    }
+
+    public String beschreibung() {
+        return name + ": " + punkte + " Punkte (" + zeit + " s)";
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  LÖSUNGEN
+// ---------------------------------------------------------------------
+//  Klassenkarte Rangliste (Notation wie im Abitur):
+//
+//      Rangliste
+//      ---------------------------------------------------------------
+//      - eintraege: Reihung von Eintrag
+//      - anzahl: Ganzzahl
+//      - vergleiche: Ganzzahl
+//      - vertauschungen: Ganzzahl
+//      ---------------------------------------------------------------
+//      + c Rangliste(kapazitaet: Ganzzahl)
+//      + getAnzahl(): Ganzzahl
+//      + getEintrag(i: Ganzzahl): Eintrag
+//      + hinzufuegen(e: Eintrag): Wahrheitswert
+//      + getVergleiche(): Ganzzahl
+//      + getVertauschungen(): Ganzzahl
+//      + zaehlerZuruecksetzen(): nichts
+//      - besser(a: Eintrag, b: Eintrag): Wahrheitswert
+//      + vertausche(i: Ganzzahl, j: Ganzzahl): nichts
+//      + hoechstePunktzahl(): Ganzzahl                  Level 2.1
+//      + besterEintrag(): Eintrag                       Level 2.1
+//      + anzahlUeber(grenze: Ganzzahl): Ganzzahl        Level 2.1
+//      + indexVon(name: Zeichenkette): Ganzzahl         Level 2.1
+//      + durchschnitt(): Kommazahl                      Level 2.1
+//      + hatDoppelteNamen(): Wahrheitswert              Level 2.1
+//      + istSortiert(): Wahrheitswert                   Level 2.2
+//      + selectionSort(): nichts                        Level 2.2
+//      + insertionSort(): nichts                        Level 2.2
+//      + bubbleSort(): nichts                           Level 2.2
+//      + einfuegenSortiert(e: Eintrag): Wahrheitswert   Level 2.2
+// ---------------------------------------------------------------------
+
+class Rangliste {
+
+    // ======== VORGEGEBEN – bis zur Linie "AB HIER ARBEITEST DU" nichts veraendern ========
+
+    private Eintrag[] eintraege;
+    private int anzahl;               // belegte Plaetze, zugleich naechster freier Index
+    private int vergleiche;           // zaehlt die Aufrufe von besser(...)
+    private int vertauschungen;       // zaehlt die Aufrufe von vertausche(...)
+
+    // Leere Rangliste mit Platz fuer kapazitaet Eintraege.
+    public Rangliste(int kapazitaet) {
+        eintraege = new Eintrag[kapazitaet];
+        anzahl = 0;
+        vergleiche = 0;
+        vertauschungen = 0;
+    }
+
+    public int getAnzahl() {
+        return anzahl;
+    }
+
+    // Eintrag an Position i - oder null, wenn i kein gueltiger Index ist.
+    public Eintrag getEintrag(int i) {
+        if (i < 0 || i >= anzahl) {
+            return null;
+        }
+        return eintraege[i];
+    }
+
+    // false, wenn e null ist oder die Liste voll ist. Sonst: e ans Ende,
+    // anzahl erhoehen, true liefern. (Kennst du aus Welt 1: aufnehmen.)
+    public boolean hinzufuegen(Eintrag e) {
+        if (e == null || anzahl >= eintraege.length) {
+            return false;
+        }
+        eintraege[anzahl] = e;
+        anzahl++;
+        return true;
+    }
+
+    public int getVergleiche() {
+        return vergleiche;
+    }
+
+    public int getVertauschungen() {
+        return vertauschungen;
+    }
+
+    public void zaehlerZuruecksetzen() {
+        vergleiche = 0;
+        vertauschungen = 0;
+    }
+
+    // besser(a: Eintrag, b: Eintrag): Wahrheitswert
+    // true, wenn a MEHR Punkte hat als b - dann gehoert a weiter nach vorne.
+    // Jeder Aufruf zaehlt einen Vergleich.
+    // REGEL: Beim Sortieren und beim sortierten Einfuegen vergleichst du
+    // Eintraege AUSSCHLIESSLICH mit besser(...) - nur so stimmen die Zaehler.
+    private boolean besser(Eintrag a, Eintrag b) {
+        vergleiche++;
+        return a.getPunkte() > b.getPunkte();
+    }
+
+    // vertausche(i: Ganzzahl, j: Ganzzahl): nichts
+    // Tauscht die Eintraege an den Positionen i und j (Dreieckstausch mit
+    // Hilfsvariable) und zaehlt eine Vertauschung.
+    // REGEL: Die drei Sortierverfahren vertauschen NUR mit vertausche(...).
+    public void vertausche(int i, int j) {
+        Eintrag hilf = eintraege[i];
+        eintraege[i] = eintraege[j];
+        eintraege[j] = hilf;
+        vertauschungen++;
+    }
+
+    // ======== AB HIER ARBEITEST DU =============================================
+
+
+    // ---------- Level 2.1: Standardbausteine (DS 13) ----------
+
+    // Maximum-Baustein: mit dem ERSTEN Eintrag starten, nicht mit 0
+    // (Punkte koennen negativ sein - Strafpunkte!).
+    public int hoechstePunktzahl() {
+        if (anzahl == 0) {
+            return -1;
+        }
+        int max = eintraege[0].getPunkte();
+        for (int i = 1; i < anzahl; i++) {
+            if (eintraege[i].getPunkte() > max) {
+                max = eintraege[i].getPunkte();
+            }
+        }
+        return max;
+    }
+
+    // Wie oben, aber wir merken uns den Eintrag selbst.
+    // ">" (nicht ">="): Bei Gleichstand bleibt der ERSTE.
+    public Eintrag besterEintrag() {
+        if (anzahl == 0) {
+            return null;
+        }
+        Eintrag bester = eintraege[0];
+        for (int i = 1; i < anzahl; i++) {
+            if (eintraege[i].getPunkte() > bester.getPunkte()) {
+                bester = eintraege[i];
+            }
+        }
+        return bester;
+    }
+
+    // Zaehl-Baustein.
+    public int anzahlUeber(int grenze) {
+        int zaehler = 0;
+        for (int i = 0; i < anzahl; i++) {
+            if (eintraege[i].getPunkte() > grenze) {
+                zaehler++;
+            }
+        }
+        return zaehler;
+    }
+
+    // Lineare Suche: erstes Vorkommen, sofort zurueckgeben.
+    // Das "return -1" steht NACH der Schleife, nicht in einem else.
+    public int indexVon(String name) {
+        for (int i = 0; i < anzahl; i++) {
+            if (eintraege[i].getName().equals(name)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    // Summe als Ganzzahl, dann Kommazahl-Division durch den Cast.
+    public double durchschnitt() {
+        if (anzahl == 0) {
+            return 0.0;
+        }
+        int summe = 0;
+        for (int i = 0; i < anzahl; i++) {
+            summe = summe + eintraege[i].getPunkte();
+        }
+        return (double) summe / anzahl;
+    }
+
+    // Jeder mit jedem: die innere Schleife beginnt bei i + 1, damit kein
+    // Eintrag mit sich selbst (und kein Paar doppelt) verglichen wird.
+    public boolean hatDoppelteNamen() {
+        for (int i = 0; i < anzahl - 1; i++) {
+            for (int j = i + 1; j < anzahl; j++) {
+                if (eintraege[i].getName().equals(eintraege[j].getName())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+    // ---------- Level 2.2: Sortieren (DS 14) ----------
+
+    // Jedes Nachbarpaar pruefen: "Fehlstand", wenn der rechte Nachbar MEHR
+    // Punkte hat. Gleiche Nachbarn sind erlaubt. Kein besser(...) - zaehlt nicht.
+    public boolean istSortiert() {
+        for (int i = 0; i < anzahl - 1; i++) {
+            if (eintraege[i].getPunkte() < eintraege[i + 1].getPunkte()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Selectionsort mit Maximum-Auswahl:
+    // Suche im unsortierten Rest i .. anzahl-1 den besten Eintrag und tausche
+    // ihn an Position i. Vergleiche immer (n-1) + (n-2) + ... + 1 = n(n-1)/2.
+    public void selectionSort() {
+        for (int i = 0; i < anzahl - 1; i++) {
+            int maxIndex = i;
+            for (int j = i + 1; j < anzahl; j++) {
+                if (besser(eintraege[j], eintraege[maxIndex])) {
+                    maxIndex = j;
+                }
+            }
+            if (maxIndex != i) {
+                vertausche(i, maxIndex);
+            }
+        }
+    }
+
+    // Insertionsort: Der Eintrag an Position i wandert so lange nach links,
+    // wie er BESSER ist als sein linker Nachbar.
+    // j > 0 MUSS vor besser(...) stehen (Kurzschluss-Auswertung von &&).
+    // Strikt "besser" -> gleich gute Eintraege werden nicht getauscht (stabil).
+    public void insertionSort() {
+        for (int i = 1; i < anzahl; i++) {
+            int j = i;
+            while (j > 0 && besser(eintraege[j], eintraege[j - 1])) {
+                vertausche(j, j - 1);
+                j--;
+            }
+        }
+    }
+
+    // Bubblesort mit Abbruch: Nach jedem Durchlauf steht der schlechteste
+    // Eintrag des Restes ganz hinten -> innere Schleife wird um 1 kuerzer.
+    // Blieb ein Durchlauf ohne Vertauschung, ist die Liste sortiert.
+    public void bubbleSort() {
+        boolean getauscht = true;
+        int durchlauf = 0;
+        while (getauscht) {
+            getauscht = false;
+            for (int j = 0; j < anzahl - 1 - durchlauf; j++) {
+                if (besser(eintraege[j + 1], eintraege[j])) {
+                    vertausche(j, j + 1);
+                    getauscht = true;
+                }
+            }
+            durchlauf++;
+        }
+    }
+
+    // Sortiertes Einfuegen (wie ein Schritt von Insertionsort, aber mit
+    // Verschieben statt Tauschen): Von hinten her jeden schlechteren
+    // Eintrag eine Stelle nach rechts schieben, dann e in die Luecke.
+    // Strikt "besser": Bei Gleichstand stoppen -> e landet HINTER gleich
+    // guten Eintraegen (stabil).
+    public boolean einfuegenSortiert(Eintrag e) {
+        if (e == null || anzahl >= eintraege.length) {
+            return false;
+        }
+        int i = anzahl;
+        while (i > 0 && besser(e, eintraege[i - 1])) {
+            eintraege[i] = eintraege[i - 1];
+            i--;
+        }
+        eintraege[i] = e;
+        anzahl++;
+        return true;
+    }
+}
+
+
+// ================== Level 2.3: Suche (DS 16) =========================
+
+class Suche {
+
+    // Zahl der Schleifendurchlaeufe der letzten Suche (zum Nachzaehlen).
+    public static int durchlaeufe = 0;
+
+    // Lineare Suche: jedes gepruefte Element zaehlt einen Durchlauf.
+    public static int linear(int[] r, int x) {
+        durchlaeufe = 0;
+        for (int i = 0; i < r.length; i++) {
+            durchlaeufe++;
+            if (r[i] == x) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    // Binaere Suche (iterativ) auf einer AUFSTEIGEND sortierten Reihung.
+    // Der Suchbereich lo .. hi halbiert sich in jedem Durchlauf.
+    public static int binaer(int[] r, int x) {
+        durchlaeufe = 0;
+        int lo = 0;
+        int hi = r.length - 1;
+        while (lo <= hi) {
+            durchlaeufe++;
+            int mid = (lo + hi) / 2;
+            if (r[mid] == x) {
+                return mid;
+            }
+            if (r[mid] < x) {
+                lo = mid + 1;
+            } else {
+                hi = mid - 1;
+            }
+        }
+        return -1;
+    }
+
+    // Experte: kleinster Index i mit r[i] >= x (r.length, falls x groesser
+    // als alle ist). Der Bereich lo .. hi enthaelt immer die Antwort; hi darf
+    // dabei r.length sein ("hinter dem letzten Element").
+    public static int einfuegeposition(int[] r, int x) {
+        durchlaeufe = 0;
+        int lo = 0;
+        int hi = r.length;
+        while (lo < hi) {
+            durchlaeufe++;
+            int mid = (lo + hi) / 2;
+            if (r[mid] < x) {
+                lo = mid + 1;
+            } else {
+                hi = mid;
+            }
+        }
+        return lo;
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  TESTS – hier nichts veraendern!
+// ---------------------------------------------------------------------
+//  Eine Testklasse pro Level. Die Stufe erkennst du am Anfang des
+//  Testnamens:
+//      basis_...        Basis       
+//      erweiterung_...  Erweiterung 
+//      experte_...      Experte     
+//  Eine Stufe ist geschafft, wenn ALLE Tests mit diesem Anfang gruen sind.
+// ---------------------------------------------------------------------
+
+// Hilfsklasse fuer die Tests: baut Ranglisten und liest sie aus.
+class TestHilfe {
+
+    // Baut eine Rangliste mit der Kapazitaet kapazitaet aus den Namen und
+    // Punkten (gleiche Position = gleicher Eintrag). Die Spielzeit ist fuer
+    // die Tests unwichtig und betraegt einfach 100 + Position.
+    public static Rangliste liste(int kapazitaet, String[] namen, int[] punkte) {
+        Rangliste r = new Rangliste(kapazitaet);
+        for (int i = 0; i < namen.length; i++) {
+            r.hinzufuegen(new Eintrag(namen[i], punkte[i], 100 + i));
+        }
+        return r;
+    }
+
+    // Namen in Listenreihenfolge, z. B. "Cyra,Aria,Brann"
+    public static String namen(Rangliste r) {
+        String s = "";
+        for (int i = 0; i < r.getAnzahl(); i++) {
+            if (i > 0) {
+                s = s + ",";
+            }
+            s = s + r.getEintrag(i).getName();
+        }
+        return s;
+    }
+
+    // Punkte in Listenreihenfolge, z. B. "1500,1200,800"
+    public static String punkte(Rangliste r) {
+        String s = "";
+        for (int i = 0; i < r.getAnzahl(); i++) {
+            if (i > 0) {
+                s = s + ",";
+            }
+            s = s + r.getEintrag(i).getPunkte();
+        }
+        return s;
+    }
+
+    // Die Standardliste der Tests (Kapazitaet 10, also NICHT voll):
+    //   Index:   0          1           2           3
+    //            Aria 1200  Brann 800   Cyra 1500   Dorn 950
+    public static Rangliste standard() {
+        String[] namen = {"Aria", "Brann", "Cyra", "Dorn"};
+        int[] punkte = {1200, 800, 1500, 950};
+        return liste(10, namen, punkte);
+    }
+}
+
+
+// ============== Level 2.1 – Standardbausteine (DS 13) =================
+
+class L21StandardTest {
+
+    @Test
+    public void basis_hoechstePunktzahl() {
+        Rangliste r = TestHilfe.standard();
+        assertEquals(1500, r.hoechstePunktzahl(), "Standardliste (1200, 800, 1500, 950): hoechste Punktzahl ist 1500");
+    }
+
+    @Test
+    public void basis_besterEintrag() {
+        Rangliste r = TestHilfe.standard();
+        assertTrue(r.besterEintrag() == r.getEintrag(2), "Standardliste: Cyra (1500 Punkte, Index 2) ist der beste Eintrag");
+    }
+
+    @Test
+    public void basis_anzahlUeber() {
+        Rangliste r = TestHilfe.standard();
+        assertEquals(3, r.anzahlUeber(900), "Ueber 900 Punkte liegen Aria (1200), Cyra (1500) und Dorn (950): 3 Eintraege");
+    }
+
+    @Test
+    public void basis_indexVon() {
+        Rangliste r = TestHilfe.standard();
+        assertEquals(1, r.indexVon("Brann"), "Brann steht an Index 1 - der Index beginnt bei 0");
+        assertEquals(0, r.indexVon("Aria"), "Aria steht ganz vorne an Index 0");
+    }
+
+    @Test
+    public void erweiterung_maximumAmAnfangUndAmEnde() {
+        String[] n1 = {"Cyra", "Brann", "Dorn"};
+        int[] p1 = {1500, 800, 950};
+        Rangliste vorne = TestHilfe.liste(10, n1, p1);
+        assertEquals(1500, vorne.hoechstePunktzahl(), "Das Maximum (1500) steht ganz vorne");
+        assertTrue(vorne.besterEintrag() == vorne.getEintrag(0), "Der beste Eintrag (Cyra) steht ganz vorne an Index 0");
+
+        String[] n2 = {"Brann", "Dorn", "Elin"};
+        int[] p2 = {800, 950, 1600};
+        Rangliste hinten = TestHilfe.liste(10, n2, p2);
+        assertEquals(1600, hinten.hoechstePunktzahl(), "Das Maximum (1600) steht ganz hinten - laeuft deine Schleife bis anzahl - 1?");
+        assertTrue(hinten.besterEintrag() == hinten.getEintrag(2), "Der beste Eintrag (Elin) steht ganz hinten - laeuft deine Schleife bis anzahl - 1?");
+    }
+
+    @Test
+    public void erweiterung_anzahlUeber_grenzeGenau() {
+        Rangliste r = TestHilfe.standard();
+        assertEquals(1, r.anzahlUeber(1200), "Ueber 1200 liegt nur Cyra (1500) - 1200 selbst ist NICHT ueber 1200 (> statt >=)");
+        assertEquals(0, r.anzahlUeber(1500), "Ueber 1500 liegt niemand");
+        assertEquals(4, r.anzahlUeber(0), "Ueber 0 liegen alle 4 Eintraege");
+    }
+
+    @Test
+    public void erweiterung_indexVon_letzterUndFehlender() {
+        Rangliste r = TestHilfe.standard();
+        assertEquals(3, r.indexVon("Dorn"), "Dorn steht ganz hinten an Index 3 - wird das letzte Element geprueft?");
+        assertEquals(-1, r.indexVon("Zora"), "Zora steht nicht in der Liste: indexVon muss -1 liefern");
+    }
+
+    @Test
+    public void erweiterung_indexVon_erstesVorkommen() {
+        String[] namen = {"Brann", "Aria", "Cyra", "Aria"};
+        int[] punkte = {800, 1200, 1500, 700};
+        Rangliste r = TestHilfe.liste(10, namen, punkte);
+        assertEquals(1, r.indexVon("Aria"), "Aria kommt an Index 1 und 3 vor: gesucht ist das ERSTE Vorkommen (Index 1)");
+    }
+
+    @Test
+    public void erweiterung_durchschnitt() {
+        String[] namen = {"Aria", "Brann", "Cyra", "Dorn"};
+        int[] punkte = {100, 200, 250, 125};
+        Rangliste r = TestHilfe.liste(10, namen, punkte);
+        assertEquals(168.75, r.durchschnitt(), "(100 + 200 + 250 + 125) / 4 = 168.75 - Vorsicht: Ganzzahl / Ganzzahl rechnet ganzzahlig (168)!");
+    }
+
+    @Test
+    public void erweiterung_leereListe() {
+        Rangliste r = new Rangliste(5);
+        assertEquals(-1, r.hoechstePunktzahl(), "Leere Liste: hoechstePunktzahl() muss -1 liefern");
+        assertTrue(r.besterEintrag() == null, "Leere Liste: besterEintrag() muss null liefern");
+        assertEquals(0, r.anzahlUeber(0), "Leere Liste: anzahlUeber muss 0 liefern");
+        assertEquals(-1, r.indexVon("Aria"), "Leere Liste: indexVon muss -1 liefern - Vorsicht vor null-Eintraegen!");
+        assertEquals(0.0, r.durchschnitt(), "Leere Liste: durchschnitt() muss 0.0 liefern - teile nie durch 0");
+    }
+
+    @Test
+    public void experte_besterEintrag_gleichstand() {
+        String[] namen = {"Brann", "Cyra", "Aria", "Elin"};
+        int[] punkte = {800, 1500, 1200, 1500};
+        Rangliste r = TestHilfe.liste(10, namen, punkte);
+        assertTrue(r.besterEintrag() == r.getEintrag(1), "Cyra und Elin haben beide 1500 Punkte: bei Gleichstand muss der ERSTE (Cyra) geliefert werden (> statt >=)");
+    }
+
+    @Test
+    public void experte_negativePunkte() {
+        // Strafpunkte: Wer in eine Falle laeuft, kann negative Punkte haben.
+        String[] namen = {"Brann", "Dorn", "Elin"};
+        int[] punkte = {-50, -20, -80};
+        Rangliste r = TestHilfe.liste(10, namen, punkte);
+        assertEquals(-20, r.hoechstePunktzahl(), "Alle Punkte negativ (-50, -20, -80): Maximum ist -20 - starte nicht mit max = 0, sondern mit dem ersten Eintrag");
+        assertTrue(r.besterEintrag() == r.getEintrag(1), "Alle Punkte negativ: Dorn (-20) ist der beste Eintrag - starte nicht mit 0 bzw. null");
+        assertEquals(2, r.anzahlUeber(-60), "Ueber -60 liegen -50 und -20: 2 Eintraege");
+        assertEquals(-50.0, r.durchschnitt(), "(-50 - 20 - 80) / 3 = -50.0");
+    }
+
+    @Test
+    public void experte_volleListeUnveraendert() {
+        // Kapazitaet 4, genau 4 Eintraege: die Reihung ist VOLL.
+        String[] namen = {"Aria", "Brann", "Cyra", "Dorn"};
+        int[] punkte = {1200, 800, 1500, 950};
+        Rangliste r = TestHilfe.liste(4, namen, punkte);
+        assertEquals(1500, r.hoechstePunktzahl(), "Volle Liste: hoechstePunktzahl() muss 1500 liefern (Index-Grenze anzahl - 1!)");
+        assertTrue(r.besterEintrag() == r.getEintrag(2), "Volle Liste: Cyra ist der beste Eintrag");
+        assertEquals(2, r.anzahlUeber(1000), "Volle Liste: ueber 1000 liegen Aria und Cyra");
+        assertEquals(3, r.indexVon("Dorn"), "Volle Liste: Dorn steht an Index 3");
+        assertEquals(1112.5, r.durchschnitt(), "Volle Liste: (1200 + 800 + 1500 + 950) / 4 = 1112.5");
+        assertFalse(r.hatDoppelteNamen(), "Volle Liste: keine doppelten Namen");
+        assertEquals("Aria,Brann,Cyra,Dorn", TestHilfe.namen(r), "Die Standardbausteine duerfen die Liste NICHT veraendern (Reihenfolge gleich lassen)");
+        assertEquals(4, r.getAnzahl(), "Die Standardbausteine duerfen die Anzahl nicht veraendern");
+    }
+
+    @Test
+    public void experte_indexVonMitEquals() {
+        Rangliste r = TestHilfe.standard();
+        String teil = "Cy";
+        String gesucht = teil + "ra";
+        assertEquals(2, r.indexVon(gesucht), "indexVon muss Zeichenketten mit equals vergleichen, nicht mit ==");
+        assertEquals(-1, r.indexVon("Cyr"), "Gesucht ist der exakte Name: 'Cyr' ist nicht 'Cyra'");
+        assertEquals(-1, r.indexVon("cyra"), "Gross- und Kleinschreibung zaehlt: 'cyra' ist nicht 'Cyra'");
+    }
+
+    @Test
+    public void experte_hatDoppelteNamen_ja() {
+        String[] namen = {"Aria", "Brann", "Cyra", "Aria"};
+        int[] punkte = {1200, 800, 1500, 700};
+        Rangliste r = TestHilfe.liste(10, namen, punkte);
+        assertTrue(r.hatDoppelteNamen(), "Aria steht an Index 0 und 3: hatDoppelteNamen() muss true liefern");
+        assertFalse(TestHilfe.standard().hatDoppelteNamen(), "Standardliste: alle Namen verschieden - vergleichst du einen Eintrag mit sich selbst?");
+    }
+
+    @Test
+    public void experte_hatDoppelteNamen_randfaelle() {
+        String[] namen = {"Aria", "Brann", "Cyra", "Cyra"};
+        int[] punkte = {1200, 800, 1500, 700};
+        Rangliste r = TestHilfe.liste(10, namen, punkte);
+        assertTrue(r.hatDoppelteNamen(), "Cyra steht an Index 2 und 3 (die letzten beiden): hatDoppelteNamen() muss true liefern");
+        assertFalse(new Rangliste(5).hatDoppelteNamen(), "Leere Liste: keine doppelten Namen");
+        String[] namen2 = {"Aria", "Brann"};
+        int[] punkte2 = {900, 900};
+        assertFalse(TestHilfe.liste(10, namen2, punkte2).hatDoppelteNamen(), "Gleiche Punkte sind keine doppelten NAMEN");
+        String teil = "Ar";
+        Rangliste r3 = new Rangliste(5);
+        r3.hinzufuegen(new Eintrag("Aria", 100, 60));
+        r3.hinzufuegen(new Eintrag(teil + "ia", 200, 70));
+        assertTrue(r3.hatDoppelteNamen(), "Namen mit equals vergleichen: 'Aria' und ein zur Laufzeit gebautes 'Aria' sind gleich");
+    }
+}
+
+
+// ================= Level 2.2 – Sortieren (DS 14) ======================
+
+class L22SortierTest {
+
+    // Die Sortier-Liste (Kapazitaet 10, also NICHT voll):
+    //   Aria 1200, Brann 800, Cyra 1500, Dorn 950, Elin 600
+    // Absteigend sortiert: Cyra, Aria, Dorn, Brann, Elin
+    private Rangliste sortierListe() {
+        String[] namen = {"Aria", "Brann", "Cyra", "Dorn", "Elin"};
+        int[] punkte = {1200, 800, 1500, 950, 600};
+        return TestHilfe.liste(10, namen, punkte);
+    }
+
+    // n = 6, bereits ABSTEIGEND sortiert (bester Fall)
+    private Rangliste absteigend6() {
+        String[] namen = {"A", "B", "C", "D", "E", "F"};
+        int[] punkte = {60, 50, 40, 30, 20, 10};
+        return TestHilfe.liste(10, namen, punkte);
+    }
+
+    // n = 6, AUFSTEIGEND sortiert (fuer die Rangliste der schlechteste Fall)
+    private Rangliste aufsteigend6() {
+        String[] namen = {"A", "B", "C", "D", "E", "F"};
+        int[] punkte = {10, 20, 30, 40, 50, 60};
+        return TestHilfe.liste(10, namen, punkte);
+    }
+
+    @Test
+    public void basis_istSortiert() {
+        String[] namen = {"Cyra", "Aria", "Dorn", "Brann"};
+        int[] punkte = {1500, 1200, 950, 800};
+        assertTrue(TestHilfe.liste(10, namen, punkte).istSortiert(), "1500, 1200, 950, 800 ist absteigend sortiert");
+        assertFalse(TestHilfe.standard().istSortiert(), "1200, 800, 1500, 950 ist NICHT absteigend sortiert");
+    }
+
+    @Test
+    public void basis_selectionSort() {
+        Rangliste r = sortierListe();
+        r.selectionSort();
+        assertEquals("Cyra,Aria,Dorn,Brann,Elin", TestHilfe.namen(r), "selectionSort muss absteigend nach Punkten sortieren (Platz 1 = meiste Punkte)");
+        assertEquals(5, r.getAnzahl(), "Beim Sortieren darf kein Eintrag verloren gehen");
+    }
+
+    @Test
+    public void basis_insertionSort() {
+        Rangliste r = sortierListe();
+        r.insertionSort();
+        assertEquals("Cyra,Aria,Dorn,Brann,Elin", TestHilfe.namen(r), "insertionSort muss absteigend nach Punkten sortieren (Platz 1 = meiste Punkte)");
+        assertEquals(5, r.getAnzahl(), "Beim Sortieren darf kein Eintrag verloren gehen");
+    }
+
+    @Test
+    public void basis_bubbleSort() {
+        Rangliste r = sortierListe();
+        r.bubbleSort();
+        assertEquals("Cyra,Aria,Dorn,Brann,Elin", TestHilfe.namen(r), "bubbleSort muss absteigend nach Punkten sortieren (Platz 1 = meiste Punkte)");
+        assertEquals(5, r.getAnzahl(), "Beim Sortieren darf kein Eintrag verloren gehen");
+    }
+
+    @Test
+    public void erweiterung_istSortiert_randfaelle() {
+        assertTrue(new Rangliste(5).istSortiert(), "Eine leere Liste gilt als sortiert");
+        String[] n1 = {"Aria"};
+        int[] p1 = {500};
+        assertTrue(TestHilfe.liste(5, n1, p1).istSortiert(), "Eine Liste mit nur einem Eintrag gilt als sortiert");
+        String[] n2 = {"Aria", "Brann", "Cyra"};
+        int[] p2 = {900, 900, 500};
+        assertTrue(TestHilfe.liste(5, n2, p2).istSortiert(), "900, 900, 500 ist sortiert - gleiche Nachbarn sind erlaubt");
+        int[] p3 = {900, 800, 850};
+        assertFalse(TestHilfe.liste(5, n2, p3).istSortiert(), "900, 800, 850 ist NICHT sortiert - wird auch das letzte Paar geprueft?");
+        int[] p4 = {900, 800, 700};
+        assertTrue(TestHilfe.liste(3, n2, p4).istSortiert(), "Volle Liste 900, 800, 700 ist sortiert - Vorsicht mit eintraege[i + 1] am Ende!");
+    }
+
+    @Test
+    public void erweiterung_istSortiert_zaehltNicht() {
+        Rangliste r = absteigend6();
+        assertTrue(r.istSortiert(), "60, 50, 40, 30, 20, 10 ist absteigend sortiert");
+        assertEquals(0, r.getVergleiche(), "istSortiert vergleicht direkt mit getPunkte() und NICHT ueber besser(...) - es zaehlt keine Vergleiche");
+    }
+
+    @Test
+    public void erweiterung_selectionSort_vergleiche() {
+        Rangliste r = sortierListe();
+        r.selectionSort();
+        assertEquals(10, r.getVergleiche(), "selectionSort bei n = 5: genau n(n-1)/2 = 4 + 3 + 2 + 1 = 10 Vergleiche ueber besser(...)");
+        Rangliste s = absteigend6();
+        s.selectionSort();
+        assertEquals(15, s.getVergleiche(), "selectionSort bei n = 6 (schon sortiert): trotzdem genau 6 * 5 / 2 = 15 Vergleiche");
+    }
+
+    @Test
+    public void erweiterung_insertionSort_besterFall() {
+        Rangliste r = absteigend6();
+        r.insertionSort();
+        assertEquals("A,B,C,D,E,F", TestHilfe.namen(r), "Eine schon sortierte Liste bleibt unveraendert");
+        assertEquals(5, r.getVergleiche(), "insertionSort bei sortierter Liste (n = 6): genau n - 1 = 5 Vergleiche - bricht deine innere Schleife ab?");
+        assertEquals(0, r.getVertauschungen(), "insertionSort bei sortierter Liste: 0 Vertauschungen");
+    }
+
+    @Test
+    public void erweiterung_bubbleSort_besterFall() {
+        Rangliste r = absteigend6();
+        r.bubbleSort();
+        assertEquals("A,B,C,D,E,F", TestHilfe.namen(r), "Eine schon sortierte Liste bleibt unveraendert");
+        assertEquals(5, r.getVergleiche(), "bubbleSort bei sortierter Liste (n = 6): genau n - 1 = 5 Vergleiche - Abbruch, wenn ein Durchlauf ohne Vertauschung blieb!");
+        assertEquals(0, r.getVertauschungen(), "bubbleSort bei sortierter Liste: 0 Vertauschungen");
+    }
+
+    @Test
+    public void erweiterung_einfuegenSortiert_mitte() {
+        String[] namen = {"Cyra", "Aria", "Brann"};
+        int[] punkte = {90, 70, 50};
+        Rangliste r = TestHilfe.liste(10, namen, punkte);
+        assertTrue(r.einfuegenSortiert(new Eintrag("Neu", 60, 100)), "einfuegenSortiert muss true liefern, wenn Platz ist");
+        assertEquals("Cyra,Aria,Neu,Brann", TestHilfe.namen(r), "60 Punkte gehoeren zwischen 70 und 50");
+        assertEquals(4, r.getAnzahl(), "Nach dem Einfuegen muss anzahl um 1 gestiegen sein");
+    }
+
+    @Test
+    public void erweiterung_einfuegenSortiert_vorneHintenLeer() {
+        Rangliste r = new Rangliste(10);
+        assertTrue(r.einfuegenSortiert(new Eintrag("Brann", 50, 100)), "Einfuegen in die leere Liste muss klappen");
+        assertTrue(r.einfuegenSortiert(new Eintrag("Cyra", 90, 100)), "Einfuegen ganz vorne muss klappen");
+        assertTrue(r.einfuegenSortiert(new Eintrag("Elin", 10, 100)), "Einfuegen ganz hinten muss klappen");
+        assertEquals("Cyra,Brann,Elin", TestHilfe.namen(r), "Neuer Bester (90) nach vorne, neuer Letzter (10) nach hinten");
+        assertEquals("90,50,10", TestHilfe.punkte(r), "Die Punkte muessen absteigend sein");
+    }
+
+    @Test
+    public void erweiterung_einfuegenSortiert_nullUndVoll() {
+        Rangliste r = new Rangliste(3);
+        r.einfuegenSortiert(new Eintrag("Aria", 70, 100));
+        r.einfuegenSortiert(new Eintrag("Brann", 90, 100));
+        assertFalse(r.einfuegenSortiert(null), "einfuegenSortiert(null) muss false liefern - null ist kein Eintrag");
+        assertEquals(2, r.getAnzahl(), "einfuegenSortiert(null) darf anzahl nicht erhoehen");
+        assertTrue(r.einfuegenSortiert(new Eintrag("Cyra", 80, 100)), "Der dritte Eintrag passt noch (Kapazitaet 3)");
+        assertFalse(r.einfuegenSortiert(new Eintrag("Dorn", 100, 100)), "Die Liste ist voll: einfuegenSortiert muss false liefern");
+        assertEquals(3, r.getAnzahl(), "Bei null oder voller Liste darf sich anzahl nicht aendern");
+        assertEquals("Brann,Cyra,Aria", TestHilfe.namen(r), "Bei voller Liste darf nichts verschoben werden");
+    }
+
+    @Test
+    public void experte_selectionSort_vertauschungen() {
+        Rangliste r = aufsteigend6();
+        r.selectionSort();
+        assertEquals("F,E,D,C,B,A", TestHilfe.namen(r), "10, 20, ..., 60 muss zu 60, 50, ..., 10 werden");
+        assertEquals(15, r.getVergleiche(), "Auch im schlechtesten Fall genau 15 Vergleiche");
+        assertEquals(3, r.getVertauschungen(), "Maximum-Auswahl auf 10, 20, 30, 40, 50, 60: nur 3 Vertauschungen - vertausche nur, wenn der Maximum-Index nicht i ist");
+        Rangliste s = absteigend6();
+        s.selectionSort();
+        assertEquals(0, s.getVertauschungen(), "Schon sortiert: selectionSort darf nichts vertauschen (Maximum-Index == i)");
+    }
+
+    @Test
+    public void experte_insertionSort_schlechtesterFall() {
+        Rangliste r = aufsteigend6();
+        r.insertionSort();
+        assertEquals("F,E,D,C,B,A", TestHilfe.namen(r), "10, 20, ..., 60 muss zu 60, 50, ..., 10 werden");
+        assertEquals(15, r.getVergleiche(), "insertionSort im schlechtesten Fall (n = 6): 1 + 2 + 3 + 4 + 5 = 15 Vergleiche");
+        assertEquals(15, r.getVertauschungen(), "insertionSort im schlechtesten Fall (n = 6): 15 Vertauschungen benachbarter Eintraege");
+    }
+
+    @Test
+    public void experte_insertionSort_traceZaehlen() {
+        String[] namen = {"A", "B", "C", "D", "E"};
+        int[] punkte = {50, 80, 30, 90, 70};
+        Rangliste r = TestHilfe.liste(10, namen, punkte);
+        r.insertionSort();
+        assertEquals("90,80,70,50,30", TestHilfe.punkte(r), "50, 80, 30, 90, 70 sortiert: 90, 80, 70, 50, 30");
+        assertEquals(8, r.getVergleiche(), "Trace 50, 80, 30, 90, 70: 1 + 1 + 3 + 3 = 8 Vergleiche (jeder Einfuege-Schritt endet mit einem 'nicht besser' oder am Anfang)");
+        assertEquals(6, r.getVertauschungen(), "Trace 50, 80, 30, 90, 70: 1 + 0 + 3 + 2 = 6 Vertauschungen");
+    }
+
+    @Test
+    public void experte_insertionSort_stabil() {
+        String[] namen = {"A", "B", "C", "D"};
+        int[] punkte = {50, 80, 50, 80};
+        Rangliste r = TestHilfe.liste(10, namen, punkte);
+        r.insertionSort();
+        assertEquals("B,D,A,C", TestHilfe.namen(r), "Stabil: Bei gleichen Punkten bleibt die alte Reihenfolge (B vor D, A vor C) - gleich gute Eintraege nicht tauschen!");
+        assertEquals(3, r.getVertauschungen(), "Gleich gute Eintraege werden nicht vertauscht: genau 3 Vertauschungen");
+    }
+
+    @Test
+    public void experte_bubbleSort_schlechtesterFall() {
+        Rangliste r = aufsteigend6();
+        r.bubbleSort();
+        assertEquals("F,E,D,C,B,A", TestHilfe.namen(r), "10, 20, ..., 60 muss zu 60, 50, ..., 10 werden");
+        assertEquals(15, r.getVertauschungen(), "bubbleSort im schlechtesten Fall (n = 6): 15 Vertauschungen");
+        assertEquals(15, r.getVergleiche(), "bubbleSort im schlechtesten Fall (n = 6): 5 + 4 + 3 + 2 + 1 = 15 Vergleiche - wird die innere Schleife in jedem Durchlauf um 1 kuerzer?");
+    }
+
+    @Test
+    public void experte_bubbleSort_stabil() {
+        String[] namen = {"A", "B", "C", "D"};
+        int[] punkte = {50, 80, 50, 80};
+        Rangliste r = TestHilfe.liste(10, namen, punkte);
+        r.bubbleSort();
+        assertEquals("B,D,A,C", TestHilfe.namen(r), "Stabil: Bei gleichen Punkten bleibt die alte Reihenfolge (B vor D, A vor C) - gleich gute Eintraege nicht tauschen!");
+    }
+
+    @Test
+    public void experte_einfuegenSortiert_gleichstand() {
+        String[] namen = {"B", "C", "D"};
+        int[] punkte = {90, 80, 70};
+        Rangliste r = TestHilfe.liste(10, namen, punkte);
+        r.einfuegenSortiert(new Eintrag("Neu", 80, 100));
+        assertEquals("B,C,Neu,D", TestHilfe.namen(r), "Gleichstand: der neue Eintrag (80) kommt HINTER den alten Eintrag mit 80 Punkten");
+        r.einfuegenSortiert(new Eintrag("X", 70, 100));
+        assertEquals("B,C,Neu,D,X", TestHilfe.namen(r), "Gleichstand am Ende: X (70) kommt hinter D (70)");
+    }
+
+    @Test
+    public void experte_einfuegenSortiert_ohneVertausche() {
+        String[] namen = {"B", "C", "D"};
+        int[] punkte = {90, 80, 70};
+        Rangliste r = TestHilfe.liste(10, namen, punkte);
+        r.einfuegenSortiert(new Eintrag("Neu", 100, 100));
+        assertEquals("Neu,B,C,D", TestHilfe.namen(r), "100 Punkte gehoeren ganz nach vorne");
+        assertEquals(0, r.getVertauschungen(), "einfuegenSortiert schiebt Eintraege nach rechts (eintraege[i] = eintraege[i - 1]) - ohne vertausche(...)");
+        assertTrue(r.getVergleiche() > 0, "einfuegenSortiert muss Eintraege ueber besser(...) vergleichen");
+    }
+
+    @Test
+    public void experte_sortieren_leerUndEinEintrag() {
+        Rangliste leer = new Rangliste(5);
+        leer.selectionSort();
+        leer.insertionSort();
+        leer.bubbleSort();
+        assertEquals(0, leer.getVergleiche(), "Eine leere Liste sortieren: 0 Vergleiche und kein Absturz");
+        String[] namen = {"Aria"};
+        int[] punkte = {500};
+        Rangliste eins = TestHilfe.liste(1, namen, punkte);
+        eins.selectionSort();
+        eins.insertionSort();
+        eins.bubbleSort();
+        assertEquals(0, eins.getVergleiche(), "Eine Liste mit einem Eintrag sortieren: 0 Vergleiche und kein Absturz");
+        assertEquals("Aria", TestHilfe.namen(eins), "Der eine Eintrag bleibt erhalten");
+    }
+
+    @Test
+    public void experte_volleListeUndEinfuegenGleichSortieren() {
+        String[] namen = {"Aria", "Brann", "Cyra", "Dorn", "Elin"};
+        int[] punkte = {1200, 800, 1500, 950, 600};
+        Rangliste a = TestHilfe.liste(5, namen, punkte);
+        Rangliste b = TestHilfe.liste(5, namen, punkte);
+        Rangliste c = TestHilfe.liste(5, namen, punkte);
+        a.selectionSort();
+        b.insertionSort();
+        c.bubbleSort();
+        assertEquals("Cyra,Aria,Dorn,Brann,Elin", TestHilfe.namen(a), "selectionSort mit VOLLER Liste (Kapazitaet 5) - Index-Grenzen pruefen!");
+        assertEquals("Cyra,Aria,Dorn,Brann,Elin", TestHilfe.namen(b), "insertionSort mit VOLLER Liste (Kapazitaet 5) - Index-Grenzen pruefen!");
+        assertEquals("Cyra,Aria,Dorn,Brann,Elin", TestHilfe.namen(c), "bubbleSort mit VOLLER Liste (Kapazitaet 5) - Index-Grenzen pruefen!");
+        Rangliste d = new Rangliste(5);
+        for (int i = 0; i < namen.length; i++) {
+            d.einfuegenSortiert(new Eintrag(namen[i], punkte[i], 100));
+        }
+        assertEquals("Cyra,Aria,Dorn,Brann,Elin", TestHilfe.namen(d), "Fuenfmal einfuegenSortiert in eine leere Liste ergibt ebenfalls die sortierte Rangliste");
+    }
+}
+
+
+// ================ Level 2.3 – Suchen (DS 16) =========================
+
+class L23SucheTest {
+
+    // Aufsteigend sortiert, n = 9:
+    //   Index: 0  1   2   3   4   5   6   7   8
+    //   Wert:  3  8  15  23  42  57  61  77  90
+    private int[] neun() {
+        int[] r = {3, 8, 15, 23, 42, 57, 61, 77, 90};
+        return r;
+    }
+
+    // Aufsteigend sortiert: 0, 2, 4, ..., 2 * (n - 1)
+    private int[] geradeZahlen(int n) {
+        int[] r = new int[n];
+        for (int i = 0; i < n; i++) {
+            r[i] = 2 * i;
+        }
+        return r;
+    }
+
+    // groesste Durchlaufzahl von binaer ueber alle Werte 0, 1, ..., 2n
+    // (also alle vorhandenen UND alle fehlenden Werte)
+    private int maxDurchlaeufe(int[] r) {
+        int max = 0;
+        for (int x = -1; x <= 2 * r.length; x++) {
+            Suche.binaer(r, x);
+            if (Suche.durchlaeufe > max) {
+                max = Suche.durchlaeufe;
+            }
+        }
+        return max;
+    }
+
+    @Test
+    public void basis_linear() {
+        int[] r = {3, 8, 15, 23, 42};
+        assertEquals(2, Suche.linear(r, 15), "linear({3, 8, 15, 23, 42}, 15) muss 2 liefern");
+        assertEquals(0, Suche.linear(r, 3), "linear({3, 8, 15, 23, 42}, 3) muss 0 liefern");
+        assertEquals(-1, Suche.linear(r, 50), "50 kommt nicht vor: linear muss -1 liefern");
+    }
+
+    @Test
+    public void basis_binaer_gefunden() {
+        int[] r = neun();
+        assertEquals(4, Suche.binaer(r, 42), "binaer(..., 42) muss 4 liefern - 42 steht genau in der Mitte");
+        assertEquals(6, Suche.binaer(r, 61), "binaer(..., 61) muss 6 liefern");
+    }
+
+    @Test
+    public void basis_binaer_nichtGefunden() {
+        int[] r = neun();
+        assertEquals(1, Suche.binaer(r, 8), "binaer(..., 8) muss 1 liefern");
+        assertEquals(-1, Suche.binaer(r, 50), "50 kommt nicht vor: binaer muss -1 liefern (und terminieren!)");
+    }
+
+    @Test
+    public void erweiterung_linear_durchlaeufe() {
+        int[] r = {3, 8, 15, 23, 42};
+        Suche.linear(r, 15);
+        assertEquals(3, Suche.durchlaeufe, "linear nach 15: 3, 8, 15 geprueft -> durchlaeufe = 3");
+        Suche.linear(r, 50);
+        assertEquals(5, Suche.durchlaeufe, "linear nach 50 (fehlt): alle 5 Elemente geprueft -> durchlaeufe = 5 (zu Beginn auf 0 setzen!)");
+    }
+
+    @Test
+    public void erweiterung_linear_erstesUndLetztes() {
+        int[] r = {4, 7, 7, 9};
+        assertEquals(1, Suche.linear(r, 7), "7 steht an Index 1 und 2: linear muss das ERSTE Vorkommen liefern");
+        assertEquals(3, Suche.linear(r, 9), "9 steht ganz hinten an Index 3 - wird das letzte Element geprueft?");
+    }
+
+    @Test
+    public void erweiterung_binaer_raender() {
+        int[] r = neun();
+        assertEquals(0, Suche.binaer(r, 3), "Das erste Element (3) muss gefunden werden: Index 0");
+        assertEquals(8, Suche.binaer(r, 90), "Das letzte Element (90) muss gefunden werden: Index 8");
+        assertEquals(-1, Suche.binaer(r, 1), "1 ist kleiner als alle Elemente: -1");
+        assertEquals(-1, Suche.binaer(r, 100), "100 ist groesser als alle Elemente: -1");
+        int[] eins = {7};
+        assertEquals(0, Suche.binaer(eins, 7), "Reihung mit einem Element {7}: 7 steht an Index 0 - Schleifenbedingung lo <= hi!");
+    }
+
+    @Test
+    public void erweiterung_binaer_traceDurchlaeufe() {
+        int[] r = neun();
+        Suche.binaer(r, 61);
+        assertEquals(2, Suche.durchlaeufe, "Trace nach 61: mid = 4 (42), dann mid = 6 (61) -> 2 Durchlaeufe");
+        Suche.binaer(r, 3);
+        assertEquals(3, Suche.durchlaeufe, "Trace nach 3: mid = 4, 1, 0 -> 3 Durchlaeufe");
+        Suche.binaer(r, 90);
+        assertEquals(4, Suche.durchlaeufe, "Trace nach 90: mid = 4, 6, 7, 8 -> 4 Durchlaeufe");
+        Suche.binaer(r, 50);
+        assertEquals(3, Suche.durchlaeufe, "Trace nach 50 (fehlt): mid = 4, 6, 5, dann lo > hi -> 3 Durchlaeufe");
+    }
+
+    @Test
+    public void erweiterung_leereReihung() {
+        int[] leer = new int[0];
+        int[] r = {5};
+        assertEquals(0, Suche.linear(r, 5), "linear({5}, 5) muss 0 liefern");
+        assertEquals(-1, Suche.linear(leer, 5), "Leere Reihung: linear muss -1 liefern");
+        assertEquals(0, Suche.durchlaeufe, "Leere Reihung: 0 Durchlaeufe bei linear");
+        assertEquals(-1, Suche.binaer(leer, 5), "Leere Reihung: binaer muss -1 liefern");
+        assertEquals(0, Suche.durchlaeufe, "Leere Reihung: 0 Durchlaeufe bei binaer");
+    }
+
+    @Test
+    public void experte_binaer_hundertElemente() {
+        int[] r = geradeZahlen(100);
+        for (int i = 0; i < 100; i++) {
+            assertEquals(i, Suche.binaer(r, 2 * i), "binaer muss " + (2 * i) + " an Index " + i + " finden");
+            assertTrue(Suche.durchlaeufe <= 7, "n = 100: hoechstens 7 Durchlaeufe (2^7 = 128 > 100) - beim Suchen nach " + (2 * i) + " waren es " + Suche.durchlaeufe);
+        }
+        assertEquals(-1, Suche.binaer(r, 101), "101 (ungerade) kommt nicht vor: -1");
+        assertEquals(7, maxDurchlaeufe(r), "n = 100: die laengste Suche braucht genau 7 Durchlaeufe");
+    }
+
+    @Test
+    public void experte_binaer_verdopplung() {
+        assertEquals(6, maxDurchlaeufe(geradeZahlen(50)), "n = 50: hoechstens 6 Durchlaeufe");
+        assertEquals(7, maxDurchlaeufe(geradeZahlen(100)), "n = 100: hoechstens 7 Durchlaeufe");
+        assertEquals(8, maxDurchlaeufe(geradeZahlen(200)), "Verdopplung n = 200: nur EIN Durchlauf mehr, also 8");
+    }
+
+    @Test
+    public void experte_binaer_alleGleich() {
+        int[] r = {5, 5, 5, 5, 5};
+        int i = Suche.binaer(r, 5);
+        assertTrue(i >= 0 && i < 5, "Alle Werte sind 5: binaer muss einen gueltigen Index liefern");
+        assertEquals(1, Suche.durchlaeufe, "Alle Werte sind 5: schon der erste mittlere Wert passt -> 1 Durchlauf");
+    }
+
+    @Test
+    public void experte_einfuegeposition() {
+        int[] r = {10, 20, 20, 30};
+        assertEquals(0, Suche.einfuegeposition(r, 5), "5 ist kleiner als alles: Position 0");
+        assertEquals(0, Suche.einfuegeposition(r, 10), "10: kleinster Index mit r[i] >= 10 ist 0");
+        assertEquals(1, Suche.einfuegeposition(r, 20), "20: kleinster Index mit r[i] >= 20 ist 1 (vor den gleichen Werten)");
+        assertEquals(3, Suche.einfuegeposition(r, 25), "25: kleinster Index mit r[i] >= 25 ist 3");
+        assertEquals(3, Suche.einfuegeposition(r, 30), "30: kleinster Index mit r[i] >= 30 ist 3");
+        assertEquals(4, Suche.einfuegeposition(r, 35), "35 ist groesser als alles: Position r.length = 4");
+    }
+
+    @Test
+    public void experte_einfuegeposition_leerUndBinaer() {
+        assertEquals(0, Suche.einfuegeposition(new int[0], 7), "Leere Reihung: Einfuegeposition 0");
+        int[] r = geradeZahlen(100);
+        assertEquals(100, Suche.einfuegeposition(r, 199), "199 ist groesser als alles (bis 198): Position 100");
+        assertEquals(51, Suche.einfuegeposition(r, 101), "101: kleinster Index mit r[i] >= 101 ist 51 (r[51] = 102)");
+        assertTrue(Suche.durchlaeufe >= 1 && Suche.durchlaeufe <= 7, "einfuegeposition soll BINAER suchen und durchlaeufe zaehlen: bei n = 100 hoechstens 7 Durchlaeufe (waren " + Suche.durchlaeufe + ")");
+    }
+}
+
+// =====================================================================
+//  HÄUFIGE SCHÜLERFEHLER (Lehrerhinweise) – in Klammern der Test, der
+//  den Fehler aufdeckt (diese Zuordnungen sind per Mutationstest geprueft)
+// =====================================================================
+//
+//  Level 2.1 – Standardbausteine
+//  - Schleife bis eintraege.length statt bis anzahl -> NullPointer-
+//    Exception an den leeren Plaetzen (basis_hoechstePunktzahl u. a.).
+//  - Off-by-one: "i <= anzahl" (Indexfehler/null) bzw. "i < anzahl - 1"
+//    (letzter Eintrag fehlt: erweiterung_maximumAmAnfangUndAmEnde,
+//    erweiterung_indexVon_letzterUndFehlender).
+//  - max mit 0 initialisiert (bzw. bester = null und Vergleich mit 0) ->
+//    bei negativen Punkten falsch (experte_negativePunkte), bei leerer
+//    Liste 0 statt -1 (erweiterung_leereListe). Richtig: mit dem ersten
+//    Eintrag starten, Leer-Abfrage davor.
+//  - besterEintrag mit ">=" -> bei Gleichstand der LETZTE
+//    (experte_besterEintrag_gleichstand).
+//  - anzahlUeber mit ">=" (erweiterung_anzahlUeber_grenzeGenau).
+//  - indexVon: "else return -1;" in der Schleife -> nur der erste Eintrag
+//    wird geprueft; ohne sofortiges return wird das LETZTE Vorkommen
+//    geliefert (erweiterung_indexVon_erstesVorkommen); contains statt
+//    equals findet "Cyr" (experte_indexVonMitEquals).
+//  - == statt equals: In der Online-IDE GRUEN (sie vergleicht mit ==
+//    inhaltlich), in echtem Java und im Abitur falsch. Die Tests
+//    experte_indexVonMitEquals und experte_hatDoppelteNamen_randfaelle
+//    bauen den Namen zur Laufzeit zusammen und wuerden in echtem Java
+//    rot - in der Online-IDE also im Code-Review pruefen!
+//  - durchschnitt: "summe / anzahl" oder "(double) (summe / anzahl)" ->
+//    ganzzahlige Division (168 statt 168.75, erweiterung_durchschnitt);
+//    ohne Leer-Abfrage Division durch 0 (erweiterung_leereListe).
+//  - hatDoppelteNamen: innere Schleife ab j = i -> jeder Eintrag ist
+//    sein eigenes Duplikat, immer true (experte_hatDoppelteNamen_ja);
+//    innere Schleife bis anzahl - 1 -> letztes Paar fehlt
+//    (experte_hatDoppelteNamen_randfaelle).
+//
+//  Level 2.2 – Sortieren
+//  - istSortiert mit "<=" statt "<" -> gleiche Nachbarn gelten als
+//    unsortiert; Schleife bis anzahl - 1 einschliesslich -> Zugriff auf
+//    eintraege[anzahl] (erweiterung_istSortiert_randfaelle); istSortiert
+//    ueber besser(...) -> zaehlt mit (erweiterung_istSortiert_zaehltNicht).
+//  - Sortierrichtung vertauscht (aufsteigend statt absteigend) - alle
+//    basis_-Tests zeigen die Reihenfolge, z. B. "erwartet: Cyra,Aria,...".
+//  - Selectionsort: innere Schleife ab j = i (zusaetzliche Vergleiche,
+//    erweiterung_selectionSort_vergleiche); Tausch IN der inneren
+//    Schleife (= kein Selectionsort, zu viele Vertauschungen) oder
+//    Tausch auch bei maxIndex == i (experte_selectionSort_vertauschungen).
+//  - Insertionsort: Bedingung "besser(...) && j > 0" in falscher
+//    Reihenfolge -> besser(eintraege[0], eintraege[-1]) -> Indexfehler.
+//    Kein Abbruch der inneren Schleife -> bester Fall 15 statt 5
+//    Vergleiche (erweiterung_insertionSort_besterFall). Bedingung
+//    "!besser(eintraege[j - 1], eintraege[j])" tauscht gleich gute
+//    Eintraege -> nicht stabil (experte_insertionSort_stabil).
+//    Vergleich direkt ueber getPunkte() -> Zaehler bleibt 0.
+//  - Bubblesort: ohne Abbruch (erweiterung_bubbleSort_besterFall), innere
+//    Schleife nicht verkuerzt (experte_bubbleSort_schlechtesterFall),
+//    "j < anzahl - durchlauf" -> eintraege[j + 1] ist null; getauscht
+//    nie auf true gesetzt -> nur ein Durchlauf.
+//  - einfuegenSortiert: Schleife "!besser(eintraege[i - 1], e)" setzt e
+//    VOR gleich gute Eintraege (experte_einfuegenSortiert_gleichstand);
+//    Voll- oder null-Abfrage fehlt (erweiterung_einfuegenSortiert_
+//    nullUndVoll); anzahl++ vergessen; Verschieben mit vertausche
+//    (experte_einfuegenSortiert_ohneVertausche); Schieben von vorn nach
+//    hinten statt von hinten nach vorn -> Eintraege werden ueberschrieben.
+//
+//  Level 2.3 – Suchen
+//  - durchlaeufe nicht zu Beginn auf 0 gesetzt -> Werte summieren sich
+//    (erweiterung_linear_durchlaeufe).
+//  - Lineare Suche ohne sofortiges return -> letztes Vorkommen
+//    (erweiterung_linear_erstesUndLetztes).
+//  - Binaere Suche mit "while (lo < hi)" -> Reihung {7} oder das letzte
+//    Element wird nicht gefunden (erweiterung_binaer_raender).
+//  - "hi = mid" statt "hi = mid - 1" bei lo <= hi -> ENDLOSSCHLEIFE bei
+//    fehlenden Werten: Der Testrunner der Online-IDE haengt dann - Tests
+//    einzeln starten lassen und den Trace auf Papier machen!
+//  - Fehlende Abbruchbedingung (Treffer nur gemerkt, nicht return) ->
+//    zu viele Durchlaeufe (erweiterung_binaer_traceDurchlaeufe).
+//  - Vergleich r[mid] < x und r[mid] > x vertauscht -> sucht in der
+//    falschen Haelfte (basis_binaer_gefunden).
+//  - einfuegeposition: hi = r.length - 1 -> fuer x groesser als alle
+//    falsch; "<=" statt "<" -> Position HINTER gleichen Werten
+//    (experte_einfuegeposition); lineare statt binaerer Suche
+//    (experte_einfuegeposition_leerUndBinaer).
+//
+//  ABI-BEZUG
+//  - Trace Insertionsort (absteigend), 50 80 30 90 70 - Zustand nach
+//    jedem aeusseren Durchlauf (Testfall experte_insertionSort_traceZaehlen):
+//        i   Reihung              Vergl.  Vert.   (kumuliert)
+//        1   80 50 30 90 70         1       1
+//        2   80 50 30 90 70         2       1
+//        3   90 80 50 30 70         5       4
+//        4   90 80 70 50 30         8       6
+//  - Dieselbe Eingabe mit Bubblesort (mit Abbruch, Verkuerzung):
+//        nach Durchlauf 1: 80 50 90 70 30  (4 Vergl., 3 Vert.)
+//        nach Durchlauf 2: 80 90 70 50 30  (7 Vergl., 5 Vert.)
+//        nach Durchlauf 3: 90 80 70 50 30  (9 Vergl., 6 Vert.)
+//        Durchlauf 4 ohne Tausch -> Abbruch (10 Vergl., 6 Vert.)
+//    Mit Selectionsort: 10 Vergleiche (immer n(n-1)/2), 2 Vertauschungen.
+//    Merke: Bubble- und Insertionsort tauschen gleich oft (6 = Zahl der
+//    Fehlstaende), Selectionsort tauscht hoechstens n - 1 Mal.
+//  - Trace Selectionsort (Maximum-Auswahl) auf 10 20 30 40 50 60:
+//        i = 0: 60 20 30 40 50 10   i = 1: 60 50 30 40 20 10
+//        i = 2: 60 50 40 30 20 10   i = 3, 4: kein Tausch
+//        -> 15 Vergleiche, nur 3 Vertauschungen (n/2 bei umgekehrter Liste)
+//  - Vergleiche zaehlen (n Eintraege):
+//        Selectionsort                immer          n(n-1)/2
+//        Insertion-/Bubblesort+       bester Fall    n - 1   (schon sortiert)
+//                                     schlechtester  n(n-1)/2 (umgekehrt)
+//        n = 6: 15 · n = 40: 780 · n = 100: 4950 · n = 200: 19900
+//    Verdopplung: n(n-1)/2 wird etwa VIERmal so gross (4950 -> 19900),
+//    der beste Fall n - 1 nur doppelt so gross.
+//  - Trace binaere Suche nach 50 in 3 8 15 23 42 57 61 77 90:
+//        lo  hi  mid  r[mid]
+//        0   8   4    42      42 < 50 -> lo = 5
+//        5   8   6    61      61 > 50 -> hi = 5
+//        5   5   5    57      57 > 50 -> hi = 4
+//        lo > hi -> -1 nach 3 Durchlaeufen
+//  - Maximale Durchlaeufe der binaeren Suche: floor(log2 n) + 1, also
+//    n = 100 -> 7 (2^6 = 64 <= 100 < 128 = 2^7), n = 200 -> 8.
+//    Verdopplung -> nur EIN Durchlauf mehr (lineare Suche: doppelt so
+//    viele). Begruendung im Abi: "Jeder Durchlauf halbiert den
+//    Suchbereich; nach 7 Halbierungen ist von 100 Elementen hoechstens
+//    eines uebrig."
+//  - Voraussetzung binaere Suche: Reihung SORTIERT - im Abitur oft als
+//    Teilaufgabe "Begruende, warum ... nicht angewendet werden kann".
+//  - Papier-Compiler-Kandidaten: anzahlUeber, indexVon, einfuegenSortiert
+//    und binaer erst handschriftlich, dann unveraendert abtippen.
+//  - Abi-Check: Leer-Abfrage (anzahl == 0) vor dem Zugriff auf
+//    eintraege[0]; Schleifen bis anzahl - 1; Zeichenketten mit equals;
+//    Liste nach den Standardbausteinen unveraendert
+//    (experte_volleListeUnveraendert).
+// =====================================================================
+
+// ---------------------------------------------------------------------
+//  Programmstart – das Hauptprogramm
+// ---------------------------------------------------------------------
+
+// ----- Level 2.1: Die Highscore-Liste des Dungeon-Spiels -----
+Rangliste highscores = new Rangliste(10);
+highscores.hinzufuegen(new Eintrag("Aria", 1200, 95));
+highscores.hinzufuegen(new Eintrag("Brann", 800, 120));
+highscores.hinzufuegen(new Eintrag("Cyra", 1500, 80));
+highscores.hinzufuegen(new Eintrag("Dorn", 950, 110));
+highscores.hinzufuegen(new Eintrag("Elin", 600, 140));
+highscores.hinzufuegen(new Eintrag("Finn", 1100, 101));
+
+println("=== Highscores (Reihenfolge des Eintragens) ===");
+for (int i = 0; i < highscores.getAnzahl(); i++) {
+    println("  " + highscores.getEintrag(i).beschreibung());
+}
+println("Hoechste Punktzahl: " + highscores.hoechstePunktzahl());
+Eintrag bester = highscores.besterEintrag();
+if (bester != null) {
+    println("Bester Eintrag:     " + bester.beschreibung());
+}
+println("Ueber 1000 Punkte:  " + highscores.anzahlUeber(1000));
+println("Index von Dorn:     " + highscores.indexVon("Dorn"));
+println("Durchschnitt:       " + highscores.durchschnitt());
+println("Doppelte Namen?     " + highscores.hatDoppelteNamen());
+
+// ----- Level 2.2: Sortieren und sortiert einfuegen -----
+// Ueberlege ZUERST auf Papier: Wie viele Vergleiche und Vertauschungen
+// braucht insertionSort fuer diese 6 Eintraege? Erst dann starten!
+highscores.zaehlerZuruecksetzen();
+highscores.insertionSort();
+println("");
+println("=== Rangliste nach insertionSort ===");
+for (int i = 0; i < highscores.getAnzahl(); i++) {
+    println("  Platz " + (i + 1) + ": " + highscores.getEintrag(i).beschreibung());
+}
+println("Vergleiche: " + highscores.getVergleiche() + ", Vertauschungen: " + highscores.getVertauschungen());
+println("Sortiert?   " + highscores.istSortiert());
+
+highscores.zaehlerZuruecksetzen();
+highscores.einfuegenSortiert(new Eintrag("Gwen", 1000, 99));
+println("Gwen (1000 Punkte) kommt auf Platz " + (highscores.indexVon("Gwen") + 1)
+        + " - Vergleiche: " + highscores.getVergleiche());
+
+// ----- Level 2.3: Suchen in einer sortierten Punktetabelle -----
+int[] tabelle = {120, 340, 410, 560, 610, 750, 820, 905, 990, 1200};
+println("");
+println("=== Suchen in der Punktetabelle (aufsteigend, n = 10) ===");
+int pos = Suche.linear(tabelle, 820);
+println("lineare Suche nach 820:  Index " + pos + " nach " + Suche.durchlaeufe + " Durchlaeufen");
+pos = Suche.binaer(tabelle, 820);
+println("binaere Suche nach 820:  Index " + pos + " nach " + Suche.durchlaeufe + " Durchlaeufen");
+pos = Suche.binaer(tabelle, 700);
+println("binaere Suche nach 700:  Index " + pos + " nach " + Suche.durchlaeufe + " Durchlaeufen");
+println("700 muesste an Index " + Suche.einfuegeposition(tabelle, 700) + " eingefuegt werden");

@@ -1,0 +1,7451 @@
+{
+ "version": 2,
+ "welt": 0,
+ "titel": "Die Akademie",
+ "farbe": "#7F6000",
+ "levels": [
+  {
+   "id": "W0-L1",
+   "nr": "0.1",
+   "titel": "Das Portal: Notation fürs Abitur",
+   "ds": [
+    1
+   ],
+   "ab": "AB 1 „Das Portal“, Teil B (Notations-Referenz) und Aufgaben 4–7",
+   "ide": "AQ_W0_L0_Diagnose_Geruest.txt – Level 0 „Diagnose“ (Klasse Diagnose; Testklassen DiagnoseBasisTest, DiagnoseErweiterungTest, DiagnoseExperteTest)",
+   "intro": [
+    {
+     "t": "text",
+     "md": "Im Abitur gibt es keinen Compiler: Signaturen, Struktogramme und Tracetabellen schreibst du **von Hand**. Das Portal prüft, ob du die Notation der Ergänzenden Hinweise (EH 2025) sicher liest."
+    },
+    {
+     "t": "hinweis",
+     "md": "**Merke:** Signatur `name(p: Typ): Rückgabetyp` · Typnamen Ganzzahl, Kommazahl, Wahrheitswert, Zeichen, Zeichenkette, nichts, Reihung von … · Struktogramm: Zuweisung mit ←, Vergleich mit =, „gib … zurück“ beendet die Methode · Tracetabelle: eine Spalte je Variable, neue Zeile bei jeder Änderung."
+    }
+   ],
+   "aufgaben": [
+    "W0-L1-01",
+    "W0-L1-02",
+    "W0-L1-03",
+    "W0-L1-04",
+    "W0-L1-05",
+    "W0-L1-06",
+    "W0-L1-07",
+    "W0-L1-08"
+   ]
+  },
+  {
+   "id": "W0-L2",
+   "nr": "0.2",
+   "titel": "Die Werkstatt: Datentypen und Kontrollstrukturen",
+   "ds": [
+    2
+   ],
+   "ab": "AB 2 „Die Werkstatt“ (Infoteile 1–4, Aufgaben 0–8)",
+   "ide": "AQ_W0_Akademie_Geruest.txt – Level 0.2 (Klasse Werkstatt, Testklasse L02WerkstattTest)",
+   "intro": [
+    {
+     "t": "text",
+     "md": "In der Werkstatt wird gerechnet, gewogen und gezählt – und zwar **genau**: In Java ist `7 / 2` nicht 3.5 und `-7 % 2` nicht 1."
+    },
+    {
+     "t": "hinweis",
+     "md": "**Merke:** `/` mit zwei Ganzzahlen rechnet **ganzzahlig** · `%` liefert den Rest (Vorzeichen der linken Zahl) · `(int)` schneidet ab · `(double) a / b` teilt als Kommazahl, `(double) (a / b)` nicht · Zufallszahl von `von` bis `bis`: `(int) (Math.random() * (bis - von + 1)) + von` · Runden (x ≥ 0): `(int) (x + 0.5)` – `Math.round` ist in der Akademie tabu."
+    }
+   ],
+   "aufgaben": [
+    "W0-L2-01",
+    "W0-L2-02",
+    "W0-L2-03",
+    "W0-L2-04",
+    "W0-L2-05",
+    "W0-L2-06",
+    "W0-L2-07",
+    "W0-L2-08"
+   ]
+  },
+  {
+   "id": "W0-L3",
+   "nr": "0.3",
+   "titel": "Die Vorratskammer: Reihungen und Zeichenketten",
+   "ds": [
+    3
+   ],
+   "ab": "AB 3 „Die Vorratskammer“ (Infoteile 1–5, Aufgaben 0–7)",
+   "ide": "AQ_W0_Akademie_Geruest.txt – Level 0.3 (Klasse Vorrat, Testklasse L03VorratTest)",
+   "intro": [
+    {
+     "t": "text",
+     "md": "Eine **Reihung** ist ein Regal mit nummerierten Fächern: ein Name, viele Werte, Index von 0 bis Länge − 1."
+    },
+    {
+     "t": "hinweis",
+     "md": "**Merke:** `r.length` (ohne Klammern), aber `s.length()` · letztes Element `r[r.length - 1]` · ungültiger Index → ArrayIndexOutOfBoundsException · `int[] b = a;` kopiert nur den **Pfeil** (Referenz) · neue Reihung: `new`, Werte einzeln übertragen, zurückgeben · for-each liefert nur Kopien der Werte."
+    }
+   ],
+   "aufgaben": [
+    "W0-L3-01",
+    "W0-L3-02",
+    "W0-L3-03",
+    "W0-L3-04",
+    "W0-L3-05",
+    "W0-L3-06",
+    "W0-L3-07",
+    "W0-L3-08"
+   ]
+  },
+  {
+   "id": "W0-L4",
+   "nr": "0.4",
+   "titel": "Die Zauberschule: Eigene Methoden",
+   "ds": [
+    4
+   ],
+   "ab": "AB 4 „Die Zauberschule“, Teil 1 (Infoteile 1–6, Aufgaben 0–7)",
+   "ide": "AQ_W0_Akademie_Geruest.txt – Level 0.4 (Klasse Zauber, Testklasse L04ZauberTest; Köpfe für Erweiterung/Experte selbst schreiben)",
+   "intro": [
+    {
+     "t": "text",
+     "md": "Jede Zauberformel hat einen **Namen**, braucht **Zutaten** (Parameter) und hat eine **Wirkung** (Rückgabewert). Im Abitur ist jede Implementierung eine Methode mit vorgegebener Signatur."
+    },
+    {
+     "t": "hinweis",
+     "md": "**Merke:** `name(a: Ganzzahl, s: Zeichenkette): Wahrheitswert` ⟷ `public static boolean name(int a, String s)` · Rückgabetyp wandert nach vorn, „nichts“ wird `void` · jeder Parameter mit eigenem Typ · `return` beendet die Methode, **jeder** Ablauf braucht ein `return` · Argumente werden der Reihe nach in die Parameter kopiert."
+    }
+   ],
+   "aufgaben": [
+    "W0-L4-01",
+    "W0-L4-02",
+    "W0-L4-03",
+    "W0-L4-04",
+    "W0-L4-05",
+    "W0-L4-06",
+    "W0-L4-07",
+    "W0-L4-08"
+   ]
+  },
+  {
+   "id": "W0-L5",
+   "nr": "0.5",
+   "titel": "Zauberschule II: Wert und Referenz",
+   "ds": [
+    5
+   ],
+   "ab": "AB 4 „Die Zauberschule“, Teil 2 (Infoteile 7–9, Aufgaben 8–12)",
+   "ide": "AQ_W0_Akademie_Geruest.txt – Level 0.5 (Klasse ZauberII, Testklasse L05ZauberIITest)",
+   "intro": [
+    {
+     "t": "text",
+     "md": "Jetzt bekommen Zauberformeln ganze Reihungen als Zutat – und manche Änderungen sind danach im Hauptprogramm sichtbar, andere nicht."
+    },
+    {
+     "t": "hinweis",
+     "md": "**Merke:** Java übergibt immer eine **Kopie des Werts** der Argumentvariablen. Bei Ganzzahlen ist das die Zahl, bei Reihungen der **Pfeil** (Referenz). Einen Parameter neu belegen (`n = …`, `r = new …`) wirkt nie nach außen; den **Inhalt** einer übergebenen Reihung ändern (`r[i] = …`) wirkt immer nach außen. „liefert eine neue Reihung“ → `new` und zurückgeben; „verändert r“ → `void`."
+    }
+   ],
+   "aufgaben": [
+    "W0-L5-01",
+    "W0-L5-02",
+    "W0-L5-03",
+    "W0-L5-04",
+    "W0-L5-05",
+    "W0-L5-06",
+    "W0-L5-07",
+    "W0-L5-08"
+   ]
+  },
+  {
+   "id": "W0-L6",
+   "nr": "0.6",
+   "titel": "Die Methoden-Werkstatt: Fehlergalerie und Abi-Check",
+   "ds": [
+    6
+   ],
+   "ab": "AB 5 „Die Methoden-Werkstatt“ (Rezept, Fehlergalerie F1–F10, Aufgaben 1–5)",
+   "ide": "AQ_W0_Akademie_Geruest.txt – Papier-Compiler 0 (Klasse Werkstattpruefung, Testklasse PapierCompiler0Test)",
+   "intro": [
+    {
+     "t": "text",
+     "md": "Im Abitur steht nur ein Aufgabentext: „Implementieren Sie die Methode …“. Kein Compiler meldet das fehlende `return`, kein Test die vergessene leere Reihung. Das Rezept: **Lesen und markieren → Signatur → Randfälle → Idee/Struktogramm → Java → Abi-Check → Papier-Compiler.**"
+    },
+    {
+     "t": "hinweis",
+     "md": "**Abi-Check:** Kopf wie gefordert · Rückgabe in jedem Pfad · Leer-Abfrage vor `r[0]` / `charAt(0)` · Grenzen 0 bis length − 1 · Original unverändert, wenn gefordert · Kommazahl ohne ganzzahlige Division · nur erlaubte String-Operationen, `equals`."
+    }
+   ],
+   "aufgaben": [
+    "W0-L6-01",
+    "W0-L6-02",
+    "W0-L6-03",
+    "W0-L6-04",
+    "W0-L6-05",
+    "W0-L6-06",
+    "W0-L6-07",
+    "W0-L6-08"
+   ]
+  }
+ ],
+ "boss": {
+  "id": "W0-BOSS",
+  "titel": "Aufnahmeprüfung: Die Bibliothek der Akademie",
+  "dauerMin": 25,
+  "anzahl": 8,
+  "mix": {
+   "1": 3,
+   "2": 3,
+   "3": 2
+  },
+  "pool": [
+   "W0-B-01",
+   "W0-B-02",
+   "W0-B-03",
+   "W0-B-04",
+   "W0-B-05",
+   "W0-B-06",
+   "W0-B-07",
+   "W0-B-08",
+   "W0-B-09",
+   "W0-B-10",
+   "W0-B-11",
+   "W0-B-12",
+   "W0-B-13",
+   "W0-B-14",
+   "W0-B-15"
+  ]
+ },
+ "aufgaben": [
+  {
+   "id": "W0-L1-01",
+   "titel": "Typnamen-Übersetzer",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Methodenkopf und Signatur",
+   "fallen": [
+    "P3"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Ordne jedem Java-Typ den **Typnamen aus dem Abitur** zu (EH 2025)."
+    }
+   ],
+   "interaktion": {
+    "kind": "match",
+    "elemente": [
+     {
+      "id": "e1",
+      "md": "`int`"
+     },
+     {
+      "id": "e2",
+      "md": "`double`"
+     },
+     {
+      "id": "e3",
+      "md": "`boolean`"
+     },
+     {
+      "id": "e4",
+      "md": "`char`"
+     },
+     {
+      "id": "e5",
+      "md": "`String`"
+     },
+     {
+      "id": "e6",
+      "md": "`int[]`"
+     },
+     {
+      "id": "e7",
+      "md": "`void`"
+     },
+     {
+      "id": "e8",
+      "md": "`String[]`"
+     }
+    ],
+    "kategorien": [
+     {
+      "id": "k1",
+      "md": "Ganzzahl"
+     },
+     {
+      "id": "k2",
+      "md": "Kommazahl"
+     },
+     {
+      "id": "k3",
+      "md": "Wahrheitswert"
+     },
+     {
+      "id": "k4",
+      "md": "Zeichen"
+     },
+     {
+      "id": "k5",
+      "md": "Zeichenkette"
+     },
+     {
+      "id": "k6",
+      "md": "Reihung von Ganzzahl"
+     },
+     {
+      "id": "k7",
+      "md": "nichts"
+     },
+     {
+      "id": "k8",
+      "md": "Reihung von Zeichenkette"
+     }
+    ]
+   },
+   "loesung": {
+    "e1": "k1",
+    "e2": "k2",
+    "e3": "k3",
+    "e4": "k4",
+    "e5": "k5",
+    "e6": "k6",
+    "e7": "k7",
+    "e8": "k8"
+   },
+   "tipps": [
+    "Ein Zeichen steht in einfachen, eine Zeichenkette in doppelten Anführungszeichen."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Die Abi-Typnamen sind deutsch und sprachunabhängig. `void` heißt **nichts** (keine Rückgabe), eine Reihung heißt immer **Reihung von …** – nie „Array“. `char` (ein Zeichen, einfache Anführungszeichen) und `String` (Zeichenkette, doppelte Anführungszeichen) sind verschiedene Typen."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P3** (Signatur verfehlt): Wer die Typnamen verwechselt, schreibt einen falschen Methodenkopf."
+    }
+   ]
+  },
+  {
+   "id": "W0-L1-02",
+   "titel": "Die Inschrift am Portal",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Datentypen und Ausdrücke",
+   "fallen": [
+    "P5"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Am Portal steht `String s = \"Zauberer\";`. Gib den Wert jedes Ausdrucks an. Zeichen und Zeichenketten schreibst du **ohne** Anführungszeichen, Wahrheitswerte als `true`/`false`."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Ausdruck",
+      "Wert"
+     ],
+     "zeilen": [
+      [
+       "`s.length()`",
+       "[[g1]]"
+      ],
+      [
+       "`s.charAt(3)`",
+       "[[g2]]"
+      ],
+      [
+       "`s.substring(2, 5)`",
+       "[[g3]]"
+      ],
+      [
+       "`s.contains(\"ber\")`",
+       "[[g4]]"
+      ],
+      [
+       "`(int) s.charAt(0)`",
+       "[[g5]]"
+      ],
+      [
+       "`\"Zauberer\".compareTo(\"Zauberin\")`",
+       "[[g6]]"
+      ],
+      [
+       "`\"zauber\".compareTo(\"Zauber\")`",
+       "[[g7]]"
+      ],
+      [
+       "`\"Elf\".compareTo(\"Elfe\")`",
+       "[[g8]]"
+      ]
+     ]
+    },
+    {
+     "t": "hinweis",
+     "md": "ASCII-Werte: 'A' = 65, 'Z' = 90, 'a' = 97, 'z' = 122."
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "zahl"
+     },
+     "g2": {
+      "typ": "text",
+      "breite": 4
+     },
+     "g3": {
+      "typ": "text",
+      "breite": 8
+     },
+     "g4": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "g5": {
+      "typ": "zahl"
+     },
+     "g6": {
+      "typ": "auswahl",
+      "optionen": [
+       "negativ",
+       "0",
+       "positiv"
+      ]
+     },
+     "g7": {
+      "typ": "auswahl",
+      "optionen": [
+       "negativ",
+       "0",
+       "positiv"
+      ]
+     },
+     "g8": {
+      "typ": "auswahl",
+      "optionen": [
+       "negativ",
+       "0",
+       "positiv"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "8"
+    ],
+    "g2": [
+     "b",
+     "'b'"
+    ],
+    "g3": [
+     "ube",
+     "\"ube\""
+    ],
+    "g4": [
+     "true"
+    ],
+    "g5": [
+     "90"
+    ],
+    "g6": [
+     "negativ"
+    ],
+    "g7": [
+     "positiv"
+    ],
+    "g8": [
+     "negativ"
+    ]
+   },
+   "tipps": [
+    "substring(a, b): a einschließlich, b ausschließlich."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "- `length()` zählt die Zeichen: Z-a-u-b-e-r-e-r = 8.\n- Der Index beginnt bei 0: Index 3 ist 'b'.\n- `substring(2, 5)` liefert die Zeichen mit Index 2, 3, 4 (das Ende ist **ausschließlich**): \"ube\".\n- `contains(\"ber\")` ist wahr, „ber“ steht ab Index 3.\n- `(int) 'Z'` liefert den ASCII-Wert 90.\n- `compareTo` vergleicht Zeichen für Zeichen: Bei Index 6 steht 'e' (101) gegen 'i' (105) → negativ. 'z' (122) kommt nach 'Z' (90) → positiv. „Elf“ ist ein echter Anfang von „Elfe“ und damit kürzer → negativ."
+    },
+    {
+     "t": "hinweis",
+     "md": "Alle diese Operationen sind im Abitur **erlaubt**. Falle **P5**: Zeichenketten vergleichst du mit `equals` bzw. `compareTo`, nie mit `==`."
+    }
+   ]
+  },
+  {
+   "id": "W0-L1-03",
+   "titel": "Erlaubt oder verboten?",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Datentypen und Ausdrücke",
+   "fallen": [
+    "P5"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Liste der Zeichenketten-Operationen im Abitur ist **abschließend**. Wähle **alle** Operationen, die du verwenden darfst."
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "optionen": [
+     {
+      "id": "a",
+      "md": "`s.length()`"
+     },
+     {
+      "id": "b",
+      "md": "`s.charAt(i)`"
+     },
+     {
+      "id": "c",
+      "md": "`s.substring(a, b)`"
+     },
+     {
+      "id": "d",
+      "md": "`s.equals(t)`"
+     },
+     {
+      "id": "e",
+      "md": "`s.contains(t)`"
+     },
+     {
+      "id": "f",
+      "md": "`s.compareTo(t)`"
+     },
+     {
+      "id": "g",
+      "md": "`s.toUpperCase()`"
+     },
+     {
+      "id": "h",
+      "md": "`s.indexOf(t)`"
+     },
+     {
+      "id": "i",
+      "md": "`s.split(\" \")`"
+     },
+     {
+      "id": "j",
+      "md": "`s.trim()`"
+     }
+    ],
+    "mehrfach": true
+   },
+   "loesung": {
+    "richtig": [
+     "a",
+     "b",
+     "c",
+     "d",
+     "e",
+     "f"
+    ]
+   },
+   "tipps": [
+    "Es sind genau sechs."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Erlaubt sind (EH 2025): Länge, Zeichen an Position, Teilzeichenkette, Verketten mit `+`, Gleichheit (`equals`), enthält Teilzeichenkette (`contains`), lexikographischer Vergleich (`compareTo`) und ASCII-Wert ↔ Zeichen per Cast. `toUpperCase`, `indexOf`, `split`, `trim` usw. sind **nicht** erlaubt – du baust sie mit Schleife und `charAt` selbst nach."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P5**: nicht erlaubte String-Operationen kosten im Abitur BE – auch wenn die Online-IDE sie ausführt."
+    }
+   ]
+  },
+  {
+   "id": "W0-L1-04",
+   "titel": "Das Rätsel am Portaltor",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Struktogramm lesen",
+   "fallen": [
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "In das Portaltor ist dieses Struktogramm eingeritzt."
+    },
+    {
+     "t": "struktogramm",
+     "kopf": "raetsel(r: Reihung von Ganzzahl): Ganzzahl",
+     "rumpf": [
+      {
+       "anw": "z ← 0"
+      },
+      {
+       "zaehle": "i von 1 bis Länge von r − 1",
+       "rumpf": [
+        {
+         "wenn": "r[i] < r[i − 1]",
+         "dann": [
+          {
+           "anw": "z ← z + 1"
+          }
+         ],
+         "sonst": []
+        }
+       ]
+      },
+      {
+       "gib": "z"
+      }
+     ]
+    },
+    {
+     "t": "text",
+     "md": "**a)** Vervollständige die Tracetabelle für den Aufruf mit `r = {6, 2, 8, 5, 5, 1}` (eine Zeile pro Durchlauf; w/f = Wert der Bedingung, z = Wert **nach** dem Durchlauf)."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "i",
+      "r[i − 1]",
+      "r[i]",
+      "r[i] < r[i − 1]",
+      "z"
+     ],
+     "zeilen": [
+      [
+       "vor der Schleife",
+       "–",
+       "–",
+       "–",
+       "0"
+      ],
+      [
+       "1",
+       "6",
+       "2",
+       "[[b1]]",
+       "[[z1]]"
+      ],
+      [
+       "2",
+       "2",
+       "8",
+       "[[b2]]",
+       "[[z2]]"
+      ],
+      [
+       "3",
+       "8",
+       "5",
+       "[[b3]]",
+       "[[z3]]"
+      ],
+      [
+       "4",
+       "5",
+       "5",
+       "[[b4]]",
+       "[[z4]]"
+      ],
+      [
+       "5",
+       "5",
+       "1",
+       "[[b5]]",
+       "[[z5]]"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Rückgabewert: [[ret]]"
+    },
+    {
+     "t": "text",
+     "md": "**b)** Beschreibe, was `raetsel` allgemein berechnet."
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "gaps",
+     "felder": {
+      "b1": {
+       "typ": "auswahl",
+       "optionen": [
+        "w",
+        "f"
+       ]
+      },
+      "b2": {
+       "typ": "auswahl",
+       "optionen": [
+        "w",
+        "f"
+       ]
+      },
+      "b3": {
+       "typ": "auswahl",
+       "optionen": [
+        "w",
+        "f"
+       ]
+      },
+      "b4": {
+       "typ": "auswahl",
+       "optionen": [
+        "w",
+        "f"
+       ]
+      },
+      "b5": {
+       "typ": "auswahl",
+       "optionen": [
+        "w",
+        "f"
+       ]
+      },
+      "z1": {
+       "typ": "zahl"
+      },
+      "z2": {
+       "typ": "zahl"
+      },
+      "z3": {
+       "typ": "zahl"
+      },
+      "z4": {
+       "typ": "zahl"
+      },
+      "z5": {
+       "typ": "zahl"
+      },
+      "ret": {
+       "typ": "zahl"
+      }
+     }
+    },
+    {
+     "kind": "choice",
+     "optionen": [
+      {
+       "id": "a",
+       "md": "die Anzahl der Stellen, an denen ein Wert kleiner ist als sein Vorgänger"
+      },
+      {
+       "id": "b",
+       "md": "die Anzahl der Werte, die kleiner sind als `r[0]`"
+      },
+      {
+       "id": "c",
+       "md": "den Index des kleinsten Werts"
+      },
+      {
+       "id": "d",
+       "md": "die Anzahl der verschiedenen Werte in `r`"
+      }
+     ],
+     "mehrfach": false
+    }
+   ],
+   "loesung": [
+    {
+     "b1": [
+      "w"
+     ],
+     "z1": [
+      "1"
+     ],
+     "b2": [
+      "f"
+     ],
+     "z2": [
+      "1"
+     ],
+     "b3": [
+      "w"
+     ],
+     "z3": [
+      "2"
+     ],
+     "b4": [
+      "f"
+     ],
+     "z4": [
+      "2"
+     ],
+     "b5": [
+      "w"
+     ],
+     "z5": [
+      "3"
+     ],
+     "ret": [
+      "3"
+     ]
+    },
+    {
+     "richtig": [
+      "a"
+     ]
+    }
+   ],
+   "tipps": [
+    "Vergleiche jeweils die beiden Nachbarn in der Zeile."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Die Zählschleife beginnt bei **1**, weil jedes Element mit seinem Vorgänger `r[i − 1]` verglichen wird. Bei 5 < 5 ist die Bedingung **falsch** (gleich ist nicht kleiner). Gezählt werden die Abstiege 6→2, 8→5 und 5→1: Rückgabe 3."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P8**: Trage in jede Zeile den Wert **nach** dem Durchlauf ein und vergiss den Rückgabewert nicht."
+    }
+   ]
+  },
+  {
+   "id": "W0-L1-05",
+   "titel": "Die Ausdauer der Heldin",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P8",
+    "P1"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Eine Heldin läuft Etappen ab, solange ihre Kraft reicht."
+    },
+    {
+     "t": "code",
+     "code": "public static int ausdauer(int[] etappe, int kraft) {\n    int i = 0;\n    while (i < etappe.length && kraft >= etappe[i]) {\n        kraft = kraft - etappe[i];\n        i++;\n    }\n    return i;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**a)** Vervollständige die Tracetabelle für `ausdauer({4, 3, 6, 2}, 12)`. Die Spalte „Bedingung“ enthält den Wert der Schleifenbedingung mit den Werten **dieser** Zeile (w/f)."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Zeitpunkt",
+      "i",
+      "kraft",
+      "Bedingung"
+     ],
+     "zeilen": [
+      [
+       "vor der Schleife",
+       "[[i0]]",
+       "[[k0]]",
+       "[[b0]]"
+      ],
+      [
+       "nach Durchlauf 1",
+       "[[i1]]",
+       "[[k1]]",
+       "[[b1]]"
+      ],
+      [
+       "nach Durchlauf 2",
+       "[[i2]]",
+       "[[k2]]",
+       "[[b2]]"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Rückgabewert: [[ret]]"
+    },
+    {
+     "t": "text",
+     "md": "**b)** Gib die Rückgabewerte an: `ausdauer({4, 3, 6, 2}, 20)` liefert [[r20]], `ausdauer({}, 5)` liefert [[r0]]."
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "i0": {
+      "typ": "zahl"
+     },
+     "k0": {
+      "typ": "zahl"
+     },
+     "b0": {
+      "typ": "auswahl",
+      "optionen": [
+       "w",
+       "f"
+      ]
+     },
+     "i1": {
+      "typ": "zahl"
+     },
+     "k1": {
+      "typ": "zahl"
+     },
+     "b1": {
+      "typ": "auswahl",
+      "optionen": [
+       "w",
+       "f"
+      ]
+     },
+     "i2": {
+      "typ": "zahl"
+     },
+     "k2": {
+      "typ": "zahl"
+     },
+     "b2": {
+      "typ": "auswahl",
+      "optionen": [
+       "w",
+       "f"
+      ]
+     },
+     "ret": {
+      "typ": "zahl"
+     },
+     "r20": {
+      "typ": "zahl"
+     },
+     "r0": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "i0": [
+     "0"
+    ],
+    "k0": [
+     "12"
+    ],
+    "b0": [
+     "w"
+    ],
+    "i1": [
+     "1"
+    ],
+    "k1": [
+     "8"
+    ],
+    "b1": [
+     "w"
+    ],
+    "i2": [
+     "2"
+    ],
+    "k2": [
+     "5"
+    ],
+    "b2": [
+     "f"
+    ],
+    "ret": [
+     "2"
+    ],
+    "r20": [
+     "4"
+    ],
+    "r0": [
+     "0"
+    ]
+   },
+   "tipps": [
+    "Prüfe in jeder Zeile beide Teilbedingungen."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Nach zwei Etappen ist die Kraft 5 < 6 – die Bedingung wird falsch, Rückgabe 2. Mit Kraft 20 reicht es für alle vier Etappen (4 + 3 + 6 + 2 = 15): Dann ist `i = 4` und schon `i < etappe.length` ist falsch."
+    },
+    {
+     "t": "hinweis",
+     "md": "`&&` wertet von links aus und hört auf, sobald das Ergebnis feststeht. Darum wird `etappe[4]` **nie** gelesen – die Indexprüfung steht absichtlich zuerst (Falle **P1**). Bei der leeren Reihung läuft die Schleife gar nicht: Rückgabe 0."
+    }
+   ]
+  },
+  {
+   "id": "W0-L1-06",
+   "titel": "Code-Puzzle: Vom Bauplan zum Code",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Code ↔ Struktogramm",
+   "fallen": [
+    "P9",
+    "P3"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Setze die Java-Methode zum Struktogramm aus den Teilen zusammen. Nicht alle Teile werden gebraucht."
+    },
+    {
+     "t": "struktogramm",
+     "kopf": "zaehleGroesser(r: Reihung von Ganzzahl, x: Ganzzahl): Ganzzahl",
+     "rumpf": [
+      {
+       "anw": "anzahl ← 0"
+      },
+      {
+       "zaehle": "jedes w in r",
+       "rumpf": [
+        {
+         "wenn": "w > x",
+         "dann": [
+          {
+           "anw": "anzahl ← anzahl + 1"
+          }
+         ],
+         "sonst": []
+        }
+       ]
+      },
+      {
+       "gib": "anzahl"
+      }
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "order",
+    "teile": [
+     {
+      "id": "p1",
+      "code": "public static int zaehleGroesser(int[] r, int x) {"
+     },
+     {
+      "id": "p2",
+      "code": "    int anzahl = 0;"
+     },
+     {
+      "id": "p3",
+      "code": "    for (int w : r) {"
+     },
+     {
+      "id": "p4",
+      "code": "        if (w > x) {"
+     },
+     {
+      "id": "p5",
+      "code": "            anzahl = anzahl + 1;"
+     },
+     {
+      "id": "p6",
+      "code": "        } // Ende if"
+     },
+     {
+      "id": "p7",
+      "code": "    } // Ende for"
+     },
+     {
+      "id": "p8",
+      "code": "    return anzahl;"
+     },
+     {
+      "id": "p9",
+      "code": "} // Ende Methode"
+     },
+     {
+      "id": "d1",
+      "code": "public static void zaehleGroesser(int[] r, int x) {"
+     },
+     {
+      "id": "d2",
+      "code": "        if (w >= x) {"
+     },
+     {
+      "id": "d3",
+      "code": "    int anzahl ← 0;"
+     },
+     {
+      "id": "d4",
+      "code": "    for (int w = 0; w <= r.length; w++) {"
+     }
+    ]
+   },
+   "loesung": {
+    "reihenfolgen": [
+     [
+      "p1",
+      "p2",
+      "p3",
+      "p4",
+      "p5",
+      "p6",
+      "p7",
+      "p8",
+      "p9"
+     ]
+    ]
+   },
+   "tipps": [
+    "Beginne mit dem Kopf: Der Rückgabetyp steht in Java vorn."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "„für jedes w in r“ wird zur for-each-Schleife `for (int w : r)`. Der Rückgabetyp Ganzzahl wird `int` (nicht `void`), die Bedingung heißt **echt größer** (`>`). Die Rückgabe steht **nach** der Schleife."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P9**: Der Pfeil ← gehört ins Struktogramm, in Java steht `=`. Falle **P3**: `void` passt nicht zur Signatur mit Rückgabetyp Ganzzahl."
+    }
+   ]
+  },
+  {
+   "id": "W0-L1-07",
+   "titel": "Bug-Hunt: Der Spiegel am Portal",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P1",
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Methode soll `true` liefern, wenn `s` vorwärts und rückwärts gleich gelesen wird (exakter Zeichenvergleich). Sie enthält **genau einen** Fehler."
+    },
+    {
+     "t": "code",
+     "code": "public static boolean istPalindrom(String s) {\n    for (int i = 0; i < s.length() / 2; i++) {\n        if (s.charAt(i) != s.charAt(s.length() - i)) {\n            return false;\n        }\n    }\n    return true;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**a)** Wähle die fehlerhafte Zeile."
+    },
+    {
+     "t": "text",
+     "md": "**b)** Korrigiere die Zeile (nur den Index, in Java-Schreibweise):"
+    },
+    {
+     "t": "code",
+     "code": "if (s.charAt(i) != s.charAt([[g1]])) {",
+     "nummern": false
+    },
+    {
+     "t": "text",
+     "md": "Was passiert beim Aufruf `istPalindrom(\"otto\")` **mit** dem Fehler? [[g2]]"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 1,
+     "anzahl": 1
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "text",
+       "breite": 18
+      },
+      "g2": {
+       "typ": "auswahl",
+       "optionen": [
+        "liefert true",
+        "liefert false",
+        "StringIndexOutOfBoundsException"
+       ]
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      3
+     ]
+    },
+    {
+     "g1": [
+      "s.length() - 1 - i",
+      "s.length() - i - 1",
+      "s.length() - (i + 1)",
+      "(s.length() - 1) - i"
+     ],
+     "g2": [
+      "StringIndexOutOfBoundsException"
+     ]
+    }
+   ],
+   "tipps": [
+    "Welchen Index hat das letzte Zeichen einer Zeichenkette der Länge 4?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Das Gegenstück zu Index `i` ist `s.length() - 1 - i`: Für i = 0 ist es das **letzte** Zeichen mit Index `s.length() - 1`. Mit `s.length() - i` wird schon im ersten Durchlauf Index 4 von „otto“ gelesen – den gibt es nicht."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P6** (Off-by-one) führt hier zu Falle **P1** (Laufzeitfehler). Prüfe immer den ersten und den letzten Durchlauf."
+    }
+   ]
+  },
+  {
+   "id": "W0-L1-08",
+   "titel": "Bauplan aus Code",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Code ↔ Struktogramm",
+   "fallen": [
+    "P9"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Übersetze die Methode in ein Struktogramm nach EH § 5, indem du die Lücken füllst."
+    },
+    {
+     "t": "code",
+     "code": "public static int punkte(int[] wuerfe) {\n    int p = 0;\n    for (int w : wuerfe) {\n        if (w % 2 == 0) {\n            p = p + w;\n        } else {\n            p = p - 1;\n        }\n    }\n    return p;\n}",
+     "nummern": true
+    },
+    {
+     "t": "struktogramm",
+     "kopf": "[[k]]",
+     "rumpf": [
+      {
+       "anw": "p ← 0"
+      },
+      {
+       "zaehle": "jedes [[v]] in wuerfe",
+       "rumpf": [
+        {
+         "wenn": "[[b]]",
+         "dann": [
+          {
+           "anw": "[[d]]"
+          }
+         ],
+         "sonst": [
+          {
+           "anw": "p ← p − 1"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "gib": "[[r]]"
+      }
+     ]
+    },
+    {
+     "t": "text",
+     "md": "**b)** Gib den Rückgabewert für die Würfe `{4, 3, 6, 1, 5}` an: [[w]]"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "gaps",
+     "felder": {
+      "k": {
+       "typ": "auswahl",
+       "optionen": [
+        "punkte(wuerfe: Reihung von Ganzzahl): Ganzzahl",
+        "int punkte(int[] wuerfe)",
+        "punkte(wuerfe: Ganzzahl): Reihung von Ganzzahl",
+        "punkte(Reihung von Ganzzahl): Ganzzahl"
+       ]
+      },
+      "v": {
+       "typ": "text",
+       "breite": 4
+      },
+      "b": {
+       "typ": "auswahl",
+       "optionen": [
+        "w % 2 = 0",
+        "w % 2 == 0",
+        "w % 2 ← 0",
+        "w / 2 = 0"
+       ]
+      },
+      "d": {
+       "typ": "auswahl",
+       "optionen": [
+        "p ← p + w",
+        "p = p + w",
+        "p + w",
+        "gib p + w zurück"
+       ]
+      },
+      "r": {
+       "typ": "text",
+       "breite": 6
+      }
+     }
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "w": {
+       "typ": "zahl"
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "k": [
+      "punkte(wuerfe: Reihung von Ganzzahl): Ganzzahl"
+     ],
+     "v": [
+      "w"
+     ],
+     "b": [
+      "w % 2 = 0"
+     ],
+     "d": [
+      "p ← p + w"
+     ],
+     "r": [
+      "p"
+     ]
+    },
+    {
+     "w": [
+      "7"
+     ]
+    }
+   ],
+   "tipps": [
+    "Struktogramm: = vergleicht, ← weist zu."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Der Kopf enthält die **Signatur** (Name, Parameter mit Typ, Rückgabetyp). Im Struktogramm wird mit `=` verglichen und mit `←` zugewiesen; „gib p zurück“ steht nach der Schleife. Wert: 4 − 1 + 6 − 1 − 1 = 7."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P9**: Java-Syntax (`==`, `=` als Zuweisung, `int[]`) hat im Struktogramm nichts zu suchen."
+    }
+   ]
+  },
+  {
+   "id": "W0-L2-01",
+   "titel": "Blitz-Warm-up: Was rechnet Java?",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Datentypen und Ausdrücke",
+   "fallen": [
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Gib den Wert jedes Ausdrucks an (alle Zahlen sind Ganzzahlen)."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Ausdruck",
+      "`29 / 6`",
+      "`29 % 6`",
+      "`6 % 29`",
+      "`-11 / 4`",
+      "`-11 % 4`",
+      "`12 - 5 * 3 % 4`"
+     ],
+     "zeilen": [
+      [
+       "Wert",
+       "[[g1]]",
+       "[[g2]]",
+       "[[g3]]",
+       "[[g4]]",
+       "[[g5]]",
+       "[[g6]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "zahl"
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "zahl"
+     },
+     "g4": {
+      "typ": "zahl"
+     },
+     "g5": {
+      "typ": "zahl"
+     },
+     "g6": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "4"
+    ],
+    "g2": [
+     "5"
+    ],
+    "g3": [
+     "6"
+    ],
+    "g4": [
+     "-2"
+    ],
+    "g5": [
+     "-3"
+    ],
+    "g6": [
+     "9"
+    ]
+   },
+   "tipps": [
+    "Bei negativen Zahlen: erst wie bei positiven rechnen, dann das Vorzeichen der linken Zahl übernehmen."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "- `29 / 6` = 4 (Rest fällt weg), `29 % 6` = 5.\n- `6 % 29` = 6: 29 passt 0-mal in 6, Rest 6.\n- `-11 / 4` = −2: Java schneidet zur 0 hin ab (nicht −3).\n- `-11 % 4` = −3: Der Rest hat das Vorzeichen der **linken** Zahl.\n- `*`, `/`, `%` haben gleichen Rang und werden von links ausgewertet: 5 * 3 = 15, 15 % 4 = 3, 12 − 3 = 9."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P4** (ganzzahlige Division): Mit zwei Ganzzahlen ist `/` immer ganzzahlig."
+    }
+   ]
+  },
+  {
+   "id": "W0-L2-02",
+   "titel": "Der Typ-Detektiv",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Datentypen und Ausdrücke",
+   "fallen": [
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Gib zu jedem Ausdruck den **Typ** und den **Wert** an. Zeichenketten schreibst du ohne Anführungszeichen, Wahrheitswerte als `true`/`false`."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Ausdruck",
+      "Typ",
+      "Wert"
+     ],
+     "zeilen": [
+      [
+       "`(double) 11 / 4`",
+       "[[t1]]",
+       "[[w1]]"
+      ],
+      [
+       "`(double) (11 / 4)`",
+       "[[t2]]",
+       "[[w2]]"
+      ],
+      [
+       "`(int) 8.99`",
+       "[[t3]]",
+       "[[w3]]"
+      ],
+      [
+       "`1 / 4 * 8.0`",
+       "[[t4]]",
+       "[[w4]]"
+      ],
+      [
+       "`3 + 4 + \"x\"`",
+       "[[t5]]",
+       "[[w5]]"
+      ],
+      [
+       "`\"x\" + 3 + 4`",
+       "[[t6]]",
+       "[[w6]]"
+      ],
+      [
+       "`'a' + 1`",
+       "[[t7]]",
+       "[[w7]]"
+      ],
+      [
+       "`!(4 > 2) && 3 == 3`",
+       "[[t8]]",
+       "[[w8]]"
+      ]
+     ]
+    },
+    {
+     "t": "hinweis",
+     "md": "'a' hat den ASCII-Wert 97."
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "t1": {
+      "typ": "auswahl",
+      "optionen": [
+       "int",
+       "double",
+       "boolean",
+       "char",
+       "String"
+      ]
+     },
+     "t2": {
+      "typ": "auswahl",
+      "optionen": [
+       "int",
+       "double",
+       "boolean",
+       "char",
+       "String"
+      ]
+     },
+     "t3": {
+      "typ": "auswahl",
+      "optionen": [
+       "int",
+       "double",
+       "boolean",
+       "char",
+       "String"
+      ]
+     },
+     "t4": {
+      "typ": "auswahl",
+      "optionen": [
+       "int",
+       "double",
+       "boolean",
+       "char",
+       "String"
+      ]
+     },
+     "t5": {
+      "typ": "auswahl",
+      "optionen": [
+       "int",
+       "double",
+       "boolean",
+       "char",
+       "String"
+      ]
+     },
+     "t6": {
+      "typ": "auswahl",
+      "optionen": [
+       "int",
+       "double",
+       "boolean",
+       "char",
+       "String"
+      ]
+     },
+     "t7": {
+      "typ": "auswahl",
+      "optionen": [
+       "int",
+       "double",
+       "boolean",
+       "char",
+       "String"
+      ]
+     },
+     "t8": {
+      "typ": "auswahl",
+      "optionen": [
+       "int",
+       "double",
+       "boolean",
+       "char",
+       "String"
+      ]
+     },
+     "w1": {
+      "typ": "zahl"
+     },
+     "w2": {
+      "typ": "zahl"
+     },
+     "w3": {
+      "typ": "zahl"
+     },
+     "w4": {
+      "typ": "zahl"
+     },
+     "w5": {
+      "typ": "text",
+      "breite": 6
+     },
+     "w6": {
+      "typ": "text",
+      "breite": 6
+     },
+     "w7": {
+      "typ": "zahl"
+     },
+     "w8": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "t1": [
+     "double"
+    ],
+    "w1": [
+     "2.75"
+    ],
+    "t2": [
+     "double"
+    ],
+    "w2": [
+     "2.0"
+    ],
+    "t3": [
+     "int"
+    ],
+    "w3": [
+     "8"
+    ],
+    "t4": [
+     "double"
+    ],
+    "w4": [
+     "0.0"
+    ],
+    "t5": [
+     "String"
+    ],
+    "w5": [
+     "7x",
+     "\"7x\""
+    ],
+    "t6": [
+     "String"
+    ],
+    "w6": [
+     "x34",
+     "\"x34\""
+    ],
+    "t7": [
+     "int"
+    ],
+    "w7": [
+     "98"
+    ],
+    "t8": [
+     "boolean"
+    ],
+    "w8": [
+     "false"
+    ]
+   },
+   "tipps": [
+    "Werte Ausdrücke streng von links nach rechts aus und achte auf den Typ jedes Zwischenergebnisses."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "- `(double) 11 / 4`: erst umwandeln, dann teilen → 2.75. `(double) (11 / 4)`: erst ganzzahlig teilen (2), dann umwandeln → 2.0.\n- `(int) 8.99` schneidet ab → 8.\n- `1 / 4 * 8.0`: Von links: `1 / 4` ist ganzzahlig 0, dann 0 * 8.0 = 0.0.\n- `+` arbeitet von links: 3 + 4 = 7, dann \"7\" + \"x\" → \"7x\". Bei `\"x\" + 3 + 4` ist sofort eine Zeichenkette beteiligt → \"x34\".\n- `'a' + 1`: Ein Zeichen wird beim Rechnen zur Zahl (97) → 98 vom Typ int.\n- `!(4 > 2)` ist false, also ist die Und-Verknüpfung false."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P4**: Typen und Casts. Die Klammer entscheidet, **wann** umgewandelt wird."
+    }
+   ]
+  },
+  {
+   "id": "W0-L2-03",
+   "titel": "Kompiliert das?",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Datentypen und Ausdrücke",
+   "fallen": [
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Ein Lehrling hat zehn Anweisungen in die Werkstatt-Datei getippt. Ordne jede Anweisung zu."
+    },
+    {
+     "t": "text",
+     "md": "Welchen Wert speichert `q` in `double q = 9 / 2;`? [[q]]"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "match",
+     "elemente": [
+      {
+       "id": "s1",
+       "md": "`int a = 5.0;`"
+      },
+      {
+       "id": "s2",
+       "md": "`double d = 5;`"
+      },
+      {
+       "id": "s3",
+       "md": "`char c = \"y\";`"
+      },
+      {
+       "id": "s4",
+       "md": "`String s = 'y';`"
+      },
+      {
+       "id": "s5",
+       "md": "`boolean b = 1;`"
+      },
+      {
+       "id": "s6",
+       "md": "`int n = (int) 5.5;`"
+      },
+      {
+       "id": "s7",
+       "md": "`double q = 9 / 2;`"
+      },
+      {
+       "id": "s8",
+       "md": "`int m = 9 / 2.0;`"
+      },
+      {
+       "id": "s9",
+       "md": "`String t = 3 + \"\";`"
+      },
+      {
+       "id": "s10",
+       "md": "`boolean g = 2 < 4 < 6;`"
+      }
+     ],
+     "kategorien": [
+      {
+       "id": "ok",
+       "md": "kompiliert"
+      },
+      {
+       "id": "fehler",
+       "md": "Compilerfehler"
+      }
+     ]
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "q": {
+       "typ": "zahl"
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "s1": "fehler",
+     "s2": "ok",
+     "s3": "fehler",
+     "s4": "fehler",
+     "s5": "fehler",
+     "s6": "ok",
+     "s7": "ok",
+     "s8": "fehler",
+     "s9": "ok",
+     "s10": "fehler"
+    },
+    {
+     "q": [
+      "4.0"
+     ]
+    }
+   ],
+   "tipps": [
+    "Frage dich bei jeder Zeile: Welchen Typ hat die rechte Seite?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "- Eine Ganzzahl passt automatisch in eine Kommazahl (`double d = 5` speichert 5.0), umgekehrt braucht man einen Cast.\n- `\"y\"` ist eine Zeichenkette, `'y'` ein Zeichen – die Typen sind nicht austauschbar.\n- `boolean` kennt nur `true`/`false`, keine 0/1.\n- `9 / 2` wird **ganzzahlig** gerechnet (4) und erst dann zu 4.0.\n- `3 + \"\"` ist eine Zeichenkette \"3\".\n- `2 < 4 < 6` vergleicht zuerst zu `true`, dann `true < 6` – das geht nicht. Richtig: `2 < 4 && 4 < 6`."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P4**: Zeichen vs. Zeichenkette und ganzzahlige Division."
+    }
+   ]
+  },
+  {
+   "id": "W0-L2-04",
+   "titel": "Die Würfel der Werkstatt",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Datentypen und Ausdrücke",
+   "fallen": [
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`Math.random()` liefert eine Kommazahl z mit 0 ≤ z < 1. Gib für jeden Ausdruck den kleinsten und den größten möglichen Wert an."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Ausdruck",
+      "kleinster Wert",
+      "größter Wert"
+     ],
+     "zeilen": [
+      [
+       "`(int) (Math.random() * 8)`",
+       "[[r1min]]",
+       "[[r1max]]"
+      ],
+      [
+       "`(int) (Math.random() * 8) + 3`",
+       "[[r2min]]",
+       "[[r2max]]"
+      ],
+      [
+       "`(int) Math.random() * 8 + 3`",
+       "[[r3min]]",
+       "[[r3max]]"
+      ],
+      [
+       "`(int) (Math.random() * 9) - 4`",
+       "[[r4min]]",
+       "[[r4max]]"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "**b)** Welcher Ausdruck liefert eine ganzzahlige Zufallszahl von **5 bis 12** (beide möglich, alle gleich wahrscheinlich)?"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "gaps",
+     "felder": {
+      "r1min": {
+       "typ": "zahl"
+      },
+      "r1max": {
+       "typ": "zahl"
+      },
+      "r2min": {
+       "typ": "zahl"
+      },
+      "r2max": {
+       "typ": "zahl"
+      },
+      "r3min": {
+       "typ": "zahl"
+      },
+      "r3max": {
+       "typ": "zahl"
+      },
+      "r4min": {
+       "typ": "zahl"
+      },
+      "r4max": {
+       "typ": "zahl"
+      }
+     }
+    },
+    {
+     "kind": "choice",
+     "optionen": [
+      {
+       "id": "a",
+       "md": "`(int) (Math.random() * 8) + 5`"
+      },
+      {
+       "id": "b",
+       "md": "`(int) (Math.random() * 12) + 5`"
+      },
+      {
+       "id": "c",
+       "md": "`(int) (Math.random() * 7) + 5`"
+      },
+      {
+       "id": "d",
+       "md": "`(int) Math.random() * 8 + 5`"
+      }
+     ],
+     "mehrfach": false
+    }
+   ],
+   "loesung": [
+    {
+     "r1min": [
+      "0"
+     ],
+     "r1max": [
+      "7"
+     ],
+     "r2min": [
+      "3"
+     ],
+     "r2max": [
+      "10"
+     ],
+     "r3min": [
+      "3"
+     ],
+     "r3max": [
+      "3"
+     ],
+     "r4min": [
+      "-4"
+     ],
+     "r4max": [
+      "4"
+     ]
+    },
+    {
+     "richtig": [
+      "a"
+     ]
+    }
+   ],
+   "tipps": [
+    "Anzahl der möglichen Werte = bis − von + 1."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`Math.random() * 8` liegt in 0 ≤ … < 8, der Cast macht daraus 0 bis 7. `+ 3` verschiebt auf 3 bis 10. Bei `(int) Math.random() * 8 + 3` wirkt der Cast nur auf `Math.random()` – das ist immer 0, also immer 3. `* 9` liefert 9 Werte (0 bis 8), `- 4` verschiebt auf −4 bis 4."
+    },
+    {
+     "t": "text",
+     "md": "Von 5 bis 12 gibt es 12 − 5 + 1 = **8** Werte, also `* 8` und `+ 5`."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P4**: Die Klammer muss um das ganze Produkt, sonst wirkt der Cast zu früh."
+    }
+   ]
+  },
+  {
+   "id": "W0-L2-05",
+   "titel": "Die Sanduhr des Alchemisten",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P8",
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "**a)** Der Alchemist rechnet Sekunden in Stunden und Minuten um. Trage in jede Zeile nur den **neuen** Wert ein."
+    },
+    {
+     "t": "code",
+     "code": "int sek = 4000;\nint std = sek / 3600;\nsek = sek % 3600;\nint min = sek / 60;\nsek = sek % 60;",
+     "nummern": true
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Zeile",
+      "sek",
+      "std",
+      "min"
+     ],
+     "zeilen": [
+      [
+       "1",
+       "[[z1]]",
+       "",
+       ""
+      ],
+      [
+       "2",
+       "",
+       "[[z2]]",
+       ""
+      ],
+      [
+       "3",
+       "[[z3]]",
+       "",
+       ""
+      ],
+      [
+       "4",
+       "",
+       "",
+       "[[z4]]"
+      ],
+      [
+       "5",
+       "[[z5]]",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "**b)** Er berechnet den Durchschnittspreis von sechs Tränken. Gib die Werte an."
+    },
+    {
+     "t": "code",
+     "code": "int summe = 47;\ndouble schnitt = summe / 6;\ndouble schnitt2 = (double) summe / 6;\nint gerundet = (int) (schnitt2 + 0.5);\nint abgeschnitten = (int) schnitt2;",
+     "nummern": true
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Variable",
+      "Wert"
+     ],
+     "zeilen": [
+      [
+       "schnitt",
+       "[[s1]]"
+      ],
+      [
+       "gerundet",
+       "[[s3]]"
+      ],
+      [
+       "abgeschnitten",
+       "[[s4]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "z1": {
+      "typ": "zahl"
+     },
+     "z2": {
+      "typ": "zahl"
+     },
+     "z3": {
+      "typ": "zahl"
+     },
+     "z4": {
+      "typ": "zahl"
+     },
+     "z5": {
+      "typ": "zahl"
+     },
+     "s1": {
+      "typ": "zahl"
+     },
+     "s3": {
+      "typ": "zahl"
+     },
+     "s4": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "z1": [
+     "4000"
+    ],
+    "z2": [
+     "1"
+    ],
+    "z3": [
+     "400"
+    ],
+    "z4": [
+     "6"
+    ],
+    "z5": [
+     "40"
+    ],
+    "s1": [
+     "7.0"
+    ],
+    "s3": [
+     "8"
+    ],
+    "s4": [
+     "7"
+    ]
+   },
+   "tipps": [
+    "`/` liefert die ganzen Stunden, `%` den Rest."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "4000 / 3600 = 1 Stunde, Rest 400 Sekunden; 400 / 60 = 6 Minuten, Rest 40 Sekunden."
+    },
+    {
+     "t": "text",
+     "md": "`summe / 6` wird ganzzahlig gerechnet (7) und dann zu 7.0. Erst `(double) summe / 6` ergibt 7.833…; + 0.5 = 8.333… → `(int)` liefert 8 (kaufmännisch gerundet), ohne + 0.5 wird auf 7 abgeschnitten."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P8**: Eine Zeile pro Anweisung, nur der geänderte Wert. Falle **P4**: ganzzahlige Division vor der Umwandlung."
+    }
+   ]
+  },
+  {
+   "id": "W0-L2-06",
+   "titel": "Die Wetterfahne – die Reihenfolge zählt",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Wetterfahne der Akademie soll anzeigen: über 25 Grad „heiß“, über 15 „warm“, über 5 „kühl“, sonst „eisig“."
+    },
+    {
+     "t": "code",
+     "code": "public static String wetter(int t) {\n    String w = \"eisig\";\n    if (t > 25) {\n        w = \"heiß\";\n    }\n    if (t > 15) {\n        w = \"warm\";\n    }\n    if (t > 5) {\n        w = \"kühl\";\n    }\n    return w;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**a)** Gib die Rückgabewerte an: `wetter(30)` [[g1]] · `wetter(20)` [[g2]] · `wetter(10)` [[g3]] · `wetter(0)` [[g4]]"
+    },
+    {
+     "t": "text",
+     "md": "**b)** Welche Änderungen machen die Methode korrekt? Wähle **alle** passenden."
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "auswahl",
+       "optionen": [
+        "eisig",
+        "kühl",
+        "warm",
+        "heiß"
+       ]
+      },
+      "g2": {
+       "typ": "auswahl",
+       "optionen": [
+        "eisig",
+        "kühl",
+        "warm",
+        "heiß"
+       ]
+      },
+      "g3": {
+       "typ": "auswahl",
+       "optionen": [
+        "eisig",
+        "kühl",
+        "warm",
+        "heiß"
+       ]
+      },
+      "g4": {
+       "typ": "auswahl",
+       "optionen": [
+        "eisig",
+        "kühl",
+        "warm",
+        "heiß"
+       ]
+      }
+     }
+    },
+    {
+     "kind": "choice",
+     "optionen": [
+      {
+       "id": "a",
+       "md": "Reihenfolge beibehalten, aber das zweite und dritte `if` durch `else if` ersetzen."
+      },
+      {
+       "id": "b",
+       "md": "Die drei `if`-Anweisungen in umgekehrter Reihenfolge schreiben: erst `t > 5`, dann `t > 15`, dann `t > 25`."
+      },
+      {
+       "id": "c",
+       "md": "Überall `>` durch `>=` ersetzen."
+      },
+      {
+       "id": "d",
+       "md": "Die Startbelegung `\"eisig\"` weglassen (`String w;`)."
+      }
+     ],
+     "mehrfach": true
+    }
+   ],
+   "loesung": [
+    {
+     "g1": [
+      "kühl"
+     ],
+     "g2": [
+      "kühl"
+     ],
+     "g3": [
+      "kühl"
+     ],
+     "g4": [
+      "eisig"
+     ]
+    },
+    {
+     "richtig": [
+      "a",
+      "b"
+     ]
+    }
+   ],
+   "tipps": [
+    "Spiele wetter(30) Zeile für Zeile durch: Welche Zuweisung passiert zuletzt?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Die drei `if` sind **unabhängig**: Bei 30 Grad sind alle drei Bedingungen wahr, die letzte Zuweisung „kühl“ gewinnt. Mit `else if` wird nur der **erste** zutreffende Zweig ausgeführt – dann stimmt die absteigende Reihenfolge. Bei unabhängigen `if` muss die strengste Bedingung zuletzt stehen. `>=` ändert nur die Grenzen, und ohne Startwert meldet der Compiler „variable w might not have been initialized“."
+    },
+    {
+     "t": "hinweis",
+     "md": "Im Struktogramm wird eine else-if-Kette zur **geschachtelten** Verzweigung im Falsch-Zweig."
+    }
+   ]
+  },
+  {
+   "id": "W0-L2-07",
+   "titel": "Der Spiegelzauber der Zahlen",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "code",
+     "code": "public static int rueckwaerts(int n) {\n    int r = 0;\n    while (n > 0) {\n        r = r * 10 + n % 10;\n        n = n / 10;\n    }\n    return r;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**a)** Vervollständige die Tracetabelle für `rueckwaerts(4705)`: eine Zeile vor der Schleife, dann eine Zeile am **Ende** jedes Durchlaufs. Die Spalte `n % 10` enthält die Ziffer, die im Durchlauf verwendet wird."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Durchlauf",
+      "n % 10",
+      "r",
+      "n"
+     ],
+     "zeilen": [
+      [
+       "vor der Schleife",
+       "–",
+       "0",
+       "4705"
+      ],
+      [
+       "1",
+       "[[z1]]",
+       "[[r1]]",
+       "[[n1]]"
+      ],
+      [
+       "2",
+       "[[z2]]",
+       "[[r2]]",
+       "[[n2]]"
+      ],
+      [
+       "3",
+       "[[z3]]",
+       "[[r3]]",
+       "[[n3]]"
+      ],
+      [
+       "4",
+       "[[z4]]",
+       "[[r4]]",
+       "[[n4]]"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Rückgabewert: [[ret]]"
+    },
+    {
+     "t": "text",
+     "md": "**b)** Gib die Rückgabewerte an: `rueckwaerts(1200)` liefert [[a]], `rueckwaerts(0)` liefert [[b]]."
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "gaps",
+     "felder": {
+      "z1": {
+       "typ": "zahl"
+      },
+      "z2": {
+       "typ": "zahl"
+      },
+      "z3": {
+       "typ": "zahl"
+      },
+      "z4": {
+       "typ": "zahl"
+      },
+      "r1": {
+       "typ": "zahl"
+      },
+      "r2": {
+       "typ": "zahl"
+      },
+      "r3": {
+       "typ": "zahl"
+      },
+      "r4": {
+       "typ": "zahl"
+      },
+      "n1": {
+       "typ": "zahl"
+      },
+      "n2": {
+       "typ": "zahl"
+      },
+      "n3": {
+       "typ": "zahl"
+      },
+      "n4": {
+       "typ": "zahl"
+      },
+      "ret": {
+       "typ": "zahl"
+      }
+     }
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "a": {
+       "typ": "zahl"
+      },
+      "b": {
+       "typ": "zahl"
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "z1": [
+      "5"
+     ],
+     "r1": [
+      "5"
+     ],
+     "n1": [
+      "470"
+     ],
+     "z2": [
+      "0"
+     ],
+     "r2": [
+      "50"
+     ],
+     "n2": [
+      "47"
+     ],
+     "z3": [
+      "7"
+     ],
+     "r3": [
+      "507"
+     ],
+     "n3": [
+      "4"
+     ],
+     "z4": [
+      "4"
+     ],
+     "r4": [
+      "5074"
+     ],
+     "n4": [
+      "0"
+     ],
+     "ret": [
+      "5074"
+     ]
+    },
+    {
+     "a": [
+      "21"
+     ],
+     "b": [
+      "0"
+     ]
+    }
+   ],
+   "tipps": [
+    "`4705 % 10` = 5 und `4705 / 10` = 470."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`n % 10` liefert die letzte Ziffer, `r * 10 + …` hängt sie hinten an `r` an, `n / 10` streicht sie aus `n`. So entsteht die Zahl rückwärts: 5074. Bei 1200 ergibt sich 0021 – führende Nullen gibt es bei Zahlen nicht, also 21. Bei n = 0 läuft die Schleife gar nicht."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P8**: Die Zeile „vor der Schleife“ und der Rückgabewert gehören zur vollständigen Tracetabelle."
+    }
+   ]
+  },
+  {
+   "id": "W0-L2-08",
+   "titel": "Bug-Hunt: Der Primzahl-Prüfer",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Methode soll prüfen, ob `n` eine Primzahl ist. Sie enthält **genau einen** Fehler."
+    },
+    {
+     "t": "code",
+     "code": "public static boolean istPrimzahl(int n) {\n    if (n < 2) {\n        return false;\n    }\n    for (int t = 2; t * t < n; t++) {\n        if (n % t == 0) {\n            return false;\n        }\n    }\n    return true;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**a)** Wähle die fehlerhafte Zeile."
+    },
+    {
+     "t": "text",
+     "md": "**b)** Korrigiere den Vergleichsoperator: `t * t` [[g1]] `n`. Gib die **kleinste** Zahl n an, für die die fehlerhafte Methode ein falsches Ergebnis liefert: [[g2]]"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 1,
+     "anzahl": 1
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "auswahl",
+       "optionen": [
+        "<",
+        "<=",
+        ">",
+        ">=",
+        "=="
+       ]
+      },
+      "g2": {
+       "typ": "zahl"
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      5
+     ]
+    },
+    {
+     "g1": [
+      "<="
+     ],
+     "g2": [
+      "4"
+     ]
+    }
+   ],
+   "tipps": [
+    "Probiere Quadratzahlen aus."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Ein Teiler t mit t · t = n muss noch geprüft werden: Bei n = 4 (und 9, 25, 49 …) ist der einzige kleine Teiler genau die Wurzel. Mit `<` läuft die Schleife für n = 4 gar nicht (2 · 2 < 4 ist falsch) und die Methode liefert `true`."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P6** (Off-by-one): `<` oder `<=`? Teste die Grenze mit einem Wert, bei dem Gleichheit eintritt."
+    }
+   ]
+  },
+  {
+   "id": "W0-L3-01",
+   "titel": "Blitz-Warm-up: Fach für Fach",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Datentypen und Ausdrücke",
+   "fallen": [
+    "P1"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Gegeben sind `int[] r = {6, 0, 9, 2, 4};` und `String s = \"Kristall\";`. Gib den Wert jedes Ausdrucks an (Zeichen und Zeichenketten ohne Anführungszeichen)."
+    },
+    {
+     "t": "reihung",
+     "werte": [
+      6,
+      0,
+      9,
+      2,
+      4
+     ],
+     "indizes": true
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Ausdruck",
+      "Wert"
+     ],
+     "zeilen": [
+      [
+       "`r.length`",
+       "[[g1]]"
+      ],
+      [
+       "`r[r.length - 1]`",
+       "[[g2]]"
+      ],
+      [
+       "`r[r[3]]`",
+       "[[g3]]"
+      ],
+      [
+       "`r[1] + r[4]`",
+       "[[g4]]"
+      ],
+      [
+       "`r[5]`",
+       "[[g5]]"
+      ],
+      [
+       "`s.length()`",
+       "[[g6]]"
+      ],
+      [
+       "`s.charAt(3)`",
+       "[[g7]]"
+      ],
+      [
+       "`s.substring(2, 6)`",
+       "[[g8]]"
+      ],
+      [
+       "`(int) s.charAt(1)`",
+       "[[g9]]"
+      ]
+     ]
+    },
+    {
+     "t": "hinweis",
+     "md": "'a' hat den ASCII-Wert 97, die folgenden Kleinbuchstaben zählen weiter: 'b' = 98, …"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "zahl"
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "zahl"
+     },
+     "g4": {
+      "typ": "zahl"
+     },
+     "g5": {
+      "typ": "auswahl",
+      "optionen": [
+       "0",
+       "4",
+       "null",
+       "ArrayIndexOutOfBoundsException"
+      ]
+     },
+     "g6": {
+      "typ": "zahl"
+     },
+     "g7": {
+      "typ": "text",
+      "breite": 4
+     },
+     "g8": {
+      "typ": "text",
+      "breite": 8
+     },
+     "g9": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "5"
+    ],
+    "g2": [
+     "4"
+    ],
+    "g3": [
+     "9"
+    ],
+    "g4": [
+     "4"
+    ],
+    "g5": [
+     "ArrayIndexOutOfBoundsException"
+    ],
+    "g6": [
+     "8"
+    ],
+    "g7": [
+     "s",
+     "'s'"
+    ],
+    "g8": [
+     "ista",
+     "\"ista\""
+    ],
+    "g9": [
+     "114"
+    ]
+   },
+   "tipps": [
+    "Bei verschachtelten Indizes zuerst den inneren Ausdruck auswerten."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "- Die Länge ist 5, das letzte Element hat den Index 4 und den Wert 4.\n- `r[r[3]]` = `r[2]` = 9 (erst den inneren Index auswerten).\n- `r[5]` gibt es nicht – Indizes laufen nur von 0 bis 4 → ArrayIndexOutOfBoundsException.\n- „Kristall“ hat 8 Zeichen, Index 3 ist 's', `substring(2, 6)` liefert die Indizes 2 bis 5: \"ista\".\n- 'r' ist der 18. Buchstabe: 97 + 17 = 114."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P1**: Laufzeitfehler durch einen Index außerhalb von 0 … Länge − 1."
+    }
+   ]
+  },
+  {
+   "id": "W0-L3-02",
+   "titel": "for oder for-each?",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Funktionsweise erläutern",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Für jede Aufgabe auf der Reihung `vorrat` soll eine Schleife geschrieben werden. Ordne zu: Geht es **nur mit der Zählschleife** (Index nötig) oder sind **beide** Schleifen möglich?"
+    }
+   ],
+   "interaktion": {
+    "kind": "match",
+    "elemente": [
+     {
+      "id": "e1",
+      "md": "die Summe aller Vorräte bilden"
+     },
+     {
+      "id": "e2",
+      "md": "jeden Vorrat halbieren"
+     },
+     {
+      "id": "e3",
+      "md": "den Index des ersten leeren Fachs liefern"
+     },
+     {
+      "id": "e4",
+      "md": "prüfen, ob ein Fach mehr als 100 enthält"
+     },
+     {
+      "id": "e5",
+      "md": "zählen, wie oft zwei Nachbarfächer gleich viel enthalten"
+     },
+     {
+      "id": "e6",
+      "md": "den größten Vorrat bestimmen"
+     },
+     {
+      "id": "e7",
+      "md": "die Vorräte von hinten nach vorn ausgeben"
+     }
+    ],
+    "kategorien": [
+     {
+      "id": "for",
+      "md": "nur Zählschleife mit Index"
+     },
+     {
+      "id": "beide",
+      "md": "Zählschleife oder for-each"
+     }
+    ]
+   },
+   "loesung": {
+    "e1": "beide",
+    "e2": "for",
+    "e3": "for",
+    "e4": "beide",
+    "e5": "for",
+    "e6": "beide",
+    "e7": "for"
+   },
+   "tipps": [
+    "Frage dich: Brauche ich den Index i?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "for-each liefert in jedem Durchlauf nur eine **Kopie** des Werts – ohne Index. Das reicht zum Lesen (Summe, Maximum, Suche nach einem Wert). Sobald du **verändern** (`r[i] = …`), eine **Position** liefern, mit **Nachbarn** vergleichen oder **rückwärts** laufen willst, brauchst du die Zählschleife."
+    }
+   ]
+  },
+  {
+   "id": "W0-L3-03",
+   "titel": "Der Sprung durchs Regal",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "code",
+     "code": "int[] r = {5, 8, 1, 9, 3, 7, 2};\nfor (int i = r.length - 2; i >= 0; i = i - 3) {\n    println(r[i]);\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Klicke die Fächer in der Reihenfolge an, in der ihr Wert ausgegeben wird."
+    }
+   ],
+   "interaktion": {
+    "kind": "array",
+    "start": [
+     5,
+     8,
+     1,
+     9,
+     3,
+     7,
+     2
+    ],
+    "modus": "klick"
+   },
+   "loesung": {
+    "folge": [
+     5,
+     2
+    ]
+   },
+   "tipps": [
+    "Berechne zuerst den Startwert r.length − 2."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Die Länge ist 7, also startet i bei 7 − 2 = 5. Danach i = 2, dann i = −1 – die Bedingung `i >= 0` ist falsch. Ausgegeben werden r[5] = 7 und r[2] = 1."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P6**: Startwert und Abbruchbedingung genau ausrechnen, nicht schätzen."
+    }
+   ]
+  },
+  {
+   "id": "W0-L3-04",
+   "titel": "Zwei Schilder, ein Regal",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Objektkarten und Referenzen",
+   "fallen": [
+    "P2"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Überlege ohne Gerät: Was steht nach dem letzten Befehl in den Reihungen, auf die `a`, `b` und `c` verweisen?"
+    },
+    {
+     "t": "code",
+     "code": "int[] a = {3, 5, 7};\nint[] b = a;\nint[] c = new int[3];\nfor (int i = 0; i < a.length; i++) {\n    c[i] = a[i];\n}\nb[0] = 30;\nc[1] = 50;\nb = c;\nb[2] = 70;",
+     "nummern": true
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Variable",
+      "Index 0",
+      "Index 1",
+      "Index 2"
+     ],
+     "zeilen": [
+      [
+       "a",
+       "[[a0]]",
+       "[[a1]]",
+       "[[a2]]"
+      ],
+      [
+       "b",
+       "[[b0]]",
+       "[[b1]]",
+       "[[b2]]"
+      ],
+      [
+       "c",
+       "[[c0]]",
+       "[[c1]]",
+       "[[c2]]"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Werte der Vergleiche: `a == b` → [[ab]] · `b == c` → [[bc]]"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "gaps",
+     "felder": {
+      "a0": {
+       "typ": "zahl"
+      },
+      "a1": {
+       "typ": "zahl"
+      },
+      "a2": {
+       "typ": "zahl"
+      },
+      "b0": {
+       "typ": "zahl"
+      },
+      "b1": {
+       "typ": "zahl"
+      },
+      "b2": {
+       "typ": "zahl"
+      },
+      "c0": {
+       "typ": "zahl"
+      },
+      "c1": {
+       "typ": "zahl"
+      },
+      "c2": {
+       "typ": "zahl"
+      }
+     }
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "ab": {
+       "typ": "auswahl",
+       "optionen": [
+        "true",
+        "false"
+       ]
+      },
+      "bc": {
+       "typ": "auswahl",
+       "optionen": [
+        "true",
+        "false"
+       ]
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "a0": [
+      "30"
+     ],
+     "a1": [
+      "5"
+     ],
+     "a2": [
+      "7"
+     ],
+     "b0": [
+      "3"
+     ],
+     "b1": [
+      "50"
+     ],
+     "b2": [
+      "70"
+     ],
+     "c0": [
+      "3"
+     ],
+     "c1": [
+      "50"
+     ],
+     "c2": [
+      "70"
+     ]
+    },
+    {
+     "ab": [
+      "false"
+     ],
+     "bc": [
+      "true"
+     ]
+    }
+   ],
+   "tipps": [
+    "Zeichne nach jeder Zeile die Pfeile."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`b = a` kopiert nur den Pfeil: `b[0] = 30` ändert die Reihung von `a`. `c` ist eine **echte Kopie** (new + Schleife) – `c[1] = 50` betrifft nur sie. Nach `b = c` zeigt `b` auf die Reihung von `c`, darum ändert `b[2] = 70` diese. `==` vergleicht bei Reihungen die **Pfeile**: a und b zeigen jetzt auf verschiedene Reihungen, b und c auf dieselbe."
+    },
+    {
+     "t": "hinweis",
+     "md": "Wer im Abitur „die Reihung bleibt unverändert“ liest, braucht eine echte Kopie – eine zweite Variable reicht nicht (vgl. Falle **P2**)."
+    }
+   ]
+  },
+  {
+   "id": "W0-L3-05",
+   "titel": "Code-Puzzle: Die Zuwachs-Liste",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Methode implementieren",
+   "fallen": [
+    "P1",
+    "P2",
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Methode `differenzen(r: Reihung von Ganzzahl): Reihung von Ganzzahl` liefert eine **neue** Reihung mit allen Differenzen benachbarter Werte (`r[i + 1] − r[i]`), z. B. `{5, −2, 0, 4}` für `{3, 8, 6, 6, 10}`. `r` enthält mindestens ein Element und bleibt unverändert. Setze die Methode zusammen – nicht alle Teile werden gebraucht."
+    }
+   ],
+   "interaktion": {
+    "kind": "order",
+    "teile": [
+     {
+      "id": "p1",
+      "code": "public static int[] differenzen(int[] r) {"
+     },
+     {
+      "id": "p2",
+      "code": "    int[] d = new int[r.length - 1];"
+     },
+     {
+      "id": "p3",
+      "code": "    for (int i = 0; i < d.length; i++) {"
+     },
+     {
+      "id": "p4",
+      "code": "        d[i] = r[i + 1] - r[i];"
+     },
+     {
+      "id": "p5",
+      "code": "    } // Ende for"
+     },
+     {
+      "id": "p6",
+      "code": "    return d;"
+     },
+     {
+      "id": "p7",
+      "code": "} // Ende Methode"
+     },
+     {
+      "id": "d1",
+      "code": "    int[] d = r;"
+     },
+     {
+      "id": "d2",
+      "code": "    for (int i = 0; i < r.length; i++) {"
+     },
+     {
+      "id": "d3",
+      "code": "        d[i] = r[i] - r[i - 1];"
+     },
+     {
+      "id": "d4",
+      "code": "public static void differenzen(int[] r) {"
+     }
+    ]
+   },
+   "loesung": {
+    "reihenfolgen": [
+     [
+      "p1",
+      "p2",
+      "p3",
+      "p4",
+      "p5",
+      "p6",
+      "p7"
+     ]
+    ]
+   },
+   "tipps": [
+    "Wie viele Differenzen hat eine Reihung mit 5 Werten?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Muster „neue Reihung liefern“: (1) mit `new` in passender Länge anlegen – hier eine weniger als `r`, (2) in der Schleife aus `r` lesen und in `d` schreiben, (3) `d` zurückgeben. Die Schleife läuft über `d.length`, damit `r[i + 1]` gültig bleibt."
+    },
+    {
+     "t": "hinweis",
+     "md": "Fallen: **P2** `int[] d = r;` würde keine neue Reihung anlegen. **P6/P1** `i < r.length` greift im letzten Durchlauf auf `r[r.length]` zu – Absturz."
+    }
+   ]
+  },
+  {
+   "id": "W0-L3-06",
+   "titel": "Die Inventur von hinten",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Methode `umdrehen` kehrt die Reihenfolge **in der Reihung selbst** um. `tausche(r, i, j)` vertauscht `r[i]` und `r[j]`."
+    },
+    {
+     "t": "code",
+     "code": "public static void umdrehen(int[] r) {\n    for (int i = 0; i < r.length / 2; i++) {\n        tausche(r, i, r.length - 1 - i);\n    }\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Führe die Tausche aus, die der Aufruf mit `r = {4, 9, 1, 7, 3, 8}` bewirkt – in der richtigen Reihenfolge."
+    }
+   ],
+   "interaktion": {
+    "kind": "array",
+    "start": [
+     4,
+     9,
+     1,
+     7,
+     3,
+     8
+    ],
+    "modus": "tausch"
+   },
+   "loesung": {
+    "tausche": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      2,
+      3
+     ]
+    ]
+   },
+   "tipps": [
+    "Das Gegenstück zu Index i ist r.length − 1 − i."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Die Schleife läuft nur bis zur **Mitte** (`r.length / 2` = 3 Durchläufe): i = 0 tauscht mit 5, i = 1 mit 4, i = 2 mit 3. Ergebnis: {8, 3, 7, 1, 9, 4}."
+    },
+    {
+     "t": "hinweis",
+     "md": "Liefe die Schleife bis `r.length`, würde jedes Paar **zweimal** getauscht – die Reihung wäre wieder wie vorher (Falle **P6**)."
+    }
+   ]
+  },
+  {
+   "id": "W0-L3-07",
+   "titel": "Bug-Hunt: Doppelte Buchstaben",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P1",
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Methode soll `true` liefern, wenn in `s` zwei **gleiche Zeichen direkt nebeneinander** stehen (z. B. „Troll“). Sie enthält **genau einen** Fehler."
+    },
+    {
+     "t": "code",
+     "code": "public static boolean hatDoppelbuchstaben(String s) {\n    for (int i = 0; i < s.length(); i++) {\n        if (s.charAt(i) == s.charAt(i + 1)) {\n            return true;\n        }\n    }\n    return false;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**a)** Wähle die fehlerhafte Zeile."
+    },
+    {
+     "t": "text",
+     "md": "**b)** Korrigiere die Schleifenbedingung: `for (int i = 0; i < [[g1]]; i++)`"
+    },
+    {
+     "t": "text",
+     "md": "Was passiert **mit** dem Fehler beim Aufruf `hatDoppelbuchstaben(\"Elfe\")`? [[g2]] · und bei `hatDoppelbuchstaben(\"Troll\")`? [[g3]]"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 1,
+     "anzahl": 1
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "text",
+       "breite": 14
+      },
+      "g2": {
+       "typ": "auswahl",
+       "optionen": [
+        "liefert true",
+        "liefert false",
+        "StringIndexOutOfBoundsException"
+       ]
+      },
+      "g3": {
+       "typ": "auswahl",
+       "optionen": [
+        "liefert true",
+        "liefert false",
+        "StringIndexOutOfBoundsException"
+       ]
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      2
+     ]
+    },
+    {
+     "g1": [
+      "s.length() - 1",
+      "(s.length() - 1)"
+     ],
+     "g2": [
+      "StringIndexOutOfBoundsException"
+     ],
+     "g3": [
+      "liefert true"
+     ]
+    }
+   ],
+   "tipps": [
+    "Welcher Index wird im letzten Durchlauf mit charAt(i + 1) gelesen?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Im letzten Durchlauf ist `i = s.length() - 1`, dann liest `s.charAt(i + 1)` hinter dem Ende. Bei „Troll“ fällt das nicht auf: Das Paar „ll“ wird gefunden, bevor das Ende erreicht ist – darum ist der Fehler tückisch. Bei „Elfe“ läuft die Schleife bis zum Ende und stürzt ab."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P1/P6**: Wer `i + 1` liest, muss die Grenze um 1 verkleinern. Teste immer auch einen Fall **ohne** Treffer."
+    }
+   ]
+  },
+  {
+   "id": "W0-L3-08",
+   "titel": "Lückencode: Etiketten ohne Lücken",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Lückencode",
+   "fallen": [
+    "P5",
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Methode `ohneLeerzeichen(s: Zeichenkette): Zeichenkette` liefert `s` ohne alle Leerzeichen, z. B. \"KrautderWeisen\" für \"Kraut der Weisen\". Verwende nur erlaubte Zeichenketten-Operationen. Fülle die Lücken (Java-Code)."
+    },
+    {
+     "t": "code",
+     "code": "public static String ohneLeerzeichen(String s) {\n    String e = [[g1]];\n    for (int i = 0; i < [[g2]]; i++) {\n        char c = [[g3]];\n        if (c [[g4]] ' ') {\n            e = [[g5]];\n        }\n    }\n    return e;\n}",
+     "nummern": true
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "text",
+      "breite": 6
+     },
+     "g2": {
+      "typ": "text",
+      "breite": 12
+     },
+     "g3": {
+      "typ": "text",
+      "breite": 12
+     },
+     "g4": {
+      "typ": "auswahl",
+      "optionen": [
+       "==",
+       "!=",
+       ".equals",
+       "="
+      ]
+     },
+     "g5": {
+      "typ": "text",
+      "breite": 12
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "\"\""
+    ],
+    "g2": [
+     "s.length()"
+    ],
+    "g3": [
+     "s.charAt(i)"
+    ],
+    "g4": [
+     "!="
+    ],
+    "g5": [
+     "e + c",
+     "e + s.charAt(i)",
+     "e + \"\" + c"
+    ]
+   },
+   "tipps": [
+    "Die Schleife besucht jedes Zeichen genau einmal."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Das Ergebnis wird Zeichen für Zeichen mit `+` aufgebaut – Startwert ist die leere Zeichenkette `\"\"`. Ein **Zeichen** (`char`, einfache Anführungszeichen) vergleichst du mit `==` bzw. `!=`; `equals` gibt es nur für Zeichenketten."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P5**: `replace` oder `split` wären bequemer, sind im Abitur aber verboten. Falle **P4**: `' '` (Zeichen) und `\" \"` (Zeichenkette) sind verschiedene Typen."
+    }
+   ]
+  },
+  {
+   "id": "W0-L4-01",
+   "titel": "Den Kopf zerlegen",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Methodenkopf und Signatur",
+   "fallen": [
+    "P3"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Gegeben ist der Methodenkopf"
+    },
+    {
+     "t": "code",
+     "code": "public static String runenName(int nr, boolean gross, char trenner)",
+     "nummern": false
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Name",
+      "Rückgabetyp (Abi)",
+      "Anzahl Parameter",
+      "Typ des 3. Parameters (Abi)"
+     ],
+     "zeilen": [
+      [
+       "[[g1]]",
+       "[[g2]]",
+       "[[g3]]",
+       "[[g4]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "text",
+      "breite": 12
+     },
+     "g2": {
+      "typ": "auswahl",
+      "optionen": [
+       "Ganzzahl",
+       "Kommazahl",
+       "Wahrheitswert",
+       "Zeichen",
+       "Zeichenkette",
+       "nichts"
+      ]
+     },
+     "g3": {
+      "typ": "zahl"
+     },
+     "g4": {
+      "typ": "auswahl",
+      "optionen": [
+       "Ganzzahl",
+       "Kommazahl",
+       "Wahrheitswert",
+       "Zeichen",
+       "Zeichenkette",
+       "nichts"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "runenName"
+    ],
+    "g2": [
+     "Zeichenkette"
+    ],
+    "g3": [
+     "3"
+    ],
+    "g4": [
+     "Zeichen"
+    ]
+   },
+   "tipps": [
+    "Der Rückgabetyp steht in Java direkt vor dem Namen."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Vor dem Namen steht der Rückgabetyp `String` = Zeichenkette. In den Klammern stehen drei Parameter, jeder mit Typ und Name; der dritte ist `char trenner` = Zeichen. Signatur: `runenName(nr: Ganzzahl, gross: Wahrheitswert, trenner: Zeichen): Zeichenkette`."
+    }
+   ]
+  },
+  {
+   "id": "W0-L4-02",
+   "titel": "Das Übersetzungsbüro",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Methodenkopf und Signatur",
+   "fallen": [
+    "P3"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "**a)** Welcher Java-Methodenkopf passt zur Signatur `zaehleUeber(r: Reihung von Kommazahl, grenze: Kommazahl): Ganzzahl`?"
+    },
+    {
+     "t": "text",
+     "md": "**b)** Welche Signatur in Abi-Notation passt zum Kopf `public static void markiere(String[] namen, int pos, char z)`?"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "choice",
+     "optionen": [
+      {
+       "id": "a",
+       "md": "`public static int zaehleUeber(double[] r, double grenze)`"
+      },
+      {
+       "id": "b",
+       "md": "`public static int zaehleUeber(double[] r, grenze)`"
+      },
+      {
+       "id": "c",
+       "md": "`public static zaehleUeber(double[] r, double grenze): int`"
+      },
+      {
+       "id": "d",
+       "md": "`public static double zaehleUeber(double[] r, double grenze)`"
+      },
+      {
+       "id": "e",
+       "md": "`public static int zaehleUeber(double grenze, double[] r)`"
+      }
+     ],
+     "mehrfach": false
+    },
+    {
+     "kind": "choice",
+     "optionen": [
+      {
+       "id": "a",
+       "md": "`markiere(namen: Reihung von Zeichenkette, pos: Ganzzahl, z: Zeichen): nichts`"
+      },
+      {
+       "id": "b",
+       "md": "`markiere(namen: Zeichenkette, pos: Ganzzahl, z: Zeichen): nichts`"
+      },
+      {
+       "id": "c",
+       "md": "`markiere(namen: Reihung von Zeichenkette, pos: Ganzzahl, z: Zeichen)`"
+      },
+      {
+       "id": "d",
+       "md": "`void markiere(namen: Reihung von Zeichenkette, pos: Ganzzahl, z: Zeichen)`"
+      },
+      {
+       "id": "e",
+       "md": "`markiere(namen: Reihung von Zeichenkette, pos: Ganzzahl, z: Zeichenkette): nichts`"
+      }
+     ],
+     "mehrfach": false
+    }
+   ],
+   "loesung": [
+    {
+     "richtig": [
+      "a"
+     ]
+    },
+    {
+     "richtig": [
+      "a"
+     ]
+    }
+   ],
+   "tipps": [
+    "Prüfe Rückgabetyp, Parameterreihenfolge und jeden Parametertyp einzeln."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Übersetzungsregeln: Rückgabetyp nach vorn (Abi: hinten nach dem Doppelpunkt), jeder Parameter „Typ Name“ ohne Doppelpunkt, Reihenfolge der Parameter bleibt, `void` = nichts. Die Abi-Signatur nennt **immer** den Rückgabetyp – auch „nichts“."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P3**: Vertauschte Parameter, fehlende Typen oder ein falscher Rückgabetyp kosten im Abitur BE."
+    }
+   ]
+  },
+  {
+   "id": "W0-L4-03",
+   "titel": "Fünf Köpfe, ein Name",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Methodenkopf und Signatur",
+   "fallen": [
+    "P3"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Alle fünf Methoden heißen `leere`. Ordne jedem Java-Methodenkopf die passende Abi-Signatur zu. Eine Signatur bleibt übrig."
+    }
+   ],
+   "interaktion": {
+    "kind": "match",
+    "elemente": [
+     {
+      "id": "e1",
+      "md": "`public static void leere(int[] r)`"
+     },
+     {
+      "id": "e2",
+      "md": "`public static int[] leere(int r)`"
+     },
+     {
+      "id": "e3",
+      "md": "`public static boolean leere(String r)`"
+     },
+     {
+      "id": "e4",
+      "md": "`public static char leere(String[] r)`"
+     },
+     {
+      "id": "e5",
+      "md": "`public static double leere(int r, double s)`"
+     }
+    ],
+    "kategorien": [
+     {
+      "id": "k1",
+      "md": "`leere(r: Reihung von Ganzzahl): nichts`"
+     },
+     {
+      "id": "k2",
+      "md": "`leere(r: Ganzzahl): Reihung von Ganzzahl`"
+     },
+     {
+      "id": "k3",
+      "md": "`leere(r: Zeichenkette): Wahrheitswert`"
+     },
+     {
+      "id": "k4",
+      "md": "`leere(r: Reihung von Zeichenkette): Zeichen`"
+     },
+     {
+      "id": "k5",
+      "md": "`leere(r: Ganzzahl, s: Kommazahl): Kommazahl`"
+     },
+     {
+      "id": "k6",
+      "md": "`leere(r: Kommazahl, s: Ganzzahl): Kommazahl`"
+     }
+    ]
+   },
+   "loesung": {
+    "e1": "k1",
+    "e2": "k2",
+    "e3": "k3",
+    "e4": "k4",
+    "e5": "k5"
+   },
+   "tipps": [
+    "Beginne mit dem Rückgabetyp – er unterscheidet die meisten Köpfe."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Lies **beide** Seiten vollständig: Rückgabetyp, Anzahl, Reihenfolge und Typen der Parameter. `int[]` ist eine Reihung von Ganzzahl, `String[]` eine Reihung von Zeichenkette. Die Signatur `leere(r: Kommazahl, s: Ganzzahl): Kommazahl` hat die Parametertypen in umgekehrter Reihenfolge – sie passt zu keinem Kopf."
+    }
+   ]
+  },
+  {
+   "id": "W0-L4-04",
+   "titel": "Passt die Zutat?",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Methodenkopf und Signatur",
+   "fallen": [
+    "P3",
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Klasse `Alchemie` enthält drei Klassenoperationen:"
+    },
+    {
+     "t": "code",
+     "code": "public static int preis(int menge) {           // menge * 4\n    return menge * 4;\n}\npublic static boolean reicht(int gold, int kosten) {\n    return gold >= kosten;\n}\npublic static String etikett(String name, int menge) {\n    return name + \" x\" + menge;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**a)** Entscheide für jede Anweisung im Hauptprogramm, ob der Compiler sie akzeptiert."
+    },
+    {
+     "t": "text",
+     "md": "**b)** Gib die Werte bzw. die Ausgabe der akzeptierten Anweisungen an (Zeichenketten ohne Anführungszeichen): p in A: [[pa]] · b in C: [[pc]] · d in E: [[pe]] · Ausgabe von H: [[ph]]"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "match",
+     "elemente": [
+      {
+       "id": "A",
+       "md": "**A** `int p = Alchemie.preis(3) + Alchemie.preis(2);`"
+      },
+      {
+       "id": "B",
+       "md": "**B** `String e = Alchemie.etikett(2, \"Salbe\");`"
+      },
+      {
+       "id": "C",
+       "md": "**C** `boolean b = Alchemie.reicht(Alchemie.preis(5), 20);`"
+      },
+      {
+       "id": "D",
+       "md": "**D** `int z = Alchemie.etikett(\"Salbe\", 1);`"
+      },
+      {
+       "id": "E",
+       "md": "**E** `double d = Alchemie.preis(7);`"
+      },
+      {
+       "id": "F",
+       "md": "**F** `int y = Alchemie.preis(1.5);`"
+      },
+      {
+       "id": "G",
+       "md": "**G** `Alchemie.reicht(10);`"
+      },
+      {
+       "id": "H",
+       "md": "**H** `println(Alchemie.etikett(\"Elixier\", Alchemie.preis(2)));`"
+      }
+     ],
+     "kategorien": [
+      {
+       "id": "ok",
+       "md": "akzeptiert"
+      },
+      {
+       "id": "fehler",
+       "md": "Compilerfehler"
+      }
+     ]
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "pa": {
+       "typ": "zahl"
+      },
+      "pc": {
+       "typ": "auswahl",
+       "optionen": [
+        "true",
+        "false"
+       ]
+      },
+      "pe": {
+       "typ": "zahl"
+      },
+      "ph": {
+       "typ": "text",
+       "breite": 14
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "A": "ok",
+     "B": "fehler",
+     "C": "ok",
+     "D": "fehler",
+     "E": "ok",
+     "F": "fehler",
+     "G": "fehler",
+     "H": "ok"
+    },
+    {
+     "pa": [
+      "20"
+     ],
+     "pc": [
+      "true"
+     ],
+     "pe": [
+      "28.0"
+     ],
+     "ph": [
+      "Elixier x8",
+      "\"Elixier x8\""
+     ]
+    }
+   ],
+   "tipps": [
+    "Prüfe jeden Aufruf: Anzahl der Argumente, Typen in der richtigen Reihenfolge, passt der Rückgabetyp zur Variablen?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "- B: Argumente in falscher Reihenfolge (Ganzzahl an Zeichenkette-Parameter).\n- D: Rückgabe Zeichenkette passt nicht in `int`.\n- F: Eine Kommazahl darf nicht an einen Ganzzahl-Parameter übergeben werden (umgekehrt schon).\n- G: Es fehlt ein Argument.\n- E: Ganzzahl → Kommazahl ist erlaubt, d = 28.0.\n- C: `preis(5)` = 20, und 20 ≥ 20 ist wahr.\n- H: `preis(2)` = 8 ist Argument von `etikett` → \"Elixier x8\"."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P3/P4**: Anzahl, Reihenfolge und Typen der Argumente müssen zu den Parametern passen."
+    }
+   ]
+  },
+  {
+   "id": "W0-L4-05",
+   "titel": "Der Compiler-Detektiv",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P3"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Fünf Lehrlinge haben Zauberformeln abgegeben. Ordne jeder Methode die Reaktion des Compilers zu."
+    },
+    {
+     "t": "text",
+     "md": "**M1**"
+    },
+    {
+     "t": "code",
+     "code": "public static int vorzeichen(int n) {\n    if (n >= 0) {\n        return 1;\n    } else {\n        return -1;\n    }\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**M2**"
+    },
+    {
+     "t": "code",
+     "code": "public static String note(int p) {\n    if (p >= 50) {\n        return \"bestanden\";\n    } else if (p < 50) {\n        return \"durchgefallen\";\n    }\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**M3**"
+    },
+    {
+     "t": "code",
+     "code": "public static int erstesNegatives(int[] r) {\n    for (int x : r) {\n        if (x < 0) {\n            return x;\n        }\n    }\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**M4**"
+    },
+    {
+     "t": "code",
+     "code": "public static boolean gross(int n) {\n    return n > 100;\n    n = 0;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**M5**"
+    },
+    {
+     "t": "code",
+     "code": "public static void zeige(int n) {\n    if (n == 0) {\n        return;\n    }\n    println(n);\n}",
+     "nummern": true
+    }
+   ],
+   "interaktion": {
+    "kind": "match",
+    "elemente": [
+     {
+      "id": "M1",
+      "md": "Methode **M1**"
+     },
+     {
+      "id": "M2",
+      "md": "Methode **M2**"
+     },
+     {
+      "id": "M3",
+      "md": "Methode **M3**"
+     },
+     {
+      "id": "M4",
+      "md": "Methode **M4**"
+     },
+     {
+      "id": "M5",
+      "md": "Methode **M5**"
+     }
+    ],
+    "kategorien": [
+     {
+      "id": "ok",
+      "md": "wird akzeptiert"
+     },
+     {
+      "id": "missing",
+      "md": "Fehler: missing return statement"
+     },
+     {
+      "id": "unreach",
+      "md": "Fehler: unreachable statement"
+     }
+    ]
+   },
+   "loesung": {
+    "M1": "ok",
+    "M2": "missing",
+    "M3": "missing",
+    "M4": "unreach",
+    "M5": "ok"
+   },
+   "tipps": [
+    "Was liefert die Methode, wenn die Schleife ohne Treffer endet?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Der Compiler prüft, ob **jeder** mögliche Ablauf mit `return` endet – **ohne** die Bedingungen zu verstehen. Bei M2 sieht er nach dem `else if` keinen Zweig für den Rest, bei M3 fehlt die Rückgabe, wenn die Schleife ohne Treffer endet. Bei M4 steht eine Anweisung hinter `return` – sie kann nie erreicht werden. M1 hat ein `else`, M5 ist `void` und darf mit `return;` vorzeitig enden."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P3**: Rückgabe fehlt auf einem Pfad. Abhilfe: ein abschließendes `return` nach der Verzweigung bzw. nach der Schleife."
+    }
+   ]
+  },
+  {
+   "id": "W0-L4-06",
+   "titel": "Das Aufrufprotokoll des Maximums",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`maxAlle` ruft die Hilfsmethode `max2` auf."
+    },
+    {
+     "t": "code",
+     "code": "public static int max2(int a, int b) {\n    if (a > b) {\n        return a;\n    }\n    return b;\n}\npublic static int maxAlle(int[] r) {      // r ist nicht leer\n    int m = r[0];\n    for (int i = 1; i < r.length; i++) {\n        m = max2(m, r[i]);\n    }\n    return m;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Erstelle das Aufrufprotokoll für `maxAlle({7, 12, 4, 15})`: eine Zeile pro Aufruf von `max2`. Den Aufruf schreibst du wie in Java mit den **Werten** der Argumente, z. B. `max2(1, 2)`."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "i",
+      "Aufruf von max2",
+      "Rückgabe",
+      "m"
+     ],
+     "zeilen": [
+      [
+       "vor der Schleife",
+       "–",
+       "–",
+       "7"
+      ],
+      [
+       "1",
+       "[[a1]]",
+       "[[r1]]",
+       "[[m1]]"
+      ],
+      [
+       "2",
+       "[[a2]]",
+       "[[r2]]",
+       "[[m2]]"
+      ],
+      [
+       "3",
+       "[[a3]]",
+       "[[r3]]",
+       "[[m3]]"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Rückgabewert von `maxAlle`: [[ret]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "a1": {
+      "typ": "text",
+      "breite": 12
+     },
+     "a2": {
+      "typ": "text",
+      "breite": 12
+     },
+     "a3": {
+      "typ": "text",
+      "breite": 12
+     },
+     "r1": {
+      "typ": "zahl"
+     },
+     "r2": {
+      "typ": "zahl"
+     },
+     "r3": {
+      "typ": "zahl"
+     },
+     "m1": {
+      "typ": "zahl"
+     },
+     "m2": {
+      "typ": "zahl"
+     },
+     "m3": {
+      "typ": "zahl"
+     },
+     "ret": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "a1": [
+     "max2(7, 12)"
+    ],
+    "r1": [
+     "12"
+    ],
+    "m1": [
+     "12"
+    ],
+    "a2": [
+     "max2(12, 4)"
+    ],
+    "r2": [
+     "12"
+    ],
+    "m2": [
+     "12"
+    ],
+    "a3": [
+     "max2(12, 15)"
+    ],
+    "r3": [
+     "15"
+    ],
+    "m3": [
+     "15"
+    ],
+    "ret": [
+     "15"
+    ]
+   },
+   "tipps": [
+    "Im ersten Durchlauf ist m = 7 und r[1] = 12."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Beim Aufruf werden die **aktuellen Werte** von `m` und `r[i]` in die Parameter `a` und `b` kopiert. `maxAlle` wartet, bis `max2` liefert, und speichert die Rückgabe in `m`. Drei Aufrufe für vier Elemente, weil die Schleife bei Index 1 beginnt."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P8**: Im Aufrufprotokoll stehen die Argumente als Werte, nicht als Variablennamen."
+    }
+   ]
+  },
+  {
+   "id": "W0-L4-07",
+   "titel": "Der Eintritt zur Turmbibliothek",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Code ↔ Struktogramm",
+   "fallen": [
+    "P9",
+    "P3"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "**a)** Vervollständige das Struktogramm zur Methode nach EH § 5."
+    },
+    {
+     "t": "code",
+     "code": "public static int ticketPreis(int alter, boolean mitglied) {\n    int preis = 12;\n    if (alter < 18) {\n        preis = 6;\n    }\n    if (mitglied) {\n        preis = preis - 2;\n    }\n    return preis;\n}",
+     "nummern": true
+    },
+    {
+     "t": "struktogramm",
+     "kopf": "[[k]]",
+     "rumpf": [
+      {
+       "anw": "preis ← 12"
+      },
+      {
+       "wenn": "[[b1]]",
+       "dann": [
+        {
+         "anw": "[[a1]]"
+        }
+       ],
+       "sonst": []
+      },
+      {
+       "wenn": "mitglied",
+       "dann": [
+        {
+         "anw": "[[a2]]"
+        }
+       ],
+       "sonst": []
+      },
+      {
+       "gib": "[[r]]"
+      }
+     ]
+    },
+    {
+     "t": "text",
+     "md": "**b)** Gib die Rückgabewerte an: `ticketPreis(15, true)` → [[p1]] · `ticketPreis(30, false)` → [[p2]] · `ticketPreis(18, true)` → [[p3]]"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "gaps",
+     "felder": {
+      "k": {
+       "typ": "auswahl",
+       "optionen": [
+        "ticketPreis(alter: Ganzzahl, mitglied: Wahrheitswert): Ganzzahl",
+        "ticketPreis(alter: Ganzzahl, mitglied: Wahrheitswert)",
+        "int ticketPreis(int alter, boolean mitglied)",
+        "ticketPreis(mitglied: Wahrheitswert, alter: Ganzzahl): Ganzzahl"
+       ]
+      },
+      "b1": {
+       "typ": "auswahl",
+       "optionen": [
+        "alter < 18",
+        "alter ≤ 18",
+        "alter > 18",
+        "alter < 18 und mitglied"
+       ]
+      },
+      "a1": {
+       "typ": "auswahl",
+       "optionen": [
+        "preis ← 6",
+        "preis = 6",
+        "gib 6 zurück",
+        "preis == 6"
+       ]
+      },
+      "a2": {
+       "typ": "auswahl",
+       "optionen": [
+        "preis ← preis − 2",
+        "preis − 2",
+        "preis = preis − 2",
+        "gib preis − 2 zurück"
+       ]
+      },
+      "r": {
+       "typ": "text",
+       "breite": 8
+      }
+     }
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "p1": {
+       "typ": "zahl"
+      },
+      "p2": {
+       "typ": "zahl"
+      },
+      "p3": {
+       "typ": "zahl"
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "k": [
+      "ticketPreis(alter: Ganzzahl, mitglied: Wahrheitswert): Ganzzahl"
+     ],
+     "b1": [
+      "alter < 18"
+     ],
+     "a1": [
+      "preis ← 6"
+     ],
+     "a2": [
+      "preis ← preis − 2"
+     ],
+     "r": [
+      "preis"
+     ]
+    },
+    {
+     "p1": [
+      "4"
+     ],
+     "p2": [
+      "12"
+     ],
+     "p3": [
+      "10"
+     ]
+    }
+   ],
+   "tipps": [
+    "Die zweite Verzweigung wird immer geprüft – egal, wie die erste ausgeht."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Der Kopf enthält die vollständige Signatur mit Rückgabetyp. Zwei **unabhängige** Verzweigungen ohne Falsch-Zweig, Zuweisungen mit ←. `gib … zurück` steht am Ende. 15 Jahre und Mitglied: 6 − 2 = 4; mit 18 gilt der volle Preis: 12 − 2 = 10."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P9**: Im Struktogramm keine Java-Syntax. Ein `return` mitten in der ersten Verzweigung würde die Mitglieder-Ermäßigung überspringen."
+    }
+   ]
+  },
+  {
+   "id": "W0-L4-08",
+   "titel": "Code-Puzzle: Die Zauberzahlen",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Methode implementieren",
+   "fallen": [
+    "P6",
+    "P3"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Methode `anzahlZauberzahlen(von: Ganzzahl, bis: Ganzzahl): Ganzzahl` liefert, wie viele der Zahlen von `von` bis `bis` (**beide einschließlich**) Zauberzahlen sind. Die Methode `istZauberzahl(n: Ganzzahl): Wahrheitswert` ist bereits implementiert und **soll verwendet werden**. Ist `von > bis`, wird 0 geliefert. Setze die Methode zusammen – nicht alle Teile werden gebraucht."
+    }
+   ],
+   "interaktion": {
+    "kind": "order",
+    "teile": [
+     {
+      "id": "p1",
+      "code": "public static int anzahlZauberzahlen(int von, int bis) {"
+     },
+     {
+      "id": "p2",
+      "code": "    int anzahl = 0;"
+     },
+     {
+      "id": "p3",
+      "code": "    for (int z = von; z <= bis; z++) {"
+     },
+     {
+      "id": "p4",
+      "code": "        if (istZauberzahl(z)) {"
+     },
+     {
+      "id": "p5",
+      "code": "            anzahl++;"
+     },
+     {
+      "id": "p6",
+      "code": "        } // Ende if"
+     },
+     {
+      "id": "p7",
+      "code": "    } // Ende for"
+     },
+     {
+      "id": "p8",
+      "code": "    return anzahl;"
+     },
+     {
+      "id": "p9",
+      "code": "} // Ende Methode"
+     },
+     {
+      "id": "d1",
+      "code": "    for (int z = von; z < bis; z++) {"
+     },
+     {
+      "id": "d2",
+      "code": "        if (istZauberzahl(z) == \"true\") {"
+     },
+     {
+      "id": "d3",
+      "code": "        istZauberzahl(z);"
+     },
+     {
+      "id": "d4",
+      "code": "public static void anzahlZauberzahlen(int von, int bis) {"
+     }
+    ]
+   },
+   "loesung": {
+    "reihenfolgen": [
+     [
+      "p1",
+      "p2",
+      "p3",
+      "p4",
+      "p5",
+      "p6",
+      "p7",
+      "p8",
+      "p9"
+     ]
+    ]
+   },
+   "tipps": [
+    "„einschließlich“ bedeutet <=."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Der Zähler wird vor der Schleife mit 0 belegt; die Schleife läuft von `von` **bis einschließlich** `bis` (`<=`). Die Hilfsmethode liefert einen Wahrheitswert – den kannst du direkt als Bedingung verwenden. Die Rückgabe steht nach der Schleife. Für `von > bis` läuft die Schleife nie: Rückgabe 0."
+    },
+    {
+     "t": "hinweis",
+     "md": "Fallen: **P6** `z < bis` lässt die letzte Zahl aus. `istZauberzahl(z) == \"true\"` vergleicht einen Wahrheitswert mit einer Zeichenkette (Compilerfehler). Ein Aufruf ohne Verwendung der Rückgabe (`istZauberzahl(z);`) bewirkt nichts."
+    }
+   ]
+  },
+  {
+   "id": "W0-L5-01",
+   "titel": "Zahl oder Pfeil?",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Objektkarten und Referenzen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "code",
+     "code": "public static void verdreifache(int n) {\n    n = n * 3;\n}\npublic static void verdreifacheAlle(int[] r) {\n    for (int i = 0; i < r.length; i++) {\n        r[i] = r[i] * 3;\n    }\n}\n// Hauptprogramm\nint x = 4;\nint[] t = {1, 2};\nverdreifache(x);\nverdreifacheAlle(t);\nprintln(x + \" \" + t[0] + \" \" + t[1]);",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Die Ausgabe lautet: [[g1]] [[g2]] [[g3]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "zahl"
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "4"
+    ],
+    "g2": [
+     "3"
+    ],
+    "g3": [
+     "6"
+    ]
+   },
+   "tipps": [
+    "Was genau steht in der Variablen t – die Werte oder ein Verweis?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`verdreifache` bekommt eine **Kopie der Zahl** 4 – `n` wird 12, `x` bleibt 4. `verdreifacheAlle` bekommt eine Kopie des **Pfeils**: `r` und `t` zeigen auf dieselbe Reihung, also ist die Änderung über `r` auch in `t` sichtbar: {3, 6}."
+    }
+   ]
+  },
+  {
+   "id": "W0-L5-02",
+   "titel": "In der Reihung oder neu?",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Methodenkopf und Signatur",
+   "fallen": [
+    "P2",
+    "P3"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Ordne jede Beschreibung zu: Arbeitet die Methode **in der Reihung** (Rückgabetyp nichts) oder liefert sie eine **neue Reihung** (Rückgabetyp Reihung von Ganzzahl)?"
+    }
+   ],
+   "interaktion": {
+    "kind": "match",
+    "elemente": [
+     {
+      "id": "e1",
+      "md": "**begrenze** setzt jeden Wert in r, der größer als 100 ist, auf 100."
+     },
+     {
+      "id": "e2",
+      "md": "**quadriert** liefert eine Reihung mit den Quadraten der Werte von r; r bleibt unverändert."
+     },
+     {
+      "id": "e3",
+      "md": "**mische** vertauscht die Elemente von r zufällig."
+     },
+     {
+      "id": "e4",
+      "md": "**nurPositive** liefert eine Reihung, die genau die positiven Werte von r enthält."
+     },
+     {
+      "id": "e5",
+      "md": "**verschiebeLinks** rückt alle Werte von r einen Index nach links; der erste Wert wandert ans Ende."
+     },
+     {
+      "id": "e6",
+      "md": "**teilreihung** liefert die Elemente von r von Index a bis Index b."
+     }
+    ],
+    "kategorien": [
+     {
+      "id": "inplace",
+      "md": "verändert r – Rückgabetyp nichts (`void`)"
+     },
+     {
+      "id": "neu",
+      "md": "liefert neue Reihung – Rückgabetyp Reihung von Ganzzahl (`int[]`)"
+     }
+    ]
+   },
+   "loesung": {
+    "e1": "inplace",
+    "e2": "neu",
+    "e3": "inplace",
+    "e4": "neu",
+    "e5": "inplace",
+    "e6": "neu"
+   },
+   "tipps": [
+    "Achte auf die Verben im Text: „setzt“ oder „liefert“?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Formulierungen wie „setzt“, „vertauscht“, „rückt“ beschreiben eine Änderung **in** r → `void`, Muster `r[i] = …`. „liefert eine Reihung“ verlangt `new` und `return`. Hat das Ergebnis eine **andere Länge** (nurPositive, teilreihung), geht es ohnehin nur mit einer neuen Reihung."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P2/P3**: Falscher Rückgabetyp oder das Original verändert, obwohl „r bleibt unverändert“ gefordert ist."
+    }
+   ]
+  },
+  {
+   "id": "W0-L5-03",
+   "titel": "Der Ringzauber",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`rotiereRechts` verschiebt alle Werte um einen Platz nach rechts; der letzte Wert wandert nach vorn. `tausche(r, i, j)` vertauscht `r[i]` und `r[j]`."
+    },
+    {
+     "t": "code",
+     "code": "public static void rotiereRechts(int[] r) {\n    for (int i = r.length - 1; i >= 1; i--) {\n        tausche(r, i, i - 1);\n    }\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Führe die Tausche des Aufrufs mit `r = {8, 5, 2, 9}` in der richtigen Reihenfolge aus."
+    }
+   ],
+   "interaktion": {
+    "kind": "array",
+    "start": [
+     8,
+     5,
+     2,
+     9
+    ],
+    "modus": "tausch"
+   },
+   "loesung": {
+    "tausche": [
+     [
+      3,
+      2
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      1,
+      0
+     ]
+    ]
+   },
+   "tipps": [
+    "Beginne mit i = r.length − 1 = 3."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Die Schleife läuft **rückwärts** von 3 bis 1: (3, 2), (2, 1), (1, 0). Die 9 „wandert“ dabei Schritt für Schritt nach vorn: {8, 5, 9, 2} → {8, 9, 5, 2} → {9, 8, 5, 2}. Die Methode ist `void` – sie verändert die übergebene Reihung selbst."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P6**: Die Schleife endet bei i = 1, sonst würde `r[-1]` gelesen."
+    }
+   ]
+  },
+  {
+   "id": "W0-L5-04",
+   "titel": "Original oder Kopie?",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Objektkarten und Referenzen",
+   "fallen": [
+    "P2"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Vier Zauberformeln und ein Hauptprogramm. Überlege ohne Gerät!"
+    },
+    {
+     "t": "code",
+     "code": "public static void plusEins(int[] r) {\n    for (int i = 0; i < r.length; i++) {\n        r[i] = r[i] + 1;\n    }\n}\npublic static int[] plusEinsKopie(int[] r) {\n    int[] n = new int[r.length];\n    for (int i = 0; i < r.length; i++) {\n        n[i] = r[i] + 1;\n    }\n    return n;\n}\npublic static void ersetze(int[] r) {\n    r = new int[3];\n    r[0] = 9;\n}\npublic static int[] ersteNull(int[] r) {\n    r[0] = 0;\n    return r;\n}\n// Hauptprogramm\nint[] a = {5, 6, 7};\nplusEins(a);\nint[] b = plusEinsKopie(a);\nersetze(b);\nint[] c = ersteNull(b);\nc[2] = 1;\nprintln(a[0] + \" \" + a[1] + \" \" + a[2]);\nprintln(b[0] + \" \" + b[1] + \" \" + b[2]);\nprintln(b == c);\nprintln(a == b);",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Ausgabe 1: [[a0]] [[a1]] [[a2]] · Ausgabe 2: [[b0]] [[b1]] [[b2]]"
+    },
+    {
+     "t": "text",
+     "md": "Ausgabe 3: [[bc]] · Ausgabe 4: [[ab]]"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "gaps",
+     "felder": {
+      "a0": {
+       "typ": "zahl"
+      },
+      "a1": {
+       "typ": "zahl"
+      },
+      "a2": {
+       "typ": "zahl"
+      },
+      "b0": {
+       "typ": "zahl"
+      },
+      "b1": {
+       "typ": "zahl"
+      },
+      "b2": {
+       "typ": "zahl"
+      }
+     }
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "bc": {
+       "typ": "auswahl",
+       "optionen": [
+        "true",
+        "false"
+       ]
+      },
+      "ab": {
+       "typ": "auswahl",
+       "optionen": [
+        "true",
+        "false"
+       ]
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "a0": [
+      "6"
+     ],
+     "a1": [
+      "7"
+     ],
+     "a2": [
+      "8"
+     ],
+     "b0": [
+      "0"
+     ],
+     "b1": [
+      "8"
+     ],
+     "b2": [
+      "1"
+     ]
+    },
+    {
+     "bc": [
+      "true"
+     ],
+     "ab": [
+      "false"
+     ]
+    }
+   ],
+   "tipps": [
+    "Zeichne für jede Reihung ein Kästchen und für jede Variable einen Pfeil."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "- `plusEins(a)` ändert den Inhalt von `a` → {6, 7, 8}.\n- `plusEinsKopie(a)` legt mit `new` eine **neue** Reihung an → b = {7, 8, 9}, a bleibt.\n- `ersetze(b)` lenkt nur den lokalen Pfeil `r` um – `b` merkt nichts.\n- `ersteNull(b)` ändert `b[0]` und gibt **denselben Pfeil** zurück: c und b zeigen auf dieselbe Reihung. Darum ändert `c[2] = 1` auch b → {0, 8, 1}.\n- `b == c` ist true (gleicher Pfeil), `a == b` false."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P2**: `ersteNull` liefert keine neue Reihung, sondern verändert das Original. Das passiert immer, wenn kein `new` vorkommt."
+    }
+   ]
+  },
+  {
+   "id": "W0-L5-05",
+   "titel": "Bug-Hunt: Das abgerundete Lager",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P2"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`abgerundet(r: Reihung von Ganzzahl): Reihung von Ganzzahl` soll eine **neue** Reihung liefern, in der jeder Wert auf volle Zehner abgerundet ist (47 → 40). `r` soll unverändert bleiben. Die Methode enthält **genau einen** Fehler."
+    },
+    {
+     "t": "code",
+     "code": "public static int[] abgerundet(int[] r) {\n    int[] erg = r;\n    for (int i = 0; i < r.length; i++) {\n        erg[i] = r[i] / 10 * 10;\n    }\n    return erg;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**a)** Wähle die fehlerhafte Zeile."
+    },
+    {
+     "t": "text",
+     "md": "**b)** Korrigiere: `int[] erg = [[g1]];`"
+    },
+    {
+     "t": "text",
+     "md": "Mit dem Fehler gibt `int[] p = {47, 5, 120}; int[] q = abgerundet(p); println(p[0] + \" \" + q[0]);` diese Werte aus: `p[0]` = [[g2]], `q[0]` = [[g3]]"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 1,
+     "anzahl": 1
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "text",
+       "breite": 16
+      },
+      "g2": {
+       "typ": "zahl"
+      },
+      "g3": {
+       "typ": "zahl"
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      2
+     ]
+    },
+    {
+     "g1": [
+      "new int[r.length]"
+     ],
+     "g2": [
+      "40"
+     ],
+     "g3": [
+      "40"
+     ]
+    }
+   ],
+   "tipps": [
+    "Wie viele Reihungen gibt es nach Zeile 2?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`int[] erg = r;` legt **keine** neue Reihung an – `erg` und `r` zeigen auf dieselbe. Darum wird das Original überschrieben: p[0] und q[0] sind beide 40. Richtig ist `new int[r.length]`; dann bleibt p = {47, 5, 120} und q = {40, 0, 120}."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P2**: „liefert eine neue Reihung“ ohne `new` in der Methode – das Original wird zerstört."
+    }
+   ]
+  },
+  {
+   "id": "W0-L5-06",
+   "titel": "Der Weg des Boten",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Ein Bote läuft der Reihe nach zu den Orten (Positionen auf einer Straße). `gesamtweg` nutzt die Hilfsmethode `abstand`."
+    },
+    {
+     "t": "code",
+     "code": "public static int abstand(int a, int b) {\n    if (a > b) {\n        return a - b;\n    }\n    return b - a;\n}\npublic static int gesamtweg(int[] orte) {\n    int weg = 0;\n    for (int i = 1; i < orte.length; i++) {\n        weg = weg + abstand(orte[i - 1], orte[i]);\n    }\n    return weg;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**a)** Vervollständige das Aufrufprotokoll für `gesamtweg({3, 8, 2, 2, 10})`."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "i",
+      "Aufruf",
+      "Rückgabe",
+      "weg"
+     ],
+     "zeilen": [
+      [
+       "vor der Schleife",
+       "–",
+       "–",
+       "0"
+      ],
+      [
+       "1",
+       "abstand(3, 8)",
+       "[[r1]]",
+       "[[w1]]"
+      ],
+      [
+       "2",
+       "abstand(8, 2)",
+       "[[r2]]",
+       "[[w2]]"
+      ],
+      [
+       "3",
+       "abstand(2, 2)",
+       "[[r3]]",
+       "[[w3]]"
+      ],
+      [
+       "4",
+       "abstand(2, 10)",
+       "[[r4]]",
+       "[[w4]]"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Rückgabewert: [[ret]]"
+    },
+    {
+     "t": "text",
+     "md": "**b)** Wie oft wird `abstand` bei einer Reihung der Länge n ≥ 1 aufgerufen?"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "gaps",
+     "felder": {
+      "r1": {
+       "typ": "zahl"
+      },
+      "r2": {
+       "typ": "zahl"
+      },
+      "r3": {
+       "typ": "zahl"
+      },
+      "r4": {
+       "typ": "zahl"
+      },
+      "w1": {
+       "typ": "zahl"
+      },
+      "w2": {
+       "typ": "zahl"
+      },
+      "w3": {
+       "typ": "zahl"
+      },
+      "w4": {
+       "typ": "zahl"
+      },
+      "ret": {
+       "typ": "zahl"
+      }
+     }
+    },
+    {
+     "kind": "choice",
+     "optionen": [
+      {
+       "id": "a",
+       "md": "n-mal"
+      },
+      {
+       "id": "b",
+       "md": "(n − 1)-mal"
+      },
+      {
+       "id": "c",
+       "md": "(n + 1)-mal"
+      },
+      {
+       "id": "d",
+       "md": "2 · n-mal"
+      }
+     ],
+     "mehrfach": false
+    }
+   ],
+   "loesung": [
+    {
+     "r1": [
+      "5"
+     ],
+     "w1": [
+      "5"
+     ],
+     "r2": [
+      "6"
+     ],
+     "w2": [
+      "11"
+     ],
+     "r3": [
+      "0"
+     ],
+     "w3": [
+      "11"
+     ],
+     "r4": [
+      "8"
+     ],
+     "w4": [
+      "19"
+     ],
+     "ret": [
+      "19"
+     ]
+    },
+    {
+     "richtig": [
+      "b"
+     ]
+    }
+   ],
+   "tipps": [
+    "abstand(8, 2): Welcher Zweig wird ausgeführt?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`abstand` liefert immer den **Betrag** der Differenz. Summe: 5 + 6 + 0 + 8 = 19. Die Schleife beginnt bei 1, weil jeweils der Vorgänger `orte[i - 1]` gebraucht wird – bei n Orten gibt es n − 1 Wegstücke und damit n − 1 Aufrufe."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P8**: Auch Durchläufe, in denen sich `weg` nicht ändert (Rückgabe 0), gehören ins Protokoll."
+    }
+   ]
+  },
+  {
+   "id": "W0-L5-07",
+   "titel": "Lückencode: Der Bonuszauber",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Lückencode",
+   "fallen": [
+    "P2",
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`mitBonus(r: Reihung von Ganzzahl, bonus: Ganzzahl, grenze: Ganzzahl): Reihung von Ganzzahl` liefert eine **neue** Reihung: Werte unter `grenze` werden um `bonus` erhöht, alle anderen übernommen. Beispiel: `mitBonus({12, 30, 7, 25}, 5, 25)` liefert `{17, 30, 12, 25}`. `r` bleibt unverändert. Fülle die Lücken (Java-Code)."
+    },
+    {
+     "t": "code",
+     "code": "public static int[] mitBonus(int[] r, int bonus, int grenze) {\n    int[] neu = [[g1]];\n    for (int i = 0; i < [[g2]]; i++) {\n        if (r[i] < grenze) {\n            neu[i] = [[g3]];\n        } else {\n            neu[i] = [[g4]];\n        }\n    }\n    return [[g5]];\n}",
+     "nummern": true
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "text",
+      "breite": 16
+     },
+     "g2": {
+      "typ": "text",
+      "breite": 10
+     },
+     "g3": {
+      "typ": "text",
+      "breite": 12
+     },
+     "g4": {
+      "typ": "text",
+      "breite": 8
+     },
+     "g5": {
+      "typ": "text",
+      "breite": 6
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "new int[r.length]"
+    ],
+    "g2": [
+     "r.length",
+     "neu.length"
+    ],
+    "g3": [
+     "r[i] + bonus",
+     "bonus + r[i]"
+    ],
+    "g4": [
+     "r[i]"
+    ],
+    "g5": [
+     "neu"
+    ]
+   },
+   "tipps": [
+    "Vergiss den else-Zweig nicht: Was steht sonst in neu[i]?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Die neue Reihung bekommt dieselbe Länge wie `r`. In der Schleife wird nur **gelesen** aus `r` und **geschrieben** in `neu` – auch die unveränderten Werte müssen übertragen werden, sonst stünde dort 0. Am Ende wird `neu` zurückgegeben."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P2**: `neu[i] = …` statt `r[i] = …` – sonst wäre das Original verändert. Falle **P6**: Grenze `< r.length`, nicht `<=`."
+    }
+   ]
+  },
+  {
+   "id": "W0-L5-08",
+   "titel": "Code-Puzzle: Der Paartanz",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Methode implementieren",
+   "fallen": [
+    "P1",
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`tauscheNachbarn(r: Reihung von Ganzzahl): nichts` vertauscht in `r` jeweils die Paare an den Indizes 0/1, 2/3, 4/5, … Bei ungerader Länge bleibt das letzte Element stehen: `{1, 2, 3, 4, 5}` wird `{2, 1, 4, 3, 5}`. Schreibe dazu eine Hilfsmethode `tausche(r: Reihung von Ganzzahl, i: Ganzzahl, j: Ganzzahl): nichts` und verwende sie. Setze **beide** Methoden zusammen (Reihenfolge der Methoden beliebig) – nicht alle Teile werden gebraucht."
+    }
+   ],
+   "interaktion": {
+    "kind": "order",
+    "teile": [
+     {
+      "id": "h1",
+      "code": "public static void tausche(int[] r, int i, int j) {"
+     },
+     {
+      "id": "h2",
+      "code": "    int h = r[i];"
+     },
+     {
+      "id": "h3",
+      "code": "    r[i] = r[j];"
+     },
+     {
+      "id": "h4",
+      "code": "    r[j] = h;"
+     },
+     {
+      "id": "h5",
+      "code": "} // Ende tausche"
+     },
+     {
+      "id": "m1",
+      "code": "public static void tauscheNachbarn(int[] r) {"
+     },
+     {
+      "id": "m2",
+      "code": "    for (int i = 0; i + 1 < r.length; i = i + 2) {"
+     },
+     {
+      "id": "m3",
+      "code": "        tausche(r, i, i + 1);"
+     },
+     {
+      "id": "m4",
+      "code": "    } // Ende for"
+     },
+     {
+      "id": "m5",
+      "code": "} // Ende tauscheNachbarn"
+     },
+     {
+      "id": "d1",
+      "code": "public static void tausche(int a, int b) {"
+     },
+     {
+      "id": "d2",
+      "code": "        tausche(r[i], r[i + 1]);"
+     },
+     {
+      "id": "d3",
+      "code": "    for (int i = 0; i < r.length; i = i + 2) {"
+     },
+     {
+      "id": "d4",
+      "code": "    return r;"
+     }
+    ]
+   },
+   "loesung": {
+    "reihenfolgen": [
+     [
+      "h1",
+      "h2",
+      "h3",
+      "h4",
+      "h5",
+      "m1",
+      "m2",
+      "m3",
+      "m4",
+      "m5"
+     ],
+     [
+      "m1",
+      "m2",
+      "m3",
+      "m4",
+      "m5",
+      "h1",
+      "h2",
+      "h3",
+      "h4",
+      "h5"
+     ]
+    ]
+   },
+   "tipps": [
+    "Welche Parameter braucht tausche, damit die Änderung im Original ankommt?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Die Hilfsmethode bekommt die **Reihung** und zwei Indizes – nur so wirkt der Tausch nach außen (Referenz). Mit `tausche(int a, int b)` würden nur Kopien der Zahlen vertauscht (Wertübergabe), die Reihung bliebe gleich. Die Bedingung `i + 1 < r.length` stellt sicher, dass es zu jedem i einen Partner gibt; `i = i + 2` springt zum nächsten Paar. Beide Methoden sind `void` – kein `return r`."
+    },
+    {
+     "t": "hinweis",
+     "md": "Fallen **P1/P6**: Mit `i < r.length` würde bei ungerader Länge `r[r.length]` gelesen – Absturz."
+    }
+   ]
+  },
+  {
+   "id": "W0-L6-01",
+   "titel": "Fehler-Bingo",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P1",
+    "P4",
+    "P5",
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Jeder Schnipsel enthält **genau einen** Fehler aus der Fehlergalerie. Ordne die Fehlernummer zu (nicht alle Nummern kommen vor)."
+    }
+   ],
+   "interaktion": {
+    "kind": "match",
+    "elemente": [
+     {
+      "id": "s1",
+      "md": "`for (int i = 0; i <= r.length; i++) { s = s + r[i]; }` – Summe aller Werte"
+     },
+     {
+      "id": "s2",
+      "md": "`if (titel == \"Runenlehre\") { … }` – Titel prüfen"
+     },
+     {
+      "id": "s3",
+      "md": "`double quote = treffer / versuche;` – Anteil (treffer, versuche sind Ganzzahlen)"
+     },
+     {
+      "id": "s4",
+      "md": "`for (int x : r) { if (x > 0) { return true; } else { return false; } }` – Gibt es irgendeinen positiven Wert?"
+     },
+     {
+      "id": "s5",
+      "md": "`int groesstes = 0; for (int x : r) { if (x > groesstes) { groesstes = x; } }` – Maximum (r nicht leer)"
+     },
+     {
+      "id": "s6",
+      "md": "`int[] sicher = r; sicher[0] = -1;` – r soll unverändert bleiben"
+     },
+     {
+      "id": "s7",
+      "md": "`return s.charAt(s.length() - 1);` – letztes Zeichen; s darf leer sein"
+     },
+     {
+      "id": "s8",
+      "md": "`public static int summeAb(int[] r, int k) { k = 2; …` – Summe ab Index k"
+     }
+    ],
+    "kategorien": [
+     {
+      "id": "F1",
+      "md": "F1 fehlender Rückgabepfad"
+     },
+     {
+      "id": "F2",
+      "md": "F2 Off-by-one"
+     },
+     {
+      "id": "F3",
+      "md": "F3 = statt =="
+     },
+     {
+      "id": "F4",
+      "md": "F4 ganzzahlige Division"
+     },
+     {
+      "id": "F5",
+      "md": "F5 Parameter überschrieben"
+     },
+     {
+      "id": "F6",
+      "md": "F6 Rückgabe in der Schleife zu früh"
+     },
+     {
+      "id": "F7",
+      "md": "F7 Reihung verändert statt Kopie"
+     },
+     {
+      "id": "F8",
+      "md": "F8 == statt equals"
+     },
+     {
+      "id": "F9",
+      "md": "F9 Leer-Abfrage vergessen"
+     },
+     {
+      "id": "F10",
+      "md": "F10 falscher Startwert bei Maximum/Minimum"
+     }
+    ]
+   },
+   "loesung": {
+    "s1": "F2",
+    "s2": "F8",
+    "s3": "F4",
+    "s4": "F6",
+    "s5": "F10",
+    "s6": "F7",
+    "s7": "F9",
+    "s8": "F5"
+   },
+   "tipps": [
+    "Lies die Absicht in jeder Zeile genau – sie verrät, was schiefgeht."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "- `<=` mit `length` greift auf `r[r.length]` zu (F2).\n- Zeichenketten mit `equals` vergleichen (F8).\n- 3 / 4 ergibt 0 (F4).\n- Ein `return` in **beiden** Zweigen beendet die Schleife nach dem ersten Element (F6).\n- Startwert 0 ist falsch, wenn alle Werte negativ sind (F10).\n- `sicher = r` kopiert nur die Referenz (F7).\n- `s.length() - 1` ist −1 bei der leeren Zeichenkette (F9).\n- `k = 2` überschreibt den Parameter (F5)."
+    },
+    {
+     "t": "hinweis",
+     "md": "Die Fehler entsprechen den Fallen **P1** (Laufzeitfehler), **P4** (Division), **P5** (equals) und **P6** (Off-by-one)."
+    }
+   ]
+  },
+  {
+   "id": "W0-L6-02",
+   "titel": "Rezept Schritt 3: Randfälle",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Methode implementieren",
+   "fallen": [
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Aufgabe: *Implementieren Sie die Methode `anteilGerade(r: Reihung von Ganzzahl): Kommazahl`. Sie liefert den Anteil der geraden Werte in r als Kommazahl zwischen 0.0 und 1.0. Für eine leere Reihung liefert sie 0.0.*"
+    },
+    {
+     "t": "text",
+     "md": "Bevor du programmierst, legst du die Testtabelle an. Gib die erwarteten Ergebnisse an (Kommazahl mit Punkt)."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "r",
+      "erwartet"
+     ],
+     "zeilen": [
+      [
+       "`{4, 7, 2, 9}`",
+       "[[g1]]"
+      ],
+      [
+       "`{ }`",
+       "[[g2]]"
+      ],
+      [
+       "`{3}`",
+       "[[g3]]"
+      ],
+      [
+       "`{-2, 6}`",
+       "[[g4]]"
+      ],
+      [
+       "`{-3, 6, 8, 10, 1}`",
+       "[[g5]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "zahl"
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "zahl"
+     },
+     "g4": {
+      "typ": "zahl"
+     },
+     "g5": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "0.5"
+    ],
+    "g2": [
+     "0.0"
+    ],
+    "g3": [
+     "0.0"
+    ],
+    "g4": [
+     "1.0"
+    ],
+    "g5": [
+     "0.6"
+    ]
+   },
+   "tipps": [
+    "Anteil = Anzahl der geraden Werte / Anzahl aller Werte."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Gerade heißt `x % 2 == 0` – das gilt auch für −2 (−2 % 2 = 0), aber nicht für −3 (−3 % 2 = −1). In {−3, 6, 8, 10, 1} sind 3 von 5 Werten gerade: 0.6. Die leere Reihung ist ein **Randfall**, der laut Text 0.0 liefert – ohne Abfrage würde 0 / 0 gerechnet."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P4**: Der Anteil muss als Kommazahl berechnet werden – `a / r.length` mit zwei Ganzzahlen liefert fast immer 0."
+    }
+   ]
+  },
+  {
+   "id": "W0-L6-03",
+   "titel": "Rezept Schritt 1: Lesen und markieren",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Methode implementieren",
+   "fallen": [
+    "P6",
+    "P2",
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Jede Formulierung im Aufgabentext hat eine Folge für deinen Code. Ordne zu."
+    }
+   ],
+   "interaktion": {
+    "kind": "match",
+    "elemente": [
+     {
+      "id": "e1",
+      "md": "„… die **echt größer** als grenze sind“"
+     },
+     {
+      "id": "e2",
+      "md": "„… die **mindestens** grenze betragen“"
+     },
+     {
+      "id": "e3",
+      "md": "„… die **höchstens** grenze betragen“"
+     },
+     {
+      "id": "e4",
+      "md": "„… die **kleiner** als grenze sind“"
+     },
+     {
+      "id": "e5",
+      "md": "„… liefert eine **neue** Reihung …; r bleibt unverändert“"
+     },
+     {
+      "id": "e6",
+      "md": "„… **setzt** alle negativen Werte in r auf 0“"
+     },
+     {
+      "id": "e7",
+      "md": "„Der Durchschnitt ist **als Kommazahl** zu berechnen.“"
+     }
+    ],
+    "kategorien": [
+     {
+      "id": "gt",
+      "md": "`x > grenze`"
+     },
+     {
+      "id": "ge",
+      "md": "`x >= grenze`"
+     },
+     {
+      "id": "le",
+      "md": "`x <= grenze`"
+     },
+     {
+      "id": "lt",
+      "md": "`x < grenze`"
+     },
+     {
+      "id": "neu",
+      "md": "`new` anlegen, füllen, zurückgeben"
+     },
+     {
+      "id": "void",
+      "md": "Rückgabetyp `void`, `r[i] = …`"
+     },
+     {
+      "id": "cast",
+      "md": "`(double)` **vor** der Division"
+     }
+    ]
+   },
+   "loesung": {
+    "e1": "gt",
+    "e2": "ge",
+    "e3": "le",
+    "e4": "lt",
+    "e5": "neu",
+    "e6": "void",
+    "e7": "cast"
+   },
+   "tipps": [
+    "Markiere im Text alle Vergleichswörter."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "„echt größer“ → `>`, „mindestens“ → `>=`, „höchstens“ → `<=`, „kleiner“ → `<`. „neue Reihung“ verlangt `new` – das Original wird nur gelesen. „setzt … in r“ verändert die übergebene Reihung, eine Rückgabe ist nicht nötig. „als Kommazahl“: Cast vor der Division, sonst ganzzahlige Division (7 / 2 → 3)."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P6**: Wer „mindestens“ mit `>` umsetzt, verliert genau den Grenzfall. Darum gehört der Gleichheitsfall in die Testtabelle."
+    }
+   ]
+  },
+  {
+   "id": "W0-L6-04",
+   "titel": "Abi-Check: Was fehlt hier?",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P3",
+    "P5",
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Auftrag: *`anzahlGleich(woerter: Reihung von Zeichenkette, wort: Zeichenkette): Ganzzahl` liefert, wie oft `wort` in `woerter` vorkommt.* Ein Lehrling gibt diese Lösung ab:"
+    },
+    {
+     "t": "code",
+     "code": "public static int anzahlGleich(String[] woerter, String wort) {\n    int anzahl = 0;\n    for (int i = 1; i < woerter.length; i++) {\n        if (woerter[i] == wort) {\n            anzahl++;\n        }\n    }\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Welche Punkte des Abi-Checks verletzt die Lösung? Wähle **alle** passenden."
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "optionen": [
+     {
+      "id": "a",
+      "md": "Rückgabe fehlt auf einem Pfad (F1)"
+     },
+     {
+      "id": "b",
+      "md": "Schleifengrenzen falsch – ein Element wird ausgelassen (F2)"
+     },
+     {
+      "id": "c",
+      "md": "Zeichenketten mit `==` statt `equals` verglichen (F8)"
+     },
+     {
+      "id": "d",
+      "md": "ganzzahlige Division (F4)"
+     },
+     {
+      "id": "e",
+      "md": "Parameter überschrieben (F5)"
+     },
+     {
+      "id": "f",
+      "md": "Leer-Abfrage vor dem Zugriff vergessen (F9)"
+     },
+     {
+      "id": "g",
+      "md": "Kopf passt nicht zur Signatur"
+     }
+    ],
+    "mehrfach": true
+   },
+   "loesung": {
+    "richtig": [
+     "a",
+     "b",
+     "c"
+    ]
+   },
+   "tipps": [
+    "Gehe den Abi-Check Punkt für Punkt durch."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Nach der Schleife fehlt `return anzahl;` – der Compiler meldet „missing return statement“. Die Schleife beginnt bei 1, `woerter[0]` wird nie geprüft. `==` vergleicht bei Zeichenketten Referenzen. Eine Leer-Abfrage ist **nicht** nötig: Für die leere Reihung läuft die Schleife nicht – es wird nie auf ein Element zugegriffen. Kopf und Signatur passen."
+    },
+    {
+     "t": "hinweis",
+     "md": "Fallen **P3** (Rückgabe fehlt), **P6** (Startindex), **P5** (equals)."
+    }
+   ]
+  },
+  {
+   "id": "W0-L6-05",
+   "titel": "Die längste Treppe",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`laengsterAnstieg` liefert die Länge der längsten Folge direkt aufeinanderfolgender, **echt steigender** Werte."
+    },
+    {
+     "t": "code",
+     "code": "public static int laengsterAnstieg(int[] r) {\n    if (r.length == 0) {\n        return 0;\n    }\n    int beste = 1;\n    int aktuell = 1;\n    for (int i = 1; i < r.length; i++) {\n        if (r[i] > r[i - 1]) {\n            aktuell++;\n            if (aktuell > beste) {\n                beste = aktuell;\n            }\n        } else {\n            aktuell = 1;\n        }\n    }\n    return beste;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**a)** Vervollständige die Tracetabelle für `r = {2, 5, 7, 3, 4, 6, 9, 1}` (Werte am Ende jedes Durchlaufs)."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "i",
+      "r[i] > r[i − 1]",
+      "aktuell",
+      "beste"
+     ],
+     "zeilen": [
+      [
+       "vor der Schleife",
+       "–",
+       "1",
+       "1"
+      ],
+      [
+       "1",
+       "w",
+       "2",
+       "2"
+      ],
+      [
+       "2",
+       "w",
+       "3",
+       "3"
+      ],
+      [
+       "3",
+       "[[b3]]",
+       "[[a3]]",
+       "[[m3]]"
+      ],
+      [
+       "4",
+       "[[b4]]",
+       "[[a4]]",
+       "[[m4]]"
+      ],
+      [
+       "5",
+       "[[b5]]",
+       "[[a5]]",
+       "[[m5]]"
+      ],
+      [
+       "6",
+       "[[b6]]",
+       "[[a6]]",
+       "[[m6]]"
+      ],
+      [
+       "7",
+       "[[b7]]",
+       "[[a7]]",
+       "[[m7]]"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Rückgabewert: [[ret]]"
+    },
+    {
+     "t": "text",
+     "md": "**b)** Was liefert `laengsterAnstieg({9, 7, 5})`? [[x]]"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "gaps",
+     "felder": {
+      "b3": {
+       "typ": "auswahl",
+       "optionen": [
+        "w",
+        "f"
+       ]
+      },
+      "b4": {
+       "typ": "auswahl",
+       "optionen": [
+        "w",
+        "f"
+       ]
+      },
+      "b5": {
+       "typ": "auswahl",
+       "optionen": [
+        "w",
+        "f"
+       ]
+      },
+      "b6": {
+       "typ": "auswahl",
+       "optionen": [
+        "w",
+        "f"
+       ]
+      },
+      "b7": {
+       "typ": "auswahl",
+       "optionen": [
+        "w",
+        "f"
+       ]
+      },
+      "a3": {
+       "typ": "zahl"
+      },
+      "a4": {
+       "typ": "zahl"
+      },
+      "a5": {
+       "typ": "zahl"
+      },
+      "a6": {
+       "typ": "zahl"
+      },
+      "a7": {
+       "typ": "zahl"
+      },
+      "m3": {
+       "typ": "zahl"
+      },
+      "m4": {
+       "typ": "zahl"
+      },
+      "m5": {
+       "typ": "zahl"
+      },
+      "m6": {
+       "typ": "zahl"
+      },
+      "m7": {
+       "typ": "zahl"
+      },
+      "ret": {
+       "typ": "zahl"
+      }
+     }
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "x": {
+       "typ": "zahl"
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "b3": [
+      "f"
+     ],
+     "a3": [
+      "1"
+     ],
+     "m3": [
+      "3"
+     ],
+     "b4": [
+      "w"
+     ],
+     "a4": [
+      "2"
+     ],
+     "m4": [
+      "3"
+     ],
+     "b5": [
+      "w"
+     ],
+     "a5": [
+      "3"
+     ],
+     "m5": [
+      "3"
+     ],
+     "b6": [
+      "w"
+     ],
+     "a6": [
+      "4"
+     ],
+     "m6": [
+      "4"
+     ],
+     "b7": [
+      "f"
+     ],
+     "a7": [
+      "1"
+     ],
+     "m7": [
+      "4"
+     ],
+     "ret": [
+      "4"
+     ]
+    },
+    {
+     "x": [
+      "1"
+     ]
+    }
+   ],
+   "tipps": [
+    "Bei einem Abstieg wird aktuell auf 1 gesetzt, beste bleibt."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`aktuell` zählt die laufende Treppe und fällt bei einem Abstieg auf 1 zurück; `beste` merkt sich den Rekord **sofort** (Baustein Maximum). Die Treppe 3, 4, 6, 9 hat Länge 4. Bei {9, 7, 5} gibt es keinen Anstieg – jedes einzelne Element ist eine Treppe der Länge 1."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P8**: In der Spalte „beste“ steht auch dann ein Wert, wenn er sich nicht ändert – sonst ist die Zeile unvollständig."
+    }
+   ]
+  },
+  {
+   "id": "W0-L6-06",
+   "titel": "Bug-Hunt: Die Prüfungsstatistik",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P4",
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "*`prozentBestanden(punkte: Reihung von Ganzzahl, grenze: Ganzzahl): Kommazahl` liefert, wie viel Prozent der Werte **mindestens** `grenze` betragen, als Kommazahl; für eine leere Reihung 0.0.* Die Implementierung enthält **zwei** Fehler."
+    },
+    {
+     "t": "code",
+     "code": "public static double prozentBestanden(int[] punkte, int grenze) {\n    if (punkte.length == 0) {\n        return 0.0;\n    }\n    int anzahl = 0;\n    for (int p : punkte) {\n        if (p > grenze) {\n            anzahl++;\n        }\n    }\n    return anzahl / punkte.length * 100;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**a)** Wähle die beiden fehlerhaften Zeilen."
+    },
+    {
+     "t": "text",
+     "md": "**b)** Korrektur: Bedingung `p` [[g1]] `grenze` · Rückgabe `return` [[g2]] `;`"
+    },
+    {
+     "t": "text",
+     "md": "Für `prozentBestanden({50, 40, 70, 30}, 40)` liefert die fehlerhafte Fassung [[g3]], die korrigierte [[g4]]."
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 1,
+     "anzahl": 2
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "auswahl",
+       "optionen": [
+        ">",
+        ">=",
+        "<",
+        "=="
+       ]
+      },
+      "g2": {
+       "typ": "auswahl",
+       "optionen": [
+        "(double) (anzahl / punkte.length) * 100",
+        "(double) anzahl / punkte.length * 100",
+        "anzahl / punkte.length * 100.0",
+        "(int) (100.0 * anzahl / punkte.length)"
+       ]
+      },
+      "g3": {
+       "typ": "zahl"
+      },
+      "g4": {
+       "typ": "zahl"
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      7,
+      11
+     ]
+    },
+    {
+     "g1": [
+      ">="
+     ],
+     "g2": [
+      "(double) anzahl / punkte.length * 100"
+     ],
+     "g3": [
+      "0.0"
+     ],
+     "g4": [
+      "75.0"
+     ]
+    }
+   ],
+   "tipps": [
+    "Rechne die fehlerhafte Zeile 11 mit anzahl = 2 und Länge 4 von links nach rechts aus."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "„mindestens“ heißt `>=` – mit `>` fehlt die 40. In Zeile 11 teilen zwei Ganzzahlen: 2 / 4 = 0, mal 100 bleibt 0 (dann 0.0). Der Cast muss **vor** der Division stehen: `(double) anzahl / punkte.length * 100` = 3 / 4 · 100 = 75.0. `(double) (anzahl / punkte.length)` castet zu spät; `* 100.0` am Ende kommt nach der ganzzahligen Division; der `(int)`-Cast schneidet Nachkommastellen ab."
+    },
+    {
+     "t": "hinweis",
+     "md": "Fallen **P6** (Grenzfall „mindestens“) und **P4** (ganzzahlige Division)."
+    }
+   ]
+  },
+  {
+   "id": "W0-L6-07",
+   "titel": "Code-Puzzle: Der erste Riese",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Methode implementieren",
+   "fallen": [
+    "P3",
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "*Implementieren Sie die Methode `ersterUeber(r: Reihung von Ganzzahl, grenze: Ganzzahl): Ganzzahl`. Sie liefert den **Index** des ersten Werts in r, der echt größer als grenze ist. Gibt es keinen solchen Wert (auch bei leerer Reihung), liefert sie −1.* Setze die Methode zusammen – nicht alle Teile werden gebraucht."
+    }
+   ],
+   "interaktion": {
+    "kind": "order",
+    "teile": [
+     {
+      "id": "p1",
+      "code": "public static int ersterUeber(int[] r, int grenze) {"
+     },
+     {
+      "id": "p2",
+      "code": "    for (int i = 0; i < r.length; i++) {"
+     },
+     {
+      "id": "p3",
+      "code": "        if (r[i] > grenze) {"
+     },
+     {
+      "id": "p4",
+      "code": "            return i;"
+     },
+     {
+      "id": "p5",
+      "code": "        } // Ende if"
+     },
+     {
+      "id": "p6",
+      "code": "    } // Ende for"
+     },
+     {
+      "id": "p7",
+      "code": "    return -1;"
+     },
+     {
+      "id": "p8",
+      "code": "} // Ende Methode"
+     },
+     {
+      "id": "d1",
+      "code": "        } else { return -1; }"
+     },
+     {
+      "id": "d2",
+      "code": "    for (int i = 1; i < r.length; i++) {"
+     },
+     {
+      "id": "d3",
+      "code": "        if (r[i] >= grenze) {"
+     },
+     {
+      "id": "d4",
+      "code": "            return r[i];"
+     }
+    ]
+   },
+   "loesung": {
+    "reihenfolgen": [
+     [
+      "p1",
+      "p2",
+      "p3",
+      "p4",
+      "p5",
+      "p6",
+      "p7",
+      "p8"
+     ]
+    ]
+   },
+   "tipps": [
+    "Wo steht fest, dass es keinen Treffer gibt?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Lineare Suche: Beim ersten Treffer sofort den **Index** `i` zurückgeben. Erst **nach** der Schleife steht fest, dass es keinen Treffer gibt → `return -1`. Die leere Reihung braucht keine Sonderbehandlung – die Schleife läuft dann nicht."
+    },
+    {
+     "t": "hinweis",
+     "md": "Fehlergalerie: `else { return -1; }` in der Schleife ist F6 (prüft nur r[0]); Start bei 1 ist F2; `>=` verfehlt „echt größer“; `return r[i]` liefert den Wert statt des Index (Falle **P3**)."
+    }
+   ]
+  },
+  {
+   "id": "W0-L6-08",
+   "titel": "Der kaputte Bauplan",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Fehler im Struktogramm",
+   "fallen": [
+    "P1",
+    "P6",
+    "P9"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "*`indexKleinster(r: Reihung von Ganzzahl): Ganzzahl` liefert den Index des kleinsten Werts in r (bei mehreren den kleinsten Index), für eine leere Reihung −1.* Im Struktogramm stecken **zwei** Fehler."
+    },
+    {
+     "t": "struktogramm",
+     "kopf": "indexKleinster(r: Reihung von Ganzzahl): Ganzzahl",
+     "rumpf": [
+      {
+       "wenn": "Länge von r = 0",
+       "dann": [
+        {
+         "gib": "−1"
+        }
+       ],
+       "sonst": []
+      },
+      {
+       "anw": "pos ← 0"
+      },
+      {
+       "zaehle": "i von 1 bis Länge von r",
+       "rumpf": [
+        {
+         "wenn": "r[i] < pos",
+         "dann": [
+          {
+           "anw": "pos ← i"
+          }
+         ],
+         "sonst": []
+        }
+       ]
+      },
+      {
+       "gib": "pos"
+      }
+     ]
+    },
+    {
+     "t": "text",
+     "md": "**a)** Welche Stellen sind fehlerhaft?"
+    },
+    {
+     "t": "text",
+     "md": "**b)** Korrigiere: Schleifenkopf [[g1]] · Bedingung [[g2]]"
+    },
+    {
+     "t": "text",
+     "md": "Die korrigierte Methode liefert für `{5, 3, 8, 3, 1, 4}` den Wert [[g3]] und für `{6, 2, 9, 2}` den Wert [[g4]]."
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "choice",
+     "optionen": [
+      {
+       "id": "a",
+       "md": "die Abfrage „Länge von r = 0“ mit „gib −1 zurück“"
+      },
+      {
+       "id": "b",
+       "md": "der Startwert „pos ← 0“"
+      },
+      {
+       "id": "c",
+       "md": "der Schleifenkopf „für i von 1 bis Länge von r“"
+      },
+      {
+       "id": "d",
+       "md": "die Bedingung „r[i] < pos“"
+      },
+      {
+       "id": "e",
+       "md": "„gib pos zurück“"
+      }
+     ],
+     "mehrfach": true
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "auswahl",
+       "optionen": [
+        "für i von 1 bis Länge von r − 1",
+        "für i von 0 bis Länge von r",
+        "für i von 2 bis Länge von r"
+       ]
+      },
+      "g2": {
+       "typ": "auswahl",
+       "optionen": [
+        "r[i] < r[pos]",
+        "r[i] < r[i − 1]",
+        "i < pos",
+        "r[pos] < r[i]"
+       ]
+      },
+      "g3": {
+       "typ": "zahl"
+      },
+      "g4": {
+       "typ": "zahl"
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "richtig": [
+      "c",
+      "d"
+     ]
+    },
+    {
+     "g1": [
+      "für i von 1 bis Länge von r − 1"
+     ],
+     "g2": [
+      "r[i] < r[pos]"
+     ],
+     "g3": [
+      "4"
+     ],
+     "g4": [
+      "1"
+     ]
+    }
+   ],
+   "tipps": [
+    "„für i von a bis b“ schließt b mit ein."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "„bis“ ist im Struktogramm **einschließlich** – „bis Länge von r“ greift im letzten Durchlauf hinter das Ende (Laufzeitfehler). `pos` ist ein **Index**; verglichen werden muss der Wert an dieser Stelle: `r[i] < r[pos]`. Der Startwert pos ← 0 ist richtig, weil nach der Leer-Abfrage r[0] existiert. Mit `<` (nicht `≤`) bleibt bei Gleichstand der kleinere Index: {6, 2, 9, 2} → 1."
+    },
+    {
+     "t": "hinweis",
+     "md": "Fallen **P6/P1**: Zählschleife bis Länge − 1. **P9**: Struktogramm nach EH § 5 – Index und Wert sauber unterscheiden."
+    }
+   ]
+  },
+  {
+   "id": "W0-B-01",
+   "titel": "Die Rechentafel am Eingang",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Datentypen und Ausdrücke",
+   "fallen": [
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Geben Sie zu jedem Ausdruck den Typ und den Wert an (Zeichenketten ohne Anführungszeichen)."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Ausdruck",
+      "Typ",
+      "Wert"
+     ],
+     "zeilen": [
+      [
+       "`(double) 17 / 4`",
+       "[[t1]]",
+       "[[w1]]"
+      ],
+      [
+       "`17 / 4 * 2.0`",
+       "[[t2]]",
+       "[[w2]]"
+      ],
+      [
+       "`\"S\" + 2 * 3`",
+       "[[t3]]",
+       "[[w3]]"
+      ],
+      [
+       "`9 % 4 + 9 / 4`",
+       "[[t4]]",
+       "[[w4]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "t1": {
+      "typ": "auswahl",
+      "optionen": [
+       "int",
+       "double",
+       "boolean",
+       "char",
+       "String"
+      ]
+     },
+     "t2": {
+      "typ": "auswahl",
+      "optionen": [
+       "int",
+       "double",
+       "boolean",
+       "char",
+       "String"
+      ]
+     },
+     "t3": {
+      "typ": "auswahl",
+      "optionen": [
+       "int",
+       "double",
+       "boolean",
+       "char",
+       "String"
+      ]
+     },
+     "t4": {
+      "typ": "auswahl",
+      "optionen": [
+       "int",
+       "double",
+       "boolean",
+       "char",
+       "String"
+      ]
+     },
+     "w1": {
+      "typ": "zahl"
+     },
+     "w2": {
+      "typ": "zahl"
+     },
+     "w3": {
+      "typ": "text",
+      "breite": 6
+     },
+     "w4": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "t1": [
+     "double"
+    ],
+    "w1": [
+     "4.25"
+    ],
+    "t2": [
+     "double"
+    ],
+    "w2": [
+     "8.0"
+    ],
+    "t3": [
+     "String"
+    ],
+    "w3": [
+     "S6",
+     "\"S6\""
+    ],
+    "t4": [
+     "int"
+    ],
+    "w4": [
+     "3"
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "(double) 17 / 4: erst umwandeln, dann teilen → 4.25. 17 / 4 ist ganzzahlig 4, mal 2.0 → 8.0. Punkt vor Strich: 2 * 3 = 6, dann \"S\" + 6 → \"S6\". 9 % 4 = 1 und 9 / 4 = 2 → 3."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P4**: ganzzahlige Division und Typ des Ergebnisses."
+    }
+   ]
+  },
+  {
+   "id": "W0-B-02",
+   "titel": "Die Mahngebühr",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Methodenkopf und Signatur",
+   "fallen": [
+    "P3"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Operation `mahngebuehr(tage: Ganzzahl, vip: Wahrheitswert): Kommazahl` berechnet die Gebühr für eine verspätete Rückgabe. Welcher Java-Methodenkopf ist korrekt?"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "optionen": [
+     {
+      "id": "a",
+      "md": "`public static double mahngebuehr(int tage, boolean vip)`"
+     },
+     {
+      "id": "b",
+      "md": "`public static double mahngebuehr(int tage, vip)`"
+     },
+     {
+      "id": "c",
+      "md": "`public static int mahngebuehr(int tage, boolean vip)`"
+     },
+     {
+      "id": "d",
+      "md": "`public static double mahngebuehr(boolean vip, int tage)`"
+     },
+     {
+      "id": "e",
+      "md": "`public static void mahngebuehr(int tage, boolean vip): double`"
+     }
+    ],
+    "mehrfach": false
+   },
+   "loesung": {
+    "richtig": [
+     "a"
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Rückgabetyp Kommazahl → `double` vor dem Namen; Parameter in derselben Reihenfolge, jeder mit Typ: `int tage, boolean vip`."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P3**: Signatur verfehlt (Typ fehlt, Reihenfolge vertauscht, falscher Rückgabetyp)."
+    }
+   ]
+  },
+  {
+   "id": "W0-B-03",
+   "titel": "Der Katalog der Operationen",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Methodenkopf und Signatur",
+   "fallen": [
+    "P3"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Ordnen Sie jedem Java-Methodenkopf die Signatur in Abi-Notation zu. Eine Signatur bleibt übrig."
+    }
+   ],
+   "interaktion": {
+    "kind": "match",
+    "elemente": [
+     {
+      "id": "h1",
+      "md": "`public static int[] ausleihenVon(String[] titel, String autor)`"
+     },
+     {
+      "id": "h2",
+      "md": "`public static void sortiere(String[] titel)`"
+     },
+     {
+      "id": "h3",
+      "md": "`public static char kennung(String titel, int nr)`"
+     }
+    ],
+    "kategorien": [
+     {
+      "id": "s1",
+      "md": "`ausleihenVon(titel: Reihung von Zeichenkette, autor: Zeichenkette): Reihung von Ganzzahl`"
+     },
+     {
+      "id": "s2",
+      "md": "`sortiere(titel: Reihung von Zeichenkette): nichts`"
+     },
+     {
+      "id": "s3",
+      "md": "`kennung(titel: Zeichenkette, nr: Ganzzahl): Zeichen`"
+     },
+     {
+      "id": "s4",
+      "md": "`kennung(titel: Zeichenkette, nr: Ganzzahl): Zeichenkette`"
+     }
+    ]
+   },
+   "loesung": {
+    "h1": "s1",
+    "h2": "s2",
+    "h3": "s3"
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`int[]` → Reihung von Ganzzahl, `String[]` → Reihung von Zeichenkette, `void` → nichts, `char` → Zeichen. Die übrige Signatur hat den Rückgabetyp Zeichenkette – dazu gibt es keinen Kopf."
+    }
+   ]
+  },
+  {
+   "id": "W0-B-04",
+   "titel": "Die Ausleihe",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Objektkarten und Referenzen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Bibliothekarin der Akademie verwaltet die Ausleihzahlen der Zauberbücher in Reihungen. Alle Operationen sind Klassenoperationen (`public static`)."
+    },
+    {
+     "t": "code",
+     "code": "public static void leihen(int[] bestand, int i, int anzahl) {\n    bestand[i] = bestand[i] - anzahl;\n    anzahl = 0;\n}\n// Hauptprogramm\nint[] b = {5, 2, 8};\nint n = 3;\nleihen(b, 2, n);\nprintln(b[2] + \" \" + n);",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Geben Sie die Ausgabe an: [[g1]] [[g2]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "zahl"
+     },
+     "g2": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "5"
+    ],
+    "g2": [
+     "3"
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`bestand` erhält eine Kopie der **Referenz** – die Änderung an `bestand[2]` (8 − 3 = 5) ist in `b` sichtbar. `anzahl` erhält eine Kopie der **Zahl** 3; `anzahl = 0` ändert nur die lokale Kopie, `n` bleibt 3."
+    }
+   ]
+  },
+  {
+   "id": "W0-B-05",
+   "titel": "Die Suche im Regal",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Sortieren und Suchen",
+   "fallen": [
+    "P1"
+   ],
+   "inhalt": [
+    {
+     "t": "code",
+     "code": "public static int letzterIndex(int[] r, int x) {\n    int i = r.length - 1;\n    while (i >= 0 && r[i] != x) {\n        i--;\n    }\n    return i;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Klicken Sie die Indizes in der Reihenfolge an, in der `r[i]` beim Aufruf `letzterIndex({4, 7, 3, 7, 1}, 3)` gelesen wird."
+    }
+   ],
+   "interaktion": {
+    "kind": "array",
+    "start": [
+     4,
+     7,
+     3,
+     7,
+     1
+    ],
+    "modus": "klick"
+   },
+   "loesung": {
+    "folge": [
+     4,
+     3,
+     2
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Die Suche beginnt hinten bei Index 4 (Wert 1), dann Index 3 (Wert 7), dann Index 2 (Wert 3) – Treffer, die Schleife endet. Rückgabe 2. Dank `i >= 0 &&` wird bei fehlendem Wert nie `r[-1]` gelesen (Falle **P1**)."
+    }
+   ]
+  },
+  {
+   "id": "W0-B-06",
+   "titel": "Mahngebühren protokollieren",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P8",
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Bibliothekarin der Akademie verwaltet die Ausleihzahlen der Zauberbücher in Reihungen. Alle Operationen sind Klassenoperationen (`public static`). Die Gebühr hängt von den Tagen der Ausleihe ab."
+    },
+    {
+     "t": "code",
+     "code": "public static int gebuehr(int tage) {\n    if (tage <= 7) {\n        return 0;\n    }\n    return (tage - 7) / 3 + 1;\n}\npublic static int gesamt(int[] tage) {\n    int s = 0;\n    for (int t : tage) {\n        s = s + gebuehr(t);\n    }\n    return s;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Dokumentieren Sie den Aufruf `gesamt({5, 10, 7, 15})` (Werte am Ende jedes Durchlaufs) und geben Sie den Rückgabewert an."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "t",
+      "Aufruf",
+      "Rückgabe von gebuehr",
+      "s"
+     ],
+     "zeilen": [
+      [
+       "vor der Schleife",
+       "–",
+       "–",
+       "0"
+      ],
+      [
+       "5",
+       "gebuehr(5)",
+       "[[r1]]",
+       "[[s1]]"
+      ],
+      [
+       "10",
+       "gebuehr(10)",
+       "[[r2]]",
+       "[[s2]]"
+      ],
+      [
+       "7",
+       "gebuehr(7)",
+       "[[r3]]",
+       "[[s3]]"
+      ],
+      [
+       "15",
+       "gebuehr(15)",
+       "[[r4]]",
+       "[[s4]]"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Rückgabewert: [[ret]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "r1": {
+      "typ": "zahl"
+     },
+     "r2": {
+      "typ": "zahl"
+     },
+     "r3": {
+      "typ": "zahl"
+     },
+     "r4": {
+      "typ": "zahl"
+     },
+     "s1": {
+      "typ": "zahl"
+     },
+     "s2": {
+      "typ": "zahl"
+     },
+     "s3": {
+      "typ": "zahl"
+     },
+     "s4": {
+      "typ": "zahl"
+     },
+     "ret": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "r1": [
+     "0"
+    ],
+    "s1": [
+     "0"
+    ],
+    "r2": [
+     "2"
+    ],
+    "s2": [
+     "2"
+    ],
+    "r3": [
+     "0"
+    ],
+    "s3": [
+     "2"
+    ],
+    "r4": [
+     "3"
+    ],
+    "s4": [
+     "5"
+    ],
+    "ret": [
+     "5"
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Bis 7 Tage ist die Ausleihe gebührenfrei (auch genau 7). gebuehr(10) = 3 / 3 + 1 = 2, gebuehr(15) = 8 / 3 + 1 = 2 + 1 = 3 (ganzzahlige Division). Summe 0 + 2 + 0 + 3 = 5."
+    },
+    {
+     "t": "hinweis",
+     "md": "Fallen **P8** (vollständige Tabelle) und **P4** (8 / 3 = 2)."
+    }
+   ]
+  },
+  {
+   "id": "W0-B-07",
+   "titel": "Das erste unberührte Buch",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P1"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "*Die Operation `erstesNull(r: Reihung von Ganzzahl): Ganzzahl` liefert den Index des ersten Buchs, das nie ausgeliehen wurde (Wert 0), sonst −1.* Die Implementierung enthält **einen** Fehler."
+    },
+    {
+     "t": "code",
+     "code": "public static int erstesNull(int[] r) {\n    int i = 0;\n    while (r[i] != 0 && i < r.length) {\n        i++;\n    }\n    if (i == r.length) {\n        return -1;\n    }\n    return i;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**a)** Markieren Sie die fehlerhafte Zeile."
+    },
+    {
+     "t": "text",
+     "md": "**b)** Korrigierte Bedingung: [[g1]] · `erstesNull({4, 0, 2})` liefert (auch mit Fehler) [[g2]] · `erstesNull({4, 2})` mit Fehler: [[g3]]"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 1,
+     "anzahl": 1
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "auswahl",
+       "optionen": [
+        "i < r.length && r[i] != 0",
+        "r[i] != 0 || i < r.length",
+        "i <= r.length && r[i] != 0",
+        "r[i] == 0 && i < r.length"
+       ]
+      },
+      "g2": {
+       "typ": "zahl"
+      },
+      "g3": {
+       "typ": "auswahl",
+       "optionen": [
+        "liefert -1",
+        "liefert 2",
+        "ArrayIndexOutOfBoundsException"
+       ]
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      3
+     ]
+    },
+    {
+     "g1": [
+      "i < r.length && r[i] != 0"
+     ],
+     "g2": [
+      "1"
+     ],
+     "g3": [
+      "ArrayIndexOutOfBoundsException"
+     ]
+    }
+   ],
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`&&` wertet von links aus. Steht `r[i] != 0` vorn, wird bei i == r.length zuerst `r[i]` gelesen – Absturz, wenn keine 0 vorkommt. Erst die Indexprüfung, dann der Zugriff. Kommt eine 0 vor, fällt der Fehler nicht auf."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P1**: Laufzeitfehler nicht ausgeschlossen."
+    }
+   ]
+  },
+  {
+   "id": "W0-B-08",
+   "titel": "Was akzeptiert der Compiler?",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Methodenkopf und Signatur",
+   "fallen": [
+    "P3",
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Gegeben sind die Methodenköpfe zweier Operationen der Bibliothek und im Hauptprogramm `int[] werte = {12, 0, 7};`."
+    },
+    {
+     "t": "code",
+     "code": "public static double schnitt(int[] r)          // Durchschnitt\npublic static int[] top(int[] r, int k)          // die k größten Werte",
+     "nummern": false
+    },
+    {
+     "t": "text",
+     "md": "Welche Anweisungen akzeptiert der Compiler? Wählen Sie **alle** passenden."
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "optionen": [
+     {
+      "id": "a",
+      "md": "`double d = schnitt(new int[3]);`"
+     },
+     {
+      "id": "b",
+      "md": "`int s = schnitt(werte);`"
+     },
+     {
+      "id": "c",
+      "md": "`int[] t = top(werte, 2);`"
+     },
+     {
+      "id": "d",
+      "md": "`top(werte);`"
+     },
+     {
+      "id": "e",
+      "md": "`int[] u = top(2, werte);`"
+     },
+     {
+      "id": "f",
+      "md": "`schnitt(werte);`"
+     },
+     {
+      "id": "g",
+      "md": "`double e = top(werte, 1);`"
+     }
+    ],
+    "mehrfach": true
+   },
+   "loesung": {
+    "richtig": [
+     "a",
+     "c",
+     "f"
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "a) Eine neu erzeugte Reihung ist ein gültiges Argument. b) Eine Kommazahl passt nicht in `int`. c) passt. d) Es fehlt ein Argument. e) Argumente vertauscht. f) Erlaubt – die Rückgabe geht allerdings verloren. g) Eine Reihung ist keine Kommazahl."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P3/P4**: Anzahl, Reihenfolge und Typen der Argumente sowie der Rückgabetyp müssen passen."
+    }
+   ]
+  },
+  {
+   "id": "W0-B-09",
+   "titel": "Drei Verweise, zwei Regale",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Objektkarten und Referenzen",
+   "fallen": [
+    "P2"
+   ],
+   "inhalt": [
+    {
+     "t": "code",
+     "code": "int[] a = {1, 2, 3};\nint[] b = a;\nint[] c = verdoppelt(a);    // liefert eine NEUE Reihung mit den doppelten Werten\nb[1] = 20;\nc[2] = 30;\na = c;",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Geben Sie nach der letzten Zeile an: `a[1]` = [[a1]] · `a[2]` = [[a2]] · `b[0]` = [[b0]] · `b[1]` = [[b1]] · `c[0]` = [[c0]] · `a == c` → [[ac]] · `b == c` → [[bc]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "a1": {
+      "typ": "zahl"
+     },
+     "a2": {
+      "typ": "zahl"
+     },
+     "b0": {
+      "typ": "zahl"
+     },
+     "b1": {
+      "typ": "zahl"
+     },
+     "c0": {
+      "typ": "zahl"
+     },
+     "ac": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "bc": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "a1": [
+     "4"
+    ],
+    "a2": [
+     "30"
+    ],
+    "b0": [
+     "1"
+    ],
+    "b1": [
+     "20"
+    ],
+    "c0": [
+     "2"
+    ],
+    "ac": [
+     "true"
+    ],
+    "bc": [
+     "false"
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`b = a`: ein Regal {1, 2, 3}, zwei Pfeile. `verdoppelt` legt ein **zweites** Regal {2, 4, 6} an. `b[1] = 20` ändert das erste Regal, `c[2] = 30` das zweite. `a = c` lenkt `a` auf das zweite Regal um: a = c = {2, 4, 30}, b = {1, 20, 3}."
+    }
+   ]
+  },
+  {
+   "id": "W0-B-10",
+   "titel": "Der Bestand wächst",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Code ↔ Struktogramm",
+   "fallen": [
+    "P9"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Bibliothek verdoppelt jedes Jahr ihren Bestand an Zauberbüchern."
+    },
+    {
+     "t": "code",
+     "code": "public static int jahre(int bestand, int ziel) {\n    int j = 0;\n    while (bestand < ziel) {\n        bestand = bestand * 2;\n        j++;\n    }\n    return j;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**a)** Vervollständigen Sie das Struktogramm nach EH § 5."
+    },
+    {
+     "t": "struktogramm",
+     "kopf": "jahre(bestand: Ganzzahl, ziel: Ganzzahl): Ganzzahl",
+     "rumpf": [
+      {
+       "anw": "j ← 0"
+      },
+      {
+       "solange": "[[g1]]",
+       "rumpf": [
+        {
+         "anw": "[[g2]]"
+        },
+        {
+         "anw": "j ← j + 1"
+        }
+       ]
+      },
+      {
+       "gib": "[[g3]]"
+      }
+     ]
+    },
+    {
+     "t": "text",
+     "md": "**b)** `jahre(3, 20)` liefert [[w]], `jahre(25, 20)` liefert [[w2]]."
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "auswahl",
+       "optionen": [
+        "bestand < ziel",
+        "bestand ≥ ziel",
+        "bestand = ziel",
+        "j < ziel"
+       ]
+      },
+      "g2": {
+       "typ": "auswahl",
+       "optionen": [
+        "bestand ← bestand * 2",
+        "bestand = bestand * 2",
+        "bestand * 2",
+        "gib bestand * 2 zurück"
+       ]
+      },
+      "g3": {
+       "typ": "text",
+       "breite": 4
+      }
+     }
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "w": {
+       "typ": "zahl"
+      },
+      "w2": {
+       "typ": "zahl"
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "g1": [
+      "bestand < ziel"
+     ],
+     "g2": [
+      "bestand ← bestand * 2"
+     ],
+     "g3": [
+      "j"
+     ]
+    },
+    {
+     "w": [
+      "3"
+     ],
+     "w2": [
+      "0"
+     ]
+    }
+   ],
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Die while-Schleife wird zur kopfgesteuerten Solange-Schleife mit **derselben** Bedingung (solange, nicht bis). Zuweisung mit ←. 3 → 6 → 12 → 24: nach 3 Jahren ist das Ziel erreicht. Ist der Bestand schon groß genug, läuft die Schleife nie: 0."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P9**: keine Java-Syntax im Struktogramm."
+    }
+   ]
+  },
+  {
+   "id": "W0-B-11",
+   "titel": "Ausleihen im Regalabschnitt",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Methode implementieren",
+   "fallen": [
+    "P6",
+    "P3"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "*Die Operation `summeBereich(r: Reihung von Ganzzahl, von: Ganzzahl, bis: Ganzzahl): Ganzzahl` liefert die Summe der Werte mit den Indizes von `von` bis `bis` (beide einschließlich). Es gilt 0 ≤ von und bis < Länge von r; ist von > bis, wird 0 geliefert.* Setzen Sie die Methode zusammen – nicht alle Teile werden gebraucht."
+    }
+   ],
+   "interaktion": {
+    "kind": "order",
+    "teile": [
+     {
+      "id": "p1",
+      "code": "public static int summeBereich(int[] r, int von, int bis) {"
+     },
+     {
+      "id": "p2",
+      "code": "    int summe = 0;"
+     },
+     {
+      "id": "p3",
+      "code": "    for (int i = von; i <= bis; i++) {"
+     },
+     {
+      "id": "p4",
+      "code": "        summe = summe + r[i];"
+     },
+     {
+      "id": "p5",
+      "code": "    } // Ende for"
+     },
+     {
+      "id": "p6",
+      "code": "    return summe;"
+     },
+     {
+      "id": "p7",
+      "code": "} // Ende Methode"
+     },
+     {
+      "id": "d1",
+      "code": "    for (int i = 0; i < r.length; i++) {"
+     },
+     {
+      "id": "d2",
+      "code": "    von = 0;"
+     },
+     {
+      "id": "d3",
+      "code": "    for (int i = von; i < bis; i++) {"
+     },
+     {
+      "id": "d4",
+      "code": "        return summe + r[i];"
+     }
+    ]
+   },
+   "loesung": {
+    "reihenfolgen": [
+     [
+      "p1",
+      "p2",
+      "p3",
+      "p4",
+      "p5",
+      "p6",
+      "p7"
+     ]
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Die Schleife beginnt beim Parameter `von` und läuft **einschließlich** bis `bis`. Die Parameter werden gelesen, nicht überschrieben (F5). Für von > bis läuft die Schleife nicht → 0."
+    },
+    {
+     "t": "hinweis",
+     "md": "Fallen **P6** (`<` statt `<=`) und **P3** (Rückgabe in der Schleife)."
+    }
+   ]
+  },
+  {
+   "id": "W0-B-12",
+   "titel": "Die Liste für die Neuauflage",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Methode implementieren",
+   "fallen": [
+    "P1",
+    "P2"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "*Die Operation `ueberGrenze(r: Reihung von Ganzzahl, grenze: Ganzzahl): Reihung von Ganzzahl` liefert eine neue Reihung mit allen Werten von r, die echt größer als grenze sind, in der ursprünglichen Reihenfolge. Die Länge entspricht genau der Anzahl dieser Werte; r bleibt unverändert.* Der erste Teil (Zählen) ist fertig:"
+    },
+    {
+     "t": "code",
+     "code": "public static int[] ueberGrenze(int[] r, int grenze) {\n    int anzahl = 0;\n    for (int x : r) {\n        if (x > grenze) {\n            anzahl++;\n        }\n    }\n    // ... hier geht es weiter",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Setzen Sie den Rest der Methode zusammen – nicht alle Teile werden gebraucht."
+    }
+   ],
+   "interaktion": {
+    "kind": "order",
+    "teile": [
+     {
+      "id": "p1",
+      "code": "    int[] erg = new int[anzahl];"
+     },
+     {
+      "id": "p2",
+      "code": "    int k = 0;"
+     },
+     {
+      "id": "p3",
+      "code": "    for (int i = 0; i < r.length; i++) {"
+     },
+     {
+      "id": "p4",
+      "code": "        if (r[i] > grenze) {"
+     },
+     {
+      "id": "p5",
+      "code": "            erg[k] = r[i];"
+     },
+     {
+      "id": "p6",
+      "code": "            k++;"
+     },
+     {
+      "id": "p7",
+      "code": "        } // Ende if"
+     },
+     {
+      "id": "p8",
+      "code": "    } // Ende for"
+     },
+     {
+      "id": "p9",
+      "code": "    return erg;"
+     },
+     {
+      "id": "p10",
+      "code": "} // Ende Methode"
+     },
+     {
+      "id": "d1",
+      "code": "            erg[i] = r[i];"
+     },
+     {
+      "id": "d2",
+      "code": "    int[] erg = new int[r.length];"
+     },
+     {
+      "id": "d3",
+      "code": "    return r;"
+     }
+    ]
+   },
+   "loesung": {
+    "reihenfolgen": [
+     [
+      "p1",
+      "p2",
+      "p3",
+      "p4",
+      "p5",
+      "p6",
+      "p7",
+      "p8",
+      "p9",
+      "p10"
+     ],
+     [
+      "p2",
+      "p1",
+      "p3",
+      "p4",
+      "p5",
+      "p6",
+      "p7",
+      "p8",
+      "p9",
+      "p10"
+     ]
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Zweiphasiges Muster: erst zählen, dann eine Reihung **genau dieser Länge** anlegen und mit einem **eigenen Schreibindex** `k` füllen. `erg[i]` würde über das Ende von `erg` hinausschreiben (Laufzeitfehler) bzw. Lücken lassen; `new int[r.length]` hätte die falsche Länge."
+    },
+    {
+     "t": "hinweis",
+     "md": "Fallen **P1** (Index außerhalb von erg) und **P2** (Original nicht verändern, `return r` ist keine neue Reihung)."
+    }
+   ]
+  },
+  {
+   "id": "W0-B-13",
+   "titel": "Das meistgeliehene Buch",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P1",
+    "P3"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "*Die Operation `indexMaximum(r: Reihung von Ganzzahl): Ganzzahl` liefert den Index des am häufigsten ausgeliehenen Buchs; bei Gleichstand den **kleinsten** dieser Indizes, für eine leere Reihung −1.*"
+    },
+    {
+     "t": "code",
+     "code": "public static int indexMaximum(int[] r) {\n    int pos = 0;\n    for (int i = 1; i < r.length; i++) {\n        if (r[i] >= r[pos]) {\n            pos = i;\n        }\n    }\n    return pos;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**a)** Markieren Sie die Zeile, die bei Gleichstand ein falsches Ergebnis verursacht."
+    },
+    {
+     "t": "text",
+     "md": "**b)** Korrigierter Operator: `r[i]` [[g1]] `r[pos]` · `indexMaximum({3, 9, 2, 9})` liefert fehlerhaft [[g2]], korrigiert [[g3]]"
+    },
+    {
+     "t": "text",
+     "md": "**c)** Was gilt für die leere Reihung?"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 1,
+     "anzahl": 1
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "auswahl",
+       "optionen": [
+        ">",
+        ">=",
+        "<",
+        "<="
+       ]
+      },
+      "g2": {
+       "typ": "zahl"
+      },
+      "g3": {
+       "typ": "zahl"
+      }
+     }
+    },
+    {
+     "kind": "choice",
+     "optionen": [
+      {
+       "id": "a",
+       "md": "Die Methode stürzt mit einer ArrayIndexOutOfBoundsException ab."
+      },
+      {
+       "id": "b",
+       "md": "Die Methode liefert 0 statt −1 – es fehlt eine Abfrage `if (r.length == 0) { return -1; }` vor der Schleife."
+      },
+      {
+       "id": "c",
+       "md": "Die Methode liefert korrekt −1."
+      },
+      {
+       "id": "d",
+       "md": "Der Compiler meldet „missing return statement“."
+      }
+     ],
+     "mehrfach": false
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      4
+     ]
+    },
+    {
+     "g1": [
+      ">"
+     ],
+     "g2": [
+      "3"
+     ],
+     "g3": [
+      "1"
+     ]
+    },
+    {
+     "richtig": [
+      "b"
+     ]
+    }
+   ],
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Mit `>=` übernimmt jeder **gleich große** spätere Wert die Position – geliefert wird der letzte Index des Maximums (3 statt 1). Für die leere Reihung läuft die Schleife nicht; es wird nichts gelesen, aber `pos = 0` zurückgegeben – ein Index, den es gar nicht gibt. Die Leer-Abfrage gehört an den Anfang."
+    },
+    {
+     "t": "hinweis",
+     "md": "Fallen **P1** (Leer-Abfrage) und **P3** (Rückgabe entspricht nicht der Vorgabe)."
+    }
+   ]
+  },
+  {
+   "id": "W0-B-14",
+   "titel": "Das Sternenregister",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Bibliothekarin druckt ein Register (Online-IDE: `println` ohne `System.out`)."
+    },
+    {
+     "t": "code",
+     "code": "for (int z = 1; z <= 3; z++) {\n    String zeile = \"\";\n    for (int s = z; s <= 4; s++) {\n        zeile = zeile + (s * z);\n    }\n    println(zeile);\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Geben Sie die drei Ausgabezeilen an (ohne Anführungszeichen):"
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Zeile",
+      "Ausgabe"
+     ],
+     "zeilen": [
+      [
+       "1",
+       "[[z1]]"
+      ],
+      [
+       "2",
+       "[[z2]]"
+      ],
+      [
+       "3",
+       "[[z3]]"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Wie oft wird die Anweisung `zeile = zeile + (s * z);` insgesamt ausgeführt? [[n]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "z1": {
+      "typ": "text",
+      "breite": 8
+     },
+     "z2": {
+      "typ": "text",
+      "breite": 8
+     },
+     "z3": {
+      "typ": "text",
+      "breite": 8
+     },
+     "n": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "z1": [
+     "1234",
+     "\"1234\""
+    ],
+    "z2": [
+     "468",
+     "\"468\""
+    ],
+    "z3": [
+     "912",
+     "\"912\""
+    ],
+    "n": [
+     "9"
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Die innere Schleife beginnt bei `s = z`. z = 1: 1, 2, 3, 4 → \"1234\". z = 2: s = 2, 3, 4 → 4, 6, 8 → \"468\". z = 3: s = 3, 4 → 9, 12 → \"912\". Die Zahlen werden an die Zeichenkette **angehängt**, nicht addiert. 4 + 3 + 2 = 9 Ausführungen."
+    },
+    {
+     "t": "hinweis",
+     "md": "Falle **P8**: Bei geschachtelten Schleifen jede innere Runde einzeln verfolgen."
+    }
+   ]
+  },
+  {
+   "id": "W0-B-15",
+   "titel": "Die Rangfolge der Regale",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Lückencode",
+   "fallen": [
+    "P1",
+    "P6",
+    "P3"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "*Die Operation `istAbsteigend(r: Reihung von Ganzzahl): Wahrheitswert` liefert wahr, wenn jedes Element ab dem zweiten **kleiner oder gleich** seinem Vorgänger ist. Für Reihungen mit weniger als zwei Elementen liefert sie wahr.* Füllen Sie die Lücken."
+    },
+    {
+     "t": "code",
+     "code": "public static boolean istAbsteigend(int[] r) {\n    for (int i = [[g1]]; i < r.length; i++) {\n        if (r[i] [[g2]] r[i - 1]) {\n            return [[g3]];\n        }\n    }\n    return [[g4]];\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Für `{9, 7, 7, 8, 2}` liefert die Methode [[w]]; dabei wird die Bedingung der if-Anweisung [[n]]-mal ausgewertet."
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "zahl"
+      },
+      "g2": {
+       "typ": "auswahl",
+       "optionen": [
+        ">",
+        ">=",
+        "<",
+        "<="
+       ]
+      },
+      "g3": {
+       "typ": "auswahl",
+       "optionen": [
+        "true",
+        "false"
+       ]
+      },
+      "g4": {
+       "typ": "auswahl",
+       "optionen": [
+        "true",
+        "false"
+       ]
+      }
+     }
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "w": {
+       "typ": "auswahl",
+       "optionen": [
+        "true",
+        "false"
+       ]
+      },
+      "n": {
+       "typ": "zahl"
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "g1": [
+      "1"
+     ],
+     "g2": [
+      ">"
+     ],
+     "g3": [
+      "false"
+     ],
+     "g4": [
+      "true"
+     ]
+    },
+    {
+     "w": [
+      "false"
+     ],
+     "n": [
+      "3"
+     ]
+    }
+   ],
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Start bei 1, damit `r[i - 1]` existiert (P1/P6). Gesucht ist ein **Gegenbeispiel**: ein Element, das größer als sein Vorgänger ist → sofort `false`. Erst nach der Schleife steht fest, dass es keins gibt → `true` (P3: Rückgabe in jedem Pfad). Bei {9, 7, 7, 8, 2} wird beim dritten Vergleich (8 > 7) abgebrochen."
+    },
+    {
+     "t": "hinweis",
+     "md": "Gleichheit (7, 7) ist erlaubt – darum `>` und nicht `>=`."
+    }
+   ]
+  }
+ ]
+}

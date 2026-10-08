@@ -1,0 +1,2999 @@
+// =====================================================================
+//  WELT 4 – DER HAFEN – MUSTERLÖSUNG (Lehrerexemplar)
+//  Informatik LK · Online-IDE · Algo Quest · Level 4.1 bis 4.6 (DS 24 – 29)
+//
+//  Das ist das ausgefuellte Geruest: Kiste, Testhilfe und Kartenbuch
+//  sind unveraendert, alle TODO-Methoden sind geloest, Knoten und
+//  MeinStapel sind geschrieben, die beiden LEVEL-4.6-Bloecke sind
+//  freigeschaltet, die Testklassen sind sonst unveraendert. Mit dieser
+//  Datei sind ALLE Tests im Reiter "Testrunner" gruen:
+//      L41StapelSchlangeTest 10 · L42SpielmoduleTest 10 ·
+//      L43UnveraendertTest 10 · L44LadelisteTest 12 · L45UmformenTest 7 ·
+//      L46ExpertenpfadTest 12 (davon 4 im LEVEL-4.6-Block)
+//      (zusammen 61 Tests; je Level basis/erweiterung/experte)
+//
+//  VORAUSSETZUNG: Bibliothek "Niedersachsen" im Workspace aktivieren
+//  (Workspace rechtsklicken -> "Einstellungen" -> Haekchen
+//  "Niedersachsen"). Ohne sie kompiliert NICHTS (Stack, Queue und
+//  DynArray unbekannt). Mit ihr sind die Java-Klassen Stack, Queue,
+//  Deque, LinkedList, ArrayList und Vector ausgeblendet.
+//
+//  ANLEITUNG FUER SCHUELER: siehe Geruest-Datei (Bibliothek einschalten,
+//  Testrunner, Stufen basis_ / erweiterung_ / experte_ je
+//  Level, Infokasten Casten, Abi-Check "Leer? Index?", Freischalten).
+//      L4.1 Hafen                  DS 24        Stack und Queue nach EH §4
+//      L4.2 Zugbuch, Initiative    DS 25 (Kuer) Undo/Redo, Zugreihenfolge
+//      L4.3 Unveraendert           DS 26        Hilfsstapel/-schlange
+//      L4.4 Ladeliste              DS 27        DynArray
+//      L4.5 Umformen               DS 28        Umformen, Klammern, Postfix
+//      L4.6 Expertenpfad, Knoten,  DS 29 (Kuer) Flood-Fill iterativ (Basis/
+//           MeinStapel                          Erweiterung), eigener
+//                                               Stapel (Experte)
+//
+//  INFOKASTEN "CASTEN BEI ABITUR-KLASSEN" (steht auch im Geruest)
+//  Die Niedersachsen-Klassen sind NICHT generisch, Inhalt ist Object:
+//      Stack s = new Stack();               (keine spitzen Klammern!)
+//      Kiste k = (Kiste) s.pop();           Stapel vom Inhaltstyp Kiste
+//      int x = (Integer) q.dequeue();       Schlange vom Inhaltstyp Ganzzahl
+//      char c = (Character) s.pop();        Stapel vom Inhaltstyp Zeichen
+//      String n = (String) q.head();        Schlange vom Inhaltstyp Zeichenkette
+//      Kiste k = (Kiste) d.getItem(i);      dynamische Reihung vom Inhaltstyp Kiste
+//  Hineinlegen ohne Cast (s.push(5), q.enqueue("Moewe"), d.append(k)),
+//  Zahlen und Zeichen werden automatisch verpackt. Fehlt ein Cast,
+//  meldet die IDE schon beim Kompilieren einen Fehler; ein FALSCHER Cast
+//  fuehrt erst beim Ausfuehren zum Laufzeitfehler (ClassCastException).
+//  Auch handschriftlich (Papier-Compiler, Boss) die Casts mitschreiben.
+//
+//  DIDAKTISCHE ENTSCHEIDUNGEN IM GERÜST:
+//  - Alle Methoden der Level 4.1, 4.3, 4.4, 4.5 und fluteIterativ sind
+//    static (Werkzeug-Klassen wie in Welt 2/3), Zugbuch und Initiative
+//    sind Objekt-Klassen mit vorgegebenen Attributen (Konstruktor =
+//    TODO). Ueber jeder Methode stehen Abi-Signatur in EH-Notation
+//    ("Stapel vom Inhaltstyp Kiste") und Aufgabentext.
+//  - Knoten und MeinStapel stehen im Geruest NUR als Klassenkarten im
+//    Kommentar (Klassenkarte -> Java = Abi-Transfer). Ihre vier Tests
+//    und ein Teil des Hauptprogramms stehen in Bloecken
+//    "/* LEVEL-4.6-START ... LEVEL-4.6-ENDE */" (wie Level 1.4 in
+//    Welt 1). So kompiliert das Geruest ab der ersten Stunde.
+//  - Vorlaeufige return-Werte -1, -2, "?", false, -1.0 und null: Im
+//    unbearbeiteten Geruest ist KEINER der 57 aktiven Tests zufaellig
+//    gruen (geprueft). Faelle, in denen "", 0, -1, false oder null
+//    richtig waere, stehen immer hinter einem Treffer-Fall im selben
+//    Test.
+//  - LEERE STRUKTUREN: Jede Methode wird auch mit einer leeren Struktur
+//    aufgerufen (Leerabfrage ist das zentrale Abi-Check-Thema, EH §4:
+//    Laufzeitfehler muessen durch Abfragen ausgeschlossen werden).
+//  - LAUFZEITFEHLER = ROTER TEST MIT HINWEIS: Jeder Test faengt
+//    RuntimeExceptions ab (try/catch) und ruft Testhilfe.laufzeitfehler
+//    auf. Die Methode wirft die Exception erneut und unterscheidet:
+//    IllegalStateException -> "Leerabfrage vergessen?",
+//    IndexOutOfBoundsException -> "Schleifengrenze? geloescht und i
+//    erhoeht?", IllegalArgumentException -> "null eingefuegt",
+//    ClassCastException -> "falscher Cast", NullPointerException ->
+//    "Attribut nicht erzeugt / Rueckgabe null". In einer richtigen
+//    Loesung tritt NIE eine Exception auf. try/catch steht nur in
+//    Testhilfe und in den Tests - die Schueler brauchen es nicht
+//    (Ausnahme: throw in MeinStapel, Experte).
+//  - "UNVERAENDERT" wird streng geprueft: Testhilfe.stapelInhalt bzw.
+//    schlangeInhalt entnimmt alle Elemente (und legt sie zurueck),
+//    Testhilfe.dieselben vergleicht dann die Objektreferenzen mit ==
+//    (dieselben Kisten, dieselbe Reihenfolge). Bei Zahlen wird der Inhalt
+//    als Text verglichen ("[42, 23, 16, 15, 8, 4]"), weil Zahlen beim
+//    Casten neu verpackt werden duerfen.
+//  - Zeichenketten-Vergleich: Tests uebergeben Namen ueber
+//    Testhilfe.kopie (zur Laufzeit zusammengesetzt). In echtem Java (und
+//    im Pruef-Harness) faellt == statt equals damit auf - die Online-IDE
+//    vergleicht Zeichenketten aber auch mit == inhaltlich, dort bleiben
+//    diese Tests gruen -> Code-Review (siehe unten).
+//  - fluteIterativ: Die Regeln stehen im Kommentar ueber der Klasse:
+//      Position als EINE Ganzzahl pos = z * 1000 + s (zurueck: z = pos /
+//      1000, s = pos % 1000); markieren BEIM EINFUEGEN (besucht-Reihung,
+//      '.' -> '+', merke(z, s)), Nachbarn oben, rechts, unten, links.
+//    Basis prueft Endkarte und Anzahl mit Schlange, Erweiterung mit
+//    Stapel, die Karte ohne Randmauer und die exakte Markier-Reihenfolge
+//    (Attribut spur, Methode merke vorgegeben). Endkarte und Anzahl sind
+//    fuer Schlange und Stapel GLEICH, die Reihenfolge ist verschieden.
+//  - MeinStapel wird gegen Stack in 400 Zufallsbefehlen verglichen
+//    (push/pop/top je 1/3, Start x = 2026, fester LCG
+//    x -> (75 * x + 74) mod 65537 in Testhilfe.naechsteZufallszahl, also
+//    in jedem Lauf dieselbe Folge; pop/top nur bei nicht leerem Stapel,
+//    isEmpty nach jedem Schritt). Die Exceptions bei leerem Stapel prueft
+//    experte_meinStapel_leer eigens.
+//
+//  TESTDATEN (auch fuer AB 1 bis 3, Warm-up, Folien und Boss 4)
+//  - Standard-Ladung (Testhilfe.ladung(), Reihenfolge = Index 0 .. 5):
+//        Holz (3 kg), Erz (5 kg), Gold (8 kg), Salz (3 kg), Tuch (8 kg),
+//        Wein (6 kg)   Summe 33 kg, Durchschnitt 5,5 kg
+//    als Stapel (kistenStapel, Holz zuerst gepusht) von OBEN:
+//        Wein, Tuch, Salz, Gold, Erz, Holz
+//        schwerste = Tuch (Gleichstand mit Gold, Tuch liegt hoeher),
+//        unterste = Holz
+//    als Schlange (kistenSchlange) von VORNE: Holz, Erz, Gold, Salz,
+//        Tuch, Wein; nachGewicht(q, 5) = Holz, Erz, Salz
+//    als DynArray: leichteste = Holz (Index 0, Gleichstand mit Salz),
+//        indexVon("Gold") = 2, einfuegesortierung ->
+//        Holz 3, Salz 3, Erz 5, Wein 6, Gold 8, Tuch 8 (stabil);
+//        abspalten(d, 5) -> Gold, Tuch, Wein; in d bleiben Holz, Erz, Salz
+//  - Zahlenstapel {4, 8, 15, 16, 23, 42} (42 oben): zaehle = 6,
+//    Summe = 108; stapleAuf({4, 8, 15, 16}) -> von oben 16, 15, 8, 4.
+//  - Schiffe (Warteschlange): Albatros, Moewe, Kormoran ->
+//    alleAbfertigen = "Albatros, Moewe, Kormoran".
+//  - Zugbuch: Nord, Ost, Sued; rueckgaengig -> Sued, Ost; wiederholen
+//    -> Ost, Sued. Initiative: Aria, Borin, Cyra -> amZug Aria, Borin,
+//    Cyra, Aria ...
+//  - Klammerausdruecke:
+//        richtig: "(a+b)*[c-{d}]", "{[()()]}", "()[]{}", "Hafen", ""
+//        falsch:  "(]", "([)]" (Art passt nicht), "(()" (am Ende offen),
+//                 "())" und "}" (schliessend bei leerem Stapel), ")("
+//  - Postfix (einstellig, + - *, ohne Leerzeichen):
+//        "34+2*" = 14    "234*+" = 14    "5" = 5      "99*9*" = 729
+//        "93-" = 6       "12-" = -1      "82-3*" = 18 "2534+*-" = -33
+//  - fluteIterativ (Karten aus Welt 3, Klasse Kartenbuch, char[][]):
+//        Karte      Start   Anzahl  Endkarte (Schlange = Stapel)
+//        Hoehle     (1, 1)  12      #######/#S++++#/#++#++#/#++++Z#/#######
+//        Hoehle     (3, 5)  12      wie oben
+//        Labyrinth  (1, 1)  25      wie lueften in Welt 3, Kammer unten
+//                                   rechts (6,6), (7,5..7) bleibt '.'
+//        Kerker     (1, 1)  12      #S++#..# usw. (Zielkammer bleibt)
+//        Kerker     (2, 5)   3      nur die Zielkammer (1,5) (1,6) (2,6)
+//        Lichtung   (1, 1)   8      ++#+/+S++/#++Z (ohne Randmauer)
+//        Wand, '+', ausserhalb  0   Karte unveraendert
+//    spur (Reihenfolge des Markierens), Hoehle ab (1, 1):
+//        Schlange: (1,1) (1,2) (2,1) (1,3) (2,2) (3,1) (1,4) (3,2) (1,5)
+//                  (2,4) (3,3) (2,5) (3,4) (3,5)
+//        Stapel:   (1,1) (1,2) (2,1) (2,2) (3,1) (3,2) (3,3) (3,4) (2,4)
+//                  (3,5) (2,5) (1,5) (1,4) (1,3)
+//    Lichtung ab (1, 1):
+//        Schlange: (1,1) (0,1) (1,2) (2,1) (1,0) (0,0) (1,3) (2,2) (0,3) (2,3)
+//        Stapel:   (1,1) (0,1) (1,2) (2,1) (1,0) (0,0) (2,2) (2,3) (1,3) (0,3)
+//    Kerker ab (2, 5): (2,5) (1,5) (2,6) (1,6) (Schlange und Stapel).
+//    Alle Werte durch Ausfuehren ermittelt und mit einer unabhaengigen
+//    Implementierung (Python) gegengeprueft.
+//
+//  LEHRERHINWEIS – VOR DEM ERSTEN EINSATZ IN DER ONLINE-IDE PRUEFEN
+//  (Die Dateien sind mit exakten Java-Nachbauten von Stack, Queue,
+//  DynArray und BinTree - Object-basiert, gleiche Exceptions - unter
+//  Java 21 geprueft, nicht in der Online-IDE selbst.)
+//  (a) Bibliothek "Niedersachsen" aktiviert? Kompiliert die Datei?
+//  (b) Casts: (Integer) mit Unboxing nach int, (Character) nach char,
+//      (String), (Kiste) - z. B. mit dem Hauptprogramm (alle Level).
+//  (c) try/catch (laut Doku seit Version 2.0 unterstuetzt): Ein
+//      absichtlicher Fehler (Leerabfrage in obersterWert loeschen) muss
+//      den Test basis_obersterWert_leer ROT mit "LAUFZEITFEHLER: top, pop
+//      ..." melden. Werden die Exceptions der Bibliothek NICHT als
+//      IllegalStateException/IndexOutOfBoundsException gefangen, bleibt
+//      der Test trotzdem rot (Meldung der IDE statt Hinweis).
+//  (d) Zugbuch: Der Redo-Stapel heisst zurueckgenommen (nicht wie die
+//      Methode rueckgaengig), damit es keinen Namenskonflikt gibt.
+//  (e) Endlosschleife (z. B. Rotieren ohne Zaehler in ausscheiden): Wie
+//      reagiert der Testrunner? Im Pruef-Harness gilt ein Test nach 3 s
+//      als rot (TIMEOUT); in der IDE ggf. Programm anhalten.
+//  (f) for-each ueber DynArray (for (Object o : d)) laut Doku moeglich -
+//      wird in diesen Dateien NICHT benutzt, erst testen, bevor es auf
+//      ein AB kommt.
+// =====================================================================
+
+
+// ---------------------------------------------------------------------
+//  GERÜST – unveraendert
+// ---------------------------------------------------------------------
+//  Kiste:      die Fracht im Hafen (wird in allen Leveln benutzt).
+//  Testhilfe:  baut Stapel/Schlangen/Reihungen fuer die Tests und
+//              liest sie aus, OHNE sie zu veraendern. Die Tests zeigen
+//              dir damit in der Meldung den ganzen Inhalt, z. B.
+//              "[erwartet: [Erz (5 kg), Holz (3 kg)], tatsaechlich: ...]".
+//              Stapel werden von OBEN nach unten, Schlangen von VORNE
+//              nach hinten angezeigt. Ausserdem: die Standard-Ladung
+//              (sechs Kisten) und die Meldung bei Laufzeitfehlern.
+//  Kartenbuch: die Dungeon-Karten aus Welt 3 als 2D-Reihungen (Level 4.6).
+//  Du darfst alle drei Klassen auch im Hauptprogramm benutzen.
+// ---------------------------------------------------------------------
+
+//  Klassenkarte (Notation wie im Abitur):
+//      Kiste
+//      ------------------------------------------------
+//      - name: Zeichenkette
+//      - gewicht: Ganzzahl                     // in kg
+//      ------------------------------------------------
+//      + c Kiste(name: Zeichenkette, gewicht: Ganzzahl)
+//      + getName(): Zeichenkette
+//      + getGewicht(): Ganzzahl
+//      + beschreibung(): Zeichenkette          // z. B. "Erz (5 kg)"
+
+class Kiste {
+
+    private String name;
+    private int gewicht;
+
+    public Kiste(String name, int gewicht) {
+        this.name = name;
+        this.gewicht = gewicht;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getGewicht() {
+        return gewicht;
+    }
+
+    public String beschreibung() {
+        return name + " (" + gewicht + " kg)";
+    }
+}
+
+
+class Testhilfe {
+
+    // ----- Strukturen bauen -----
+
+    // Stapel aus Ganzzahlen: werte[0] zuerst, der letzte Wert liegt oben.
+    public static Stack zahlenStapel(int[] werte) {
+        Stack s = new Stack();
+        for (int i = 0; i < werte.length; i++) {
+            s.push(werte[i]);
+        }
+        return s;
+    }
+
+    // Schlange aus Ganzzahlen: werte[0] steht vorne.
+    public static Queue zahlenSchlange(int[] werte) {
+        Queue q = new Queue();
+        for (int i = 0; i < werte.length; i++) {
+            q.enqueue(werte[i]);
+        }
+        return q;
+    }
+
+    // Schlange aus Zeichenketten: namen[0] steht vorne.
+    public static Queue namenSchlange(String[] namen) {
+        Queue q = new Queue();
+        for (int i = 0; i < namen.length; i++) {
+            q.enqueue(namen[i]);
+        }
+        return q;
+    }
+
+    // Stapel aus Kisten: kisten[0] liegt unten, die letzte Kiste oben.
+    public static Stack kistenStapel(Kiste[] kisten) {
+        Stack s = new Stack();
+        for (int i = 0; i < kisten.length; i++) {
+            s.push(kisten[i]);
+        }
+        return s;
+    }
+
+    // Schlange aus Kisten: kisten[0] steht vorne.
+    public static Queue kistenSchlange(Kiste[] kisten) {
+        Queue q = new Queue();
+        for (int i = 0; i < kisten.length; i++) {
+            q.enqueue(kisten[i]);
+        }
+        return q;
+    }
+
+    // Dynamische Reihung aus Kisten in derselben Reihenfolge.
+    public static DynArray kistenReihung(Kiste[] kisten) {
+        DynArray d = new DynArray();
+        for (int i = 0; i < kisten.length; i++) {
+            d.append(kisten[i]);
+        }
+        return d;
+    }
+
+    // ----- Inhalt auslesen, OHNE die Struktur zu veraendern -----
+
+    // Inhalt eines Stapels von oben nach unten. s ist danach wieder genau
+    // wie vorher (dieselben Objekte, dieselbe Reihenfolge).
+    public static DynArray stapelInhalt(Stack s) {
+        if (s == null) {
+            return null;
+        }
+        DynArray d = new DynArray();
+        Stack hilf = new Stack();
+        while (!s.isEmpty()) {
+            Object o = s.pop();
+            d.append(o);
+            hilf.push(o);
+        }
+        while (!hilf.isEmpty()) {
+            s.push(hilf.pop());
+        }
+        return d;
+    }
+
+    // Inhalt einer Schlange von vorne nach hinten. q ist danach wieder
+    // genau wie vorher.
+    public static DynArray schlangeInhalt(Queue q) {
+        if (q == null) {
+            return null;
+        }
+        DynArray d = new DynArray();
+        while (!q.isEmpty()) {
+            d.append(q.dequeue());
+        }
+        for (int i = 0; i < d.getLength(); i++) {
+            q.enqueue(d.getItem(i));
+        }
+        return d;
+    }
+
+    // ----- Texte fuer die Meldungen -----
+
+    // Zahlen oder Zeichenketten als Text, z. B. "[4, 8, 15]".
+    public static String text(DynArray d) {
+        if (d == null) {
+            return "null";
+        }
+        String t = "[";
+        for (int i = 0; i < d.getLength(); i++) {
+            if (i > 0) {
+                t = t + ", ";
+            }
+            t = t + d.getItem(i);
+        }
+        return t + "]";
+    }
+
+    // Kisten als Text, z. B. "[Erz (5 kg), Holz (3 kg)]".
+    public static String kistenText(DynArray d) {
+        if (d == null) {
+            return "null";
+        }
+        String t = "[";
+        for (int i = 0; i < d.getLength(); i++) {
+            if (i > 0) {
+                t = t + ", ";
+            }
+            Kiste k = (Kiste) d.getItem(i);
+            t = t + k.beschreibung();
+        }
+        return t + "]";
+    }
+
+    public static String stapelText(Stack s) {
+        return text(stapelInhalt(s));
+    }
+
+    public static String schlangeText(Queue q) {
+        return text(schlangeInhalt(q));
+    }
+
+    public static String kistenStapelText(Stack s) {
+        return kistenText(stapelInhalt(s));
+    }
+
+    public static String kistenSchlangeText(Queue q) {
+        return kistenText(schlangeInhalt(q));
+    }
+
+    // ----- Vergleich: dieselben Objekte in derselben Reihenfolge? -----
+
+    public static boolean dieselben(DynArray a, DynArray b) {
+        if (a == null || b == null) {
+            return false;
+        }
+        if (a.getLength() != b.getLength()) {
+            return false;
+        }
+        for (int i = 0; i < a.getLength(); i++) {
+            if (a.getItem(i) != b.getItem(i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Eine Kiste als Text (auch null), z. B. "Erz (5 kg)".
+    public static String kisteText(Kiste k) {
+        if (k == null) {
+            return "null";
+        }
+        return k.beschreibung();
+    }
+
+    // ----- Die Standard-Ladung des Hafens (fuer Tests, AB und Hauptprogramm) -----
+
+    // Liefert bei JEDEM Aufruf sechs NEUE Kisten:
+    //     Holz (3 kg), Erz (5 kg), Gold (8 kg), Salz (3 kg), Tuch (8 kg), Wein (6 kg)
+    // Gesamtgewicht 33 kg, Durchschnitt 5,5 kg.
+    public static Kiste[] ladung() {
+        Kiste[] k = new Kiste[6];
+        k[0] = new Kiste("Holz", 3);
+        k[1] = new Kiste("Erz", 5);
+        k[2] = new Kiste("Gold", 8);
+        k[3] = new Kiste("Salz", 3);
+        k[4] = new Kiste("Tuch", 8);
+        k[5] = new Kiste("Wein", 6);
+        return k;
+    }
+
+    // ----- Laufzeitfehler in einem Test verstaendlich melden -----
+
+    // Die Tests fangen Laufzeitfehler (Exceptions) ab und melden sie mit
+    // einem Hinweis. In einer richtigen Loesung tritt NIE ein Laufzeitfehler
+    // auf - auch nicht bei leeren Strukturen!
+    public static void laufzeitfehler(RuntimeException e) {
+        String meldung = " (Meldung der IDE: " + e.getMessage() + ")";
+        try {
+            throw e;
+        } catch (IllegalStateException x) {
+            fail("LAUFZEITFEHLER: top, pop, head oder dequeue auf einer LEEREN Struktur - Leerabfrage mit isEmpty() vergessen?" + meldung);
+        } catch (IndexOutOfBoundsException x) {
+            fail("LAUFZEITFEHLER: Index ausserhalb - bei DynArray gilt 0 <= i < getLength() (insertAt: i <= getLength()). Schleifengrenze pruefen! Geloescht und danach i erhoeht?" + meldung);
+        } catch (IllegalArgumentException x) {
+            fail("LAUFZEITFEHLER: null in Stack, Queue oder DynArray gelegt - push, enqueue, append, insertAt und setItem verbieten null." + meldung);
+        } catch (ClassCastException x) {
+            fail("LAUFZEITFEHLER: falscher Cast - passt (Kiste), (Integer), (String) bzw. (Character) zum Inhaltstyp der Struktur?" + meldung);
+        } catch (NullPointerException x) {
+            fail("LAUFZEITFEHLER: Zugriff auf null - Attribut im Konstruktor nicht erzeugt (new Stack() ...)? Liefert eine Methode noch null?" + meldung);
+        } catch (RuntimeException x) {
+            fail("LAUFZEITFEHLER" + meldung);
+        }
+    }
+
+    // ----- Sonstiges -----
+
+    // Neue Zeichenkette mit demselben Inhalt wie s (Zeichen fuer Zeichen
+    // zusammengesetzt). Damit pruefen die Tests, dass du Zeichenketten mit
+    // equals vergleichst und nicht mit ==.
+    public static String kopie(String s) {
+        String t = "";
+        for (int i = 0; i < s.length(); i++) {
+            t = t + s.charAt(i);
+        }
+        return t;
+    }
+
+    // Pseudo-Zufallszahl (linearer Kongruenzgenerator): liefert aus x
+    // die naechste Zahl zwischen 0 und 65536 - immer dieselbe Folge.
+    public static int naechsteZufallszahl(int x) {
+        return (x * 75 + 74) % 65537;
+    }
+
+    // 2D-Reihung als Text: Zeilen mit "\n" getrennt.
+    public static String kartenText(char[][] karte) {
+        if (karte == null) {
+            return "null";
+        }
+        String t = "";
+        for (int z = 0; z < karte.length; z++) {
+            if (z > 0) {
+                t = t + "\n";
+            }
+            for (int s = 0; s < karte[z].length; s++) {
+                t = t + karte[z][s];
+            }
+        }
+        return t;
+    }
+
+    // Zeilen als Text (wie kartenText), fuer erwartete Karten.
+    public static String zeilenText(String[] zeilen) {
+        String t = "";
+        for (int i = 0; i < zeilen.length; i++) {
+            if (i > 0) {
+                t = t + "\n";
+            }
+            t = t + zeilen[i];
+        }
+        return t;
+    }
+}
+
+
+// Die Testkarten aus Welt 3 als Reihung von Reihung von Zeichen:
+// karte[z][s] = Zeile z, Spalte s. '#' Wand, '.' frei, 'S' Start, 'Z' Ziel.
+// Jeder Aufruf liefert eine NEUE Karte (frisch vernebelt).
+class Kartenbuch {
+
+    // Baut aus Textzeilen eine 2D-Reihung: karte[z][s] = zeilen[z].charAt(s).
+    public static char[][] karte(String[] zeilen) {
+        char[][] k = new char[zeilen.length][zeilen[0].length()];
+        for (int z = 0; z < zeilen.length; z++) {
+            for (int s = 0; s < zeilen[z].length(); s++) {
+                k[z][s] = zeilen[z].charAt(s);
+            }
+        }
+        return k;
+    }
+
+    // Die offene Hoehle (5 x 7), Start (1, 1), Ziel (3, 5).
+    public static char[][] hoehle() {
+        String[] zeilen = {
+            "#######",
+            "#S....#",
+            "#..#..#",
+            "#....Z#",
+            "#######"
+        };
+        return karte(zeilen);
+    }
+
+    // Das Labyrinth (9 x 9), Start (1, 1), Ziel (5, 7); die Kammer unten
+    // rechts ist nur UEBER ECK mit dem Gang verbunden.
+    public static char[][] labyrinth() {
+        String[] zeilen = {
+            "#########",
+            "#S#...#.#",
+            "#.#.#.#.#",
+            "#...#...#",
+            "#.###.#.#",
+            "#...#.#Z#",
+            "###.##.##",
+            "#...#...#",
+            "#########"
+        };
+        return karte(zeilen);
+    }
+
+    // Der Kerker (6 x 8), Start (1, 1), Ziel (2, 5) in einer eigenen Kammer.
+    public static char[][] kerker() {
+        String[] zeilen = {
+            "########",
+            "#S..#..#",
+            "#.#.#Z.#",
+            "#...####",
+            "#.#....#",
+            "########"
+        };
+        return karte(zeilen);
+    }
+
+    // Die Lichtung (3 x 4) OHNE Randmauer, Start (1, 1), Ziel (2, 3).
+    public static char[][] lichtung() {
+        String[] zeilen = {
+            "..#.",
+            ".S..",
+            "#..Z"
+        };
+        return karte(zeilen);
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  LÖSUNGEN
+// ---------------------------------------------------------------------
+//  Ueber jeder Methode steht ihre Signatur in Abi-Notation:
+//      name(p: Typ, q: Typ): Rueckgabetyp
+//  Neu in Welt 4 (Klassen der Bibliothek "Niedersachsen"):
+//      Stapel vom Inhaltstyp Kiste                  Stack
+//      Schlange vom Inhaltstyp Ganzzahl             Queue
+//      dynamische Reihung vom Inhaltstyp Kiste      DynArray
+//
+//  Die Schnittstellen (wie in den Ergaenzenden Hinweisen zum Abitur):
+//      Stack    : c Stack(), isEmpty(): Wahrheitswert, push(x): nichts,
+//                 top(): Inhaltstyp, pop(): Inhaltstyp
+//      Queue    : c Queue(), isEmpty(): Wahrheitswert, enqueue(x): nichts,
+//                 head(): Inhaltstyp, dequeue(): Inhaltstyp
+//      DynArray : c DynArray(), isEmpty(): Wahrheitswert,
+//                 getItem(i): Inhaltstyp, append(x): nichts,
+//                 insertAt(i, x): nichts, setItem(i, x): nichts,
+//                 delete(i): nichts, getLength(): Ganzzahl
+//
+//  Muster "UNVERAENDERT" (Beispiel: Stapel durchlaufen):
+//
+//      Stack hilf = new Stack();
+//      while (!s.isEmpty()) {             // Leer? -> erst pruefen
+//          Kiste k = (Kiste) s.pop();     // Cast!
+//          // ... k auswerten ...
+//          hilf.push(k);                  // DIESELBE Kiste aufheben
+//      }
+//      while (!hilf.isEmpty()) {
+//          s.push(hilf.pop());            // zurueckschichten
+//      }
+// ---------------------------------------------------------------------
+
+// ============= Level 4.1 – Stapel und Schlange (DS 24) ==============
+//  Alle Methoden sind static: Aufruf mit Klassenname, z. B.
+//  Hafen.leeren(s).
+
+class Hafen {
+
+    // ===================== Stufe BASIS =====================
+
+    // stapleAuf(werte: Reihung von Ganzzahl): Stapel vom Inhaltstyp Ganzzahl
+    // Erzeugt einen NEUEN Stapel und legt die Werte darauf: werte[0]
+    // zuerst, der letzte Wert liegt oben. {4, 8, 15} -> oben 15, unten 4.
+    public static Stack stapleAuf(int[] werte) {
+        Stack s = new Stack();
+        for (int i = 0; i < werte.length; i++) {
+            s.push(werte[i]);                           // int wird automatisch verpackt
+        }
+        return s;
+    }
+
+    // obersterWert(s: Stapel vom Inhaltstyp Ganzzahl): Ganzzahl
+    // Liefert den obersten Wert, OHNE ihn zu entfernen (top, nicht pop).
+    // Leerer Stapel -> -1.
+    public static int obersterWert(Stack s) {
+        if (s.isEmpty()) {
+            return -1;                                  // Leer? -> kein top()!
+        }
+        return (Integer) s.top();                       // Cast: Object -> Integer
+    }
+
+    // leeren(s: Stapel): Ganzzahl
+    // Entnimmt ALLE Elemente und gibt zurueck, wie viele es waren.
+    // Danach ist s leer. Leerer Stapel -> 0.
+    public static int leeren(Stack s) {
+        int anzahl = 0;
+        while (!s.isEmpty()) {
+            s.pop();
+            anzahl++;
+        }
+        return anzahl;
+    }
+
+
+    // ================== Stufe ERWEITERUNG ==================
+
+    // warteschlange(namen: Reihung von Zeichenkette): Schlange vom Inhaltstyp Zeichenkette
+    // Erzeugt eine NEUE Schlange: namen[0] stellt sich zuerst an (steht
+    // vorne), der letzte Name steht hinten.
+    public static Queue warteschlange(String[] namen) {
+        Queue q = new Queue();
+        for (int i = 0; i < namen.length; i++) {
+            q.enqueue(namen[i]);
+        }
+        return q;
+    }
+
+    // naechster(q: Schlange vom Inhaltstyp Zeichenkette): Zeichenkette
+    // Entnimmt den vordersten Namen und gibt ihn zurueck.
+    // Leere Schlange -> "".
+    public static String naechster(Queue q) {
+        if (q.isEmpty()) {
+            return "";                                  // Leer? -> kein dequeue()!
+        }
+        return (String) q.dequeue();
+    }
+
+    // alleAbfertigen(q: Schlange vom Inhaltstyp Zeichenkette): Zeichenkette
+    // Entnimmt ALLE Namen der Reihe nach und liefert sie, mit ", "
+    // verbunden: "Albatros, Moewe, Kormoran". Leere Schlange -> "".
+    // Danach ist q leer.
+    public static String alleAbfertigen(Queue q) {
+        String text = "";
+        boolean erster = true;
+        while (!q.isEmpty()) {
+            if (!erster) {
+                text = text + ", ";                     // Trenner nur ZWISCHEN den Namen
+            }
+            text = text + (String) q.dequeue();
+            erster = false;
+        }
+        return text;
+    }
+
+
+    // =================== Stufe EXPERTE =====================
+
+    // umkehren(q: Schlange): nichts
+    // Kehrt die Reihenfolge der Schlange um - mit Hilfe eines Stapels.
+    // Vorne A, B, C hinten -> vorne C, B, A hinten.
+    public static void umkehren(Queue q) {
+        Stack hilf = new Stack();
+        while (!q.isEmpty()) {
+            hilf.push(q.dequeue());                     // A, B, C -> oben liegt C
+        }
+        while (!hilf.isEmpty()) {
+            q.enqueue(hilf.pop());                      // C zuerst wieder anstellen
+        }
+    }
+
+    // stapelUmdrehen(s: Stapel): Stapel
+    // Liefert einen NEUEN Stapel mit umgekehrter Reihenfolge: Was in s
+    // unten lag, liegt im neuen Stapel oben. s ist danach leer.
+    public static Stack stapelUmdrehen(Stack s) {
+        Stack neu = new Stack();
+        while (!s.isEmpty()) {
+            neu.push(s.pop());
+        }
+        return neu;
+    }
+}
+
+
+// ============ Level 4.2 – Spielmodule (DS 25, Kuer-DS) ==============
+//  Zwei Objekt-Klassen (KEINE static-Methoden): Erst ein Objekt
+//  erzeugen, dann die Methoden daran aufrufen, z. B.
+//      Zugbuch zb = new Zugbuch();   zb.zug("Nord");
+//
+//  Klassenkarten:
+//      Zugbuch                                   Initiative
+//      -----------------------------------       -----------------------------------
+//      - erledigt: Stapel vom Inhaltstyp         - reihe: Schlange vom Inhaltstyp
+//          Zeichenkette                              Zeichenkette
+//      - zurueckgenommen: Stapel vom             -----------------------------------
+//          Inhaltstyp Zeichenkette               + c Initiative()
+//      -----------------------------------       + beitreten(name: Zeichenkette): nichts
+//      + c Zugbuch()                             + amZug(): Zeichenkette
+//      + zug(z: Zeichenkette): nichts            + ausscheiden(name: Zeichenkette):
+//      + rueckgaengig(): Zeichenkette                Wahrheitswert
+//      + wiederholen(): Zeichenkette
+//      + anzahlZuege(): Ganzzahl
+
+class Zugbuch {
+
+    private Stack erledigt;         // ausgefuehrte Zuege, der letzte liegt oben
+    private Stack zurueckgenommen;  // zurueckgenommene Zuege (fuer wiederholen)
+
+    // ===================== Stufe BASIS =====================
+
+    // c Zugbuch()
+    // Erzeugt die beiden (leeren) Stapel.
+    public Zugbuch() {
+        erledigt = new Stack();
+        zurueckgenommen = new Stack();
+    }
+
+    // zug(z: Zeichenkette): nichts
+    // Ein neuer Zug wird ausgefuehrt: z kommt oben auf erledigt. Nach einem
+    // neuen Zug kann man nichts mehr wiederholen: der Stapel zurueckgenommen
+    // wird geleert.
+    public void zug(String z) {
+        erledigt.push(z);
+        zurueckgenommen = new Stack();                  // Redo-Stapel leeren
+    }
+
+    // rueckgaengig(): Zeichenkette
+    // Nimmt den letzten Zug zurueck: oberster Zug von erledigt nach
+    // zurueckgenommen; Rueckgabe dieser Zug. Nichts mehr da -> "".
+    public String rueckgaengig() {
+        if (erledigt.isEmpty()) {
+            return "";                                  // Leer? -> kein pop()!
+        }
+        String z = (String) erledigt.pop();
+        zurueckgenommen.push(z);
+        return z;
+    }
+
+
+    // ================== Stufe ERWEITERUNG ==================
+
+    // wiederholen(): Zeichenkette
+    // Fuehrt den zuletzt zurueckgenommenen Zug wieder aus: oberster Zug
+    // von zurueckgenommen zurueck nach erledigt; Rueckgabe dieser Zug.
+    // Nichts zum Wiederholen da -> "".
+    public String wiederholen() {
+        if (zurueckgenommen.isEmpty()) {
+            return "";
+        }
+        String z = (String) zurueckgenommen.pop();
+        erledigt.push(z);
+        return z;
+    }
+
+    // anzahlZuege(): Ganzzahl
+    // Anzahl der Zuege in erledigt. UNVERAENDERT: erledigt sieht danach
+    // genau so aus wie vorher (Hilfsstapel).
+    public int anzahlZuege() {
+        Stack hilf = new Stack();
+        int anzahl = 0;
+        while (!erledigt.isEmpty()) {
+            hilf.push(erledigt.pop());
+            anzahl++;
+        }
+        while (!hilf.isEmpty()) {
+            erledigt.push(hilf.pop());                  // zurueckschichten
+        }
+        return anzahl;
+    }
+}
+
+
+class Initiative {
+
+    private Queue reihe;            // vorne steht, wer als Naechstes am Zug ist
+
+    // ===================== Stufe BASIS =====================
+
+    // c Initiative()
+    // Erzeugt die (leere) Schlange.
+    public Initiative() {
+        reihe = new Queue();
+    }
+
+    // beitreten(name: Zeichenkette): nichts
+    // name stellt sich hinten an.
+    public void beitreten(String name) {
+        reihe.enqueue(name);
+    }
+
+    // amZug(): Zeichenkette
+    // Der Vorderste ist am Zug: Er wird vorne entnommen und sofort hinten
+    // wieder angestellt (rotieren). Rueckgabe: sein Name. Leer -> "".
+    public String amZug() {
+        if (reihe.isEmpty()) {
+            return "";
+        }
+        String name = (String) reihe.dequeue();
+        reihe.enqueue(name);                            // hinten wieder anstellen
+        return name;
+    }
+
+
+    // =================== Stufe EXPERTE =====================
+
+    // ausscheiden(name: Zeichenkette): Wahrheitswert
+    // Entfernt das ERSTE Vorkommen von name aus der Reihe; die Reihenfolge
+    // der uebrigen bleibt gleich. Rueckgabe true, wenn name dabei war,
+    // sonst false (Reihe unveraendert).
+    public boolean ausscheiden(String name) {
+        Queue hilf = new Queue();
+        boolean gefunden = false;
+        while (!reihe.isEmpty()) {
+            String n = (String) reihe.dequeue();
+            if (!gefunden && n.equals(name)) {
+                gefunden = true;                        // NICHT wieder anstellen
+            } else {
+                hilf.enqueue(n);
+            }
+        }
+        while (!hilf.isEmpty()) {
+            reihe.enqueue(hilf.dequeue());              // Reihenfolge bleibt
+        }
+        return gefunden;
+    }
+}
+
+
+// ========== Level 4.3 – Muster "unveraendert lassen" (DS 26) ==========
+//  ALLE Methoden dieser Klasse lassen die uebergebene Struktur
+//  UNVERAENDERT: dieselben Objekte in derselben Reihenfolge (Ausnahme:
+//  entferneAlle). Nutze Hilfsstapel bzw. Hilfsschlange und schichte
+//  am Ende zurueck - auch wenn du schon vorher fertig bist!
+
+class Unveraendert {
+
+    // ===================== Stufe BASIS =====================
+
+    // zaehle(s: Stapel): Ganzzahl
+    // Anzahl der Elemente in s. UNVERAENDERT (Hilfsstapel).
+    public static int zaehle(Stack s) {
+        Stack hilf = new Stack();
+        int anzahl = 0;
+        while (!s.isEmpty()) {
+            hilf.push(s.pop());
+            anzahl++;
+        }
+        while (!hilf.isEmpty()) {
+            s.push(hilf.pop());                         // zurueckschichten
+        }
+        return anzahl;
+    }
+
+    // summe(q: Schlange vom Inhaltstyp Ganzzahl): Ganzzahl
+    // Summe aller Werte in q. UNVERAENDERT (Hilfsschlange).
+    public static int summe(Queue q) {
+        Queue hilf = new Queue();
+        int summe = 0;
+        while (!q.isEmpty()) {
+            Object o = q.dequeue();
+            int x = (Integer) o;                        // Cast fuers Rechnen
+            summe = summe + x;
+            hilf.enqueue(o);                            // dasselbe Objekt aufheben
+        }
+        while (!hilf.isEmpty()) {
+            q.enqueue(hilf.dequeue());
+        }
+        return summe;
+    }
+
+
+    // ================== Stufe ERWEITERUNG ==================
+
+    // enthaelt(s: Stapel vom Inhaltstyp Kiste, name: Zeichenkette): Wahrheitswert
+    // true, wenn eine Kiste mit diesem Namen im Stapel liegt.
+    // UNVERAENDERT - auch wenn du die Kiste schon gefunden hast!
+    public static boolean enthaelt(Stack s, String name) {
+        Stack hilf = new Stack();
+        boolean gefunden = false;
+        while (!s.isEmpty()) {
+            Kiste k = (Kiste) s.pop();
+            if (k.getName().equals(name)) {
+                gefunden = true;                        // NICHT sofort return - erst zurueckschichten
+            }
+            hilf.push(k);
+        }
+        while (!hilf.isEmpty()) {
+            s.push(hilf.pop());
+        }
+        return gefunden;
+    }
+
+    // durchschnittsGewicht(q: Schlange vom Inhaltstyp Kiste): Kommazahl
+    // Durchschnittliches Gewicht der Kisten in q. Leere Schlange -> 0.0.
+    // UNVERAENDERT (Hilfsschlange).
+    public static double durchschnittsGewicht(Queue q) {
+        Queue hilf = new Queue();
+        int summe = 0;
+        int anzahl = 0;
+        while (!q.isEmpty()) {
+            Kiste k = (Kiste) q.dequeue();
+            summe = summe + k.getGewicht();
+            anzahl++;
+            hilf.enqueue(k);
+        }
+        while (!hilf.isEmpty()) {
+            q.enqueue(hilf.dequeue());
+        }
+        if (anzahl == 0) {
+            return 0.0;                                 // nie durch 0 teilen
+        }
+        return (double) summe / anzahl;                 // Kommazahl-Division!
+    }
+
+    // schwerste(s: Stapel vom Inhaltstyp Kiste): Kiste
+    // Die schwerste Kiste im Stapel; bei Gleichstand die OBERSTE davon.
+    // Leerer Stapel -> null. UNVERAENDERT.
+    public static Kiste schwerste(Stack s) {
+        Stack hilf = new Stack();
+        Kiste beste = null;
+        while (!s.isEmpty()) {
+            Kiste k = (Kiste) s.pop();
+            if (beste == null || k.getGewicht() > beste.getGewicht()) {
+                beste = k;                              // > (nicht >=): die obere gewinnt
+            }
+            hilf.push(k);
+        }
+        while (!hilf.isEmpty()) {
+            s.push(hilf.pop());
+        }
+        return beste;
+    }
+
+
+    // =================== Stufe EXPERTE =====================
+
+    // unterste(s: Stapel vom Inhaltstyp Kiste): Kiste
+    // Die unterste Kiste des Stapels. Leerer Stapel -> null. UNVERAENDERT.
+    public static Kiste unterste(Stack s) {
+        Stack hilf = new Stack();
+        Kiste letzte = null;
+        while (!s.isEmpty()) {
+            letzte = (Kiste) s.pop();                   // die zuletzt entnommene ist die unterste
+            hilf.push(letzte);
+        }
+        while (!hilf.isEmpty()) {
+            s.push(hilf.pop());
+        }
+        return letzte;
+    }
+
+    // entferneAlle(q: Schlange vom Inhaltstyp Kiste, name: Zeichenkette): Ganzzahl
+    // AUSNAHME - diese Methode VERAENDERT q: Alle Kisten mit diesem Namen
+    // werden entfernt, die uebrigen bleiben in ihrer Reihenfolge.
+    // Rueckgabe: Anzahl der entfernten Kisten.
+    public static int entferneAlle(Queue q, String name) {
+        Queue hilf = new Queue();
+        int anzahl = 0;
+        while (!q.isEmpty()) {
+            Kiste k = (Kiste) q.dequeue();
+            if (k.getName().equals(name)) {
+                anzahl++;                               // nicht wieder anstellen
+            } else {
+                hilf.enqueue(k);
+            }
+        }
+        while (!hilf.isEmpty()) {
+            q.enqueue(hilf.dequeue());
+        }
+        return anzahl;
+    }
+}
+
+
+// ============ Level 4.4 – Die Ladeliste (DS 27) =====================
+//  Alle Methoden arbeiten auf einer dynamischen Reihung vom Inhaltstyp
+//  Kiste (DynArray). Index ab 0, Laenge mit getLength().
+//  Index? Vor getItem, setItem und delete: 0 <= i < getLength().
+//  Wer in einer Schleife loescht, darf den Index danach NICHT erhoehen.
+
+class Ladeliste {
+
+    // ===================== Stufe BASIS =====================
+
+    // gesamtGewicht(d: dynamische Reihung vom Inhaltstyp Kiste): Ganzzahl
+    // Summe der Gewichte aller Kisten. Leere Reihung -> 0.
+    public static int gesamtGewicht(DynArray d) {
+        int summe = 0;
+        for (int i = 0; i < d.getLength(); i++) {
+            Kiste k = (Kiste) d.getItem(i);
+            summe = summe + k.getGewicht();
+        }
+        return summe;
+    }
+
+    // indexVon(d: dynamische Reihung vom Inhaltstyp Kiste, name: Zeichenkette): Ganzzahl
+    // Index der ERSTEN Kiste mit diesem Namen, sonst -1.
+    public static int indexVon(DynArray d, String name) {
+        for (int i = 0; i < d.getLength(); i++) {
+            Kiste k = (Kiste) d.getItem(i);
+            if (k.getName().equals(name)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    // leichteste(d: dynamische Reihung vom Inhaltstyp Kiste): Kiste
+    // Die leichteste Kiste; bei Gleichstand die ERSTE davon.
+    // Leere Reihung -> null. d bleibt unveraendert.
+    public static Kiste leichteste(DynArray d) {
+        if (d.isEmpty()) {
+            return null;                                // Leer? -> kein getItem(0)!
+        }
+        Kiste beste = (Kiste) d.getItem(0);
+        for (int i = 1; i < d.getLength(); i++) {
+            Kiste k = (Kiste) d.getItem(i);
+            if (k.getGewicht() < beste.getGewicht()) {
+                beste = k;                              // < (nicht <=): die erste gewinnt
+            }
+        }
+        return beste;
+    }
+
+
+    // ================== Stufe ERWEITERUNG ==================
+
+    // einfuegenSortiert(d: dynamische Reihung vom Inhaltstyp Kiste, k: Kiste): nichts
+    // d ist aufsteigend nach Gewicht sortiert. k wird so eingefuegt, dass
+    // d sortiert bleibt - HINTER allen Kisten, die gleich schwer sind.
+    // Ist k die schwerste, kommt sie ans Ende.
+    public static void einfuegenSortiert(DynArray d, Kiste k) {
+        int pos = 0;
+        boolean gefunden = false;
+        while (pos < d.getLength() && !gefunden) {      // Index? zuerst die Grenze pruefen
+            Kiste x = (Kiste) d.getItem(pos);
+            if (x.getGewicht() > k.getGewicht()) {
+                gefunden = true;                        // erste echt schwerere Kiste
+            } else {
+                pos++;
+            }
+        }
+        d.insertAt(pos, k);                             // pos == getLength() haengt hinten an
+    }
+
+    // entferneLeichteste(d: dynamische Reihung vom Inhaltstyp Kiste): Kiste
+    // Entfernt die leichteste Kiste (bei Gleichstand die ERSTE davon) aus d
+    // und gibt sie zurueck. Leere Reihung -> null.
+    public static Kiste entferneLeichteste(DynArray d) {
+        if (d.isEmpty()) {
+            return null;
+        }
+        int minIndex = 0;
+        for (int i = 1; i < d.getLength(); i++) {
+            Kiste k = (Kiste) d.getItem(i);
+            Kiste m = (Kiste) d.getItem(minIndex);
+            if (k.getGewicht() < m.getGewicht()) {
+                minIndex = i;
+            }
+        }
+        Kiste leicht = (Kiste) d.getItem(minIndex);     // ERST merken ...
+        d.delete(minIndex);                             // ... DANN loeschen
+        return leicht;
+    }
+
+    // entferneDuplikate(d: dynamische Reihung vom Inhaltstyp Kiste): nichts
+    // Kisten mit gleichem Namen: Nur das ERSTE Vorkommen bleibt, alle
+    // spaeteren werden geloescht. Die Reihenfolge der uebrigen bleibt.
+    public static void entferneDuplikate(DynArray d) {
+        for (int i = 0; i < d.getLength(); i++) {
+            Kiste a = (Kiste) d.getItem(i);
+            int j = i + 1;
+            while (j < d.getLength()) {
+                Kiste b = (Kiste) d.getItem(j);
+                if (b.getName().equals(a.getName())) {
+                    d.delete(j);                        // j NICHT erhoehen: der Nachfolger rueckt nach
+                } else {
+                    j++;
+                }
+            }
+        }
+    }
+
+
+    // =================== Stufe EXPERTE =====================
+
+    // einfuegesortierung(d: dynamische Reihung vom Inhaltstyp Kiste): nichts
+    // Sortiert d aufsteigend nach Gewicht mit Sortieren durch Einfuegen.
+    // STABIL: gleich schwere Kisten behalten ihre Reihenfolge.
+    // Nur getItem, setItem, insertAt, delete und getLength benutzen
+    // (keine Reihung, keine zweite DynArray).
+    public static void einfuegesortierung(DynArray d) {
+        for (int i = 1; i < d.getLength(); i++) {
+            Kiste k = (Kiste) d.getItem(i);
+            int j = i - 1;
+            boolean weiter = true;
+            while (j >= 0 && weiter) {
+                Kiste v = (Kiste) d.getItem(j);
+                if (v.getGewicht() > k.getGewicht()) {  // nur ECHT schwerere nach rechts -> stabil
+                    d.setItem(j + 1, v);
+                    j--;
+                } else {
+                    weiter = false;
+                }
+            }
+            d.setItem(j + 1, k);
+        }
+    }
+
+    // abspalten(d: dynamische Reihung vom Inhaltstyp Kiste, grenze: Ganzzahl):
+    //     dynamische Reihung vom Inhaltstyp Kiste
+    // Alle Kisten mit gewicht > grenze werden aus d entfernt und in einer
+    // NEUEN dynamischen Reihung zurueckgegeben (Reihenfolge bleibt in
+    // beiden erhalten). Keine solche Kiste -> leere Reihung (nicht null).
+    public static DynArray abspalten(DynArray d, int grenze) {
+        DynArray schwer = new DynArray();
+        int i = 0;
+        while (i < d.getLength()) {
+            Kiste k = (Kiste) d.getItem(i);
+            if (k.getGewicht() > grenze) {
+                schwer.append(k);
+                d.delete(i);                            // i NICHT erhoehen
+            } else {
+                i++;
+            }
+        }
+        return schwer;
+    }
+}
+
+
+// ============ Level 4.5 – Umformen und Anwendungen (DS 28) ============
+
+class Umformen {
+
+    // ===================== Stufe BASIS =====================
+
+    // schlangeZuDynArray(q: Schlange): dynamische Reihung
+    // Neue dynamische Reihung mit den Elementen von q in Schlangen-
+    // reihenfolge (vorne -> Index 0). q bleibt UNVERAENDERT.
+    public static DynArray schlangeZuDynArray(Queue q) {
+        DynArray d = new DynArray();
+        while (!q.isEmpty()) {
+            d.append(q.dequeue());
+        }
+        for (int i = 0; i < d.getLength(); i++) {
+            q.enqueue(d.getItem(i));                    // q wiederherstellen
+        }
+        return d;
+    }
+
+    // dynArrayZuStapel(d: dynamische Reihung): Stapel
+    // Neuer Stapel: Element 0 wird zuerst gepusht, das letzte Element
+    // liegt oben. d bleibt unveraendert.
+    public static Stack dynArrayZuStapel(DynArray d) {
+        Stack s = new Stack();
+        for (int i = 0; i < d.getLength(); i++) {
+            s.push(d.getItem(i));
+        }
+        return s;
+    }
+
+
+    // ================== Stufe ERWEITERUNG ==================
+
+    // klammernOk(s: Zeichenkette): Wahrheitswert
+    // true, wenn die Klammern ( ) [ ] { } in s richtig gesetzt sind: Jede
+    // schliessende Klammer passt zur zuletzt geoeffneten, und am Ende ist
+    // keine Klammer mehr offen. Andere Zeichen werden ignoriert.
+    // Benutze einen Stapel vom Inhaltstyp Zeichen.
+    public static boolean klammernOk(String s) {
+        Stack offen = new Stack();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == '(' || c == '[' || c == '{') {
+                offen.push(c);                          // char wird automatisch verpackt
+            } else if (c == ')' || c == ']' || c == '}') {
+                if (offen.isEmpty()) {
+                    return false;                       // Leer? zu viele schliessende Klammern
+                }
+                char auf = (Character) offen.pop();
+                if (c == ')' && auf != '(') {
+                    return false;
+                }
+                if (c == ']' && auf != '[') {
+                    return false;
+                }
+                if (c == '}' && auf != '{') {
+                    return false;
+                }
+            }
+        }
+        return offen.isEmpty();                         // noch Klammern offen? -> false
+    }
+
+
+    // =================== Stufe EXPERTE =====================
+
+    // postfix(ausdruck: Zeichenkette): Ganzzahl
+    // Wertet einen Ausdruck in Postfix-Schreibweise aus: einstellige Zahlen
+    // und die Operatoren + - *, ohne Leerzeichen. "34+2*" = (3 + 4) * 2 = 14.
+    // Der Ausdruck ist immer gueltig. Ziffer -> Zahl: (int) c - (int) '0'.
+    public static int postfix(String ausdruck) {
+        Stack werte = new Stack();
+        for (int i = 0; i < ausdruck.length(); i++) {
+            char c = ausdruck.charAt(i);
+            if (c >= '0' && c <= '9') {
+                werte.push((int) c - (int) '0');        // Ziffer -> Zahlwert (ASCII)
+            } else {
+                int b = (Integer) werte.pop();          // ZUERST der RECHTE Operand
+                int a = (Integer) werte.pop();
+                if (c == '+') {
+                    werte.push(a + b);
+                } else if (c == '-') {
+                    werte.push(a - b);
+                } else {
+                    werte.push(a * b);
+                }
+            }
+        }
+        return (Integer) werte.pop();                   // gueltig: genau ein Wert uebrig
+    }
+
+    // nachGewicht(q: Schlange vom Inhaltstyp Kiste, grenze: Ganzzahl):
+    //     dynamische Reihung vom Inhaltstyp Kiste
+    // Neue dynamische Reihung mit allen Kisten aus q mit gewicht <= grenze
+    // (in Schlangenreihenfolge). q bleibt UNVERAENDERT.
+    public static DynArray nachGewicht(Queue q, int grenze) {
+        DynArray d = new DynArray();
+        Queue hilf = new Queue();
+        while (!q.isEmpty()) {
+            Kiste k = (Kiste) q.dequeue();
+            if (k.getGewicht() <= grenze) {
+                d.append(k);
+            }
+            hilf.enqueue(k);
+        }
+        while (!hilf.isEmpty()) {
+            q.enqueue(hilf.dequeue());
+        }
+        return d;
+    }
+}
+
+
+// ========== Level 4.6 – Expertenpfad (DS 29, Kuer-DS) ===============
+//  (a) Nebel lueften wie in Welt 3 - aber OHNE Rekursion: Statt der
+//      Selbstaufrufe merkst du dir die noch zu bearbeitenden Felder in
+//      einer Schlange (mitSchlange == true) oder einem Stapel (false).
+//  (b) Ein eigener Stapel aus Knoten: So koennte Stack innen gebaut sein.
+//
+//  REGELN fuer fluteIterativ (sonst stimmt die spur nicht):
+//  - Begehbar sind '.', 'S' und 'Z' (im Feld!). Beim Markieren wird aus
+//    '.' ein '+'; 'S' und 'Z' bleiben stehen, gelten aber als besucht
+//    (Tipp: eine Reihung von Reihung von Wahrheitswert "besucht").
+//  - Eine Position (z, s) wird als EINE Ganzzahl gespeichert:
+//        pos = z * 1000 + s      zurueck: z = pos / 1000, s = pos % 1000
+//  - MARKIEREN BEIM EINFUEGEN: Ein Feld wird markiert (und mit merke(z, s)
+//    gemeldet), BEVOR es in die Schlange bzw. den Stapel kommt - so kommt
+//    kein Feld zweimal hinein.
+//  - Nachbarn IMMER in der Reihenfolge oben, rechts, unten, links.
+//
+//      fluteIterativ(karte, z, s, mitSchlange)
+//      ist (z, s) nicht begehbar?  -> gib 0 zurueck
+//      markiere (z, s), lege z * 1000 + s hinein
+//      solange die Struktur nicht leer ist:
+//          entnimm pos (dequeue bzw. pop), berechne z und s daraus
+//          fuer jeden Nachbarn (oben, rechts, unten, links):
+//              begehbar und noch nicht besucht?
+//                  -> markieren, merke(nz, ns), hineinlegen
+//      gib die Anzahl der Felder zurueck, die von '.' zu '+' wurden
+
+class Expertenpfad {
+
+    // ======== VORGEGEBEN – bis zur Linie "AB HIER ARBEITEST DU" nichts veraendern ========
+
+    // Protokoll der markierten Felder in der Reihenfolge des Markierens,
+    // z. B. "(1,1) (1,2) (2,1)". Die Tests setzen spur vorher auf "".
+    public static String spur = "";
+
+    // Haengt das Feld (z, s) an die spur an. Rufe merke(z, s) direkt beim
+    // Markieren jedes Feldes auf (auch fuer S und Z).
+    public static void merke(int z, int s) {
+        if (!spur.equals("")) {
+            spur = spur + " ";
+        }
+        spur = spur + "(" + z + "," + s + ")";
+    }
+
+    // ======== AB HIER ARBEITEST DU =============================================
+
+
+    // ========= Stufe BASIS und ERWEITERUNG ==========
+    // (Basis-Tests: Endkarte und Anzahl mit Schlange; Erweiterung: mit
+    //  Stapel, Karte ohne Randmauer und die genaue Reihenfolge in spur.)
+
+    // fluteIterativ(karte: Reihung von Reihung von Zeichen, z: Ganzzahl, s: Ganzzahl,
+    //     mitSchlange: Wahrheitswert): Ganzzahl
+    // Lueftet ab (z, s) alle erreichbaren Felder (siehe REGELN oben) mit
+    // einer Schlange (mitSchlange == true) bzw. einem Stapel (false).
+    // Rueckgabe: Anzahl der Felder, die von '.' zu '+' wurden.
+    // Ist (z, s) ausserhalb, eine Wand oder schon '+': 0, nichts aendern.
+    public static int fluteIterativ(char[][] karte, int z, int s, boolean mitSchlange) {
+        int zeilen = karte.length;
+        int spalten = karte[0].length;
+        if (z < 0 || z >= zeilen || s < 0 || s >= spalten) {
+            return 0;                                   // Index? ausserhalb
+        }
+        if (karte[z][s] != '.' && karte[z][s] != 'S' && karte[z][s] != 'Z') {
+            return 0;                                   // Wand oder schon gelueftet
+        }
+        boolean[][] besucht = new boolean[zeilen][spalten];
+        Queue schlange = new Queue();
+        Stack stapel = new Stack();
+        int anzahl = 0;
+        // Start markieren und hineinlegen
+        besucht[z][s] = true;
+        merke(z, s);
+        if (karte[z][s] == '.') {
+            karte[z][s] = '+';
+            anzahl++;
+        }
+        if (mitSchlange) {
+            schlange.enqueue(z * 1000 + s);
+        } else {
+            stapel.push(z * 1000 + s);
+        }
+        int[] dz = {-1, 0, 1, 0};                       // oben, rechts, unten, links
+        int[] ds = {0, 1, 0, -1};
+        while (!schlange.isEmpty() || !stapel.isEmpty()) {
+            int pos = 0;
+            if (mitSchlange) {
+                pos = (Integer) schlange.dequeue();
+            } else {
+                pos = (Integer) stapel.pop();
+            }
+            int pz = pos / 1000;
+            int ps = pos % 1000;
+            for (int r = 0; r < 4; r++) {
+                int nz = pz + dz[r];
+                int ns = ps + ds[r];
+                if (nz >= 0 && nz < zeilen && ns >= 0 && ns < spalten) {
+                    char c = karte[nz][ns];
+                    if (!besucht[nz][ns] && (c == '.' || c == 'S' || c == 'Z')) {
+                        besucht[nz][ns] = true;         // markieren BEIM Einfuegen
+                        merke(nz, ns);
+                        if (c == '.') {
+                            karte[nz][ns] = '+';
+                            anzahl++;
+                        }
+                        if (mitSchlange) {
+                            schlange.enqueue(nz * 1000 + ns);
+                        } else {
+                            stapel.push(nz * 1000 + ns);
+                        }
+                    }
+                }
+            }
+        }
+        return anzahl;
+    }
+}
+
+
+//  Klassenkarten (Experte):
+//      Knoten                                  MeinStapel
+//      -----------------------------------     -----------------------------------
+//      - inhalt: Object                        - kopf: Knoten     // oberster Knoten
+//      - naechster: Knoten                     -----------------------------------
+//      -----------------------------------     + c MeinStapel()
+//      + c Knoten(inhalt: Object,              + isEmpty(): Wahrheitswert
+//            naechster: Knoten)                + push(inhalt: Object): nichts
+//      + getInhalt(): Object                   + top(): Object
+//      + getNaechster(): Knoten                + pop(): Object
+//      + setInhalt(inhalt: Object): nichts
+//      + setNaechster(naechster: Knoten): nichts
+//
+//      kopf -> [Gold | o-]-> [Holz | o-]-> [Erz | null]
+//              (oben)                       (unten)
+//
+//      Alle Attribute private, alle Methoden public. MeinStapel verhaelt
+//      sich wie Stack: top() und pop() auf einem LEEREN Stapel werfen
+//          throw new IllegalStateException("Der Stapel ist leer.");
+//      Die Tests vergleichen MeinStapel mit Stack in 400 zufaelligen
+//      Befehlen (immer dieselbe Folge, Testhilfe.naechsteZufallszahl).
+
+class Knoten {
+
+    private Object inhalt;
+    private Knoten naechster;
+
+    // =================== Stufe EXPERTE =====================
+
+    // c Knoten(inhalt: Object, naechster: Knoten)
+    public Knoten(Object inhalt, Knoten naechster) {
+        this.inhalt = inhalt;
+        this.naechster = naechster;
+    }
+
+    // getInhalt(): Object
+    public Object getInhalt() {
+        return inhalt;
+    }
+
+    // getNaechster(): Knoten
+    public Knoten getNaechster() {
+        return naechster;
+    }
+
+    // setInhalt(inhalt: Object): nichts
+    public void setInhalt(Object inhalt) {
+        this.inhalt = inhalt;
+    }
+
+    // setNaechster(naechster: Knoten): nichts
+    public void setNaechster(Knoten naechster) {
+        this.naechster = naechster;
+    }
+}
+
+
+class MeinStapel {
+
+    private Knoten kopf;            // oberster Knoten; null = leerer Stapel
+
+    // =================== Stufe EXPERTE =====================
+    // Gleiches Verhalten wie Stack: top() und pop() auf einem leeren
+    // Stapel werfen eine IllegalStateException:
+    //     throw new IllegalStateException("Der Stapel ist leer.");
+
+    // c MeinStapel()
+    // Erzeugt einen leeren Stapel.
+    public MeinStapel() {
+        kopf = null;
+    }
+
+    // isEmpty(): Wahrheitswert
+    public boolean isEmpty() {
+        return kopf == null;
+    }
+
+    // push(inhalt: Object): nichts
+    // Neuer Knoten wird der neue kopf; sein Nachfolger ist der alte kopf.
+    public void push(Object inhalt) {
+        kopf = new Knoten(inhalt, kopf);
+    }
+
+    // top(): Object
+    // Inhalt des obersten Knotens (ohne Entfernen).
+    public Object top() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Der Stapel ist leer.");
+        }
+        return kopf.getInhalt();
+    }
+
+    // pop(): Object
+    // Inhalt des obersten Knotens; der Knoten wird entfernt.
+    public Object pop() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Der Stapel ist leer.");
+        }
+        Object inhalt = kopf.getInhalt();
+        kopf = kopf.getNaechster();
+        return inhalt;
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  TESTS – hier nichts veraendern!
+// ---------------------------------------------------------------------
+//  Eine Testklasse pro Level. Die Stufe erkennst du am Anfang des
+//  Testnamens:
+//      basis_...        Basis       
+//      erweiterung_...  Erweiterung 
+//      experte_...      Experte     
+//  Eine Stufe ist geschafft, wenn ALLE Tests mit diesem Anfang gruen sind.
+//  Jeder Test faengt Laufzeitfehler ab und meldet sie mit "LAUFZEITFEHLER:
+//  ..." und einem Hinweis (Testhilfe.laufzeitfehler).
+// ---------------------------------------------------------------------
+
+class L41StapelSchlangeTest {
+
+    @Test
+    public void basis_stapleAuf() {
+        try {
+            int[] werte = {4, 8, 15, 16};
+            Stack s = Hafen.stapleAuf(werte);
+            assertTrue(s != null, "stapleAuf liefert null - erzeuge mit new Stack() einen NEUEN Stapel und gib ihn zurueck");
+            assertEquals("[16, 15, 8, 4]", Testhilfe.stapelText(s), "stapleAuf({4, 8, 15, 16}): 16 muss oben liegen, 4 ganz unten (Anzeige von oben nach unten)");
+            Stack leer = Hafen.stapleAuf(new int[0]);
+            assertTrue(leer != null, "stapleAuf mit leerer Reihung muss einen LEEREN Stapel liefern, nicht null");
+            assertTrue(leer.isEmpty(), "stapleAuf mit leerer Reihung muss einen LEEREN Stapel liefern");
+            assertTrue(leer != s, "Jeder Aufruf von stapleAuf muss einen NEUEN Stapel erzeugen");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void basis_obersterWert() {
+        try {
+            int[] werte = {4, 8, 15};
+            Stack s = Testhilfe.zahlenStapel(werte);
+            assertEquals(15, Hafen.obersterWert(s), "obersterWert: Auf dem Stapel 15, 8, 4 (von oben) liegt 15 oben");
+            assertEquals("[15, 8, 4]", Testhilfe.stapelText(s), "obersterWert darf den Stapel NICHT veraendern - top() statt pop() benutzen");
+            assertEquals(15, Hafen.obersterWert(s), "obersterWert zweimal hintereinander: wieder 15 (nichts entfernt)");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void basis_obersterWert_leer() {
+        try {
+            int[] werte = {42};
+            Stack s = Testhilfe.zahlenStapel(werte);
+            assertEquals(42, Hafen.obersterWert(s), "obersterWert: Auf dem Stapel liegt nur 42");
+            Stack leer = new Stack();
+            assertEquals(-1, Hafen.obersterWert(leer), "obersterWert auf LEEREM Stapel: -1 (vorher mit isEmpty() pruefen!)");
+            assertTrue(leer.isEmpty(), "Der leere Stapel bleibt leer");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void basis_leeren() {
+        try {
+            int[] werte = {4, 8, 15, 16, 23};
+            Stack s = Testhilfe.zahlenStapel(werte);
+            assertEquals(5, Hafen.leeren(s), "leeren: Es lagen 5 Werte auf dem Stapel");
+            assertTrue(s.isEmpty(), "Nach leeren muss der Stapel leer sein");
+            assertEquals(0, Hafen.leeren(s), "leeren auf leerem Stapel: 0 (und kein Laufzeitfehler)");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_warteschlange() {
+        try {
+            String[] namen = {"Albatros", "Moewe", "Kormoran"};
+            Queue q = Hafen.warteschlange(namen);
+            assertTrue(q != null, "warteschlange liefert null - erzeuge mit new Queue() eine NEUE Schlange");
+            assertEquals("[Albatros, Moewe, Kormoran]", Testhilfe.schlangeText(q), "warteschlange: namen[0] steht vorne (Anzeige von vorne nach hinten)");
+            Queue leer = Hafen.warteschlange(new String[0]);
+            assertTrue(leer != null, "warteschlange mit leerer Reihung muss eine LEERE Schlange liefern, nicht null");
+            assertTrue(leer.isEmpty(), "warteschlange mit leerer Reihung muss eine LEERE Schlange liefern");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_naechster() {
+        try {
+            String[] namen = {"Albatros", "Moewe", "Kormoran"};
+            Queue q = Testhilfe.namenSchlange(namen);
+            assertEquals("Albatros", Hafen.naechster(q), "naechster: Albatros steht vorne");
+            assertEquals("[Moewe, Kormoran]", Testhilfe.schlangeText(q), "naechster muss den vordersten Namen ENTNEHMEN (dequeue)");
+            assertEquals("Moewe", Hafen.naechster(q), "naechster: jetzt steht Moewe vorne");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_naechster_leer() {
+        try {
+            String[] namen = {"Moewe"};
+            Queue q = Testhilfe.namenSchlange(namen);
+            assertEquals("Moewe", Hafen.naechster(q), "naechster: Moewe steht als Einzige in der Schlange");
+            assertEquals("", Hafen.naechster(q), "naechster auf LEERER Schlange: die leere Zeichenkette (vorher mit isEmpty() pruefen!)");
+            assertTrue(q.isEmpty(), "Die Schlange bleibt leer");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_alleAbfertigen() {
+        try {
+            String[] namen = {"Albatros", "Moewe", "Kormoran"};
+            Queue q = Testhilfe.namenSchlange(namen);
+            assertEquals("Albatros, Moewe, Kormoran", Hafen.alleAbfertigen(q), "alleAbfertigen: Namen in Schlangenreihenfolge, mit ', ' verbunden - kein Komma am Anfang oder Ende");
+            assertTrue(q.isEmpty(), "Nach alleAbfertigen ist die Schlange leer");
+            String[] einer = {"Moewe"};
+            assertEquals("Moewe", Hafen.alleAbfertigen(Testhilfe.namenSchlange(einer)), "alleAbfertigen mit nur einem Namen: 'Moewe' ohne Komma");
+            assertEquals("", Hafen.alleAbfertigen(new Queue()), "alleAbfertigen auf leerer Schlange: die leere Zeichenkette");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void experte_umkehren() {
+        try {
+            Kiste[] k = Testhilfe.ladung();
+            Queue q = Testhilfe.kistenSchlange(k);
+            Hafen.umkehren(q);
+            Kiste[] umgekehrt = {k[5], k[4], k[3], k[2], k[1], k[0]};
+            assertEquals(Testhilfe.kistenText(Testhilfe.kistenReihung(umgekehrt)), Testhilfe.kistenSchlangeText(q), "umkehren: Wer hinten stand, steht jetzt vorne");
+            assertTrue(Testhilfe.dieselben(Testhilfe.kistenReihung(umgekehrt), Testhilfe.schlangeInhalt(q)), "umkehren: Es muessen DIESELBEN Kisten-Objekte in der Schlange stehen");
+            String[] namen = {"Albatros", "Moewe"};
+            Queue zwei = Testhilfe.namenSchlange(namen);
+            Hafen.umkehren(zwei);
+            assertEquals("[Moewe, Albatros]", Testhilfe.schlangeText(zwei), "umkehren mit zwei Namen");
+            Queue leer = new Queue();
+            Hafen.umkehren(leer);
+            assertTrue(leer.isEmpty(), "umkehren einer leeren Schlange: bleibt leer (kein Laufzeitfehler)");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void experte_stapelUmdrehen() {
+        try {
+            int[] werte = {1, 2, 3, 4};
+            Stack s = Testhilfe.zahlenStapel(werte);
+            Stack neu = Hafen.stapelUmdrehen(s);
+            assertTrue(neu != null, "stapelUmdrehen liefert null - erzeuge einen NEUEN Stapel");
+            assertTrue(neu != s, "stapelUmdrehen muss einen NEUEN Stapel liefern, nicht s selbst");
+            assertEquals("[1, 2, 3, 4]", Testhilfe.stapelText(neu), "stapelUmdrehen: Was unten lag (1), liegt im neuen Stapel oben");
+            assertTrue(s.isEmpty(), "Nach stapelUmdrehen ist s leer");
+            Stack leer = Hafen.stapelUmdrehen(new Stack());
+            assertTrue(leer != null, "stapelUmdrehen eines leeren Stapels: neuer LEERER Stapel, nicht null");
+            assertTrue(leer.isEmpty(), "stapelUmdrehen eines leeren Stapels: neuer LEERER Stapel");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+}
+
+
+class L42SpielmoduleTest {
+
+    @Test
+    public void basis_zugbuch_rueckgaengig() {
+        try {
+            Zugbuch zb = new Zugbuch();
+            zb.zug("Nord");
+            zb.zug("Ost");
+            zb.zug("Sued");
+            assertEquals("Sued", zb.rueckgaengig(), "rueckgaengig: Der LETZTE Zug (Sued) wird zuerst zurueckgenommen");
+            assertEquals("Ost", zb.rueckgaengig(), "rueckgaengig: danach Ost");
+            assertEquals("Nord", zb.rueckgaengig(), "rueckgaengig: danach Nord");
+            assertEquals("", zb.rueckgaengig(), "rueckgaengig, wenn kein Zug mehr da ist: die leere Zeichenkette (Leerabfrage!)");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void basis_zugbuch_leer() {
+        try {
+            Zugbuch zb = new Zugbuch();
+            assertEquals("", zb.rueckgaengig(), "rueckgaengig bei einem NEUEN Zugbuch: die leere Zeichenkette (Stapel im Konstruktor erzeugt? Leerabfrage?)");
+            zb.zug("West");
+            assertEquals("West", zb.rueckgaengig(), "Nach zug('West') liefert rueckgaengig 'West'");
+            assertEquals("", zb.rueckgaengig(), "Danach ist nichts mehr zurueckzunehmen: die leere Zeichenkette");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void basis_initiative_amZug() {
+        try {
+            Initiative ini = new Initiative();
+            ini.beitreten("Aria");
+            ini.beitreten("Borin");
+            ini.beitreten("Cyra");
+            assertEquals("Aria", ini.amZug(), "amZug: Wer zuerst beigetreten ist, ist zuerst am Zug");
+            assertEquals("Borin", ini.amZug(), "amZug: dann Borin");
+            assertEquals("Cyra", ini.amZug(), "amZug: dann Cyra");
+            assertEquals("Aria", ini.amZug(), "amZug: Aria wurde hinten wieder angestellt - die naechste Runde beginnt");
+            assertEquals("Borin", ini.amZug(), "amZug: zweite Runde, Borin");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void basis_initiative_leer() {
+        try {
+            Initiative ini = new Initiative();
+            assertEquals("", ini.amZug(), "amZug bei leerer Reihe: die leere Zeichenkette (Schlange im Konstruktor erzeugt? Leerabfrage?)");
+            ini.beitreten("Solo");
+            assertEquals("Solo", ini.amZug(), "amZug mit nur einem Teilnehmer: Solo");
+            assertEquals("Solo", ini.amZug(), "amZug mit nur einem Teilnehmer: wieder Solo (hinten angestellt)");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_wiederholen() {
+        try {
+            Zugbuch zb = new Zugbuch();
+            zb.zug("Nord");
+            zb.zug("Ost");
+            zb.zug("Sued");
+            zb.rueckgaengig();
+            zb.rueckgaengig();
+            assertEquals("Ost", zb.wiederholen(), "wiederholen: Der zuletzt zurueckgenommene Zug (Ost) kommt zuerst wieder");
+            assertEquals("Sued", zb.wiederholen(), "wiederholen: danach Sued");
+            assertEquals("", zb.wiederholen(), "wiederholen, wenn nichts zurueckgenommen ist: die leere Zeichenkette (Leerabfrage!)");
+            assertEquals("Sued", zb.rueckgaengig(), "Nach wiederholen liegt Sued wieder oben auf erledigt");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_neuerZugLoeschtWiederholen() {
+        try {
+            Zugbuch zb = new Zugbuch();
+            zb.zug("Nord");
+            zb.zug("Ost");
+            assertEquals("Ost", zb.rueckgaengig(), "rueckgaengig: Ost");
+            zb.zug("West");
+            assertEquals("", zb.wiederholen(), "Nach einem NEUEN Zug kann nichts mehr wiederholt werden: die leere Zeichenkette (zug leert den Stapel zurueckgenommen)");
+            assertEquals("West", zb.rueckgaengig(), "rueckgaengig: West");
+            assertEquals("Nord", zb.rueckgaengig(), "rueckgaengig: Nord (Ost wurde verworfen)");
+            assertEquals("", zb.rueckgaengig(), "rueckgaengig: nichts mehr da");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_anzahlZuege() {
+        try {
+            Zugbuch zb = new Zugbuch();
+            assertEquals(0, zb.anzahlZuege(), "anzahlZuege bei neuem Zugbuch: 0");
+            zb.zug("Nord");
+            zb.zug("Ost");
+            zb.zug("Sued");
+            zb.zug("West");
+            assertEquals(4, zb.anzahlZuege(), "anzahlZuege: 4 Zuege");
+            assertEquals(4, zb.anzahlZuege(), "anzahlZuege ein zweites Mal: wieder 4 - erledigt muss UNVERAENDERT bleiben");
+            assertEquals("West", zb.rueckgaengig(), "Nach anzahlZuege muss West noch oben liegen - Zuege in der richtigen Reihenfolge zurueckgeschichtet?");
+            assertEquals("Sued", zb.rueckgaengig(), "Reihenfolge nach anzahlZuege: Sued");
+            assertEquals(2, zb.anzahlZuege(), "anzahlZuege nach zwei rueckgaengig: 2");
+            assertEquals("Ost", zb.rueckgaengig(), "Reihenfolge nach anzahlZuege: Ost");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void experte_ausscheiden() {
+        try {
+            Initiative ini = new Initiative();
+            ini.beitreten("Aria");
+            ini.beitreten("Borin");
+            ini.beitreten("Cyra");
+            ini.beitreten("Dorn");
+            assertTrue(ini.ausscheiden(Testhilfe.kopie("Cyra")), "ausscheiden('Cyra'): Cyra war dabei -> true (Namen mit equals vergleichen!)");
+            assertEquals("Aria", ini.amZug(), "Nach ausscheiden bleibt die Reihenfolge: Aria");
+            assertEquals("Borin", ini.amZug(), "Reihenfolge: Borin");
+            assertEquals("Dorn", ini.amZug(), "Reihenfolge: Dorn (Cyra ist raus)");
+            assertEquals("Aria", ini.amZug(), "Reihenfolge: wieder Aria - es sind nur noch drei");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void experte_ausscheiden_nichtDabei() {
+        try {
+            Initiative ini = new Initiative();
+            assertFalse(ini.ausscheiden("Aria"), "ausscheiden bei leerer Reihe: false (kein Laufzeitfehler)");
+            ini.beitreten("Aria");
+            ini.beitreten("Borin");
+            ini.beitreten("Cyra");
+            assertEquals("Aria", ini.amZug(), "amZug: Aria");
+            assertFalse(ini.ausscheiden("Zed"), "ausscheiden('Zed'): nicht dabei -> false (und keine Endlosschleife!)");
+            assertFalse(ini.ausscheiden("Bor"), "ausscheiden('Bor'): nur ein Teil von 'Borin' -> false (equals, nicht contains)");
+            assertEquals("Borin", ini.amZug(), "Die Reihe bleibt unveraendert: Borin ist am Zug");
+            assertEquals("Cyra", ini.amZug(), "Die Reihe bleibt unveraendert: Cyra");
+            assertEquals("Aria", ini.amZug(), "Die Reihe bleibt unveraendert: Aria");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void experte_ausscheiden_erstesVorkommen() {
+        try {
+            Initiative ini = new Initiative();
+            ini.beitreten("Aria");
+            ini.beitreten("Borin");
+            ini.beitreten("Aria");
+            ini.beitreten("Cyra");
+            assertEquals("Aria", ini.amZug(), "amZug: Aria (die erste) - sie steht jetzt ganz hinten");
+            assertTrue(ini.ausscheiden(Testhilfe.kopie("Aria")), "ausscheiden('Aria') -> true");
+            assertEquals("Borin", ini.amZug(), "Nur das ERSTE Vorkommen (von vorne gesehen) scheidet aus: Borin");
+            assertEquals("Cyra", ini.amZug(), "Reihenfolge: Cyra");
+            assertEquals("Aria", ini.amZug(), "Reihenfolge: Aria (die hintere ist noch da)");
+            assertEquals("Borin", ini.amZug(), "Reihenfolge: Borin");
+            assertTrue(ini.ausscheiden("Cyra"), "ausscheiden('Cyra') -> true");
+            assertTrue(ini.ausscheiden("Aria"), "ausscheiden('Aria') -> true");
+            assertTrue(ini.ausscheiden("Borin"), "ausscheiden('Borin') -> true");
+            assertEquals("", ini.amZug(), "Alle ausgeschieden: amZug liefert die leere Zeichenkette");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+}
+
+
+class L43UnveraendertTest {
+
+    @Test
+    public void basis_zaehle() {
+        try {
+            int[] werte = {4, 8, 15, 16, 23, 42};
+            Stack s = Testhilfe.zahlenStapel(werte);
+            assertEquals(6, Unveraendert.zaehle(s), "zaehle: 6 Werte auf dem Stapel");
+            assertEquals("[42, 23, 16, 15, 8, 4]", Testhilfe.stapelText(s), "zaehle muss den Stapel UNVERAENDERT lassen - Hilfsstapel und zurueckschichten!");
+            assertEquals(6, Unveraendert.zaehle(s), "zaehle ein zweites Mal: wieder 6");
+            assertEquals(0, Unveraendert.zaehle(new Stack()), "zaehle auf leerem Stapel: 0");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void basis_zaehle_dieselbenKisten() {
+        try {
+            Kiste[] k = Testhilfe.ladung();
+            Stack s = Testhilfe.kistenStapel(k);
+            DynArray vorher = Testhilfe.stapelInhalt(s);
+            assertEquals(6, Unveraendert.zaehle(s), "zaehle: 6 Kisten");
+            assertEquals(Testhilfe.kistenText(vorher), Testhilfe.kistenStapelText(s), "zaehle: Der Kistenstapel muss UNVERAENDERT sein (von oben nach unten)");
+            assertTrue(Testhilfe.dieselben(vorher, Testhilfe.stapelInhalt(s)), "zaehle: Es muessen DIESELBEN Kisten-Objekte im Stapel liegen (keine neuen Kisten erzeugen)");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void basis_summe() {
+        try {
+            int[] werte = {4, 8, 15, 16, 23, 42};
+            Queue q = Testhilfe.zahlenSchlange(werte);
+            assertEquals(108, Unveraendert.summe(q), "summe: 4 + 8 + 15 + 16 + 23 + 42 = 108");
+            assertEquals("[4, 8, 15, 16, 23, 42]", Testhilfe.schlangeText(q), "summe muss die Schlange UNVERAENDERT lassen - gleiche Reihenfolge (Hilfsschlange, kein Hilfsstapel!)");
+            assertEquals(108, Unveraendert.summe(q), "summe ein zweites Mal: wieder 108");
+            assertEquals(0, Unveraendert.summe(new Queue()), "summe auf leerer Schlange: 0");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_enthaelt() {
+        try {
+            Kiste[] k = Testhilfe.ladung();
+            Stack s = Testhilfe.kistenStapel(k);
+            DynArray vorher = Testhilfe.stapelInhalt(s);
+            assertTrue(Unveraendert.enthaelt(s, Testhilfe.kopie("Gold")), "enthaelt('Gold'): Gold liegt im Stapel -> true (Namen mit equals vergleichen!)");
+            assertTrue(Testhilfe.dieselben(vorher, Testhilfe.stapelInhalt(s)), "enthaelt muss den Stapel UNVERAENDERT lassen - auch wenn die Kiste gefunden wurde! Jetzt: " + Testhilfe.kistenStapelText(s));
+            assertFalse(Unveraendert.enthaelt(s, "Kaffee"), "enthaelt('Kaffee'): keine solche Kiste -> false");
+            assertTrue(Testhilfe.dieselben(vorher, Testhilfe.stapelInhalt(s)), "enthaelt muss den Stapel UNVERAENDERT lassen. Jetzt: " + Testhilfe.kistenStapelText(s));
+            assertFalse(Unveraendert.enthaelt(new Stack(), "Gold"), "enthaelt auf leerem Stapel: false");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_enthaelt_obenUndUnten() {
+        try {
+            Kiste[] k = Testhilfe.ladung();
+            Stack s = Testhilfe.kistenStapel(k);
+            DynArray vorher = Testhilfe.stapelInhalt(s);
+            assertTrue(Unveraendert.enthaelt(s, Testhilfe.kopie("Wein")), "enthaelt('Wein'): Wein liegt OBEN -> true");
+            assertTrue(Testhilfe.dieselben(vorher, Testhilfe.stapelInhalt(s)), "enthaelt('Wein') muss den Stapel UNVERAENDERT lassen. Jetzt: " + Testhilfe.kistenStapelText(s));
+            assertTrue(Unveraendert.enthaelt(s, Testhilfe.kopie("Holz")), "enthaelt('Holz'): Holz liegt ganz UNTEN -> true");
+            assertTrue(Testhilfe.dieselben(vorher, Testhilfe.stapelInhalt(s)), "enthaelt('Holz') muss den Stapel UNVERAENDERT lassen. Jetzt: " + Testhilfe.kistenStapelText(s));
+            Kiste[] kohle = {new Kiste("Holzkohle", 2)};
+            assertFalse(Unveraendert.enthaelt(Testhilfe.kistenStapel(kohle), "Holz"), "enthaelt('Holz') auf einem Stapel mit nur Holzkohle: false (equals, nicht contains)");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_durchschnittsGewicht() {
+        try {
+            Kiste[] k = Testhilfe.ladung();
+            Queue q = Testhilfe.kistenSchlange(k);
+            DynArray vorher = Testhilfe.schlangeInhalt(q);
+            assertEquals(5.5, Unveraendert.durchschnittsGewicht(q), "durchschnittsGewicht: 33 kg / 6 Kisten = 5.5 - Kommazahl-Division!");
+            assertTrue(Testhilfe.dieselben(vorher, Testhilfe.schlangeInhalt(q)), "durchschnittsGewicht muss die Schlange UNVERAENDERT lassen. Jetzt: " + Testhilfe.kistenSchlangeText(q));
+            Kiste[] eine = {new Kiste("Anker", 9)};
+            assertEquals(9.0, Unveraendert.durchschnittsGewicht(Testhilfe.kistenSchlange(eine)), "durchschnittsGewicht mit einer Kiste (9 kg): 9.0");
+            assertEquals(0.0, Unveraendert.durchschnittsGewicht(new Queue()), "durchschnittsGewicht auf leerer Schlange: 0.0 (nicht durch 0 teilen!)");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_schwerste() {
+        try {
+            Kiste[] k = Testhilfe.ladung();
+            Stack s = Testhilfe.kistenStapel(k);
+            DynArray vorher = Testhilfe.stapelInhalt(s);
+            Kiste x = Unveraendert.schwerste(s);
+            assertTrue(x == k[4], "schwerste: Gold und Tuch wiegen beide 8 kg - Tuch liegt weiter OBEN und gewinnt. Erwartet: Tuch (8 kg), tatsaechlich: " + Testhilfe.kisteText(x));
+            assertTrue(Testhilfe.dieselben(vorher, Testhilfe.stapelInhalt(s)), "schwerste muss den Stapel UNVERAENDERT lassen. Jetzt: " + Testhilfe.kistenStapelText(s));
+            Kiste[] zwei = {new Kiste("Anker", 9), new Kiste("Feder", 1)};
+            Kiste y = Unveraendert.schwerste(Testhilfe.kistenStapel(zwei));
+            assertTrue(y == zwei[0], "schwerste: Der Anker (9 kg) liegt ganz unten und ist die schwerste. Tatsaechlich: " + Testhilfe.kisteText(y));
+            assertTrue(Unveraendert.schwerste(new Stack()) == null, "schwerste auf leerem Stapel: null");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void experte_unterste() {
+        try {
+            Kiste[] k = Testhilfe.ladung();
+            Stack s = Testhilfe.kistenStapel(k);
+            DynArray vorher = Testhilfe.stapelInhalt(s);
+            Kiste x = Unveraendert.unterste(s);
+            assertTrue(x == k[0], "unterste: Holz (3 kg) liegt ganz unten. Tatsaechlich: " + Testhilfe.kisteText(x));
+            assertTrue(Testhilfe.dieselben(vorher, Testhilfe.stapelInhalt(s)), "unterste muss den Stapel UNVERAENDERT lassen. Jetzt: " + Testhilfe.kistenStapelText(s));
+            Kiste[] eine = {new Kiste("Anker", 9)};
+            Stack einzel = Testhilfe.kistenStapel(eine);
+            assertTrue(Unveraendert.unterste(einzel) == eine[0], "unterste bei nur einer Kiste: genau diese Kiste");
+            assertFalse(einzel.isEmpty(), "unterste: Der Stapel mit einer Kiste darf danach nicht leer sein");
+            assertTrue(Unveraendert.unterste(new Stack()) == null, "unterste auf leerem Stapel: null");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void experte_entferneAlle() {
+        try {
+            Kiste[] k = {new Kiste("Holz", 3), new Kiste("Holz", 4), new Kiste("Erz", 5), new Kiste("Holz", 2), new Kiste("Gold", 8), new Kiste("Holz", 1)};
+            Queue q = Testhilfe.kistenSchlange(k);
+            assertEquals(4, Unveraendert.entferneAlle(q, Testhilfe.kopie("Holz")), "entferneAlle('Holz'): 4 Holzkisten entfernt (Namen mit equals vergleichen!)");
+            Kiste[] rest = {k[2], k[4]};
+            assertEquals(Testhilfe.kistenText(Testhilfe.kistenReihung(rest)), Testhilfe.kistenSchlangeText(q), "entferneAlle: Die uebrigen Kisten bleiben in ihrer Reihenfolge");
+            assertTrue(Testhilfe.dieselben(Testhilfe.kistenReihung(rest), Testhilfe.schlangeInhalt(q)), "entferneAlle: Es muessen DIESELBEN Kisten-Objekte uebrig bleiben");
+            assertEquals(0, Unveraendert.entferneAlle(q, "Kaffee"), "entferneAlle('Kaffee'): keine solche Kiste -> 0");
+            assertTrue(Testhilfe.dieselben(Testhilfe.kistenReihung(rest), Testhilfe.schlangeInhalt(q)), "entferneAlle('Kaffee') darf nichts veraendern");
+            assertEquals(0, Unveraendert.entferneAlle(new Queue(), "Holz"), "entferneAlle auf leerer Schlange: 0");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void experte_entferneAlle_alle() {
+        try {
+            Kiste[] k = {new Kiste("Salz", 3), new Kiste("Salz", 3), new Kiste("Salz", 4)};
+            Queue q = Testhilfe.kistenSchlange(k);
+            assertEquals(3, Unveraendert.entferneAlle(q, "Salz"), "entferneAlle('Salz'): alle drei Kisten entfernt");
+            assertTrue(q.isEmpty(), "Danach ist die Schlange leer");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+}
+
+
+class L44LadelisteTest {
+
+    @Test
+    public void basis_gesamtGewicht() {
+        try {
+            DynArray d = Testhilfe.kistenReihung(Testhilfe.ladung());
+            assertEquals(33, Ladeliste.gesamtGewicht(d), "gesamtGewicht: 3 + 5 + 8 + 3 + 8 + 6 = 33 - laeuft die Schleife bis getLength() - 1?");
+            assertEquals(6, d.getLength(), "gesamtGewicht darf die Ladeliste nicht veraendern");
+            assertEquals(0, Ladeliste.gesamtGewicht(new DynArray()), "gesamtGewicht einer leeren Ladeliste: 0");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void basis_indexVon() {
+        try {
+            DynArray d = Testhilfe.kistenReihung(Testhilfe.ladung());
+            assertEquals(2, Ladeliste.indexVon(d, Testhilfe.kopie("Gold")), "indexVon('Gold'): Index 2 (Namen mit equals vergleichen!)");
+            assertEquals(0, Ladeliste.indexVon(d, Testhilfe.kopie("Holz")), "indexVon('Holz'): Index 0");
+            assertEquals(5, Ladeliste.indexVon(d, Testhilfe.kopie("Wein")), "indexVon('Wein'): Index 5 - der letzte Index muss auch geprueft werden");
+            assertEquals(-1, Ladeliste.indexVon(d, "Kaffee"), "indexVon('Kaffee'): nicht vorhanden -> -1");
+            assertEquals(-1, Ladeliste.indexVon(new DynArray(), "Holz"), "indexVon in leerer Ladeliste: -1");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void basis_indexVon_erstesVorkommen() {
+        try {
+            Kiste[] k = {new Kiste("Erz", 5), new Kiste("Holz", 3), new Kiste("Erz", 7)};
+            DynArray d = Testhilfe.kistenReihung(k);
+            assertEquals(0, Ladeliste.indexVon(d, "Erz"), "indexVon('Erz'): Es zaehlt das ERSTE Vorkommen -> 0");
+            assertEquals(1, Ladeliste.indexVon(d, "Holz"), "indexVon('Holz'): 1");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void basis_leichteste() {
+        try {
+            Kiste[] k = Testhilfe.ladung();
+            DynArray d = Testhilfe.kistenReihung(k);
+            Kiste x = Ladeliste.leichteste(d);
+            assertTrue(x == k[0], "leichteste: Holz und Salz wiegen beide 3 kg - die ERSTE (Holz, Index 0) gewinnt. Tatsaechlich: " + Testhilfe.kisteText(x));
+            assertEquals(6, d.getLength(), "leichteste darf nichts entfernen");
+            Kiste[] k2 = {new Kiste("Anker", 9), new Kiste("Tau", 4), new Kiste("Feder", 1)};
+            Kiste y = Ladeliste.leichteste(Testhilfe.kistenReihung(k2));
+            assertTrue(y == k2[2], "leichteste: Die Feder (1 kg) steht am Ende. Tatsaechlich: " + Testhilfe.kisteText(y));
+            assertTrue(Ladeliste.leichteste(new DynArray()) == null, "leichteste einer leeren Ladeliste: null (kein getItem(0) ohne Leerabfrage!)");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_einfuegenSortiert() {
+        try {
+            Kiste[] k = {new Kiste("Holz", 3), new Kiste("Salz", 3), new Kiste("Erz", 5), new Kiste("Wein", 6), new Kiste("Gold", 8)};
+            DynArray d = Testhilfe.kistenReihung(k);
+            Kiste sand = new Kiste("Sand", 4);
+            Ladeliste.einfuegenSortiert(d, sand);
+            assertEquals("[Holz (3 kg), Salz (3 kg), Sand (4 kg), Erz (5 kg), Wein (6 kg), Gold (8 kg)]", Testhilfe.kistenText(d), "einfuegenSortiert(Sand, 4 kg): zwischen Salz und Erz");
+            assertTrue(d.getItem(2) == sand, "einfuegenSortiert: An Index 2 muss DIESELBE Kiste sand stehen");
+            Ladeliste.einfuegenSortiert(d, new Kiste("Blei", 3));
+            assertEquals("[Holz (3 kg), Salz (3 kg), Blei (3 kg), Sand (4 kg), Erz (5 kg), Wein (6 kg), Gold (8 kg)]", Testhilfe.kistenText(d), "einfuegenSortiert(Blei, 3 kg): HINTER die gleich schweren Kisten Holz und Salz");
+            Ladeliste.einfuegenSortiert(d, new Kiste("Feder", 1));
+            Ladeliste.einfuegenSortiert(d, new Kiste("Anker", 9));
+            assertEquals("[Feder (1 kg), Holz (3 kg), Salz (3 kg), Blei (3 kg), Sand (4 kg), Erz (5 kg), Wein (6 kg), Gold (8 kg), Anker (9 kg)]", Testhilfe.kistenText(d), "einfuegenSortiert: Feder (1 kg) ganz vorne, Anker (9 kg) ganz hinten (insertAt(getLength(), k) haengt an)");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_einfuegenSortiert_leer() {
+        try {
+            DynArray d = new DynArray();
+            Kiste tau = new Kiste("Tau", 4);
+            Ladeliste.einfuegenSortiert(d, tau);
+            assertEquals(1, d.getLength(), "einfuegenSortiert in eine LEERE Ladeliste: danach genau 1 Kiste");
+            assertTrue(d.getItem(0) == tau, "einfuegenSortiert in eine leere Ladeliste: Tau steht an Index 0");
+            Ladeliste.einfuegenSortiert(d, new Kiste("Tau", 4));
+            assertEquals(2, d.getLength(), "einfuegenSortiert einer gleich schweren Kiste: danach 2 Kisten");
+            assertTrue(d.getItem(0) == tau, "Die gleich schwere neue Kiste kommt HINTER die alte");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_entferneLeichteste() {
+        try {
+            Kiste[] k = {new Kiste("Erz", 5), new Kiste("Holz", 3), new Kiste("Gold", 8), new Kiste("Salz", 3)};
+            DynArray d = Testhilfe.kistenReihung(k);
+            Kiste x = Ladeliste.entferneLeichteste(d);
+            assertTrue(x == k[1], "entferneLeichteste: Holz (3 kg) ist die ERSTE leichteste und wird zurueckgegeben. Tatsaechlich: " + Testhilfe.kisteText(x));
+            assertEquals("[Erz (5 kg), Gold (8 kg), Salz (3 kg)]", Testhilfe.kistenText(d), "entferneLeichteste: Holz ist entfernt, die anderen bleiben in ihrer Reihenfolge");
+            Kiste y = Ladeliste.entferneLeichteste(d);
+            assertTrue(y == k[3], "entferneLeichteste zum zweiten Mal: Salz (3 kg, am Ende). Tatsaechlich: " + Testhilfe.kisteText(y));
+            assertEquals("[Erz (5 kg), Gold (8 kg)]", Testhilfe.kistenText(d), "entferneLeichteste: Salz entfernt");
+            assertTrue(Ladeliste.entferneLeichteste(d) == k[0], "entferneLeichteste: Erz");
+            assertTrue(Ladeliste.entferneLeichteste(d) == k[2], "entferneLeichteste: Gold");
+            assertTrue(Ladeliste.entferneLeichteste(d) == null, "entferneLeichteste auf leerer Ladeliste: null");
+            assertTrue(d.isEmpty(), "Danach ist die Ladeliste leer");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_entferneDuplikate() {
+        try {
+            Kiste[] k = {new Kiste("Holz", 3), new Kiste("Holz", 4), new Kiste("Holz", 5), new Kiste("Erz", 5), new Kiste("Erz", 2), new Kiste("Gold", 8), new Kiste("Holz", 1)};
+            DynArray d = Testhilfe.kistenReihung(k);
+            Ladeliste.entferneDuplikate(d);
+            assertEquals("[Holz (3 kg), Erz (5 kg), Gold (8 kg)]", Testhilfe.kistenText(d), "entferneDuplikate: Von jedem Namen bleibt das ERSTE Vorkommen. Drei Holz-Kisten hintereinander: Nach delete(j) rueckt die naechste auf Index j - j dann NICHT erhoehen!");
+            Kiste[] rest = {k[0], k[3], k[5]};
+            assertTrue(Testhilfe.dieselben(Testhilfe.kistenReihung(rest), d), "entferneDuplikate: Es muessen DIESELBEN Kisten-Objekte uebrig bleiben");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_entferneDuplikate_randfaelle() {
+        try {
+            Kiste[] k = {new Kiste("Salz", 3), new Kiste(Testhilfe.kopie("Salz"), 4)};
+            DynArray d = Testhilfe.kistenReihung(k);
+            Ladeliste.entferneDuplikate(d);
+            assertEquals("[Salz (3 kg)]", Testhilfe.kistenText(d), "entferneDuplikate: zwei Kisten Salz -> nur die erste bleibt (Namen mit equals vergleichen!)");
+            DynArray ohne = Testhilfe.kistenReihung(Testhilfe.ladung());
+            Ladeliste.entferneDuplikate(ohne);
+            assertEquals(6, ohne.getLength(), "entferneDuplikate ohne doppelte Namen: alle 6 Kisten bleiben");
+            DynArray leer = new DynArray();
+            Ladeliste.entferneDuplikate(leer);
+            assertTrue(leer.isEmpty(), "entferneDuplikate auf leerer Ladeliste: bleibt leer (kein Laufzeitfehler)");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void experte_einfuegesortierung() {
+        try {
+            Kiste[] k = {new Kiste("Gold", 8), new Kiste("Holz", 3), new Kiste("Tuch", 8), new Kiste("Erz", 5), new Kiste("Salz", 3), new Kiste("Wein", 6)};
+            DynArray d = Testhilfe.kistenReihung(k);
+            Ladeliste.einfuegesortierung(d);
+            assertEquals("[Holz (3 kg), Salz (3 kg), Erz (5 kg), Wein (6 kg), Gold (8 kg), Tuch (8 kg)]", Testhilfe.kistenText(d), "einfuegesortierung: aufsteigend nach Gewicht und STABIL (Holz vor Salz, Gold vor Tuch wie vorher)");
+            Kiste[] erwartet = {k[1], k[4], k[3], k[5], k[0], k[2]};
+            assertTrue(Testhilfe.dieselben(Testhilfe.kistenReihung(erwartet), d), "einfuegesortierung: Es muessen DIESELBEN Kisten-Objekte in der Ladeliste stehen");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void experte_einfuegesortierung_randfaelle() {
+        try {
+            Kiste[] k = {new Kiste("F", 6), new Kiste("E", 5), new Kiste("D", 4), new Kiste("C", 3), new Kiste("B", 2), new Kiste("A", 1)};
+            DynArray d = Testhilfe.kistenReihung(k);
+            Ladeliste.einfuegesortierung(d);
+            assertEquals("[A (1 kg), B (2 kg), C (3 kg), D (4 kg), E (5 kg), F (6 kg)]", Testhilfe.kistenText(d), "einfuegesortierung einer absteigend sortierten Ladeliste (schlechtester Fall)");
+            Kiste[] eine = {new Kiste("Anker", 9)};
+            DynArray e1 = Testhilfe.kistenReihung(eine);
+            Ladeliste.einfuegesortierung(e1);
+            assertEquals("[Anker (9 kg)]", Testhilfe.kistenText(e1), "einfuegesortierung mit nur einer Kiste");
+            DynArray leer = new DynArray();
+            Ladeliste.einfuegesortierung(leer);
+            assertTrue(leer.isEmpty(), "einfuegesortierung einer leeren Ladeliste: bleibt leer");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void experte_abspalten() {
+        try {
+            Kiste[] k = {new Kiste("Holz", 3), new Kiste("Gold", 8), new Kiste("Tuch", 8), new Kiste("Erz", 5), new Kiste("Wein", 6), new Kiste("Anker", 9)};
+            DynArray d = Testhilfe.kistenReihung(k);
+            DynArray schwer = Ladeliste.abspalten(d, 5);
+            assertTrue(schwer != null, "abspalten liefert null - erzeuge eine NEUE dynamische Reihung");
+            assertEquals("[Gold (8 kg), Tuch (8 kg), Wein (6 kg), Anker (9 kg)]", Testhilfe.kistenText(schwer), "abspalten(5): alle Kisten mit MEHR als 5 kg, Reihenfolge bleibt. Gold und Tuch stehen hintereinander - nach delete(i) i NICHT erhoehen!");
+            assertEquals("[Holz (3 kg), Erz (5 kg)]", Testhilfe.kistenText(d), "abspalten(5): In d bleiben die Kisten bis 5 kg (Erz mit genau 5 kg bleibt!)");
+            Kiste[] s = {k[1], k[2], k[4], k[5]};
+            assertTrue(Testhilfe.dieselben(Testhilfe.kistenReihung(s), schwer), "abspalten: DIESELBEN Kisten-Objekte in der neuen Reihung");
+            DynArray keine = Ladeliste.abspalten(d, 100);
+            assertTrue(keine != null, "abspalten ohne passende Kiste: leere Reihung, nicht null");
+            assertTrue(keine.isEmpty(), "abspalten(100): keine Kiste ist schwerer -> leere Reihung");
+            assertEquals(2, d.getLength(), "abspalten(100) darf nichts aus d entfernen");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+}
+
+
+class L45UmformenTest {
+
+    @Test
+    public void basis_schlangeZuDynArray() {
+        try {
+            Kiste[] k = Testhilfe.ladung();
+            Queue q = Testhilfe.kistenSchlange(k);
+            DynArray d = Umformen.schlangeZuDynArray(q);
+            assertTrue(d != null, "schlangeZuDynArray liefert null - erzeuge eine NEUE dynamische Reihung");
+            assertTrue(Testhilfe.dieselben(Testhilfe.kistenReihung(k), d), "schlangeZuDynArray: Index 0 = vorderste Kiste usw. (dieselben Objekte). Tatsaechlich: " + Testhilfe.kistenText(d));
+            assertTrue(Testhilfe.dieselben(Testhilfe.kistenReihung(k), Testhilfe.schlangeInhalt(q)), "schlangeZuDynArray muss die Schlange UNVERAENDERT lassen. Jetzt: " + Testhilfe.kistenSchlangeText(q));
+            DynArray leer = Umformen.schlangeZuDynArray(new Queue());
+            assertTrue(leer != null, "schlangeZuDynArray einer leeren Schlange: leere Reihung, nicht null");
+            assertTrue(leer.isEmpty(), "schlangeZuDynArray einer leeren Schlange: leere Reihung");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void basis_dynArrayZuStapel() {
+        try {
+            DynArray d = new DynArray();
+            d.append(4);
+            d.append(8);
+            d.append(15);
+            Stack s = Umformen.dynArrayZuStapel(d);
+            assertTrue(s != null, "dynArrayZuStapel liefert null - erzeuge einen NEUEN Stapel");
+            assertEquals("[15, 8, 4]", Testhilfe.stapelText(s), "dynArrayZuStapel: Element 0 zuerst gepusht -> das letzte Element (15) liegt oben");
+            assertEquals("[4, 8, 15]", Testhilfe.text(d), "dynArrayZuStapel darf d nicht veraendern");
+            Stack leer = Umformen.dynArrayZuStapel(new DynArray());
+            assertTrue(leer != null, "dynArrayZuStapel einer leeren Reihung: leerer Stapel, nicht null");
+            assertTrue(leer.isEmpty(), "dynArrayZuStapel einer leeren Reihung: leerer Stapel");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_klammernOk_richtig() {
+        try {
+            assertTrue(Umformen.klammernOk("(a+b)*[c-{d}]"), "'(a+b)*[c-{d}]' ist richtig geklammert (andere Zeichen ignorieren)");
+            assertTrue(Umformen.klammernOk("{[()()]}"), "'{[()()]}' ist richtig geklammert");
+            assertTrue(Umformen.klammernOk("()[]{}"), "'()[]{}' ist richtig geklammert");
+            assertTrue(Umformen.klammernOk("Hafen"), "'Hafen' enthaelt keine Klammern -> true");
+            assertTrue(Umformen.klammernOk(""), "Die leere Zeichenkette ist richtig geklammert -> true");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_klammernOk_falsch() {
+        try {
+            assertTrue(Umformen.klammernOk("[x]"), "'[x]' ist richtig geklammert");
+            assertFalse(Umformen.klammernOk("(]"), "'(]': ] passt nicht zu ( -> false");
+            assertFalse(Umformen.klammernOk("([)]"), "'([)]': ) passt nicht zur zuletzt geoeffneten [ -> false");
+            assertFalse(Umformen.klammernOk("(()"), "'(()': am Ende ist noch eine Klammer offen -> false (Stapel am Ende leer?)");
+            assertFalse(Umformen.klammernOk("())"), "'())': zu viele schliessende Klammern -> false (Leerabfrage vor pop!)");
+            assertFalse(Umformen.klammernOk("}"), "'}': schliessende Klammer ohne oeffnende -> false (Leerabfrage vor pop!)");
+            assertFalse(Umformen.klammernOk(")("), "')(': falsche Reihenfolge -> false");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void experte_postfix() {
+        try {
+            assertEquals(14, Umformen.postfix("34+2*"), "postfix('34+2*') = (3 + 4) * 2 = 14");
+            assertEquals(14, Umformen.postfix("234*+"), "postfix('234*+') = 2 + 3 * 4 = 14");
+            assertEquals(5, Umformen.postfix("5"), "postfix('5') = 5 (nur eine Zahl)");
+            assertEquals(729, Umformen.postfix("99*9*"), "postfix('99*9*') = 9 * 9 * 9 = 729");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void experte_postfix_reihenfolge() {
+        try {
+            assertEquals(6, Umformen.postfix("93-"), "postfix('93-') = 9 - 3 = 6: Der ZUERST entnommene Wert ist der RECHTE Operand!");
+            assertEquals(-1, Umformen.postfix("12-"), "postfix('12-') = 1 - 2 = -1");
+            assertEquals(18, Umformen.postfix("82-3*"), "postfix('82-3*') = (8 - 2) * 3 = 18");
+            assertEquals(-33, Umformen.postfix("2534+*-"), "postfix('2534+*-') = 2 - 5 * (3 + 4) = -33");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void experte_nachGewicht() {
+        try {
+            Kiste[] k = Testhilfe.ladung();
+            Queue q = Testhilfe.kistenSchlange(k);
+            DynArray d = Umformen.nachGewicht(q, 5);
+            assertTrue(d != null, "nachGewicht liefert null - erzeuge eine NEUE dynamische Reihung");
+            Kiste[] leicht = {k[0], k[1], k[3]};
+            assertEquals(Testhilfe.kistenText(Testhilfe.kistenReihung(leicht)), Testhilfe.kistenText(d), "nachGewicht(5): alle Kisten mit HOECHSTENS 5 kg in Schlangenreihenfolge (Erz mit genau 5 kg gehoert dazu)");
+            assertTrue(Testhilfe.dieselben(Testhilfe.kistenReihung(leicht), d), "nachGewicht: DIESELBEN Kisten-Objekte in der Reihung");
+            assertTrue(Testhilfe.dieselben(Testhilfe.kistenReihung(k), Testhilfe.schlangeInhalt(q)), "nachGewicht muss die Schlange UNVERAENDERT lassen. Jetzt: " + Testhilfe.kistenSchlangeText(q));
+            DynArray keine = Umformen.nachGewicht(q, 1);
+            assertTrue(keine != null, "nachGewicht ohne passende Kiste: leere Reihung, nicht null");
+            assertTrue(keine.isEmpty(), "nachGewicht(1): keine Kiste wiegt hoechstens 1 kg");
+            assertTrue(Umformen.nachGewicht(new Queue(), 5).isEmpty(), "nachGewicht einer leeren Schlange: leere Reihung");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+}
+
+
+class L46ExpertenpfadTest {
+
+    // fluteIterativ mit erwarteter Endkarte und erwarteter Anzahl pruefen.
+    private void pruefeFlut(char[][] karte, int z, int s, boolean mitSchlange, String[] erwartet, int anzahl, String name) {
+        String art = "Stapel";
+        if (mitSchlange) {
+            art = "Schlange";
+        }
+        Expertenpfad.spur = "";
+        int n = Expertenpfad.fluteIterativ(karte, z, s, mitSchlange);
+        assertEquals(Testhilfe.zeilenText(erwartet), Testhilfe.kartenText(karte), name + ": fluteIterativ(" + z + ", " + s + ") mit " + art + " - Endkarte");
+        assertEquals(anzahl, n, name + ": fluteIterativ(" + z + ", " + s + ") mit " + art + " - Anzahl der Felder, die von '.' zu '+' wurden");
+    }
+
+    @Test
+    public void basis_flute_hoehle() {
+        try {
+            String[] erwartet = {"#######", "#S++++#", "#++#++#", "#++++Z#", "#######"};
+            pruefeFlut(Kartenbuch.hoehle(), 1, 1, true, erwartet, 12, "Hoehle");
+            pruefeFlut(Kartenbuch.hoehle(), 3, 5, true, erwartet, 12, "Hoehle ab Z");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void basis_flute_labyrinth() {
+        try {
+            String[] erwartet = {"#########", "#S#+++#+#", "#+#+#+#+#", "#+++#+++#", "#+###+#+#", "#+++#+#Z#", "###+##.##", "#+++#...#", "#########"};
+            pruefeFlut(Kartenbuch.labyrinth(), 1, 1, true, erwartet, 25, "Labyrinth (die Kammer unten rechts ist nur UEBER ECK verbunden und bleibt '.')");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void basis_flute_kerker() {
+        try {
+            String[] ab11 = {"########", "#S++#..#", "#+#+#Z.#", "#+++####", "#+#++++#", "########"};
+            pruefeFlut(Kartenbuch.kerker(), 1, 1, true, ab11, 12, "Kerker");
+            String[] ab25 = {"########", "#S..#++#", "#.#.#Z+#", "#...####", "#.#....#", "########"};
+            pruefeFlut(Kartenbuch.kerker(), 2, 5, true, ab25, 3, "Kerker ab Z");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void basis_flute_nichtBegehbar() {
+        try {
+            char[][] k = Kartenbuch.kerker();
+            String[] erwartet = {"########", "#S..#++#", "#.#.#Z+#", "#...####", "#.#....#", "########"};
+            pruefeFlut(k, 1, 6, true, erwartet, 3, "Kerker ab (1, 6)");
+            pruefeFlut(k, 0, 0, true, erwartet, 0, "Kerker ab der Wand (0, 0): nichts aendern");
+            pruefeFlut(k, 2, 6, true, erwartet, 0, "Kerker ab (2, 6) - dort ist schon '+': nichts aendern");
+            pruefeFlut(k, -1, 3, true, erwartet, 0, "Kerker ab (-1, 3) - ausserhalb: nichts aendern, kein Laufzeitfehler");
+            pruefeFlut(k, 2, 8, true, erwartet, 0, "Kerker ab (2, 8) - ausserhalb: nichts aendern, kein Laufzeitfehler");
+            String[] hoehle = {"#######", "#S....#", "#..#..#", "#....Z#", "#######"};
+            pruefeFlut(Kartenbuch.hoehle(), 2, 3, false, hoehle, 0, "Hoehle ab der Wand (2, 3) mitten im Raum: nichts aendern");
+            String[] gang = {"+..", "###"};
+            pruefeFlut(Kartenbuch.karte(gang), 0, 0, false, gang, 0, "Gang ab (0, 0) - dort ist schon '+': nichts aendern");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_flute_stapel() {
+        try {
+            String[] hoehle = {"#######", "#S++++#", "#++#++#", "#++++Z#", "#######"};
+            pruefeFlut(Kartenbuch.hoehle(), 1, 1, false, hoehle, 12, "Hoehle");
+            String[] laby = {"#########", "#S#+++#+#", "#+#+#+#+#", "#+++#+++#", "#+###+#+#", "#+++#+#Z#", "###+##.##", "#+++#...#", "#########"};
+            pruefeFlut(Kartenbuch.labyrinth(), 1, 1, false, laby, 25, "Labyrinth");
+            String[] kerker = {"########", "#S++#..#", "#+#+#Z.#", "#+++####", "#+#++++#", "########"};
+            pruefeFlut(Kartenbuch.kerker(), 1, 1, false, kerker, 12, "Kerker");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_flute_rand() {
+        try {
+            String[] erwartet = {"++#+", "+S++", "#++Z"};
+            pruefeFlut(Kartenbuch.lichtung(), 1, 1, true, erwartet, 8, "Lichtung OHNE Randmauer (Nachbarn ausserhalb pruefen!)");
+            pruefeFlut(Kartenbuch.lichtung(), 1, 1, false, erwartet, 8, "Lichtung OHNE Randmauer (Nachbarn ausserhalb pruefen!)");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_spur_schlange() {
+        try {
+            Expertenpfad.spur = "";
+            Expertenpfad.fluteIterativ(Kartenbuch.hoehle(), 1, 1, true);
+            assertEquals("(1,1) (1,2) (2,1) (1,3) (2,2) (3,1) (1,4) (3,2) (1,5) (2,4) (3,3) (2,5) (3,4) (3,5)", Expertenpfad.spur, "Hoehle mit Schlange: Reihenfolge des Markierens (merke beim Markieren, Nachbarn oben, rechts, unten, links)");
+            Expertenpfad.spur = "";
+            Expertenpfad.fluteIterativ(Kartenbuch.lichtung(), 1, 1, true);
+            assertEquals("(1,1) (0,1) (1,2) (2,1) (1,0) (0,0) (1,3) (2,2) (0,3) (2,3)", Expertenpfad.spur, "Lichtung mit Schlange: Reihenfolge des Markierens");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_spur_stapel() {
+        try {
+            Expertenpfad.spur = "";
+            Expertenpfad.fluteIterativ(Kartenbuch.hoehle(), 1, 1, false);
+            assertEquals("(1,1) (1,2) (2,1) (2,2) (3,1) (3,2) (3,3) (3,4) (2,4) (3,5) (2,5) (1,5) (1,4) (1,3)", Expertenpfad.spur, "Hoehle mit Stapel: Reihenfolge des Markierens (gleiche Endkarte wie mit Schlange, aber andere Reihenfolge!)");
+            Expertenpfad.spur = "";
+            Expertenpfad.fluteIterativ(Kartenbuch.lichtung(), 1, 1, false);
+            assertEquals("(1,1) (0,1) (1,2) (2,1) (1,0) (0,0) (2,2) (2,3) (1,3) (0,3)", Expertenpfad.spur, "Lichtung mit Stapel: Reihenfolge des Markierens");
+            Expertenpfad.spur = "";
+            Expertenpfad.fluteIterativ(Kartenbuch.kerker(), 2, 5, false);
+            assertEquals("(2,5) (1,5) (2,6) (1,6)", Expertenpfad.spur, "Kerker ab Z (2, 5) mit Stapel: Auch Start und Ziel werden gemerkt");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    // ----- Level 4.6 Experte: Knoten und MeinStapel -----
+    // (im Geruest auskommentiert im Block LEVEL-4.6 - hier freigeschaltet)
+
+    @Test
+    public void experte_knoten() {
+        try {
+            Knoten unten = new Knoten("Erz", null);
+            Knoten oben = new Knoten("Holz", unten);
+            assertEquals("Holz", (String) oben.getInhalt(), "getInhalt des oberen Knotens: Holz");
+            assertTrue(oben.getNaechster() == unten, "getNaechster des oberen Knotens: der untere Knoten");
+            assertTrue(unten.getNaechster() == null, "getNaechster des unteren Knotens: null");
+            oben.setInhalt("Gold");
+            assertEquals("Gold", (String) oben.getInhalt(), "Nach setInhalt('Gold'): Gold");
+            oben.setNaechster(null);
+            assertTrue(oben.getNaechster() == null, "Nach setNaechster(null): null");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void experte_meinStapel_grundlagen() {
+        try {
+            MeinStapel m = new MeinStapel();
+            assertTrue(m.isEmpty(), "Ein neuer MeinStapel ist leer");
+            Kiste[] k = Testhilfe.ladung();
+            m.push(k[1]);
+            m.push(k[0]);
+            m.push(k[2]);
+            assertFalse(m.isEmpty(), "Nach push ist MeinStapel nicht leer");
+            assertTrue(m.top() == k[2], "top: Gold wurde zuletzt gepusht und liegt oben");
+            assertTrue(m.top() == k[2], "top entfernt nichts: wieder Gold");
+            assertTrue(m.pop() == k[2], "pop: Gold");
+            assertTrue(m.pop() == k[0], "pop: Holz");
+            assertFalse(m.isEmpty(), "Erz liegt noch im Stapel");
+            assertTrue(m.pop() == k[1], "pop: Erz");
+            assertTrue(m.isEmpty(), "Jetzt ist MeinStapel wieder leer");
+            m.push(k[5]);
+            assertTrue(m.pop() == k[5], "push und pop auf einem wieder leeren Stapel: Wein");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void experte_meinStapel_leer() {
+        MeinStapel m = new MeinStapel();
+        boolean geworfen = false;
+        try {
+            m.top();
+        } catch (IllegalStateException e) {
+            geworfen = true;
+        } catch (RuntimeException e) {
+            fail("top() auf leerem MeinStapel: falscher Laufzeitfehler - erwartet wird eine IllegalStateException (Leerabfrage + throw new IllegalStateException(...))");
+        }
+        assertTrue(geworfen, "top() auf leerem MeinStapel muss eine IllegalStateException werfen - wie Stack");
+        geworfen = false;
+        try {
+            m.push("Erz");
+            m.pop();
+            m.pop();
+        } catch (IllegalStateException e) {
+            geworfen = true;
+        } catch (RuntimeException e) {
+            fail("pop() auf leerem MeinStapel: falscher Laufzeitfehler - erwartet wird eine IllegalStateException (Leerabfrage + throw new IllegalStateException(...))");
+        }
+        assertTrue(geworfen, "pop() auf leerem MeinStapel muss eine IllegalStateException werfen - wie Stack");
+        assertTrue(m.isEmpty(), "Nach dem Fehlversuch ist MeinStapel leer");
+    }
+
+    @Test
+    public void experte_meinStapel_zufallsvergleich() {
+        try {
+            Stack original = new Stack();
+            MeinStapel mein = new MeinStapel();
+            int x = 2026;
+            int maxHoehe = 0;
+            int hoehe = 0;
+            for (int schritt = 1; schritt <= 400; schritt++) {
+                x = Testhilfe.naechsteZufallszahl(x);
+                int befehl = x % 3;
+                if (befehl == 0) {
+                    original.push(x);
+                    mein.push(x);
+                    hoehe++;
+                } else if (!original.isEmpty()) {
+                    if (befehl == 1) {
+                        int a = (Integer) original.pop();
+                        int b = (Integer) mein.pop();
+                        assertEquals(a, b, "Schritt " + schritt + ": pop liefert bei Stack und MeinStapel verschiedene Werte");
+                        hoehe--;
+                    } else {
+                        int a = (Integer) original.top();
+                        int b = (Integer) mein.top();
+                        assertEquals(a, b, "Schritt " + schritt + ": top liefert bei Stack und MeinStapel verschiedene Werte");
+                    }
+                }
+                if (hoehe > maxHoehe) {
+                    maxHoehe = hoehe;
+                }
+                assertEquals(original.isEmpty(), mein.isEmpty(), "Schritt " + schritt + ": isEmpty() bei Stack und MeinStapel verschieden");
+            }
+            while (!original.isEmpty()) {
+                int a = (Integer) original.pop();
+                int b = (Integer) mein.pop();
+                assertEquals(a, b, "Abbauen am Ende: pop liefert verschiedene Werte");
+            }
+            assertTrue(mein.isEmpty(), "Am Ende muessen beide Stapel leer sein");
+            assertTrue(maxHoehe >= 3, "(Selbstkontrolle des Tests: Der Stapel war mindestens 3 hoch)");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+}
+
+// =====================================================================
+//  HÄUFIGE SCHÜLERFEHLER (Lehrerhinweise) – in Klammern der Test, der
+//  den Fehler aufdeckt (diese Zuordnungen sind per Mutationstest geprueft:
+//  88 typische Fehler, jeder macht mindestens einen Test rot oder
+//  verhindert das Kompilieren)
+// =====================================================================
+//
+//  QUER DURCH ALLE LEVEL
+//  - LEERABFRAGE VERGESSEN: top/pop/head/dequeue ohne isEmpty(), bei
+//    DynArray getItem(0) ohne Pruefung -> roter Test mit "LAUFZEITFEHLER:
+//    ... LEEREN Struktur - Leerabfrage mit isEmpty() vergessen?"
+//    (basis_obersterWert_leer, erweiterung_naechster_leer,
+//    basis_zugbuch_leer, basis_initiative_leer, erweiterung_wiederholen,
+//    experte_unterste, basis_leichteste, erweiterung_entferneLeichteste,
+//    erweiterung_klammernOk_falsch). Merksatz: "Erst fragen, dann nehmen."
+//  - STRUKTUR NICHT WIEDERHERGESTELLT (kein Zurueckschichten, oder
+//    "return true" mitten in der Schleife): anzahlZuege, zaehle, enthaelt,
+//    durchschnittsGewicht, unterste, schlangeZuDynArray, nachGewicht
+//    (erweiterung_anzahlZuege, basis_zaehle, erweiterung_enthaelt,
+//    erweiterung_durchschnittsGewicht, experte_unterste,
+//    basis_schlangeZuDynArray, experte_nachGewicht).
+//  - REIHENFOLGE BEIM ZURUECKSCHICHTEN UMGEDREHT: Schlange ueber einen
+//    Hilfsstapel bzw. Stapel ueber eine Hilfsschlange zurueckgeschichtet
+//    (basis_summe, erweiterung_anzahlZuege, experte_entferneAlle,
+//    experte_umkehren mit Hilfsschlange). Regel: Stapel -> Hilfsstapel
+//    -> Stapel; Schlange -> Hilfsschlange -> Schlange (oder rotieren).
+//  - NEUE OBJEKTE STATT DERSELBEN: "hilf.push(new Kiste(k.getName(),
+//    k.getGewicht()))" sieht gleich aus, ist aber nicht unveraendert
+//    (erweiterung_schwerste; Testhilfe.dieselben vergleicht mit ==).
+//  - CAST VERGESSEN -> Kompilierfehler ("Object kann nicht ... umgewandelt
+//    werden"); CAST FALSCH bzw. falscher Inhaltstyp -> ClassCastException,
+//    z. B. offen.push("" + c) und spaeter (Character) offen.pop()
+//    (erweiterung_klammernOk_richtig/_falsch) oder werte.push(c) statt
+//    werte.push((int) c - (int) '0') und spaeter (Integer) werte.pop()
+//    (experte_postfix). Meldung "LAUFZEITFEHLER: falscher Cast".
+//  - == STATT EQUALS bei Namen: im Pruef-Harness (echtes Java) rot
+//    (experte_ausscheiden, erweiterung_enthaelt, basis_indexVon,
+//    erweiterung_entferneDuplikate_randfaelle - die Namen kommen ueber
+//    Testhilfe.kopie). ACHTUNG: Die Online-IDE vergleicht Zeichenketten
+//    auch mit == inhaltlich - dort bleiben diese Tests GRUEN. Im
+//    Code-Review pruefen, im Abitur ist == falsch!
+//  - contains statt equals: findet "Holz" in "Holzkohle" bzw. "Bor" in
+//    "Borin" (erweiterung_enthaelt_obenUndUnten,
+//    experte_ausscheiden_nichtDabei).
+//
+//  Level 4.1 – Hafen
+//  - stapleAuf von hinten nach vorne gepusht (4 liegt oben) oder null
+//    zurueckgegeben (basis_stapleAuf).
+//  - obersterWert mit pop statt top - der Stapel wird kleiner
+//    (basis_obersterWert); ohne Leerabfrage (basis_obersterWert_leer).
+//  - leeren mit if statt while (nur ein Element entfernt, basis_leeren).
+//  - naechster mit head statt dequeue (erweiterung_naechster).
+//  - alleAbfertigen: ", " nach JEDEM Namen -> "Albatros, Moewe,
+//    Kormoran, " (erweiterung_alleAbfertigen). Loesungen: Merker
+//    "erster" oder ersten Namen vor der Schleife (nach Leerabfrage!).
+//  - umkehren mit Hilfsschlange statt Hilfsstapel -> nichts umgekehrt
+//    (experte_umkehren); stapelUmdrehen gibt s statt des neuen Stapels
+//    zurueck (experte_stapelUmdrehen).
+//
+//  Level 4.2 – Spielmodule
+//  - Konstruktor leer gelassen (Attribute bleiben null) -> "LAUFZEITFEHLER:
+//    Zugriff auf null - Attribut im Konstruktor nicht erzeugt" in fast
+//    allen Tests der Klasse.
+//  - zug leert den Redo-Stapel nicht -> nach neuem Zug kann ein alter Zug
+//    "wiederholt" werden (erweiterung_neuerZugLoeschtWiederholen).
+//  - rueckgaengig legt den Zug nicht auf zurueckgenommen
+//    (erweiterung_wiederholen).
+//  - amZug stellt den Vordersten nicht wieder hinten an (basis_initiative_
+//    amZug u. a.).
+//  - ausscheiden als "rotieren, bis der Name vorne steht" OHNE Zaehler:
+//    ist der Name nicht da, ENDLOSSCHLEIFE (experte_ausscheiden_nichtDabei
+//    -> TIMEOUT bzw. haengender Testrunner); ist er da, ist danach die
+//    Reihenfolge verschoben (experte_ausscheiden). Richtig: genau
+//    "Laenge"-mal rotieren (Laenge vorher zaehlen) oder Hilfsschlange.
+//  - ausscheiden entfernt ALLE Vorkommen (experte_ausscheiden_
+//    erstesVorkommen) - Merker "gefunden".
+//
+//  Level 4.3 – Unveraendert
+//  - enthaelt mit "return true" sofort beim Fund -> der Stapel bleibt
+//    halb abgebaut (erweiterung_enthaelt, _obenUndUnten). Erst
+//    zurueckschichten, dann return - oder vor dem return zurueckschichten.
+//  - durchschnittsGewicht: summe / anzahl ganzzahlig (5.0 statt 5.5);
+//    ohne Leerabfrage 0.0 / 0 = NaN bzw. bei int Division durch 0
+//    (erweiterung_durchschnittsGewicht).
+//  - schwerste mit ">=" -> bei Gleichstand gewinnt die UNTERE (Gold statt
+//    Tuch, erweiterung_schwerste).
+//  - unterste mit "Kiste letzte = (Kiste) s.top();" vor der Schleife ->
+//    Laufzeitfehler beim leeren Stapel (experte_unterste).
+//  - entferneAlle: nur das erste Vorkommen entfernt (experte_entferneAlle,
+//    _alle); ueber Hilfsstapel zurueck -> Reihenfolge umgedreht.
+//
+//  Level 4.4 – Ladeliste
+//  - Schleife bis "i <= d.getLength()" -> IndexOutOfBoundsException
+//    (basis_gesamtGewicht); Start bei 1 (erste Kiste fehlt).
+//  - indexVon: "else return -1" in der Schleife (nur Index 0 geprueft,
+//    basis_indexVon); Schleife rueckwaerts -> letztes Vorkommen
+//    (basis_indexVon_erstesVorkommen).
+//  - leichteste mit "<=" -> bei Gleichstand die letzte (basis_leichteste).
+//  - einfuegenSortiert: ">=" statt ">" -> vor die gleich schweren
+//    (erweiterung_einfuegenSortiert, _leer); Schleife ohne
+//    "pos < d.getLength()" -> Laufzeitfehler bei der schwersten Kiste;
+//    "if (pos < getLength()) insertAt(...)" -> schwerste Kiste fehlt.
+//    insertAt(getLength(), k) haengt an - kein Sonderfall noetig.
+//  - entferneLeichteste: erst delete, dann getItem(minIndex) -> falsche
+//    Kiste zurueckgegeben (erweiterung_entferneLeichteste).
+//  - DELETE IN VORWAERTSSCHLEIFE: nach delete(j) bzw. delete(i) den Index
+//    trotzdem erhoeht -> das nachgerueckte Element wird uebersprungen
+//    (erweiterung_entferneDuplikate mit drei Holz-Kisten hintereinander,
+//    experte_abspalten mit Gold und Tuch hintereinander). Richtig: Index
+//    nur im else-Zweig erhoehen ODER rueckwaerts laufen. Rueckwaerts in
+//    abspalten mit append dreht aber die Reihenfolge der neuen Reihung
+//    um (experte_abspalten) - dann insertAt(0, k) benutzen.
+//  - entferneDuplikate mit innerer Schleife ab j = i: jede Kiste ist ihr
+//    eigenes Duplikat (erweiterung_entferneDuplikate).
+//  - einfuegesortierung: ">=" macht das Verfahren instabil (Tuch vor Gold,
+//    experte_einfuegesortierung); "j > 0" vergleicht nie mit Index 0;
+//    ohne "j >= 0" Laufzeitfehler (experte_einfuegesortierung_randfaelle).
+//  - abspalten mit ">=" (Erz mit genau 5 kg wandert mit, experte_abspalten).
+//
+//  Level 4.5 – Umformen
+//  - schlangeZuDynArray stellt q nicht wieder her (basis_schlangeZuDynArray).
+//  - dynArrayZuStapel von hinten gepusht -> Element 0 oben
+//    (basis_dynArrayZuStapel).
+//  - klammernOk: Leerabfrage vor pop vergessen -> Laufzeitfehler bei
+//    "())" und "}" (erweiterung_klammernOk_falsch); am Ende "return true"
+//    statt "return offen.isEmpty()" ("(()" gilt als richtig); Art der
+//    Klammer nicht verglichen ("(]").
+//  - postfix: Operanden vertauscht ("93-" ergibt -6, experte_postfix_
+//    reihenfolge): Der ZUERST entnommene Wert ist der RECHTE Operand.
+//    Ziffer nicht umgerechnet: push(c) -> ClassCastException; push((int)
+//    c) -> ASCII-Werte ('3' = 51) (experte_postfix).
+//  - nachGewicht mit "<" (Erz fehlt), q nicht oder nur teilweise
+//    wiederhergestellt (experte_nachGewicht).
+//
+//  Level 4.6 – Expertenpfad
+//  - Randpruefung der Nachbarn vergessen -> Laufzeitfehler auf der
+//    Lichtung (erweiterung_flute_rand).
+//  - Startfeld nicht geprueft (Wand oder '+' als Start flutet trotzdem,
+//    basis_flute_nichtBegehbar) bzw. Start ausserhalb -> Laufzeitfehler.
+//  - S und Z mitgezaehlt (Hoehle ab S: 13 statt 12, basis_flute_hoehle
+//    u. a.); Z nicht als begehbar behandelt (nur in der spur sichtbar).
+//  - Schlange und Stapel vertauscht, andere Nachbar-Reihenfolge, merke
+//    vergessen, Markieren erst beim ENTNEHMEN -> Endkarte richtig, aber
+//    spur falsch (erweiterung_spur_schlange, _stapel). Das ist fachlich
+//    der Kern der Kuer: gleiche Endkarte, andere Reihenfolge.
+//  - MeinStapel: pop/top ohne Leerabfrage -> NullPointerException statt
+//    IllegalStateException (experte_meinStapel_leer); push mit
+//    "new Knoten(inhalt, null)" verliert den Rest; pop liefert den Inhalt
+//    des NEUEN kopf (erst merken, dann umhaengen); top entfernt den Knoten
+//    (experte_meinStapel_grundlagen, _zufallsvergleich).
+//
+//  CODE-REVIEW (die Tests erkennen das NICHT – per Mutationstest belegt)
+//  - == statt equals bei Zeichenketten: in der Online-IDE gruen (siehe
+//    oben), im Harness rot. Suchen (Strg+F) nach "== name" bzw. "== n".
+//  - einfuegesortierung mit einer zweiten DynArray (z. B. ueber
+//    einfuegenSortiert in eine neue Reihung): alle Tests gruen, verletzt
+//    aber die Aufgabe "nur getItem/setItem/insertAt/delete" (in-place).
+//  - fluteIterativ mit Kodierung z * 100 + s statt z * 1000 + s: auf den
+//    Testkarten (hoechstens 9 Spalten) gruen - im Gespraech klaeren,
+//    warum der Faktor groesser als die Spaltenzahl sein muss.
+//  - Richtige Alternativen, die ebenfalls gruen sind: Redo-Stapel in zug
+//    per "while (!zurueckgenommen.isEmpty()) zurueckgenommen.pop();" leeren;
+//    ausscheiden durch Rotieren mit Zaehler (Laenge vorher bestimmen);
+//    entferneDuplikate/abspalten rueckwaerts (bei abspalten mit
+//    insertAt(0, k)); umkehren der Schlange rekursiv.
+//  - Leerabfrage per Zaehler statt isEmpty() (z. B. "if (anzahl > 0)")
+//    ist richtig, aber im Abitur ist isEmpty() die erwartete Abfrage.
+//
+//  MUSTER-TRACETABELLEN (fuer AB 1 bis 3, Warm-up und Boss 4)
+//  Notation: Stapel von OBEN nach unten, Schlange von VORNE nach hinten,
+//  "-" = leer. Im Abitur wird der Zustand nach jeder Anweisung skizziert.
+//
+//  (1) Befehlsfolge auf einem Stapel und einer Schlange
+//        Anweisung              Stapel s      Rueckgabe
+//        s = new Stack()        -
+//        s.push(4)              4
+//        s.push(8)              8 4
+//        s.pop()                4             8
+//        s.push(15)             15 4
+//        s.push(16)             16 15 4
+//        s.top()                16 15 4       16
+//        s.pop()                15 4          16
+//        s.push(23)             23 15 4
+//
+//        Anweisung              Schlange q                Rueckgabe
+//        q = new Queue()        -
+//        q.enqueue("Albatros")  Albatros
+//        q.enqueue("Moewe")     Albatros Moewe
+//        q.dequeue()            Moewe                     Albatros
+//        q.enqueue("Kormoran")  Moewe Kormoran
+//        q.head()               Moewe Kormoran            Moewe
+//        q.enqueue(q.dequeue()) Kormoran Moewe            (rotieren)
+//
+//  (2) MISCHAUFGABE Stapel + Schlange (Ganzzahlen, Casts mitschreiben!)
+//      Start: q = 3 1 4 1 5 (vorne 3), s leer.
+//        Nr  Anweisung                                   q          s
+//        0   (Start)                                     3 1 4 1 5  -
+//        1   s.push(q.dequeue());                        1 4 1 5    3
+//        2   s.push(q.dequeue());                        4 1 5      1 3
+//        3   q.enqueue(s.pop());                         4 1 5 1    3
+//        4   q.enqueue(q.dequeue());                     1 5 1 4    3
+//        5   s.push(q.head());                           1 5 1 4    1 3
+//        6   int x = (Integer) s.pop()
+//                    + (Integer) q.dequeue();   x = 2    5 1 4      3
+//        7   s.push(x);                                  5 1 4      2 3
+//      Fehlerquelle: in Schritt 5 bleibt q unveraendert (head, nicht
+//      dequeue); in Schritt 4 wandert das vordere Element nach hinten.
+//
+//  (3) Muster "unveraendert" mit Hilfsstapel: enthaelt(s, "Gold"),
+//      s von oben: Wein Gold Holz
+//        Phase         k     gefunden  s               hilf
+//        Start         -     false     Wein Gold Holz  -
+//        abbauen       Wein  false     Gold Holz       Wein
+//        abbauen       Gold  true      Holz            Gold Wein
+//        abbauen       Holz  true      -               Holz Gold Wein
+//        zurueck       -     true      Holz            Gold Wein
+//        zurueck       -     true      Gold Holz       Wein
+//        zurueck       -     true      Wein Gold Holz  -
+//        -> Rueckgabe true, s wieder wie am Anfang (dieselben Kisten).
+//      Mit "return true" beim Fund bliebe s = Holz (unvollstaendig!).
+//
+//  (4) umkehren(q) mit Hilfsstapel, q = A B C
+//        Phase          q        hilf (oben ... unten)
+//        Start          A B C    -
+//        dequeue->push  B C      A
+//        dequeue->push  C        B A
+//        dequeue->push  -        C B A
+//        pop->enqueue   C        B A
+//        pop->enqueue   C B      A
+//        pop->enqueue   C B A    -
+//      Mit einer Hilfsschlange statt des Stapels kaeme A B C heraus.
+//
+//  (5) delete in einer Vorwaertsschleife: abspalten(d, 5) mit
+//      d = Holz 3, Gold 8, Tuch 8, Erz 5
+//      FALSCH (i wird nach delete erhoeht):
+//        i  getItem(i)  > 5?  Aktion                    d danach
+//        0  Holz 3      nein  i = 1                     Holz Gold Tuch Erz
+//        1  Gold 8      ja    append, delete(1), i = 2  Holz Tuch Erz
+//        2  Erz 5       nein  i = 3                     Holz Tuch Erz
+//        -> Tuch wurde UEBERSPRUNGEN (rutschte auf Index 1).
+//      RICHTIG (i nur im else-Zweig erhoehen):
+//        1  Gold 8      ja    append, delete(1)         Holz Tuch Erz
+//        1  Tuch 8      ja    append, delete(1)         Holz Erz
+//        1  Erz 5       nein  i = 2                     Holz Erz
+//        -> schwer = Gold Tuch, d = Holz Erz.
+//
+//  (6) einfuegenSortiert(d, Blei 3) mit d = Holz 3, Salz 3, Erz 5, Gold 8
+//        pos  getItem(pos)  Gewicht > 3?  Aktion
+//        0    Holz 3        nein          pos = 1
+//        1    Salz 3        nein          pos = 2
+//        2    Erz 5         ja            gefunden -> insertAt(2, Blei)
+//        -> Holz 3, Salz 3, Blei 3, Erz 5, Gold 8 (hinter gleich schwere).
+//      Kiste Anker 9: Schleife endet mit pos = 4 = getLength() ->
+//      insertAt(4, Anker) haengt hinten an.
+//
+//  (7) klammernOk mit Stapel vom Inhaltstyp Zeichen
+//      "{[()]}":
+//        Zeichen  Aktion                     Stapel (oben ... unten)
+//        {        push                       {
+//        [        push                       [ {
+//        (        push                       ( [ {
+//        )        pop -> ( passt             [ {
+//        ]        pop -> [ passt             {
+//        }        pop -> { passt             -
+//        Ende     Stapel leer -> true
+//      "([)]": ( push, [ push, ) pop -> [ passt NICHT -> false.
+//      "())":  ( push, ) pop, ) Stapel LEER -> false (ohne Leerabfrage:
+//              Laufzeitfehler). "(()": Ende, Stapel nicht leer -> false.
+//
+//  (8) postfix mit Stapel vom Inhaltstyp Ganzzahl
+//      "34+2*":
+//        Zeichen  Aktion                       Stapel (oben ... unten)
+//        3        push 3                       3
+//        4        push 4                       4 3
+//        +        b = 4, a = 3, push 3 + 4     7
+//        2        push 2                       2 7
+//        *        b = 2, a = 7, push 7 * 2     14
+//        Ende     pop -> 14
+//      "2534+*-": 2 | 5 2 | 3 5 2 | 4 3 5 2 | + -> 7 5 2 | * -> 35 2 |
+//                 - -> 2 - 35 = -33.
+//      "93-": b = 3, a = 9 -> 9 - 3 = 6 (vertauscht: -6).
+//
+//  (9) fluteIterativ(Hoehle, 1, 1, ...) - Positionen als z * 1000 + s,
+//      markiert wird beim Einfuegen, Nachbarn oben, rechts, unten, links:
+//        Nr  entnommen  neu markiert       Schlange (vorne ... hinten)
+//         0  -          1001 (S)           1001
+//         1  1001       1002 2001          1002 2001
+//         2  1002       1003 2002          2001 1003 2002
+//         3  2001       3001               1003 2002 3001
+//         4  1003       1004               2002 3001 1004
+//         5  2002       3002               3001 1004 3002
+//         6  3001       -                  1004 3002
+//         7  1004       1005 2004          3002 1005 2004
+//         8  3002       3003               1005 2004 3003
+//         9  1005       2005               2004 3003 2005
+//        10  2004       3004               3003 2005 3004
+//        11  3003       -                  2005 3004
+//        12  2005       3005 (Z)           3004 3005
+//        13  3004       -                  3005
+//        14  3005       -                  (leer)
+//
+//        Nr  entnommen  neu markiert       Stapel (oben ... unten)
+//         0  -          1001 (S)           1001
+//         1  1001       1002 2001          2001 1002
+//         2  2001       2002 3001          3001 2002 1002
+//         3  3001       3002               3002 2002 1002
+//         4  3002       3003               3003 2002 1002
+//         5  3003       3004               3004 2002 1002
+//         6  3004       2004 3005 (Z)      3005 2004 2002 1002
+//         7  3005       2005               2005 2004 2002 1002
+//         8  2005       1005               1005 2004 2002 1002
+//         9  1005       1004               1004 2004 2002 1002
+//        10  1004       1003               1003 2004 2002 1002
+//        11  1003       -                  2004 2002 1002
+//        12  2004       -                  2002 1002
+//        13  2002       -                  1002
+//        14  1002       -                  (leer)
+//
+//      Beide Verfahren markieren dieselben 14 Felder (12 x '.' -> '+',
+//      dazu S und Z), nur in anderer Reihenfolge. Die Schlange arbeitet
+//      "in Wellen" (Breitensuche: erst alle Felder im Abstand 1, dann 2
+//      ...), der Stapel laeuft erst einen Gang bis zum Ende (Tiefensuche,
+//      wie die Rekursion in Welt 3). Groesste Fuellung: Schlange 3,
+//      Stapel 4 Positionen.
+//
+//  AUFWAND (Denkanstoss DS 29): Eine Schlange mit enqueue/dequeue hat pro
+//  Operation konstanten Aufwand. Bildet man die Schlange mit einer
+//  DynArray nach (append hinten, getItem(0) + delete(0) vorne), muss bei
+//  jedem delete(0) - wenn die DynArray intern eine Reihung benutzt - der
+//  ganze Rest nachruecken: n Elemente entnehmen kostet dann ca. n * n / 2
+//  Verschiebungen (quadratischer Aufwand statt linearem).
+//
+//  ABI-BEZUG
+//  - Befehlsfolgen und Mischaufgaben tracen, Zustaende skizzieren
+//    (22N-B a, 24H-B e); Eignung Stapel/Schlange/DynArray beurteilen
+//    (24N-B b, 26H-B f); Methoden, die eine Struktur unveraendert lassen
+//    (23H-C c, 25H-B b, 25N-B l, 26H-B e); DynArray sortiert einfuegen,
+//    Minimum entfernen (24H-B g, 25N-A l, 26H-B b); Umformen,
+//    Klammerpruefung, Postfix (22N-A c/d, 23H-B c, 25N-B b/c).
+//  - Papier-Compiler-Kandidaten: enthaelt, durchschnittsGewicht,
+//    einfuegenSortiert, entferneLeichteste, klammernOk erst
+//    handschriftlich (mit Leerabfragen und Casts), dann unveraendert
+//    abtippen.
+//  - Abi-Check Welt 4: "Leer? Index?" - vor top/pop/head/dequeue isEmpty()
+//    pruefen, bei DynArray 0 <= i < getLength(); "unveraendert" heisst
+//    dieselben Objekte in derselben Reihenfolge; Casts beim Entnehmen;
+//    Zeichenketten mit equals; jeder Pfad mit return.
+// =====================================================================
+
+// ---------------------------------------------------------------------
+//  Programmstart – das Hauptprogramm: ein Tag im Hafen
+// ---------------------------------------------------------------------
+
+// ----- Level 4.1: Kisten stapeln, Schiffe abfertigen -----
+println("=== Level 4.1: Ein Tag im Hafen ===");
+int[] nummern = {4, 8, 15, 16};
+Stack turm = Hafen.stapleAuf(nummern);
+println("Kistenturm (von oben):     " + Testhilfe.stapelText(turm));
+if (turm != null) {
+    println("Oberste Nummer:            " + Hafen.obersterWert(turm));
+}
+String[] schiffe = {"Albatros", "Moewe", "Kormoran"};
+Queue mole = Hafen.warteschlange(schiffe);
+println("Warteschlange an der Mole: " + Testhilfe.schlangeText(mole));
+if (mole != null) {
+    println("Erster Liegeplatz:         " + Hafen.naechster(mole));
+    println("Danach abgefertigt:        " + Hafen.alleAbfertigen(mole));
+}
+
+// ----- Level 4.2: Rueckgaengig und Zugreihenfolge -----
+println("");
+println("=== Level 4.2: Spielmodule ===");
+Zugbuch buch = new Zugbuch();
+buch.zug("Nord");
+buch.zug("Ost");
+buch.zug("Sued");
+println("Zuege im Zugbuch: " + buch.anzahlZuege());
+println("Rueckgaengig:     " + buch.rueckgaengig());
+println("Rueckgaengig:     " + buch.rueckgaengig());
+println("Wiederholen:      " + buch.wiederholen());
+println("Zuege im Zugbuch: " + buch.anzahlZuege());
+
+Initiative kampf = new Initiative();
+kampf.beitreten("Aria");
+kampf.beitreten("Borin");
+kampf.beitreten("Goblin");
+String runde = "";
+for (int i = 0; i < 4; i++) {
+    runde = runde + kampf.amZug() + " ";
+}
+println("Am Zug:           " + runde);
+println("Goblin besiegt:   " + kampf.ausscheiden("Goblin"));
+runde = "";
+for (int i = 0; i < 4; i++) {
+    runde = runde + kampf.amZug() + " ";
+}
+println("Am Zug:           " + runde);
+
+// ----- Level 4.3: Das Lager pruefen, ohne es umzuraeumen -----
+println("");
+println("=== Level 4.3: Das Lager ===");
+Kiste[] ladung = Testhilfe.ladung();
+Stack lager = Testhilfe.kistenStapel(ladung);
+println("Lager (von oben): " + Testhilfe.kistenStapelText(lager));
+println("Kisten im Lager:  " + Unveraendert.zaehle(lager));
+println("Gold im Lager:    " + Unveraendert.enthaelt(lager, "Gold"));
+println("Schwerste Kiste:  " + Testhilfe.kisteText(Unveraendert.schwerste(lager)));
+println("Unterste Kiste:   " + Testhilfe.kisteText(Unveraendert.unterste(lager)));
+println("Lager danach:     " + Testhilfe.kistenStapelText(lager) + "  <- unveraendert?");
+Queue kai = Testhilfe.kistenSchlange(ladung);
+println("Durchschnitt am Kai: " + Unveraendert.durchschnittsGewicht(kai) + " kg");
+
+// ----- Level 4.4: Die Ladeliste -----
+println("");
+println("=== Level 4.4: Die Ladeliste ===");
+DynArray liste = new DynArray();
+for (int i = 0; i < ladung.length; i++) {
+    Ladeliste.einfuegenSortiert(liste, ladung[i]);
+}
+println("Sortiert eingefuegt: " + Testhilfe.kistenText(liste));
+println("Gesamtgewicht:       " + Ladeliste.gesamtGewicht(liste) + " kg");
+println("Index von Tuch:      " + Ladeliste.indexVon(liste, "Tuch"));
+DynArray schwerlast = Ladeliste.abspalten(liste, 5);
+println("Schwerlast (> 5 kg): " + Testhilfe.kistenText(schwerlast));
+println("Rest der Liste:      " + Testhilfe.kistenText(liste));
+
+// ----- Level 4.5: Umformen, Klammern, Postfix -----
+println("");
+println("=== Level 4.5: Umformen ===");
+println("Klammern in {[(a+b)*c]} richtig? " + Umformen.klammernOk("{[(a+b)*c]}"));
+println("Klammern in ([)] richtig?        " + Umformen.klammernOk("([)]"));
+println("Postfix 34+2* = " + Umformen.postfix("34+2*"));
+println("Kisten bis 5 kg am Kai: " + Testhilfe.kistenText(Umformen.nachGewicht(kai, 5)));
+
+// ----- Level 4.6: Nebel lueften ohne Rekursion -----
+println("");
+println("=== Level 4.6: Expertenpfad ===");
+char[][] karte = Kartenbuch.hoehle();
+Expertenpfad.spur = "";
+int gelueftet = Expertenpfad.fluteIterativ(karte, 1, 1, true);
+println(Testhilfe.kartenText(karte));
+println("Mit Schlange gelueftet: " + gelueftet + " Felder");
+println("Reihenfolge: " + Expertenpfad.spur);
+char[][] karte2 = Kartenbuch.hoehle();
+Expertenpfad.spur = "";
+gelueftet = Expertenpfad.fluteIterativ(karte2, 1, 1, false);
+println("Mit Stapel gelueftet:   " + gelueftet + " Felder");
+println("Reihenfolge: " + Expertenpfad.spur);
+
+// ----- Level 4.6 Experte: der eigene Stapel -----
+// (im Geruest auskommentiert im Block LEVEL-4.6 - hier freigeschaltet)
+MeinStapel eigener = new MeinStapel();
+eigener.push("Erz");
+eigener.push("Holz");
+eigener.push("Gold");
+String abbau = "";
+while (!eigener.isEmpty()) {
+    abbau = abbau + (String) eigener.pop() + " ";
+}
+println("MeinStapel abgebaut: " + abbau);

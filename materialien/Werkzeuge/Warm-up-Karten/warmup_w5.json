@@ -1,0 +1,159 @@
+{
+  "version": 1,
+  "karten": [
+    {
+      "id": "W5-01",
+      "welt": 5,
+      "kategorie": "Objektkarten und Referenzen",
+      "titel": "Der Setzling",
+      "aufgabe": "Bibliothek „Niedersachsen“: BinTree ist nicht generisch – getItem() liefert Object und wird gecastet, z. B. (Integer) b.getItem(). Ein nicht leerer Baum hat immer zwei Teilbäume (ggf. leere Bäume, nie null). getItem, getLeft und getRight auf einem leeren Baum lösen einen Laufzeitfehler aus.\na) Führe die Zeilen 1 bis 10 aus und zeichne den Baum b danach (Knoten als Kreise, leere Teilbäume nicht zeichnen).\nb) Gib für deinen Baum die Wurzel, alle Blätter, alle inneren Knoten, die Höhe und die Ebene des Knotens 7 an (Wurzel = Ebene 0; Höhe: leerer Baum 0, Blatt 1).\nc) Erläutere, warum Zeile 6 keinen Fehler auslöst, obwohl dort noch kein Knoten steht, und warum die Zeilen 8 und 9 den Baum b verändern, obwohl sie nur t verwenden.\nd) Gib an, was die Anweisung `int x = (Integer) b.getLeft().getLeft().getLeft().getItem();` nach Zeile 10 bewirkt.",
+      "code": "1  BinTree b = new BinTree(8);\n2  b.setLeft(new BinTree(3));\n3  b.setRight(new BinTree(10));\n4  b.getLeft().setLeft(new BinTree(1));\n5  b.getLeft().setRight(new BinTree(6));\n6  b.getRight().getRight().setItem(14);\n7  BinTree t = b.getLeft().getRight();\n8  t.setLeft(new BinTree(4));\n9  t.setRight(new BinTree(7));\n10 b.getRight().getRight().setLeft(new BinTree(13));",
+      "loesung": "a) siehe Baum – es entsteht genau der beispielBST der Baumschule. Kontrolle: Preorder 8 3 1 6 4 7 10 14 13.\nb) Wurzel 8; Blätter 1, 4, 7, 13; innere Knoten 8, 3, 6, 10, 14; Höhe 4 (vier Ebenen); Knoten 7 liegt auf Ebene 3 (Weg 8 → 3 → 6 → 7).\nc) Zeile 6: b.getRight() ist das Blatt 10, dessen rechter Teilbaum ein leerer Baum (nicht null!) ist. setItem auf einem leeren Baum macht ihn zum Blatt mit zwei leeren Teilbäumen – ein Knoten 14 entsteht. Zeile 7: t ist eine zweite Referenz auf denselben Teilbaum (Knoten 6), keine Kopie. setLeft/setRight über t ändern deshalb den Baum, den auch b erreicht.\nd) b.getLeft().getLeft() ist das Blatt 1; dessen getLeft() ist ein leerer Baum. getItem() auf dem leeren Baum → Laufzeitfehler (IllegalStateException). Absichern mit if (!x.isEmpty()) bzw. vorher isLeaf() prüfen.",
+      "loesungCode": "Baum b nach Zeile 10:\n     __________8_\n    /            \\\n  _3____          10___\n /      \\              \\\n1       _6_             14\n       /   \\           /\n      4     7        13",
+      "minuten": 7
+    },
+    {
+      "id": "W5-02",
+      "welt": 5,
+      "kategorie": "Methodenkopf und Signatur",
+      "titel": "Wegweiser im Wald",
+      "aufgabe": "Die Methoden der Klasse Rekursiv sind in der Notation des EH angegeben (alle static).\na) Gib zu jeder Signatur den Java-Methodenkopf an:\n(1) maximum(b: BinTree vom Inhaltstyp Ganzzahl): Ganzzahl  (2) pfadZu(b: BinTree vom Inhaltstyp Ganzzahl, x: Ganzzahl): Zeichenkette  (3) blaetter(b: BinTree vom Inhaltstyp Ganzzahl): dynamische Reihung vom Inhaltstyp Ganzzahl  (4) istGleich(a: BinTree, b: BinTree): Wahrheitswert\nb) Gib umgekehrt die Signaturen zu `public static void spiegeln(BinTree b)` und `public static BinTree baueAus(int[] r)` in EH-Notation an.\nc) b ist ein nicht leerer BinTree vom Inhaltstyp Ganzzahl, t einer vom Inhaltstyp Zeichenkette. Entscheide für jede der Zeilen 1 bis 6, ob der Compiler sie akzeptiert, und korrigiere fehlerhafte Zeilen. Welche akzeptierte Zeile kann trotzdem zur Laufzeit scheitern?",
+      "code": "1  int w = b.getItem();\n2  int v = (Integer) b.getItem() + 1;\n3  int u = (Integer) b.getLeft().getItem();\n4  String s = (String) t.getItem();\n5  boolean plus = ((String) t.getItem()).equals(\"+\");\n6  int z = (Integer) b.getLeft();",
+      "loesung": "a) siehe Code. BinTree bleibt BinTree (kein Inhaltstyp in Java), „dynamische Reihung“ heißt in Java DynArray.\nb) spiegeln(b: BinTree): nichts · baueAus(r: Reihung von Ganzzahl): BinTree (genauer: BinTree vom Inhaltstyp Ganzzahl).\nc) Zeile 1: Fehler – getItem() liefert Object, Object → int geht nicht ohne Cast; richtig: int w = (Integer) b.getItem(); Zeile 2: in Ordnung – der Methodenaufruf bindet stärker als der Cast, gecastet wird also das Ergebnis von getItem(), danach wird 1 addiert. Zeile 3: akzeptiert, scheitert aber zur Laufzeit, wenn der linke Teilbaum leer ist (IllegalStateException) – vorher !b.getLeft().isEmpty() prüfen. Zeile 4: in Ordnung. Zeile 5: in Ordnung (Zeichenketten immer mit equals vergleichen). Zeile 6: Fehler – getLeft() liefert einen BinTree, kein Inhaltselement; ein BinTree lässt sich nicht in Integer umwandeln. Richtig: int z = (Integer) b.getLeft().getItem(); (mit Leer-Abfrage).",
+      "loesungCode": "public static int maximum(BinTree b)\npublic static String pfadZu(BinTree b, int x)\npublic static DynArray blaetter(BinTree b)\npublic static boolean istGleich(BinTree a, BinTree b)",
+      "minuten": 6
+    },
+    {
+      "id": "W5-03",
+      "welt": 5,
+      "kategorie": "Funktionsweise erläutern",
+      "titel": "Drei Wege durch den Wald",
+      "aufgabe": "Traversierungen: Preorder = Wurzel, links, rechts · Inorder = links, Wurzel, rechts · Postorder = links, rechts, Wurzel (jeweils rekursiv für jeden Teilbaum).\na) Gib Preorder, Inorder und Postorder des Baums A an.\nb) Von einem Baum B kennt man nur die Preorder 5 9 2 7 4 9 1 und die Inorder 2 9 7 5 4 1 9. Rekonstruiere B schrittweise, zeichne ihn und gib zur Kontrolle seine Postorder an. Tipp: Das erste Element der Preorder ist die Wurzel; in der Inorder stehen links davon die Werte des linken, rechts davon die des rechten Teilbaums. (Die 9 kommt zweimal vor – das stört hier nicht, weil sie in verschiedenen Teilbäumen liegt.)\nc) Zeige mit zwei Bäumen aus je zwei Knoten, dass Preorder und Postorder allein einen Baum nicht eindeutig festlegen.",
+      "code": "Baum A:\n     __________8_\n    /            \\\n  _3____          10___\n /      \\              \\\n1       _6_             14\n       /   \\           /\n      4     7        13",
+      "loesung": "a) Preorder 8 3 1 6 4 7 10 14 13 · Inorder 1 3 4 6 7 8 10 13 14 (beim BST aufsteigend!) · Postorder 1 4 7 6 3 13 14 10 8.\nb) Wurzel 5; Inorder links davon 2 9 7, rechts 4 1 9. Links: Preorder 9 2 7 → Wurzel 9 mit 2 links und 7 rechts. Rechts: Preorder 4 9 1 → Wurzel 4; in der Inorder 4 1 9 steht nichts links von 4, also ist der linke Teilbaum leer; rechts bleibt 1 9 mit Preorder 9 1 → Wurzel 9, 1 links. B ist der zahlenbaum der Baumschule. Postorder 2 7 9 1 9 4 5.\nc) Wurzel 1 mit 2 als linkem Kind bzw. 2 als rechtem Kind: beide Bäume haben Preorder 1 2 und Postorder 2 1. Erst die Inorder (2 1 bzw. 1 2) unterscheidet sie.",
+      "loesungCode": "Baum B (rekonstruiert):\n     ____5_\n    /      \\\n  _9_       4____\n /   \\           \\\n2     7          _9\n                /\n               1\n\nBaum c) links:\n  _1\n /\n2\n\nBaum c) rechts:\n1_\n  \\\n   2",
+      "minuten": 8
+    },
+    {
+      "id": "W5-04",
+      "welt": 5,
+      "kategorie": "Lückencode",
+      "titel": "Der Rechenbaum",
+      "aufgabe": "Ein Termbaum enthält Zeichenketten: Blätter sind Zahlen (\"3\", \"12\"), innere Knoten die Operatoren \"+\", \"-\", \"*\", \"/\" (ganzzahlig). Der Baum T stellt den Term (3 + 4) * (5 − 2) dar.\na) Gib Preorder, Inorder und Postorder von T an. Welche Traversierung liefert die Eingabe für den Postfix-Rechner aus Welt 4? Warum braucht die Inorder Klammern?\nb) Zeichne den Termbaum zum Term 8 − 2 * 3 (Punkt vor Strich) und gib seinen Wert an.\nc) Ergänze die Lücken (1) bis (5) der Methode berechne(t: BinTree vom Inhaltstyp Zeichenkette): Ganzzahl. t ist ein nicht leerer, korrekter Termbaum; zahl(s) wandelt eine Ziffernfolge in eine Ganzzahl um (vorgegeben).",
+      "code": "Baum T:\n     ____*____\n    /         \\\n  _+_         _-_\n /   \\       /   \\\n3     4     5     2\n\npublic static int berechne(BinTree t) {\n    String s = __(1)__ t.getItem();\n    if (__(2)__) {\n        return zahl(s);\n    }\n    int l = berechne(__(3)__);\n    int r = berechne(t.getRight());\n    if (s.equals(\"+\")) { return l + r; }\n    if (__(4)__) { return l - r; }\n    if (s.equals(\"*\")) { return l * r; }\n    return __(5)__;\n}",
+      "loesung": "a) Preorder * + 3 4 - 5 2 · Inorder 3 + 4 * 5 - 2 · Postorder 3 4 + 5 2 - * (= Postfix-Notation; der Stapel-Rechner aus Welt 4 berechnet daraus 21). Die Inorder 3 + 4 * 5 − 2 verliert die Struktur: Nach Punkt vor Strich würde sie als 3 + (4 * 5) − 2 gelesen (hier zufällig auch 21; beim Baum zu (3 + 4) * 5 käme aber 23 statt 35 heraus). Deshalb setzt man bei der Inorder um jeden inneren Knoten Klammern: ((3 + 4) * (5 − 2)).\nb) Die Wurzel ist der Operator, der zuletzt ausgeführt wird: \"-\" mit 8 links und dem Teilbaum \"*\" (2, 3) rechts. Wert 8 − 6 = 2.\nc) (1) (String) – getItem() liefert Object. (2) t.isLeaf() – Blätter sind Zahlen (t ist nie leer, weil jeder Operator zwei Operanden hat). (3) t.getLeft() (4) s.equals(\"-\") – Zeichenketten mit equals vergleichen, nicht mit ==. (5) l / r – ganzzahlige Division. berechne(T) liefert 21.",
+      "loesungCode": "Baum 8 − 2 * 3:\n  _-____\n /      \\\n8       _*_\n       /   \\\n      2     3\n\n(1) (String)   (2) t.isLeaf()   (3) t.getLeft()\n(4) s.equals(\"-\")   (5) l / r",
+      "minuten": 8
+    },
+    {
+      "id": "W5-05",
+      "welt": 5,
+      "kategorie": "Tracetabelle",
+      "titel": "Wie hoch ist der Baum?",
+      "aufgabe": "Die Methode hoehe ist rekursiv; Basisfall ist der leere Baum (Höhe 0). Der Baum C ist der rechte Teilbaum des zahlenbaums.\na) Dokumentiere den Aufruf hoehe(C) in einer Rekursionstabelle mit den Spalten Rekursionstiefe, Aufruf und Rückgabewert (Erstaufruf = Tiefe 0). Trage die Aufrufe in der Reihenfolge ein, in der sie beginnen; leere Teilbäume schreibst du als hoehe(leer).\nb) Gib an, wie oft hoehe für einen Baum mit n Knoten insgesamt aufgerufen wird, und begründe. Wie oft ist es beim ganzen zahlenbaum (7 Knoten)?\nc) Ändere den Rumpf so ab, dass die Methode die Anzahl der Blätter liefert.",
+      "code": "Baum C:\n4____\n     \\\n     _9\n    /\n   1\n\npublic static int hoehe(BinTree b) {\n    if (b.isEmpty()) {\n        return 0;\n    }\n    int l = hoehe(b.getLeft());\n    int r = hoehe(b.getRight());\n    if (l > r) {\n        return l + 1;\n    }\n    return r + 1;\n}",
+      "loesung": "a) siehe Tabelle: 7 Aufrufe, Ergebnis 3. Der linke Teilbaum von 4 ist leer – auch dafür gibt es einen Aufruf (Rückgabe 0). Ein Aufruf ist erst beendet, wenn beide Teilaufrufe zurückgekehrt sind (Rückgabewert von unten nach oben lesen).\nb) Jeder der n Knoten erzeugt einen Aufruf; jeder Knoten hat zwei Teilbäume, also gibt es insgesamt 2n Teilbäume, von denen n leer sind, + 1 für die Wurzel → n + (n + 1) = 2n + 1 Aufrufe. C: 2 · 3 + 1 = 7 ✓. zahlenbaum: 2 · 7 + 1 = 15.\nc) siehe Code: Basisfall leer → 0; Blatt → 1; sonst Summe der Blätter beider Teilbäume (für C: 1, für den zahlenbaum: 3).",
+      "loesungCode": "Rekursionstiefe | Aufruf                    | Rückgabewert\n----------------+---------------------------+-------------\n       0        | hoehe(4)                  |      3\n       1        | hoehe(leer)  links von 4  |      0\n       1        | hoehe(9)                  |      2\n       2        | hoehe(1)                  |      1\n       3        | hoehe(leer)  links von 1  |      0\n       3        | hoehe(leer)  rechts von 1 |      0\n       2        | hoehe(leer)  rechts von 9 |      0\n\npublic static int anzahlBlaetter(BinTree b) {\n    if (b.isEmpty()) {\n        return 0;\n    }\n    if (b.isLeaf()) {\n        return 1;\n    }\n    return anzahlBlaetter(b.getLeft()) + anzahlBlaetter(b.getRight());\n}",
+      "minuten": 8
+    },
+    {
+      "id": "W5-06",
+      "welt": 5,
+      "kategorie": "Fehler im Java-Code",
+      "titel": "Der Ast bricht",
+      "aufgabe": "Die Methode summe(b: BinTree vom Inhaltstyp Ganzzahl): Ganzzahl soll die Summe aller Werte liefern (leerer Baum: 0). Bibliothek „Niedersachsen“: BinTree ist nicht generisch – getItem() liefert Object und wird gecastet, z. B. (Integer) b.getItem().\na) Nenne die Zeilen, die der Compiler nicht akzeptiert, und korrigiere sie.\nb) Nach der Korrektur aus a) wird summe mit dem zahlenbaum aufgerufen. Gib die Aufrufe in der Reihenfolge an, in der sie beginnen, bis es zum Laufzeitfehler kommt. Erläutere die Ursache.\nc) Korrigiere die Methode so, dass sie für jeden Baum (auch den leeren) funktioniert, und gib summe(zahlenbaum) an.",
+      "code": "1  public static int summe(BinTree b) {\n2      if (b.isLeaf()) {\n3          return b.getItem();\n4      }\n5      return b.getItem() + summe(b.getLeft()) + summe(b.getRight());\n6  }",
+      "loesung": "a) Zeilen 3 und 5: getItem() liefert Object; ein Object kann nicht zurückgegeben bzw. addiert werden, wo int erwartet wird. Korrektur: return (Integer) b.getItem(); bzw. return (Integer) b.getItem() + summe(…) + summe(…);\nb) summe(5) → summe(9) → summe(2) (Blatt: 2) → summe(7) (Blatt: 7) → summe(4) → summe(linker Teilbaum von 4) – dieser ist leer: isLeaf() auf einem leeren Baum → IllegalStateException. Ursache: Der Basisfall „Blatt“ deckt nicht alle Fälle ab – ein Knoten mit genau einem Kind (hier 4) führt zu einem Aufruf mit dem leeren Baum. Auch summe(leerer Baum) scheitert sofort.\nc) Basisfall immer „leerer Baum“: if (b.isEmpty()) return 0; – dann braucht man keinen Sonderfall für Blätter. summe(zahlenbaum) = 5 + 9 + 2 + 7 + 4 + 9 + 1 = 37.",
+      "loesungCode": "public static int summe(BinTree b) {\n    if (b.isEmpty()) {\n        return 0;\n    }\n    return (Integer) b.getItem() + summe(b.getLeft()) + summe(b.getRight());\n}",
+      "minuten": 7
+    },
+    {
+      "id": "W5-07",
+      "welt": 5,
+      "kategorie": "Code ↔ Struktogramm",
+      "titel": "Zählen auf Ebene k",
+      "aufgabe": "Die Methode anzahlAufEbene liefert die Anzahl der Knoten auf der angegebenen Ebene (Wurzel = Ebene 0).\na) Gib die Rückgabewerte für den zahlenbaum und die Ebenen 0, 1, 2, 3 und 4 an.\nb) Entwickle zur Methode ein Struktogramm nach den Abi-Konventionen (Kopf mit Signatur, ←, „gib … zurück“; den rekursiven Aufruf notierst du als Anweisung, z. B. l ← anzahlAufEbene(…)).\nc) Jemand vertauscht die beiden if-Anweisungen (erst ebene == 0, dann isEmpty). Gib an, welche Werte sich für den zahlenbaum dann bei den Ebenen 2 und 4 ergeben, und erläutere den Fehler.",
+      "code": "public static int anzahlAufEbene(BinTree b, int ebene) {\n    if (b.isEmpty()) {\n        return 0;\n    }\n    if (ebene == 0) {\n        return 1;\n    }\n    int l = anzahlAufEbene(b.getLeft(), ebene - 1);\n    int r = anzahlAufEbene(b.getRight(), ebene - 1);\n    return l + r;\n}",
+      "loesung": "a) Ebene 0 → 1 (5), Ebene 1 → 2 (9, 4), Ebene 2 → 3 (2, 7, 9), Ebene 3 → 1 (1), Ebene 4 → 0. Bei jedem Abstieg wird ebene um 1 kleiner; gezählt wird ein Knoten, wenn ebene dort 0 ist.\nb) siehe Struktogramm. Die Reihenfolge „erst leer?, dann ebene = 0?“ muss erhalten bleiben.\nc) Ebene 2 → 4, Ebene 4 → 2. Jetzt wird auch ein leerer Teilbaum auf der gesuchten Ebene mit 1 gezählt (auf Ebene 2 der leere linke Teilbaum von 4, auf Ebene 4 die beiden leeren Teilbäume des Blatts 1). Einen Laufzeitfehler gibt es nicht (isEmpty wird vor getLeft weiterhin geprüft) – der Fehler fällt nur durch falsche Werte auf, deshalb gehört der Basisfall „leer“ immer an den Anfang.",
+      "loesungCode": "anzahlAufEbene(b: BinTree, ebene: Ganzzahl): Ganzzahl\n  falls b.isEmpty()\n    dann: gib 0 zurück\n    sonst: –\n  falls ebene = 0\n    dann: gib 1 zurück\n    sonst: –\n  l ← anzahlAufEbene(b.getLeft(), ebene − 1)\n  r ← anzahlAufEbene(b.getRight(), ebene − 1)\n  gib l + r zurück",
+      "minuten": 8
+    },
+    {
+      "id": "W5-08",
+      "welt": 5,
+      "kategorie": "Methode implementieren",
+      "titel": "Blätter sammeln",
+      "aufgabe": "Für die Item-Datenbank sollen die Blattwerte eines Baums gesammelt werden.\na) Implementiere blaetter(b: BinTree vom Inhaltstyp Ganzzahl): dynamische Reihung vom Inhaltstyp Ganzzahl. Die Methode liefert eine neue dynamische Reihung mit allen Blattwerten von links nach rechts (leerer Baum: leere Reihung). Nutze dazu – wie im L5-Gerüst – die überladene rekursive Hilfsmethode blaetter(b: BinTree, d: dynamische Reihung): nichts (gleicher Name, zusätzlicher Parameter).\nb) Gib das Ergebnis für den zahlenbaum und für den beispielBST an.\nc) Erläutere, warum die Hilfsmethode eine dynamische Reihung als Parameter bekommt, statt in jedem Aufruf eine neue zu erzeugen.",
+      "code": "",
+      "loesung": "a) siehe Code (wie im L5-Gerüst; sammleInorder(b, d) ist genauso aufgebaut). Basisfall: leerer Baum → nichts tun. Ein Blatt wird angehängt; sonst erst links, dann rechts sammeln (so entsteht die Reihenfolge von links nach rechts).\nb) zahlenbaum → 2, 7, 1 · beispielBST → 1, 4, 7, 13.\nc) Alle Aufrufe sollen in dieselbe Reihung schreiben (dasselbe Objekt, die Referenz wird übergeben). Würde jeder Aufruf eine neue DynArray erzeugen, gingen die gesammelten Werte verloren – oder man müsste die Ergebnisse der Teilaufrufe mühsam zusammenkopieren.",
+      "loesungCode": "public static DynArray blaetter(BinTree b) {\n    DynArray d = new DynArray();\n    blaetter(b, d);\n    return d;\n}\n\npublic static void blaetter(BinTree b, DynArray d) {\n    if (!b.isEmpty()) {\n        if (b.isLeaf()) {\n            d.append(b.getItem());\n        } else {\n            blaetter(b.getLeft(), d);\n            blaetter(b.getRight(), d);\n        }\n    }\n}",
+      "minuten": 8
+    },
+    {
+      "id": "W5-09",
+      "welt": 5,
+      "kategorie": "Tracetabelle",
+      "titel": "Die Wanderschlange",
+      "aufgabe": "Die Methode levelorder durchläuft einen Baum ebenenweise mithilfe einer Schlange vom Inhaltstyp BinTree. In der Schlange liegen also Teilbäume, nicht Zahlen.\na) Führe levelorder(beispielBST) aus. Notiere nach jedem Schleifendurchlauf den entnommenen Knoten, den Inhalt der Schlange (vorn zuerst, jeder Teilbaum durch den Wert seiner Wurzel) und s.\nb) Erläutere, warum in Zeile 8 gecastet werden muss.\nc) Die Schlange wird durch einen Stapel ersetzt (push statt enqueue, pop statt dequeue). Gib die Ausgabe für den beispielBST an. Welche Reihenfolge entsteht, wenn man zusätzlich die beiden if-Anweisungen vertauscht?",
+      "code": "1  public static String levelorder(BinTree b) {\n2      String s = \"\";\n3      Queue q = new Queue();\n4      if (!b.isEmpty()) {\n5          q.enqueue(b);\n6      }\n7      while (!q.isEmpty()) {\n8          BinTree t = (BinTree) q.dequeue();\n9          s = s + t.getItem() + \" \";\n10         if (!t.getLeft().isEmpty()) {\n11             q.enqueue(t.getLeft());\n12         }\n13         if (!t.getRight().isEmpty()) {\n14             q.enqueue(t.getRight());\n15         }\n16     }\n17     return s;\n18 }",
+      "loesung": "a) siehe Tabelle. Ergebnis \"8 3 10 1 6 14 4 7 13 \" – erst Ebene 0, dann Ebene 1, … (Schlange: zuerst hineingelegt, zuerst entnommen).\nb) dequeue() liefert Object. Um getItem(), getLeft() und getRight() aufrufen zu können, muss t den Typ BinTree haben.\nc) Stapel: \"8 10 14 13 3 6 7 4 1 \" – der zuletzt abgelegte (rechte) Teilbaum wird zuerst bearbeitet. Mit vertauschten if-Anweisungen (erst rechts, dann links ablegen) entsteht die Preorder \"8 3 1 6 4 7 10 14 13 \" – ein Stapel ersetzt die Rekursion.",
+      "loesungCode": "entnommen | Schlange danach (vorn zuerst) | s\n----------+-------------------------------+---------------------\n    8     | 3, 10                         | 8\n    3     | 10, 1, 6                      | 8 3\n    10    | 1, 6, 14                      | 8 3 10\n    1     | 6, 14                         | 8 3 10 1\n    6     | 14, 4, 7                      | 8 3 10 1 6\n    14    | 4, 7, 13                      | 8 3 10 1 6 14\n    4     | 7, 13                         | 8 3 10 1 6 14 4\n    7     | 13                            | 8 3 10 1 6 14 4 7\n    13    | –                             | 8 3 10 1 6 14 4 7 13",
+      "minuten": 8
+    },
+    {
+      "id": "W5-10",
+      "welt": 5,
+      "kategorie": "Funktionsweise erläutern",
+      "titel": "Die Item-Datenbank wächst",
+      "aufgabe": "In der Item-Datenbank liegen die Item-Nummern in einem binären Suchbaum (BST): Für jeden Knoten sind alle Werte im linken Teilbaum kleiner, alle im rechten größer. Duplikate werden ignoriert. Eingefügt wird immer als neues Blatt am Ende des Suchwegs.\na) Füge in einen leeren BST nacheinander 8, 3, 10, 1, 6, 14, 4, 7, 13 ein und zeichne ihn.\nb) Füge anschließend 5 und 12 ein. Gib jeweils den Suchweg (verglichene Knoten) an und markiere die neuen Knoten.\nc) Gib die Inorder des Baums aus b) an und begründe, warum die Inorder eines BST immer aufsteigend sortiert ist. Was passiert beim Einfügen von 6?",
+      "code": "",
+      "loesung": "a) siehe Baum (beispielBST): 3 < 8 → links, 10 > 8 → rechts, 1 → 8, 3 → links von 3, 6 → rechts von 3, 14 → rechts von 10, 4 → 8, 3, 6 → links von 6, 7 → rechts von 6, 13 → 8, 10, 14 → links von 14.\nb) 5: 8 (kleiner) → 3 (größer) → 6 (kleiner) → 4 (größer) → rechter Teilbaum von 4 ist leer → 5 wird rechtes Kind von 4. 12: 8 → 10 → 14 → 13 → 12 wird linkes Kind von 13. Jeweils 4 Vergleiche.\nc) 1 3 4 5 6 7 8 10 12 13 14. Inorder besucht zuerst den ganzen linken Teilbaum (alle kleiner), dann die Wurzel, dann den rechten Teilbaum (alle größer) – und das gilt rekursiv für jeden Teilbaum. Einfügen von 6: Suchweg 8 → 3 → 6, der Wert ist schon vorhanden → nichts passiert.",
+      "loesungCode": "Baum nach a):\n     __________8_\n    /            \\\n  _3____          10___\n /      \\              \\\n1       _6_             14\n       /   \\           /\n      4     7        13\n\nBaum nach b) – neu: 5 und 12:\n     _____________8_\n    /               \\\n  _3_______          10______\n /         \\                 \\\n1       ____6_                14\n       /      \\              /\n      4_       7           13\n        \\                 /\n         5              12",
+      "minuten": 7
+    },
+    {
+      "id": "W5-11",
+      "welt": 5,
+      "kategorie": "Struktogramm lesen",
+      "titel": "Suchen mit Zählwerk",
+      "aufgabe": "Die Operation vergleiche zählt, wie viele (nicht leere) Knoten bei der Suche nach x im BST b untersucht werden. Die Inhalte sind Ganzzahlen.\na) Gib für den beispielBST die untersuchten Knoten und die Rückgabe für x = 7, x = 5, x = 13 und x = 8 an.\nb) Gib den größtmöglichen Rückgabewert für diesen Baum an und begründe, wovon er abhängt.\nc) Erläutere, warum je Schritt nur ein Teilbaum untersucht werden muss. Wie viele Knoten müsste man im schlimmsten Fall untersuchen, wenn der Baum kein Suchbaum wäre (z. B. der zahlenbaum)?",
+      "code": "vergleiche(b: BinTree vom Inhaltstyp Ganzzahl, x: Ganzzahl): Ganzzahl\n  anzahl ← 0\n  t ← b\n  solange nicht t.isEmpty()\n    anzahl ← anzahl + 1\n    w ← t.getItem()\n    falls x = w\n      dann: gib anzahl zurück\n      sonst: falls x < w\n               dann: t ← t.getLeft()\n               sonst: t ← t.getRight()\n  gib anzahl zurück",
+      "loesung": "a) x = 7: 8, 3, 6, 7 → 4 · x = 5: 8, 3, 6, 4 → danach leerer Teilbaum → 4 (nicht gefunden) · x = 13: 8, 10, 14, 13 → 4 · x = 8: 8 → 1.\nb) 4 = Höhe des Baums: Man steigt je Vergleich eine Ebene tiefer, mehr Ebenen gibt es nicht. Der Rückgabewert ist also höchstens die Höhe (längster Weg von der Wurzel zu einem Blatt in Knoten).\nc) Im BST liegen alle kleineren Werte links und alle größeren rechts. Ist x < w, kann x nur im linken Teilbaum liegen – der rechte wird gar nicht betrachtet. Ohne Suchbaum-Ordnung kann x überall stehen: Im schlimmsten Fall (x nicht vorhanden) müssen alle Knoten untersucht werden, beim zahlenbaum alle 7.",
+      "loesungCode": "",
+      "minuten": 7
+    },
+    {
+      "id": "W5-12",
+      "welt": 5,
+      "kategorie": "Verändern und Erweitern",
+      "titel": "Ein Item verschwindet",
+      "aufgabe": "Löschen im BST – drei Fälle: (1) Blatt: einfach entfernen. (2) Knoten mit einem Kind: Das Kind (mit seinem ganzen Teilbaum) rückt an die Stelle des Knotens. (3) Knoten mit zwei Kindern: Der Wert wird durch den Nachfolger ersetzt (kleinster Wert im rechten Teilbaum: einmal rechts, dann ganz nach links); der Nachfolger wird dort nach Fall 1 oder 2 gelöscht.\nLösche jeweils aus dem ursprünglichen beispielBST und zeichne den Baum danach:\na) 7   b) 10   c) 3   d) 8 (die Wurzel)\ne) Statt des Nachfolgers darf man auch den Vorgänger nehmen (größter Wert im linken Teilbaum). Gib an, welcher Wert in c) und d) dann aufrückt. Begründe, warum der Nachfolger höchstens ein Kind hat.",
+      "code": "Baum beispielBST:\n     __________8_\n    /            \\\n  _3____          10___\n /      \\              \\\n1       _6_             14\n       /   \\           /\n      4     7        13",
+      "loesung": "a) Fall 1: 7 ist ein Blatt → 6 hat danach nur noch das linke Kind 4.\nb) Fall 2: 10 hat nur das rechte Kind 14 → der Teilbaum 14 (mit 13) wird rechtes Kind von 8.\nc) Fall 3: Nachfolger von 3 ist 4 (rechts zu 6, dann links zu 4). 4 ersetzt 3, das Blatt 4 wird entfernt.\nd) Fall 3: Nachfolger von 8 ist 10 (rechts zu 10, links ist leer). 10 wird neue Wurzel; der alte Knoten 10 wird nach Fall 2 gelöscht, 14 rückt hoch.\ne) Vorgänger: in c) 1, in d) 7. Der Nachfolger ist der am weitesten links stehende Knoten im rechten Teilbaum – er hat kein linkes Kind (sonst wäre dieses kleiner), also höchstens ein (rechtes) Kind. Deshalb lässt er sich mit Fall 1 oder 2 entfernen. Kontrolle: Die Inorder bleibt jeweils aufsteigend sortiert.",
+      "loesungCode": "Baum a) ohne 7:\n     _______8_\n    /         \\\n  _3____       10___\n /      \\           \\\n1       _6           14\n       /            /\n      4           13\n\nBaum b) ohne 10:\n     __________8____\n    /               \\\n  _3____             14\n /      \\           /\n1       _6_       13\n       /   \\\n      4     7\n\nBaum c) ohne 3:\n     _______8_\n    /         \\\n  _4_          10___\n /   \\              \\\n1     6_             14\n        \\           /\n         7        13\n\nBaum d) ohne 8:\n     __________10___\n    /               \\\n  _3____             14\n /      \\           /\n1       _6_       13\n       /   \\\n      4     7",
+      "minuten": 8
+    },
+    {
+      "id": "W5-13",
+      "welt": 5,
+      "kategorie": "Funktionsweise erläutern",
+      "titel": "Krumm oder buschig?",
+      "aufgabe": "Die Methode ausgeglichenAus baut aus einer aufsteigend sortierten Reihung einen BST: Die Mitte wird Wurzel, aus den Hälften links und rechts davon entstehen rekursiv die Teilbäume. Aufruf: ausgeglichenAus(r, 0, r.length − 1) – im L5-Gerüst erledigt das ausgeglichenAus(sortiert).\na) Zeichne den BST, der durch Einfügen von 1, 2, 3, 4, 5 (in dieser Reihenfolge) entsteht, und den Baum ausgeglichenAus für r = {1, 2, 3, 4, 5}. Gib jeweils die Höhe an.\nb) Die maximale Anzahl der Vergleiche bei einer Suche ist die Höhe. Gib sie für n = 7, 15, 31 und 1023 Werte an – einmal für den entarteten Baum, einmal für den Baum aus ausgeglichenAus. Was bewirkt eine Verdopplung von n jeweils?\nc) Erläutere, warum die Item-Datenbank entartet, wenn neue Items mit aufsteigender Nummer eingefügt werden, und wie man Abhilfe schaffen kann.",
+      "code": "public static BinTree ausgeglichenAus(int[] r, int lo, int hi) {\n    BinTree b = new BinTree();\n    if (lo <= hi) {\n        int mitte = (lo + hi) / 2;\n        b.setItem(r[mitte]);\n        b.setLeft(ausgeglichenAus(r, lo, mitte - 1));\n        b.setRight(ausgeglichenAus(r, mitte + 1, hi));\n    }\n    return b;\n}",
+      "loesung": "a) Einfügen von 1 bis 5: jeder neue Wert ist größer als alle bisherigen und landet ganz rechts → Kette, Höhe 5 (entartet, wie eine Liste). ausgeglichenAus: mitte = 2 → Wurzel 3; links {1, 2}: mitte 0 → 1 mit rechtem Kind 2; rechts {4, 5}: mitte 3 → 4 mit rechtem Kind 5. Höhe 3.\nb) entartet: 7, 15, 31, 1023 (= n). ausgeglichen: 3, 4, 5, 10 (vollständige Bäume mit 2^h − 1 Knoten). Verdopplung von n: beim entarteten Baum doppelt so viele Vergleiche, beim ausgeglichenen nur ein Vergleich mehr (eine Ebene mehr bietet Platz für doppelt so viele Knoten) – logarithmisches Wachstum wie bei der binären Suche.\nc) Jede neue Nummer ist größer als alle vorhandenen und wird ganz rechts angehängt: Der Baum wird zur rechten Kette, die Suche braucht so viele Vergleiche wie eine lineare Suche. Abhilfe: Items sammeln, in Inorder (sortiert) auslesen und mit ausgeglichenAus neu aufbauen; oder in zufälliger Reihenfolge einfügen (bzw. selbst ausgleichende Bäume – nicht Abi-Stoff).",
+      "loesungCode": "Baum entartet (Höhe 5):\n1_\n  \\\n   2_\n     \\\n      3_\n        \\\n         4_\n           \\\n            5\n\nBaum ausgeglichenAus (Höhe 3):\n  ____3_\n /      \\\n1_       4_\n  \\        \\\n   2        5",
+      "minuten": 8
+    },
+    {
+      "id": "W5-14",
+      "welt": 5,
+      "kategorie": "Fehler im Java-Code",
+      "titel": "Die isBST-Falle",
+      "aufgabe": "istBSTfalsch soll prüfen, ob b ein binärer Suchbaum ist (alle Werte im linken Teilbaum kleiner, alle im rechten größer als der Wert des Knotens – für jeden Knoten).\na) Gib die Rückgabe von istBSTfalsch für den Baum D an und begründe, dass D kein BST ist.\nb) Erläutere den Denkfehler der Methode.\nc) Korrigiere: Implementiere istBST(b: BinTree vom Inhaltstyp Ganzzahl): Wahrheitswert mit der Hilfsmethode istBST(b, min, max), die prüft, ob alle Werte echt zwischen min und max liegen. Alle Werte sind ≥ 0, deshalb steht −1 für „keine Grenze“. Gib die Grenzen min und max an, mit denen die Knoten auf dem Weg 8 → 3 → 6 → 9 geprüft werden.",
+      "code": "Baum D:\n     __________8_\n    /            \\\n  _3____          10___\n /      \\              \\\n1       _6_             14\n       /   \\           /\n      4     9        13\n\npublic static boolean istBSTfalsch(BinTree b) {\n    if (b.isEmpty()) {\n        return true;\n    }\n    int w = (Integer) b.getItem();\n    if (!b.getLeft().isEmpty()\n            && (Integer) b.getLeft().getItem() >= w) {\n        return false;\n    }\n    if (!b.getRight().isEmpty()\n            && (Integer) b.getRight().getItem() <= w) {\n        return false;\n    }\n    return istBSTfalsch(b.getLeft())\n            && istBSTfalsch(b.getRight());\n}",
+      "loesung": "a) istBSTfalsch(D) liefert true: Jedes Kind steht für sich auf der richtigen Seite seines Elternknotens (9 > 6). Aber 9 liegt im linken Teilbaum der Wurzel 8 und ist größer als 8 → D ist kein BST (Inorder 1 3 4 6 9 8 10 13 14 ist nicht sortiert; eine Suche nach 9 ginge rechts von 8 und fände sie nicht).\nb) Die Methode vergleicht nur Elternknoten und direkte Kinder. Die BST-Bedingung gilt aber für ganze Teilbäume: Jeder Knoten muss zu allen Vorfahren passen. Auf dem Weg nach unten werden die erlaubten Grenzen immer enger.\nc) siehe Code. Grenzen (min, max): 8 in (−1, keine) ✓ → 3 in (−1, 8) ✓ → 6 in (3, 8) ✓ → 9 in (6, 8) ✗ → false. Beim Abstieg nach links wird der Knotenwert die neue Obergrenze, nach rechts die neue Untergrenze. Für den beispielBST liefert istBST true.",
+      "loesungCode": "public static boolean istBST(BinTree b) {\n    return istBST(b, -1, -1);\n}\n\n// min = -1: keine Untergrenze, max = -1: keine Obergrenze\npublic static boolean istBST(BinTree b, int min, int max) {\n    if (b.isEmpty()) {\n        return true;\n    }\n    int w = (Integer) b.getItem();\n    if (w <= min) {\n        return false;\n    }\n    if (max != -1 && w >= max) {\n        return false;\n    }\n    return istBST(b.getLeft(), min, w) && istBST(b.getRight(), w, max);\n}",
+      "minuten": 8
+    }
+  ]
+}

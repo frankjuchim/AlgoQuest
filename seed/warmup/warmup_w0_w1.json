@@ -1,0 +1,258 @@
+{
+  "version": 1,
+  "karten": [
+    {
+      "id": "W0-01",
+      "welt": 0,
+      "kategorie": "Struktogramm lesen",
+      "titel": "Das Rätsel des Portalwächters",
+      "aufgabe": "Der Portalwächter prüft Zahlenfolgen mit der Operation geheim.\na) Gib den Rückgabewert für r = [3, 7, 2, 9, 9, 4] an. Notiere dazu nach jedem Schleifendurchlauf die Werte von i und z.\nb) Beschreibe in einem Satz, was die Operation allgemein berechnet.\nc) Gib eine Reihung der Länge 5 an, für die der Rückgabewert so groß wie möglich ist.",
+      "code": "geheim(r: Reihung von Ganzzahl): Ganzzahl\n  z ← 0\n  für i von 1 bis länge(r) − 1\n    falls r[i] > r[i − 1]\n      dann: z ← z + 1\n      sonst: –\n  gib z zurück",
+      "loesung": "a) i = 1: 7 > 3 → z = 1 · i = 2: 2 > 7 falsch → z = 1 · i = 3: 9 > 2 → z = 2 · i = 4: 9 > 9 falsch → z = 2 · i = 5: 4 > 9 falsch → z = 2. Rückgabewert: 2.\nb) Die Operation zählt, wie oft ein Element größer ist als sein direkter Vorgänger (Anzahl der „Anstiege“).\nc) Jede streng aufsteigende Reihung, z. B. [1, 2, 3, 4, 5] → Rückgabewert 4 (= länge(r) − 1). Achtung: [1, 2, 2, 3, 4] liefert nur 3, weil 2 > 2 falsch ist.",
+      "loesungCode": "",
+      "minuten": 5
+    },
+    {
+      "id": "W0-02",
+      "welt": 0,
+      "kategorie": "Code ↔ Struktogramm",
+      "titel": "Vom Code zum Bauplan",
+      "aufgabe": "Übersetze die Java-Methode in ein Struktogramm nach Abi-Notation:\nKopf mit Signatur (deutsche Typnamen), Zuweisung mit ←, Zählschleife, Verzweigung, „gib … zurück“.",
+      "code": "public static int zaehleGerade(int[] r) {\n    int anzahl = 0;\n    for (int i = 0; i < r.length; i++) {\n        if (r[i] % 2 == 0) {\n            anzahl = anzahl + 1;\n        }\n    }\n    return anzahl;\n}",
+      "loesung": "Prüfe dein Struktogramm: Signatur zaehleGerade(r: Reihung von Ganzzahl): Ganzzahl · Zuweisung mit ← (nicht =) · Schleifengrenze länge(r) − 1 · Vergleich sprachunabhängig (mod, =) · „gib anzahl zurück“ als letzter Block nach der Schleife.\nAlternative: für jedes x in r · falls x mod 2 = 0.",
+      "loesungCode": "zaehleGerade(r: Reihung von Ganzzahl): Ganzzahl\n  anzahl ← 0\n  für i von 0 bis länge(r) − 1\n    falls r[i] mod 2 = 0\n      dann: anzahl ← anzahl + 1\n      sonst: –\n  gib anzahl zurück",
+      "minuten": 6
+    },
+    {
+      "id": "W0-03",
+      "welt": 0,
+      "kategorie": "Tracetabelle",
+      "titel": "Spurensuche im Portal",
+      "aufgabe": "a) Erstelle eine Tracetabelle für den Aufruf mystery(r) mit r = [5, 8, 3, 6, 1, 4].\nSpalten: i | r[i] | r[i] < a | a | b (erste Zeile: Werte vor der Schleife).\nb) Gib den Rückgabewert an und beschreibe, was die Methode allgemein berechnet.",
+      "code": "public static int mystery(int[] r) {\n    int a = r[0];\n    int b = 0;\n    for (int i = 1; i < r.length; i++) {\n        if (r[i] < a) {\n            a = r[i];\n            b = i;\n        }\n    }\n    return b;\n}",
+      "loesung": "b) Rückgabewert: 4. Die Methode liefert den Index des kleinsten Elements (bei mehrfachem Minimum den Index des ersten Vorkommens, weil mit < verglichen wird).",
+      "loesungCode": "i | r[i] | r[i] < a | a | b\n--+------+----------+---+---\n- |  -   |    -     | 5 | 0\n1 |  8   |  falsch  | 5 | 0\n2 |  3   |  wahr    | 3 | 2\n3 |  6   |  falsch  | 3 | 2\n4 |  1   |  wahr    | 1 | 4\n5 |  4   |  falsch  | 1 | 4",
+      "minuten": 6
+    },
+    {
+      "id": "W0-04",
+      "welt": 0,
+      "kategorie": "Fehler im Struktogramm",
+      "titel": "Der kaputte Bauplan",
+      "aufgabe": "Das Struktogramm soll das größte Element einer nicht leeren Reihung zurückgeben. Es enthält drei Fehler.\na) Finde die drei Fehler und erläutere jeweils ihre Auswirkung.\nb) Gib ein korrigiertes Struktogramm an.",
+      "code": "maximum(r: Reihung von Ganzzahl): Ganzzahl\n  // r ist nicht leer\n  max ← 0\n  für i von 1 bis länge(r)\n    falls r[i] > max\n      dann: max ← r[i]\n            gib max zurück\n      sonst: –",
+      "loesung": "Fehler 1: max ← 0 – enthält r nur negative Werte, wird fälschlich 0 geliefert. Korrektur: max ← r[0].\nFehler 2: Schleife bis länge(r) – im letzten Durchlauf wird auf r[länge(r)] zugegriffen (Index außerhalb der Reihung). Korrektur: bis länge(r) − 1.\nFehler 3: „gib max zurück“ steht in der Verzweigung – die Operation endet schon beim ersten größeren Element; folgt kein größeres Element, gibt es gar keine Rückgabe. Korrektur: „gib max zurück“ nach der Schleife.",
+      "loesungCode": "maximum(r: Reihung von Ganzzahl): Ganzzahl\n  // r ist nicht leer\n  max ← r[0]\n  für i von 1 bis länge(r) − 1\n    falls r[i] > max\n      dann: max ← r[i]\n      sonst: –\n  gib max zurück",
+      "minuten": 6
+    },
+    {
+      "id": "W0-05",
+      "welt": 0,
+      "kategorie": "Fehler im Java-Code",
+      "titel": "Rückwärts durchs Portal",
+      "aufgabe": "Die Methode soll den Index des letzten Vorkommens von x in r liefern. Kommt x nicht vor, soll −1 geliefert werden.\na) Finde die drei Fehler und erläutere jeweils ihre Auswirkung.\nb) Gib eine korrigierte Fassung an.",
+      "code": "public static int letzterIndexVon(int[] r, int x) {\n    int pos = 0;\n    for (int i = r.length; i > 0; i--) {\n        if (r[i] == x) {\n            return i;\n        }\n    }\n    return pos;\n}",
+      "loesung": "Fehler 1: Start bei i = r.length – schon der erste Zugriff r[r.length] liegt außerhalb der Reihung (ArrayIndexOutOfBoundsException). Korrektur: i = r.length - 1.\nFehler 2: Bedingung i > 0 – das Element r[0] wird nie geprüft. Korrektur: i >= 0.\nFehler 3: pos = 0 – kommt x nicht vor, wird 0 geliefert; 0 ist aber ein gültiger Index. Korrektur: -1 zurückgeben.",
+      "loesungCode": "public static int letzterIndexVon(int[] r, int x) {\n    for (int i = r.length - 1; i >= 0; i--) {\n        if (r[i] == x) {\n            return i;\n        }\n    }\n    return -1;\n}",
+      "minuten": 6
+    },
+    {
+      "id": "W0-06",
+      "welt": 0,
+      "kategorie": "Lückencode",
+      "titel": "Der Spiegelzauber",
+      "aufgabe": "Die Methode kehrt die Reihenfolge der Elemente in r um, ohne eine neue Reihung anzulegen.\nBeispiel: [1, 2, 3, 4, 5] wird zu [5, 4, 3, 2, 1].\na) Ergänze die Lücken (1) bis (4).\nb) Begründe, warum die Schleife nur bis zur Mitte der Reihung laufen darf.",
+      "code": "public static void umdrehen(int[] r) {\n    for (int i = 0; i < ___(1)___; i++) {\n        int tmp = ___(2)___;\n        r[i] = r[___(3)___];\n        r[r.length - 1 - i] = ___(4)___;\n    }\n}",
+      "loesung": "a) (1) r.length / 2 · (2) r[i] · (3) r.length - 1 - i · (4) tmp\nb) In jedem Durchlauf wird ein Paar (vorne/hinten) getauscht. Liefe i bis r.length - 1, würde jedes Paar ein zweites Mal getauscht – die Reihung stünde wieder in der Ausgangsreihenfolge. Bei ungerader Länge bleibt das mittlere Element stehen (5 / 2 = 2, ganzzahlige Division).",
+      "loesungCode": "public static void umdrehen(int[] r) {\n    for (int i = 0; i < r.length / 2; i++) {\n        int tmp = r[i];\n        r[i] = r[r.length - 1 - i];\n        r[r.length - 1 - i] = tmp;\n    }\n}",
+      "minuten": 5
+    },
+    {
+      "id": "W0-07",
+      "welt": 0,
+      "kategorie": "Methode implementieren",
+      "titel": "Die Spannweite des Portals",
+      "aufgabe": "Implementiere die Methode spannweite(r: Reihung von Ganzzahl): Ganzzahl.\nSie liefert die Differenz zwischen dem größten und dem kleinsten Element. Für eine leere Reihung wird 0 geliefert.\nBeispiele: [4, 9, 1, 7] → 8 · [5] → 0 · [] → 0\nTipp: Ein einziger Schleifendurchlauf genügt. Denk an die Leer-Abfrage vor dem ersten Zugriff!",
+      "code": "public static int spannweite(int[] r) {\n    // dein Code\n}",
+      "loesung": "Kernpunkte: Leer-Abfrage vor dem Zugriff auf r[0] · min und max mit r[0] initialisieren (nicht mit 0!) · eine Schleife, zwei Vergleiche · Rückgabe max - min.",
+      "loesungCode": "public static int spannweite(int[] r) {\n    if (r.length == 0) {\n        return 0;\n    }\n    int min = r[0];\n    int max = r[0];\n    for (int i = 1; i < r.length; i++) {\n        if (r[i] < min) {\n            min = r[i];\n        }\n        if (r[i] > max) {\n            max = r[i];\n        }\n    }\n    return max - min;\n}",
+      "minuten": 7
+    },
+    {
+      "id": "W0-08",
+      "welt": 0,
+      "kategorie": "Funktionsweise erläutern",
+      "titel": "Das Zählwerk des Portals",
+      "aufgabe": "a) Gib die zurückgegebene Reihung für r = [2, 5, 1, 4] an.\nb) Erläutere die Funktionsweise der Methode. Gehe dabei auf die Rolle der Variablen summe ein.\nc) Begründe, ob r nach dem Aufruf verändert ist.",
+      "code": "public static int[] kumuliert(int[] r) {\n    int[] erg = new int[r.length];\n    int summe = 0;\n    for (int i = 0; i < r.length; i++) {\n        summe = summe + r[i];\n        erg[i] = summe;\n    }\n    return erg;\n}",
+      "loesung": "a) [2, 7, 8, 12]\nb) Es wird eine neue Reihung erg mit derselben Länge wie r erzeugt. summe speichert die laufende Summe aller bisher besuchten Elemente. In jedem Durchlauf wird r[i] zu summe addiert und der aktuelle Stand in erg[i] abgelegt. Damit gilt erg[i] = r[0] + r[1] + … + r[i] (kumulierte Summen). Die neue Reihung wird zurückgegeben.\nc) r bleibt unverändert: Aus r wird nur gelesen, geschrieben wird ausschließlich in die neue Reihung erg.",
+      "loesungCode": "",
+      "minuten": 5
+    },
+    {
+      "id": "W1-01",
+      "welt": 1,
+      "kategorie": "Klasse vs. Objekt",
+      "titel": "Bauplan oder Held?",
+      "aufgabe": "a) Erläutere den Unterschied zwischen einer Klasse und einem Objekt am Beispiel der Heldenschmiede.\nb) Gib an, wie viele Klassen im Programmausschnitt verwendet und wie viele Objekte erzeugt werden. Begründe.\nc) Gib die Lebenspunkte von aria, bruno und goblin nach Ausführung des Ausschnitts an.",
+      "code": "Held aria = new Held(\"Aria\");\nHeld bruno = new Held(\"Bruno\", 120, 14);\nMonster goblin = new Monster(\"Goblin\", 30, 6);\nHeld h = aria;\nh.nimmSchaden(25);",
+      "loesung": "a) Eine Klasse ist der Bauplan (Typ): Sie legt fest, welche Attribute (z. B. name, leben) und welche Methoden (z. B. nimmSchaden) jedes ihrer Objekte hat. Ein Objekt ist ein konkretes Exemplar dieser Klasse mit eigenen Attributwerten (z. B. name = \"Aria\", leben = 100). Objekte werden mit new durch Aufruf eines Konstruktors erzeugt.\nb) 2 Klassen (Held, Monster), 3 Objekte. Nur new erzeugt Objekte. Held h = aria; kopiert lediglich die Referenz: h und aria verweisen auf dasselbe Objekt.\nc) aria: 75 (der Schaden über h trifft dasselbe Objekt) · bruno: 120 · goblin: 30",
+      "loesungCode": "",
+      "minuten": 5
+    },
+    {
+      "id": "W1-02",
+      "welt": 1,
+      "kategorie": "Bestandteile einer Klasse",
+      "titel": "Anatomie eines Monsters",
+      "aufgabe": "a) Benenne Attribute (mit Typ), Konstruktor und Methoden der Klasse Monster. Gib je Methode an, ob sie sondierend (liefert nur einen Wert) oder verändernd ist.\nb) Erläutere die Bedeutung von private und public in dieser Klasse.\nc) Erkläre, wozu im Konstruktor this benötigt wird.",
+      "code": "public class Monster {\n    private String name;\n    private int leben;\n    private int staerke;\n    public Monster(String name, int leben, int staerke) {\n        this.name = name;\n        this.leben = leben;\n        this.staerke = staerke;\n    }\n    public int getLeben() { return leben; }\n    public void nimmSchaden(int schaden) {\n        leben = leben - schaden;\n        if (leben < 0) { leben = 0; }\n    }\n    public boolean istBesiegt() { return leben <= 0; }\n    public void angreifen(Held h) { h.nimmSchaden(staerke); }\n}",
+      "loesung": "a) Attribute: name (Zeichenkette), leben (Ganzzahl), staerke (Ganzzahl). Konstruktor: Monster(name, leben, staerke) – heißt wie die Klasse, hat keinen Rückgabetyp und setzt die Anfangswerte der Attribute. Methoden: getLeben(): Ganzzahl und istBesiegt(): Wahrheitswert sind sondierend; nimmSchaden(schaden: Ganzzahl): nichts ist verändernd (leben); angreifen(h: Held): nichts verändert das übergebene Held-Objekt.\nb) private: Die Attribute sind nur innerhalb der Klasse Monster zugreifbar. Von außen kann leben also nicht direkt (z. B. auf −50) gesetzt werden – nur über Methoden, die auf gültige Werte achten (Datenkapselung). public: Konstruktor und Methoden sind von außen (z. B. Hauptprogramm, Klasse Held) aufrufbar.\nc) Parameter und Attribute heißen gleich; der Parameter verdeckt das Attribut. this.leben bezeichnet das Attribut des aktuellen Objekts, leben (ohne this) den Parameter.",
+      "loesungCode": "",
+      "minuten": 6
+    },
+    {
+      "id": "W1-03",
+      "welt": 1,
+      "kategorie": "Objektkarten und Referenzen",
+      "titel": "Zwei Namen, ein Held",
+      "aufgabe": "a) Zeichne die Objektkarten nach Ausführung des Ausschnitts (nur name, leben, gold) und die Referenzpfeile der Variablen a, b und c.\nb) Gib den Wert der Ausdrücke an:\na == c · a.getName().equals(c.getName()) · a.getLeben() · c.getGold()",
+      "code": "Held a = new Held(\"Aria\");\nHeld b = a;\nHeld c = new Held(\"Aria\");\nb.nimmSchaden(30);\nc.erhalteGold(15);\na.heilen(10);\nb = c;\nb.erhalteGold(-5);",
+      "loesung": "Es gibt genau zwei Held-Objekte. a und zunächst auch b verweisen auf held1; ab b = c verweisen b und c auf held2.\nheld1: nimmSchaden(30) → 70, heilen(10) → 80. held2: erhalteGold(15) → 15; erhalteGold(-5) wird ignoriert (nur betrag > 0).\nb) a == c → false (zwei verschiedene Objekte; == vergleicht Referenzen) · a.getName().equals(c.getName()) → true (gleicher Inhalt) · a.getLeben() → 80 · c.getGold() → 15",
+      "loesungCode": "a ──────► held1: Held\n          name  = \"Aria\"\n          leben = 80\n          gold  = 0\n\nb ──┐\nc ──┴───► held2: Held\n          name  = \"Aria\"\n          leben = 100\n          gold  = 15",
+      "minuten": 6
+    },
+    {
+      "id": "W1-04",
+      "welt": 1,
+      "kategorie": "Objektkarten und Referenzen",
+      "titel": "Was steckt im Rucksack?",
+      "aufgabe": "a) Zeichne die Objektkarte von h (nur inventar, anzahl, waffe) sowie alle Objekte, auf die h verweist. Stelle die Reihung inventar mit allen 5 Feldern dar.\nb) Gib an, wie viele Gegenstand-Objekte existieren und welchen Wert h.gesamtWert() liefert.\nc) Gib die Rückgabewerte der vier Aufrufe von aufnehmen an.",
+      "code": "Held h = new Held(\"Aria\");\nGegenstand f = new Gegenstand(\"Fackel\", 5);\nh.aufnehmen(f);\nh.aufnehmen(new Trank(\"Heiltrank\", 20, 30));\nh.aufnehmen(null);\nh.aufnehmen(f);",
+      "loesung": "a) inventar[0] und inventar[2] verweisen auf dasselbe Fackel-Objekt, inventar[1] auf das Trank-Objekt, inventar[3] und inventar[4] sind null. anzahl = 3, waffe = null.\nb) Es existieren 2 Gegenstand-Objekte (Fackel, Heiltrank) – die Fackel ist zweimal referenziert, aber nur einmal erzeugt. h.gesamtWert() = 5 + 20 + 5 = 30.\nc) true · true · false (g == null) · true",
+      "loesungCode": "h ──► held1: Held\n      inventar = [ • , • , • , null, null ]\n                   │   │   │\n                   │   │   └──► (dasselbe Objekt wie [0])\n                   │   └──► g2: Trank\n                   │          name = \"Heiltrank\", wert = 20, heilwert = 30\n                   └──► g1: Gegenstand\n                          name = \"Fackel\", wert = 5\n      anzahl = 3\n      waffe  = null\n\nf ──► g1 (dieselbe Fackel)",
+      "minuten": 7
+    },
+    {
+      "id": "W1-05",
+      "welt": 1,
+      "kategorie": "Klassendiagramm",
+      "titel": "Vom Code zur Klassenkarte",
+      "aufgabe": "a) Erstelle zur Java-Klasse Gegenstand die Klassenkarte nach Abi-Konventionen (Sichtbarkeit + / -, deutsche Typnamen, Konstruktor mit c).\nb) Begründe, ob der Wert eines Gegenstands nach der Erzeugung noch verändert werden kann.",
+      "code": "public class Gegenstand {\n    private String name;\n    private int wert;\n\n    public Gegenstand(String name, int wert) {\n        this.name = name;\n        this.wert = wert;\n    }\n\n    public String getName() { return name; }\n    public int getWert() { return wert; }\n\n    public String beschreibung() {\n        return name + \" (\" + wert + \" Gold)\";\n    }\n}",
+      "loesung": "b) Nein. Das Attribut wert ist private, und es gibt keine Methode, die wert verändert (kein Setter). Der Wert wird nur im Konstruktor gesetzt und kann danach nur noch gelesen werden.",
+      "loesungCode": "Gegenstand\n──────────────────────────────────────────────\n- name: Zeichenkette\n- wert: Ganzzahl\n──────────────────────────────────────────────\n+ c Gegenstand(name: Zeichenkette, wert: Ganzzahl)\n+ getName(): Zeichenkette\n+ getWert(): Ganzzahl\n+ beschreibung(): Zeichenkette",
+      "minuten": 5
+    },
+    {
+      "id": "W1-06",
+      "welt": 1,
+      "kategorie": "Klassendiagramm",
+      "titel": "Der Stammbaum der Gegenstände",
+      "aufgabe": "a) Zeichne ein Klassendiagramm mit den Klassen Held, Gegenstand, Waffe, Trank und Schluessel. Gib in jeder Klassenkarte alle Attribute an; Methoden darfst du durch „…“ ersetzen. Stelle alle Vererbungs- und Assoziationsbeziehungen nach Abi-Konventionen dar.\nb) Erläutere, warum Held zwei Assoziationen zu Gegenstand-Klassen besitzt.",
+      "code": "",
+      "loesung": "a) Vererbung: Waffe, Trank und Schluessel jeweils mit Pfeil mit hohler Dreiecksspitze zu Gegenstand. Assoziationen: einfache, unbeschriftete Linien ohne Kardinalitäten von Held zu Gegenstand (Attribut inventar) und von Held zu Waffe (Attribut waffe). In den Unterklassen stehen nur die zusätzlichen Attribute – name und wert werden geerbt.\nb) inventar ist eine Reihung von Gegenstand: Der Held verwaltet beliebige Gegenstände (auch Waffen, Tränke, Schlüssel). waffe ist ein eigenes Attribut vom Typ Waffe: die aktuell ausgerüstete Waffe. Deshalb gibt es eine Linie zu Gegenstand und eine zu Waffe.",
+      "loesungCode": "Held                              Gegenstand\n- name: Zeichenkette              - name: Zeichenkette\n- leben: Ganzzahl                 - wert: Ganzzahl\n- maxLeben: Ganzzahl              ...\n- staerke: Ganzzahl\n- gold: Ganzzahl                  Held ────────── Gegenstand\n- inventar: Reihung von Gegenstand\n- anzahl: Ganzzahl                Held ────────── Waffe\n- waffe: Waffe\n...                               Waffe      ───▷ Gegenstand\n                                  Trank      ───▷ Gegenstand\nWaffe        - schaden: Ganzzahl  Schluessel ───▷ Gegenstand\nTrank        - heilwert: Ganzzahl\nSchluessel   - tuer: Ganzzahl     (▷ = hohle Dreiecksspitze)",
+      "minuten": 8
+    },
+    {
+      "id": "W1-07",
+      "welt": 1,
+      "kategorie": "Lückencode",
+      "titel": "Die Schmiede der Waffen",
+      "aufgabe": "Die Klasse Waffe erbt von Gegenstand. beschreibung() liefert z. B. \"Waffe: Schwert (50 Gold), Schaden 12\".\na) Ergänze die Lücken (1) bis (3).\nb) Erläutere, warum in beschreibung() nicht einfach name + \" (\" + wert + … geschrieben werden kann.",
+      "code": "public class Waffe ___(1)___ Gegenstand {\n    private int schaden;\n\n    public Waffe(String name, int wert, int schaden) {\n        ___(2)___;\n        this.schaden = schaden;\n    }\n\n    public int getSchaden() {\n        return schaden;\n    }\n\n    public String beschreibung() {\n        return \"Waffe: \" + ___(3)___ + \", Schaden \" + schaden;\n    }\n}",
+      "loesung": "a) (1) extends · (2) super(name, wert) – muss die erste Anweisung im Konstruktor sein · (3) super.beschreibung()\nb) name und wert sind in Gegenstand private und damit in der Unterklasse Waffe nicht sichtbar → Compilerfehler. Zugriff nur über geerbte öffentliche Methoden: super.beschreibung() oder getName() / getWert().",
+      "loesungCode": "public class Waffe extends Gegenstand {\n    private int schaden;\n\n    public Waffe(String name, int wert, int schaden) {\n        super(name, wert);\n        this.schaden = schaden;\n    }\n\n    public int getSchaden() {\n        return schaden;\n    }\n\n    public String beschreibung() {\n        return \"Waffe: \" + super.beschreibung() + \", Schaden \" + schaden;\n    }\n}",
+      "minuten": 5
+    },
+    {
+      "id": "W1-08",
+      "welt": 1,
+      "kategorie": "Lückencode",
+      "titel": "Ab in den Rucksack",
+      "aufgabe": "Die Methode aufnehmen der Klasse Held legt g am Ende des Inventars ab. Sie liefert false, wenn g null ist oder das Inventar voll ist, sonst true.\na) Ergänze die Lücken (1) bis (5).\nb) Begründe, warum die Reihenfolge der beiden Teilbedingungen in Zeile 2 keine Rolle spielt – im Gegensatz zu g == null || g.getWert() > 100.",
+      "code": "public boolean aufnehmen(Gegenstand g) {\n    if (g == ___(1)___ || anzahl ___(2)___ inventar.length) {\n        return false;\n    }\n    inventar[___(3)___] = g;\n    ___(4)___;\n    return ___(5)___;\n}",
+      "loesung": "a) (1) null · (2) >= (auch == möglich) · (3) anzahl · (4) anzahl++ bzw. anzahl = anzahl + 1 · (5) true\nb) Keine der beiden Teilbedingungen greift auf g zu, beide sind immer auswertbar. Bei g.getWert() muss zuerst g == null geprüft werden: || wertet von links aus und bricht ab, sobald ein Teil wahr ist (Kurzschlussauswertung) – sonst NullPointerException.",
+      "loesungCode": "public boolean aufnehmen(Gegenstand g) {\n    if (g == null || anzahl >= inventar.length) {\n        return false;\n    }\n    inventar[anzahl] = g;\n    anzahl++;\n    return true;\n}",
+      "minuten": 5
+    },
+    {
+      "id": "W1-09",
+      "welt": 1,
+      "kategorie": "Fehler im Java-Code",
+      "titel": "Der falsche Spürsinn",
+      "aufgabe": "Die Methode enthaelt(name: Zeichenkette): Wahrheitswert der Klasse Held soll prüfen, ob ein Gegenstand mit dem angegebenen Namen im Inventar liegt. Sie enthält vier Fehler.\na) Finde die Fehler und erläutere jeweils ihre Auswirkung.\nb) Gib eine korrigierte Fassung an.",
+      "code": "public boolean enthaelt(String name) {\n    for (int i = 0; i <= anzahl; i++) {\n        if (inventar[i].getName() == name) {\n            return true;\n        } else {\n            return false;\n        }\n    }\n}",
+      "loesung": "Fehler 1: i <= anzahl – inventar[anzahl] ist null (NullPointerException) bzw. bei vollem Inventar Index 5 außerhalb der Reihung. Korrektur: i < anzahl.\nFehler 2: == vergleicht bei Zeichenketten Referenzen, nicht den Inhalt. Korrektur: equals. (Die Online-IDE vergleicht mit == zwar inhaltlich – im Abitur und in echtem Java gilt aber: equals!)\nFehler 3: return false im sonst-Zweig – es wird nur der erste Gegenstand geprüft. Korrektur: return false erst nach der Schleife.\nFehler 4: Nach der Schleife fehlt eine Rückgabe (z. B. bei anzahl == 0 wird die Schleife nicht betreten) → Compilerfehler „missing return statement“.",
+      "loesungCode": "public boolean enthaelt(String name) {\n    for (int i = 0; i < anzahl; i++) {\n        if (inventar[i].getName().equals(name)) {\n            return true;\n        }\n    }\n    return false;\n}",
+      "minuten": 6
+    },
+    {
+      "id": "W1-10",
+      "welt": 1,
+      "kategorie": "Fehler im Java-Code",
+      "titel": "Der gierige Drache",
+      "aufgabe": "Die Methode wertvollsterGegenstand(): Gegenstand der Klasse Held soll den Gegenstand mit dem größten Wert liefern – bei Gleichstand den ersten, bei leerem Inventar null. Sie enthält drei Fehler.\na) Finde die Fehler und erläutere jeweils, bei welchem Inventar sie sich auswirken.\nb) Gib eine korrigierte Fassung an.",
+      "code": "public Gegenstand wertvollsterGegenstand() {\n    Gegenstand bester = inventar[0];\n    for (int i = 0; i < inventar.length; i++) {\n        if (inventar[i].getWert() >= bester.getWert()) {\n            bester = inventar[i];\n        }\n    }\n    return bester;\n}",
+      "loesung": "Fehler 1: Fehlende Leer-Abfrage – bei anzahl == 0 ist bester == null, bester.getWert() löst eine NullPointerException aus. Korrektur: zuerst if (anzahl == 0) return null;\nFehler 2: Schleife bis inventar.length statt anzahl – bei weniger als 5 Gegenständen wird ein null-Feld erreicht (NullPointerException). Korrektur: i < anzahl.\nFehler 3: >= statt > – bei Gleichstand wird der letzte statt der erste gleich wertvolle Gegenstand geliefert. Korrektur: >. (Start bei i = 1 ist möglich, da inventar[0] schon in bester steht.)",
+      "loesungCode": "public Gegenstand wertvollsterGegenstand() {\n    if (anzahl == 0) {\n        return null;\n    }\n    Gegenstand bester = inventar[0];\n    for (int i = 1; i < anzahl; i++) {\n        if (inventar[i].getWert() > bester.getWert()) {\n            bester = inventar[i];\n        }\n    }\n    return bester;\n}",
+      "minuten": 6
+    },
+    {
+      "id": "W1-11",
+      "welt": 1,
+      "kategorie": "Methode implementieren",
+      "titel": "Angriff und Auslese",
+      "aufgabe": "Implementiere in der Klasse Held:\na) angriffswert(): Ganzzahl – liefert staerke plus den Schaden der ausgerüsteten Waffe; ohne Waffe (waffe == null) nur staerke.\nb) anzahlTeurerAls(grenze: Ganzzahl): Ganzzahl – liefert die Anzahl der Gegenstände im Inventar, deren Wert größer als grenze ist.\nBeispiel: Inventar Fackel (5), Schwert (50), Heiltrank (20) → anzahlTeurerAls(10) liefert 2.",
+      "code": "",
+      "loesung": "Kernpunkte: a) null-Abfrage vor waffe.getSchaden() · Rückgabe in jedem Pfad. b) Zähler mit 0 initialisieren · Schleife von 0 bis anzahl - 1 (nicht inventar.length – sonst null-Zugriff) · echter Vergleich > (nicht >=) · Rückgabe nach der Schleife.",
+      "loesungCode": "public int angriffswert() {\n    if (waffe == null) {\n        return staerke;\n    }\n    return staerke + waffe.getSchaden();\n}\n\npublic int anzahlTeurerAls(int grenze) {\n    int zaehler = 0;\n    for (int i = 0; i < anzahl; i++) {\n        if (inventar[i].getWert() > grenze) {\n            zaehler++;\n        }\n    }\n    return zaehler;\n}",
+      "minuten": 6
+    },
+    {
+      "id": "W1-12",
+      "welt": 1,
+      "kategorie": "Methode implementieren",
+      "titel": "Weg damit!",
+      "aufgabe": "Implementiere in der Klasse Held die Methode entfernen(index: Ganzzahl): Gegenstand.\n• Sie liefert den Gegenstand an der Position index und entfernt ihn aus dem Inventar.\n• Die nachfolgenden Gegenstände rücken auf (Reihenfolge bleibt erhalten), das frei gewordene letzte Feld wird null, anzahl sinkt um 1.\n• Ist index ungültig (kleiner 0 oder nicht kleiner als anzahl), wird null geliefert; das Inventar bleibt unverändert.",
+      "code": "",
+      "loesung": "Kernpunkte: Index-Abfrage vor jedem Zugriff (index < 0 || index >= anzahl) · Gegenstand vor dem Verschieben merken · Schleife von index bis anzahl - 2 mit inventar[i] = inventar[i + 1] (Grenze: i + 1 muss < anzahl sein) · letztes belegtes Feld auf null setzen · anzahl verringern · gemerkten Gegenstand zurückgeben.",
+      "loesungCode": "public Gegenstand entfernen(int index) {\n    if (index < 0 || index >= anzahl) {\n        return null;\n    }\n    Gegenstand weg = inventar[index];\n    for (int i = index; i < anzahl - 1; i++) {\n        inventar[i] = inventar[i + 1];\n    }\n    inventar[anzahl - 1] = null;\n    anzahl--;\n    return weg;\n}",
+      "minuten": 8
+    },
+    {
+      "id": "W1-13",
+      "welt": 1,
+      "kategorie": "Verändern und Erweitern",
+      "titel": "Die Rüstung des Helden",
+      "aufgabe": "Helden sollen eine Rüstung tragen können, die jeden Treffer abschwächt.\na) Ergänze in der Klasse Held ein Attribut ruestung (Ganzzahl, Anfangswert 0) und eine Methode setRuestung(r: Ganzzahl): nichts, die nur Werte ≥ 0 übernimmt.\nb) Verändere nimmSchaden(schaden: Ganzzahl): nichts: Der tatsächliche Schaden ist schaden − ruestung, aber nie kleiner als 0. leben fällt weiterhin nie unter 0.\nc) Gib an, wie sich nimmSchaden(4) bei ruestung = 6 auswirkt, und begründe, warum der Mindestwert 0 nötig ist.",
+      "code": "public void nimmSchaden(int schaden) {\n    leben = leben - schaden;\n    if (leben < 0) {\n        leben = 0;\n    }\n}",
+      "loesung": "a) Attribut private int ruestung; im Konstruktor ruestung = 0 setzen (in beiden Konstruktoren bzw. nur im zweiten, wenn der erste mit this(...) weiterleitet).\nc) Tatsächlicher Schaden 4 − 6 = −2 → wird auf 0 gesetzt, leben bleibt unverändert. Ohne Mindestwert würde der Held durch einen schwachen Treffer um 2 Punkte geheilt – und könnte dabei sogar maxLeben überschreiten.",
+      "loesungCode": "private int ruestung;   // im Konstruktor: ruestung = 0;\n\npublic void setRuestung(int r) {\n    if (r >= 0) {\n        ruestung = r;\n    }\n}\n\npublic void nimmSchaden(int schaden) {\n    int echt = schaden - ruestung;\n    if (echt < 0) {\n        echt = 0;\n    }\n    leben = leben - echt;\n    if (leben < 0) {\n        leben = 0;\n    }\n}",
+      "minuten": 7
+    },
+    {
+      "id": "W1-14",
+      "welt": 1,
+      "kategorie": "Funktionsweise erläutern",
+      "titel": "Die Aufräum-Magie",
+      "aufgabe": "Die folgende Methode der Klasse Held wird aufgerufen. Das Inventar enthält vorher:\nFackel (5), Schwert (50), Seil (3), Heiltrank (20)\na) Gib den Inhalt von inventar (alle 5 Felder) und den Wert von anzahl nach dem Aufruf an.\nb) Erläutere die Funktionsweise der Methode. Gehe auf die Rolle von j ein.\nc) Gib einen passenden Methodennamen an.",
+      "code": "public void geheimnis() {\n    int j = 0;\n    for (int i = 0; i < anzahl; i++) {\n        if (inventar[i].getWert() >= 10) {\n            inventar[j] = inventar[i];\n            j++;\n        }\n    }\n    for (int i = j; i < anzahl; i++) {\n        inventar[i] = null;\n    }\n    anzahl = j;\n}",
+      "loesung": "a) inventar = [Schwert, Heiltrank, null, null, null], anzahl = 2\nb) Die erste Schleife durchläuft alle belegten Felder. Jeder Gegenstand mit Wert ≥ 10 wird an die Position j kopiert; j zeigt immer auf das nächste freie Feld für „behaltene“ Gegenstände und zählt sie gleichzeitig. Gegenstände mit Wert < 10 werden übersprungen (überschrieben). Die zweite Schleife setzt die nicht mehr benötigten Felder ab j auf null. Zum Schluss wird anzahl auf j gesetzt. Die Reihenfolge der behaltenen Gegenstände bleibt erhalten.\nc) z. B. billigeEntfernen() oder ramschAussortieren()",
+      "loesungCode": "",
+      "minuten": 6
+    },
+    {
+      "id": "W1-15",
+      "welt": 1,
+      "kategorie": "Funktionsweise erläutern",
+      "titel": "Welche beschreibung() läuft?",
+      "aufgabe": "a) Gib die Konsolenausgabe des Programmausschnitts an.\nb) Erläutere, warum für die drei Objekte unterschiedliche Methoden ausgeführt werden, obwohl alle in einer Reihung von Gegenstand liegen.\nc) Zeile A wird einkommentiert. Begründe, warum der Compiler einen Fehler meldet, und gib eine Korrektur an.",
+      "code": "Gegenstand[] kiste = new Gegenstand[3];\nkiste[0] = new Waffe(\"Schwert\", 50, 12);\nkiste[1] = new Schluessel(\"Rostiger Schlüssel\", 2, 7);\nkiste[2] = new Trank(\"Heiltrank\", 20, 30);\nfor (Gegenstand g : kiste) {\n    println(g.beschreibung());\n}\nGegenstand x = new Waffe(\"Dolch\", 15, 5);\n// println(x.getSchaden());      // Zeile A",
+      "loesung": "b) Welche Methode ausgeführt wird, entscheidet der Typ des Objekts zur Laufzeit, nicht der Typ der Variablen (dynamische Bindung / Polymorphie). Waffe und Trank überschreiben beschreibung() und rufen mit super.beschreibung() die Version der Oberklasse auf. Schluessel überschreibt nicht → es läuft die geerbte Version aus Gegenstand.\nc) Der Compiler prüft anhand des deklarierten Typs: x hat den Typ Gegenstand, und Gegenstand besitzt keine Methode getSchaden(). Korrektur: Variable als Waffe deklarieren: Waffe x = new Waffe(\"Dolch\", 15, 5);",
+      "loesungCode": "Waffe: Schwert (50 Gold), Schaden 12\nRostiger Schlüssel (2 Gold)\nTrank: Heiltrank (20 Gold), heilt 30",
+      "minuten": 6
+    }
+  ]
+}

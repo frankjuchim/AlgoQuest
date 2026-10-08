@@ -1,0 +1,52 @@
+ALGO QUEST - Das Dungeon der Datenstrukturen
+Informatik LK (eA, Niedersachsen, Abitur ab 2027) - Vollstaendiges Materialpaket Welt 0 bis 6
+(DS 1-40: Akademie, Heldenschmiede, Rangliste, Labyrinth, Hafen, Wald, Endgegner) + Lern-WebApp "Algo Quest Lab" v2.0
+
+ORDNER
+00_Lehrerhinweise           Verlaufsplaene je Welt (W0 DS 1-7 ... W6 DS 37-40) mit passenden Lab-Leveln;
+                            AQ_Gesamtuebersicht_DS1-40.docx = Gesamtplan mit allen Dateien (HIER STARTEN)
+WeltN_.../1_Praesentation   PowerPoint mit Sprechernotizen
+WeltN_.../2_Arbeitsblaetter Schuelerblaetter (Word) - je Abschnitt ein Kasten "Im Lab ueben: Level x.y"
+WeltN_.../3_Online-IDE      Geruest-Dateien zum Austeilen (Inhalt in die Online-IDE kopieren, Tests im Reiter "Testrunner")
+WeltN_.../4_Boss            Papier-Boss (handschriftlich, Abi-Training, ohne Punkte); Welt 6: Probeklausur + Klausuren
+WeltN_.../5_Loesungen       NUR LEHRKRAFT: AB-Loesungen, Online-IDE-Musterloesungen, Erwartungshorizonte
+Werkzeuge                   Werkzeugkarten (laminieren) + Warm-up-Karten (Druck + JSON)
+WebApp                      algoquest-webapp.tar (direkt in CapRover hochladbar), README.md, AUFGABENFORMAT.md, Screenshots
+
+ALGO QUEST LAB (WebApp v2.0) - https://algoquest.frankjuchim.de - SO FUNKTIONIERT ES
+- Schueler melden sich selbst an: Kurscode + Name (Vorname + Initial) -> persoenlicher Code (notieren!).
+  Weiterspielen auf jedem Geraet mit Kurscode + Name + Code.
+- Weltkarte Welt 0-6 mit 36 Lab-Leveln passend zu den ABs (283 automatisch gepruefte Aufgaben: Lueckentexte,
+  Trace-/Rekursionstabellen, Struktogramme, Bug-Hunts, Code-Puzzles, Stapel/Schlange/DynArray, Baeume, Sortierschritte ...),
+  Trainingsplatz mit Zufallsaufgaben, Online-Boss je Welt (Zeitlimit), Warm-up-Trainer.
+- Punkte, Raenge und Abzeichen entstehen AUTOMATISCH - die Lehrkraft traegt nichts ein. Scoreboard im Kurs, optional Beamer-Board.
+- Lehrkraft-Bereich (/lehrer): Kurs anlegen (Kurscode + QR), Einstellungen (Welten/Bosse freischalten, Scoreboard an/aus,
+  Anmeldung offen), Schueler umbenennen/loeschen/Code anzeigen, alle loeschen, Auswertung (Fortschrittsmatrix,
+  Aufgabenstatistik, Fallen-Profil P1-P10, CSV), Aufgaben-Vorschau mit Loesungen, Urkunden.
+- Weitere Lehrkraefte registrieren sich selbst; der Superadmin (ADMIN_EMAIL/ADMIN_PASSWORD) schaltet sie frei.
+- Online-IDE bleibt extern (Geruest-Dateien); die Lab-Level zeigen das passende IDE-Level als Hinweis.
+
+INSTALLATION AUF CAPROVER (Details im README)
+1. Neue App anlegen, HTTP-Port 80, "Has Persistent Data" aktivieren, Persistent Directory /app/data.
+2. Umgebungsvariablen: ADMIN_EMAIL (= Benutzername des Superadmins; ohne Angabe "admin"), ADMIN_PASSWORD (mind. 10 Zeichen, besser 12+),
+   SESSION_SECRET (lange Zufallszeichenkette, z. B. openssl rand -hex 32).
+3. Deployment -> "Upload tar file" -> algoquest-webapp.tar. Domain algoquest.frankjuchim.de verbinden, HTTPS aktivieren.
+4. Anmelden unter https://algoquest.frankjuchim.de/lehrer, Kurs anlegen, QR-Code/Kurscode an die Klasse geben.
+UPGRADE VON DER ALTEN WEBAPP (v1.x): Die alte Datenbank (Gilden/XP) wird beim ersten Start automatisch als
+algoquest.v1-backup-<datum>.db gesichert, danach beginnt das Lab mit einer neuen, leeren Datenbank.
+Updates des Lab: neues tar hochladen - Lernstaende bleiben erhalten, neue Aufgaben werden ergaenzt.
+
+VOR DEM ERSTEN EINSATZ PRUEFEN
+- Datenschutzseite des Lab (/datenschutz, Datei public/datenschutz.html) an die Schule anpassen.
+- Online-IDE: Bibliothek "Niedersachsen" aktivieren (Workspace rechtsklicken -> Einstellungen -> Haekchen);
+  Stack/Queue/DynArray/BinTree sind dort NICHT generisch (Casts, z. B. (Integer) s.pop()). Gerueste einmal in der echten
+  Online-IDE laufen lassen (geprueft wurde mit javac + Nachbau der Bibliothek): assertEquals mit Kommazahlen,
+  BinTree auf leeren Baeumen, destroy() auf Text im Baumzeichner, for-each ueber DynArray.
+- Die Online-IDE vergleicht Zeichenketten mit == inhaltlich: Tests erkennen "== statt equals" dort nicht (Code-Review).
+- QR-Code zur YouTube-Playlist eintragen. Notenschluessel in den Klausur-Erwartungshorizonten an die Schulvorgabe anpassen.
+
+WELT 6: DS 37 Probeklausur "Paketstation" (35 BE, 90 min), DS 38 Korrektur nach Kernpunkten + Fehlerjagd
+"Top 10 Punktverluste" (Lab-Level 6.1/6.2), DS 39-40 Klausur "Ladepark" (60 BE, 180 min), Nachschreibklausur
+"Kletterhalle". Klausuren und Klausur-Papier-Compiler VOR DEM TERMIN NICHT AUSTEILEN. Den Probeklausur-Papier-Compiler
+(3_Online-IDE) erst in DS 38 ausgeben. Sortier-Duell (W2) und Dungeon-Rennen (W3) sind Team-Spiele mit Ergebnistabelle
+an der Tafel (ohne Lab-Wertung).

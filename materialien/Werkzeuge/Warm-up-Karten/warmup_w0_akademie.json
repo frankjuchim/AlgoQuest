@@ -1,0 +1,159 @@
+{
+  "version": 1,
+  "karten": [
+    {
+      "id": "W0-09",
+      "welt": 0,
+      "kategorie": "Tracetabelle",
+      "titel": "Die Waage des Alchemisten",
+      "aufgabe": "Der Alchemist der Werkstatt rechnet mit Ganz- und Kommazahlen.\na) Gib für jede Zeile ab Zeile 3 den Wert der neu belegten Variablen an (Tabelle Variable | Wert). Schreibe Kommazahlen mit Punkt, z. B. 2.0.\nb) Erläutere, warum d1, d2 und d3 unterschiedliche Werte haben können.\nc) Gib einen Ausdruck an, der eine ganzzahlige Zufallszahl von 1 bis 6 (einschließlich) liefert, und begründe den Bereich.",
+      "code": "int a = 17;\nint b = 5;\nint q = a / b;\nint r = a % b;\ndouble d1 = a / b;\ndouble d2 = (double) a / b;\ndouble d3 = (double) (a / b);\nint g = (int) 3.99;\nboolean ok = d2 > q && r != 0;",
+      "loesung": "b) d1: a / b ist eine Division zweier Ganzzahlen – das Ergebnis 3 wird erst danach in die Kommazahl 3.0 umgewandelt. d2: Der Cast wirkt nur auf a (Cast bindet stärker als /), also wird 17.0 / 5 als Kommazahl gerechnet: 3.4. d3: Die Klammer erzwingt zuerst die ganzzahlige Division (3), der Cast macht daraus 3.0. Merke: (int) schneidet die Nachkommastellen ab, es wird nicht gerundet (g = 3).\nc) (int) (Math.random() * 6) + 1 – Math.random() liefert eine Kommazahl von 0 (einschließlich) bis 1 (ausschließlich). Mal 6 ergibt 0 bis unter 6, der Cast schneidet ab: 0, 1, …, 5. Plus 1 ergibt 1 bis 6. Allgemein für von bis bis: (int) (Math.random() * (bis − von + 1)) + von.",
+      "loesungCode": "Variable | Wert\n---------+-----\nq        | 3\nr        | 2\nd1       | 3.0\nd2       | 3.4\nd3       | 3.0\ng        | 3\nok       | true",
+      "minuten": 6
+    },
+    {
+      "id": "W0-10",
+      "welt": 0,
+      "kategorie": "Lückencode",
+      "titel": "Die Sanduhr der Akademie",
+      "aufgabe": "Die Methode zeitText(sekunden: Ganzzahl): Zeichenkette wandelt eine Dauer (sekunden ≥ 0) in einen Text um.\nBeispiele: zeitText(3725) liefert \"1 h 2 min 5 s\", zeitText(59) liefert \"0 h 0 min 59 s\".\na) Ergänze die Lücken (1) bis (4). Verwende nur / und % – keine Methoden der Klasse Math.\nb) Eine Sanduhr läuft genau 60 Sekunden. Gib einen Ausdruck an, der berechnet, wie viele Sanduhren für sekunden Sekunden mindestens nötig sind (aufrunden ohne Math!). Prüfe mit 120 und 121.",
+      "code": "public static String zeitText(int sekunden) {\n    int h = sekunden / ___(1)___;\n    int rest = sekunden ___(2)___ 3600;\n    int min = rest ___(3)___ 60;\n    int s = ___(4)___;\n    return h + \" h \" + min + \" min \" + s + \" s\";\n}",
+      "loesung": "a) (1) 3600 · (2) % · (3) / · (4) rest % 60 (gleichwertig: sekunden % 60)\nb) (sekunden + 59) / 60 – die ganzzahlige Division rundet ab; durch das Addieren von 59 wird jeder angebrochene Rest auf die nächste volle Sanduhr gehoben. 120 → 179 / 60 = 2 · 121 → 180 / 60 = 3 · 0 → 59 / 60 = 0.\nAlternative mit Verzweigung: uhren ← sekunden / 60; falls sekunden % 60 ≠ 0, dann uhren ← uhren + 1.",
+      "loesungCode": "public static String zeitText(int sekunden) {\n    int h = sekunden / 3600;\n    int rest = sekunden % 3600;\n    int min = rest / 60;\n    int s = rest % 60;\n    return h + \" h \" + min + \" min \" + s + \" s\";\n}",
+      "minuten": 5
+    },
+    {
+      "id": "W0-11",
+      "welt": 0,
+      "kategorie": "Fehler im Java-Code",
+      "titel": "Der Türsteher der Bibliothek",
+      "aufgabe": "Die Methode preis(alter: Ganzzahl, mitglied: Wahrheitswert): Ganzzahl soll den Eintrittspreis in Gold liefern: Kinder unter 6 Jahren zahlen 0, Jugendliche unter 18 Jahren 3, alle anderen 8 Gold. Mitglieder der Akademie zahlen die Hälfte, aufgerundet auf volle Gold. Die Methode enthält drei Fehler.\na) Finde die Fehler. Gib jeweils einen Aufruf an, der falsch wäre, wenn nur dieser Fehler vorhanden wäre.\nb) Gib eine korrigierte Fassung an.",
+      "code": "public static int preis(int alter, boolean mitglied) {\n    int p;\n    if (alter < 18) {\n        p = 3;\n    } else if (alter < 6) {\n        p = 0;\n    } else {\n        p = 8;\n    }\n    if (mitglied = true) {\n        p = p / 2;\n    }\n    return p;\n}",
+      "loesung": "Fehler 1: Reihenfolge der Bedingungen – jedes Kind unter 6 ist auch unter 18, landet also im ersten Zweig; der Zweig alter < 6 wird nie erreicht. preis(4, false) liefert 3 statt 0. Korrektur: zuerst alter < 6 prüfen.\nFehler 2: mitglied = true ist eine Zuweisung, kein Vergleich. Sie setzt mitglied auf true, die Bedingung ist immer wahr – auch Nichtmitglieder zahlen die Hälfte: preis(30, false) liefert 4 statt 8. Korrektur: if (mitglied) oder if (mitglied == true).\nFehler 3: p / 2 ist ganzzahlige Division und rundet ab: preis(10, true) liefert 1 statt 2. Korrektur: (p + 1) / 2.",
+      "loesungCode": "public static int preis(int alter, boolean mitglied) {\n    int p;\n    if (alter < 6) {\n        p = 0;\n    } else if (alter < 18) {\n        p = 3;\n    } else {\n        p = 8;\n    }\n    if (mitglied) {\n        p = (p + 1) / 2;\n    }\n    return p;\n}",
+      "minuten": 6
+    },
+    {
+      "id": "W0-12",
+      "welt": 0,
+      "kategorie": "Tracetabelle",
+      "titel": "Das Zahlenschloss",
+      "aufgabe": "Das Zahlenschloss der Werkstatt öffnet sich nur mit dem Ergebnis der Methode geheim.\na) Erstelle eine Tracetabelle für den Aufruf geheim(4071) mit den Spalten Durchlauf | n % 10 | e | n (erste Zeile: Werte vor der Schleife, dann eine Zeile am Ende jedes Durchlaufs). Gib den Rückgabewert an.\nb) Beschreibe, was die Methode allgemein berechnet.\nc) Gib den Rückgabewert von geheim(1200) an und erkläre, warum er nur zwei Ziffern hat.",
+      "code": "public static int geheim(int n) {\n    int e = 0;\n    while (n > 0) {\n        e = e * 10 + n % 10;\n        n = n / 10;\n    }\n    return e;\n}",
+      "loesung": "a) Rückgabewert: 1704 (4 Durchläufe).\nb) Die Methode kehrt die Ziffernfolge einer nicht negativen Zahl um: n % 10 trennt die letzte Ziffer ab, n / 10 entfernt sie; e * 10 schiebt die bisherigen Ziffern eine Stelle nach links und macht Platz für die neue Ziffer.\nc) geheim(1200) liefert 21 (e: 0 → 0 → 2 → 21). Die umgedrehte Folge wäre 0021 – führende Nullen gibt es bei Ganzzahlen nicht.",
+      "loesungCode": "Durchlauf | n % 10 |   e  |   n\n----------+--------+------+-----\n    -     |   -    |    0 | 4071\n    1     |   1    |    1 |  407\n    2     |   7    |   17 |   40\n    3     |   0    |  170 |    4\n    4     |   4    | 1704 |    0",
+      "minuten": 6
+    },
+    {
+      "id": "W0-13",
+      "welt": 0,
+      "kategorie": "Funktionsweise erläutern",
+      "titel": "Inventur in der Vorratskammer",
+      "aufgabe": "Das Programm steht im Hauptprogramm der Online-IDE.\na) Gib alle Ausgaben an. Was passiert in der letzten Zeile?\nb) Erläutere, warum die for-each-Schleife die Reihung nicht verändert. Gib eine Schleife an, die wirklich jeden Vorrat verdoppelt.\nc) Die zweite Schleife soll alle Vorräte addieren. Erläutere den Fehler und seine Auswirkung.",
+      "code": "int[] vorrat = {4, 0, 7, 2};\nprintln(vorrat.length);\nprintln(vorrat[vorrat.length - 1]);\nfor (int x : vorrat) {\n    x = x * 2;\n}\nprintln(vorrat[0]);\nint summe = 0;\nfor (int i = 1; i < vorrat.length; i++) {\n    summe = summe + vorrat[i];\n}\nprintln(summe);\nprintln(vorrat[vorrat.length]);",
+      "loesung": "a) Ausgaben: 4 · 2 · 4 · 9. Die letzte Zeile bricht mit einem Laufzeitfehler ab (ArrayIndexOutOfBoundsException): Die gültigen Indizes sind 0 bis vorrat.length − 1 = 3, vorrat[4] gibt es nicht.\nb) Bei for-each ist x eine eigene Variable, in die nacheinander eine Kopie jedes Wertes geschrieben wird. x = x * 2 ändert nur diese Kopie, nicht das Fach der Reihung. Zum Verändern braucht man den Index (siehe unten).\nc) Die Schleife beginnt bei i = 1 – vorrat[0] wird nie addiert. Ergebnis 9 statt 13. Korrektur: int i = 0 (oder for (int x : vorrat) summe = summe + x;).",
+      "loesungCode": "for (int i = 0; i < vorrat.length; i++) {\n    vorrat[i] = vorrat[i] * 2;\n}",
+      "minuten": 6
+    },
+    {
+      "id": "W0-14",
+      "welt": 0,
+      "kategorie": "Objektkarten und Referenzen",
+      "titel": "Zwei Schilder, ein Regal",
+      "aufgabe": "Reihungsvariablen speichern eine Referenz auf die Reihung – nicht die Reihung selbst.\na) Zeichne ein Speicherbild nach der letzten Zeile: Variablen als Kästchen, Reihungen als Kästchenreihe, Referenzen als Pfeile.\nb) Gib die Inhalte von a, b und c sowie den Wert von x an.\nc) Gib an, welchen Wert die Vergleiche a == b und a == c haben, und erläutere.",
+      "code": "int[] a = {3, 5, 8};\nint[] b = a;\nint[] c = new int[a.length];\nfor (int i = 0; i < a.length; i++) {\n    c[i] = a[i];\n}\nb[0] = 9;\nc[1] = 7;\nint x = a[2];\nx = 0;",
+      "loesung": "b) a = [9, 5, 8] · b = [9, 5, 8] · c = [3, 7, 8] · x = 0. int[] b = a kopiert nur die Referenz: a und b sind zwei Schilder an demselben Regal, b[0] = 9 ändert also auch a[0]. c ist eine echte Kopie (neue Reihung, Werte einzeln kopiert) – c[1] = 7 wirkt nur auf c. x erhält eine Kopie des Wertes 8; x = 0 ändert a nicht.\nc) a == b ist true: Beide Variablen verweisen auf dieselbe Reihung. a == c ist false, obwohl c anfangs dieselben Werte hatte – == vergleicht bei Reihungen die Referenzen, nicht die Inhalte.",
+      "loesungCode": "a ──┐\n    ├──► [ 9 | 5 | 8 ]\nb ──┘\nc ─────► [ 3 | 7 | 8 ]\nx = 0    (eigene Kopie des Wertes, kein Pfeil)",
+      "minuten": 6
+    },
+    {
+      "id": "W0-15",
+      "welt": 0,
+      "kategorie": "Verändern und Erweitern",
+      "titel": "Die verbotenen Bücher",
+      "aufgabe": "Die Methode anzahlA soll zählen, wie oft der Buchstabe a oder A in s vorkommt – z. B. 5 für \"Abrakadabra\".\na) Kennzeichne die Stellen, die gegen die Abi-Vorgaben für Zeichenketten verstoßen, und begründe.\nb) Schreibe die Methode nur mit erlaubten Operationen um. Tipp: charAt liefert ein Zeichen, Zeichen vergleicht man mit ==.\nc) Erlaubt oder nicht? s.length() · s.split(\" \") · s.charAt(0) · s.indexOf(\"x\") · s.contains(\"ab\") · s.trim() · s.compareTo(t) · (int) s.charAt(0)",
+      "code": "public static int anzahlA(String s) {\n    String k = s.toLowerCase();\n    int n = 0;\n    for (int i = 0; i < k.length(); i++) {\n        if (k.substring(i, i + 1) == \"a\") {\n            n++;\n        }\n    }\n    return n;\n}",
+      "loesung": "a) toLowerCase gehört nicht zu den erlaubten Zeichenketten-Operationen. k.substring(i, i + 1) == \"a\" vergleicht zwei Zeichenketten mit == – in Java werden dabei Referenzen verglichen; substring liefert ein neues Objekt, der Vergleich ist immer false und die Methode liefert 0. (Die Online-IDE vergleicht mit == inhaltlich – im Abitur gilt trotzdem: Zeichenketten immer mit equals!) substring selbst ist erlaubt.\nc) Erlaubt: length, charAt, contains, compareTo, (int) Zeichen (ASCII-Wert). Nicht erlaubt: split, indexOf, trim.",
+      "loesungCode": "public static int anzahlA(String s) {\n    int n = 0;\n    for (int i = 0; i < s.length(); i++) {\n        char c = s.charAt(i);\n        if (c == 'a' || c == 'A') {\n            n++;\n        }\n    }\n    return n;\n}",
+      "minuten": 6
+    },
+    {
+      "id": "W0-16",
+      "welt": 0,
+      "kategorie": "Methodenkopf und Signatur",
+      "titel": "Zauberformeln übersetzen",
+      "aufgabe": "Im Abitur ist jede Methode als Signatur vorgegeben – du schreibst den passenden Java-Methodenkopf. Alle Methoden hier sind public static.\na) Gib zu jeder Signatur den Java-Methodenkopf an:\n(1) istVoll(r: Reihung von Ganzzahl): Wahrheitswert\n(2) mittelwert(a: Ganzzahl, b: Ganzzahl): Kommazahl\n(3) zeigeTitel(titel: Zeichenkette, band: Ganzzahl): nichts\n(4) erstesZeichen(s: Zeichenkette): Zeichen\nb) Gib zu den Java-Köpfen (5) bis (7) die Signatur in Abi-Notation an.\nc) Benenne im Kopf (5) den Rückgabetyp, den Methodennamen und die Parameter.",
+      "code": "(5) public static int[] kopiere(int[] quelle, int anzahl)\n(6) public static String[] mitAnfang(String[] titel, char c)\n(7) public static boolean gleich(double x, double y)",
+      "loesung": "a) siehe Code-Block (1) bis (4) – „nichts“ wird zu void, Reihung von Ganzzahl zu int[].\nb) (5) kopiere(quelle: Reihung von Ganzzahl, anzahl: Ganzzahl): Reihung von Ganzzahl\n(6) mitAnfang(titel: Reihung von Zeichenkette, c: Zeichen): Reihung von Zeichenkette\n(7) gleich(x: Kommazahl, y: Kommazahl): Wahrheitswert\nc) Rückgabetyp int[] (Reihung von Ganzzahl) · Methodenname kopiere · Parameter quelle vom Typ int[] und anzahl vom Typ int. public static: öffentlich sichtbar, Klassenmethode (Aufruf ohne Objekt).",
+      "loesungCode": "(1) public static boolean istVoll(int[] r)\n(2) public static double mittelwert(int a, int b)\n(3) public static void zeigeTitel(String titel, int band)\n(4) public static char erstesZeichen(String s)",
+      "minuten": 5
+    },
+    {
+      "id": "W0-17",
+      "welt": 0,
+      "kategorie": "Methodenkopf und Signatur",
+      "titel": "Passt der Schlüssel ins Schloss?",
+      "aufgabe": "Gegeben ist der Kopf der Methode rabatt(preis: Ganzzahl, mitglied: Wahrheitswert): Kommazahl.\na) Entscheide für jede Zeile (A) bis (H), ob der Compiler sie akzeptiert. Begründe bei jeder abgelehnten Zeile.\nb) Erläutere an Zeile (A) den Unterschied zwischen Parameter und Argument.\nc) Zeile (H) wird akzeptiert. Erläutere, warum sie trotzdem nichts bewirkt.",
+      "code": "public static double rabatt(int preis, boolean mitglied)\n\n(A) double d = rabatt(20, true);\n(B) int x = rabatt(20, true);\n(C) double e = rabatt(true, 20);\n(D) double f = rabatt(19.5, false);\n(E) String s = \"Preis: \" + rabatt(10, false);\n(F) double g = rabatt(8);\n(G) boolean b = rabatt(4, 3 > 2) > 2;\n(H) rabatt(20, true);",
+      "loesung": "a) Akzeptiert: (A), (E), (G), (H). Abgelehnt: (B) Der Rückgabewert ist eine Kommazahl; sie passt nicht ohne Cast in eine Ganzzahl-Variable (möglicher Verlust der Nachkommastellen). (C) Reihenfolge vertauscht: true passt nicht zum Parameter preis (Ganzzahl), 20 nicht zu mitglied (Wahrheitswert). (D) 19.5 ist keine Ganzzahl. (F) Es fehlt ein Argument – Anzahl, Reihenfolge und Typen müssen zur Parameterliste passen.\n(E): Die Kommazahl wird an die Zeichenkette angehängt. (G): 3 > 2 ist ein Wahrheitswert; das Ergebnis von rabatt wird mit 2 verglichen – das Ergebnis ist ein Wahrheitswert.\nb) Parameter (formale Parameter) sind die Variablen im Methodenkopf: preis und mitglied. Argumente sind die konkreten Werte beim Aufruf: 20 und true. Beim Aufruf erhält preis den Wert 20 und mitglied den Wert true.\nc) Der Rückgabewert wird berechnet, aber weder gespeichert noch ausgegeben – er geht verloren.",
+      "loesungCode": "",
+      "minuten": 6
+    },
+    {
+      "id": "W0-18",
+      "welt": 0,
+      "kategorie": "Funktionsweise erläutern",
+      "titel": "Original oder Kopie?",
+      "aufgabe": "Drei Zaubersprüche sollen etwas verdoppeln bzw. ersetzen.\na) Gib die Ausgabe des Hauptprogramms an.\nb) Erläutere für jede der drei Methoden, ob ihre Änderung nach außen wirkt.\nc) Ändere verdopple so, dass a im Hauptprogramm tatsächlich verdoppelt wird. Passe Kopf und Aufruf an.",
+      "code": "public static void verdopple(int x) {\n    x = x * 2;\n}\npublic static void verdoppleAlle(int[] r) {\n    for (int i = 0; i < r.length; i++) {\n        r[i] = r[i] * 2;\n    }\n}\npublic static void ersetze(int[] r) {\n    r = new int[r.length];\n}\n// Hauptprogramm\nint a = 5;\nint[] t = {1, 2, 3};\nverdopple(a);\nverdoppleAlle(t);\nersetze(t);\nprintln(a + \" \" + t[0] + \" \" + t[2]);",
+      "loesung": "a) Ausgabe: 5 2 6\nb) verdopple: Wertübergabe – x ist eine Kopie von a; die Änderung von x wirkt nicht nach außen, a bleibt 5.\nverdoppleAlle: r erhält eine Kopie der Referenz und verweist auf dieselbe Reihung wie t. Die Änderung des Inhalts r[i] wirkt nach außen: t = [2, 4, 6].\nersetze: r wird auf eine neue Reihung umgelenkt – das ändert nur die lokale Kopie der Referenz. t verweist weiterhin auf [2, 4, 6].\nc) Ergebnis zurückgeben statt im Parameter ändern:",
+      "loesungCode": "public static int verdopple(int x) {\n    return x * 2;\n}\n// Aufruf im Hauptprogramm:\na = verdopple(a);",
+      "minuten": 6
+    },
+    {
+      "id": "W0-19",
+      "welt": 0,
+      "kategorie": "Tracetabelle",
+      "titel": "Würfelpunkte der Akademie",
+      "aufgabe": "Beim Würfelturnier der Akademie wird jeder Wurf mit der Hilfsmethode punkte bewertet.\na) Erstelle für den Aufruf auswerten(new int[] {4, 6, 3, 6, 5}) ein Aufrufprotokoll mit den Spalten i | Aufruf | Rückgabe | summe (erste Zeile: vor der Schleife, dann eine Zeile pro Aufruf von punkte). Gib den Rückgabewert von auswerten an.\nb) Begründe, warum punkte(6) den Wert 3 liefert und nicht 1, obwohl 6 gerade ist.\nc) Nenne einen Vorteil davon, die Bewertung eines Wurfs in eine eigene Methode auszulagern.",
+      "code": "public static int punkte(int wurf) {\n    if (wurf == 6) {\n        return 3;\n    }\n    if (wurf % 2 == 0) {\n        return 1;\n    }\n    return 0;\n}\n\npublic static int auswerten(int[] wuerfe) {\n    int summe = 0;\n    for (int i = 0; i < wuerfe.length; i++) {\n        summe = summe + punkte(wuerfe[i]);\n    }\n    return summe;\n}",
+      "loesung": "a) Rückgabewert von auswerten: 7.\nb) return beendet die Methode sofort. Bei wurf = 6 ist die erste Bedingung wahr, return 3 wird ausgeführt – die zweite Abfrage wird gar nicht mehr erreicht.\nc) z. B.: Die Regel steht an genau einer Stelle (Änderung nur dort nötig) · punkte lässt sich einzeln testen · auswerten bleibt kurz und lesbar · punkte kann von anderen Methoden wiederverwendet werden.",
+      "loesungCode": "i | Aufruf    | Rückgabe | summe\n--+-----------+----------+------\n- |     -     |    -     |   0\n0 | punkte(4) |    1     |   1\n1 | punkte(6) |    3     |   4\n2 | punkte(3) |    0     |   4\n3 | punkte(6) |    3     |   7\n4 | punkte(5) |    0     |   7",
+      "minuten": 7
+    },
+    {
+      "id": "W0-20",
+      "welt": 0,
+      "kategorie": "Code ↔ Struktogramm",
+      "titel": "Nur die geraden Runen",
+      "aufgabe": "Die Operation nurGerade liefert eine NEUE Reihung, die genau die geraden Werte von r in der ursprünglichen Reihenfolge enthält; r bleibt unverändert. Sie nutzt die Hilfsmethode istGerade(n: Ganzzahl): Wahrheitswert.\na) Implementiere istGerade in Java (eine Zeile im Rumpf genügt).\nb) Übersetze das Struktogramm von nurGerade in Java.\nc) Gib das Ergebnis für r = [3, 8, −2, 7, 6] an und begründe, warum zwei Schleifen nötig sind.",
+      "code": "nurGerade(r: Reihung von Ganzzahl): Reihung von Ganzzahl\n  anzahl ← 0\n  für jedes x in r\n    falls istGerade(x)\n      dann: anzahl ← anzahl + 1\n      sonst: –\n  erg ← neue Reihung von Ganzzahl der Länge anzahl\n  k ← 0\n  für jedes x in r\n    falls istGerade(x)\n      dann: erg[k] ← x\n            k ← k + 1\n      sonst: –\n  gib erg zurück",
+      "loesung": "a) return n % 2 == 0; – Achtung: n % 2 == 1 als Test auf „ungerade“ ist bei negativen Zahlen falsch (−7 % 2 ergibt −1).\nc) Ergebnis [8, −2, 6]. Die Länge einer Reihung muss beim Erzeugen feststehen. Deshalb zählt die erste Schleife die geraden Werte, erst dann kann erg mit passender Länge erzeugt werden. k ist der Schreibindex in erg – er ist nicht derselbe wie die Position in r.",
+      "loesungCode": "public static boolean istGerade(int n) {\n    return n % 2 == 0;\n}\n\npublic static int[] nurGerade(int[] r) {\n    int anzahl = 0;\n    for (int x : r) {\n        if (istGerade(x)) {\n            anzahl = anzahl + 1;\n        }\n    }\n    int[] erg = new int[anzahl];\n    int k = 0;\n    for (int x : r) {\n        if (istGerade(x)) {\n            erg[k] = x;\n            k = k + 1;\n        }\n    }\n    return erg;\n}",
+      "minuten": 8
+    },
+    {
+      "id": "W0-21",
+      "welt": 0,
+      "kategorie": "Fehler im Java-Code",
+      "titel": "Der Compiler streikt",
+      "aufgabe": "Beide Methoden werden vom Compiler mit der Meldung „missing return statement“ abgelehnt.\na) Erläutere für jede Methode, auf welchem Ausführungsweg sie ohne Rückgabe enden könnte.\nb) Jemand ergänzt in indexVon am Ende return -1;. Nun ist der Compiler zufrieden – die Methode ist trotzdem falsch. Gib einen Aufruf an, der das zeigt, und erkläre.\nc) Gib korrigierte Fassungen beider Methoden an.",
+      "code": "public static int indexVon(int[] r, int x) {\n    for (int i = 0; i < r.length; i++) {\n        if (r[i] == x) {\n            return i;\n        } else {\n            return -1;\n        }\n    }\n}\n\npublic static String bewertung(int punkte) {\n    if (punkte >= 50) {\n        return \"bestanden\";\n    } else if (punkte < 50) {\n        return \"nicht bestanden\";\n    }\n}",
+      "loesung": "a) indexVon: Ist r leer, wird der Schleifenrumpf nie ausgeführt – nach der Schleife folgt kein return. bewertung: Der Compiler prüft nicht, ob die beiden Bedingungen zusammen alle Fälle abdecken. Für ihn gibt es den Weg „beide Bedingungen falsch“, und dort fehlt ein return. Regel: Jeder mögliche Weg durch die Methode muss mit return enden.\nb) indexVon(new int[] {3, 5}, 5) liefert −1 statt 1: Schon im ersten Durchlauf wird r[0] = 3 geprüft; weil 3 ≠ 5, gibt der else-Zweig sofort −1 zurück. Die Methode prüft immer nur das erste Element. return -1 darf erst nach der Schleife stehen.\nc) Bei bewertung genügt ein einfaches else (die zweite Bedingung ist überflüssig).",
+      "loesungCode": "public static int indexVon(int[] r, int x) {\n    for (int i = 0; i < r.length; i++) {\n        if (r[i] == x) {\n            return i;\n        }\n    }\n    return -1;\n}\n\npublic static String bewertung(int punkte) {\n    if (punkte >= 50) {\n        return \"bestanden\";\n    } else {\n        return \"nicht bestanden\";\n    }\n}",
+      "minuten": 6
+    },
+    {
+      "id": "W0-22",
+      "welt": 0,
+      "kategorie": "Methode implementieren",
+      "titel": "Das Rezept der Akademie",
+      "aufgabe": "Abi-Aufgabe: „Die Operation anteilUeber liefert den Anteil der Werte in r, die größer als grenze sind, in Prozent als Kommazahl. Für eine leere Reihung wird 0.0 geliefert. Implementieren Sie die Operation anteilUeber(r: Reihung von Ganzzahl, grenze: Ganzzahl): Kommazahl.“\na) Rezept Schritt 1 und 2: Notiere den Java-Methodenkopf und zwei Randfälle.\nb) Implementiere die Methode in Java.\nc) Abi-Check: Prüfe deine Lösung mit [12, 0, 7, 25] und grenze 7 (erwartet 50.0). Gib an, was 100 * anzahl / r.length bei [5, 9, 1] und grenze 4 liefert, und begründe.",
+      "code": "",
+      "loesung": "a) Kopf: public static double anteilUeber(int[] r, int grenze). Randfälle: leere Reihung (sonst Division durch 0) · Werte gleich grenze zählen nicht mit (echter Vergleich >) · kein bzw. jeder Wert über grenze → 0.0 bzw. 100.0.\nKernpunkte: Leer-Abfrage vor der Division · Zähler mit 0 starten · Schleife über alle Indizes 0 bis r.length − 1 · Rechnung mit Kommazahl (100.0) · return in jedem Pfad.\nc) [12, 0, 7, 25], grenze 7: 2 von 4 Werten (12 und 25) → 50.0. 100 * anzahl / r.length mit [5, 9, 1], grenze 4: 100 * 2 / 3 = 200 / 3 = 66 – ganzzahlige Division! Als Kommazahl gespeichert ergibt das 66.0 statt 66.66… Erst 100.0 * anzahl / r.length rechnet mit Kommazahlen.",
+      "loesungCode": "public static double anteilUeber(int[] r, int grenze) {\n    if (r.length == 0) {\n        return 0.0;\n    }\n    int anzahl = 0;\n    for (int i = 0; i < r.length; i++) {\n        if (r[i] > grenze) {\n            anzahl++;\n        }\n    }\n    return 100.0 * anzahl / r.length;\n}",
+      "minuten": 7
+    }
+  ]
+}

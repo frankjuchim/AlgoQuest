@@ -1,0 +1,1053 @@
+// =====================================================================
+//  WELT 6 – DER ENDGEGNER – KLAUSUR "LADEPARK" – PAPIER-COMPILER
+//  Informatik LK · Online-IDE · Algo Quest · DS 39-40 · NUR LEHRKRAFT
+//
+//  Zweck: Korrekturfragen zu den Implementierungsaufgaben schnell
+//  entscheiden ("laeuft das so?"). Die Handschrift des Prueflings wird
+//  UNVERAENDERT in die passende Methode der Klasse Ladepark abgetippt,
+//  dann laufen die Tests im Reiter "Testrunner". Die Note ergibt sich
+//  aber IMMER aus den Kernpunkten des Erwartungshorizonts – ein roter
+//  Test ist ein Hinweis, kein automatischer Punktabzug (Folgefehler,
+//  Schreibfehler ohne fachliche Bedeutung, gleichwertige Alternativen).
+//
+//  VORAUSSETZUNG: Bibliothek "Niedersachsen" im Workspace aktivieren
+//  (Workspace rechtsklicken -> "Einstellungen" -> Haekchen
+//  "Niedersachsen"). Ohne sie sind Queue, DynArray und BinTree unbekannt.
+//  Die Klassen sind NICHT generisch: (Ladesaeule) saeulen.getItem(i),
+//  (Ladevorgang) warteschlange.dequeue(), (Integer) b.getItem().
+//
+//  ANLEITUNG
+//  1. Datei als neuen Workspace "Klausur Ladepark - Papier-Compiler"
+//     anlegen (NICHT an die Klasse austeilen), Bibliothek aktivieren.
+//  2. Zu pruefende Teilaufgabe waehlen und die Handschrift in die
+//     Methode im Abschnitt "HIER DIE HANDSCHRIFT ... ABTIPPEN" tippen:
+//        c) besteFreieSaeule()          -> TeilC_BesteFreieSaeuleTest (6 Tests)
+//        d) wartezeit(kennzeichen)      -> TeilD_WartezeitTest (6 Tests)
+//        e) spitzenstunde() (Struktogramm Zeile fuer Zeile uebertragen)
+//                                       -> TeilE_SpitzenstundeTest (5 Tests)
+//        n) entferneVorgaenge(...) in der KORRIGIERTEN Fassung
+//                                       -> TeilN_EntferneVorgaengeTest (5 Tests)
+//     VorgabenTest (3 Tests) prueft die vorgegebenen Operationen aus
+//     den Abbildungen 4, 7 und 10 mit den Klausurdaten (immer gruen).
+//  3. Im Geruest ist KEIN Test aus c, d, e, n gruen (geprueft); die
+//     Methode entferneVorgaenge steht dort so fehlerhaft wie in
+//     Abbildung 11 der Klausur.
+//  4. Zum Vergleich: Methode durch die Musterloesung am Dateiende
+//     ersetzen (Block MUSTERLÖSUNG, als Kommentar) -> alles gruen.
+//
+//  ACHTUNG (P5): Die Online-IDE vergleicht Zeichenketten auch mit ==
+//  inhaltlich. "v.getKennzeichen() == kennzeichen" bleibt dort GRUEN,
+//  ist im Abitur aber falsch (equals!). Deshalb bei d) und n) den
+//  Vergleich immer von Hand pruefen. (Im Pruef-Harness mit echtem Java
+//  fallen diese Varianten ueber Testhilfe.kopie auf.)
+//
+//  LAUFZEITFEHLER (P1): Jeder Test faengt RuntimeExceptions ab und meldet
+//  sie mit Hinweis (Leer-Abfrage? Index? Cast? null?).
+//
+//  Geprueft mit javac (Java 21) und Nachbauten der Bibliotheksklassen
+//  (gleiche Exceptions): Musterloesung und 7 Alternativen gruen,
+//  25 typische Fehlvarianten (P1-P7) rot - Liste im Block
+//  MUSTERLÖSUNG und im Erwartungshorizont.
+// =====================================================================
+
+// ---------------------------------------------------------------------
+//  GERÜST – Kontextklassen aus Abbildung 1 (hier nichts veraendern)
+// ---------------------------------------------------------------------
+
+class Ladevorgang {
+
+    private String kennzeichen;
+    private int energie;   // in kWh
+    private int dauer;     // in Minuten
+
+    public Ladevorgang(String kennzeichen, int energie, int dauer) {
+        this.kennzeichen = kennzeichen;
+        this.energie = energie;
+        this.dauer = dauer;
+    }
+
+    public String getKennzeichen() {
+        return kennzeichen;
+    }
+
+    public int getEnergie() {
+        return energie;
+    }
+
+    public int getDauer() {
+        return dauer;
+    }
+
+    public String toString() {
+        return kennzeichen + " (" + energie + " kWh, " + dauer + " min)";
+    }
+}
+
+class Ladesaeule {
+
+    private int nummer;
+    private int leistung;          // maximale Ladeleistung in kW
+    private Ladevorgang aktuell;   // laufender Ladevorgang, null, wenn die Saeule frei ist
+
+    public Ladesaeule(int nummer) {
+        this.nummer = nummer;
+        this.leistung = 11;
+        this.aktuell = null;
+    }
+
+    public Ladesaeule(int nummer, int leistung) {
+        this.nummer = nummer;
+        this.leistung = leistung;
+        this.aktuell = null;
+    }
+
+    public int getNummer() {
+        return nummer;
+    }
+
+    public int getLeistung() {
+        return leistung;
+    }
+
+    public boolean istFrei() {
+        return aktuell == null;
+    }
+
+    public void starten(Ladevorgang v) {
+        aktuell = v;
+    }
+
+    public Ladevorgang beenden() {
+        Ladevorgang v = aktuell;
+        aktuell = null;
+        return v;
+    }
+
+    // Preis pro kWh in Cent
+    public int preisProKWh() {
+        return 49;
+    }
+}
+
+// Loesung zu Teilaufgabe b) in Java (nur zur Kontrolle, kein Test noetig)
+class Schnellladesaeule extends Ladesaeule {
+
+    private String steckertyp;
+    private int zuschlag;   // Zuschlag in Cent pro kWh
+
+    public Schnellladesaeule(int nummer, int leistung, String steckertyp, int zuschlag) {
+        super(nummer, leistung);
+        this.steckertyp = steckertyp;
+        this.zuschlag = zuschlag;
+    }
+
+    public String getSteckertyp() {
+        return steckertyp;
+    }
+
+    public int preisProKWh() {
+        return super.preisProKWh() + zuschlag;
+    }
+}
+
+class Ladepark {
+
+    private DynArray saeulen;          // dynamische Reihung vom Inhaltstyp Ladesaeule
+    private Queue warteschlange;       // Schlange vom Inhaltstyp Ladevorgang
+    private DynArray protokoll;        // dynamische Reihung vom Inhaltstyp Ladevorgang
+    private int[][] energie;           // [Saeule][Stunde], geladene Energie in kWh
+    private BinTree karten;            // binaerer Suchbaum vom Inhaltstyp Ganzzahl
+    private int netzleistung;          // kWh, die pro Stunde hoechstens aus dem Netz bezogen werden
+    private int kapazitaet;            // Kapazitaet des Pufferspeichers in kWh
+
+    public Ladepark(int netzleistung, int kapazitaet) {
+        this.netzleistung = netzleistung;
+        this.kapazitaet = kapazitaet;
+        saeulen = new DynArray();
+        warteschlange = new Queue();
+        protokoll = new DynArray();
+        energie = new int[1][24];
+        karten = new BinTree();
+    }
+
+    public void neueSaeule(Ladesaeule s) {
+        saeulen.append(s);
+    }
+
+    public void einreihen(Ladevorgang v) {
+        warteschlange.enqueue(v);
+    }
+
+    public void protokollieren(Ladevorgang v) {
+        protokoll.append(v);
+    }
+
+    // ----- nur fuer die Tests (nicht im Klassendiagramm der Klausur) -----
+    public DynArray getSaeulen() {
+        return saeulen;
+    }
+
+    public Queue getWarteschlange() {
+        return warteschlange;
+    }
+
+    public DynArray getProtokoll() {
+        return protokoll;
+    }
+
+    public int[][] getEnergie() {
+        return energie;
+    }
+
+    public void setEnergie(int[][] e) {
+        energie = e;
+    }
+
+    public BinTree getKarten() {
+        return karten;
+    }
+
+    // =================================================================
+    //  VORGEGEBEN in der Klausur (Struktogramme Abbildung 4, 7 und 10),
+    //  hier zeilengetreu in Java – zur Kontrolle von f), i) und m)
+    // =================================================================
+
+    // Abbildung 4: sortiert protokoll absteigend nach der Energie
+    public void sortiereProtokoll() {
+        int pos = 1;
+        while (pos < protokoll.getLength()) {
+            if (pos == 0) {
+                pos = pos + 1;
+            } else {
+                Ladevorgang links = (Ladevorgang) protokoll.getItem(pos - 1);
+                Ladevorgang rechts = (Ladevorgang) protokoll.getItem(pos);
+                if (links.getEnergie() < rechts.getEnergie()) {
+                    protokoll.setItem(pos - 1, rechts);
+                    protokoll.setItem(pos, links);
+                    pos = pos - 1;
+                } else {
+                    pos = pos + 1;
+                }
+            }
+        }
+    }
+
+    // Abbildung 7: erste Stunde mit Ueberlast oder -1
+    public int ueberlast(int[] bedarf, int h, int puffer) {
+        if (h == bedarf.length) {
+            return -1;
+        }
+        puffer = puffer + netzleistung - bedarf[h];
+        if (puffer < 0) {
+            return h;
+        }
+        if (puffer > kapazitaet) {
+            puffer = kapazitaet;
+        }
+        return ueberlast(bedarf, h + 1, puffer);
+    }
+
+    // Abbildung 10: Anzahl der Kartennummern x mit von <= x <= bis im BST b
+    public int anzahlImBereich(BinTree b, int von, int bis) {
+        if (b.isEmpty()) {
+            return 0;
+        }
+        int x = (Integer) b.getItem();
+        if (x < von) {
+            return anzahlImBereich(b.getRight(), von, bis);
+        }
+        if (x > bis) {
+            return anzahlImBereich(b.getLeft(), von, bis);
+        }
+        return 1 + anzahlImBereich(b.getLeft(), von, bis) + anzahlImBereich(b.getRight(), von, bis);
+    }
+
+    // =================================================================
+    //  HIER DIE HANDSCHRIFT UNVERAENDERT ABTIPPEN (Teilaufgaben c, d, e, n)
+    // =================================================================
+
+    // Teilaufgabe c) besteFreieSaeule(): Ladesaeule
+    public Ladesaeule besteFreieSaeule() {
+        // TODO Handschrift abtippen
+        return null;
+    }
+
+    // Teilaufgabe d) wartezeit(kennzeichen: Zeichenkette): Ganzzahl
+    public int wartezeit(String kennzeichen) {
+        // TODO Handschrift abtippen
+        return -2;
+    }
+
+    // Teilaufgabe e) spitzenstunde(): Ganzzahl  (Struktogramm Zeile fuer Zeile uebertragen)
+    public int spitzenstunde() {
+        // TODO Struktogramm uebertragen
+        return -2;
+    }
+
+    // Teilaufgabe n) entferneVorgaenge(kennzeichen: Zeichenkette): Ganzzahl
+    // So steht die Operation in Abbildung 11 der Klausur (mit drei Fehlern).
+    // Die KORRIGIERTE Fassung des Prueflings hier abtippen.
+    public int entferneVorgaenge(String kennzeichen) {
+        int anzahl = 0;
+        for (int i = 0; i <= protokoll.getLength(); i++) {
+            Ladevorgang v = (Ladevorgang) protokoll.getItem(i);
+            if (v.getKennzeichen() == kennzeichen) {
+                protokoll.delete(i);
+                anzahl++;
+            }
+        }
+        return anzahl;
+    }
+}
+
+// ---------------------------------------------------------------------
+//  TESTHILFE (hier nichts veraendern)
+// ---------------------------------------------------------------------
+
+class Testhilfe {
+
+    // Zeichenkette zur Laufzeit neu zusammensetzen: In echtem Java faellt
+    // == statt equals damit auf. ACHTUNG: Die Online-IDE vergleicht
+    // Zeichenketten auch mit == inhaltlich -> dort von Hand pruefen (P5)!
+    public static String kopie(String s) {
+        String k = "";
+        for (int i = 0; i < s.length(); i++) {
+            k = k + s.charAt(i);
+        }
+        return k;
+    }
+
+    // Schlange aus Ladevorgaengen: r[0] steht vorne.
+    public static Queue schlange(Ladevorgang[] r) {
+        Queue q = new Queue();
+        for (int i = 0; i < r.length; i++) {
+            q.enqueue(r[i]);
+        }
+        return q;
+    }
+
+    // true, wenn q GENAU die Objekte aus r in dieser Reihenfolge enthaelt.
+    // q ist danach wieder wie vorher.
+    public static boolean gleicheSchlange(Queue q, Ladevorgang[] r) {
+        Queue hilf = new Queue();
+        int n = 0;
+        boolean ok = true;
+        while (!q.isEmpty()) {
+            Object o = q.dequeue();
+            if (n >= r.length || o != r[n]) {
+                ok = false;
+            }
+            n++;
+            hilf.enqueue(o);
+        }
+        while (!hilf.isEmpty()) {
+            q.enqueue(hilf.dequeue());
+        }
+        return ok && n == r.length;
+    }
+
+    // Kennzeichen der dynamischen Reihung als Text, z. B. "[OL-EV 7, DEL-LP 42]"
+    public static String kennzeichen(DynArray d) {
+        String t = "[";
+        for (int i = 0; i < d.getLength(); i++) {
+            if (i > 0) {
+                t = t + ", ";
+            }
+            t = t + ((Ladevorgang) d.getItem(i)).getKennzeichen();
+        }
+        return t + "]";
+    }
+
+    // Kartennummer in den binaeren Suchbaum b einfuegen (Duplikate ignorieren)
+    public static void einfuegen(BinTree b, int x) {
+        if (b.isEmpty()) {
+            b.setItem(x);
+        } else if (x < (Integer) b.getItem()) {
+            einfuegen(b.getLeft(), x);
+        } else if (x > (Integer) b.getItem()) {
+            einfuegen(b.getRight(), x);
+        }
+    }
+
+    public static Ladepark park() {
+        return new Ladepark(100, 120);
+    }
+
+    public static void laufzeitfehler(RuntimeException e) {
+        String meldung = " (Meldung: " + e.getMessage() + ")";
+        try {
+            throw e;
+        } catch (IllegalStateException x) {
+            fail("LAUFZEITFEHLER: head/dequeue/top/pop/getItem auf LEERER Struktur - isEmpty() vergessen? (P1)" + meldung);
+        } catch (IndexOutOfBoundsException x) {
+            fail("LAUFZEITFEHLER: Index ausserhalb - 0 <= i < getLength() bzw. < length; geloescht und danach i erhoeht? (P1/P6)" + meldung);
+        } catch (IllegalArgumentException x) {
+            fail("LAUFZEITFEHLER: null in Queue oder DynArray gelegt" + meldung);
+        } catch (ClassCastException x) {
+            fail("LAUFZEITFEHLER: falscher Cast (P4)" + meldung);
+        } catch (NullPointerException x) {
+            fail("LAUFZEITFEHLER: Zugriff auf null - z. B. beste.getLeistung(), solange beste noch null ist (P1)" + meldung);
+        } catch (RuntimeException x) {
+            fail("LAUFZEITFEHLER" + meldung);
+        }
+    }
+}
+
+// ---------------------------------------------------------------------
+//  TESTKLASSEN (Reiter "Testrunner"): je Teilaufgabe eine Klasse
+// ---------------------------------------------------------------------
+
+class TeilC_BesteFreieSaeuleTest {
+
+    @Test
+    public void c1_beispiel() {
+        try {
+            Ladepark p = Testhilfe.park();
+            Ladesaeule s0 = new Ladesaeule(1);
+            Ladesaeule s1 = new Ladesaeule(2, 50);
+            Ladesaeule s2 = new Ladesaeule(3, 22);
+            Ladesaeule s3 = new Ladesaeule(4, 150);
+            Ladesaeule s4 = new Ladesaeule(5, 150);
+            p.neueSaeule(s0);
+            p.neueSaeule(s1);
+            p.neueSaeule(s2);
+            p.neueSaeule(s3);
+            p.neueSaeule(s4);
+            s1.starten(new Ladevorgang("OL-EV 7", 18, 25));
+            assertTrue(p.besteFreieSaeule() == s3, "Freie Saeulen 11, 22, 150, 150 kW: die erste 150-kW-Saeule (Nr. 4) wird geliefert");
+            s3.starten(new Ladevorgang("HB-AQ 300", 52, 60));
+            assertTrue(p.besteFreieSaeule() == s4, "Saeule 4 belegt: jetzt Saeule 5 (150 kW)");
+            s4.starten(new Ladevorgang("BRA-K 19", 12, 20));
+            assertTrue(p.besteFreieSaeule() == s2, "Saeulen 4 und 5 belegt: Saeule 3 (22 kW) ist die staerkste freie");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void c2_gleichstandErste() {
+        try {
+            Ladepark p = Testhilfe.park();
+            Ladesaeule a = new Ladesaeule(1, 22);
+            Ladesaeule b = new Ladesaeule(2, 22);
+            Ladesaeule c = new Ladesaeule(3, 22);
+            p.neueSaeule(a);
+            p.neueSaeule(b);
+            p.neueSaeule(c);
+            assertTrue(p.besteFreieSaeule() == a, "Drei freie 22-kW-Saeulen: die mit dem kleinsten Index (Nr. 1)");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void c3_staerksteBelegt() {
+        try {
+            Ladepark p = Testhilfe.park();
+            Ladesaeule a = new Ladesaeule(1, 150);
+            Ladesaeule b = new Ladesaeule(2, 11);
+            p.neueSaeule(a);
+            p.neueSaeule(b);
+            a.starten(new Ladevorgang("OL-EV 7", 18, 25));
+            assertTrue(p.besteFreieSaeule() == b, "Die 150-kW-Saeule ist belegt: die freie 11-kW-Saeule wird geliefert");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void c4_keineFrei() {
+        try {
+            Ladepark p = Testhilfe.park();
+            Ladesaeule a = new Ladesaeule(1, 50);
+            Ladesaeule b = new Ladesaeule(2, 22);
+            p.neueSaeule(a);
+            p.neueSaeule(b);
+            assertTrue(p.besteFreieSaeule() == a, "Beide frei: Saeule 1 (50 kW)");
+            a.starten(new Ladevorgang("OL-EV 7", 18, 25));
+            b.starten(new Ladevorgang("DEL-LP 42", 30, 45));
+            assertTrue(p.besteFreieSaeule() == null, "Alle Saeulen belegt: null");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void c5_keineSaeulen() {
+        try {
+            Ladepark p = Testhilfe.park();
+            p.neueSaeule(new Ladesaeule(1));
+            assertTrue(p.besteFreieSaeule() != null, "Eine freie Saeule vorhanden: nicht null");
+            Ladepark leer = Testhilfe.park();
+            assertTrue(leer.besteFreieSaeule() == null, "Ladepark ohne Saeulen: null (kein Laufzeitfehler)");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void c6_saeulenUnveraendert() {
+        try {
+            Ladepark p = Testhilfe.park();
+            Ladesaeule a = new Ladesaeule(1, 22);
+            Ladesaeule b = new Ladesaeule(2, 150);
+            p.neueSaeule(a);
+            p.neueSaeule(b);
+            assertTrue(p.besteFreieSaeule() == b, "Saeule 2 (150 kW)");
+            assertEquals(2, p.getSaeulen().getLength(), "saeulen behaelt beide Saeulen");
+            assertTrue(p.getSaeulen().getItem(0) == a && p.getSaeulen().getItem(1) == b, "Reihenfolge in saeulen unveraendert");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+}
+
+class TeilD_WartezeitTest {
+
+    private Ladevorgang[] beispiel() {
+        Ladevorgang[] r = {new Ladevorgang("DEL-LP 42", 30, 45), new Ladevorgang("OL-EV 7", 18, 25),
+                new Ladevorgang("HB-AQ 300", 52, 60), new Ladevorgang("BRA-K 19", 12, 20)};
+        return r;
+    }
+
+    private Ladepark park(Ladevorgang[] r) {
+        Ladepark p = Testhilfe.park();
+        for (int i = 0; i < r.length; i++) {
+            p.einreihen(r[i]);
+        }
+        return p;
+    }
+
+    @Test
+    public void d1_beispiel() {
+        try {
+            Ladevorgang[] r = beispiel();
+            Ladepark p = park(r);
+            assertEquals(70, p.wartezeit(Testhilfe.kopie("HB-AQ 300")), "Vor HB-AQ 300 stehen 45 + 25 = 70 min");
+            assertTrue(Testhilfe.gleicheSchlange(p.getWarteschlange(), r), "Schlange danach UNVERAENDERT (dieselben Ladevorgaenge in derselben Reihenfolge) (P2)");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void d2_vorne() {
+        try {
+            Ladevorgang[] r = beispiel();
+            Ladepark p = park(r);
+            assertEquals(0, p.wartezeit(Testhilfe.kopie("DEL-LP 42")), "DEL-LP 42 steht vorne: Wartezeit 0");
+            assertTrue(Testhilfe.gleicheSchlange(p.getWarteschlange(), r), "Schlange danach UNVERAENDERT (P2)");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void d3_hinten() {
+        try {
+            Ladevorgang[] r = beispiel();
+            Ladepark p = park(r);
+            assertEquals(130, p.wartezeit(Testhilfe.kopie("BRA-K 19")), "Vor BRA-K 19 stehen 45 + 25 + 60 = 130 min (eigene Dauer zaehlt nicht)");
+            assertTrue(Testhilfe.gleicheSchlange(p.getWarteschlange(), r), "Schlange danach UNVERAENDERT (P2)");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void d4_nichtEnthalten() {
+        try {
+            Ladevorgang[] r = beispiel();
+            Ladepark p = park(r);
+            assertEquals(-1, p.wartezeit(Testhilfe.kopie("OS-X 1")), "OS-X 1 wartet nicht: -1");
+            assertTrue(Testhilfe.gleicheSchlange(p.getWarteschlange(), r), "Schlange auch ohne Treffer UNVERAENDERT (P2)");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void d5_leereSchlange() {
+        try {
+            Ladevorgang[] r = beispiel();
+            Ladepark p = park(r);
+            assertEquals(45, p.wartezeit(Testhilfe.kopie("OL-EV 7")), "Vor OL-EV 7 stehen 45 min");
+            Ladepark leer = Testhilfe.park();
+            assertEquals(-1, leer.wartezeit("DEL-LP 42"), "Leere Schlange: -1 (kein Laufzeitfehler, P1)");
+            assertTrue(leer.getWarteschlange().isEmpty(), "Leere Schlange bleibt leer");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void d6_zweimal() {
+        try {
+            Ladevorgang[] r = beispiel();
+            Ladepark p = park(r);
+            assertEquals(70, p.wartezeit(Testhilfe.kopie("HB-AQ 300")), "erster Aufruf: 70");
+            assertEquals(70, p.wartezeit(Testhilfe.kopie("HB-AQ 300")), "zweiter Aufruf: wieder 70 (Schlange unveraendert?)");
+            assertEquals(130, p.wartezeit(Testhilfe.kopie("BRA-K 19")), "danach BRA-K 19: 130");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+}
+
+class TeilE_SpitzenstundeTest {
+
+    // 4 Saeulen x 24 Stunden; Stunden 15 bis 20 wie Abbildung 3 der Klausur
+    private int[][] beispiel() {
+        int[][] e = {
+            {0, 0, 0, 0, 0, 0, 3, 8, 11, 11, 6, 4, 9, 11, 7, 9, 11, 11, 10, 6, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 5, 12, 30, 41, 25, 18, 20, 33, 28, 30, 40, 45, 48, 50, 32, 21, 9, 4, 0},
+            {0, 0, 0, 0, 0, 0, 11, 22, 22, 22, 11, 0, 11, 22, 22, 0, 22, 22, 11, 22, 22, 11, 0, 0},
+            {12, 0, 0, 0, 0, 0, 40, 75, 90, 60, 45, 50, 70, 65, 60, 80, 95, 120, 110, 120, 60, 30, 15, 0}};
+        return e;
+    }
+
+    @Test
+    public void e1_beispiel() {
+        try {
+            Ladepark p = Testhilfe.park();
+            p.setEnergie(beispiel());
+            assertEquals(17, p.spitzenstunde(), "Spitzenstunde ist 17 (201 kWh); Spalten summieren, nicht Zeilen!");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void e2_gleichstandFrueheste() {
+        try {
+            int[][] e = new int[3][24];
+            e[0][5] = 30;
+            e[2][5] = 40;
+            e[1][20] = 70;
+            e[2][9] = 69;
+            Ladepark p = Testhilfe.park();
+            p.setEnergie(e);
+            assertEquals(5, p.spitzenstunde(), "Stunden 5 und 20 je 70 kWh: die frueheste (5)");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void e3_letzteStunde() {
+        try {
+            int[][] e = new int[2][24];
+            e[0][22] = 10;
+            e[1][23] = 11;
+            Ladepark p = Testhilfe.park();
+            p.setEnergie(e);
+            assertEquals(23, p.spitzenstunde(), "Spitze in der letzten Stunde 23 (Schleife bis einschliesslich 23, P6)");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void e4_ersteStunde() {
+        try {
+            int[][] e = new int[2][24];
+            e[1][0] = 5;
+            Ladepark p = Testhilfe.park();
+            p.setEnergie(e);
+            assertEquals(0, p.spitzenstunde(), "Spitze in Stunde 0");
+            e[1][0] = 0;
+            assertEquals(0, p.spitzenstunde(), "Alles 0 kWh: frueheste Stunde 0");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void e5_eineSaeuleUnveraendert() {
+        try {
+            int[][] e = new int[1][24];
+            for (int h = 0; h < 24; h++) {
+                e[0][h] = (h * 7) % 24;
+            }
+            Ladepark p = Testhilfe.park();
+            p.setEnergie(e);
+            assertEquals(17, p.spitzenstunde(), "Eine Saeule: Stunde 17 (17 * 7 mod 24 = 23 ist der groesste Wert)");
+            assertEquals(23, p.getEnergie()[0][17], "energie bleibt unveraendert");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+}
+
+class TeilN_EntferneVorgaengeTest {
+
+    private Ladepark park(String[] kz) {
+        Ladepark p = Testhilfe.park();
+        for (int i = 0; i < kz.length; i++) {
+            p.protokollieren(new Ladevorgang(kz[i], 10 + i, 20));
+        }
+        return p;
+    }
+
+    @Test
+    public void n1_beispiel() {
+        try {
+            String[] kz = {"OL-EV 7", "HB-AQ 300", "HB-AQ 300", "DEL-LP 42", "HB-AQ 300"};
+            Ladepark p = park(kz);
+            assertEquals(3, p.entferneVorgaenge(Testhilfe.kopie("HB-AQ 300")), "HB-AQ 300 kommt dreimal vor (zweimal direkt hintereinander!)");
+            assertEquals("[OL-EV 7, DEL-LP 42]", Testhilfe.kennzeichen(p.getProtokoll()), "Rest des Protokolls in alter Reihenfolge");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void n2_nichtEnthalten() {
+        try {
+            String[] kz = {"OL-EV 7", "DEL-LP 42"};
+            Ladepark p = park(kz);
+            assertEquals(1, p.entferneVorgaenge(Testhilfe.kopie("DEL-LP 42")), "DEL-LP 42 einmal");
+            assertEquals(0, p.entferneVorgaenge(Testhilfe.kopie("OS-X 1")), "OS-X 1 nicht im Protokoll: 0");
+            assertEquals("[OL-EV 7]", Testhilfe.kennzeichen(p.getProtokoll()), "Protokoll danach");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void n3_alleGleich() {
+        try {
+            String[] kz = {"BRA-K 19", "BRA-K 19", "BRA-K 19", "BRA-K 19"};
+            Ladepark p = park(kz);
+            assertEquals(4, p.entferneVorgaenge(Testhilfe.kopie("BRA-K 19")), "Alle vier entfernen");
+            assertTrue(p.getProtokoll().isEmpty(), "Protokoll danach leer");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void n4_leer() {
+        try {
+            String[] kz = {"OL-EV 7"};
+            Ladepark p = park(kz);
+            assertEquals(1, p.entferneVorgaenge(Testhilfe.kopie("OL-EV 7")), "OL-EV 7 einmal");
+            assertEquals(0, p.entferneVorgaenge("OL-EV 7"), "Leeres Protokoll: 0 (kein Laufzeitfehler)");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void n5_letztes() {
+        try {
+            String[] kz = {"OL-EV 7", "DEL-LP 42", "HB-AQ 300"};
+            Ladepark p = park(kz);
+            assertEquals(1, p.entferneVorgaenge(Testhilfe.kopie("HB-AQ 300")), "Letztes Element entfernen");
+            assertEquals("[OL-EV 7, DEL-LP 42]", Testhilfe.kennzeichen(p.getProtokoll()), "Protokoll danach");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+}
+
+// Kontrolle der VORGEGEBENEN Operationen mit den Daten der Klausur (muss immer gruen sein)
+class VorgabenTest {
+
+    @Test
+    public void f_sortiereProtokoll() {
+        Ladepark p = Testhilfe.park();
+        p.protokollieren(new Ladevorgang("OL-EV 7", 18, 30));
+        p.protokollieren(new Ladevorgang("HB-AQ 300", 42, 50));
+        p.protokollieren(new Ladevorgang("DEL-LP 42", 25, 35));
+        p.protokollieren(new Ladevorgang("WST-M 5", 42, 40));
+        p.protokollieren(new Ladevorgang("BRA-K 19", 9, 15));
+        p.sortiereProtokoll();
+        assertEquals("[HB-AQ 300, WST-M 5, DEL-LP 42, OL-EV 7, BRA-K 19]", Testhilfe.kennzeichen(p.getProtokoll()), "Abbildung 5 sortiert (42, 42, 25, 18, 9)");
+    }
+
+    @Test
+    public void i_ueberlast() {
+        Ladepark p = Testhilfe.park();
+        int[] bedarf = {20, 130, 160, 90, 150, 140, 60, 180};
+        assertEquals(4, p.ueberlast(bedarf, 0, 60), "Abbildung 8: Ueberlast in Stunde 4");
+        int[] klein = {90, 100, 40};
+        assertEquals(-1, p.ueberlast(klein, 0, 0), "ohne Ueberlast: -1");
+    }
+
+    @Test
+    public void m_anzahlImBereich() {
+        Ladepark p = Testhilfe.park();
+        int[] nr = {518, 274, 730, 133, 402, 615, 911, 350, 461, 688};
+        for (int i = 0; i < nr.length; i++) {
+            Testhilfe.einfuegen(p.getKarten(), nr[i]);
+        }
+        assertEquals(2, p.anzahlImBereich(p.getKarten(), 300, 450), "Karten 350 und 402 liegen in [300; 450]");
+        assertEquals(10, p.anzahlImBereich(p.getKarten(), 0, 1000), "alle 10 Karten");
+    }
+}
+
+// ---------------------------------------------------------------------
+//  HAUPTPROGRAMM (Kontrollausgaben fuer die Lehrkraft)
+// ---------------------------------------------------------------------
+Ladepark park = new Ladepark(100, 120);
+park.protokollieren(new Ladevorgang("OL-EV 7", 18, 30));
+park.protokollieren(new Ladevorgang("HB-AQ 300", 42, 50));
+park.protokollieren(new Ladevorgang("DEL-LP 42", 25, 35));
+park.protokollieren(new Ladevorgang("WST-M 5", 42, 40));
+park.protokollieren(new Ladevorgang("BRA-K 19", 9, 15));
+park.sortiereProtokoll();
+println("f) protokoll nach sortiereProtokoll: " + Testhilfe.kennzeichen(park.getProtokoll()));
+int[] bedarf = {20, 130, 160, 90, 150, 140, 60, 180};
+println("i) ueberlast(bedarf, 0, 60) = " + park.ueberlast(bedarf, 0, 60));
+int[] karten = {518, 274, 730, 133, 402, 615, 911, 350, 461, 688};
+for (int i = 0; i < karten.length; i++) {
+    Testhilfe.einfuegen(park.getKarten(), karten[i]);
+}
+println("m) anzahlImBereich(karten, 300, 450) = " + park.anzahlImBereich(park.getKarten(), 300, 450));
+println("Weiter im Reiter Testrunner: TeilC_..., TeilD_..., TeilE_..., TeilN_... und VorgabenTest.");
+
+
+/* =====================================================================
+   MUSTERLÖSUNG (Lehrerexemplar) – START
+   Zum Pruefen die jeweilige Methode im Geruest durch die folgende
+   ersetzen. Alle Tests gruen: TeilC_BesteFreieSaeuleTest 6/6, TeilD_WartezeitTest 6/6, TeilE_SpitzenstundeTest 5/5, TeilN_EntferneVorgaengeTest 5/5, VorgabenTest 3/3
+   ===================================================================== */
+/*
+    // Teilaufgabe c) besteFreieSaeule(): Ladesaeule
+    public Ladesaeule besteFreieSaeule() {
+        Ladesaeule beste = null;
+        for (int i = 0; i < saeulen.getLength(); i++) {
+            Ladesaeule s = (Ladesaeule) saeulen.getItem(i);
+            if (s.istFrei()) {
+                if (beste == null || s.getLeistung() > beste.getLeistung()) {
+                    beste = s;
+                }
+            }
+        }
+        return beste;
+    }
+
+    // Teilaufgabe d) wartezeit(kennzeichen: Zeichenkette): Ganzzahl
+    public int wartezeit(String kennzeichen) {
+        Queue hilf = new Queue();
+        int summe = 0;
+        boolean gefunden = false;
+        while (!warteschlange.isEmpty()) {
+            Ladevorgang v = (Ladevorgang) warteschlange.dequeue();
+            if (v.getKennzeichen().equals(kennzeichen)) {
+                gefunden = true;
+            }
+            if (!gefunden) {
+                summe = summe + v.getDauer();
+            }
+            hilf.enqueue(v);
+        }
+        while (!hilf.isEmpty()) {
+            warteschlange.enqueue(hilf.dequeue());
+        }
+        if (gefunden) {
+            return summe;
+        }
+        return -1;
+    }
+
+    // Teilaufgabe e) spitzenstunde(): Ganzzahl  (Struktogramm EH Abbildung E.2)
+    public int spitzenstunde() {
+        int beste = 0;
+        int maxSumme = -1;
+        for (int h = 0; h < energie[0].length; h++) {
+            int summe = 0;
+            for (int s = 0; s < energie.length; s++) {
+                summe = summe + energie[s][h];
+            }
+            if (summe > maxSumme) {
+                maxSumme = summe;
+                beste = h;
+            }
+        }
+        return beste;
+    }
+
+    // Teilaufgabe n) entferneVorgaenge - korrigiert (Aenderungen markiert)
+    public int entferneVorgaenge(String kennzeichen) {
+        int anzahl = 0;
+        for (int i = 0; i < protokoll.getLength(); i++) {                 // Fehler 1: < statt <=
+            Ladevorgang v = (Ladevorgang) protokoll.getItem(i);
+            if (v.getKennzeichen().equals(kennzeichen)) {                   // Fehler 2: equals statt ==
+                protokoll.delete(i);
+                i--;                                                        // Fehler 3: Index korrigieren
+                anzahl++;
+            }
+        }
+        return anzahl;
+    }
+
+   ----- gleichwertige Alternativen (ebenfalls alle Tests gruen) -----
+
+   // c) Alternative 1: for-each und Vergleich ueber den Index  [6/6]
+    public Ladesaeule besteFreieSaeule() {
+        int besterIndex = -1;
+        int maxLeistung = -1;
+        int i = 0;
+        for (Object o : saeulen) {
+            Ladesaeule s = (Ladesaeule) o;
+            if (s.istFrei() && s.getLeistung() > maxLeistung) {
+                maxLeistung = s.getLeistung();
+                besterIndex = i;
+            }
+            i++;
+        }
+        if (besterIndex == -1) {
+            return null;
+        }
+        return (Ladesaeule) saeulen.getItem(besterIndex);
+    }
+
+   // c) Alternative 2: Leer-Abfrage vorab, zwei Schritte (erste freie, dann besser)  [6/6]
+    public Ladesaeule besteFreieSaeule() {
+        if (saeulen.isEmpty()) {
+            return null;
+        }
+        Ladesaeule beste = null;
+        int i = 0;
+        while (i < saeulen.getLength() && beste == null) {
+            Ladesaeule s = (Ladesaeule) saeulen.getItem(i);
+            if (s.istFrei()) {
+                beste = s;
+            }
+            i++;
+        }
+        while (i < saeulen.getLength()) {
+            Ladesaeule s = (Ladesaeule) saeulen.getItem(i);
+            if (s.istFrei() && s.getLeistung() > beste.getLeistung()) {
+                beste = s;
+            }
+            i++;
+        }
+        return beste;
+    }
+
+   // d) Alternative 1: Laenge bestimmen und Schlange einmal rotieren (ohne Hilfsschlange)  [6/6]
+    public int wartezeit(String kennzeichen) {
+        Queue zaehl = new Queue();
+        int n = 0;
+        while (!warteschlange.isEmpty()) {
+            zaehl.enqueue(warteschlange.dequeue());
+            n++;
+        }
+        while (!zaehl.isEmpty()) {
+            warteschlange.enqueue(zaehl.dequeue());
+        }
+        int summe = 0;
+        int ergebnis = -1;
+        for (int i = 0; i < n; i++) {
+            Ladevorgang v = (Ladevorgang) warteschlange.dequeue();
+            if (ergebnis == -1 && v.getKennzeichen().equals(kennzeichen)) {
+                ergebnis = summe;
+            }
+            summe = summe + v.getDauer();
+            warteschlange.enqueue(v);
+        }
+        return ergebnis;
+    }
+
+   // d) Alternative 2: Rueckgabe sofort beim Treffer, Rest vorher umfuellen  [6/6]
+    public int wartezeit(String kennzeichen) {
+        Queue hilf = new Queue();
+        int summe = 0;
+        int ergebnis = -1;
+        while (!warteschlange.isEmpty()) {
+            Ladevorgang v = (Ladevorgang) warteschlange.dequeue();
+            hilf.enqueue(v);
+            if (ergebnis == -1) {
+                if (v.getKennzeichen().equals(kennzeichen)) {
+                    ergebnis = summe;
+                } else {
+                    summe = summe + v.getDauer();
+                }
+            }
+        }
+        while (!hilf.isEmpty()) {
+            warteschlange.enqueue(hilf.dequeue());
+        }
+        return ergebnis;
+    }
+
+   // e) Alternative: feste Stundenzahl 24, Start mit der Summe von Stunde 0  [5/5]
+    public int spitzenstunde() {
+        int maxSumme = 0;
+        for (int s = 0; s < energie.length; s++) {
+            maxSumme = maxSumme + energie[s][0];
+        }
+        int beste = 0;
+        for (int h = 1; h <= 23; h++) {
+            int summe = 0;
+            for (int s = 0; s < energie.length; s++) {
+                summe = summe + energie[s][h];
+            }
+            if (summe > maxSumme) {
+                maxSumme = summe;
+                beste = h;
+            }
+        }
+        return beste;
+    }
+
+   // n) Alternative 1: Rueckwaerts durchlaufen  [5/5]
+    public int entferneVorgaenge(String kennzeichen) {
+        int anzahl = 0;
+        for (int i = protokoll.getLength() - 1; i >= 0; i--) {
+            Ladevorgang v = (Ladevorgang) protokoll.getItem(i);
+            if (v.getKennzeichen().equals(kennzeichen)) {
+                protokoll.delete(i);
+                anzahl++;
+            }
+        }
+        return anzahl;
+    }
+
+   // n) Alternative 2: solange-Schleife, i nur ohne Loeschen erhoehen  [5/5]
+    public int entferneVorgaenge(String kennzeichen) {
+        int anzahl = 0;
+        int i = 0;
+        while (i < protokoll.getLength()) {
+            Ladevorgang v = (Ladevorgang) protokoll.getItem(i);
+            if (v.getKennzeichen().equals(kennzeichen)) {
+                protokoll.delete(i);
+                anzahl++;
+            } else {
+                i++;
+            }
+        }
+        return anzahl;
+    }
+
+   ----- typische Fehlvarianten (Mutanten) und Testergebnis -----
+   c)  P4       Cast (Ladesaeule) vergessen: Kompilierfehler
+   c)  P6/P1    Schleife bis i <= getLength(): 0/6
+   c)  P1       beste == null nicht abgefragt (NullPointer): 0/6 - in der Online-IDE ggf. gruen (== vergleicht dort inhaltlich): von Hand pruefen
+   c)  -        istFrei() nicht abgefragt: 3/6
+   c)  -        Vergleich mit >= (bei Gleichstand die letzte): 4/6
+   c)  P1       Start mit beste = Element 0 (belegt/leer nicht beachtet): 3/6
+   c)  -        Rueckgabe bei der ersten freien Saeule: 4/6
+   c)  P3       Rueckgabe fehlt am Ende: Kompilierfehler
+   d)  P2       Schlange nicht wiederhergestellt (Hilfsschlange nicht zurueckgefuehrt): 1/6
+   d)  P2       Abbruch beim Treffer, nur Hilfsschlange hinten angehaengt: 3/6
+   d)  P5       Kennzeichen mit == verglichen: 1/6 - in der Online-IDE ggf. gruen (== vergleicht dort inhaltlich): von Hand pruefen
+   d)  P6       eigene Ladedauer mitgezaehlt: 1/6
+   d)  -        0 statt -1, wenn nicht enthalten: 4/6
+   d)  P1       head() ohne Leer-Abfrage in der Schleifenbedingung: 0/6
+   d)  P4       Cast (Ladevorgang) vergessen: Kompilierfehler
+   e)  P6       Indizes vertauscht: energie[h][s]: 0/5
+   e)  -        Vergleich mit >= (spaeteste statt frueheste Stunde): 3/5
+   e)  P6       Schleife nur bis Stunde 22 (h < 23): 4/5
+   e)  -        summe nicht je Stunde zurueckgesetzt: 2/5
+   e)  P3       maxSumme statt Stunde zurueckgegeben: 0/5
+   n)  P1/P6/P5 Originalfassung aus Abbildung 11 (alle drei Fehler): 0/5
+   n)  P5/P6    nur Fehler 1 (<=) korrigiert: 0/5
+   n)  P6       Fehler 1 und 2 korrigiert, Fehler 3 nicht (Element nach dem geloeschten uebersprungen): 3/5
+   n)  P5       Fehler 1 und 3 korrigiert, == bleibt: 0/5 - in der Online-IDE ggf. gruen (== vergleicht dort inhaltlich): von Hand pruefen
+   n)  P6       Korrektur von Fehler 1 als i < getLength() - 1 (letztes Element fehlt): 0/5
+*/
+// ===== MUSTERLÖSUNG – ENDE =====

@@ -1,0 +1,126 @@
+// =====================================================================
+//  RUNENBUCH – Testumgebung fuer den Papier-Compiler (AB 3)
+//  Informatik LK · Online-IDE · Algo Quest · Welt 5
+//  Bibliothek "Niedersachsen" im Workspace aktivieren!
+//  Tippe deine handschriftlichen Methoden UNVERAENDERT in DEIN TEIL ein
+//  und starte im Reiter "Testrunner" die Klasse RunenbuchTest.
+// =====================================================================
+
+// ------------------- GERUEST – hier nichts veraendern -------------------
+class Rune {
+    private char zeichen;
+    private boolean ende;
+
+    public Rune(char zeichen, boolean ende) {
+        this.zeichen = zeichen;
+        this.ende = ende;
+    }
+
+    public char getZeichen() {
+        return zeichen;
+    }
+
+    public boolean istEnde() {
+        return ende;
+    }
+
+    public void setEnde(boolean e) {
+        ende = e;
+    }
+}
+
+class Runenbaum {
+
+    // baue(woerter: Reihung von Zeichenkette): BinTree  – neuer Runenbaum
+    public static BinTree baue(String[] woerter) {
+        BinTree b = new BinTree();
+        for (int i = 0; i < woerter.length; i++) {
+            einfuegen(b, woerter[i]);
+        }
+        return b;
+    }
+
+    // einfuegen(b: BinTree vom Inhaltstyp Rune, wort: Zeichenkette): nichts
+    // links = erstes Kind, rechts = naechster Geschwister (alphabetisch)
+    public static void einfuegen(BinTree b, String wort) {
+        char c = wort.charAt(0);
+        String rest = wort.substring(1, wort.length());
+        if (b.isEmpty()) {
+            b.setItem(new Rune(c, rest.length() == 0));
+        } else {
+            Rune r = (Rune) b.getItem();
+            if (c > r.getZeichen()) {
+                einfuegen(b.getRight(), wort);
+                return;
+            }
+            if (c < r.getZeichen()) {
+                BinTree alt = new BinTree(r);
+                alt.setLeft(b.getLeft());
+                alt.setRight(b.getRight());
+                b.setItem(new Rune(c, rest.length() == 0));
+                b.setLeft(new BinTree());
+                b.setRight(alt);
+            } else if (rest.length() == 0) {
+                r.setEnde(true);
+            }
+        }
+        if (rest.length() > 0) {
+            einfuegen(b.getLeft(), rest);
+        }
+    }
+
+    // ------------------- DEIN TEIL – hier arbeitest du! -------------------
+
+    // TODO AB 3, Aufgabe 5: anzahlWoerter(b: BinTree vom Inhaltstyp Rune): Ganzzahl
+    public static int anzahlWoerter(BinTree b) {
+        return -1;
+    }
+
+    // TODO AB 3, Mini-Abi e): istPraefix(b: BinTree vom Inhaltstyp Rune, p: Zeichenkette): Wahrheitswert
+    public static boolean istPraefix(BinTree b, String p) {
+        return false;
+    }
+}
+
+// ------------------- TESTS – hier nichts veraendern! -------------------
+class RunenbuchTest {
+
+    @Test
+    public void papier_anzahlWoerter() {
+        try {
+            String[] w1 = {"EIS", "EISEN", "ELF", "FEE", "FELS"};
+            BinTree t = Runenbaum.baue(w1);
+            assertEquals(5, Runenbaum.anzahlWoerter(t), "Runenbaum 1 (EIS, EISEN, ELF, FEE, FELS): 5 Woerter");
+            Runenbaum.einfuegen(t, "EI");
+            assertEquals(6, Runenbaum.anzahlWoerter(t), "nach einfuegen EI (kein neuer Knoten, nur I markiert): 6 Woerter");
+            Runenbaum.einfuegen(t, "ELFE");
+            Runenbaum.einfuegen(t, "ERZ");
+            assertEquals(8, Runenbaum.anzahlWoerter(t), "nach ELFE und ERZ: 8 Woerter");
+            String[] w3 = {"MOOS", "NEBEL", "MOND", "MOLCH", "MOOR"};
+            assertEquals(5, Runenbaum.anzahlWoerter(Runenbaum.baue(w3)), "Runenbaum der Waldhueterin: 5 Woerter");
+            String[] w4 = {"A"};
+            assertEquals(1, Runenbaum.anzahlWoerter(Runenbaum.baue(w4)), "ein Wort aus einem Buchstaben: 1");
+            assertEquals(0, Runenbaum.anzahlWoerter(new BinTree()), "leerer Runenbaum: 0");
+        } catch (RuntimeException e) {
+            fail("LAUFZEITFEHLER: " + e.getMessage() + " - Basisfall if (b.isEmpty()) vergessen?");
+        }
+    }
+
+    @Test
+    public void papier_istPraefix() {
+        try {
+            String[] w3 = {"MOOS", "NEBEL", "MOND", "MOLCH", "MOOR"};
+            BinTree t = Runenbaum.baue(w3);
+            assertTrue(Runenbaum.istPraefix(t, "MOO"), "MOO ist Anfang von MOOS und MOOR (aber selbst kein Wort)");
+            assertTrue(Runenbaum.istPraefix(t, "NE"), "NE ist Anfang von NEBEL - dazu muss die Suche bei den Geschwistern von M weitergehen");
+            assertTrue(Runenbaum.istPraefix(t, "MOLCH"), "ein ganzes Wort ist auch ein Anfang");
+            assertTrue(Runenbaum.istPraefix(t, "N"), "N");
+            assertFalse(Runenbaum.istPraefix(t, "MOOSE"), "MOOSE: nach S geht es nicht weiter");
+            assertFalse(Runenbaum.istPraefix(t, "MI"), "MI: kein Wort beginnt mit MI");
+            assertFalse(Runenbaum.istPraefix(t, "O"), "O: kein Wort beginnt mit O");
+            assertFalse(Runenbaum.istPraefix(new BinTree(), "A"), "leerer Runenbaum: false");
+        } catch (RuntimeException e) {
+            fail("LAUFZEITFEHLER: " + e.getMessage() + " - Basisfall if (b.isEmpty()) vergessen oder charAt/substring falsch?");
+        }
+    }
+}

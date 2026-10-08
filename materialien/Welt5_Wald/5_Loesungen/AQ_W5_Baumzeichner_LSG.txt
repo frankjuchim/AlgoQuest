@@ -1,0 +1,945 @@
+// =====================================================================
+//  WELT 5 – DER WALD – BAUMZEICHNER – MUSTERLÖSUNG (Lehrerexemplar)
+//  Informatik LK · Online-IDE · Algo Quest · DS 31 – 35 (Kuer/Sichtpruefung)
+//
+//  Das ausgefuellte Baumzeichner-Geruest: Baumschule, Item und Zeichner
+//  sind unveraendert, in Animation und ItemDatenbank stehen alle
+//  Loesungen (Aufgabe 1 bis 8). Die erwarteten Ausgaben und die
+//  berechneten Koordinaten stehen am Ende der Datei (KENNZAHLEN); sie
+//  sind durch Ausfuehren mit Nachbauten der Grafik-Klassen ermittelt.
+//
+//  ANLEITUNG FUER SCHUELER: siehe Geruest-Datei. Eigener Workspace
+//  (Baumschule steht auch in der Level-Datei), Bibliothek
+//  "Niedersachsen" einschalten. Keine Testklassen - Sichtkontrolle.
+//
+//  DIDAKTISCHE ENTSCHEIDUNGEN
+//  - Layout nach INORDER-INDEX (Spalte = Inorder-Nummer, Zeile = Ebene):
+//    einfach zu erklaeren, garantiert ueberlappungsfrei (jeder Knoten hat
+//    seine eigene Spalte) und beim Suchbaum sieht man die Sortierung
+//    direkt: von links nach rechts aufsteigend. Gut fuer DS 34: "Inorder
+//    eines BST ist sortiert" ist im Bild abzulesen. Die Berechnung
+//    (Zeichner.platziere) ist selbst eine Inorder-Traversierung mit
+//    Rueckgabe des Index - ein Lesebeispiel fuer Schnelle.
+//  - Grafik-API NUR wie in den Grafik-Geruesten der Welten 2 und 3:
+//    new World(b, h), new Rectangle(x, y, b, h), new Text(x, y, groesse,
+//    text), setFillColor, setText, destroy, SystemTools.setSpeed.
+//    Deshalb sind Knoten Quadrate (kein Circle) und Kanten Winkel aus
+//    duennen Rechtecken (kein Line): waagerecht aus der Elternmitte bis
+//    ueber das Kind, dann senkrecht bis zur Oberkante des Kindes. Weil
+//    die Knoten zwischen Eltern und Kind (in Inorder) alle im Teilbaum
+//    des Kindes und damit TIEFER liegen, kreuzt keine Kante einen Knoten.
+//  - Die Schueler schreiben nur die Durchlauf-Logik (Rekursion,
+//    Schlange, Suchweg); das Zeichnen uebernimmt der Zeichner. betrete
+//    (blau) + besuche (gruen) zeigen den Unterschied der Traversierungen:
+//    Bei Postorder ist die Wurzel zuerst blau und zuletzt gruen.
+//  - Zeichner.neuZeichnen() behaelt die Farben aller Knoten (Vergleich
+//    der BinTree-Objekte mit ==), deshalb bleibt beim Einfuegen der
+//    Suchweg gold, nachdem der Baum neu gezeichnet wurde.
+//  - Knoten werden ueber das BinTree-OBJEKT gefunden. Wer einen zweiten
+//    Baum aus der Baumschule holt (Baumschule.zahlenbaum() erzeugt jedes
+//    Mal einen NEUEN Baum), faerbt nichts ein: Denkanstoss im
+//    Hauptprogramm ("nichts passiert - warum?"). Richtig:
+//        BinTree z = Baumschule.zahlenbaum();
+//        Zeichner.zeichne(z, "zahlenbaum");  Animation.preorderZeigen(z);
+//  - Die Item-Datenbank ist ein BST vom Inhaltstyp Item (Cast (Item),
+//    Vergleich ueber getNummer()) - Transfer von Level 5.4 auf Objekte.
+//    finde faerbt den Suchweg wie sucheZeigen.
+//  - Grenzen: hoechstens 40 Knoten; Knotengroesse passt sich an (46 px
+//    bei bis zu 13 Knoten und 6 Ebenen, 20 px beim vollstaendigen Baum
+//    mit 31 Knoten). Texte mit mehr als 4 Zeichen werden gekuerzt
+//    ("Kann es fliegen?" -> "Kan.").
+//
+//  LEHRERHINWEIS – VOR DEM ERSTEN EINSATZ IN DER ONLINE-IDE PRUEFEN
+//  (geprueft unter Java 21 mit Nachbauten von World, Rectangle, Text und
+//  der Niedersachsen-Bibliothek, nicht in der Online-IDE selbst)
+//  (a) Text.destroy(): In Welt 2/3 wurde destroy nur fuer Rectangle
+//      benutzt; laut learnj-Doku haben alle Grafikobjekte destroy. Wenn
+//      die Beschriftungen beim Neuzeichnen stehen bleiben, hier pruefen.
+//  (b) Text(x, y, ...) mit (x, y) = linke OBERE Ecke (wie in Welt 3,
+//      Titel bei y = 15). Liegt die Beschriftung zu tief, in
+//      Zeichner.neuZeichnen die y-Formel anpassen.
+//  (c) Hintergrund der World: Die Farben sind fuer den dunklen
+//      Standard-Hintergrund gewaehlt (Titel gold, Info grau-blau, wie im
+//      Dungeon-Rennen). Knoten sind hell mit dunkler Schrift.
+//  (d) Tempo: SystemTools.setSpeed(500) + Zeichner.setPause(60) - nach
+//      Gefuehl anpassen (Pause ist eine Zaehlschleife).
+//  (e) Zeichenreihenfolge: Spaeter erzeugte Objekte liegen oben (laut
+//      learnj-Doku); die Kanten werden deshalb VOR den Knoten erzeugt.
+// =====================================================================
+
+
+// ---------------------------------------------------------------------
+//  GERÜST – unveraendert
+// ---------------------------------------------------------------------
+//  Baumschule: die Testbaeume der Welt 5 (wie in der Level-Datei).
+//  Item:       ein Gegenstand der Item-Datenbank (Nummer und Name).
+//  Zeichner:   zeichnet einen BinTree und faerbt Knoten ein.
+// ---------------------------------------------------------------------
+
+//  Die Testbaeume (ja = links, nein = rechts beim Monsterquiz):
+//
+//  beispielBST()            zahlenbaum()            termbaum()
+//  (BST: 8, 3, 10, 1, 6,    (KEIN BST,              "(3+4)*(5-2)"
+//   14, 4, 7, 13 eingefuegt) Duplikat 9)
+//          8                       5                     *
+//        /   \                   /   \                 /   \
+//       3     10                9     4               +     -
+//      / \      \              / \     \             / \   / \
+//     1   6      14           2   7     9           3   4 5   2
+//        / \    /                      /
+//       4   7  13                     1
+//
+//  entartet(): 1 -> 2 -> 3 -> 4 -> 5 (jeder Knoten hat nur ein rechtes Kind)
+//
+//  monsterquiz():                 Kann es fliegen?
+//                              ja /              \ nein
+//                    Speit es Feuer?          Lebt es im Wasser?
+//                    ja /     \ nein          ja /         \ nein
+//                   Drache    Greif         Kraken         Troll
+//
+//  leer(): leerer Baum      blatt(x): ein einzelnes Blatt mit dem Wert x
+
+class Baumschule {
+
+    // knoten(inhalt: Object, links: BinTree, rechts: BinTree): BinTree
+    // Neuer Knoten mit dem Inhalt und den beiden Teilbaeumen.
+    public static BinTree knoten(Object inhalt, BinTree links, BinTree rechts) {
+        BinTree b = new BinTree(inhalt);
+        b.setLeft(links);
+        b.setRight(rechts);
+        return b;
+    }
+
+    // blatt(x: Ganzzahl): BinTree  - ein Knoten mit zwei leeren Teilbaeumen
+    public static BinTree blatt(int x) {
+        return new BinTree(x);
+    }
+
+    // leer(): BinTree  - der leere Baum
+    public static BinTree leer() {
+        return new BinTree();
+    }
+
+    // Der Beispiel-Suchbaum: entsteht durch Einfuegen von
+    // 8, 3, 10, 1, 6, 14, 4, 7, 13 (in dieser Reihenfolge).
+    public static BinTree beispielBST() {
+        BinTree links = knoten(3, blatt(1), knoten(6, blatt(4), blatt(7)));
+        BinTree rechts = knoten(10, leer(), knoten(14, blatt(13), leer()));
+        return knoten(8, links, rechts);
+    }
+
+    // Ein Zahlenbaum, der KEIN Suchbaum ist (9 kommt zweimal vor).
+    public static BinTree zahlenbaum() {
+        BinTree links = knoten(9, blatt(2), blatt(7));
+        BinTree rechts = knoten(4, leer(), knoten(9, blatt(1), leer()));
+        return knoten(5, links, rechts);
+    }
+
+    // Entarteter Suchbaum: 1, 2, 3, 4, 5 eingefuegt -> rechte Kette.
+    public static BinTree entartet() {
+        BinTree b = blatt(5);
+        for (int i = 4; i >= 1; i--) {
+            b = knoten(i, leer(), b);
+        }
+        return b;
+    }
+
+    // Termbaum zu (3+4)*(5-2): Inhaltstyp Zeichenkette.
+    // Innere Knoten: Rechenzeichen "+", "-", "*", "/"; Blaetter: Zahlen.
+    public static BinTree termbaum() {
+        BinTree plus = knoten("+", new BinTree("3"), new BinTree("4"));
+        BinTree minus = knoten("-", new BinTree("5"), new BinTree("2"));
+        return knoten("*", plus, minus);
+    }
+
+    // Startbaum des Akinator-Monsterquiz: innere Knoten = Fragen,
+    // Blaetter = Monster; ja -> links, nein -> rechts.
+    public static BinTree monsterquiz() {
+        BinTree fliegt = knoten("Speit es Feuer?", new BinTree("Drache"), new BinTree("Greif"));
+        BinTree laeuft = knoten("Lebt es im Wasser?", new BinTree("Kraken"), new BinTree("Troll"));
+        return knoten("Kann es fliegen?", fliegt, laeuft);
+    }
+}
+
+
+//  Klassenkarte (Notation wie im Abitur):
+//      Item
+//      ------------------------------------------------
+//      - nummer: Ganzzahl                      // Schluessel im Suchbaum
+//      - name: Zeichenkette
+//      ------------------------------------------------
+//      + c Item(nummer: Ganzzahl, name: Zeichenkette)
+//      + getNummer(): Ganzzahl
+//      + getName(): Zeichenkette
+//      + beschreibung(): Zeichenkette          // z. B. "#65 Bogen"
+
+class Item {
+
+    private int nummer;
+    private String name;
+
+    public Item(int nummer, String name) {
+        this.nummer = nummer;
+        this.name = name;
+    }
+
+    public int getNummer() {
+        return nummer;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String beschreibung() {
+        return "#" + nummer + " " + name;
+    }
+}
+
+
+// Der Zeichner malt einen BinTree in die Grafik und faerbt Knoten ein.
+//
+// Befehle fuer dich (alle static):
+//   Zeichner.zeichne(b, "Titel")        zeichnet den Baum b (Zahlen,
+//                                       kurze Zeichenketten)
+//   Zeichner.zeichneItems(b, "Titel")   zeichnet einen BinTree vom
+//                                       Inhaltstyp Item (zeigt die Nummer)
+//   Zeichner.start("Preorder")          neue Runde: alle Knoten wieder
+//                                       hellblau, Ausgabezeile leer
+//   Zeichner.betrete(b)                 Knoten b blau: der Aufruf fuer b
+//                                       laeuft gerade
+//   Zeichner.besuche(b)                 Knoten b gruen und sein Inhalt
+//                                       kommt in die Ausgabezeile
+//   Zeichner.hervorheben(b, farbe)      Knoten b in einer Farbe, z. B.
+//                                       Zeichner.WEG (gold) oder
+//                                       Zeichner.GEFUNDEN (kraeftig gruen)
+//   Zeichner.neuZeichnen()              Baum neu zeichnen, nachdem er sich
+//                                       veraendert hat (z. B. eingefuegt);
+//                                       die Farben bleiben erhalten
+//   Zeichner.meldung("Text")            Text unter dem Titel (und in der
+//                                       Konsole)
+//   Zeichner.fertig()                   schreibt die Ausgabezeile in die
+//                                       Konsole, z. B. "Preorder: 8 3 1 ..."
+//   Zeichner.setPause(n)                Wartezeit nach jedem Einfaerben
+//                                       (Standard 60, 0 = keine)
+//   Zeichner.koordinaten()              die berechneten Positionen als Text
+//
+// Leere Baeume, null oder Knoten, die nicht gezeichnet sind, werden bei
+// betrete, besuche und hervorheben einfach uebergangen.
+//
+// So wird gezeichnet: Die Knoten sind Quadrate, Ebene i liegt in der
+// Zeile i (Wurzel oben). Die x-Position ist der INORDER-INDEX: der
+// kleinste Wert (ganz links in Inorder) bekommt Spalte 0, der naechste
+// Spalte 1 usw. Bei einem Suchbaum stehen die Werte also von links nach
+// rechts aufsteigend sortiert. Weil jeder Knoten seine eigene Spalte hat,
+// ueberlappt nichts. Die Kanten sind Winkel: waagerecht aus der
+// Elternmitte bis ueber das Kind, dann senkrecht hinunter.
+class Zeichner {
+
+    // ----- Farben fuer hervorheben -----
+    public static String NORMAL = "#DBE7F5";       // hellblau: noch nicht besucht
+    public static String AKTIV = "#5B9BD5";        // blau: Aufruf laeuft gerade
+    public static String BESUCHT = "#A9D18E";      // gruen: besucht / ausgegeben
+    public static String WEG = "#FFD966";          // gold: Suchweg
+    public static String GEFUNDEN = "#70AD47";     // kraeftig gruen: gefunden
+    public static String NEU = "#F4B183";          // orange: neu eingefuegt
+    public static String FEHLT = "#FF7C80";        // rot: hier fehlt etwas
+
+    private static String FARBE_LINIE = "#BFBFBF";
+    private static String FARBE_SCHRIFT = "#1F2D3D";
+
+    // ----- Zeichenflaeche -----
+    private static int BREITE = 1000;
+    private static int HOEHE = 700;
+    private static int RAND = 30;
+    private static int OBEN = 85;                  // y der Wurzel
+    private static int UNTEN = 600;                // unterste Kante der Knoten
+    private static int MAX_KNOTEN = 40;
+
+    // ----- der gezeichnete Baum (Index = Inorder-Index) -----
+    private static BinTree wurzel = null;
+    private static boolean itemModus = false;
+    private static BinTree[] knoten = new BinTree[40];
+    private static int[] ebeneVon = new int[40];
+    private static int[] kindLinks = new int[40];
+    private static int[] kindRechts = new int[40];
+    private static int[] posX = new int[40];
+    private static int[] posY = new int[40];
+    private static String[] farbe = new String[40];
+    private static Rectangle[] kasten = new Rectangle[40];
+    private static Text[] schrift = new Text[40];
+    private static int anzahl = 0;
+    private static int tiefe = 0;
+    private static boolean zuGross = false;
+    private static Rectangle[] linien = new Rectangle[80];
+    private static int anzahlLinien = 0;
+
+    // ----- Layout (wird an den Baum angepasst) -----
+    private static int abstand = 80;               // Abstand der Spalten
+    private static int zeile = 90;                 // Abstand der Ebenen
+    private static int groesse = 46;               // Kantenlaenge eines Knotens
+    private static int links0 = 0;                 // x der Spalte 0
+
+    // ----- Texte -----
+    private static boolean weltBereit = false;
+    private static Text titel;
+    private static Text info;
+    private static Text ausgabe;
+    private static Text legende;
+    private static String titelText = "";
+    private static String ausgabeText = "";
+    private static int pausenLaenge = 60;
+
+
+    // =============== Befehle ===============
+
+    public static void zeichne(BinTree b, String ueberschrift) {
+        itemModus = false;
+        neuerBaum(b, ueberschrift);
+    }
+
+    public static void zeichneItems(BinTree b, String ueberschrift) {
+        itemModus = true;
+        neuerBaum(b, ueberschrift);
+    }
+
+    public static void start(String ueberschrift) {
+        welt();
+        warte(3);                                  // altes Bild kurz stehen lassen
+        for (int i = 0; i < anzahl; i++) {
+            farbe[i] = NORMAL;
+            kasten[i].setFillColor(NORMAL);
+        }
+        titelText = ueberschrift;
+        ausgabeText = "";
+        titel.setText(ueberschrift);
+        info.setText("");
+        ausgabe.setText(ueberschrift + ": ");
+    }
+
+    public static void betrete(BinTree b) {
+        hervorheben(b, AKTIV);
+    }
+
+    public static void besuche(BinTree b) {
+        if (index(b) < 0) {
+            return;
+        }
+        ausgabeText = ausgabeText + beschriftung(b.getItem()) + " ";
+        ausgabe.setText(titelText + ": " + ausgabeText);
+        hervorheben(b, BESUCHT);
+    }
+
+    public static void hervorheben(BinTree b, String f) {
+        int i = index(b);
+        if (i < 0) {
+            return;
+        }
+        farbe[i] = f;
+        kasten[i].setFillColor(f);
+        warte(1);
+    }
+
+    public static void meldung(String text) {
+        welt();
+        info.setText(text);
+        println("   " + text);
+    }
+
+    public static void fertig() {
+        println(titelText + ": " + ausgabeText);
+    }
+
+    public static String getAusgabe() {
+        return ausgabeText;
+    }
+
+    public static void setPause(int n) {
+        pausenLaenge = n;
+    }
+
+    // Die berechneten Positionen, z. B. "8 (493|85)  3 (333|175) ..."
+    // (linke obere Ecke der Knoten, in Preorder).
+    public static String koordinaten() {
+        return koordinaten(wurzel);
+    }
+
+    public static void neuZeichnen() {
+        welt();
+        BinTree[] alteKnoten = knoten;
+        String[] alteFarben = farbe;
+        int alteAnzahl = anzahl;
+        entfernen();
+        knoten = new BinTree[MAX_KNOTEN];
+        farbe = new String[MAX_KNOTEN];
+        anzahl = 0;
+        tiefe = 0;
+        zuGross = false;
+        if (wurzel == null || wurzel.isEmpty()) {
+            info.setText("(leerer Baum)");
+            return;
+        }
+        platziere(wurzel, 0);
+        if (!zuGross) {
+            layout();
+        }
+        if (zuGross || groesse < 10) {
+            anzahl = 0;
+            info.setText("Der Baum ist zu gross oder zu tief zum Zeichnen.");
+            return;
+        }
+        for (int i = 0; i < anzahl; i++) {
+            if (kindLinks[i] >= 0) {
+                verbinde(i, kindLinks[i]);
+            }
+            if (kindRechts[i] >= 0) {
+                verbinde(i, kindRechts[i]);
+            }
+        }
+        for (int i = 0; i < anzahl; i++) {
+            farbe[i] = NORMAL;
+            for (int k = 0; k < alteAnzahl; k++) {
+                if (alteKnoten[k] == knoten[i]) {
+                    farbe[i] = alteFarben[k];      // Farbe vom letzten Bild behalten
+                }
+            }
+            kasten[i] = new Rectangle(posX[i], posY[i], groesse, groesse);
+            kasten[i].setFillColor(farbe[i]);
+            String t = beschriftung(knoten[i].getItem());
+            int fs = groesse * 45 / 100;
+            int textBreite = t.length() * fs * 55 / 100;
+            schrift[i] = new Text(posX[i] + (groesse - textBreite) / 2, posY[i] + (groesse - fs) / 2, fs, t);
+            schrift[i].setFillColor(FARBE_SCHRIFT);
+        }
+    }
+
+
+    // =============== intern ===============
+
+    private static void neuerBaum(BinTree b, String ueberschrift) {
+        welt();
+        entfernen();
+        anzahl = 0;                                // keine alten Farben uebernehmen
+        wurzel = b;
+        neuZeichnen();
+        titelText = ueberschrift;
+        ausgabeText = "";
+        titel.setText(ueberschrift);
+        ausgabe.setText("");
+    }
+
+    private static void welt() {
+        if (!weltBereit) {
+            new World(BREITE, HOEHE);
+            titel = new Text(RAND, 12, 28, "");
+            titel.setFillColor("#DAA520");
+            info = new Text(RAND, 50, 18, "");
+            info.setFillColor("#8FA8C8");
+            ausgabe = new Text(RAND, 622, 22, "");
+            ausgabe.setFillColor("#9DC3E6");
+            legende = new Text(RAND, 664, 15, "hellblau: unbesucht | blau: Aufruf laeuft | gruen: besucht | gold: Suchweg | orange: neu | rot: fehlt");
+            legende.setFillColor("#8C8C8C");
+            weltBereit = true;
+        }
+    }
+
+    // Kurze Pause (Tempo zusaetzlich mit dem Regler der IDE einstellen).
+    private static void warte(int mal) {
+        int summe = 0;
+        for (int i = 0; i < pausenLaenge * mal; i++) {
+            summe = summe + i;
+        }
+    }
+
+    private static int index(BinTree b) {
+        for (int i = 0; i < anzahl; i++) {
+            if (knoten[i] == b) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private static String beschriftung(Object o) {
+        String t = "" + o;
+        if (itemModus) {
+            Item it = (Item) o;
+            t = "" + it.getNummer();
+        }
+        if (t.length() > 4) {
+            t = t.substring(0, 3) + ".";
+        }
+        return t;
+    }
+
+    // Inorder durchlaufen: Der Index eines Knotens ist seine Inorder-Nummer
+    // (= Spalte). Rueckgabe: Index des Knotens, -1 fuer den leeren Baum.
+    private static int platziere(BinTree b, int ebene) {
+        if (b.isEmpty()) {
+            return -1;
+        }
+        int l = platziere(b.getLeft(), ebene + 1);
+        if (anzahl >= MAX_KNOTEN) {
+            zuGross = true;
+            return -1;
+        }
+        int i = anzahl;
+        anzahl++;
+        knoten[i] = b;
+        ebeneVon[i] = ebene;
+        kindLinks[i] = l;
+        if (ebene > tiefe) {
+            tiefe = ebene;
+        }
+        kindRechts[i] = platziere(b.getRight(), ebene + 1);
+        return i;
+    }
+
+    // Spaltenabstand, Zeilenabstand und Knotengroesse an den Baum anpassen.
+    private static void layout() {
+        abstand = (BREITE - 2 * RAND) / anzahl;
+        if (abstand > 80) {
+            abstand = 80;
+        }
+        zeile = 90;
+        if (tiefe > 0 && (UNTEN - OBEN - 46) / tiefe < 90) {
+            zeile = (UNTEN - OBEN - 46) / tiefe;
+        }
+        groesse = 46;
+        if (groesse > abstand - 10) {
+            groesse = abstand - 10;
+        }
+        if (groesse > zeile - 10) {
+            groesse = zeile - 10;
+        }
+        links0 = (BREITE - anzahl * abstand) / 2 + (abstand - groesse) / 2;
+        for (int i = 0; i < anzahl; i++) {
+            posX[i] = links0 + i * abstand;
+            posY[i] = OBEN + ebeneVon[i] * zeile;
+        }
+    }
+
+    // Kante als Winkel: waagerecht in Hoehe der Elternmitte bis ueber die
+    // Mitte des Kindes, dann senkrecht hinunter bis zur Oberkante des Kindes.
+    private static void verbinde(int eltern, int kind) {
+        int xm = posX[kind] + groesse / 2;         // Mitte des Kindes
+        int ym = posY[eltern] + groesse / 2;       // Hoehe der Elternmitte
+        if (xm < posX[eltern]) {
+            linie(xm - 1, ym - 1, posX[eltern] - xm + 1, 3);
+        } else {
+            linie(posX[eltern] + groesse, ym - 1, xm - posX[eltern] - groesse + 2, 3);
+        }
+        linie(xm - 1, ym - 1, 3, posY[kind] - ym + 1);
+    }
+
+    private static void linie(int x, int y, int b, int h) {
+        Rectangle r = new Rectangle(x, y, b, h);
+        r.setFillColor(FARBE_LINIE);
+        linien[anzahlLinien] = r;
+        anzahlLinien++;
+    }
+
+    private static void entfernen() {
+        for (int i = 0; i < anzahl; i++) {
+            kasten[i].destroy();
+            schrift[i].destroy();
+        }
+        for (int i = 0; i < anzahlLinien; i++) {
+            linien[i].destroy();
+        }
+        anzahlLinien = 0;
+    }
+
+    private static String koordinaten(BinTree b) {
+        if (b == null || b.isEmpty()) {
+            return "";
+        }
+        int i = index(b);
+        String t = "";
+        if (i >= 0) {
+            t = beschriftung(b.getItem()) + " (" + posX[i] + "|" + posY[i] + ")  ";
+        }
+        return t + koordinaten(b.getLeft()) + koordinaten(b.getRight());
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  LÖSUNGEN
+// ---------------------------------------------------------------------
+//  Aufgabe 1 bis 5: Klasse Animation (Traversierungen und Suchbaum
+//  sichtbar machen). Aufgabe 6 bis 8: Klasse ItemDatenbank.
+//  Starte nach jeder Aufgabe das Hauptprogramm und schau zu! Vergleiche
+//  die Ausgabezeile mit deinen Ergebnissen aus Level 5.1 (Preorder,
+//  Postorder) und 5.3 (Levelorder).
+// ---------------------------------------------------------------------
+
+class Animation {
+
+    // ---------------- BEISPIEL (fertig): Inorder ----------------
+    // inorderZeigen(b: BinTree): nichts
+    // betrete faerbt den Knoten blau, sobald sein Aufruf beginnt; besuche
+    // faerbt ihn gruen, wenn er an der Reihe ist (hier: ZWISCHEN den
+    // beiden Teilbaeumen). So siehst du, welche Aufrufe noch "offen" sind.
+    public static void inorderZeigen(BinTree b) {
+        if (b.isEmpty()) {
+            return;
+        }
+        Zeichner.betrete(b);
+        inorderZeigen(b.getLeft());
+        Zeichner.besuche(b);
+        inorderZeigen(b.getRight());
+    }
+
+    // ---------------- Aufgabe 1 (Basis): Preorder ----------------
+    // preorderZeigen(b: BinTree): nichts
+    // Wie inorderZeigen, aber in Preorder: Wurzel - links - rechts.
+    // Erwartete Ausgabe fuer beispielBST: 8 3 1 6 4 7 10 14 13
+    public static void preorderZeigen(BinTree b) {
+        if (b.isEmpty()) {
+            return;
+        }
+        Zeichner.besuche(b);                            // Wurzel ZUERST
+        preorderZeigen(b.getLeft());
+        preorderZeigen(b.getRight());
+    }
+
+    // ---------------- Aufgabe 2 (Basis): Postorder ----------------
+    // postorderZeigen(b: BinTree): nichts
+    // links - rechts - Wurzel. Benutze betrete UND besuche: Dann siehst
+    // du, dass die Wurzel als ERSTE betreten, aber als LETZTE besucht wird.
+    // Erwartete Ausgabe fuer beispielBST: 1 4 7 6 3 13 14 10 8
+    public static void postorderZeigen(BinTree b) {
+        if (b.isEmpty()) {
+            return;
+        }
+        Zeichner.betrete(b);
+        postorderZeigen(b.getLeft());
+        postorderZeigen(b.getRight());
+        Zeichner.besuche(b);                            // Wurzel ZULETZT
+    }
+
+    // ---------------- Aufgabe 3 (Erweiterung): Levelorder ----------------
+    // levelorderZeigen(b: BinTree): nichts   (NICHT rekursiv)
+    // Ebene fuer Ebene mit einer Schlange vom Inhaltstyp BinTree:
+    // Wurzel einreihen; solange die Schlange nicht leer ist: vordersten
+    // Teilbaum k entnehmen ((BinTree) q.dequeue()), besuchen, seine nicht
+    // leeren Kinder einreihen. Tipp: Faerbe eingereihte Knoten mit
+    // Zeichner.betrete - dann siehst du, was gerade in der Schlange steht.
+    // Erwartete Ausgabe fuer beispielBST: 8 3 10 1 6 14 4 7 13
+    public static void levelorderZeigen(BinTree b) {
+        Queue q = new Queue();
+        if (!b.isEmpty()) {
+            q.enqueue(b);
+            Zeichner.betrete(b);                        // blau = steht in der Schlange
+        }
+        while (!q.isEmpty()) {
+            BinTree k = (BinTree) q.dequeue();
+            Zeichner.besuche(k);
+            if (!k.getLeft().isEmpty()) {
+                q.enqueue(k.getLeft());
+                Zeichner.betrete(k.getLeft());
+            }
+            if (!k.getRight().isEmpty()) {
+                q.enqueue(k.getRight());
+                Zeichner.betrete(k.getRight());
+            }
+        }
+    }
+
+    // ---------------- Aufgabe 4 (Erweiterung): Suchweg einfaerben ----------------
+    // sucheZeigen(b: BinTree vom Inhaltstyp Ganzzahl, x: Ganzzahl): Wahrheitswert
+    // Rekursive Suche im BST wie Suchbaum.suche aus Level 5.4. Faerbe
+    // jeden Knoten auf dem Weg mit Zeichner.WEG (gold), den gefundenen
+    // Knoten mit Zeichner.GEFUNDEN. Am Ende eine Meldung, z. B.
+    // Zeichner.meldung("7 gefunden") bzw. Zeichner.meldung("5 fehlt").
+    // beispielBST: 7 -> Weg 8, 3, 6 und 7 gefunden; 5 -> Weg 8, 3, 6, 4.
+    public static boolean sucheZeigen(BinTree b, int x) {
+        if (b.isEmpty()) {
+            Zeichner.meldung(x + " fehlt (leerer Teilbaum erreicht)");
+            return false;
+        }
+        int wert = (Integer) b.getItem();
+        if (x == wert) {
+            Zeichner.hervorheben(b, Zeichner.GEFUNDEN);
+            Zeichner.meldung(x + " gefunden");
+            return true;
+        }
+        Zeichner.hervorheben(b, Zeichner.WEG);          // Suchweg
+        if (x < wert) {
+            return sucheZeigen(b.getLeft(), x);
+        }
+        return sucheZeigen(b.getRight(), x);
+    }
+
+    // ---------------- Aufgabe 5 (Experte): Einfuegen zeigen ----------------
+    // einfuegenZeigen(b: BinTree vom Inhaltstyp Ganzzahl, x: Ganzzahl): nichts
+    // Wie Suchbaum.einfuegen aus Level 5.4, aber sichtbar: Suchweg mit
+    // Zeichner.WEG einfaerben. Ist der leere Teilbaum erreicht: b.setItem(x),
+    // dann Zeichner.neuZeichnen() (der Baum hat sich veraendert!) und den
+    // neuen Knoten mit Zeichner.NEU einfaerben. Duplikat: Knoten mit
+    // Zeichner.FEHLT einfaerben und Meldung.
+    public static void einfuegenZeigen(BinTree b, int x) {
+        if (b.isEmpty()) {
+            b.setItem(x);                               // leerer Teilbaum -> Blatt
+            Zeichner.neuZeichnen();
+            Zeichner.hervorheben(b, Zeichner.NEU);
+            Zeichner.meldung(x + " eingefuegt");
+            return;
+        }
+        int wert = (Integer) b.getItem();
+        if (x == wert) {
+            Zeichner.hervorheben(b, Zeichner.FEHLT);
+            Zeichner.meldung(x + " ist schon da - Duplikat, nichts eingefuegt");
+            return;
+        }
+        Zeichner.hervorheben(b, Zeichner.WEG);
+        if (x < wert) {
+            einfuegenZeigen(b.getLeft(), x);
+        } else {
+            einfuegenZeigen(b.getRight(), x);
+        }
+    }
+}
+
+
+// Die Item-Datenbank des Dungeon-Spiels: ein binaerer Suchbaum vom
+// Inhaltstyp Item, geordnet nach der Item-NUMMER (links kleinere,
+// rechts groessere Nummern). Casten nicht vergessen:
+//     Item it = (Item) b.getItem();
+//
+//  Klassenkarte:
+//      ItemDatenbank
+//      ------------------------------------------------
+//      - baum: BinTree                         // Inhaltstyp Item
+//      ------------------------------------------------
+//      + c ItemDatenbank()                     // VORGEGEBEN: leerer Baum
+//      + getBaum(): BinTree                    // VORGEGEBEN
+//      + einfuegen(it: Item): nichts
+//      + finde(nummer: Ganzzahl): Item
+//      + inventar(): Zeichenkette
+class ItemDatenbank {
+
+    private BinTree baum;
+
+    public ItemDatenbank() {
+        baum = new BinTree();
+    }
+
+    public BinTree getBaum() {
+        return baum;
+    }
+
+    // ---------------- Aufgabe 6 (Basis): Item einfuegen ----------------
+    // einfuegen(it: Item): nichts
+    // Fuegt it nach seiner Nummer in den Suchbaum ein (ohne Grafik).
+    // Eine Nummer, die schon vorkommt, wird nicht noch einmal eingefuegt.
+    public void einfuegen(Item it) {
+        einfuegen(baum, it);
+    }
+
+    // einfuegen(b: BinTree, it: Item): nichts   - rekursive Hilfsmethode
+    private static void einfuegen(BinTree b, Item it) {
+        if (b.isEmpty()) {
+            b.setItem(it);
+            return;
+        }
+        Item hier = (Item) b.getItem();                 // Cast: Object -> Item
+        if (it.getNummer() < hier.getNummer()) {
+            einfuegen(b.getLeft(), it);
+        } else if (it.getNummer() > hier.getNummer()) {
+            einfuegen(b.getRight(), it);
+        }
+    }
+
+    // ---------------- Aufgabe 7 (Erweiterung): Item finden ----------------
+    // finde(nummer: Ganzzahl): Item
+    // Sucht das Item mit dieser Nummer und faerbt dabei den Suchweg ein
+    // (Zeichner.WEG, Treffer Zeichner.GEFUNDEN). Nicht vorhanden -> null.
+    public Item finde(int nummer) {
+        return finde(baum, nummer);
+    }
+
+    // finde(b: BinTree, nummer: Ganzzahl): Item   - rekursive Hilfsmethode
+    private static Item finde(BinTree b, int nummer) {
+        if (b.isEmpty()) {
+            return null;
+        }
+        Item hier = (Item) b.getItem();
+        if (nummer == hier.getNummer()) {
+            Zeichner.hervorheben(b, Zeichner.GEFUNDEN);
+            return hier;
+        }
+        Zeichner.hervorheben(b, Zeichner.WEG);
+        if (nummer < hier.getNummer()) {
+            return finde(b.getLeft(), nummer);
+        }
+        return finde(b.getRight(), nummer);
+    }
+
+    // ---------------- Aufgabe 8 (Experte): Inventarliste ----------------
+    // inventar(): Zeichenkette
+    // Alle Items nach Nummer sortiert, jedes mit beschreibung() und
+    // danach "; ", z. B. "#10 Brot; #20 Seil; ... ". Leere Datenbank -> "".
+    // Tipp: Welche Traversierung liefert einen Suchbaum sortiert?
+    public String inventar() {
+        return inventar(baum);
+    }
+
+    // inventar(b: BinTree): Zeichenkette   - rekursive Hilfsmethode
+    private static String inventar(BinTree b) {
+        if (b.isEmpty()) {
+            return "";
+        }
+        Item hier = (Item) b.getItem();
+        return inventar(b.getLeft()) + hier.beschreibung() + "; " + inventar(b.getRight());
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  Programmstart
+// ---------------------------------------------------------------------
+//  Tempo: SystemTools.setSpeed (oder der Regler oben in der IDE) und
+//  Zeichner.setPause(...). Zum schnellen Durchlaufen: setSpeed(10000)
+//  und Zeichner.setPause(0).
+
+SystemTools.setSpeed(500);
+Zeichner.setPause(60);
+
+// ----- Szene 1: die vier Traversierungen am beispielBST -----
+BinTree baum = Baumschule.beispielBST();
+Zeichner.zeichne(baum, "beispielBST");
+
+Zeichner.start("Inorder");
+Animation.inorderZeigen(baum);
+Zeichner.fertig();
+
+Zeichner.start("Preorder");                 // Aufgabe 1
+Animation.preorderZeigen(baum);
+Zeichner.fertig();
+
+Zeichner.start("Postorder");                // Aufgabe 2
+Animation.postorderZeigen(baum);
+Zeichner.fertig();
+
+Zeichner.start("Levelorder");               // Aufgabe 3
+Animation.levelorderZeigen(baum);
+Zeichner.fertig();
+
+// ----- Szene 2: Suchen und Einfuegen im Suchbaum -----
+Zeichner.start("Suche nach 7");             // Aufgabe 4
+Animation.sucheZeigen(baum, 7);
+Zeichner.start("Suche nach 5");
+Animation.sucheZeigen(baum, 5);
+
+Zeichner.start("Einfuegen von 5");          // Aufgabe 5
+Animation.einfuegenZeigen(baum, 5);
+Zeichner.start("Einfuegen von 11");
+Animation.einfuegenZeigen(baum, 11);
+Zeichner.start("Einfuegen von 6");
+Animation.einfuegenZeigen(baum, 6);
+println("Baum danach: " + Zeichner.koordinaten());
+
+// ----- Szene 3: die Item-Datenbank -----
+ItemDatenbank db = new ItemDatenbank();     // Aufgabe 6
+db.einfuegen(new Item(50, "Heiltrank"));
+db.einfuegen(new Item(30, "Fackel"));
+db.einfuegen(new Item(70, "Schwert"));
+db.einfuegen(new Item(20, "Seil"));
+db.einfuegen(new Item(40, "Schluessel"));
+db.einfuegen(new Item(60, "Schild"));
+db.einfuegen(new Item(80, "Drachenei"));
+db.einfuegen(new Item(10, "Brot"));
+db.einfuegen(new Item(35, "Karte"));
+db.einfuegen(new Item(45, "Laterne"));
+db.einfuegen(new Item(65, "Bogen"));
+db.einfuegen(new Item(75, "Kompass"));
+Zeichner.zeichneItems(db.getBaum(), "Item-Datenbank (Nummern)");
+
+Zeichner.start("Suche Item 65");            // Aufgabe 7
+Item gesucht = db.finde(65);
+if (gesucht != null) {
+    Zeichner.meldung("Gefunden: " + gesucht.beschreibung());
+} else {
+    Zeichner.meldung("Item 65 nicht gefunden");
+}
+Zeichner.start("Suche Item 33");
+gesucht = db.finde(33);
+if (gesucht != null) {
+    Zeichner.meldung("Gefunden: " + gesucht.beschreibung());
+} else {
+    Zeichner.meldung("Item 33 nicht gefunden");
+}
+
+println("Inventar: " + db.inventar());      // Aufgabe 8
+
+// ----- Zum Ausprobieren (Kommentarzeichen entfernen) -----
+// Zeichner.zeichne(Baumschule.zahlenbaum(), "zahlenbaum");
+// Zeichner.start("Preorder");
+// Animation.preorderZeigen(Baumschule.zahlenbaum());   // nichts passiert - warum?
+// Zeichner.zeichne(Baumschule.termbaum(), "termbaum (3+4)*(5-2)");
+// Zeichner.start("Postorder = Postfix");
+// Animation.postorderZeigen(Baumschule.termbaum());     // auch nichts - warum?
+// BinTree kette = new BinTree();
+// Zeichner.zeichne(kette, "Sortiert einfuegen: 1, 2, 3, ...");
+// for (int i = 1; i <= 8; i++) {
+//     Animation.einfuegenZeigen(kette, i);
+// }
+
+
+// =====================================================================
+//  KENNZAHLEN – ermittelt durch Ausfuehren der Musterloesung
+//
+//  Konsolenausgabe des Hauptprogramms (Pause 0):
+//      Inorder: 1 3 4 6 7 8 10 13 14
+//      Preorder: 8 3 1 6 4 7 10 14 13
+//      Postorder: 1 4 7 6 3 13 14 10 8
+//      Levelorder: 8 3 10 1 6 14 4 7 13
+//         7 gefunden                      (Weg 8, 3, 6 gold; 7 gruen)
+//         5 fehlt (leerer Teilbaum erreicht)   (Weg 8, 3, 6, 4 gold)
+//         5 eingefuegt                    (rechts von 4)
+//         11 eingefuegt                   (links von 13)
+//         6 ist schon da - Duplikat, nichts eingefuegt
+//      Gefunden: #65 Bogen                (Weg 50, 70, 60 gold; 65 gruen)
+//      Item 33 nicht gefunden             (Weg 50, 30, 40, 35 gold)
+//      Inventar: #10 Brot; #20 Seil; #30 Fackel; #35 Karte;
+//        #40 Schluessel; #45 Laterne; #50 Heiltrank; #60 Schild;
+//        #65 Bogen; #70 Schwert; #75 Kompass; #80 Drachenei;
+//
+//  Die Item-Datenbank (Einfuegereihenfolge 50, 30, 70, 20, 40, 60, 80,
+//  10, 35, 45, 65, 75):
+//                      50 Heiltrank
+//                /                    \
+//          30 Fackel                 70 Schwert
+//          /       \                 /        \
+//     20 Seil   40 Schluessel   60 Schild   80 Drachenei
+//      /          /     \           \           /
+//  10 Brot   35 Karte  45 Laterne  65 Bogen  75 Kompass
+//  Hoehe 4; finde(65): 4 Vergleiche, finde(33): 4 Vergleiche bis leer.
+//
+//  KOORDINATEN (linke obere Ecke, World 1000 x 700; Zeichner.koordinaten())
+//  beispielBST (9 Knoten, 4 Ebenen): Spaltenabstand 80, Zeilenabstand 90,
+//  Knoten 46 x 46 px, Spalte 0 bei x = 157:
+//      8 (557|85)   3 (237|175)  1 (157|265)  6 (397|265)  4 (317|355)
+//      7 (477|355)  10 (637|175) 14 (797|265) 13 (717|355)
+//  Item-Datenbank (12 Knoten): Spaltenabstand 78, Spalte 0 bei x = 48:
+//      50 (516|85)  30 (204|175) 20 (126|265) 10 (48|355)  40 (360|265)
+//      35 (282|355) 45 (438|355) 70 (750|175) 60 (594|265) 65 (672|355)
+//      80 (906|265) 75 (828|355)
+//  Layout-Pruefung (Knoten ueberlappen nicht, keine Kante schneidet einen
+//  Knoten, alles innerhalb der World, Text im Knoten) bestanden fuer:
+//  beispielBST, zahlenbaum, entartet, termbaum, monsterquiz, Blatt, leer,
+//  beispielBST nach Einfuegen von 5, 11, 12, Item-Datenbank, Kette 1..12
+//  (Knoten 32 px), vollstaendiger Baum mit 31 Knoten (20 px); 41 Knoten
+//  -> "zu gross", nichts gezeichnet.
+//
+//  LOESUNGEN DER DENKANSTOESSE IM HAUPTPROGRAMM
+//  - "nichts passiert - warum?": Baumschule.zahlenbaum() liefert bei
+//    jedem Aufruf einen NEUEN Baum. Gezeichnet ist ein anderes Objekt
+//    als das, das preorderZeigen durchlaeuft - der Zeichner findet die
+//    Knoten nicht (Vergleich mit ==). Erst in einer Variablen merken.
+//  - Kette 1..8: Sortiert eingefuegt entsteht die rechte Kette (8 Ebenen,
+//    jede Einfuegung laeuft den ganzen Weg ab) - Anlass fuer DS 35
+//    (ausgeglichen vs. entartet).
+// =====================================================================

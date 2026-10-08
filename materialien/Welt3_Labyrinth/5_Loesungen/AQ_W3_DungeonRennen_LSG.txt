@@ -1,0 +1,1142 @@
+// =====================================================================
+//  WELT 3 – DAS LABYRINTH – DUNGEON-RENNEN – MUSTERLÖSUNG (Lehrerexemplar)
+//  Informatik LK · Online-IDE · Algo Quest · DS 19–20 (Flood-Fill,
+//  Backtracking)
+//
+//  Das ausgefuellte Renn-Geruest: Die Klasse Rennen ist unveraendert,
+//  in MeinSolver stehen der Flood-Fill (lueften), das Standard-
+//  Backtracking (oben, rechts, unten, links) und die Musterloesung fuer
+//  das Rennen (Kompass-Strategie: Richtung Ziel zuerst). Die Klasse
+//  Referenz misst beide Strategien auf den drei Rennkarten nach.
+//  Alle Zahlen unten sind durch Ausfuehren ermittelt und exakt
+//  reproduzierbar (feste Karten, kein Zufall in den Verfahren).
+//
+//  ANLEITUNG FUER SCHUELER UND RENN-REGELN: siehe Geruest-Datei.
+//
+//  DIE RENNKARTEN (auch fuer AB2, Warm-up und Boss nutzbar; [Zeile][Spalte])
+//
+//  Karte 1 – klein (7 x 11)          Karte 2 – mittel (11 x 15)
+//     01234567890                   012345678901234
+//   0 ###########                 0 ###############
+//   1 #...#...#.#                 1 #.......#.....#
+//   2 #.#.#.#.#.#                 2 #.#####.#.###.#
+//   3 #.#...#...#                 3 #.#...#.#...#.#
+//   4 #.#####.#.#                 4 #.#.#.#.###.#.#
+//   5 #S......#Z#                 5 #...#.#.....#S#
+//   6 ###########                 6 #.###.#######.#
+//  S = (5, 1), Z = (5, 9)         7 #.#...#.......#
+//  30 freie Felder, alle          8 #.#####.#######
+//  erreichbar                     9 #Z#...#.......#
+//                                10 ###############
+//
+//                                    S = (5, 13), Z = (9, 1); 68 freie
+//                                    Felder, 65 erreichbar (abgeschlossene
+//                                    Kammer (9, 3) bis (9, 5))
+//
+//  Karte 3 – gross (15 x 21), S = (7, 19), Z = (13, 1), 140 freie
+//  Felder, alle erreichbar, mehrere Wege (Schleifen) und Sackgassen
+//               11111111112
+//     012345678901234567890
+//   0 #####################
+//   1 #.....#.....#.......#
+//   2 #.###.#.###.#.#####.#
+//   3 #.#...#...#...#...#.#
+//   4 #.#.#####.#####.#.#.#
+//   5 #.#.#.....#.....#...#
+//   6 #.#.#.#####.#####.###
+//   7 #.#...#.....#...#..S#
+//   8 #.#####.#####.#.#.###
+//   9 #.......#.....#.#...#
+//  10 #.#######.#####.###.#
+//  11 #.#.....#.#...#...#.#
+//  12 #.#.###.#.#.#.###.#.#
+//  13 #Z..#...#...#.#.....#
+//  14 #####################
+//
+//  Karte 2 und 3 liegen "spiegelverkehrt" zu Karte 1 (Ziel links):
+//  Eine feste Richtungsreihenfolge kann so nicht auf allen Karten
+//  gleichzeitig Glueck haben.
+//
+//  Kontrollkarten 1-3: je ein neues Labyrinth in der Groesse der
+//  Rennkarte 1, 2 bzw. 3, S und Z an denselben Stellen (Tiefensuche mit
+//  eigenem Stapel, Pseudozufall wie Welt 2 mit Startwert aus Math.random,
+//  dazu (Zeilen * Spalten) / 30 Durchbrueche fuer mehrere Wege).
+//  Ueber Rennen.training(0) bzw. Rennen.nebel(0) ueben Schueler auf
+//  Zufallskarten 11 x 17 (S links, Z rechts, Zeilen zufaellig).
+//
+//  DIDAKTISCHE ENTSCHEIDUNGEN
+//  - Gewertet werden Schritte (Aufrufe von betrete), nicht die Laufzeit
+//    - wie im Sortier-Duell: Zaehlen statt Stoppuhr.
+//  - verlasse ist kostenlos: Backtracking soll nicht bestraft werden;
+//    teuer ist nur das Betreten neuer Felder (Erkunden).
+//  - NEBEL-Regel (istBegehbar/istZiel nur fuer Standort und Nachbarn):
+//    Ohne sie koennte man die ganze Karte kostenlos abfragen, offline
+//    per Breitensuche den kuerzesten Weg berechnen und nur diesen gehen
+//    - das Rennen waere dann fuer alle gleich (Karte 1–3: 83 Schritte).
+//    So bleibt es eine echte Erkundung mit Backtracking.
+//  - Der Kompass (zielZeile/zielSpalte) ist bewusst erlaubt: Er macht
+//    Heuristiken wie "Richtung Ziel zuerst" moeglich.
+//  - Bewegungsregeln (erster Schritt auf S, nur Nachbarfelder, verlasse
+//    nur den Standort) werden sofort geprueft; am Ende prueft Rennen
+//    zusaetzlich per Breitensuche, ob die betretenen, nicht verlassenen
+//    Felder S und Z verbinden.
+//  - Kein Verfahren gewinnt ueberall: Die Kompass-Strategie ist auf
+//    Karte 1 und 3 besser, faellt auf Karte 2 aber auf eine Sackgasse
+//    "in Richtung Ziel" herein. Die Summe zwingt zum Abwaegen.
+//  - Die Ergebniszeile "RENNEN-ERGEBNIS: ..." haelt die Lehrkraft in der
+//    Ergebnistabelle an der Tafel fest (Schritte, weniger ist besser,
+//    nur gueltige Ergebnisse).
+//  - Feste Wege fallen auf: Weil die Kontrollkarten dieselbe Groesse
+//    und dieselben Positionen von S und Z (also auch denselben Kompass)
+//    haben, laeuft ein fest eingebauter Weg, der an Rennen.zeilen(),
+//    Rennen.spalten() oder der Lage von S/Z erkannt wird, dort in eine
+//    Wand oder springt -> ungueltig (geprueft). Grenze: Wer die Karte
+//    vorher ueber istBegehbar-Abfragen am Start "erkennt", faellt nur im
+//    Code-Review auf -> Code der Siegergilde kurz ansehen.
+// =====================================================================
+
+
+// ---------------------------------------------------------------------
+//  GERÜST – unveraendert
+// ---------------------------------------------------------------------
+
+class Rennen {
+
+    // ----- Karte und Zustand (private: nur ueber die Befehle erreichbar) -----
+    private static char[][] karte;         // '#' Wand, '.' frei, 'S' Start, 'Z' Ziel
+    private static int[][] zustand;        // NEBEL, GELUEFTET, WEG oder SACKGASSE
+    private static Rectangle[][] kachel;
+    private static int startZ = 0;
+    private static int startS = 0;
+    private static int zielZ = 0;
+    private static int zielS = 0;
+    private static String kartenName = "";
+
+    private static int NEBEL = 0;          // noch nicht betreten (grau)
+    private static int GELUEFTET = 1;      // Fackel steht hier (hell)
+    private static int WEG = 2;            // betreten, gehoert zum Weg (gold)
+    private static int SACKGASSE = 3;      // betreten und wieder verlassen (rot)
+
+    // ----- aktueller Weg: Stapel der betretenen, nicht verlassenen Felder -----
+    private static int[] wegZ;
+    private static int[] wegS;
+    private static int wegLaenge = 0;
+
+    private static int schritte = 0;
+    private static int fackeln = 0;
+    private static int pruefungen = 0;
+
+    // ----- Modus -----
+    private static int KEIN_LAUF = 0;
+    private static int NEBEL_LUEFTEN = 1;
+    private static int WEGSUCHE = 2;
+    private static int modus = 0;
+    private static boolean regelverstoss = false;  // im ganzen Lauf
+    private static boolean kartenVerstoss = false; // auf der aktuellen Karte
+    private static String verstossGrund = "";      // erster Verstoss im Lauf
+    private static String kartenGrund = "";        // erster Fehler auf der Karte
+
+    // ----- Grafik -----
+    private static Text titel;
+    private static Text info;
+    private static Text legende;
+    private static boolean grafikBereit = false;
+    private static int RAND = 20;          // linker Rand
+    private static int OBEN = 60;          // obere Kante der Karte
+    private static int BREITE = 860;       // Platz fuer die Karte
+    private static int HOEHE = 620;
+    private static int g = 40;             // Kachelgroesse, wird angepasst
+
+    private static String FARBE_WAND = "#2E2A28";
+    private static String FARBE_NEBEL = "#8C8C8C";
+    private static String FARBE_HELL = "#F2EBD9";
+    private static String FARBE_WEG = "#DAA520";
+    private static String FARBE_SACKGASSE = "#C00000";
+    private static String FARBE_START = "#1F4E79";
+    private static String FARBE_ZIEL = "#548235";
+
+    // ----- Pseudozufall fuer die Kontroll- und Zufallskarten (wie Welt 2) -----
+    // saat <- (saat * 8121 + 28411) mod 134456, alle Zwischenwerte < 2^31
+    private static int saat = 2027;
+    private static int LCG_M = 134456;
+    private static int LCG_A = 8121;
+    private static int LCG_C = 28411;
+
+    private static int zufall(int grenze) {
+        saat = (saat * LCG_A + LCG_C) % LCG_M;
+        return (saat * grenze) / LCG_M;
+    }
+
+
+    // =============== Befehle fuer MeinSolver ===============
+
+    // Anzahl der Zeilen bzw. Spalten der Karte
+    static int zeilen() {
+        if (karte == null) {
+            return 0;
+        }
+        return karte.length;
+    }
+
+    static int spalten() {
+        if (karte == null) {
+            return 0;
+        }
+        return karte[0].length;
+    }
+
+    // true, wenn (z, s) in der Karte liegt, keine Wand ist und noch NICHT
+    // betreten (bzw. beim Nebel lueften: noch nicht gelueftet) wurde.
+    // Im Rennen: nur fuer den eigenen Standort und seine vier Nachbarn!
+    static boolean istBegehbar(int z, int s) {
+        if (!sichtbar(z, s, "istBegehbar")) {
+            return false;
+        }
+        pruefungen++;
+        return imFeld(z, s) && karte[z][s] != '#' && zustand[z][s] == NEBEL;
+    }
+
+    // true, wenn (z, s) das Ziel ist.
+    // Im Rennen: nur fuer den eigenen Standort und seine vier Nachbarn!
+    static boolean istZiel(int z, int s) {
+        if (!sichtbar(z, s, "istZiel")) {
+            return false;
+        }
+        return imFeld(z, s) && karte[z][s] == 'Z';
+    }
+
+    // Kompass: Zeile und Spalte des Ziels
+    static int zielZeile() {
+        return zielZ;
+    }
+
+    static int zielSpalte() {
+        return zielS;
+    }
+
+    // Wegsuche: Betritt das Feld (z, s). Zaehlt einen Schritt.
+    // Erlaubt: der erste Schritt auf S, danach nur ein begehbares
+    // Nachbarfeld (oben, rechts, unten, links) des aktuellen Standorts.
+    static void betrete(int z, int s) {
+        if (modus != WEGSUCHE) {
+            verstoss("Rennen.betrete(...) ist nur in der Wegsuche erlaubt (Nebel lueften: Rennen.fackel)");
+            return;
+        }
+        schritte++;
+        if (!imFeld(z, s) || karte[z][s] == '#') {
+            verstoss("betrete(" + z + ", " + s + "): Wand oder ausserhalb der Karte");
+            return;
+        }
+        if (zustand[z][s] != NEBEL) {
+            verstoss("betrete(" + z + ", " + s + "): Feld wurde schon betreten");
+            return;
+        }
+        if (wegLaenge == 0) {
+            if (z != startZ || s != startS) {
+                verstoss("betrete(" + z + ", " + s + "): Der erste Schritt muss auf S gehen");
+                return;
+            }
+        } else if (!benachbart(z, s, wegZ[wegLaenge - 1], wegS[wegLaenge - 1])) {
+            verstoss("betrete(" + z + ", " + s + "): Sprung - kein Nachbar von (" + wegZ[wegLaenge - 1]
+                     + ", " + wegS[wegLaenge - 1] + ")");
+            return;
+        }
+        zustand[z][s] = WEG;
+        wegZ[wegLaenge] = z;
+        wegS[wegLaenge] = s;
+        wegLaenge++;
+        faerbe(z, s);
+        zeigeStand();
+    }
+
+    // Wegsuche: Verlaesst das Feld (z, s) als Sackgasse (rot). Zaehlt
+    // NICHT als Schritt. Erlaubt nur fuer den aktuellen Standort (das
+    // zuletzt betretene, noch nicht verlassene Feld). Danach steht man
+    // wieder auf dem Feld davor.
+    static void verlasse(int z, int s) {
+        if (modus != WEGSUCHE) {
+            verstoss("Rennen.verlasse(...) ist nur in der Wegsuche erlaubt");
+            return;
+        }
+        if (wegLaenge == 0 || wegZ[wegLaenge - 1] != z || wegS[wegLaenge - 1] != s) {
+            verstoss("verlasse(" + z + ", " + s + "): Das ist nicht dein aktueller Standort");
+            return;
+        }
+        wegLaenge--;
+        zustand[z][s] = SACKGASSE;
+        faerbe(z, s);
+    }
+
+    // Nebel lueften: Stellt auf (z, s) eine Fackel auf - der Nebel dort
+    // ist gelueftet. Nur auf begehbaren, noch nicht gelueftete Felder.
+    static void fackel(int z, int s) {
+        if (modus != NEBEL_LUEFTEN) {
+            verstoss("Rennen.fackel(...) ist nur beim Nebel lueften erlaubt");
+            return;
+        }
+        if (!imFeld(z, s) || karte[z][s] == '#') {
+            verstoss("fackel(" + z + ", " + s + "): Wand oder ausserhalb der Karte");
+            return;
+        }
+        if (zustand[z][s] != NEBEL) {
+            verstoss("fackel(" + z + ", " + s + "): Feld ist schon gelueftet");
+            return;
+        }
+        zustand[z][s] = GELUEFTET;
+        fackeln++;
+        faerbe(z, s);
+        zeigeStand();
+    }
+
+    static int getSchritte() {
+        return schritte;
+    }
+
+
+    // =============== Modus 1: Nebel lueften ===============
+    // nr = 1, 2, 3: die Rennkarten; nr = 0: Zufallskarte (jedes Mal neu)
+    static void nebel(int nr) {
+        if (modus != KEIN_LAUF) {
+            verstoss("Rennen.nebel(...) waehrend eines Laufs aufgerufen");
+            return;
+        }
+        if (nr < 0 || nr > 3) {
+            println("Karte " + nr + " gibt es nicht (erlaubt: 1, 2, 3 oder 0 fuer eine Zufallskarte).");
+            return;
+        }
+        regelverstoss = false;
+        verstossGrund = "";
+        laden(nr, 1 + (int) (Math.random() * (LCG_M - 1)));
+        titel.setText("Nebel lueften: " + kartenName);
+        modus = NEBEL_LUEFTEN;
+        MeinSolver.lueften(startZ, startS);
+        modus = KEIN_LAUF;
+
+        int erreichbar = 0;
+        int falsch = 0;
+        boolean[][] erreicht = erreichbareFelder();
+        for (int z = 0; z < zeilen(); z++) {
+            for (int s = 0; s < spalten(); s++) {
+                if (erreicht[z][s]) {
+                    erreichbar++;
+                }
+                if (erreicht[z][s] != (zustand[z][s] == GELUEFTET)) {
+                    falsch++;
+                }
+            }
+        }
+        boolean ok = falsch == 0 && !regelverstoss;
+        println("NEBEL " + kartenName + ": gelueftet = " + fackeln + " von " + erreichbar
+                + " erreichbaren Feldern, Pruefungen (istBegehbar) = " + pruefungen
+                + ", korrekt = " + jaNein(ok));
+        if (regelverstoss) {
+            println("FEHLER: " + verstossGrund);
+        }
+        info.setText("Gelueftet: " + fackeln + " von " + erreichbar + "   korrekt: " + jaNein(ok));
+    }
+
+
+    // =============== Modus 2: Training (eine Karte, zaehlt nicht) ===============
+    // nr = 1, 2, 3: die Rennkarten; nr = 0: Zufallskarte (jedes Mal neu)
+    static void training(int nr) {
+        if (modus != KEIN_LAUF) {
+            verstoss("Rennen.training(...) waehrend eines Laufs aufgerufen");
+            return;
+        }
+        if (nr < 0 || nr > 3) {
+            println("Karte " + nr + " gibt es nicht (erlaubt: 1, 2, 3 oder 0 fuer eine Zufallskarte).");
+            return;
+        }
+        regelverstoss = false;
+        verstossGrund = "";
+        laden(nr, 1 + (int) (Math.random() * (LCG_M - 1)));
+        boolean ok = laufen();
+        println("TRAINING " + kartenName + ": Schritte = " + schritte + ", gueltig = " + jaNein(ok));
+        if (!ok) {
+            println("  -> " + kartenGrund);
+        }
+    }
+
+
+    // =============== Modus 3: Das Dungeon-Rennen ===============
+    static void starten() {
+        if (modus != KEIN_LAUF) {
+            verstoss("Rennen.starten() waehrend eines Laufs aufgerufen");
+            return;
+        }
+        regelverstoss = false;
+        verstossGrund = "";
+        int summe = 0;
+        boolean gueltig = true;
+
+        println("================ DUNGEON-RENNEN ================");
+        for (int nr = 1; nr <= 3; nr++) {
+            laden(nr, 0);
+            boolean ok = laufen();
+            if (!ok) {
+                gueltig = false;
+            }
+            summe = summe + schritte;
+            println(kartenName + ": Schritte = " + schritte + ", gueltig = " + jaNein(ok));
+            if (!ok) {
+                println("  -> " + kartenGrund);
+            }
+        }
+
+        // Kontrollkarten: unbekannte Labyrinthe in denselben Groessen und
+        // mit S und Z an denselben Stellen wie die Rennkarten, bei jedem
+        // Start andere (zufaelliger Startwert). Sie zaehlen nicht, muessen
+        // aber geloest werden - fest eingebaute Wege fliegen hier auf.
+        for (int nr = 1; nr <= 3; nr++) {
+            laden(nr + 3, 1 + (int) (Math.random() * (LCG_M - 1)));
+            boolean kontrolleOk = laufen();
+            if (!kontrolleOk) {
+                gueltig = false;
+            }
+            println(kartenName + ", zaehlt nicht: Schritte = " + schritte + ", gueltig = " + jaNein(kontrolleOk));
+            if (!kontrolleOk) {
+                println("  -> " + kartenGrund);
+            }
+        }
+
+        if (regelverstoss) {
+            gueltig = false;
+            println("REGELVERSTOSS: " + verstossGrund);
+        }
+        println("RENNEN-ERGEBNIS: Schritte = " + summe + ", gueltig = " + jaNein(gueltig));
+        titel.setText("RENNEN-ERGEBNIS (gueltig: " + jaNein(gueltig) + ")");
+        info.setText("Schritte auf den drei Rennkarten: " + summe);
+    }
+
+
+    // =============== intern ===============
+
+    // Laesst MeinSolver.suche auf der geladenen Karte laufen und prueft
+    // danach den Weg.
+    private static boolean laufen() {
+        titel.setText("Wegsuche: " + kartenName);
+        modus = WEGSUCHE;
+        boolean gemeldet = MeinSolver.suche(startZ, startS);
+        modus = KEIN_LAUF;
+        String fehler = pruefeWeg(gemeldet);
+        boolean ok = fehler.equals("") && !kartenVerstoss;
+        if (!kartenVerstoss) {
+            kartenGrund = fehler;
+        }
+        if (ok) {
+            info.setText("Ziel erreicht!   Schritte: " + schritte);
+        } else {
+            info.setText("UNGUELTIG   Schritte: " + schritte);
+        }
+        return ok;
+    }
+
+    // Prueft, ob das Ziel ueber benachbarte betretene Felder von S aus
+    // erreicht wurde. Liefert "" (in Ordnung) oder den Grund.
+    private static String pruefeWeg(boolean gemeldet) {
+        if (!gemeldet) {
+            return "suche(...) hat false geliefert - Ziel nicht gefunden";
+        }
+        if (zustand[startZ][startS] != WEG) {
+            return "S gehoert nicht zum Weg";
+        }
+        if (zustand[zielZ][zielS] != WEG) {
+            return "Ziel gemeldet, aber Z wurde nicht betreten";
+        }
+        // Breitensuche von S aus nur ueber Weg-Felder
+        boolean[][] besucht = new boolean[zeilen()][spalten()];
+        int[] qz = new int[zeilen() * spalten()];
+        int[] qs = new int[zeilen() * spalten()];
+        int kopf = 0;
+        int ende = 0;
+        qz[ende] = startZ;
+        qs[ende] = startS;
+        ende++;
+        besucht[startZ][startS] = true;
+        int[] dz = {-1, 0, 1, 0};
+        int[] ds = {0, 1, 0, -1};
+        while (kopf < ende) {
+            int z = qz[kopf];
+            int s = qs[kopf];
+            kopf++;
+            for (int r = 0; r < 4; r++) {
+                int nz = z + dz[r];
+                int ns = s + ds[r];
+                if (imFeld(nz, ns) && !besucht[nz][ns] && karte[nz][ns] != '#' && zustand[nz][ns] == WEG) {
+                    besucht[nz][ns] = true;
+                    qz[ende] = nz;
+                    qs[ende] = ns;
+                    ende++;
+                }
+            }
+        }
+        if (!besucht[zielZ][zielS]) {
+            return "kein zusammenhaengender Weg von S nach Z";
+        }
+        return "";
+    }
+
+    // Alle von S aus erreichbaren Felder (fuer die Nebel-Pruefung)
+    private static boolean[][] erreichbareFelder() {
+        boolean[][] besucht = new boolean[zeilen()][spalten()];
+        int[] qz = new int[zeilen() * spalten()];
+        int[] qs = new int[zeilen() * spalten()];
+        int kopf = 0;
+        int ende = 0;
+        qz[ende] = startZ;
+        qs[ende] = startS;
+        ende++;
+        besucht[startZ][startS] = true;
+        int[] dz = {-1, 0, 1, 0};
+        int[] ds = {0, 1, 0, -1};
+        while (kopf < ende) {
+            int z = qz[kopf];
+            int s = qs[kopf];
+            kopf++;
+            for (int r = 0; r < 4; r++) {
+                int nz = z + dz[r];
+                int ns = s + ds[r];
+                if (imFeld(nz, ns) && !besucht[nz][ns] && karte[nz][ns] != '#') {
+                    besucht[nz][ns] = true;
+                    qz[ende] = nz;
+                    qs[ende] = ns;
+                    ende++;
+                }
+            }
+        }
+        return besucht;
+    }
+
+    // Im Rennen darf man nur den eigenen Standort und die vier Nachbarn
+    // untersuchen ("Nebel"). Standort = zuletzt betretenes, noch nicht
+    // verlassenes Feld; vor dem ersten Schritt das Startfeld S.
+    private static boolean sichtbar(int z, int s, String befehl) {
+        if (modus != WEGSUCHE) {
+            return true;
+        }
+        int hz = startZ;
+        int hs = startS;
+        if (wegLaenge > 0) {
+            hz = wegZ[wegLaenge - 1];
+            hs = wegS[wegLaenge - 1];
+        }
+        if ((z == hz && s == hs) || benachbart(z, s, hz, hs)) {
+            return true;
+        }
+        verstoss(befehl + "(" + z + ", " + s + "): Blick in den Nebel - nur der Standort ("
+                 + hz + ", " + hs + ") und seine vier Nachbarn sind sichtbar");
+        return false;
+    }
+
+    private static boolean benachbart(int z1, int s1, int z2, int s2) {
+        int dz = z1 - z2;
+        int ds = s1 - s2;
+        return (dz == 0 && (ds == 1 || ds == -1)) || (ds == 0 && (dz == 1 || dz == -1));
+    }
+
+    private static boolean imFeld(int z, int s) {
+        return karte != null && z >= 0 && z < karte.length && s >= 0 && s < karte[0].length;
+    }
+
+    private static void verstoss(String grund) {
+        regelverstoss = true;
+        if (verstossGrund.equals("")) {
+            verstossGrund = grund;
+        }
+        if (!kartenVerstoss) {
+            kartenGrund = "Regelverstoss: " + grund;
+        }
+        kartenVerstoss = true;
+    }
+
+    private static String jaNein(boolean b) {
+        if (b) {
+            return "ja";
+        }
+        return "nein";
+    }
+
+    // Laedt Karte nr und zeichnet sie: 1-3 Rennkarten, 4-6 Kontrollkarten
+    // zu den Rennkarten 1-3, 0 Zufallskarte.
+    private static void laden(int nr, int startwert) {
+        grafikVorbereiten();
+
+        // alte Kacheln entfernen
+        if (kachel != null) {
+            for (int z = 0; z < kachel.length; z++) {
+                for (int s = 0; s < kachel[z].length; s++) {
+                    kachel[z][s].destroy();
+                }
+            }
+        }
+
+        if (nr >= 1 && nr <= 3) {
+            String[] zeilenText = kartenText(nr);
+            karte = new char[zeilenText.length][zeilenText[0].length()];
+            for (int z = 0; z < zeilenText.length; z++) {
+                for (int s = 0; s < zeilenText[0].length(); s++) {
+                    karte[z][s] = zeilenText[z].charAt(s);
+                }
+            }
+        } else if (nr >= 4) {
+            // Kontrollkarte: so lange neu wuerfeln, bis der kuerzeste Weg
+            // der zugehoerigen Rennkarte hier durch eine Wand versperrt ist
+            // - ein auswendig gelernter Weg kann dann nicht funktionieren.
+            int versuch = 0;
+            kontrollLabyrinth(nr, startwert);
+            while (wegOffen(kartenText(nr - 3)) && versuch < 50) {
+                versuch++;
+                kontrollLabyrinth(nr, 1 + (startwert + versuch * 7919) % (LCG_M - 1));
+            }
+        } else {
+            erzeugeLabyrinth(startwert, 11, 17, -1, 1, -1, 15);
+        }
+        if (nr == 1) {
+            kartenName = "Karte 1 (klein, 7 x 11)";
+        } else if (nr == 2) {
+            kartenName = "Karte 2 (mittel, 11 x 15)";
+        } else if (nr == 3) {
+            kartenName = "Karte 3 (gross, 15 x 21)";
+        } else if (nr >= 4) {
+            kartenName = "Kontrollkarte " + (nr - 3) + " (unbekannt)";
+        } else {
+            kartenName = "Zufallskarte (11 x 17)";
+        }
+
+        zustand = new int[zeilen()][spalten()];
+        wegZ = new int[zeilen() * spalten()];
+        wegS = new int[zeilen() * spalten()];
+        wegLaenge = 0;
+        schritte = 0;
+        fackeln = 0;
+        pruefungen = 0;
+        kartenVerstoss = false;
+        kartenGrund = "";
+        for (int z = 0; z < zeilen(); z++) {
+            for (int s = 0; s < spalten(); s++) {
+                if (karte[z][s] == 'S') {
+                    startZ = z;
+                    startS = s;
+                }
+                if (karte[z][s] == 'Z') {
+                    zielZ = z;
+                    zielS = s;
+                }
+            }
+        }
+
+        g = BREITE / spalten();
+        if (HOEHE / zeilen() < g) {
+            g = HOEHE / zeilen();
+        }
+        if (g > 60) {
+            g = 60;
+        }
+        kachel = new Rectangle[zeilen()][spalten()];
+        for (int z = 0; z < zeilen(); z++) {
+            for (int s = 0; s < spalten(); s++) {
+                kachel[z][s] = new Rectangle(RAND + s * g, OBEN + z * g, g - 2, g - 2);
+                faerbe(z, s);
+            }
+        }
+        titel.setText(kartenName);
+        zeigeStand();
+    }
+
+    // Die drei festen Rennkarten
+    private static String[] kartenText(int nr) {
+        if (nr == 1) {
+            String[] k1 = {
+                "###########",
+                "#...#...#.#",
+                "#.#.#.#.#.#",
+                "#.#...#...#",
+                "#.#####.#.#",
+                "#S......#Z#",
+                "###########"};
+            return k1;
+        }
+        if (nr == 2) {
+            String[] k2 = {
+                "###############",
+                "#.......#.....#",
+                "#.#####.#.###.#",
+                "#.#...#.#...#.#",
+                "#.#.#.#.###.#.#",
+                "#...#.#.....#S#",
+                "#.###.#######.#",
+                "#.#...#.......#",
+                "#.#####.#######",
+                "#Z#...#.......#",
+                "###############"};
+            return k2;
+        }
+        String[] k3 = {
+            "#####################",
+            "#.....#.....#.......#",
+            "#.###.#.###.#.#####.#",
+            "#.#...#...#...#...#.#",
+            "#.#.#####.#####.#.#.#",
+            "#.#.#.....#.....#...#",
+            "#.#.#.#####.#####.###",
+            "#.#...#.....#...#..S#",
+            "#.#####.#####.#.#.###",
+            "#.......#.....#.#...#",
+            "#.#######.#####.###.#",
+            "#.#.....#.#...#...#.#",
+            "#.#.###.#.#.#.###.#.#",
+            "#Z..#...#...#.#.....#",
+            "#####################"};
+        return k3;
+    }
+
+    private static void kontrollLabyrinth(int nr, int startwert) {
+        if (nr == 4) {
+            erzeugeLabyrinth(startwert, 7, 11, 5, 1, 5, 9);
+        } else if (nr == 5) {
+            erzeugeLabyrinth(startwert, 11, 15, 5, 13, 9, 1);
+        } else {
+            erzeugeLabyrinth(startwert, 15, 21, 7, 19, 13, 1);
+        }
+    }
+
+    // true, wenn der kuerzeste Weg von S nach Z auf der Rennkarte (Text)
+    // in der gerade erzeugten Karte komplett frei ist (Breitensuche auf
+    // der Rennkarte, dann den Weg rueckwaerts gegen die Karte pruefen).
+    private static boolean wegOffen(String[] rk) {
+        int zz = rk.length;
+        int ss = rk[0].length();
+        int[] vorgaenger = new int[zz * ss];
+        boolean[] besucht = new boolean[zz * ss];
+        int[] q = new int[zz * ss];
+        int kopf = 0;
+        int ende = 0;
+        int ziel = -1;
+        for (int z = 0; z < zz; z++) {
+            for (int s = 0; s < ss; s++) {
+                if (rk[z].charAt(s) == 'S') {
+                    q[ende] = z * ss + s;
+                    ende++;
+                    besucht[z * ss + s] = true;
+                    vorgaenger[z * ss + s] = -1;
+                }
+                if (rk[z].charAt(s) == 'Z') {
+                    ziel = z * ss + s;
+                }
+            }
+        }
+        int[] dz = {-1, 0, 1, 0};
+        int[] ds = {0, 1, 0, -1};
+        while (kopf < ende) {
+            int z = q[kopf] / ss;
+            int s = q[kopf] % ss;
+            kopf++;
+            for (int r = 0; r < 4; r++) {
+                int nz = z + dz[r];
+                int ns = s + ds[r];
+                if (nz >= 0 && nz < zz && ns >= 0 && ns < ss && !besucht[nz * ss + ns]
+                        && rk[nz].charAt(ns) != '#') {
+                    besucht[nz * ss + ns] = true;
+                    vorgaenger[nz * ss + ns] = z * ss + s;
+                    q[ende] = nz * ss + ns;
+                    ende++;
+                }
+            }
+        }
+        int k = ziel;
+        while (k != -1) {
+            if (karte[k / ss][k % ss] == '#') {
+                return false;
+            }
+            k = vorgaenger[k];
+        }
+        return true;
+    }
+
+    // Erzeugt ein Labyrinth mit zz Zeilen und ss Spalten (beide ungerade):
+    // Tiefensuche mit eigenem Stapel, dazu einige zusaetzliche
+    // Durchbrueche, damit es mehrere Wege gibt. S kommt nach (sz, sp),
+    // Z nach (zz2, zp); sz bzw. zz2 = -1 heisst: zufaellige Zeile.
+    private static void erzeugeLabyrinth(int startwert, int zz, int ss, int sz, int sp, int zz2, int zp) {
+        saat = startwert;
+        karte = new char[zz][ss];
+        for (int z = 0; z < zz; z++) {
+            for (int s = 0; s < ss; s++) {
+                karte[z][s] = '#';
+            }
+        }
+        int[] stapelZ = new int[zz * ss];
+        int[] stapelS = new int[zz * ss];
+        int oben = 0;
+        karte[1][1] = '.';
+        stapelZ[oben] = 1;
+        stapelS[oben] = 1;
+        oben++;
+        int[] dz = {-1, 0, 1, 0};
+        int[] ds = {0, 1, 0, -1};
+        int[] moeglich = new int[4];
+        while (oben > 0) {
+            int z = stapelZ[oben - 1];
+            int s = stapelS[oben - 1];
+            int anzahl = 0;
+            for (int r = 0; r < 4; r++) {
+                int nz = z + 2 * dz[r];
+                int ns = s + 2 * ds[r];
+                if (nz > 0 && nz < zz - 1 && ns > 0 && ns < ss - 1 && karte[nz][ns] == '#') {
+                    moeglich[anzahl] = r;
+                    anzahl++;
+                }
+            }
+            if (anzahl == 0) {
+                oben--;
+            } else {
+                int r = moeglich[zufall(anzahl)];
+                karte[z + dz[r]][s + ds[r]] = '.';
+                karte[z + 2 * dz[r]][s + 2 * ds[r]] = '.';
+                stapelZ[oben] = z + 2 * dz[r];
+                stapelS[oben] = s + 2 * ds[r];
+                oben++;
+            }
+        }
+        // zusaetzliche Durchbrueche (nur Waende zwischen zwei freien Feldern,
+        // keine Eckpfeiler)
+        int durchbrueche = 0;
+        int versuche = 0;
+        int ziel = (zz * ss) / 30;
+        while (durchbrueche < ziel && versuche < 1000) {
+            versuche++;
+            int z = 1 + zufall(zz - 2);
+            int s = 1 + zufall(ss - 2);
+            if (karte[z][s] == '#' && (z + s) % 2 == 1) {
+                boolean waagerecht = karte[z][s - 1] == '.' && karte[z][s + 1] == '.';
+                boolean senkrecht = karte[z - 1][s] == '.' && karte[z + 1][s] == '.';
+                if (waagerecht || senkrecht) {
+                    karte[z][s] = '.';
+                    durchbrueche++;
+                }
+            }
+        }
+        int zeileS = sz;
+        if (zeileS < 0) {
+            zeileS = 1 + 2 * zufall((zz - 1) / 2);
+        }
+        int zeileZ = zz2;
+        if (zeileZ < 0) {
+            zeileZ = 1 + 2 * zufall((zz - 1) / 2);
+        }
+        karte[zeileS][sp] = 'S';
+        karte[zeileZ][zp] = 'Z';
+    }
+
+    private static void grafikVorbereiten() {
+        if (!grafikBereit) {
+            new World(900, 780);
+            titel = new Text(20, 15, 30, "");
+            titel.setFillColor("#DAA520");
+            info = new Text(20, 690, 26, "");
+            info.setFillColor("#8FA8C8");
+            legende = new Text(20, 735, 20, "Wand dunkel | Nebel grau | gelueftet hell | Weg gold | Sackgasse rot | S blau | Z gruen");
+            legende.setFillColor("#8C8C8C");
+            grafikBereit = true;
+        }
+    }
+
+    private static void faerbe(int z, int s) {
+        String f = FARBE_NEBEL;
+        if (karte[z][s] == '#') {
+            f = FARBE_WAND;
+        } else if (karte[z][s] == 'S') {
+            f = FARBE_START;
+        } else if (karte[z][s] == 'Z') {
+            f = FARBE_ZIEL;
+        } else if (zustand[z][s] == GELUEFTET) {
+            f = FARBE_HELL;
+        } else if (zustand[z][s] == WEG) {
+            f = FARBE_WEG;
+        } else if (zustand[z][s] == SACKGASSE) {
+            f = FARBE_SACKGASSE;
+        }
+        kachel[z][s].setFillColor(f);
+    }
+
+    private static void zeigeStand() {
+        if (modus == NEBEL_LUEFTEN) {
+            info.setText("Gelueftet: " + fackeln);
+        } else {
+            info.setText("Schritte: " + schritte);
+        }
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  LÖSUNGEN
+// ---------------------------------------------------------------------
+
+class MeinSolver {
+
+    // Welche Strategie tritt mit suche an? "kompass" (Musterloesung fuer
+    // das Rennen) oder "standard" (Backtracking oben, rechts, unten, links).
+    static String strategie = "kompass";
+
+
+    // ================= MODUS 1: NEBEL LUEFTEN =================
+    // Basisfall: nicht begehbar (Wand, Rand, schon gelueftet) -> fertig.
+    // Pruefungen = 1 + 4 * gelueftet: Jedes gelueftete Feld ruft lueften
+    // viermal auf, dazu kommt der erste Aufruf von aussen.
+
+    static void lueften(int z, int s) {
+        if (!Rennen.istBegehbar(z, s)) {
+            return;                            // Basisfall
+        }
+        Rennen.fackel(z, s);
+        lueften(z - 1, s);                     // oben
+        lueften(z, s + 1);                     // rechts
+        lueften(z + 1, s);                     // unten
+        lueften(z, s - 1);                     // links
+    }
+
+
+    // ================= MODUS 2: WEGSUCHE =================
+
+    static boolean suche(int z, int s) {
+        if (strategie.equals("standard")) {
+            return sucheStandard(z, s);
+        }
+        return sucheKompass(z, s);
+    }
+
+
+    // ---------------- Standard-Backtracking (Modus 2 / AB2 Teil 2) ----------------
+    // Reihenfolge oben, rechts, unten, links. Das Feld wird erst NACH
+    // erfolgloser Suche in allen vier Richtungen verlassen (Schritt
+    // zuruecknehmen) - genau das ist Backtracking.
+
+    static boolean sucheStandard(int z, int s) {
+        if (!Rennen.istBegehbar(z, s)) {
+            return false;                      // Basisfall 1: Wand, Rand, schon betreten
+        }
+        Rennen.betrete(z, s);
+        if (Rennen.istZiel(z, s)) {
+            return true;                       // Basisfall 2: Ziel gefunden
+        }
+        if (sucheStandard(z - 1, s)) {         // oben
+            return true;
+        }
+        if (sucheStandard(z, s + 1)) {         // rechts
+            return true;
+        }
+        if (sucheStandard(z + 1, s)) {         // unten
+            return true;
+        }
+        if (sucheStandard(z, s - 1)) {         // links
+            return true;
+        }
+        Rennen.verlasse(z, s);                 // Sackgasse: Schritt zuruecknehmen
+        return false;
+    }
+
+
+    // ---------------- Musterloesung fuer das Rennen: Kompass-Strategie ----------------
+    // Gleiches Backtracking, aber die vier Nachbarn werden in der
+    // Reihenfolge ihres Manhattan-Abstands zum Ziel versucht
+    //     abstand = |zeile - zielZeile| + |spalte - zielSpalte|
+    // (bei Gleichstand gilt oben, rechts, unten, links). Das ist eine
+    // HEURISTIK: Sie fuehrt meist schneller zum Ziel, kann aber in eine
+    // Sackgasse locken, die "in Richtung Ziel" liegt (Karte 2!).
+
+    static boolean sucheKompass(int z, int s) {
+        if (!Rennen.istBegehbar(z, s)) {
+            return false;
+        }
+        Rennen.betrete(z, s);
+        if (Rennen.istZiel(z, s)) {
+            return true;
+        }
+
+        int[] dz = {-1, 0, 1, 0};              // oben, rechts, unten, links
+        int[] ds = {0, 1, 0, -1};
+        int[] abstand = new int[4];
+        boolean[] versucht = new boolean[4];
+        for (int r = 0; r < 4; r++) {
+            abstand[r] = betrag(z + dz[r] - Rennen.zielZeile()) + betrag(s + ds[r] - Rennen.zielSpalte());
+        }
+
+        // viermal die noch nicht versuchte Richtung mit dem kleinsten
+        // Abstand waehlen ("<" statt "<=": bei Gleichstand gewinnt die
+        // fruehere Richtung)
+        for (int runde = 0; runde < 4; runde++) {
+            int beste = -1;
+            for (int r = 0; r < 4; r++) {
+                if (!versucht[r] && (beste == -1 || abstand[r] < abstand[beste])) {
+                    beste = r;
+                }
+            }
+            versucht[beste] = true;
+            if (sucheKompass(z + dz[beste], s + ds[beste])) {
+                return true;
+            }
+        }
+
+        Rennen.verlasse(z, s);
+        return false;
+    }
+
+    private static int betrag(int x) {
+        if (x < 0) {
+            return -x;
+        }
+        return x;
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  Lehrerwerkzeug: Referenzwerte selbst nachmessen
+//  Aufruf im Hauptprogramm:  Referenz.tabelle();   (Tempo auf Maximum)
+//  Laesst beide Strategien auf den drei Rennkarten laufen (Training,
+//  zaehlt nicht) und gibt die Schritte aus.
+// ---------------------------------------------------------------------
+
+class Referenz {
+
+    static void tabelle() {
+        String[] strategien = {"standard", "kompass"};
+        for (int i = 0; i < strategien.length; i++) {
+            MeinSolver.strategie = strategien[i];
+            int summe = 0;
+            String zeile = strategien[i] + ":";
+            for (int nr = 1; nr <= 3; nr++) {
+                Rennen.training(nr);
+                zeile = zeile + "  Karte " + nr + " = " + Rennen.getSchritte();
+                summe = summe + Rennen.getSchritte();
+            }
+            println("REFERENZ " + zeile + "  | Summe = " + summe);
+        }
+        MeinSolver.strategie = "kompass";
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  Programmstart
+// ---------------------------------------------------------------------
+
+SystemTools.setSpeed(500);
+
+Rennen.nebel(2);
+
+// Rennen.training(3);
+// MeinSolver.strategie = "standard";   // Standard-Backtracking antreten lassen
+// Rennen.training(3);
+
+// SystemTools.setSpeed(10000);
+// Rennen.starten();
+
+// Referenz.tabelle();                   // beide Strategien, Karte 1 bis 3
+
+
+// =====================================================================
+//  REFERENZWERTE – gemessen mit Referenz.tabelle() und Rennen.nebel(...)
+//  (exakt reproduzierbar: feste Karten, deterministische Verfahren)
+//
+//  RENNEN – Schritte (Aufrufe von betrete, inklusive S und Z)
+//
+//  Strategie                      Karte 1   Karte 2   Karte 3  | SUMME
+//  -----------------------------------------------------------------
+//  Standard (oben, rechts,           23        49        88    |  160
+//            unten, links)
+//  Kompass (Richtung Ziel zuerst)    13        53        73    |  139
+//  -----------------------------------------------------------------
+//  beste FESTE Reihenfolge           15        49        88    |  152
+//  (z. B. rechts, oben, unten, links; alle 24 Reihenfolgen
+//  durchgerechnet: 152 bis 206)
+//  kuerzester Weg (zum Vergleich)    13        37        33    |   83
+//  (Breitensuche bei offener Karte - im Nebel nicht erreichbar,
+//  nur eine untere Schranke)
+//
+//  Geruest unveraendert (suche liefert false):  gueltig = nein
+//  Kontrollkarten: wechseln bei jedem Start (zaehlen nicht).
+//
+//  So ordnest du die Renn-Ergebnisse ein (Summe der Schritte):
+//    160          Standard-Backtracking - die Grundaufgabe aus Modus 2.
+//    152 - 206    nur die Reihenfolge der Richtungen geaendert. Keine
+//                 feste Reihenfolge schafft weniger als 152, weil das
+//                 Ziel auf Karte 1 rechts, auf Karte 2 und 3 links liegt.
+//    139          Kompass-Strategie (Musterloesung).
+//    unter 139    sehr gut (z. B. Kompass mit besserer Gleichstands-
+//                 Regel oder eine Kombination mehrerer Ideen) -
+//                 unbedingt vorstellen lassen! Vorher pruefen: keine
+//                 Sonderregeln fuer die bekannten Karten.
+//
+//  Beobachtungen fuer die Sicherung:
+//  1. Karte 1: Standard geht zuerst nach oben in den Umweg und findet
+//     einen Weg aus 21 Feldern (2 Felder Sackgasse); der Kompass laeuft
+//     direkt (13 = kuerzester Weg).
+//     -> Backtracking findet IRGENDEINEN Weg, nicht den kuerzesten.
+//  2. Karte 2: Der Kompass zieht nach unten links - genau dort liegt
+//     eine lange Sackgasse (16 rote Felder, 53 Schritte). Standard
+//     verliert nur 12 Felder (49). Kuerzester Weg: 37.
+//     -> Eine Heuristik ist eine Faustregel, keine Garantie.
+//  3. Karte 3: Beide finden den kuerzesten Weg (33 Felder), verschwenden
+//     aber verschieden viele Schritte in Sackgassen (55 bzw. 40).
+//  4. Das Feld S zaehlt mit: Wer suche "nur" aus Nachbarfeldern startet
+//     und S nie betritt, ist ungueltig (Regel 5).
+//
+//  NEBEL LUEFTEN (Flood-Fill, Reihenfolge oben, rechts, unten, links)
+//
+//  Karte          gelueftet   erreichbar   Pruefungen (istBegehbar)
+//  ------------------------------------------------------------------
+//  1 klein            30          30             121
+//  2 mittel           65          65             261   (3 Felder der
+//                                                       Kammer bleiben grau)
+//  3 gross           140         140             561
+//
+//  Zusammenhang: Pruefungen = 4 * gelueftet + 1. Jeder Aufruf von
+//  lueften prueft genau einmal; jedes gelueftete Feld loest vier
+//  weitere Aufrufe aus, dazu kommt der erste Aufruf von aussen.
+//  Abi-Formulierung: "Die Anzahl der Aufrufe waechst linear mit der
+//  Anzahl der erreichbaren Felder."
+//  Rekursionstiefe: Die Aufrufe bilden einen "Wurm" durch das Labyrinth;
+//  im schlimmsten Fall ist die Tiefe so gross wie die Zahl der Felder.
+// =====================================================================
+
+
+// =====================================================================
+//  HÄUFIGE SCHÜLERFEHLER (Lehrerhinweise)
+// =====================================================================
+//
+//  Modus 1 – lueften
+//  - Basisfall vergessen (fackel ohne vorherige Pruefung mit
+//    istBegehbar) -> die Rekursion endet nie, die Online-IDE bricht mit
+//    einem Fehler ab (zu tiefe Rekursion). Merke: erst pruefen
+//    (Basisfall), dann handeln.
+//  - Nur zwei Richtungen (z. B. oben, rechts) -> Teile bleiben grau,
+//    korrekt = nein.
+//  - Schleife ueber die ganze Karte statt Rekursion -> auch die
+//    abgeschlossene Kammer in Karte 2 wird hell, korrekt = nein. Gut zur
+//    Abgrenzung "erreichbar" vs. "frei".
+//  - betrete statt fackel -> Fehler "nur in der Wegsuche erlaubt".
+//
+//  Modus 2 – suche (Backtracking)
+//  - verlasse vergessen -> der Held "springt" beim naechsten Versuch
+//    (Regelverstoss "Blick in den Nebel" bzw. "Sprung"), gueltig = nein.
+//    Genau das ist der Kern von Backtracking: Schritt zuruecknehmen.
+//  - true sofort zurueckgeben, ohne den rekursiven Aufrufen zu folgen
+//    ("if (suche(...)) return true;" fehlt) -> Weg zerreisst oder Ziel
+//    nicht gefunden.
+//  - verlasse vor dem Ausprobieren aller Richtungen -> Felder werden zu
+//    frueh rot, Ziel oft nicht gefunden.
+//  - istZiel VOR betrete -> Z wird gemeldet, aber nicht betreten
+//    ("Ziel gemeldet, aber Z wurde nicht betreten").
+//  - Diagonale statt Nachbar (z. B. (z + 1, s + 1)) -> Regelverstoss
+//    "Blick in den Nebel" (diagonale Felder sind nicht sichtbar).
+//
+//  Rennen
+//  - Nur die Reihenfolge der Richtungen aendern: legal, bringt aber
+//    hoechstens 152 (siehe Tabelle) - gut als erste Verbesserung.
+//  - Feste Wege fuer die bekannten Karten (auch nur fuer eine Karte,
+//    erkannt z. B. an Rennen.zeilen()) -> scheitert an der passenden
+//    Kontrollkarte (gueltig = nein).
+//  - Ganze Karte vorab mit istBegehbar abfragen -> "Blick in den Nebel".
+// =====================================================================

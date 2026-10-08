@@ -1,0 +1,352 @@
+// =====================================================================
+//  LEVEL 0 – DIAGNOSE: DAS PORTAL – GERÜST
+//  Informatik LK · Online-IDE · Algo Quest · Welt 0 – Die Akademie (DS 1)
+//
+//  Bevor du das Dungeon betrittst, prueft das Portal, was du aus der
+//  Einfuehrungsphase noch kannst: Reihungen, Schleifen, Verzweigungen
+//  und Zeichenketten. Keine Panik - das hier ist eine Diagnose, keine
+//  Klassenarbeit. Jeder gruene Test zeigt dir, was schon sitzt.
+//
+//  ANLEITUNG:
+//  1. Du arbeitest NUR im Abschnitt "DEIN TEIL" in der Klasse Diagnose.
+//     Ersetze dort jeweils die Zeile mit "// TODO" und die vorlaeufige
+//     return-Anweisung durch deine eigene Loesung.
+//
+//  2. Tests starten: Oeffne den Reiter "Testrunner" und klicke auf den
+//     gruenen Dreieckspfeil neben einer Testklasse (alle Tests dieser
+//     Klasse) oder neben einem einzelnen Test. Gruen = bestanden,
+//     rot = noch nicht bestanden. Lies bei roten Tests die Meldung -
+//     sie verraet dir, welcher Fall noch nicht klappt.
+//
+//  3. Es gibt drei Stufen - arbeite sie der Reihe nach ab:
+//
+//      Stufe         Testklasse                 Methoden
+//      -----------------------------------------------------------------------------
+//      Basis         DiagnoseBasisTest          summe, maximum, zaehle
+//      Erweiterung   DiagnoseErweiterungTest    indexVon,
+//                                               istAufsteigendSortiert,
+//                                               durchschnitt
+//      Experte       DiagnoseExperteTest        anzahlVokale, istPalindrom
+//
+//     Eine Stufe ist geschafft, wenn ALLE Tests ihrer Testklasse gruen
+//     sind. Achtung: Ein paar Tests sind schon am Anfang zufaellig gruen,
+//     weil die vorlaeufigen return-Werte passen. Das zaehlt noch nicht.
+//
+//  4. Die Testklassen darfst du NICHT veraendern - sonst zaehlt der Test nicht. Du glaubst, ein Test ist falsch? Melde ihn deiner Lehrkraft (Bug-Meldung).
+//
+//  5. Mit dem gruenen Startknopf oben laeuft das Hauptprogramm ganz
+//     unten. Dort kannst du deine Methoden auch selbst ausprobieren.
+//
+//  SPIELREGELN (wie im Abitur):
+//  - Zeichenketten nur mit length(), charAt(i), substring(a, b),
+//    equals(...), contains(...), compareTo(...) bearbeiten.
+//    NICHT erlaubt: toLowerCase, toUpperCase, split, indexOf, ...
+//  - Reihungen: Index von 0 bis r.length - 1.
+// =====================================================================
+
+
+// ---------------------------------------------------------------------
+//  DEIN TEIL – hier arbeitest du!
+// ---------------------------------------------------------------------
+
+class Diagnose {
+
+    // ===================== Stufe BASIS =====================
+
+    // summe(r: Reihung von Ganzzahl): Ganzzahl
+    // Liefert die Summe aller Elemente. Leere Reihung -> 0.
+    public static int summe(int[] r) {
+        // TODO Level 0 · Basis
+        return 0;
+    }
+
+    // maximum(r: Reihung von Ganzzahl): Ganzzahl
+    // Liefert das groesste Element. Du darfst annehmen, dass r NICHT leer ist.
+    public static int maximum(int[] r) {
+        // TODO Level 0 · Basis
+        return 0;
+    }
+
+    // zaehle(r: Reihung von Ganzzahl, x: Ganzzahl): Ganzzahl
+    // Liefert, wie oft x in r vorkommt.
+    public static int zaehle(int[] r, int x) {
+        // TODO Level 0 · Basis
+        return 0;
+    }
+
+
+    // ================== Stufe ERWEITERUNG ==================
+
+    // indexVon(r: Reihung von Ganzzahl, x: Ganzzahl): Ganzzahl
+    // Liefert den Index des ERSTEN Vorkommens von x, sonst -1.
+    public static int indexVon(int[] r, int x) {
+        // TODO Level 0 · Erweiterung
+        return 0;
+    }
+
+    // istAufsteigendSortiert(r: Reihung von Ganzzahl): Wahrheitswert
+    // true, wenn jedes Element kleiner oder gleich seinem rechten
+    // Nachbarn ist. Leere Reihung und ein Element -> true.
+    public static boolean istAufsteigendSortiert(int[] r) {
+        // TODO Level 0 · Erweiterung
+        return false;
+    }
+
+    // durchschnitt(r: Reihung von Ganzzahl): Kommazahl
+    // Liefert den Durchschnitt (Mittelwert) als Kommazahl.
+    // Leere Reihung -> 0.0
+    public static double durchschnitt(int[] r) {
+        // TODO Level 0 · Erweiterung
+        return -1.0;
+    }
+
+
+    // ==================== Stufe EXPERTE ====================
+
+    // anzahlVokale(s: Zeichenkette): Ganzzahl
+    // Zaehlt a, e, i, o, u - klein UND gross.
+    // Nur mit length() und charAt(i) - KEIN toLowerCase!
+    public static int anzahlVokale(String s) {
+        // TODO Level 0 · Experte
+        return -1;
+    }
+
+    // istPalindrom(s: Zeichenkette): Wahrheitswert
+    // true, wenn s vorwaerts und rueckwaerts gelesen gleich ist.
+    // Exakter Zeichenvergleich ('O' ist nicht 'o').
+    // "" und Zeichenketten mit nur einem Zeichen -> true.
+    public static boolean istPalindrom(String s) {
+        // TODO Level 0 · Experte
+        return false;
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  TESTS – hier nichts veraendern!
+// ---------------------------------------------------------------------
+//  Jede Testklasse gehoert zu einer Stufe:
+//      DiagnoseBasisTest        Basis       
+//      DiagnoseErweiterungTest  Erweiterung 
+//      DiagnoseExperteTest      Experte     
+//  Eine Stufe ist geschafft, wenn ALLE Tests ihrer Klasse gruen sind.
+// ---------------------------------------------------------------------
+
+class DiagnoseBasisTest {
+
+    @Test
+    public void basis_summe_normal() {
+        int[] r = {3, 5, 2};
+        assertEquals(10, Diagnose.summe(r), "summe({3, 5, 2}) muss 10 ergeben");
+    }
+
+    @Test
+    public void basis_summe_mitNegativenZahlen() {
+        int[] r = {-4, 4, -2};
+        assertEquals(-2, Diagnose.summe(r), "summe({-4, 4, -2}) muss -2 ergeben - negative Zahlen zaehlen mit");
+    }
+
+    @Test
+    public void basis_summe_einElement() {
+        int[] r = {7};
+        assertEquals(7, Diagnose.summe(r), "summe({7}) muss 7 ergeben");
+    }
+
+    @Test
+    public void basis_summe_leereReihung() {
+        int[] r = new int[0];
+        assertEquals(0, Diagnose.summe(r), "Die Summe einer leeren Reihung ist 0");
+    }
+
+    @Test
+    public void basis_maximum_inDerMitte() {
+        int[] r = {3, 9, 2};
+        assertEquals(9, Diagnose.maximum(r), "maximum({3, 9, 2}) muss 9 ergeben");
+    }
+
+    @Test
+    public void basis_maximum_amAnfangUndAmEnde() {
+        int[] vorne = {9, 1, 2};
+        int[] hinten = {1, 2, 9};
+        assertEquals(9, Diagnose.maximum(vorne), "maximum({9, 1, 2}) muss 9 ergeben - steht das Maximum ganz vorne?");
+        assertEquals(9, Diagnose.maximum(hinten), "maximum({1, 2, 9}) muss 9 ergeben - laeuft deine Schleife bis zum letzten Element?");
+    }
+
+    @Test
+    public void basis_maximum_nurNegativeZahlen() {
+        int[] r = {-5, -2, -9};
+        assertEquals(-2, Diagnose.maximum(r), "maximum({-5, -2, -9}) muss -2 ergeben - starte nicht mit max = 0, sondern mit r[0]");
+    }
+
+    @Test
+    public void basis_zaehle_mehrfach() {
+        int[] r = {1, 2, 1, 1};
+        assertEquals(3, Diagnose.zaehle(r, 1), "zaehle({1, 2, 1, 1}, 1) muss 3 ergeben");
+    }
+
+    @Test
+    public void basis_zaehle_nichtEnthalten() {
+        int[] r = {1, 2, 3};
+        assertEquals(0, Diagnose.zaehle(r, 5), "zaehle({1, 2, 3}, 5) muss 0 ergeben");
+    }
+
+    @Test
+    public void basis_zaehle_leereReihung() {
+        int[] r = new int[0];
+        assertEquals(0, Diagnose.zaehle(r, 1), "In einer leeren Reihung kommt nichts vor - Ergebnis 0");
+    }
+}
+
+
+class DiagnoseErweiterungTest {
+
+    @Test
+    public void erweiterung_indexVon_gefunden() {
+        int[] r = {4, 7, 9};
+        assertEquals(1, Diagnose.indexVon(r, 7), "indexVon({4, 7, 9}, 7) muss 1 ergeben - der Index beginnt bei 0");
+    }
+
+    @Test
+    public void erweiterung_indexVon_erstesVorkommen() {
+        int[] r = {5, 3, 5, 3};
+        assertEquals(0, Diagnose.indexVon(r, 5), "indexVon({5, 3, 5, 3}, 5) muss 0 ergeben - gesucht ist das ERSTE Vorkommen");
+        assertEquals(1, Diagnose.indexVon(r, 3), "indexVon({5, 3, 5, 3}, 3) muss 1 ergeben - gesucht ist das ERSTE Vorkommen");
+    }
+
+    @Test
+    public void erweiterung_indexVon_amEnde() {
+        int[] r = {4, 7, 9};
+        assertEquals(2, Diagnose.indexVon(r, 9), "indexVon({4, 7, 9}, 9) muss 2 ergeben - wird das letzte Element geprueft?");
+    }
+
+    @Test
+    public void erweiterung_indexVon_nichtGefunden() {
+        int[] r = {4, 7, 9};
+        assertEquals(-1, Diagnose.indexVon(r, 8), "indexVon({4, 7, 9}, 8) muss -1 ergeben, weil 8 nicht vorkommt");
+    }
+
+    @Test
+    public void erweiterung_indexVon_leereReihung() {
+        int[] r = new int[0];
+        assertEquals(-1, Diagnose.indexVon(r, 1), "In einer leeren Reihung muss indexVon -1 liefern");
+    }
+
+    @Test
+    public void erweiterung_sortiert_ja() {
+        int[] r = {1, 3, 7, 12};
+        assertTrue(Diagnose.istAufsteigendSortiert(r), "{1, 3, 7, 12} ist aufsteigend sortiert");
+    }
+
+    @Test
+    public void erweiterung_sortiert_gleicheNachbarn() {
+        int[] r = {2, 2, 5};
+        assertTrue(Diagnose.istAufsteigendSortiert(r), "{2, 2, 5} gilt als aufsteigend sortiert - gleiche Nachbarn sind erlaubt");
+    }
+
+    @Test
+    public void erweiterung_sortiert_nein() {
+        int[] mitte = {1, 5, 3, 7};
+        int[] vorne = {5, 1, 2, 3};
+        int[] hinten = {1, 2, 3, 0};
+        assertFalse(Diagnose.istAufsteigendSortiert(mitte), "{1, 5, 3, 7} ist NICHT sortiert");
+        assertFalse(Diagnose.istAufsteigendSortiert(vorne), "{5, 1, 2, 3} ist NICHT sortiert - die Unordnung steht ganz vorne");
+        assertFalse(Diagnose.istAufsteigendSortiert(hinten), "{1, 2, 3, 0} ist NICHT sortiert - wird das letzte Paar verglichen?");
+    }
+
+    @Test
+    public void erweiterung_sortiert_leerUndEinElement() {
+        int[] leer = new int[0];
+        int[] eins = {42};
+        assertTrue(Diagnose.istAufsteigendSortiert(leer), "Eine leere Reihung gilt als sortiert");
+        assertTrue(Diagnose.istAufsteigendSortiert(eins), "Eine Reihung mit einem Element gilt als sortiert");
+    }
+
+    @Test
+    public void erweiterung_durchschnitt_ganzzahlig() {
+        int[] r = {2, 4, 6};
+        assertEquals(4.0, Diagnose.durchschnitt(r), "durchschnitt({2, 4, 6}) muss 4.0 ergeben");
+    }
+
+    @Test
+    public void erweiterung_durchschnitt_mitKomma() {
+        int[] r = {1, 2};
+        assertEquals(1.5, Diagnose.durchschnitt(r), "durchschnitt({1, 2}) muss 1.5 ergeben - Vorsicht: Ganzzahl / Ganzzahl rechnet ganzzahlig!");
+    }
+
+    @Test
+    public void erweiterung_durchschnitt_leereReihung() {
+        int[] r = new int[0];
+        assertEquals(0.0, Diagnose.durchschnitt(r), "Der Durchschnitt einer leeren Reihung soll 0.0 sein - teile nie durch 0");
+    }
+}
+
+
+class DiagnoseExperteTest {
+
+    @Test
+    public void experte_vokale_kleinbuchstaben() {
+        assertEquals(3, Diagnose.anzahlVokale("dungeon"), "'dungeon' enthaelt 3 Vokale (u, e, o)");
+    }
+
+    @Test
+    public void experte_vokale_grossbuchstaben() {
+        assertEquals(5, Diagnose.anzahlVokale("AEIOU"), "'AEIOU' enthaelt 5 Vokale - Grossbuchstaben zaehlen auch");
+    }
+
+    @Test
+    public void experte_vokale_gemischtMitLeerzeichen() {
+        assertEquals(4, Diagnose.anzahlVokale("Algo Quest"), "'Algo Quest' enthaelt 4 Vokale (A, o, u, e)");
+    }
+
+    @Test
+    public void experte_vokale_keineUndLeer() {
+        assertEquals(0, Diagnose.anzahlVokale("xyz"), "'xyz' enthaelt keine Vokale");
+        assertEquals(0, Diagnose.anzahlVokale(""), "Die leere Zeichenkette enthaelt keine Vokale");
+    }
+
+    @Test
+    public void experte_palindrom_geradeLaenge() {
+        assertTrue(Diagnose.istPalindrom("otto"), "'otto' ist ein Palindrom");
+        assertTrue(Diagnose.istPalindrom("abba"), "'abba' ist ein Palindrom");
+    }
+
+    @Test
+    public void experte_palindrom_ungeradeLaenge() {
+        assertTrue(Diagnose.istPalindrom("rentner"), "'rentner' ist ein Palindrom");
+        assertTrue(Diagnose.istPalindrom("reliefpfeiler"), "'reliefpfeiler' ist ein Palindrom");
+    }
+
+    @Test
+    public void experte_palindrom_nein() {
+        assertFalse(Diagnose.istPalindrom("hallo"), "'hallo' ist kein Palindrom");
+        assertFalse(Diagnose.istPalindrom("ab"), "'ab' ist kein Palindrom");
+        assertFalse(Diagnose.istPalindrom("abca"), "'abca' ist kein Palindrom - nur die aeusseren Zeichen stimmen ueberein");
+    }
+
+    @Test
+    public void experte_palindrom_grossUndKlein() {
+        assertFalse(Diagnose.istPalindrom("Otto"), "'Otto' ist KEIN Palindrom - verglichen wird exakt, 'O' und 'o' sind verschiedene Zeichen");
+    }
+
+    @Test
+    public void experte_palindrom_leerUndEinZeichen() {
+        assertTrue(Diagnose.istPalindrom(""), "Die leere Zeichenkette gilt als Palindrom");
+        assertTrue(Diagnose.istPalindrom("x"), "Ein einzelnes Zeichen ist immer ein Palindrom");
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  Programmstart – hier kannst du deine Methoden selbst ausprobieren
+// ---------------------------------------------------------------------
+
+int[] schatz = {12, 5, 30, 5, 9};
+
+println("Summe:      " + Diagnose.summe(schatz));
+println("Maximum:    " + Diagnose.maximum(schatz));
+println("Anzahl 5:   " + Diagnose.zaehle(schatz, 5));
+println("Index 30:   " + Diagnose.indexVon(schatz, 30));
+println("Sortiert?   " + Diagnose.istAufsteigendSortiert(schatz));
+println("Schnitt:    " + Diagnose.durchschnitt(schatz));
+println("Vokale:     " + Diagnose.anzahlVokale("Das Dungeon der Datenstrukturen"));
+println("Palindrom?  " + Diagnose.istPalindrom("rentner"));

@@ -1,0 +1,1360 @@
+// =====================================================================
+//  WELT 3 – DAS LABYRINTH – GERÜST
+//  Informatik LK · Online-IDE · Algo Quest · Level 3.1 bis 3.3
+//
+//  Unter der Rangliste liegt das Labyrinth: eine Dungeon-Karte voller
+//  Nebel, Waende und Sackgassen. Um sie zu erobern, brauchst du einen
+//  neuen Zauber - die REKURSION: eine Methode, die sich selbst aufruft.
+//  Du lueftest den Nebel Feld fuer Feld, findest per Backtracking den
+//  Weg zum Ziel und sortierst die Schaetze mit "Teile und herrsche".
+//
+//  ANLEITUNG:
+//  1. Du arbeitest NUR im Abschnitt "DEIN TEIL": in den Klassen
+//     Rekursion und TeileUndHerrsche und in der Klasse Karte unterhalb
+//     der Linie "AB HIER ARBEITEST DU". Ueber jeder Methode stehen ihre
+//     Signatur in Abi-Notation und eine kurze Beschreibung. Ersetze die
+//     Zeilen "// TODO Level 3.x" und die vorlaeufigen return-Anweisungen
+//     durch deine Loesung.
+//
+//  2. Tests starten: Oeffne den Reiter "Testrunner" und klicke auf den
+//     gruenen Dreieckspfeil neben einer Testklasse (alle Tests dieses
+//     Levels) oder neben einem einzelnen Test. Gruen = bestanden,
+//     rot = noch nicht bestanden. Lies bei roten Tests die Meldung!
+//
+//  3. Die Level und ihre Testklassen:
+//
+//      Level  DS      Klasse            Testklasse             Inhalt
+//      ----------------------------------------------------------------
+//      3.1    18      Rekursion         L31RekursionTest       Basisfall
+//                                                              und Rekur-
+//                                                              sionsschritt,
+//                                                              Aufrufe
+//                                                              zaehlen
+//      3.2    19-20   Karte             L32KarteTest           2D-Reihung,
+//                                                              Nachbarn,
+//                                                              Nebel lueften
+//                                                              (Flood-Fill);
+//                                                              Experte =
+//                                                              Backtracking
+//                                                              (Kuer-DS 20)
+//      3.3    21-22   TeileUndHerrsche  L33TeileHerrscheTest   binaere Suche
+//                                                              rekursiv,
+//                                                              Maximum,
+//                                                              Mergesort,
+//                                                              Quicksort
+//
+//     In jedem Level gibt es drei Stufen. Du erkennst sie am Anfang des
+//     Testnamens:
+//          basis_...         Basis
+//          erweiterung_...   Erweiterung
+//          experte_...       Experte
+//     Eine Stufe ist geschafft, wenn ALLE Tests mit diesem Anfang gruen
+//     sind. Ein paar Tests sind schon am Anfang zufaellig gruen, weil
+//     die vorlaeufigen return-Werte passen - das zaehlt noch nicht.
+//
+//  4. REKURSIONS-REGELN (Pflicht!):
+//     - Steht ueber einer Methode "REKURSIV - ohne Schleife", dann darf
+//       sie KEINE for- oder while-Schleife enthalten, sondern muss sich
+//       selbst aufrufen. Die Tests koennen das nicht pruefen - deine
+//       Team und deine Lehrkraft tun es im Code-Review. Eine Loesung
+//       mit Schleife gilt als NICHT geloest, auch wenn alles gruen ist.
+//     - Schreibe in jeder rekursiven Methode ZUERST den Basisfall
+//       (Abbruch ohne Selbstaufruf), DANN den Rekursionsschritt (das
+//       Problem wird kleiner und die Methode ruft sich selbst auf).
+//     - Fehlt der Basisfall oder wird er nie erreicht, ruft sich die
+//       Methode endlos selbst auf, bis der Aufrufstapel ueberlaeuft:
+//       Fehlermeldung "StackOverflowError" (oder "Maximum call stack
+//       size exceeded"). Dann: Basisfall pruefen, Rekursionstabelle auf
+//       Papier anlegen. Haengt der Testrunner, starte den Test einzeln.
+//
+//  5. ZAEHL-REGELN (sonst stimmen die Zahlen in den Tests nicht):
+//     - Rekursion.aufrufe: fibonacci erhoeht aufrufe als ERSTE Anweisung
+//       bei JEDEM Aufruf um 1 - auch beim Basisfall.
+//     - Karte.schritte: findeWeg erhoeht schritte als ERSTE Anweisung bei
+//       JEDEM Aufruf um 1 - auch wenn das Feld ausserhalb liegt, eine
+//       Wand ist oder schon besucht wurde. findeWeg ruft sich fuer die
+//       Nachbarn auf, OHNE vorher zu pruefen, ob sie begehbar sind (das
+//       prueft der Aufruf selbst), und hoert sofort auf, sobald ein
+//       Nachbar true liefert.
+//     - Nachbar-Reihenfolge IMMER: oben, rechts, unten, links
+//       (im Uhrzeigersinn, beginnend oben).
+//     - TeileUndHerrsche.vergleiche: zerlege zaehlt jeden Vergleich
+//       r[i] < pivot.
+//     - Die Zaehler werden NICHT automatisch auf 0 gesetzt - das machen
+//       die Tests (und du im Hauptprogramm) vor jedem Versuch.
+//
+//  6. VORGEGEBEN (nicht veraendern): die Klasse Anzeige, in der Klasse
+//     Karte der obere Block (Attribute, Konstruktor, getZeilen,
+//     getSpalten, getFeld, setFeld, alsText), die Zaehler aufrufe,
+//     schritte und vergleiche sowie die Hilfsklasse Kartenbuch mit den
+//     Testkarten. Die Testklassen darfst du NICHT veraendern - sonst zaehlt der Test nicht. Du glaubst, ein Test ist falsch? Melde ihn deiner Lehrkraft (Bug-Meldung).
+//
+//  7. Mit dem gruenen Startknopf oben laeuft das Hauptprogramm ganz unten
+//     (eine kleine Expedition ins Labyrinth mit Kartenausgabe).
+//
+//  SPIELREGELN (wie im Abitur):
+//  - 2D-Reihung: feld[z][s] = Zeile z, Spalte s. Zeilen:
+//    feld.length, Spalten: feld[0].length. Vor JEDEM Zugriff pruefen, ob
+//    (z, s) im Feld liegt - am Rand fehlen Nachbarn!
+//  - Zeichen (char) mit == vergleichen: feld[z][s] == '#'. Zeichen-
+//    ketten (String) dagegen IMMER mit equals.
+//  - Zeichenketten nur mit length(), charAt(i), substring(a, b), +,
+//    equals(...), contains(...), compareTo(...) bearbeiten.
+//  - Jede Methode mit Rueckgabetyp braucht in JEDEM Fall ein return -
+//    auch im Basisfall.
+// =====================================================================
+
+
+// ---------------------------------------------------------------------
+//  GERÜST – hier nichts veraendern
+// ---------------------------------------------------------------------
+//  Die Klasse Anzeige hilft beim Ausgeben von Reihungen. Die Tests
+//  benutzen sie, um dir in der Meldung die ganze Reihung zu zeigen,
+//  z. B. "[erwartet: {1, 2, 3}, tatsaechlich: {3, 1, 2}]".
+//  Du darfst sie auch selbst im Hauptprogramm benutzen.
+// ---------------------------------------------------------------------
+
+class Anzeige {
+
+    // text(r: Reihung von Ganzzahl): Zeichenkette
+    // Liefert die Reihung als Text, z. B. "{4, 8, 15}".
+    // Leere Reihung -> "{}", null (noch keine Reihung) -> "null".
+    public static String text(int[] r) {
+        if (r == null) {
+            return "null";
+        }
+        String s = "{";
+        for (int i = 0; i < r.length; i++) {
+            if (i > 0) {
+                s = s + ", ";
+            }
+            s = s + r[i];
+        }
+        return s + "}";
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  DEIN TEIL – hier arbeitest du!
+// ---------------------------------------------------------------------
+//  Ueber jeder Methode steht ihre Signatur in Abi-Notation:
+//      name(p: Typ, q: Typ): Rueckgabetyp
+//  Neu in Welt 3:
+//      Zeichen                          char
+//      Reihung von Reihung von Zeichen  char[][]   (2D-Reihung)
+//
+//  So sieht jede rekursive Methode aus (Beispiel fakultaet):
+//
+//      fakultaet(n: Ganzzahl): Ganzzahl
+//      +-----------------------------------------------------+
+//      |                       n = 0 ?                       |
+//      |           wahr           |          falsch          |
+//      +--------------------------+--------------------------+
+//      | gib 1 zurueck            | gib n * fakultaet(n - 1) |
+//      | // Basisfall             | zurueck                  |
+//      |                          | // Rekursionsschritt     |
+//      +-----------------------------------------------------+
+// ---------------------------------------------------------------------
+
+// ===================== Level 3.1 – Rekursion (DS 18) ===================
+//  Alle Methoden sind static: Aufruf mit Klassenname, z. B.
+//  Rekursion.fakultaet(5). ALLE Methoden dieser Klasse sind
+//  REKURSIV - ohne Schleife!
+
+class Rekursion {
+
+    // VORGEGEBEN: zaehlt die Aufrufe von fibonacci (siehe Zaehl-Regeln).
+    public static int aufrufe = 0;
+
+    // ===================== Stufe BASIS =====================
+
+    // fakultaet(n: Ganzzahl): Ganzzahl
+    // n! = 1 * 2 * ... * n fuer n >= 0. Es gilt 0! = 1 und n! = n * (n - 1)!.
+    // REKURSIV - ohne Schleife.
+    public static int fakultaet(int n) {
+        // TODO Level 3.1 · Basis
+        return -1;
+    }
+
+    // summeBis(n: Ganzzahl): Ganzzahl
+    // 0 + 1 + 2 + ... + n fuer n >= 0, also summeBis(0) = 0.
+    // REKURSIV - ohne Schleife.
+    public static int summeBis(int n) {
+        // TODO Level 3.1 · Basis
+        return -1;
+    }
+
+    // potenz(basis: Ganzzahl, exponent: Ganzzahl): Ganzzahl
+    // basis hoch exponent fuer exponent >= 0; potenz(x, 0) = 1.
+    // REKURSIV - ohne Schleife (und ohne Math.pow).
+    public static int potenz(int basis, int exponent) {
+        // TODO Level 3.1 · Basis
+        return -1;
+    }
+
+
+    // ================== Stufe ERWEITERUNG ==================
+
+    // anzahlZiffern(n: Ganzzahl): Ganzzahl
+    // Anzahl der Ziffern von n >= 0, z. B. 4711 -> 4. Achtung: 0 hat EINE
+    // Ziffer. Tipp: n / 10 schneidet die letzte Ziffer ab.
+    // REKURSIV - ohne Schleife.
+    public static int anzahlZiffern(int n) {
+        // TODO Level 3.1 · Erweiterung
+        return -1;
+    }
+
+    // istPalindrom(s: Zeichenkette): Wahrheitswert
+    // true, wenn s vorwaerts und rueckwaerts gleich ist ("otto", "level").
+    // Exakter Zeichenvergleich (gross/klein zaehlt). "" und Zeichenketten
+    // mit 1 Zeichen sind Palindrome. Idee: erstes und letztes Zeichen
+    // gleich UND der Teil dazwischen ist ein Palindrom.
+    // Nur length(), charAt(i) und substring(a, b) benutzen.
+    // REKURSIV - ohne Schleife.
+    public static boolean istPalindrom(String s) {
+        // TODO Level 3.1 · Erweiterung
+        return false;
+    }
+
+    // summeAb(r: Reihung von Ganzzahl, i: Ganzzahl): Ganzzahl
+    // Summe r[i] + r[i + 1] + ... + r[r.length - 1].
+    // Basisfall: i == r.length (keine Elemente mehr) -> 0.
+    // Die ganze Reihung: summeAb(r, 0).
+    // REKURSIV - ohne Schleife.
+    public static int summeAb(int[] r, int i) {
+        // TODO Level 3.1 · Erweiterung
+        return -1;
+    }
+
+
+    // =================== Stufe EXPERTE =====================
+
+    // maximumAb(r: Reihung von Ganzzahl, i: Ganzzahl): Ganzzahl
+    // Groesster Wert unter r[i], r[i + 1], ..., r[r.length - 1]
+    // (0 <= i < r.length, die Reihung ist also nicht leer).
+    // REKURSIV - ohne Schleife.
+    public static int maximumAb(int[] r, int i) {
+        // TODO Level 3.1 · Experte
+        return -1;
+    }
+
+    // dual(n: Ganzzahl): Zeichenkette
+    // Dualdarstellung von n >= 0 ohne fuehrende Nullen:
+    // dual(0) = "0", dual(1) = "1", dual(6) = "110", dual(13) = "1101".
+    // Tipp: Die letzte Dualziffer ist n % 2, der Rest davor ist dual(n / 2).
+    // REKURSIV - ohne Schleife.
+    public static String dual(int n) {
+        // TODO Level 3.1 · Experte
+        return "";
+    }
+
+    // fibonacci(n: Ganzzahl): Ganzzahl
+    // fib(0) = 0, fib(1) = 1, fib(n) = fib(n - 1) + fib(n - 2) fuer n >= 2.
+    // BAUMREKURSIV: Im Rekursionsschritt ruft sich die Methode ZWEIMAL auf.
+    // Erste Anweisung: aufrufe um 1 erhoehen (bei JEDEM Aufruf).
+    // Beispiel: aufrufe = 0; fibonacci(5) liefert 5, danach ist aufrufe = 15.
+    // REKURSIV - ohne Schleife.
+    public static int fibonacci(int n) {
+        // TODO Level 3.1 · Experte
+        return -1;
+    }
+}
+
+
+// ============ Level 3.2 – Die Dungeon-Karte (DS 19 und 20) ============
+//  Klassenkarte Karte (Notation wie im Abitur):
+//
+//      Karte
+//      ---------------------------------------------------------------
+//      - feld: Reihung von Reihung von Zeichen       // feld[z][s]
+//      + schritte: Ganzzahl                          // Aufrufe von findeWeg
+//      ---------------------------------------------------------------
+//      + c Karte(zeilen: Reihung von Zeichenkette)
+//      + getZeilen(): Ganzzahl
+//      + getSpalten(): Ganzzahl
+//      + getFeld(z: Ganzzahl, s: Ganzzahl): Zeichen
+//      + setFeld(z: Ganzzahl, s: Ganzzahl, c: Zeichen): nichts
+//      + alsText(): Zeichenkette
+//      + istImFeld(z: Ganzzahl, s: Ganzzahl): Wahrheitswert              Basis
+//      + istBegehbar(z: Ganzzahl, s: Ganzzahl): Wahrheitswert            Basis
+//      + anzahlWaende(): Ganzzahl                                        Basis
+//      + anzahlBegehbareNachbarn(z: Ganzzahl, s: Ganzzahl): Ganzzahl     Erweiterung
+//      + lueften(z: Ganzzahl, s: Ganzzahl): nichts                       Erweiterung
+//      + anzahlGelueftet(): Ganzzahl                                     Erweiterung
+//      + findeWeg(z: Ganzzahl, s: Ganzzahl): Wahrheitswert               Experte
+//
+//  Die Zeichen auf der Karte:
+//      '#'  Wand                    '+'  geluefteter (besuchter) Gang
+//      '.'  freier Gang (Nebel)     '*'  Feld auf dem gefundenen Weg
+//      'S'  Start                   'x'  Sackgasse (besucht, kein Weg)
+//      'Z'  Ziel
+//
+//  Beispiel: Die Karte aus den Zeilen {"#S.#", "#..Z"} hat 2 Zeilen und
+//  4 Spalten; feld[0][1] ist 'S', feld[1][3] ist 'Z'.
+//
+//      Spalte s:   0 1 2 3
+//      Zeile 0:    # S . #
+//      Zeile 1:    # . . Z
+//
+//  Nachbarn von (z, s) - IMMER in dieser Reihenfolge:
+//      oben (z - 1, s), rechts (z, s + 1), unten (z + 1, s), links (z, s - 1)
+// ---------------------------------------------------------------------
+
+class Karte {
+
+    // ======== VORGEGEBEN – bis zur Linie "AB HIER ARBEITEST DU" nichts veraendern ========
+
+    private char[][] feld;      // feld[z][s]: Zeile z, Spalte s
+    public int schritte;        // zaehlt die Aufrufe von findeWeg (Experte)
+
+    // Baut die Karte aus Textzeilen: feld[z][s] = zeilen[z].charAt(s).
+    // Alle Zeilen muessen gleich lang sein.
+    public Karte(String[] zeilen) {
+        feld = new char[zeilen.length][zeilen[0].length()];
+        for (int z = 0; z < zeilen.length; z++) {
+            for (int s = 0; s < zeilen[z].length(); s++) {
+                feld[z][s] = zeilen[z].charAt(s);
+            }
+        }
+        schritte = 0;
+    }
+
+    public int getZeilen() {
+        return feld.length;
+    }
+
+    public int getSpalten() {
+        return feld[0].length;
+    }
+
+    public char getFeld(int z, int s) {
+        return feld[z][s];
+    }
+
+    public void setFeld(int z, int s, char c) {
+        feld[z][s] = c;
+    }
+
+    // Die Karte als Text: Zeilen mit "\n" getrennt (ohne "\n" am Ende).
+    // println(karte.alsText()) zeichnet die Karte auf die Konsole.
+    public String alsText() {
+        String text = "";
+        for (int z = 0; z < feld.length; z++) {
+            if (z > 0) {
+                text = text + "\n";
+            }
+            for (int s = 0; s < feld[z].length; s++) {
+                text = text + feld[z][s];
+            }
+        }
+        return text;
+    }
+
+    // ======== AB HIER ARBEITEST DU =============================================
+
+
+    // ===================== Stufe BASIS =====================
+
+    // istImFeld(z: Ganzzahl, s: Ganzzahl): Wahrheitswert
+    // true, wenn (z, s) ein gueltiges Feld der Karte ist:
+    // 0 <= z < Anzahl Zeilen und 0 <= s < Anzahl Spalten.
+    public boolean istImFeld(int z, int s) {
+        // TODO Level 3.2 · Basis
+        return false;
+    }
+
+    // istBegehbar(z: Ganzzahl, s: Ganzzahl): Wahrheitswert
+    // true, wenn (z, s) im Feld liegt UND dort '.', 'S' oder 'Z' steht.
+    // Ausserhalb der Karte -> false (KEIN Absturz!).
+    public boolean istBegehbar(int z, int s) {
+        // TODO Level 3.2 · Basis
+        return false;
+    }
+
+    // anzahlWaende(): Ganzzahl
+    // Anzahl der Felder mit '#' auf der ganzen Karte.
+    // (Hier sind Schleifen erlaubt: zwei geschachtelte Zaehlschleifen.)
+    public int anzahlWaende() {
+        // TODO Level 3.2 · Basis
+        return -1;
+    }
+
+
+    // ================== Stufe ERWEITERUNG ==================
+
+    // anzahlBegehbareNachbarn(z: Ganzzahl, s: Ganzzahl): Ganzzahl
+    // Wie viele der vier Nachbarn (oben, rechts, unten, links) von (z, s)
+    // sind begehbar? Diagonale Felder zaehlen NICHT. Am Rand fehlen
+    // Nachbarn - nutze istBegehbar, dann gibt es keinen Absturz.
+    public int anzahlBegehbareNachbarn(int z, int s) {
+        // TODO Level 3.2 · Erweiterung
+        return -1;
+    }
+
+    // lueften(z: Ganzzahl, s: Ganzzahl): nichts
+    // Nebel lueften (Flood-Fill): Ist (z, s) begehbar ('.', 'S' oder 'Z'),
+    // wird das Feld als besucht markiert und danach werden die vier
+    // Nachbarn gelueftet (oben, rechts, unten, links). Sonst passiert
+    // nichts (Basisfall: Wand, Rand, schon besucht).
+    // Ergebnis: Alle von (z, s) aus erreichbaren '.' sind '+'.
+    // 'S' und 'Z' sind am Ende wieder als 'S' und 'Z' zu sehen.
+    // ACHTUNG Endlosrekursion: Markiere ein Feld, BEVOR du die Nachbarn
+    // lueftest - sonst laufen zwei Nachbarn ewig hin und her. Auch S und Z
+    // muessen waehrenddessen als besucht gelten (z. B. voruebergehend '+'
+    // setzen und am Ende den alten Buchstaben zuruecksetzen).
+    // REKURSIV - ohne Schleife.
+    public void lueften(int z, int s) {
+        // TODO Level 3.2 · Erweiterung
+    }
+
+    // anzahlGelueftet(): Ganzzahl
+    // Anzahl der Felder mit '+' auf der ganzen Karte (Schleifen erlaubt).
+    public int anzahlGelueftet() {
+        // TODO Level 3.2 · Erweiterung
+        return -1;
+    }
+
+
+    // =================== Stufe EXPERTE – Kuer-DS 20 ===================
+
+    // findeWeg(z: Ganzzahl, s: Ganzzahl): Wahrheitswert
+    // BACKTRACKING: Sucht von (z, s) aus einen Weg zum Ziel 'Z'
+    // (Nachbarn oben, rechts, unten, links). true, wenn Z erreichbar ist.
+    //   1. schritte um 1 erhoehen (bei JEDEM Aufruf, siehe Zaehl-Regeln).
+    //   2. Basisfaelle: ausserhalb der Karte -> false; Feld ist 'Z' -> true;
+    //      Feld ist weder '.' noch 'S' (Wand oder schon besucht) -> false.
+    //   3. Feld vorlaeufig als Weg markieren ('*'), dann nacheinander die
+    //      Nachbarn versuchen. Liefert ein Nachbar true -> sofort true
+    //      zurueckgeben (das Feld bleibt '*').
+    //   4. Kein Nachbar fuehrt zum Ziel: Schritt zuruecknehmen - das Feld
+    //      wird zur Sackgasse 'x' - und false zurueckgeben.
+    // Am Ende: Weg-Felder '*', besuchte Sackgassen 'x', nie besuchte
+    // Felder bleiben '.', und S und Z sind wieder 'S' und 'Z'.
+    // Gibt es keinen Weg: false, alle besuchten '.' sind 'x'.
+    // REKURSIV - ohne Schleife.
+    public boolean findeWeg(int z, int s) {
+        // TODO Level 3.2 · Experte
+        return false;
+    }
+}
+
+
+// ========= Level 3.3 – Teile und herrsche (DS 21 und 22) ==============
+//  Teile und herrsche: Problem in Teilprobleme derselben Art zerlegen
+//  (TEILEN), die Teile rekursiv loesen (HERRSCHEN) und die Teilloesungen
+//  zusammensetzen (VERBINDEN). Alle Methoden sind static.
+//  Reihungsabschnitte werden mit Indexgrenzen beschrieben:
+//      von, bis bzw. lo, hi        -> beide Grenzen gehoeren DAZU
+//      teilstueck(r, von, bis)     -> bis gehoert NICHT dazu (exklusiv)
+// ---------------------------------------------------------------------
+
+class TeileUndHerrsche {
+
+    // VORGEGEBEN: zaehlt die Vergleiche r[i] < pivot in zerlege.
+    public static int vergleiche = 0;
+
+    // ===================== Stufe BASIS =====================
+
+    // binaerRek(r: Reihung von Ganzzahl, x: Ganzzahl, lo: Ganzzahl, hi: Ganzzahl): Ganzzahl
+    // Binaere Suche nach x im Bereich r[lo] ... r[hi] (beide einschliesslich),
+    // r ist AUFSTEIGEND sortiert. Liefert den Index von x oder -1.
+    // Basisfall: lo > hi (Bereich leer) -> -1. Sonst mid = (lo + hi) / 2;
+    // r[mid] == x -> mid; sonst rekursiv NUR in der passenden Haelfte
+    // weitersuchen (ohne mid).
+    // REKURSIV - ohne Schleife.
+    public static int binaerRek(int[] r, int x, int lo, int hi) {
+        // TODO Level 3.3 · Basis
+        return -1;
+    }
+
+    // binaer(r: Reihung von Ganzzahl, x: Ganzzahl): Ganzzahl
+    // Sucht x in der ganzen Reihung: ruft binaerRek(r, x, 0, r.length - 1)
+    // auf und liefert dessen Ergebnis.
+    public static int binaer(int[] r, int x) {
+        // TODO Level 3.3 · Basis
+        return -1;
+    }
+
+
+    // ================== Stufe ERWEITERUNG ==================
+
+    // maximumTH(r: Reihung von Ganzzahl, von: Ganzzahl, bis: Ganzzahl): Ganzzahl
+    // Groesster Wert im Bereich r[von] ... r[bis] (von <= bis) nach
+    // "Teile und herrsche":
+    //   Basisfall: von == bis -> r[von].
+    //   Sonst: mitte = (von + bis) / 2, Maximum der linken Haelfte
+    //   von ... mitte und der rechten Haelfte mitte + 1 ... bis rekursiv
+    //   bestimmen und den groesseren der beiden Werte zurueckgeben.
+    // REKURSIV - ohne Schleife.
+    public static int maximumTH(int[] r, int von, int bis) {
+        // TODO Level 3.3 · Erweiterung
+        return -1;
+    }
+
+    // teilstueck(r: Reihung von Ganzzahl, von: Ganzzahl, bis: Ganzzahl): Reihung von Ganzzahl
+    // NEUE Reihung mit den Elementen r[von], r[von + 1], ..., r[bis - 1].
+    // ACHTUNG: bis gehoert NICHT dazu, die neue Reihung hat also die
+    // Laenge bis - von. von == bis -> leere Reihung. r bleibt unveraendert.
+    // (Schleife erlaubt.)
+    public static int[] teilstueck(int[] r, int von, int bis) {
+        // TODO Level 3.3 · Erweiterung
+        return null;
+    }
+
+    // verschmelze(a: Reihung von Ganzzahl, b: Reihung von Ganzzahl): Reihung von Ganzzahl
+    // a und b sind AUFSTEIGEND sortiert. Liefert eine NEUE aufsteigend
+    // sortierte Reihung mit allen Elementen von a und b: Immer das
+    // kleinere der beiden vordersten Elemente uebernehmen (bei Gleichstand
+    // das aus a). Ist eine Reihung aufgebraucht, den Rest der anderen
+    // anhaengen. (Schleifen erlaubt.)
+    public static int[] verschmelze(int[] a, int[] b) {
+        // TODO Level 3.3 · Erweiterung
+        return null;
+    }
+
+    // mergeSort(r: Reihung von Ganzzahl): Reihung von Ganzzahl
+    // Liefert eine NEUE aufsteigend sortierte Reihung; r bleibt unveraendert.
+    //   Basisfall: r.length <= 1 -> eine KOPIE von r zurueckgeben.
+    //   Sonst: mitte = r.length / 2; links = teilstueck(r, 0, mitte),
+    //   rechts = teilstueck(r, mitte, r.length); beide Teile rekursiv
+    //   sortieren und mit verschmelze zusammenfuegen.
+    // REKURSIV - ohne Schleife (die Schleifen stecken in teilstueck und
+    // verschmelze).
+    public static int[] mergeSort(int[] r) {
+        // TODO Level 3.3 · Erweiterung
+        return null;
+    }
+
+
+    // =================== Stufe EXPERTE =====================
+
+    // quickSort(r: Reihung von Ganzzahl): nichts
+    // Sortiert r AUFSTEIGEND in-place (r selbst wird veraendert):
+    // ruft quickSort(r, 0, r.length - 1) auf.
+    public static void quickSort(int[] r) {
+        // TODO Level 3.3 · Experte
+    }
+
+    // quickSort(r: Reihung von Ganzzahl, lo: Ganzzahl, hi: Ganzzahl): nichts
+    // Sortiert den Bereich r[lo] ... r[hi]:
+    //   Nur falls lo < hi (sonst Basisfall - nichts zu tun):
+    //   p = zerlege(r, lo, hi); dann quickSort(r, lo, p - 1) und
+    //   quickSort(r, p + 1, hi). Das Pivot an Position p steht schon richtig.
+    // REKURSIV - ohne Schleife.
+    public static void quickSort(int[] r, int lo, int hi) {
+        // TODO Level 3.3 · Experte
+    }
+
+    // zerlege(r: Reihung von Ganzzahl, lo: Ganzzahl, hi: Ganzzahl): Ganzzahl
+    // Zerlegt r[lo] ... r[hi] um das Pivot r[lo] (das LINKE Element):
+    //   pivot <- r[lo]; grenze <- lo
+    //   fuer i von lo + 1 bis hi:
+    //       vergleiche um 1 erhoehen
+    //       falls r[i] < pivot: grenze <- grenze + 1; tausche r[grenze] und r[i]
+    //   tausche r[lo] und r[grenze]; gib grenze zurueck
+    // Danach stehen links vom Pivot nur kleinere, rechts nur groessere oder
+    // gleiche Werte. (Schleife erlaubt.)
+    public static int zerlege(int[] r, int lo, int hi) {
+        // TODO Level 3.3 · Experte
+        return -1;
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  TESTS – hier nichts veraendern!
+// ---------------------------------------------------------------------
+//  Eine Testklasse pro Level. Die Stufe erkennst du am Anfang des
+//  Testnamens:
+//      basis_...        Basis       
+//      erweiterung_...  Erweiterung 
+//      experte_...      Experte     
+//  Eine Stufe ist geschafft, wenn ALLE Tests mit diesem Anfang gruen sind.
+// ---------------------------------------------------------------------
+
+// Hilfsklasse fuer Tests und Hauptprogramm: die vier Testkarten.
+// Jeder Aufruf liefert eine NEUE Karte (frisch vernebelt).
+class Kartenbuch {
+
+    // Die offene Hoehle (5 Zeilen, 7 Spalten), Start (1, 1), Ziel (3, 5):
+    //       0123456
+    //    0  #######
+    //    1  #S....#
+    //    2  #..#..#
+    //    3  #....Z#
+    //    4  #######
+    public static Karte hoehle() {
+        String[] zeilen = {
+            "#######",
+            "#S....#",
+            "#..#..#",
+            "#....Z#",
+            "#######"
+        };
+        return new Karte(zeilen);
+    }
+
+    // Das Labyrinth (9 Zeilen, 9 Spalten), Start (1, 1), Ziel (5, 7).
+    // Es gibt einen Weg, mehrere Sackgassen und unten rechts eine
+    // abgeschlossene Kammer (nur UEBER ECK mit dem Gang verbunden).
+    //       012345678
+    //    0  #########
+    //    1  #S#...#.#
+    //    2  #.#.#.#.#
+    //    3  #...#...#
+    //    4  #.###.#.#
+    //    5  #...#.#Z#
+    //    6  ###.##.##
+    //    7  #...#...#
+    //    8  #########
+    public static Karte labyrinth() {
+        String[] zeilen = {
+            "#########",
+            "#S#...#.#",
+            "#.#.#.#.#",
+            "#...#...#",
+            "#.###.#.#",
+            "#...#.#Z#",
+            "###.##.##",
+            "#...#...#",
+            "#########"
+        };
+        return new Karte(zeilen);
+    }
+
+    // Der Kerker (6 Zeilen, 8 Spalten), Start (1, 1), Ziel (2, 5).
+    // KEIN Weg: Das Ziel liegt in einer eigenen Kammer.
+    //       01234567
+    //    0  ########
+    //    1  #S..#..#
+    //    2  #.#.#Z.#
+    //    3  #...####
+    //    4  #.#....#
+    //    5  ########
+    public static Karte kerker() {
+        String[] zeilen = {
+            "########",
+            "#S..#..#",
+            "#.#.#Z.#",
+            "#...####",
+            "#.#....#",
+            "########"
+        };
+        return new Karte(zeilen);
+    }
+
+    // Die Lichtung (3 Zeilen, 4 Spalten), Start (1, 1), Ziel (2, 3).
+    // OHNE Randmauer: Wer nicht prueft, ob (z, s) im Feld liegt, stuerzt ab.
+    //       0123
+    //    0  ..#.
+    //    1  .S..
+    //    2  #..Z
+    public static Karte lichtung() {
+        String[] zeilen = {
+            "..#.",
+            ".S..",
+            "#..Z"
+        };
+        return new Karte(zeilen);
+    }
+
+    // Erwartete Karte als Text (Zeilen mit "\n" verbunden) - wie alsText().
+    public static String text(String[] zeilen) {
+        String t = "";
+        for (int i = 0; i < zeilen.length; i++) {
+            if (i > 0) {
+                t = t + "\n";
+            }
+            t = t + zeilen[i];
+        }
+        return t;
+    }
+}
+
+
+// ================== Level 3.1 – Rekursion (DS 18) =====================
+
+class L31RekursionTest {
+
+    @Test
+    public void basis_fakultaet() {
+        assertEquals(120, Rekursion.fakultaet(5), "fakultaet(5) = 5 * 4 * 3 * 2 * 1 = 120");
+        assertEquals(6, Rekursion.fakultaet(3), "fakultaet(3) = 3 * 2 * 1 = 6");
+        assertEquals(1, Rekursion.fakultaet(1), "fakultaet(1) = 1");
+        assertEquals(3628800, Rekursion.fakultaet(10), "fakultaet(10) = 3628800");
+    }
+
+    @Test
+    public void basis_fakultaet_basisfallNull() {
+        assertEquals(1, Rekursion.fakultaet(0), "fakultaet(0) = 1 (Basisfall n = 0). Bei StackOverflowError wird dein Basisfall bei n = 0 nie erreicht");
+        assertEquals(2, Rekursion.fakultaet(2), "fakultaet(2) = 2 * fakultaet(1) = 2");
+    }
+
+    @Test
+    public void basis_summeBis() {
+        assertEquals(10, Rekursion.summeBis(4), "summeBis(4) = 0 + 1 + 2 + 3 + 4 = 10");
+        assertEquals(55, Rekursion.summeBis(10), "summeBis(10) = 55");
+        assertEquals(1, Rekursion.summeBis(1), "summeBis(1) = 0 + 1 = 1");
+    }
+
+    @Test
+    public void basis_summeBis_basisfallNull() {
+        assertEquals(3, Rekursion.summeBis(2), "summeBis(2) = 0 + 1 + 2 = 3");
+        assertEquals(0, Rekursion.summeBis(0), "summeBis(0) = 0. Bei StackOverflowError fehlt der Basisfall n = 0 (n = 1 reicht nicht)");
+    }
+
+    @Test
+    public void basis_potenz() {
+        assertEquals(1024, Rekursion.potenz(2, 10), "potenz(2, 10) = 1024");
+        assertEquals(81, Rekursion.potenz(3, 4), "potenz(3, 4) = 3 * 3 * 3 * 3 = 81");
+        assertEquals(5, Rekursion.potenz(5, 1), "potenz(5, 1) = 5");
+        assertEquals(-8, Rekursion.potenz(-2, 3), "potenz(-2, 3) = (-2) * (-2) * (-2) = -8");
+    }
+
+    @Test
+    public void basis_potenz_exponentNull() {
+        assertEquals(1, Rekursion.potenz(7, 0), "potenz(7, 0) = 1 (Basisfall exponent = 0). Bei StackOverflowError den Basisfall pruefen!");
+        assertEquals(49, Rekursion.potenz(7, 2), "potenz(7, 2) = 49");
+    }
+
+    @Test
+    public void erweiterung_anzahlZiffern() {
+        assertEquals(4, Rekursion.anzahlZiffern(4711), "4711 hat 4 Ziffern");
+        assertEquals(1, Rekursion.anzahlZiffern(7), "7 hat 1 Ziffer");
+        assertEquals(2, Rekursion.anzahlZiffern(10), "10 hat 2 Ziffern");
+        assertEquals(3, Rekursion.anzahlZiffern(100), "100 hat 3 Ziffern - auch die Nullen zaehlen");
+    }
+
+    @Test
+    public void erweiterung_anzahlZiffern_null() {
+        assertEquals(1, Rekursion.anzahlZiffern(0), "0 hat EINE Ziffer: anzahlZiffern(0) = 1 (Basisfall n < 10, nicht n == 0)");
+        assertEquals(2, Rekursion.anzahlZiffern(99), "99 hat 2 Ziffern");
+    }
+
+    @Test
+    public void erweiterung_istPalindrom() {
+        assertTrue(Rekursion.istPalindrom("otto"), "'otto' ist ein Palindrom (gerade Laenge)");
+        assertTrue(Rekursion.istPalindrom("level"), "'level' ist ein Palindrom (ungerade Laenge)");
+        assertFalse(Rekursion.istPalindrom("abc"), "'abc' ist kein Palindrom");
+        assertFalse(Rekursion.istPalindrom("abca"), "'abca': erstes und letztes Zeichen gleich, aber 'bc' in der Mitte ist kein Palindrom");
+        assertFalse(Rekursion.istPalindrom("Otto"), "'Otto' ist kein Palindrom: 'O' und 'o' sind verschiedene Zeichen");
+    }
+
+    @Test
+    public void erweiterung_istPalindrom_randfaelle() {
+        assertTrue(Rekursion.istPalindrom(""), "Die leere Zeichenkette ist ein Palindrom (Basisfall)");
+        assertTrue(Rekursion.istPalindrom("x"), "Ein einzelnes Zeichen ist ein Palindrom (Basisfall)");
+        assertTrue(Rekursion.istPalindrom("aa"), "'aa' ist ein Palindrom");
+        assertFalse(Rekursion.istPalindrom("ab"), "'ab' ist kein Palindrom");
+        assertTrue(Rekursion.istPalindrom("abcba"), "'abcba' ist ein Palindrom - bei ungerader Laenge muss der Basisfall Laenge <= 1 greifen");
+    }
+
+    @Test
+    public void erweiterung_summeAb() {
+        int[] r = {3, 8, 2, 5};
+        assertEquals(18, Rekursion.summeAb(r, 0), "summeAb({3, 8, 2, 5}, 0) = 3 + 8 + 2 + 5 = 18");
+        assertEquals(7, Rekursion.summeAb(r, 2), "summeAb({3, 8, 2, 5}, 2) = 2 + 5 = 7");
+        assertEquals(5, Rekursion.summeAb(r, 3), "summeAb({3, 8, 2, 5}, 3) = 5 (nur das letzte Element)");
+    }
+
+    @Test
+    public void erweiterung_summeAb_basisfall() {
+        int[] r = {3, 8, 2, 5};
+        assertEquals(15, Rekursion.summeAb(r, 1), "summeAb({3, 8, 2, 5}, 1) = 8 + 2 + 5 = 15");
+        assertEquals(0, Rekursion.summeAb(r, 4), "summeAb(r, r.length) = 0 - Basisfall i == r.length (keine Elemente mehr)");
+        assertEquals(0, Rekursion.summeAb(new int[0], 0), "Leere Reihung: summeAb(r, 0) = 0 - Basisfall i == r.length");
+        int[] neg = {-4, 4, -9};
+        assertEquals(-9, Rekursion.summeAb(neg, 0), "summeAb({-4, 4, -9}, 0) = -9");
+    }
+
+    @Test
+    public void experte_maximumAb() {
+        int[] r = {4, 9, 2, 7, 1};
+        assertEquals(9, Rekursion.maximumAb(r, 0), "maximumAb({4, 9, 2, 7, 1}, 0) = 9");
+        assertEquals(7, Rekursion.maximumAb(r, 2), "maximumAb({4, 9, 2, 7, 1}, 2) = 7 - erst ab Index 2 suchen");
+        assertEquals(1, Rekursion.maximumAb(r, 4), "maximumAb({4, 9, 2, 7, 1}, 4) = 1 (Basisfall: letztes Element)");
+    }
+
+    @Test
+    public void experte_maximumAb_raender() {
+        int[] vorne = {12, 3, 5};
+        int[] hinten = {3, 5, 12};
+        int[] neg = {-5, -2, -8};
+        assertEquals(12, Rekursion.maximumAb(vorne, 0), "Maximum ganz vorne: {12, 3, 5} -> 12");
+        assertEquals(12, Rekursion.maximumAb(hinten, 0), "Maximum ganz hinten: {3, 5, 12} -> 12");
+        assertEquals(-2, Rekursion.maximumAb(neg, 0), "Nur negative Werte: {-5, -2, -8} -> -2 (nicht mit 0 starten!)");
+        int[] eins = {6};
+        assertEquals(6, Rekursion.maximumAb(eins, 0), "Ein Element: {6} -> 6");
+    }
+
+    @Test
+    public void experte_dual() {
+        assertEquals("110", Rekursion.dual(6), "dual(6) = '110' (6 = 4 + 2)");
+        assertEquals("1101", Rekursion.dual(13), "dual(13) = '1101' (13 = 8 + 4 + 1)");
+        assertEquals("1000", Rekursion.dual(8), "dual(8) = '1000'");
+        assertEquals("1", Rekursion.dual(1), "dual(1) = '1'");
+    }
+
+    @Test
+    public void experte_dual_basisfall() {
+        assertEquals("10", Rekursion.dual(2), "dual(2) = '10' - ohne fuehrende Null (nicht '010')");
+        assertEquals("0", Rekursion.dual(0), "dual(0) = '0' (nicht die leere Zeichenkette)");
+        assertEquals("11111111", Rekursion.dual(255), "dual(255) = '11111111'");
+    }
+
+    @Test
+    public void experte_fibonacci() {
+        assertEquals(5, Rekursion.fibonacci(5), "fibonacci(5) = 5 (0, 1, 1, 2, 3, 5)");
+        assertEquals(55, Rekursion.fibonacci(10), "fibonacci(10) = 55");
+        assertEquals(1, Rekursion.fibonacci(2), "fibonacci(2) = fib(1) + fib(0) = 1");
+        assertEquals(1, Rekursion.fibonacci(1), "fibonacci(1) = 1 (Basisfall)");
+        assertEquals(0, Rekursion.fibonacci(0), "fibonacci(0) = 0 (Basisfall)");
+    }
+
+    @Test
+    public void experte_fibonacci_aufrufe() {
+        Rekursion.aufrufe = 0;
+        Rekursion.fibonacci(5);
+        assertEquals(15, Rekursion.aufrufe, "fibonacci(5) ruft sich (mit dem ersten Aufruf) 15-mal auf - zeichne den Aufrufbaum! aufrufe++ als ERSTE Anweisung, zwei Selbstaufrufe");
+        Rekursion.aufrufe = 0;
+        Rekursion.fibonacci(1);
+        assertEquals(1, Rekursion.aufrufe, "fibonacci(1) ist ein Basisfall: genau 1 Aufruf");
+        Rekursion.aufrufe = 0;
+        Rekursion.fibonacci(10);
+        assertEquals(177, Rekursion.aufrufe, "fibonacci(10) braucht 177 Aufrufe - baumrekursiv waechst die Zahl der Aufrufe sehr schnell");
+    }
+}
+
+
+// ============ Level 3.2 – Die Dungeon-Karte (DS 19 und 20) ============
+
+class L32KarteTest {
+
+    @Test
+    public void basis_istImFeld() {
+        Karte k = Kartenbuch.hoehle();          // 5 Zeilen, 7 Spalten
+        assertTrue(k.istImFeld(0, 0), "Hoehle: (0, 0) ist die Ecke oben links - im Feld");
+        assertTrue(k.istImFeld(4, 6), "Hoehle (5 Zeilen, 7 Spalten): (4, 6) ist die Ecke unten rechts - im Feld. Zeilen und Spalten vertauscht?");
+        assertTrue(k.istImFeld(2, 3), "Hoehle: (2, 3) liegt mitten im Feld");
+        assertFalse(k.istImFeld(5, 0), "Hoehle: Zeile 5 gibt es nicht (Zeilen 0 bis 4)");
+        assertFalse(k.istImFeld(0, 7), "Hoehle: Spalte 7 gibt es nicht (Spalten 0 bis 6)");
+        assertFalse(k.istImFeld(-1, 3), "Hoehle: Zeile -1 gibt es nicht");
+        assertFalse(k.istImFeld(2, -1), "Hoehle: Spalte -1 gibt es nicht");
+    }
+
+    @Test
+    public void basis_istImFeld_lichtung() {
+        Karte k = Kartenbuch.lichtung();        // 3 Zeilen, 4 Spalten
+        assertTrue(k.istImFeld(2, 3), "Lichtung (3 Zeilen, 4 Spalten): (2, 3) ist im Feld");
+        assertTrue(k.istImFeld(0, 3), "Lichtung: (0, 3) ist im Feld");
+        assertFalse(k.istImFeld(3, 2), "Lichtung: Zeile 3 gibt es nicht - Zeilen: feld.length, Spalten: feld[0].length");
+        assertFalse(k.istImFeld(2, 4), "Lichtung: Spalte 4 gibt es nicht");
+    }
+
+    @Test
+    public void basis_istBegehbar() {
+        Karte k = Kartenbuch.hoehle();
+        assertTrue(k.istBegehbar(1, 2), "Hoehle: (1, 2) ist '.' - begehbar");
+        assertTrue(k.istBegehbar(1, 1), "Hoehle: (1, 1) ist der Start 'S' - begehbar");
+        assertTrue(k.istBegehbar(3, 5), "Hoehle: (3, 5) ist das Ziel 'Z' - begehbar");
+        assertFalse(k.istBegehbar(0, 0), "Hoehle: (0, 0) ist eine Wand '#'");
+        assertFalse(k.istBegehbar(2, 3), "Hoehle: (2, 3) ist eine Wand '#' mitten in der Hoehle");
+    }
+
+    @Test
+    public void basis_istBegehbar_ausserhalb() {
+        Karte k = Kartenbuch.lichtung();
+        assertTrue(k.istBegehbar(0, 0), "Lichtung: (0, 0) ist '.' - begehbar");
+        assertFalse(k.istBegehbar(-1, 0), "(-1, 0) liegt ausserhalb: false - und KEIN Absturz (zuerst istImFeld pruefen!)");
+        assertFalse(k.istBegehbar(0, -1), "(0, -1) liegt ausserhalb: false");
+        assertFalse(k.istBegehbar(3, 1), "(3, 1) liegt ausserhalb: false");
+        assertFalse(k.istBegehbar(1, 4), "(1, 4) liegt ausserhalb: false");
+    }
+
+    @Test
+    public void basis_istBegehbar_besucht() {
+        String[] zeilen = {"S+*x.Z#"};
+        Karte k = new Karte(zeilen);
+        assertTrue(k.istBegehbar(0, 4), "'.' ist begehbar");
+        assertTrue(k.istBegehbar(0, 0), "'S' ist begehbar");
+        assertTrue(k.istBegehbar(0, 5), "'Z' ist begehbar");
+        assertFalse(k.istBegehbar(0, 1), "'+' (schon gelueftet) ist NICHT begehbar");
+        assertFalse(k.istBegehbar(0, 2), "'*' (schon auf dem Weg) ist NICHT begehbar");
+        assertFalse(k.istBegehbar(0, 3), "'x' (Sackgasse) ist NICHT begehbar");
+        assertFalse(k.istBegehbar(0, 6), "'#' (Wand) ist NICHT begehbar");
+    }
+
+    @Test
+    public void basis_anzahlWaende() {
+        assertEquals(21, Kartenbuch.hoehle().anzahlWaende(), "Die Hoehle hat 21 Waende");
+        assertEquals(50, Kartenbuch.labyrinth().anzahlWaende(), "Das Labyrinth hat 50 Waende");
+        assertEquals(31, Kartenbuch.kerker().anzahlWaende(), "Der Kerker hat 31 Waende - laufen beide Schleifen bis zum letzten Index?");
+        assertEquals(2, Kartenbuch.lichtung().anzahlWaende(), "Die Lichtung hat 2 Waende");
+    }
+
+    @Test
+    public void erweiterung_anzahlBegehbareNachbarn() {
+        Karte k = Kartenbuch.hoehle();
+        assertEquals(3, k.anzahlBegehbareNachbarn(2, 2), "Hoehle (2, 2): oben '.', rechts '#', unten '.', links '.' -> 3");
+        assertEquals(2, k.anzahlBegehbareNachbarn(1, 1), "Hoehle (1, 1) = S: oben '#', rechts '.', unten '.', links '#' -> 2");
+        assertEquals(3, k.anzahlBegehbareNachbarn(2, 5), "Hoehle (2, 5): oben '.', rechts '#', unten 'Z', links '.' -> 3 (Z zaehlt als begehbar)");
+        assertEquals(1, k.anzahlBegehbareNachbarn(0, 1), "Hoehle (0, 1) ist eine Wand - gezaehlt werden trotzdem die Nachbarn: nur unten 'S' -> 1 (oben ist ausserhalb!)");
+    }
+
+    @Test
+    public void erweiterung_anzahlBegehbareNachbarn_randUndDiagonal() {
+        Karte k = Kartenbuch.lichtung();
+        assertEquals(4, k.anzahlBegehbareNachbarn(1, 1), "Lichtung (1, 1) = S: alle vier Nachbarn sind '.' -> 4");
+        assertEquals(2, k.anzahlBegehbareNachbarn(0, 0), "Lichtung (0, 0) ist die Ecke: oben und links liegen AUSSERHALB -> 2");
+        assertEquals(2, k.anzahlBegehbareNachbarn(2, 3), "Lichtung (2, 3) = Z in der Ecke unten rechts -> 2");
+        assertEquals(1, k.anzahlBegehbareNachbarn(0, 3), "Lichtung (0, 3): nur unten ist begehbar -> 1");
+        assertEquals(3, k.anzahlBegehbareNachbarn(1, 2), "Lichtung (1, 2): oben '#', rechts '.', unten '.', links 'S' -> 3. Diagonale Felder zaehlen NICHT!");
+    }
+
+    @Test
+    public void erweiterung_lueften_hoehle() {
+        Karte k = Kartenbuch.hoehle();
+        k.lueften(1, 1);
+        String[] erwartet = {
+            "#######",
+            "#S++++#",
+            "#++#++#",
+            "#++++Z#",
+            "#######"
+        };
+        assertEquals(Kartenbuch.text(erwartet), k.alsText(), "Hoehle nach lueften(1, 1): alle '.' werden '+', S und Z bleiben sichtbar");
+        assertEquals(12, k.anzahlGelueftet(), "Hoehle nach lueften(1, 1): 12 Felder sind gelueftet");
+    }
+
+    @Test
+    public void erweiterung_lueften_labyrinth() {
+        Karte k = Kartenbuch.labyrinth();
+        k.lueften(1, 1);
+        String[] erwartet = {
+            "#########",
+            "#S#+++#+#",
+            "#+#+#+#+#",
+            "#+++#+++#",
+            "#+###+#+#",
+            "#+++#+#Z#",
+            "###+##.##",
+            "#+++#...#",
+            "#########"
+        };
+        assertEquals(Kartenbuch.text(erwartet), k.alsText(), "Labyrinth nach lueften(1, 1): Die Kammer unten rechts bleibt vernebelt - sie ist nur UEBER ECK erreichbar (keine Diagonalen!)");
+        assertEquals(25, k.anzahlGelueftet(), "Labyrinth nach lueften(1, 1): 25 Felder sind gelueftet");
+    }
+
+    @Test
+    public void erweiterung_lueften_kerker() {
+        Karte k = Kartenbuch.kerker();
+        k.lueften(1, 1);
+        String[] erwartet = {
+            "########",
+            "#S++#..#",
+            "#+#+#Z.#",
+            "#+++####",
+            "#+#++++#",
+            "########"
+        };
+        assertEquals(Kartenbuch.text(erwartet), k.alsText(), "Kerker nach lueften(1, 1): Die Kammer mit dem Ziel bleibt vernebelt");
+        Karte k2 = Kartenbuch.kerker();
+        k2.lueften(2, 5);
+        String[] erwartet2 = {
+            "########",
+            "#S..#++#",
+            "#.#.#Z+#",
+            "#...####",
+            "#.#....#",
+            "########"
+        };
+        assertEquals(Kartenbuch.text(erwartet2), k2.alsText(), "Kerker nach lueften(2, 5) - Start auf dem Ziel Z: nur die Zielkammer wird gelueftet, Z bleibt sichtbar");
+        assertEquals(3, k2.anzahlGelueftet(), "Kerker nach lueften(2, 5): 3 Felder sind gelueftet");
+    }
+
+    @Test
+    public void erweiterung_lueften_rand() {
+        Karte k = Kartenbuch.lichtung();
+        k.lueften(1, 1);
+        String[] erwartet = {
+            "++#+",
+            "+S++",
+            "#++Z"
+        };
+        assertEquals(Kartenbuch.text(erwartet), k.alsText(), "Lichtung (ohne Randmauer) nach lueften(1, 1): alles wird gelueftet. Bei Absturz fehlt die Pruefung, ob (z, s) im Feld liegt");
+        assertEquals(8, k.anzahlGelueftet(), "Lichtung nach lueften(1, 1): 8 Felder sind gelueftet");
+    }
+
+    @Test
+    public void erweiterung_lueften_wandUndAusserhalb() {
+        Karte k = Kartenbuch.hoehle();
+        k.lueften(0, 0);
+        k.lueften(2, 3);
+        k.lueften(-1, 2);
+        k.lueften(1, 7);
+        String[] unveraendert = {
+            "#######",
+            "#S....#",
+            "#..#..#",
+            "#....Z#",
+            "#######"
+        };
+        assertEquals(Kartenbuch.text(unveraendert), k.alsText(), "lueften auf einer Wand oder ausserhalb der Karte darf NICHTS veraendern (Basisfall)");
+        k.lueften(2, 4);
+        assertEquals(12, k.anzahlGelueftet(), "Hoehle nach lueften(2, 4): von jedem Gang aus wird die ganze Hoehle gelueftet - 12 Felder");
+        assertTrue(k.getFeld(1, 1) == 'S', "Hoehle nach lueften(2, 4): Der Start bleibt 'S'");
+        assertTrue(k.getFeld(3, 5) == 'Z', "Hoehle nach lueften(2, 4): Das Ziel bleibt 'Z'");
+    }
+
+    @Test
+    public void erweiterung_anzahlGelueftet() {
+        String[] zeilen = {"#++.", "+..+"};
+        Karte k = new Karte(zeilen);
+        assertEquals(4, k.anzahlGelueftet(), "Karte {'#++.', '+..+'}: 4 Felder sind '+' - auch das letzte Feld zaehlen!");
+        assertEquals(0, Kartenbuch.labyrinth().anzahlGelueftet(), "Frische Karte: noch nichts gelueftet -> 0");
+    }
+
+    @Test
+    public void experte_findeWeg_hoehle() {
+        Karte k = Kartenbuch.hoehle();
+        assertTrue(k.findeWeg(1, 1), "Hoehle: Es gibt einen Weg von S zu Z");
+        String[] erwartet = {
+            "#######",
+            "#S****#",
+            "#..#.*#",
+            "#....Z#",
+            "#######"
+        };
+        assertEquals(Kartenbuch.text(erwartet), k.alsText(), "Hoehle nach findeWeg(1, 1): Weg mit '*' (Reihenfolge oben, rechts, unten, links!), nie besuchte Felder bleiben '.'");
+    }
+
+    @Test
+    public void experte_findeWeg_labyrinth() {
+        Karte k = Kartenbuch.labyrinth();
+        assertTrue(k.findeWeg(1, 1), "Labyrinth: Es gibt einen Weg von S zu Z");
+        String[] erwartet = {
+            "#########",
+            "#S#***#x#",
+            "#*#*#*#x#",
+            "#***#***#",
+            "#.###.#*#",
+            "#...#.#Z#",
+            "###.##.##",
+            "#...#...#",
+            "#########"
+        };
+        assertEquals(Kartenbuch.text(erwartet), k.alsText(), "Labyrinth nach findeWeg(1, 1): Weg '*', Sackgasse oben rechts 'x' (Schritt zurueckgenommen!), Rest '.'");
+    }
+
+    @Test
+    public void experte_findeWeg_keinWeg() {
+        Karte k = Kartenbuch.kerker();
+        assertFalse(k.findeWeg(1, 1), "Kerker: Das Ziel ist nicht erreichbar - findeWeg muss false liefern");
+        String[] erwartet = {
+            "########",
+            "#Sxx#..#",
+            "#x#x#Z.#",
+            "#xxx####",
+            "#x#xxxx#",
+            "########"
+        };
+        assertEquals(Kartenbuch.text(erwartet), k.alsText(), "Kerker nach findeWeg(1, 1): Alle besuchten Felder sind Sackgassen 'x', S bleibt 'S', die Zielkammer bleibt '.'");
+    }
+
+    @Test
+    public void experte_findeWeg_rand() {
+        Karte k = Kartenbuch.lichtung();
+        assertTrue(k.findeWeg(1, 1), "Lichtung: Es gibt einen Weg von S zu Z");
+        String[] erwartet = {
+            "xx#x",
+            "xS**",
+            "#..Z"
+        };
+        assertEquals(Kartenbuch.text(erwartet), k.alsText(), "Lichtung nach findeWeg(1, 1): Sackgassen am Rand 'x', Weg '*'. Bei Absturz fehlt die Pruefung, ob (z, s) im Feld liegt");
+    }
+
+    @Test
+    public void experte_findeWeg_schritte() {
+        Karte h = Kartenbuch.hoehle();
+        h.schritte = 0;
+        h.findeWeg(1, 1);
+        assertEquals(15, h.schritte, "Hoehle: findeWeg(1, 1) wird 15-mal aufgerufen (jeder Aufruf zaehlt - auch auf Waenden; Reihenfolge oben, rechts, unten, links; Abbruch beim ersten true)");
+        Karte l = Kartenbuch.labyrinth();
+        l.schritte = 0;
+        l.findeWeg(1, 1);
+        assertEquals(41, l.schritte, "Labyrinth: findeWeg(1, 1) wird 41-mal aufgerufen");
+        Karte k = Kartenbuch.kerker();
+        k.schritte = 0;
+        k.findeWeg(1, 1);
+        assertEquals(53, k.schritte, "Kerker (ohne Weg): findeWeg(1, 1) wird 53-mal aufgerufen");
+        Karte li = Kartenbuch.lichtung();
+        li.schritte = 0;
+        li.findeWeg(1, 1);
+        assertEquals(24, li.schritte, "Lichtung: findeWeg(1, 1) wird 24-mal aufgerufen (Aufrufe ausserhalb der Karte zaehlen mit)");
+    }
+
+    @Test
+    public void experte_findeWeg_startAmZiel() {
+        String[] zeilen = {"#Z.", "#.#"};
+        Karte k = new Karte(zeilen);
+        k.schritte = 0;
+        assertTrue(k.findeWeg(0, 1), "Start direkt auf dem Ziel: findeWeg liefert sofort true");
+        assertEquals(1, k.schritte, "Start direkt auf dem Ziel: genau 1 Aufruf (Basisfall)");
+        assertEquals("#Z.\n#.#", k.alsText(), "Start direkt auf dem Ziel: Die Karte bleibt unveraendert");
+        Karte w = Kartenbuch.hoehle();
+        assertFalse(w.findeWeg(0, 0), "Start auf einer Wand: kein Weg (false)");
+        assertFalse(w.findeWeg(-1, 0), "Start ausserhalb der Karte: kein Weg (false)");
+    }
+}
+
+
+// ========= Level 3.3 – Teile und herrsche (DS 21 und 22) ==============
+
+class L33TeileHerrscheTest {
+
+    // Aufsteigend sortiert, n = 9:
+    //   Index: 0  1   2   3   4   5   6   7   8
+    //   Wert:  3  8  15  23  42  57  61  77  90
+    private int[] neun() {
+        int[] r = {3, 8, 15, 23, 42, 57, 61, 77, 90};
+        return r;
+    }
+
+    @Test
+    public void basis_binaer_gefunden() {
+        int[] r = neun();
+        assertEquals(4, TeileUndHerrsche.binaer(r, 42), "42 steht in der Mitte (Index 4) - schon der erste Vergleich trifft");
+        assertEquals(6, TeileUndHerrsche.binaer(r, 61), "61 steht an Index 6 (rechte Haelfte)");
+        assertEquals(1, TeileUndHerrsche.binaer(r, 8), "8 steht an Index 1 (linke Haelfte)");
+        assertEquals(0, TeileUndHerrsche.binaer(r, 3), "3 steht ganz vorne an Index 0");
+        assertEquals(8, TeileUndHerrsche.binaer(r, 90), "90 steht ganz hinten an Index 8");
+    }
+
+    @Test
+    public void basis_binaer_nichtGefunden() {
+        int[] r = neun();
+        assertEquals(2, TeileUndHerrsche.binaer(r, 15), "15 steht an Index 2");
+        assertEquals(-1, TeileUndHerrsche.binaer(r, 50), "50 kommt nicht vor: -1 (Basisfall lo > hi). Bei StackOverflowError wird der Bereich nicht kleiner (mid + 1 bzw. mid - 1!)");
+        assertEquals(-1, TeileUndHerrsche.binaer(r, 1), "1 ist kleiner als alle Werte: -1");
+        assertEquals(-1, TeileUndHerrsche.binaer(r, 100), "100 ist groesser als alle Werte: -1");
+    }
+
+    @Test
+    public void basis_binaer_leerUndEins() {
+        int[] eins = {7};
+        assertEquals(0, TeileUndHerrsche.binaer(eins, 7), "Reihung {7}: 7 steht an Index 0");
+        assertEquals(-1, TeileUndHerrsche.binaer(eins, 5), "Reihung {7}: 5 kommt nicht vor");
+        assertEquals(-1, TeileUndHerrsche.binaer(new int[0], 5), "Leere Reihung: -1 (binaerRek(r, x, 0, -1): lo > hi)");
+    }
+
+    @Test
+    public void basis_binaerRek_teilbereich() {
+        int[] r = neun();
+        assertEquals(5, TeileUndHerrsche.binaerRek(r, 57, 4, 8), "binaerRek(r, 57, 4, 8): 57 steht an Index 5");
+        assertEquals(7, TeileUndHerrsche.binaerRek(r, 77, 5, 7), "binaerRek(r, 77, 5, 7): 77 steht an Index 7 - mid = (lo + hi) / 2, nicht (hi - lo) / 2");
+        assertEquals(-1, TeileUndHerrsche.binaerRek(r, 8, 4, 8), "binaerRek(r, 8, 4, 8): 8 steht an Index 1 - also NICHT im Bereich 4 bis 8 -> -1");
+        assertEquals(-1, TeileUndHerrsche.binaerRek(r, 42, 5, 4), "binaerRek(r, 42, 5, 4): lo > hi, der Bereich ist leer -> -1 (Basisfall)");
+    }
+
+    @Test
+    public void erweiterung_maximumTH() {
+        int[] r = {4, 9, 2, 7, 1};
+        assertEquals(9, TeileUndHerrsche.maximumTH(r, 0, 4), "maximumTH({4, 9, 2, 7, 1}, 0, 4) = 9");
+        assertEquals(7, TeileUndHerrsche.maximumTH(r, 2, 4), "maximumTH({4, 9, 2, 7, 1}, 2, 4) = 7 - nur im Bereich 2 bis 4 suchen");
+        assertEquals(7, TeileUndHerrsche.maximumTH(r, 3, 3), "maximumTH(r, 3, 3) = r[3] = 7 (Basisfall von == bis)");
+        assertEquals(9, TeileUndHerrsche.maximumTH(r, 0, 1), "maximumTH(r, 0, 1) = 9 - zwei Elemente: beide Haelften pruefen");
+    }
+
+    @Test
+    public void erweiterung_maximumTH_raender() {
+        int[] vorne = {12, 3, 5, 1};
+        int[] hinten = {3, 5, 1, 12};
+        int[] neg = {-5, -2, -8};
+        assertEquals(12, TeileUndHerrsche.maximumTH(vorne, 0, 3), "Maximum ganz vorne: {12, 3, 5, 1} -> 12");
+        assertEquals(12, TeileUndHerrsche.maximumTH(hinten, 0, 3), "Maximum ganz hinten: {3, 5, 1, 12} -> 12 (rechte Haelfte: mitte + 1 bis bis)");
+        assertEquals(5, TeileUndHerrsche.maximumTH(vorne, 1, 3), "maximumTH({12, 3, 5, 1}, 1, 3) = 5 - die 12 liegt ausserhalb");
+        assertEquals(-2, TeileUndHerrsche.maximumTH(neg, 0, 2), "Nur negative Werte: {-5, -2, -8} -> -2");
+    }
+
+    @Test
+    public void erweiterung_teilstueck() {
+        int[] r = {5, 2, 9, 1, 6, 3};
+        assertEquals("{2, 9, 1}", Anzeige.text(TeileUndHerrsche.teilstueck(r, 1, 4)), "teilstueck({5, 2, 9, 1, 6, 3}, 1, 4) = {2, 9, 1} - bis (Index 4) gehoert NICHT dazu");
+        assertEquals("{5, 2, 9}", Anzeige.text(TeileUndHerrsche.teilstueck(r, 0, 3)), "teilstueck(r, 0, 3) = {5, 2, 9}");
+        assertEquals("{1, 6, 3}", Anzeige.text(TeileUndHerrsche.teilstueck(r, 3, 6)), "teilstueck(r, 3, 6) = {1, 6, 3} (bis 6 = r.length)");
+        assertEquals("{}", Anzeige.text(TeileUndHerrsche.teilstueck(r, 2, 2)), "teilstueck(r, 2, 2) ist leer: Laenge bis - von = 0");
+        assertEquals("{5, 2, 9, 1, 6, 3}", Anzeige.text(r), "teilstueck darf r nicht veraendern");
+        assertFalse(TeileUndHerrsche.teilstueck(r, 0, 6) == r, "teilstueck(r, 0, 6) muss eine NEUE Reihung liefern (Kopie), nicht r selbst");
+    }
+
+    @Test
+    public void erweiterung_verschmelze() {
+        int[] a = {2, 5, 9};
+        int[] b = {1, 3, 6};
+        assertEquals("{1, 2, 3, 5, 6, 9}", Anzeige.text(TeileUndHerrsche.verschmelze(a, b)), "verschmelze({2, 5, 9}, {1, 3, 6}) = {1, 2, 3, 5, 6, 9}");
+        assertEquals("{2, 5, 9}", Anzeige.text(a), "verschmelze darf a nicht veraendern");
+        int[] c = {1, 2};
+        int[] d = {3, 4, 5};
+        assertEquals("{1, 2, 3, 4, 5}", Anzeige.text(TeileUndHerrsche.verschmelze(c, d)), "verschmelze({1, 2}, {3, 4, 5}): a ist zuerst aufgebraucht - den REST von b anhaengen!");
+        assertEquals("{1, 2, 3, 4, 5}", Anzeige.text(TeileUndHerrsche.verschmelze(d, c)), "verschmelze({3, 4, 5}, {1, 2}): b ist zuerst aufgebraucht - den REST von a anhaengen!");
+    }
+
+    @Test
+    public void erweiterung_verschmelze_randfaelle() {
+        int[] leer = new int[0];
+        int[] b = {4, 7};
+        assertEquals("{4, 7}", Anzeige.text(TeileUndHerrsche.verschmelze(leer, b)), "verschmelze({}, {4, 7}) = {4, 7}");
+        assertEquals("{4, 7}", Anzeige.text(TeileUndHerrsche.verschmelze(b, leer)), "verschmelze({4, 7}, {}) = {4, 7}");
+        int[] c = {1, 3, 3};
+        int[] d = {2, 3};
+        assertEquals("{1, 2, 3, 3, 3}", Anzeige.text(TeileUndHerrsche.verschmelze(c, d)), "verschmelze({1, 3, 3}, {2, 3}) = {1, 2, 3, 3, 3} - gleiche Werte duerfen nicht verloren gehen");
+    }
+
+    @Test
+    public void erweiterung_mergeSort() {
+        int[] r = {5, 2, 9, 1, 6, 3};
+        int[] s = TeileUndHerrsche.mergeSort(r);
+        assertEquals("{1, 2, 3, 5, 6, 9}", Anzeige.text(s), "mergeSort({5, 2, 9, 1, 6, 3}) = {1, 2, 3, 5, 6, 9}");
+        assertEquals("{5, 2, 9, 1, 6, 3}", Anzeige.text(r), "mergeSort liefert eine NEUE Reihung - r selbst bleibt unveraendert");
+        int[] r8 = {7, 3, 9, 2, 8, 5, 1, 6};
+        assertEquals("{1, 2, 3, 5, 6, 7, 8, 9}", Anzeige.text(TeileUndHerrsche.mergeSort(r8)), "mergeSort({7, 3, 9, 2, 8, 5, 1, 6}) = {1, 2, 3, 5, 6, 7, 8, 9}");
+    }
+
+    @Test
+    public void erweiterung_mergeSort_randfaelle() {
+        int[] zwei = {2, 1};
+        assertEquals("{1, 2}", Anzeige.text(TeileUndHerrsche.mergeSort(zwei)), "mergeSort({2, 1}) = {1, 2}. Bei StackOverflowError: mitte = r.length / 2 - sonst ist eine Haelfte leer und die andere so lang wie vorher");
+        int[] eins = {7};
+        int[] e = TeileUndHerrsche.mergeSort(eins);
+        assertEquals("{7}", Anzeige.text(e), "mergeSort({7}) = {7} (Basisfall)");
+        assertFalse(e == eins, "Basisfall: mergeSort muss eine KOPIE liefern, nicht r selbst");
+        assertEquals("{}", Anzeige.text(TeileUndHerrsche.mergeSort(new int[0])), "mergeSort({}) = {} (Basisfall)");
+        int[] dopp = {3, 1, 3, 1, 2};
+        assertEquals("{1, 1, 2, 3, 3}", Anzeige.text(TeileUndHerrsche.mergeSort(dopp)), "mergeSort({3, 1, 3, 1, 2}) = {1, 1, 2, 3, 3} - doppelte Werte");
+    }
+
+    @Test
+    public void experte_zerlege() {
+        int[] r = {5, 3, 8, 1, 9, 2};
+        TeileUndHerrsche.vergleiche = 0;
+        int p = TeileUndHerrsche.zerlege(r, 0, 5);
+        assertEquals("{2, 3, 1, 5, 9, 8}", Anzeige.text(r), "zerlege({5, 3, 8, 1, 9, 2}, 0, 5) mit Pivot 5 (links) - genau nach dem Verfahren tauschen, sonst entsteht eine andere Reihenfolge");
+        assertEquals(3, p, "zerlege liefert die Endposition des Pivots 5: Index 3");
+        assertEquals(5, TeileUndHerrsche.vergleiche, "zerlege(r, 0, 5): 5 Vergleiche (i = 1 bis 5)");
+    }
+
+    @Test
+    public void experte_zerlege_teilbereich() {
+        int[] r = {9, 1, 6, 4, 8, 2, 7, 0};
+        TeileUndHerrsche.vergleiche = 0;
+        int p = TeileUndHerrsche.zerlege(r, 2, 6);
+        assertEquals("{9, 1, 2, 4, 6, 8, 7, 0}", Anzeige.text(r), "zerlege(r, 2, 6): nur r[2] bis r[6] zerlegen, Pivot r[2] = 6; r[0], r[1] und r[7] bleiben stehen");
+        assertEquals(4, p, "zerlege(r, 2, 6): Das Pivot 6 landet an Index 4");
+        assertEquals(4, TeileUndHerrsche.vergleiche, "zerlege(r, 2, 6): 4 Vergleiche (i = 3 bis 6)");
+    }
+
+    @Test
+    public void experte_zerlege_gleicheWerte() {
+        int[] r = {4, 4, 2, 4, 1};
+        TeileUndHerrsche.vergleiche = 0;
+        int p = TeileUndHerrsche.zerlege(r, 0, 4);
+        assertEquals("{1, 2, 4, 4, 4}", Anzeige.text(r), "zerlege({4, 4, 2, 4, 1}, 0, 4): Nur ECHT kleinere Werte (r[i] < pivot) wandern nach links - Werte gleich dem Pivot bleiben rechts");
+        assertEquals(2, p, "zerlege({4, 4, 2, 4, 1}, 0, 4): Das Pivot 4 landet an Index 2");
+        assertEquals(4, TeileUndHerrsche.vergleiche, "zerlege(r, 0, 4): 4 Vergleiche");
+    }
+
+    @Test
+    public void experte_quickSort() {
+        int[] r = {4, 8, 2, 9, 3, 7, 1};
+        TeileUndHerrsche.vergleiche = 0;
+        TeileUndHerrsche.quickSort(r);
+        assertEquals("{1, 2, 3, 4, 7, 8, 9}", Anzeige.text(r), "quickSort({4, 8, 2, 9, 3, 7, 1}) sortiert r selbst (in-place)");
+        assertEquals(11, TeileUndHerrsche.vergleiche, "quickSort({4, 8, 2, 9, 3, 7, 1}): 6 + 2 + 1 + 2 = 11 Vergleiche - pruefe die Grenzen p - 1 und p + 1");
+        int[] d = {3, 1, 3, 2, 3};
+        TeileUndHerrsche.quickSort(d);
+        assertEquals("{1, 2, 3, 3, 3}", Anzeige.text(d), "quickSort({3, 1, 3, 2, 3}) = {1, 2, 3, 3, 3} - doppelte Werte");
+    }
+
+    @Test
+    public void experte_quickSort_schlechtesterFall() {
+        int[] r = {1, 2, 3, 4, 5, 6};
+        TeileUndHerrsche.vergleiche = 0;
+        TeileUndHerrsche.quickSort(r);
+        assertEquals("{1, 2, 3, 4, 5, 6}", Anzeige.text(r), "Bereits sortiert: bleibt sortiert");
+        assertEquals(15, TeileUndHerrsche.vergleiche, "Bereits sortiert, n = 6: Das Pivot (links) ist immer das kleinste -> 5 + 4 + 3 + 2 + 1 = 15 = n(n-1)/2 Vergleiche (schlechtester Fall)");
+        int[] u = {6, 5, 4, 3, 2, 1};
+        TeileUndHerrsche.vergleiche = 0;
+        TeileUndHerrsche.quickSort(u);
+        assertEquals("{1, 2, 3, 4, 5, 6}", Anzeige.text(u), "quickSort({6, 5, 4, 3, 2, 1}) = {1, 2, 3, 4, 5, 6}");
+        assertEquals(15, TeileUndHerrsche.vergleiche, "Absteigend sortiert, n = 6: ebenfalls 15 Vergleiche");
+    }
+
+    @Test
+    public void experte_quickSort_randfaelle() {
+        int[] eins = {5};
+        TeileUndHerrsche.vergleiche = 0;
+        TeileUndHerrsche.quickSort(eins);
+        int[] leer = new int[0];
+        TeileUndHerrsche.quickSort(leer);
+        assertEquals(0, TeileUndHerrsche.vergleiche, "Ein Element oder leere Reihung: nichts zu tun, 0 Vergleiche (Basisfall lo >= hi)");
+        int[] zwei = {9, 4};
+        TeileUndHerrsche.quickSort(zwei);
+        assertEquals("{4, 9}", Anzeige.text(zwei), "quickSort({9, 4}) = {4, 9}");
+        assertEquals(1, TeileUndHerrsche.vergleiche, "quickSort({9, 4}): genau 1 Vergleich");
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  Programmstart – das Hauptprogramm
+// ---------------------------------------------------------------------
+
+// ----- Level 3.1: Erste Zaubersprueche der Rekursion -----
+println("=== Level 3.1: Rekursion ===");
+println("fakultaet(5)      = " + Rekursion.fakultaet(5));
+println("summeBis(10)      = " + Rekursion.summeBis(10));
+println("potenz(2, 10)     = " + Rekursion.potenz(2, 10));
+println("istPalindrom('level') = " + Rekursion.istPalindrom("level"));
+println("dual(13)          = " + Rekursion.dual(13));
+// Ueberlege ZUERST auf Papier (Aufrufbaum!): Wie oft ruft sich
+// fibonacci(6) auf? Erst dann starten.
+Rekursion.aufrufe = 0;
+int fib = Rekursion.fibonacci(6);
+println("fibonacci(6)      = " + fib + "  (Aufrufe: " + Rekursion.aufrufe + ")");
+
+// ----- Level 3.2: Expedition ins Labyrinth -----
+println("");
+println("=== Level 3.2: Das Labyrinth ===");
+Karte karte = Kartenbuch.labyrinth();
+println(karte.alsText());
+println("Waende: " + karte.anzahlWaende() + ", begehbare Nachbarn von S: " + karte.anzahlBegehbareNachbarn(1, 1));
+
+println("");
+println("--- Nebel lueften ab S ---");
+karte.lueften(1, 1);
+println(karte.alsText());
+println("Gelueftete Felder: " + karte.anzahlGelueftet());
+
+println("");
+println("--- Wegsuche (Backtracking) ab S ---");
+Karte expedition = Kartenbuch.labyrinth();
+expedition.schritte = 0;
+boolean gefunden = expedition.findeWeg(1, 1);
+println(expedition.alsText());
+println("Weg gefunden: " + gefunden + ", Aufrufe von findeWeg: " + expedition.schritte);
+
+// ----- Level 3.3: Die Schatzkammer sortieren -----
+println("");
+println("=== Level 3.3: Teile und herrsche ===");
+int[] schaetze = {7, 3, 9, 2, 8, 5, 1, 6};
+println("Schaetze:          " + Anzeige.text(schaetze));
+println("Maximum (T&H):     " + TeileUndHerrsche.maximumTH(schaetze, 0, schaetze.length - 1));
+int[] sortiert = TeileUndHerrsche.mergeSort(schaetze);
+println("mergeSort (neu):   " + Anzeige.text(sortiert));
+if (sortiert != null) {
+    println("Index von 8:       " + TeileUndHerrsche.binaer(sortiert, 8));
+}
+TeileUndHerrsche.vergleiche = 0;
+TeileUndHerrsche.quickSort(schaetze);
+println("quickSort (in-place): " + Anzeige.text(schaetze) + "  (Vergleiche: " + TeileUndHerrsche.vergleiche + ")");

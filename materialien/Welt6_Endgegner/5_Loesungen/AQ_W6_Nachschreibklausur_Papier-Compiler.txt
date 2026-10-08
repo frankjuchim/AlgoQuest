@@ -1,0 +1,1120 @@
+// =====================================================================
+//  WELT 6 - DER ENDGEGNER - NACHSCHREIBKLAUSUR "KLETTERHALLE"
+//  PAPIER-COMPILER (nur fuer die Lehrkraft - NICHT austeilen)
+//  Informatik LK · Online-IDE · Algo Quest · DS 39 - 40 (Nachschreibtermin)
+//
+//  ZWECK: Korrekturfragen bei den Implementierungen schnell und sicher
+//  entscheiden ("Laeuft das so? Faellt der leere Stapel auf? Bleibt das
+//  Tourenbuch unveraendert?"). Die Handschrift des Prueflings wird
+//  UNVERAENDERT in den passenden Abtipp-Block kopiert, dann werden die
+//  Tests im Reiter "Testrunner" gestartet. Die BE vergibt weiterhin der
+//  Erwartungshorizont (Kernpunkte) - die Tests sind ein Hilfsmittel, kein
+//  Bewertungsautomat (siehe HINWEISE ZUR KORREKTUR unten).
+//
+//  VORAUSSETZUNG: Bibliothek "Niedersachsen" im Workspace aktivieren
+//  (Workspace rechtsklicken -> "Einstellungen" -> Haekchen
+//  "Niedersachsen"). Ohne sie kompiliert NICHTS (Stack, Queue, DynArray,
+//  BinTree unbekannt).
+//
+//  AUFBAU DIESER DATEI
+//    1. Kontextklassen Route, Mitglied, Station, Kletterhalle wie in
+//       Abbildung 1 der Klausur. Die zu pruefenden Methoden stehen in
+//       ABTIPP-BLOECKEN:
+//           // >>> ABTIPPEN c) ... // <<< ENDE c)
+//       Im Auslieferungszustand enthaelt jeder Block nur einen Platzhalter
+//       (Tests weitgehend rot) - bzw. in f) die FEHLERHAFTE Fassung aus Abbildung 5.
+//    2. Pruefhilfe: baut die Beispieldaten der Klausur (Abbildungen 2, 3,
+//       4, 6, 9 und 12), liest Strukturen aus, ohne sie zu veraendern, und
+//       uebersetzt Laufzeitfehler in Hinweise mit P-Nummer (Top 10
+//       Punktverluste).
+//    3. Testklasse KletterhalleTest (29 Tests, Praefix = Teilaufgabe):
+//           c_  hoechsterGrad (Stapel, unveraendert)            7 Tests
+//           d_  abmelden - JAVA-UEBERSETZUNG des Struktogramms   5 Tests
+//           e_  ausschrauben (dynamische Reihung)               5 Tests
+//           f_  schwersteRoute - korrigierte Fassung            5 Tests
+//           m_  naechstesZiel (binaerer Suchbaum, rekursiv)     7 Tests
+//    4. Hauptprogramm: druckt die Werte, die in g) und i) der Klausur
+//       verlangt sind (Rekursion aufstieg, Ablauf von sortiere) - zum
+//       schnellen Nachsehen.
+//    5. MUSTERLOeSUNG (Lehrerexemplar) in einem markierten Kommentarblock
+//       am Ende: "/* MUSTERLOESUNG-START" ... "MUSTERLOESUNG-ENDE */".
+//       Zum Gegenpruefen den Inhalt eines Abschnitts in den passenden
+//       Abtipp-Block kopieren -> alle Tests dieses Praefixes gruen.
+//
+//  VORGEHEN BEIM KORRIGIEREN
+//    (1) Datei in einen eigenen Workspace kopieren (je Pruefling ein
+//        Duplikat oder Bloecke nacheinander ersetzen).
+//    (2) Handschrift Zeichen fuer Zeichen in den Block abtippen - auch
+//        Tippfehler, fehlende Casts und fehlende Semikolons. Kompiliert es
+//        nicht, steht im EH, welcher Fehler wie zu gewichten ist (fehlender
+//        Cast = P4, fehlendes return auf einem Pfad = P3 ...). Fuer den Test
+//        darf die Lehrkraft offensichtliche Schreibfehler (Semikolon,
+//        Klammer) korrigieren und das notieren.
+//    (3) Testrunner starten. Rote Tests zeigen eine Meldung mit P-Nummer.
+//    (4) Nur die Methode des gerade geprueften Blocks ist relevant - die
+//        uebrigen Bloecke duerfen im Platzhalter-Zustand bleiben.
+//
+//  HINWEISE ZUR KORREKTUR (wichtig!)
+//    - Zeichenketten: Die Tests uebergeben Namen und Sektoren als zur
+//      Laufzeit zusammengesetzte Kopien (Pruefhilfe.kopie). In echtem Java
+//      faellt == statt equals damit auf. Die Online-IDE vergleicht
+//      Zeichenketten mit == aber INHALTLICH - dort bleiben diese Tests
+//      gruen. == statt equals daher immer per Code-Review werten (P5).
+//    - m) Nutzung der Suchbaum-Ordnung: Der Test
+//      m_nutztSuchbaumOrdnung zaehlt, bei welchen Mitgliedern getPunkte()
+//      aufgerufen wurde (Unterklasse ZaehlMitglied). Eine Loesung, die
+//      den ganzen Baum durchsucht, liefert richtige Ergebnisse, ist aber
+//      dort rot: Kernpunkt "Ordnung genutzt" (AFB III) nicht erreicht,
+//      die uebrigen Kernpunkte koennen trotzdem vergeben werden.
+//    - d) ist im Abitur ein STRUKTOGRAMM. Der Block d) dient nur dazu,
+//      eine zweifelhafte Struktogramm-Logik nach Uebersetzung in Java
+//      schnell zu pruefen (Notation nach EH §5 wird NICHT getestet).
+//    - f) Der Block enthaelt zunaechst die fehlerhafte Fassung aus
+//      Abbildung 5 (Tests rot, f_beispielKante meldet den
+//      IndexOutOfBounds-Fehler). Die Korrektur des Prueflings ersetzt
+//      den Block.
+//    - Endlosschleifen (z. B. Rotieren ohne Zaehler in abmelden): Im
+//      Pruef-Harness gilt ein Test nach 3 s als rot; in der Online-IDE
+//      ggf. das Programm anhalten.
+//
+//  BEISPIELDATEN (identisch mit dem Material der Klausur)
+//    Abb. 2  Tourenbuch von Mila, von OBEN: Sandmann (4), Wolkenkratzer (6),
+//            Dachrinne (9), Sandmann (4), Spinne (10)
+//            hoechsterGrad: k=1 -> 4, k=2 -> 6, k=3 -> 9, k=4 -> 9,
+//            k=5 -> 10, k=10 -> 10, k=0 -> 0, leeres Tourenbuch -> 0
+//    Abb. 3  Warteliste Station 2, von VORN: Ben, Ada, Cem, Ada, Dana
+//            abmelden("Ada") -> true, danach Ben, Cem, Ada, Dana
+//            abmelden("Eva") -> false, Warteliste unveraendert
+//    Abb. 4  routen: Morgenrot (8, Platte), Kalkfresser (7, Dach),
+//            Sandmann (4, Platte), Schwalbennest (6, Dach),
+//            Dachrinne (9, Dach), Wolkenkratzer (6, Kante), Spinne (10, Dach)
+//            ausschrauben("Dach") -> 4, danach Morgenrot, Sandmann,
+//            Wolkenkratzer; ("Platte") -> 2; ("Kante") -> 1; ("Turm") -> 0
+//            schwersteRoute: Dach -> Spinne, Platte -> Morgenrot,
+//            Kante -> Wolkenkratzer, Turm -> null, leere Reihung -> null
+//    Abb. 6  wand (Zeile 0 oben):  3 0 5 5 0 / 0 4 0 6 1 / 2 0 7 0 3 /
+//            5 3 0 2 0 / 1 0 4 0 2;   aufstieg(4, 2) = 25,
+//            aufstieg(4, 0) = 17, aufstieg(4, 4) = 22
+//    Abb. 9  Teilnehmende (Anmeldung): Jana 38, Kai 57, Lea 47, Mo 31,
+//            Nele 38, Ole 52 -> nach sortiere: Kai 57, Ole 52, Lea 47,
+//            Nele 38, Jana 38, Mo 31 (15 Vergleiche; nicht stabil)
+//    Abb. 12 bestenliste (BST nach Punkten), Einfuegereihenfolge:
+//            Tim 60, Ida 35, Vera 82, Bo 20, Lou 48, Rae 71, Zoe 95,
+//            Gus 41, Sam 55
+//            naechstesZiel: 50 -> Sam, 60 -> Rae, 48 -> Sam, 75 -> Vera,
+//            20 -> Ida, 0 -> Bo, 95 -> null, 100 -> null; leerer Baum -> null
+//
+//  LEHRERHINWEIS - VOR DEM ERSTEN EINSATZ IN DER ONLINE-IDE PRUEFEN
+//  (Die Datei ist mit exakten Java-Nachbauten von Stack, Queue, DynArray
+//  und BinTree - Object-basiert, gleiche Exceptions - unter Java 21
+//  geprueft, nicht in der Online-IDE selbst.)
+//    (a) Bibliothek aktiviert? Kompiliert die Datei im Auslieferungszustand?
+//    (b) Casts (Route), (Mitglied), Unboxing; int[][] in der Online-IDE.
+//    (c) try/catch: Mit der fehlerhaften Fassung in f) muss
+//        f_beispielKante ROT mit "LAUFZEITFEHLER: Index ausserhalb ..."
+//        melden.
+//    (d) Unterklasse ZaehlMitglied (ueberschreibt getPunkte) und
+//        instanceof in der Pruefhilfe.
+// =====================================================================
+
+
+// ---------------------------------------------------------------------
+//  KONTEXTKLASSEN (wie Abbildung 1 der Klausur)
+// ---------------------------------------------------------------------
+
+class Route {
+
+    private String name;
+    private int grad;          // Schwierigkeitsgrad 3 bis 11
+    private String sektor;
+
+    public Route(String name, int grad, String sektor) {
+        this.name = name;
+        this.grad = grad;
+        this.sektor = sektor;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getGrad() {
+        return grad;
+    }
+
+    public String getSektor() {
+        return sektor;
+    }
+}
+
+
+class Mitglied {
+
+    private String name;
+    private int punkte;
+    private Stack tourenbuch;  // Stapel vom Inhaltstyp Route, oben: zuletzt geklettert
+
+    public Mitglied(String name) {
+        this.name = name;
+        this.punkte = 0;
+        this.tourenbuch = new Stack();
+    }
+
+    public Mitglied(String name, int punkte) {
+        this.name = name;
+        this.punkte = punkte;
+        this.tourenbuch = new Stack();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPunkte() {
+        return punkte;
+    }
+
+    public void klettern(Route r) {
+        tourenbuch.push(r);
+        punkte = punkte + r.getGrad();
+    }
+
+    // nur fuer die Pruefhilfe (nicht im Klassendiagramm der Klausur)
+    public Stack getTourenbuch() {
+        return tourenbuch;
+    }
+
+    // >>> ABTIPPEN c) hoechsterGrad - Handschrift unveraendert hier einsetzen
+    public int hoechsterGrad(int k) {
+        return -99;   // Platzhalter
+    }
+    // <<< ENDE c)
+}
+
+
+class Station {
+
+    private int nummer;
+    private Route route;
+    private Queue warteliste;  // Schlange vom Inhaltstyp Mitglied
+
+    public Station(int nummer, Route route) {
+        this.nummer = nummer;
+        this.route = route;
+        this.warteliste = new Queue();
+    }
+
+    public void anstellen(Mitglied m) {
+        warteliste.enqueue(m);
+    }
+
+    public Mitglied naechster() {
+        if (warteliste.isEmpty()) {
+            return null;
+        }
+        return (Mitglied) warteliste.dequeue();
+    }
+
+    // nur fuer die Pruefhilfe (nicht im Klassendiagramm der Klausur)
+    public Queue getWarteliste() {
+        return warteliste;
+    }
+
+    // >>> ABTIPPEN d) abmelden - Java-Uebersetzung des Struktogramms
+    public boolean abmelden(String name) {
+        return false;   // Platzhalter
+    }
+    // <<< ENDE d)
+}
+
+
+class Kletterhalle {
+
+    private String name;
+    private DynArray routen;     // dynamische Reihung vom Inhaltstyp Route
+    private Station[] stationen;
+    private int[][] wand;        // Boulderwand [Zeile][Spalte], Zeile 0 oben
+    private BinTree bestenliste; // binaerer Suchbaum vom Inhaltstyp Mitglied (nach Punkten)
+
+    public Kletterhalle(String name) {
+        this.name = name;
+        this.routen = new DynArray();
+        this.stationen = new Station[4];
+        this.wand = new int[5][5];
+        this.bestenliste = new BinTree();
+    }
+
+    // nur fuer die Pruefhilfe (nicht im Klassendiagramm der Klausur)
+    public DynArray getRouten() {
+        return routen;
+    }
+
+    public void setWand(int[][] w) {
+        wand = w;
+    }
+
+    public BinTree getBestenliste() {
+        return bestenliste;
+    }
+
+    // Abbildung 7 der Klausur (vorgegeben, nicht zu implementieren)
+    public int aufstieg(int z, int s) {
+        if (z == 0) {
+            return wand[z][s];
+        }
+        int ns = s;
+        if (s > 0 && wand[z - 1][s - 1] > wand[z - 1][ns]) {
+            ns = s - 1;
+        }
+        if (s < wand[0].length - 1 && wand[z - 1][s + 1] > wand[z - 1][ns]) {
+            ns = s + 1;
+        }
+        if (wand[z - 1][ns] == 0) {
+            return wand[z][s];
+        }
+        return wand[z][s] + aufstieg(z - 1, ns);
+    }
+
+    // Abbildung 10 der Klausur (vorgegeben, nicht zu implementieren);
+    // mit Protokollausgabe an der Stelle "Protokollierung"
+    public void sortiere(Mitglied[] t) {
+        int n = t.length;
+        for (int i = 0; i <= n - 2; i++) {
+            int pos = i;
+            for (int j = i + 1; j <= n - 1; j++) {
+                if (t[j].getPunkte() > t[pos].getPunkte()) {
+                    pos = j;
+                }
+            }
+            Mitglied hilf = t[i];
+            t[i] = t[pos];
+            t[pos] = hilf;
+            println("i = " + i + ", pos = " + pos + ":  " + Pruefhilfe.reihungText(t));
+        }
+    }
+
+    // >>> ABTIPPEN e) ausschrauben - Handschrift unveraendert hier einsetzen
+    public int ausschrauben(String sektor) {
+        return -99;   // Platzhalter
+    }
+    // <<< ENDE e)
+
+    // >>> ABTIPPEN f) schwersteRoute - hier steht die FEHLERHAFTE Fassung aus
+    //     Abbildung 5; durch die Korrektur des Prueflings ersetzen
+    public Route schwersteRoute(String sektor) {
+        Route beste = (Route) routen.getItem(0);
+        for (int i = 1; i <= routen.getLength(); i++) {
+            Route r = (Route) routen.getItem(i);
+            if (r.getSektor() == sektor && r.getGrad() > beste.getGrad()) {
+                beste = r;
+            }
+        }
+        return beste;
+    }
+    // <<< ENDE f)
+
+    // >>> ABTIPPEN m) naechstesZiel - Handschrift unveraendert hier einsetzen
+    public Mitglied naechstesZiel(BinTree b, int punkte) {
+        return new Mitglied("Platzhalter");   // Platzhalter
+    }
+    // <<< ENDE m)
+}
+
+
+// ---------------------------------------------------------------------
+//  PRUEFHILFE - Beispieldaten, Auslesen ohne Veraendern, Meldungen
+// ---------------------------------------------------------------------
+
+// Mitglied, das sich merkt, ob getPunkte() aufgerufen wurde (fuer m)
+class ZaehlMitglied extends Mitglied {
+
+    private boolean besucht;
+
+    public ZaehlMitglied(String name, int punkte) {
+        super(name, punkte);
+        besucht = false;
+    }
+
+    public int getPunkte() {
+        besucht = true;
+        return super.getPunkte();
+    }
+
+    public boolean istBesucht() {
+        return besucht;
+    }
+
+    public void zuruecksetzen() {
+        besucht = false;
+    }
+}
+
+
+class Pruefhilfe {
+
+    // ----- Beispieldaten der Klausur -----
+
+    // Routen aus Abbildung 4 (Index 0 bis 6)
+    public static Route[] routen() {
+        Route[] r = new Route[7];
+        r[0] = new Route("Morgenrot", 8, "Platte");
+        r[1] = new Route("Kalkfresser", 7, "Dach");
+        r[2] = new Route("Sandmann", 4, "Platte");
+        r[3] = new Route("Schwalbennest", 6, "Dach");
+        r[4] = new Route("Dachrinne", 9, "Dach");
+        r[5] = new Route("Wolkenkratzer", 6, "Kante");
+        r[6] = new Route("Spinne", 10, "Dach");
+        return r;
+    }
+
+    // Halle mit den Routen r in der Reihenfolge der Reihung
+    public static Kletterhalle halle(Route[] r) {
+        Kletterhalle h = new Kletterhalle("Vertikal");
+        for (int i = 0; i < r.length; i++) {
+            h.getRouten().append(r[i]);
+        }
+        return h;
+    }
+
+    // Mila aus Abbildung 2: zuerst Spinne geklettert, zuletzt Sandmann.
+    // Tourenbuch von OBEN: Sandmann, Wolkenkratzer, Dachrinne, Sandmann, Spinne
+    public static Mitglied mila(Route[] r) {
+        Mitglied m = new Mitglied("Mila");
+        m.klettern(r[6]);
+        m.klettern(r[2]);
+        m.klettern(r[4]);
+        m.klettern(r[5]);
+        m.klettern(r[2]);
+        return m;
+    }
+
+    // Warteliste aus Abbildung 3 (von vorn): Ben, Ada, Cem, Ada, Dana
+    public static Mitglied[] wartende() {
+        Mitglied[] w = new Mitglied[5];
+        w[0] = new Mitglied("Ben");
+        w[1] = new Mitglied("Ada");
+        w[2] = new Mitglied("Cem");
+        w[3] = new Mitglied("Ada");
+        w[4] = new Mitglied("Dana");
+        return w;
+    }
+
+    public static Station station(Mitglied[] w) {
+        Station st = new Station(2, new Route("Kalkfresser", 7, "Dach"));
+        for (int i = 0; i < w.length; i++) {
+            st.anstellen(w[i]);
+        }
+        return st;
+    }
+
+    // Boulderwand aus Abbildung 6
+    public static int[][] wand() {
+        int[][] w = {
+            {3, 0, 5, 5, 0},
+            {0, 4, 0, 6, 1},
+            {2, 0, 7, 0, 3},
+            {5, 3, 0, 2, 0},
+            {1, 0, 4, 0, 2}
+        };
+        return w;
+    }
+
+    // Teilnehmende aus Abbildung 9 (Wettkampf)
+    public static Mitglied[] teilnehmende() {
+        Mitglied[] t = new Mitglied[6];
+        t[0] = new Mitglied("Jana", 38);
+        t[1] = new Mitglied("Kai", 57);
+        t[2] = new Mitglied("Lea", 47);
+        t[3] = new Mitglied("Mo", 31);
+        t[4] = new Mitglied("Nele", 38);
+        t[5] = new Mitglied("Ole", 52);
+        return t;
+    }
+
+    // Bestenliste aus Abbildung 12 (binaerer Suchbaum nach Punkten);
+    // die Mitglieder sind ZaehlMitglieder (merken sich getPunkte-Aufrufe)
+    public static BinTree bestenliste() {
+        BinTree b = new BinTree();
+        einfuegen(b, new ZaehlMitglied("Tim", 60));
+        einfuegen(b, new ZaehlMitglied("Ida", 35));
+        einfuegen(b, new ZaehlMitglied("Vera", 82));
+        einfuegen(b, new ZaehlMitglied("Bo", 20));
+        einfuegen(b, new ZaehlMitglied("Lou", 48));
+        einfuegen(b, new ZaehlMitglied("Rae", 71));
+        einfuegen(b, new ZaehlMitglied("Zoe", 95));
+        einfuegen(b, new ZaehlMitglied("Gus", 41));
+        einfuegen(b, new ZaehlMitglied("Sam", 55));
+        return b;
+    }
+
+    // Einfuegen in den Suchbaum (Vergleich ueber das Attribut, OHNE
+    // getPunkte, damit die Besucht-Markierung nicht verfaelscht wird)
+    private static void einfuegen(BinTree b, ZaehlMitglied m) {
+        if (b.isEmpty()) {
+            b.setItem(m);
+        } else {
+            ZaehlMitglied w = (ZaehlMitglied) b.getItem();
+            if (punkteOhneMarke(m) < punkteOhneMarke(w)) {
+                einfuegen(b.getLeft(), m);
+            } else {
+                einfuegen(b.getRight(), m);
+            }
+        }
+    }
+
+    private static int punkteOhneMarke(ZaehlMitglied m) {
+        boolean vorher = m.istBesucht();
+        int p = m.getPunkte();
+        if (!vorher) {
+            m.zuruecksetzen();
+        }
+        return p;
+    }
+
+    // Namen aller Mitglieder, bei denen getPunkte() aufgerufen wurde (Preorder)
+    public static String besucht(BinTree b) {
+        if (b.isEmpty()) {
+            return "";
+        }
+        String t = "";
+        Object o = b.getItem();
+        if (o instanceof ZaehlMitglied && ((ZaehlMitglied) o).istBesucht()) {
+            t = ((ZaehlMitglied) o).getName() + " ";
+        }
+        return t + besucht(b.getLeft()) + besucht(b.getRight());
+    }
+
+    public static void alleZuruecksetzen(BinTree b) {
+        if (!b.isEmpty()) {
+            ((ZaehlMitglied) b.getItem()).zuruecksetzen();
+            alleZuruecksetzen(b.getLeft());
+            alleZuruecksetzen(b.getRight());
+        }
+    }
+
+    // Name eines Mitglieds oder "null" (fuer die Meldungen der Tests)
+    public static String name(Mitglied m) {
+        if (m == null) {
+            return "null";
+        }
+        return m.getName();
+    }
+
+    // Inhalt des Suchbaums in Inorder als Text (Struktur-Kontrolle)
+    public static String inorder(BinTree b) {
+        if (b.isEmpty()) {
+            return "";
+        }
+        return inorder(b.getLeft()) + ((Mitglied) b.getItem()).getName() + " " + inorder(b.getRight());
+    }
+
+    // ----- Auslesen, OHNE zu veraendern -----
+
+    // Tourenbuch von oben nach unten, z. B. "[Sandmann, Spinne]"
+    public static String stapelText(Stack s) {
+        Stack hilf = new Stack();
+        String t = "[";
+        while (!s.isEmpty()) {
+            Object o = s.pop();
+            if (hilf.isEmpty()) {
+                t = t + ((Route) o).getName();
+            } else {
+                t = t + ", " + ((Route) o).getName();
+            }
+            hilf.push(o);
+        }
+        while (!hilf.isEmpty()) {
+            s.push(hilf.pop());
+        }
+        return t + "]";
+    }
+
+    // true, wenn s von oben nach unten GENAU die Objekte erwartet[0], erwartet[1], ...
+    // enthaelt (dieselben Objekte, dieselbe Reihenfolge); s bleibt unveraendert
+    public static boolean stapelGleich(Stack s, Route[] erwartet) {
+        Stack hilf = new Stack();
+        boolean gleich = true;
+        int i = 0;
+        while (!s.isEmpty()) {
+            Object o = s.pop();
+            if (i >= erwartet.length || o != erwartet[i]) {
+                gleich = false;
+            }
+            hilf.push(o);
+            i++;
+        }
+        while (!hilf.isEmpty()) {
+            s.push(hilf.pop());
+        }
+        return gleich && i == erwartet.length;
+    }
+
+    // Warteliste von vorn nach hinten als Namen
+    public static String schlangeText(Queue q) {
+        Queue hilf = new Queue();
+        String t = "[";
+        boolean erstes = true;
+        while (!q.isEmpty()) {
+            Object o = q.dequeue();
+            if (erstes) {
+                t = t + ((Mitglied) o).getName();
+                erstes = false;
+            } else {
+                t = t + ", " + ((Mitglied) o).getName();
+            }
+            hilf.enqueue(o);
+        }
+        while (!hilf.isEmpty()) {
+            q.enqueue(hilf.dequeue());
+        }
+        return t + "]";
+    }
+
+    // true, wenn q von vorn GENAU die Objekte erwartet[0], ... enthaelt
+    public static boolean schlangeGleich(Queue q, Mitglied[] erwartet) {
+        Queue hilf = new Queue();
+        boolean gleich = true;
+        int i = 0;
+        while (!q.isEmpty()) {
+            Object o = q.dequeue();
+            if (i >= erwartet.length || o != erwartet[i]) {
+                gleich = false;
+            }
+            hilf.enqueue(o);
+            i++;
+        }
+        while (!hilf.isEmpty()) {
+            q.enqueue(hilf.dequeue());
+        }
+        return gleich && i == erwartet.length;
+    }
+
+    // Routen einer dynamischen Reihung als Namen
+    public static String reihungText(DynArray d) {
+        String t = "[";
+        for (int i = 0; i < d.getLength(); i++) {
+            if (i > 0) {
+                t = t + ", ";
+            }
+            t = t + ((Route) d.getItem(i)).getName();
+        }
+        return t + "]";
+    }
+
+    // Mitglieder einer statischen Reihung mit Punkten
+    public static String reihungText(Mitglied[] t) {
+        String s = "";
+        for (int i = 0; i < t.length; i++) {
+            if (i > 0) {
+                s = s + ", ";
+            }
+            s = s + t[i].getName() + " " + t[i].getPunkte();
+        }
+        return s;
+    }
+
+    // ----- Sonstiges -----
+
+    // Neue Zeichenkette mit demselben Inhalt (zur Laufzeit zusammengesetzt):
+    // In echtem Java faellt damit == statt equals auf (P5).
+    public static String kopie(String s) {
+        String t = "";
+        for (int i = 0; i < s.length(); i++) {
+            t = t + s.charAt(i);
+        }
+        return t;
+    }
+
+    // Laufzeitfehler -> roter Test mit Hinweis auf die Top-10-Punktverluste
+    public static void laufzeitfehler(RuntimeException e) {
+        String meldung = " (Meldung: " + e.getMessage() + ")";
+        try {
+            throw e;
+        } catch (IllegalStateException x) {
+            fail("LAUFZEITFEHLER: top/pop/head/dequeue bzw. getItem/getLeft/getRight auf einer LEEREN Struktur - Leerabfrage fehlt (P1)" + meldung);
+        } catch (IndexOutOfBoundsException x) {
+            fail("LAUFZEITFEHLER: Index ausserhalb - gueltig sind 0 bis getLength() - 1; geloescht und danach i erhoeht? (P1/P6)" + meldung);
+        } catch (IllegalArgumentException x) {
+            fail("LAUFZEITFEHLER: null in Stack, Queue, DynArray oder BinTree gelegt" + meldung);
+        } catch (ClassCastException x) {
+            fail("LAUFZEITFEHLER: falscher Cast (P4)" + meldung);
+        } catch (NullPointerException x) {
+            fail("LAUFZEITFEHLER: Zugriff auf null - z. B. Methode einer nicht vorhandenen Route aufgerufen (P1)" + meldung);
+        } catch (RuntimeException x) {
+            fail("LAUFZEITFEHLER" + meldung);
+        }
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  TESTKLASSE (Praefix = Teilaufgabe der Klausur)
+// ---------------------------------------------------------------------
+
+class KletterhalleTest {
+
+    public KletterhalleTest() {
+    }
+
+    // ===== c) hoechsterGrad (Stapel vom Inhaltstyp Route, unveraendert) =====
+
+    @Test
+    public void c_beispiel() {
+        try {
+            Route[] r = Pruefhilfe.routen();
+            Mitglied m = Pruefhilfe.mila(r);
+            assertEquals(6, m.hoechsterGrad(2), "hoechsterGrad(2): Sandmann (4), Wolkenkratzer (6) -> 6");
+            assertEquals(9, m.hoechsterGrad(3), "hoechsterGrad(3): ... Dachrinne (9) -> 9");
+        } catch (RuntimeException e) {
+            Pruefhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void c_grenzeGenau() {
+        try {
+            Route[] r = Pruefhilfe.routen();
+            Mitglied m = Pruefhilfe.mila(r);
+            assertEquals(4, m.hoechsterGrad(1), "hoechsterGrad(1): nur die oberste Route Sandmann (4) - genau k Routen betrachten (P6)");
+            assertEquals(9, m.hoechsterGrad(4), "hoechsterGrad(4): Spinne (10) liegt an 5. Stelle und darf NICHT mitzaehlen (P6)");
+            assertEquals(10, m.hoechsterGrad(5), "hoechsterGrad(5): alle fuenf Routen -> Spinne (10)");
+        } catch (RuntimeException e) {
+            Pruefhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void c_kGroesserAlsAnzahl() {
+        try {
+            Route[] r = Pruefhilfe.routen();
+            Mitglied m = Pruefhilfe.mila(r);
+            assertEquals(10, m.hoechsterGrad(10), "hoechsterGrad(10) bei nur 5 Routen: alle betrachten -> 10, ohne pop auf leerem Stapel (P1)");
+        } catch (RuntimeException e) {
+            Pruefhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void c_leeresTourenbuch() {
+        try {
+            Mitglied m = new Mitglied("Neu");
+            assertEquals(0, m.hoechsterGrad(3), "leeres Tourenbuch -> 0 (kein top/pop ohne Leerabfrage, P1)");
+            assertTrue(m.getTourenbuch().isEmpty(), "leeres Tourenbuch bleibt leer");
+        } catch (RuntimeException e) {
+            Pruefhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void c_kNull() {
+        try {
+            Route[] r = Pruefhilfe.routen();
+            Mitglied m = Pruefhilfe.mila(r);
+            assertEquals(0, m.hoechsterGrad(0), "hoechsterGrad(0): keine Route betrachten -> 0");
+            Route[] erwartet = {r[2], r[5], r[4], r[2], r[6]};
+            assertTrue(Pruefhilfe.stapelGleich(m.getTourenbuch(), erwartet), "Tourenbuch nach hoechsterGrad(0) veraendert: " + Pruefhilfe.stapelText(m.getTourenbuch()) + " (P2)");
+        } catch (RuntimeException e) {
+            Pruefhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void c_unveraendertTeilweise() {
+        try {
+            Route[] r = Pruefhilfe.routen();
+            Mitglied m = Pruefhilfe.mila(r);
+            m.hoechsterGrad(3);
+            Route[] erwartet = {r[2], r[5], r[4], r[2], r[6]};
+            assertTrue(Pruefhilfe.stapelGleich(m.getTourenbuch(), erwartet), "Tourenbuch nach hoechsterGrad(3) nicht unveraendert (dieselben Routen, gleiche Reihenfolge): " + Pruefhilfe.stapelText(m.getTourenbuch()) + " (P2)");
+        } catch (RuntimeException e) {
+            Pruefhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void c_unveraendertGanz() {
+        try {
+            Route[] r = Pruefhilfe.routen();
+            Mitglied m = Pruefhilfe.mila(r);
+            m.hoechsterGrad(10);
+            Route[] erwartet = {r[2], r[5], r[4], r[2], r[6]};
+            assertTrue(Pruefhilfe.stapelGleich(m.getTourenbuch(), erwartet), "Tourenbuch nach hoechsterGrad(10) nicht unveraendert: " + Pruefhilfe.stapelText(m.getTourenbuch()) + " (P2)");
+            assertEquals(10, m.hoechsterGrad(10), "zweiter Aufruf liefert dasselbe Ergebnis");
+        } catch (RuntimeException e) {
+            Pruefhilfe.laufzeitfehler(e);
+        }
+    }
+
+    // ===== d) abmelden (Schlange vom Inhaltstyp Mitglied) =====
+
+    @Test
+    public void d_beispiel() {
+        try {
+            Mitglied[] w = Pruefhilfe.wartende();
+            Station st = Pruefhilfe.station(w);
+            assertTrue(st.abmelden(Pruefhilfe.kopie("Ada")), "abmelden(\"Ada\"): Ada steht in der Warteliste -> true (equals! P5)");
+            Mitglied[] erwartet = {w[0], w[2], w[3], w[4]};
+            assertTrue(Pruefhilfe.schlangeGleich(st.getWarteliste(), erwartet), "nach abmelden(\"Ada\") erwartet [Ben, Cem, Ada, Dana], tatsaechlich " + Pruefhilfe.schlangeText(st.getWarteliste()));
+        } catch (RuntimeException e) {
+            Pruefhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void d_nichtVorhanden() {
+        try {
+            Mitglied[] w = Pruefhilfe.wartende();
+            Station st = Pruefhilfe.station(w);
+            assertFalse(st.abmelden(Pruefhilfe.kopie("Eva")), "abmelden(\"Eva\"): nicht in der Warteliste -> false");
+            assertTrue(Pruefhilfe.schlangeGleich(st.getWarteliste(), w), "Warteliste muss unveraendert sein, tatsaechlich " + Pruefhilfe.schlangeText(st.getWarteliste()) + " (P2)");
+        } catch (RuntimeException e) {
+            Pruefhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void d_ersterUndLetzter() {
+        try {
+            Mitglied[] w = Pruefhilfe.wartende();
+            Station st = Pruefhilfe.station(w);
+            assertTrue(st.abmelden(Pruefhilfe.kopie("Ben")), "abmelden(\"Ben\"): vorderstes Mitglied -> true");
+            assertTrue(st.abmelden(Pruefhilfe.kopie("Dana")), "abmelden(\"Dana\"): hinterstes Mitglied -> true");
+            Mitglied[] erwartet = {w[1], w[2], w[3]};
+            assertTrue(Pruefhilfe.schlangeGleich(st.getWarteliste(), erwartet), "erwartet [Ada, Cem, Ada], tatsaechlich " + Pruefhilfe.schlangeText(st.getWarteliste()));
+        } catch (RuntimeException e) {
+            Pruefhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void d_zweimal() {
+        try {
+            Mitglied[] w = Pruefhilfe.wartende();
+            Station st = Pruefhilfe.station(w);
+            st.abmelden(Pruefhilfe.kopie("Ada"));
+            assertTrue(st.abmelden(Pruefhilfe.kopie("Ada")), "zweites abmelden(\"Ada\"): die zweite Ada -> true");
+            assertFalse(st.abmelden(Pruefhilfe.kopie("Ada")), "drittes abmelden(\"Ada\"): keine Ada mehr -> false");
+            Mitglied[] erwartet = {w[0], w[2], w[4]};
+            assertTrue(Pruefhilfe.schlangeGleich(st.getWarteliste(), erwartet), "erwartet [Ben, Cem, Dana], tatsaechlich " + Pruefhilfe.schlangeText(st.getWarteliste()));
+        } catch (RuntimeException e) {
+            Pruefhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void d_leer() {
+        try {
+            Station st = Pruefhilfe.station(new Mitglied[0]);
+            assertFalse(st.abmelden(Pruefhilfe.kopie("Ada")), "leere Warteliste -> false (P1)");
+            assertTrue(st.getWarteliste().isEmpty(), "leere Warteliste bleibt leer");
+        } catch (RuntimeException e) {
+            Pruefhilfe.laufzeitfehler(e);
+        }
+    }
+
+    // ===== e) ausschrauben (dynamische Reihung vom Inhaltstyp Route) =====
+
+    @Test
+    public void e_beispielDach() {
+        try {
+            Route[] r = Pruefhilfe.routen();
+            Kletterhalle h = Pruefhilfe.halle(r);
+            assertEquals(4, h.ausschrauben(Pruefhilfe.kopie("Dach")), "ausschrauben(\"Dach\"): 4 Routen (Index 1, 3, 4, 6; 3 und 4 direkt hintereinander!)");
+            assertEquals("[Morgenrot, Sandmann, Wolkenkratzer]", Pruefhilfe.reihungText(h.getRouten()), "uebrige Routen in alter Reihenfolge (nach delete nicht i erhoehen! P6)");
+        } catch (RuntimeException e) {
+            Pruefhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void e_ersteUndEinzelne() {
+        try {
+            Route[] r = Pruefhilfe.routen();
+            Kletterhalle h = Pruefhilfe.halle(r);
+            assertEquals(2, h.ausschrauben(Pruefhilfe.kopie("Platte")), "ausschrauben(\"Platte\"): Index 0 und 2 -> 2");
+            assertEquals("[Kalkfresser, Schwalbennest, Dachrinne, Wolkenkratzer, Spinne]", Pruefhilfe.reihungText(h.getRouten()), "uebrige Routen nach ausschrauben(\"Platte\")");
+            assertEquals(1, h.ausschrauben(Pruefhilfe.kopie("Kante")), "danach ausschrauben(\"Kante\") -> 1");
+        } catch (RuntimeException e) {
+            Pruefhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void e_keinTreffer() {
+        try {
+            Route[] r = Pruefhilfe.routen();
+            Kletterhalle h = Pruefhilfe.halle(r);
+            assertEquals(0, h.ausschrauben(Pruefhilfe.kopie("Turm")), "Sektor ohne Routen -> 0");
+            assertEquals(7, h.getRouten().getLength(), "keine Route entfernen");
+        } catch (RuntimeException e) {
+            Pruefhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void e_alle() {
+        try {
+            Route[] r = {new Route("A", 5, "Dach"), new Route("B", 6, "Dach"), new Route("C", 7, "Dach")};
+            Kletterhalle h = Pruefhilfe.halle(r);
+            assertEquals(3, h.ausschrauben(Pruefhilfe.kopie("Dach")), "alle drei Routen im Sektor -> 3");
+            assertTrue(h.getRouten().isEmpty(), "danach ist routen leer");
+        } catch (RuntimeException e) {
+            Pruefhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void e_leer() {
+        try {
+            Kletterhalle h = new Kletterhalle("Leer");
+            assertEquals(0, h.ausschrauben(Pruefhilfe.kopie("Dach")), "leere Reihung -> 0 ohne Laufzeitfehler (P1)");
+        } catch (RuntimeException e) {
+            Pruefhilfe.laufzeitfehler(e);
+        }
+    }
+
+    // ===== f) schwersteRoute (korrigierte Fassung) =====
+
+    @Test
+    public void f_beispielKante() {
+        try {
+            Route[] r = Pruefhilfe.routen();
+            Kletterhalle h = Pruefhilfe.halle(r);
+            assertTrue(h.schwersteRoute(Pruefhilfe.kopie("Kante")) == r[5], "schwersteRoute(\"Kante\") -> Wolkenkratzer (nicht Morgenrot aus dem Sektor Platte!)");
+        } catch (RuntimeException e) {
+            Pruefhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void f_dach() {
+        try {
+            Route[] r = Pruefhilfe.routen();
+            Kletterhalle h = Pruefhilfe.halle(r);
+            assertTrue(h.schwersteRoute(Pruefhilfe.kopie("Dach")) == r[6], "schwersteRoute(\"Dach\") -> Spinne (10, letzter Index - Schleife bis getLength() - 1)");
+        } catch (RuntimeException e) {
+            Pruefhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void f_platteErsteRoute() {
+        try {
+            Route[] r = Pruefhilfe.routen();
+            Kletterhalle h = Pruefhilfe.halle(r);
+            assertTrue(h.schwersteRoute(Pruefhilfe.kopie("Platte")) == r[0], "schwersteRoute(\"Platte\") -> Morgenrot (Index 0 muss mitgeprueft werden)");
+        } catch (RuntimeException e) {
+            Pruefhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void f_keinTreffer() {
+        try {
+            Route[] r = Pruefhilfe.routen();
+            Kletterhalle h = Pruefhilfe.halle(r);
+            assertTrue(h.schwersteRoute(Pruefhilfe.kopie("Turm")) == null, "Sektor ohne Routen -> null");
+        } catch (RuntimeException e) {
+            Pruefhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void f_leer() {
+        try {
+            Kletterhalle h = new Kletterhalle("Leer");
+            assertTrue(h.schwersteRoute(Pruefhilfe.kopie("Dach")) == null, "leere Reihung -> null ohne getItem(0) (P1)");
+        } catch (RuntimeException e) {
+            Pruefhilfe.laufzeitfehler(e);
+        }
+    }
+
+    // ===== m) naechstesZiel (binaerer Suchbaum vom Inhaltstyp Mitglied) =====
+
+    @Test
+    public void m_beispiel() {
+        try {
+            Kletterhalle h = new Kletterhalle("Vertikal");
+            BinTree b = Pruefhilfe.bestenliste();
+            assertEquals("Sam", Pruefhilfe.name(h.naechstesZiel(b, 50)), "naechstesZiel(50): kleinste Punktzahl ueber 50 hat Sam (55)");
+            assertEquals("Rae", Pruefhilfe.name(h.naechstesZiel(b, 60)), "naechstesZiel(60): Rae (71) - Tim (60) selbst ist nicht mehr als 60");
+        } catch (RuntimeException e) {
+            Pruefhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void m_kandidatOben() {
+        try {
+            Kletterhalle h = new Kletterhalle("Vertikal");
+            BinTree b = Pruefhilfe.bestenliste();
+            assertEquals("Vera", Pruefhilfe.name(h.naechstesZiel(b, 75)), "naechstesZiel(75): Vera (82) - links von Vera liegt nur Rae (71), also bleibt Vera der Kandidat");
+            assertEquals("Ida", Pruefhilfe.name(h.naechstesZiel(b, 20)), "naechstesZiel(20): Ida (35) - Bo (20) ist nicht MEHR als 20");
+        } catch (RuntimeException e) {
+            Pruefhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void m_strengGroesser() {
+        try {
+            Kletterhalle h = new Kletterhalle("Vertikal");
+            BinTree b = Pruefhilfe.bestenliste();
+            assertEquals("Sam", Pruefhilfe.name(h.naechstesZiel(b, 48)), "naechstesZiel(48): Sam (55), nicht Lou mit genau 48 Punkten (> statt >=, P6)");
+            assertEquals("Bo", Pruefhilfe.name(h.naechstesZiel(b, 0)), "naechstesZiel(0): Bo (20), das Minimum");
+        } catch (RuntimeException e) {
+            Pruefhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void m_keiner() {
+        try {
+            Kletterhalle h = new Kletterhalle("Vertikal");
+            BinTree b = Pruefhilfe.bestenliste();
+            assertTrue(h.naechstesZiel(b, 95) == null, "naechstesZiel(95): niemand hat mehr als 95 Punkte -> null");
+            assertTrue(h.naechstesZiel(b, 100) == null, "naechstesZiel(100) -> null");
+        } catch (RuntimeException e) {
+            Pruefhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void m_leer() {
+        try {
+            Kletterhalle h = new Kletterhalle("Vertikal");
+            assertTrue(h.naechstesZiel(new BinTree(), 50) == null, "leerer Baum -> null (Basisfall isEmpty, P1/P7)");
+        } catch (RuntimeException e) {
+            Pruefhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void m_unveraendert() {
+        try {
+            Kletterhalle h = new Kletterhalle("Vertikal");
+            BinTree b = Pruefhilfe.bestenliste();
+            h.naechstesZiel(b, 50);
+            assertEquals("Bo Ida Gus Lou Sam Tim Rae Vera Zoe ", Pruefhilfe.inorder(b), "die Bestenliste darf nicht veraendert werden");
+        } catch (RuntimeException e) {
+            Pruefhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void m_nutztSuchbaumOrdnung() {
+        try {
+            Kletterhalle h = new Kletterhalle("Vertikal");
+            BinTree b = Pruefhilfe.bestenliste();
+            Pruefhilfe.alleZuruecksetzen(b);
+            h.naechstesZiel(b, 50);
+            assertEquals("Tim Ida Lou Sam ", Pruefhilfe.besucht(b), "naechstesZiel(50): nur Tim, Ida, Lou und Sam duerfen untersucht werden - je Schritt nur EIN Teilbaum (AFB III)");
+            Pruefhilfe.alleZuruecksetzen(b);
+            h.naechstesZiel(b, 60);
+            assertEquals("Tim Vera Rae ", Pruefhilfe.besucht(b), "naechstesZiel(60): nur Tim, Vera und Rae duerfen untersucht werden");
+        } catch (RuntimeException e) {
+            Pruefhilfe.laufzeitfehler(e);
+        }
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  HAUPTPROGRAMM - Kontrollwerte zu g) und i)
+// ---------------------------------------------------------------------
+
+Kletterhalle halle = new Kletterhalle("Vertikal");
+halle.setWand(Pruefhilfe.wand());
+println("g) aufstieg(4, 2) = " + halle.aufstieg(4, 2));
+println("   aufstieg(4, 0) = " + halle.aufstieg(4, 0) + ",  aufstieg(4, 4) = " + halle.aufstieg(4, 4));
+println("i) sortiere - Start:  " + Pruefhilfe.reihungText(Pruefhilfe.teilnehmende()));
+halle.sortiere(Pruefhilfe.teilnehmende());
+
+
+/* MUSTERLOESUNG-START  (Lehrerexemplar)
+   Jeden Abschnitt bei Bedarf in den gleichnamigen Abtipp-Block kopieren.
+   Mit allen fuenf Abschnitten sind alle 29 Tests gruen.
+
+// ----- c) hoechsterGrad (Klasse Mitglied, Stapel)
+    public int hoechsterGrad(int k) {
+        Stack hilf = new Stack();
+        int max = 0;
+        int anzahl = 0;
+        while (!tourenbuch.isEmpty() && anzahl < k) {
+            Route r = (Route) tourenbuch.pop();
+            if (r.getGrad() > max) {
+                max = r.getGrad();
+            }
+            hilf.push(r);
+            anzahl = anzahl + 1;
+        }
+        while (!hilf.isEmpty()) {
+            tourenbuch.push(hilf.pop());
+        }
+        return max;
+    }
+
+// ----- d) abmelden (Klasse Station) - Java-Uebersetzung des Struktogramms
+    public boolean abmelden(String name) {
+        boolean gefunden = false;
+        Queue hilf = new Queue();
+        while (!warteliste.isEmpty()) {
+            Mitglied m = (Mitglied) warteliste.dequeue();
+            if (!gefunden && m.getName().equals(name)) {
+                gefunden = true;
+            } else {
+                hilf.enqueue(m);
+            }
+        }
+        while (!hilf.isEmpty()) {
+            warteliste.enqueue(hilf.dequeue());
+        }
+        return gefunden;
+    }
+
+// ----- e) ausschrauben (Klasse Kletterhalle, dynamische Reihung)
+    public int ausschrauben(String sektor) {
+        int anzahl = 0;
+        int i = 0;
+        while (i < routen.getLength()) {
+            Route r = (Route) routen.getItem(i);
+            if (r.getSektor().equals(sektor)) {
+                routen.delete(i);
+                anzahl = anzahl + 1;
+            } else {
+                i = i + 1;
+            }
+        }
+        return anzahl;
+    }
+
+// ----- f) schwersteRoute (Klasse Kletterhalle) - korrigierte Fassung
+    public Route schwersteRoute(String sektor) {
+        Route beste = null;
+        for (int i = 0; i < routen.getLength(); i++) {
+            Route r = (Route) routen.getItem(i);
+            if (r.getSektor().equals(sektor)) {
+                if (beste == null || r.getGrad() > beste.getGrad()) {
+                    beste = r;
+                }
+            }
+        }
+        return beste;
+    }
+
+// ----- m) naechstesZiel (Klasse Kletterhalle, binaerer Suchbaum)
+    public Mitglied naechstesZiel(BinTree b, int punkte) {
+        if (b.isEmpty()) {
+            return null;
+        }
+        Mitglied m = (Mitglied) b.getItem();
+        if (m.getPunkte() <= punkte) {
+            return naechstesZiel(b.getRight(), punkte);
+        }
+        Mitglied links = naechstesZiel(b.getLeft(), punkte);
+        if (links == null) {
+            return m;
+        }
+        return links;
+    }
+MUSTERLOESUNG-ENDE */

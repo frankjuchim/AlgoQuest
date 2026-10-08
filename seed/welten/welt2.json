@@ -1,0 +1,5086 @@
+{
+ "version": 2,
+ "welt": 2,
+ "titel": "Die Rangliste",
+ "farbe": "#1F7A7A",
+ "levels": [
+  {
+   "id": "W2-L1",
+   "nr": "2.1",
+   "titel": "Die Highscore-Liste – Standardbausteine und lineare Suche",
+   "ds": [
+    13
+   ],
+   "ab": "AB W2·1 Standardbausteine und Suchen",
+   "ide": "AQ_W2_L2_Rangliste_Geruest.txt – Level 2.1 (Klasse Rangliste, Testklasse L21StandardTest)",
+   "intro": [
+    {
+     "t": "text",
+     "md": "Standardbausteine auf einer Reihung von Objekten mit Füllstand `anzahl`: Zählen, Maximum/Minimum, lineare Suche (erstes Vorkommen, sonst −1), Duplikate (jeder mit jedem), Durchschnitt."
+    },
+    {
+     "t": "hinweis",
+     "md": "**Achtung Abi:** Rekord mit dem ersten Eintrag starten (nicht mit 0) · Schleifen bis `anzahl − 1` · `return -1` nach der Schleife · `equals` statt `==` · Kommazahl-Division mit Cast."
+    }
+   ],
+   "aufgaben": [
+    "W2-L1-01",
+    "W2-L1-02",
+    "W2-L1-03",
+    "W2-L1-04",
+    "W2-L1-05",
+    "W2-L1-06",
+    "W2-L1-07",
+    "W2-L1-08"
+   ]
+  },
+  {
+   "id": "W2-L2",
+   "nr": "2.2",
+   "titel": "Ordnung im Ranking – Selection-, Insertion-, Bubblesort",
+   "ds": [
+    14
+   ],
+   "ab": "AB W2·2 Sortieren",
+   "ide": "AQ_W2_L2_Rangliste_Geruest.txt – Level 2.2 (Sortieren, Testklasse L22SortierTest)",
+   "intro": [
+    {
+     "t": "text",
+     "md": "Alle drei Verfahren bestehen nur aus **vergleichen** (`besser`) und **vertauschen** (`vertausche`). Sortiert wird absteigend: Platz 1 an Index 0."
+    },
+    {
+     "t": "hinweis",
+     "md": "**Erkennungsmerkmale:** Selectionsort sucht das Extremum und tauscht weit · Insertionsort lässt einen Eintrag nach links wandern · Bubblesort vergleicht nur Nachbarn, Abbruch ohne Vertauschung."
+    }
+   ],
+   "aufgaben": [
+    "W2-L2-01",
+    "W2-L2-02",
+    "W2-L2-03",
+    "W2-L2-04",
+    "W2-L2-05",
+    "W2-L2-06",
+    "W2-L2-07",
+    "W2-L2-08"
+   ]
+  },
+  {
+   "id": "W2-L3",
+   "nr": "2.3",
+   "titel": "Das Sortier-Duell – Effizienz durch Zählen",
+   "ds": [
+    15
+   ],
+   "ab": "AB W2·3 Effizienz und binäre Suche – Teil A (Aufgaben 0–3)",
+   "ide": "AQ_W2_SortierDuell_Geruest.txt – Sortier-Duell (MeinSortierer.duellSort, Duell.starten)",
+   "intro": [
+    {
+     "t": "text",
+     "md": "Aufwand misst man nicht in Sekunden, sondern durch **Zählen** von Vergleichen und Vertauschungen – abhängig von n und vom Fall (bester, schlechtester, mittlerer)."
+    },
+    {
+     "t": "hinweis",
+     "md": "**Achtung Abi:** Selectionsort immer n(n − 1)/2 Vergleiche · Verdopplung von n → etwa vierfache Vergleiche (quadratisch) · schlechtesten Fall mit Eingabe angeben und begründen. Keine O-Notation nötig."
+    }
+   ],
+   "aufgaben": [
+    "W2-L3-01",
+    "W2-L3-02",
+    "W2-L3-03",
+    "W2-L3-04",
+    "W2-L3-05",
+    "W2-L3-06",
+    "W2-L3-07",
+    "W2-L3-08"
+   ]
+  },
+  {
+   "id": "W2-L4",
+   "nr": "2.4",
+   "titel": "Halbieren statt Durchsuchen – binäre Suche",
+   "ds": [
+    16
+   ],
+   "ab": "AB W2·3 Effizienz und binäre Suche – Teil B (Aufgaben 4–7)",
+   "ide": "AQ_W2_L2_Rangliste_Geruest.txt – IDE-Level 2.3 (Klasse Suche, Testklasse L23SucheTest)",
+   "intro": [
+    {
+     "t": "text",
+     "md": "Die **binäre Suche** funktioniert nur auf sortierten Daten: Ein Blick auf `r[mid]` mit mid = (lo + hi) / 2 schließt eine ganze Hälfte aus."
+    },
+    {
+     "t": "hinweis",
+     "md": "**Die vier Fallen:** nur auf sortierten Daten · Bedingung `lo <= hi` · `lo = mid + 1` bzw. `hi = mid - 1` · `return -1` nach der Schleife. Höchstens ⌊log₂ n⌋ + 1 Durchläufe, Verdopplung → +1."
+    }
+   ],
+   "aufgaben": [
+    "W2-L4-01",
+    "W2-L4-02",
+    "W2-L4-03",
+    "W2-L4-04",
+    "W2-L4-05",
+    "W2-L4-06",
+    "W2-L4-07",
+    "W2-L4-08"
+   ]
+  }
+ ],
+ "boss": {
+  "id": "W2-BOSS",
+  "titel": "Das Wettfischen am Drachensee",
+  "dauerMin": 25,
+  "anzahl": 8,
+  "mix": {
+   "1": 3,
+   "2": 3,
+   "3": 2
+  },
+  "pool": [
+   "W2-B-01",
+   "W2-B-02",
+   "W2-B-03",
+   "W2-B-04",
+   "W2-B-05",
+   "W2-B-06",
+   "W2-B-07",
+   "W2-B-08",
+   "W2-B-09",
+   "W2-B-10",
+   "W2-B-11",
+   "W2-B-12",
+   "W2-B-13",
+   "W2-B-14",
+   "W2-B-15"
+  ]
+ },
+ "aufgaben": [
+  {
+   "id": "W2-L1-01",
+   "titel": "Ganz oder Komma?",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Datentypen und Ausdrücke",
+   "fallen": [
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Gib an, was `println(…)` für jeden Ausdruck ausgibt – genau so, wie es auf der Konsole erscheint (Kommazahlen mit Punkt, z. B. `3.0`)."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Ausdruck",
+      "Ausgabe"
+     ],
+     "zeilen": [
+      [
+       "`9 / 4`",
+       "[[g1]]"
+      ],
+      [
+       "`(double) 9 / 4`",
+       "[[g2]]"
+      ],
+      [
+       "`(double) (9 / 4)`",
+       "[[g3]]"
+      ],
+      [
+       "`9 / 4.0`",
+       "[[g4]]"
+      ],
+      [
+       "`9 % 4`",
+       "[[g5]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 8
+     },
+     "g2": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 8
+     },
+     "g3": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 8
+     },
+     "g4": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 8
+     },
+     "g5": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 8
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "2"
+    ],
+    "g2": [
+     "2.25",
+     "2,25"
+    ],
+    "g3": [
+     "2.0",
+     "2,0"
+    ],
+    "g4": [
+     "2.25",
+     "2,25"
+    ],
+    "g5": [
+     "1"
+    ]
+   },
+   "tipps": [
+    "Ganzzahl / Ganzzahl rechnet ganzzahlig. Der Cast wirkt auf das, was direkt dahinter steht."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`9 / 4` sind zwei Ganzzahlen → ganzzahlige Division **2**. `(double) 9 / 4`: erst wird 9 zu 9.0, dann 9.0 / 4 = **2.25**. `(double) (9 / 4)`: erst 9 / 4 = 2, dann zu **2.0** – zu spät gecastet (P4)! `9 / 4.0` → **2.25**. `9 % 4` ist der Rest **1**. Genau diese Falle steckt im Baustein Durchschnitt."
+    }
+   ]
+  },
+  {
+   "id": "W2-L1-02",
+   "titel": "Welcher Baustein ist das?",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Funktionsweise erläutern",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Ordne jedes Code-Fragment aus der Klasse `Rangliste` dem Standardbaustein zu."
+    }
+   ],
+   "interaktion": {
+    "kind": "match",
+    "elemente": [
+     {
+      "id": "e1",
+      "md": "`int z = 0;` … `if (eintraege[i].getPunkte() > grenze) { z++; }` … `return z;`"
+     },
+     {
+      "id": "e2",
+      "md": "`int pos = 0;` … `if (eintraege[i].getZeit() < eintraege[pos].getZeit()) { pos = i; }` … `return pos;`"
+     },
+     {
+      "id": "e3",
+      "md": "`if (eintraege[i].getName().equals(name)) { return i; }` … nach der Schleife `return -1;`"
+     },
+     {
+      "id": "e4",
+      "md": "`for (int j = i + 1; j < anzahl; j++)` … `if (…equals(…)) { return true; }`"
+     },
+     {
+      "id": "e5",
+      "md": "`summe = summe + eintraege[i].getPunkte();` … `return (double) summe / anzahl;`"
+     }
+    ],
+    "kategorien": [
+     {
+      "id": "z",
+      "md": "Zählen"
+     },
+     {
+      "id": "m",
+      "md": "Minimum/Maximum mit Index"
+     },
+     {
+      "id": "s",
+      "md": "lineare Suche (erstes Vorkommen)"
+     },
+     {
+      "id": "d",
+      "md": "Duplikate (jeder mit jedem)"
+     },
+     {
+      "id": "a",
+      "md": "Durchschnitt"
+     }
+    ]
+   },
+   "loesung": {
+    "e1": "z",
+    "e2": "m",
+    "e3": "s",
+    "e4": "d",
+    "e5": "a"
+   },
+   "tipps": [
+    "Achte auf die Startwerte und darauf, was zurückgegeben wird."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Zählen: Zähler startet bei 0, `++` bei jedem Treffer. Minimum/Maximum: Rekordhalter = erster Eintrag (Index 0), wird bei einem besseren ersetzt. Lineare Suche: beim ersten Treffer sofort `return i`, −1 erst **nach** der Schleife. Duplikate: zwei Schleifen, die innere ab `i + 1`. Durchschnitt: Summe, dann Kommazahl-Division."
+    }
+   ]
+  },
+  {
+   "id": "W2-L1-03",
+   "titel": "Wer führt die Rangliste an?",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Rangliste enthält (Index 0 bis 4): Nox 640, Pia 910, Rex 1210, Sun 880, Taj 1210 Punkte."
+    },
+    {
+     "t": "code",
+     "code": "public Eintrag besterEintrag() {\n    if (anzahl == 0) {\n        return null;\n    }\n    Eintrag bester = eintraege[0];\n    for (int i = 1; i < anzahl; i++) {\n        if (eintraege[i].getPunkte() > bester.getPunkte()) {\n            bester = eintraege[i];\n        }\n    }\n    return bester;\n}",
+     "nummern": true
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "i",
+      "eintraege[i].getPunkte()",
+      "getPunkte() > bester.getPunkte()",
+      "bester"
+     ],
+     "zeilen": [
+      [
+       "–",
+       "–",
+       "–",
+       "Nox"
+      ],
+      [
+       "1",
+       "910",
+       "[[v1]]",
+       "[[b1]]"
+      ],
+      [
+       "2",
+       "1210",
+       "[[v2]]",
+       "[[b2]]"
+      ],
+      [
+       "3",
+       "880",
+       "[[v3]]",
+       "[[b3]]"
+      ],
+      [
+       "4",
+       "1210",
+       "[[v4]]",
+       "[[b4]]"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Rückgabe: [[r]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "v1": {
+      "typ": "auswahl",
+      "optionen": [
+       "wahr",
+       "falsch"
+      ]
+     },
+     "b1": {
+      "typ": "auswahl",
+      "optionen": [
+       "Nox",
+       "Pia",
+       "Rex",
+       "Sun",
+       "Taj"
+      ]
+     },
+     "v2": {
+      "typ": "auswahl",
+      "optionen": [
+       "wahr",
+       "falsch"
+      ]
+     },
+     "b2": {
+      "typ": "auswahl",
+      "optionen": [
+       "Nox",
+       "Pia",
+       "Rex",
+       "Sun",
+       "Taj"
+      ]
+     },
+     "v3": {
+      "typ": "auswahl",
+      "optionen": [
+       "wahr",
+       "falsch"
+      ]
+     },
+     "b3": {
+      "typ": "auswahl",
+      "optionen": [
+       "Nox",
+       "Pia",
+       "Rex",
+       "Sun",
+       "Taj"
+      ]
+     },
+     "v4": {
+      "typ": "auswahl",
+      "optionen": [
+       "wahr",
+       "falsch"
+      ]
+     },
+     "b4": {
+      "typ": "auswahl",
+      "optionen": [
+       "Nox",
+       "Pia",
+       "Rex",
+       "Sun",
+       "Taj"
+      ]
+     },
+     "r": {
+      "typ": "auswahl",
+      "optionen": [
+       "Nox",
+       "Pia",
+       "Rex",
+       "Sun",
+       "Taj"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "v1": [
+     "wahr"
+    ],
+    "b1": [
+     "Pia"
+    ],
+    "v2": [
+     "wahr"
+    ],
+    "b2": [
+     "Rex"
+    ],
+    "v3": [
+     "falsch"
+    ],
+    "b3": [
+     "Rex"
+    ],
+    "v4": [
+     "falsch"
+    ],
+    "b4": [
+     "Rex"
+    ],
+    "r": [
+     "Rex"
+    ]
+   },
+   "tipps": [
+    "Bei Gleichstand ist `>` falsch – der erste Rekordhalter bleibt."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Start: Nox. i = 1: 910 > 640 → Pia. i = 2: 1210 > 910 → Rex. i = 3: 880 > 1210 falsch. i = 4: 1210 > 1210 **falsch** → Rex bleibt. Rückgabe **Rex** – bei Gleichstand der erste. Mit `>=` käme Taj heraus."
+    }
+   ]
+  },
+  {
+   "id": "W2-L1-04",
+   "titel": "Der abgerundete Durchschnitt",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Für eine Rangliste mit 700, 800 und 850 Punkten liefert `durchschnitt()` den Wert `783.0` statt `783.33…`."
+    },
+    {
+     "t": "code",
+     "code": "public double durchschnitt() {\n    int summe = 0;\n    for (int i = 0; i < anzahl; i++) {\n        summe = summe + eintraege[i].getPunkte();\n    }\n    return summe / anzahl;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**a)** Markiere die fehlerhafte Zeile. **b)** Korrigierte Zeile: [[g1]]"
+    },
+    {
+     "t": "text",
+     "md": "**c)** Mit deiner Korrektur wird `durchschnitt()` für eine **leere** Rangliste aufgerufen. Was passiert? [[g2]]"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 1,
+     "anzahl": 1
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 34
+      },
+      "g2": {
+       "typ": "auswahl",
+       "optionen": [
+        "Ergebnis 0.0",
+        "Ergebnis NaN („keine Zahl\") – die Leer-Abfrage fehlt",
+        "ArithmeticException (Division durch 0)",
+        "Ergebnis −1"
+       ]
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      6
+     ]
+    },
+    {
+     "g1": [
+      "return (double) summe / anzahl;",
+      "return (double) summe / anzahl",
+      "return summe / (double) anzahl;",
+      "return summe / (double) anzahl",
+      "return 1.0 * summe / anzahl;",
+      "return 1.0 * summe / anzahl",
+      "return summe * 1.0 / anzahl;",
+      "return summe * 1.0 / anzahl",
+      "return (double) summe / (double) anzahl;",
+      "return (double) summe / (double) anzahl",
+      "return summe / (anzahl * 1.0);",
+      "return summe / (anzahl * 1.0)"
+     ],
+     "g2": [
+      "Ergebnis NaN („keine Zahl\") – die Leer-Abfrage fehlt"
+     ]
+    }
+   ],
+   "tipps": [
+    "Welchen Typ haben `summe` und `anzahl`?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Zeile 6: `summe / anzahl` sind zwei Ganzzahlen → ganzzahlige Division 2350 / 3 = 783, erst danach wird daraus 783.0 (P4). Richtig: `return (double) summe / anzahl;` – der Cast muss **vor** der Division wirken. Für die leere Liste rechnet Java dann 0.0 / 0 = **NaN** – laut Auftrag soll aber 0.0 kommen. Darum gehört an den Anfang `if (anzahl == 0) { return 0.0; }`. (Der Originalcode bricht bei leerer Liste mit einer ArithmeticException ab.)"
+    }
+   ]
+  },
+  {
+   "id": "W2-L1-05",
+   "titel": "Die Späher im Einsatz",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Sortieren und Suchen",
+   "fallen": [
+    "P5"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Rangliste `r` (Kapazität 8) enthält (Index 0 bis 5): Nox 640, Pia 910, Rex 1210, Sun 880, Taj 1210, Uma 450 Punkte. Alle Bausteine sind wie in Level 2.1 implementiert (`anzahlUeber` zählt echt größer, `indexVon` vergleicht mit `equals`, `getEintrag` liefert bei ungültigem Index null)."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Aufruf",
+      "Ergebnis"
+     ],
+     "zeilen": [
+      [
+       "`r.anzahlUeber(880)`",
+       "[[g1]]"
+      ],
+      [
+       "`r.anzahlUeber(1210)`",
+       "[[g2]]"
+      ],
+      [
+       "`r.indexVon(\"Taj\")`",
+       "[[g3]]"
+      ],
+      [
+       "`r.indexVon(\"taj\")`",
+       "[[g4]]"
+      ],
+      [
+       "`r.hoechstePunktzahl()`",
+       "[[g5]]"
+      ],
+      [
+       "`r.getEintrag(6) == null`",
+       "[[g6]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "zahl"
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "zahl"
+     },
+     "g4": {
+      "typ": "zahl"
+     },
+     "g5": {
+      "typ": "zahl"
+     },
+     "g6": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "3"
+    ],
+    "g2": [
+     "0"
+    ],
+    "g3": [
+     "4"
+    ],
+    "g4": [
+     "-1"
+    ],
+    "g5": [
+     "1210"
+    ],
+    "g6": [
+     "true"
+    ]
+   },
+   "tipps": [
+    "`equals` unterscheidet Groß- und Kleinschreibung."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`anzahlUeber(880)` zählt 910, 1210, 1210 → **3** (880 selbst ist nicht *größer*). Über 1210 liegt niemand → **0**. Taj steht an Index **4**; \"taj\" mit kleinem t kommt nicht vor → **−1** (equals beachtet Groß-/Kleinschreibung). Maximum **1210**. Index 6 ist nicht belegt (anzahl = 6) → `getEintrag(6)` liefert null → **true**."
+    }
+   ]
+  },
+  {
+   "id": "W2-L1-06",
+   "titel": "Jeder gegen jeden",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`hatGleichePunkte()` prüft, ob zwei Einträge dieselbe Punktzahl haben. Punkte (Index 0 bis 4): 520, 830, 610, 830, 400."
+    },
+    {
+     "t": "code",
+     "code": "public boolean hatGleichePunkte() {\n    for (int i = 0; i < anzahl - 1; i++) {\n        for (int j = i + 1; j < anzahl; j++) {\n            if (eintraege[i].getPunkte() == eintraege[j].getPunkte()) {\n                return true;\n            }\n        }\n    }\n    return false;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Trage jeden Vergleich in einer eigenen Zeile ein."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Vergleich Nr.",
+      "i",
+      "j",
+      "gleich?"
+     ],
+     "zeilen": [
+      [
+       "1",
+       "[[i1]]",
+       "[[j1]]",
+       "[[q1]]"
+      ],
+      [
+       "2",
+       "[[i2]]",
+       "[[j2]]",
+       "[[q2]]"
+      ],
+      [
+       "3",
+       "[[i3]]",
+       "[[j3]]",
+       "[[q3]]"
+      ],
+      [
+       "4",
+       "[[i4]]",
+       "[[j4]]",
+       "[[q4]]"
+      ],
+      [
+       "5",
+       "[[i5]]",
+       "[[j5]]",
+       "[[q5]]"
+      ],
+      [
+       "6",
+       "[[i6]]",
+       "[[j6]]",
+       "[[q6]]"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Rückgabe: [[r]] · Bei 6 Einträgen **ohne** gleiche Punkte gäbe es [[n]] Vergleiche."
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "i1": {
+      "typ": "zahl"
+     },
+     "j1": {
+      "typ": "zahl"
+     },
+     "q1": {
+      "typ": "auswahl",
+      "optionen": [
+       "wahr",
+       "falsch"
+      ]
+     },
+     "i2": {
+      "typ": "zahl"
+     },
+     "j2": {
+      "typ": "zahl"
+     },
+     "q2": {
+      "typ": "auswahl",
+      "optionen": [
+       "wahr",
+       "falsch"
+      ]
+     },
+     "i3": {
+      "typ": "zahl"
+     },
+     "j3": {
+      "typ": "zahl"
+     },
+     "q3": {
+      "typ": "auswahl",
+      "optionen": [
+       "wahr",
+       "falsch"
+      ]
+     },
+     "i4": {
+      "typ": "zahl"
+     },
+     "j4": {
+      "typ": "zahl"
+     },
+     "q4": {
+      "typ": "auswahl",
+      "optionen": [
+       "wahr",
+       "falsch"
+      ]
+     },
+     "i5": {
+      "typ": "zahl"
+     },
+     "j5": {
+      "typ": "zahl"
+     },
+     "q5": {
+      "typ": "auswahl",
+      "optionen": [
+       "wahr",
+       "falsch"
+      ]
+     },
+     "i6": {
+      "typ": "zahl"
+     },
+     "j6": {
+      "typ": "zahl"
+     },
+     "q6": {
+      "typ": "auswahl",
+      "optionen": [
+       "wahr",
+       "falsch"
+      ]
+     },
+     "r": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "n": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "i1": [
+     "0"
+    ],
+    "j1": [
+     "1"
+    ],
+    "q1": [
+     "falsch"
+    ],
+    "i2": [
+     "0"
+    ],
+    "j2": [
+     "2"
+    ],
+    "q2": [
+     "falsch"
+    ],
+    "i3": [
+     "0"
+    ],
+    "j3": [
+     "3"
+    ],
+    "q3": [
+     "falsch"
+    ],
+    "i4": [
+     "0"
+    ],
+    "j4": [
+     "4"
+    ],
+    "q4": [
+     "falsch"
+    ],
+    "i5": [
+     "1"
+    ],
+    "j5": [
+     "2"
+    ],
+    "q5": [
+     "falsch"
+    ],
+    "i6": [
+     "1"
+    ],
+    "j6": [
+     "3"
+    ],
+    "q6": [
+     "wahr"
+    ],
+    "r": [
+     "true"
+    ],
+    "n": [
+     "15"
+    ]
+   },
+   "tipps": [
+    "Die innere Schleife beginnt bei `i + 1`.",
+    "Nach `return true` ist sofort Schluss."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Paare (0,1), (0,2), (0,3), (0,4), (1,2) sind verschieden; beim 6. Vergleich (1,3) sind 830 und 830 gleich → sofort `return true`. Ohne Treffer prüft die Methode alle Paare i < j: bei 6 Einträgen 5 + 4 + 3 + 2 + 1 = **15** = 6 · 5 / 2. Allgemein n(n − 1)/2 – die Formel begegnet dir beim Sortieren wieder."
+    }
+   ]
+  },
+  {
+   "id": "W2-L1-07",
+   "titel": "Puzzle: Steht Dorn schon drin?",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Methode implementieren",
+   "fallen": [
+    "P5",
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Setze `indexVon(name: Zeichenkette): Ganzzahl` zusammen: Index des **ersten** Eintrags mit diesem Namen, sonst −1. Nicht alle Teile werden gebraucht."
+    }
+   ],
+   "interaktion": {
+    "kind": "order",
+    "teile": [
+     {
+      "id": "a",
+      "code": "public int indexVon(String name) {"
+     },
+     {
+      "id": "b",
+      "code": "    for (int i = 0; i < anzahl; i++) {"
+     },
+     {
+      "id": "c",
+      "code": "        if (eintraege[i].getName().equals(name)) {"
+     },
+     {
+      "id": "d",
+      "code": "            return i;"
+     },
+     {
+      "id": "e",
+      "code": "        }"
+     },
+     {
+      "id": "f",
+      "code": "    }"
+     },
+     {
+      "id": "g",
+      "code": "    return -1;"
+     },
+     {
+      "id": "h",
+      "code": "}"
+     },
+     {
+      "id": "x",
+      "code": "        if (eintraege[i].getName() == name) {"
+     },
+     {
+      "id": "y",
+      "code": "    for (int i = 0; i <= anzahl; i++) {"
+     },
+     {
+      "id": "z",
+      "code": "        } else { return -1; }"
+     }
+    ]
+   },
+   "loesung": {
+    "reihenfolgen": [
+     [
+      "a",
+      "b",
+      "c",
+      "d",
+      "e",
+      "f",
+      "g",
+      "h"
+     ]
+    ]
+   },
+   "tipps": [
+    "Wann steht fest, dass der Name nicht vorkommt?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Lineare Suche: über die belegten Plätze (`i < anzahl`, nicht `<=`, P6), Namen mit `equals` (P5), beim ersten Treffer sofort `return i`. `return -1` steht **nach** der Schleife – ein `else { return -1; }` würde die Suche schon nach dem ersten Eintrag abbrechen."
+    }
+   ]
+  },
+  {
+   "id": "W2-L1-08",
+   "titel": "Vom Code zum Struktogramm",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Code ↔ Struktogramm",
+   "fallen": [
+    "P9"
+   ],
+   "inhalt": [
+    {
+     "t": "code",
+     "code": "public int anzahlUeber(int grenze) {\n    int zaehler = 0;\n    for (int i = 0; i < anzahl; i++) {\n        if (eintraege[i].getPunkte() > grenze) {\n            zaehler++;\n        }\n    }\n    return zaehler;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Vervollständige das Struktogramm nach EH § 5."
+    },
+    {
+     "t": "struktogramm",
+     "kopf": "anzahlUeber(grenze: Ganzzahl): Ganzzahl",
+     "rumpf": [
+      {
+       "anw": "zaehler ← [[g1]]"
+      },
+      {
+       "zaehle": "i von 0 bis [[g2]]",
+       "rumpf": [
+        {
+         "wenn": "eintraege[i].getPunkte() [[g3]] grenze",
+         "dann": [
+          {
+           "anw": "zaehler ← [[g4]]"
+          }
+         ],
+         "sonst": []
+        }
+       ]
+      },
+      {
+       "gib": "[[g5]]"
+      }
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 6
+     },
+     "g2": {
+      "typ": "auswahl",
+      "optionen": [
+       "anzahl",
+       "anzahl − 1",
+       "eintraege.length",
+       "Länge von eintraege − 1"
+      ]
+     },
+     "g3": {
+      "typ": "auswahl",
+      "optionen": [
+       ">",
+       "≥",
+       "<",
+       "="
+      ]
+     },
+     "g4": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 14
+     },
+     "g5": {
+      "typ": "auswahl",
+      "optionen": [
+       "zaehler",
+       "anzahl",
+       "i",
+       "grenze"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "0"
+    ],
+    "g2": [
+     "anzahl − 1"
+    ],
+    "g3": [
+     ">"
+    ],
+    "g4": [
+     "zaehler + 1",
+     "1 + zaehler"
+    ],
+    "g5": [
+     "zaehler"
+    ]
+   },
+   "tipps": [
+    "`zaehler++` schreibt man im Struktogramm als Zuweisung mit ←."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Im Struktogramm gibt es kein `++`: `zaehler ← zaehler + 1` (P9). Die Zählschleife läuft „von 0 bis anzahl − 1\" – beide Grenzen **inklusive**, das entspricht `i < anzahl`. Am Ende „gib zaehler zurück\"."
+    }
+   ]
+  },
+  {
+   "id": "W2-L2-01",
+   "titel": "Auswahl der Besten: Selectionsort",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Sortieren und Suchen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Sortiere die Punkte mit **Selectionsort** genau nach dieser Methode der Rangliste:"
+    },
+    {
+     "t": "code",
+     "code": "public void selectionSort() {\n    for (int i = 0; i < anzahl - 1; i++) {\n        int maxIndex = i;\n        for (int j = i + 1; j < anzahl; j++) {\n            if (besser(eintraege[j], eintraege[maxIndex])) {\n                maxIndex = j;\n            }\n        }\n        if (maxIndex != i) {\n            vertausche(i, maxIndex);\n        }\n    }\n}",
+     "nummern": true
+    },
+    {
+     "t": "hinweis",
+     "md": "`besser(a, b)` liefert wahr, wenn `a` **mehr** Punkte hat (strikt `>`), und zählt einen Vergleich. Sortiert wird **absteigend** – Platz 1 (meiste Punkte) an Index 0."
+    },
+    {
+     "t": "reihung",
+     "werte": [
+      40,
+      70,
+      20,
+      90,
+      60
+     ],
+     "indizes": true
+    },
+    {
+     "t": "text",
+     "md": "Wähle nacheinander die beiden Indizes jeder Vertauschung, genau in der Reihenfolge, in der das Verfahren tauscht. Wenn keine Vertauschung mehr folgt, drücke „fertig\"."
+    }
+   ],
+   "interaktion": {
+    "kind": "array",
+    "modus": "tausch",
+    "start": [
+     40,
+     70,
+     20,
+     90,
+     60
+    ],
+    "fertigKnopf": true
+   },
+   "loesung": {
+    "tausche": [
+     [
+      0,
+      3
+     ],
+     [
+      2,
+      4
+     ]
+    ]
+   },
+   "tipps": [
+    "Notiere dir nebenher den Zustand nach jedem Durchlauf der äußeren Schleife."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Selectionsort sucht im Rest ab i den besten Eintrag und tauscht ihn nach vorn – aber nur, wenn er nicht schon an Position i steht. Vertauschungen: (0, 3) → 90, 70, 20, 40, 60 · (2, 4) → 90, 70, 60, 40, 20. Insgesamt 2 Vertauschungen und 10 Aufrufe von `besser`."
+    }
+   ]
+  },
+  {
+   "id": "W2-L2-02",
+   "titel": "Einsortieren wie beim Kartenspiel: Insertionsort",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Sortieren und Suchen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Sortiere die Punkte mit **Insertionsort** genau nach dieser Methode der Rangliste:"
+    },
+    {
+     "t": "code",
+     "code": "public void insertionSort() {\n    for (int i = 1; i < anzahl; i++) {\n        int j = i;\n        while (j > 0 && besser(eintraege[j], eintraege[j - 1])) {\n            vertausche(j, j - 1);\n            j--;\n        }\n    }\n}",
+     "nummern": true
+    },
+    {
+     "t": "hinweis",
+     "md": "`besser(a, b)` liefert wahr, wenn `a` **mehr** Punkte hat (strikt `>`), und zählt einen Vergleich. Sortiert wird **absteigend** – Platz 1 (meiste Punkte) an Index 0."
+    },
+    {
+     "t": "reihung",
+     "werte": [
+      30,
+      50,
+      10,
+      60,
+      40
+     ],
+     "indizes": true
+    },
+    {
+     "t": "text",
+     "md": "Wähle nacheinander die beiden Indizes jeder Vertauschung, genau in der Reihenfolge, in der das Verfahren tauscht. Wenn keine Vertauschung mehr folgt, drücke „fertig\"."
+    }
+   ],
+   "interaktion": {
+    "kind": "array",
+    "modus": "tausch",
+    "start": [
+     30,
+     50,
+     10,
+     60,
+     40
+    ],
+    "fertigKnopf": true
+   },
+   "loesung": {
+    "tausche": [
+     [
+      1,
+      0
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      1,
+      0
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      3,
+      2
+     ]
+    ]
+   },
+   "tipps": [
+    "Notiere dir nebenher den Zustand nach jedem Durchlauf der äußeren Schleife."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Insertionsort lässt jeden Eintrag durch Nachbartausche nach links wandern, solange er besser als sein linker Nachbar ist. Vertauschungen: (1, 0) → 50, 30, 10, 60, 40 · (3, 2) → 50, 30, 60, 10, 40 · (2, 1) → 50, 60, 30, 10, 40 · (1, 0) → 60, 50, 30, 10, 40 · (4, 3) → 60, 50, 30, 40, 10 · (3, 2) → 60, 50, 40, 30, 10. Insgesamt 6 Vertauschungen und 8 Aufrufe von `besser`."
+    }
+   ]
+  },
+  {
+   "id": "W2-L2-03",
+   "titel": "Die Blasen steigen: Bubblesort",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Sortieren und Suchen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Sortiere die Punkte mit **Bubblesort mit Abbruch** genau nach dieser Methode der Rangliste:"
+    },
+    {
+     "t": "code",
+     "code": "public void bubbleSort() {\n    boolean getauscht = true;\n    int durchlauf = 0;\n    while (getauscht) {\n        getauscht = false;\n        for (int j = 0; j < anzahl - 1 - durchlauf; j++) {\n            if (besser(eintraege[j + 1], eintraege[j])) {\n                vertausche(j, j + 1);\n                getauscht = true;\n            }\n        }\n        durchlauf++;\n    }\n}",
+     "nummern": true
+    },
+    {
+     "t": "hinweis",
+     "md": "`besser(a, b)` liefert wahr, wenn `a` **mehr** Punkte hat (strikt `>`), und zählt einen Vergleich. Sortiert wird **absteigend** – Platz 1 (meiste Punkte) an Index 0."
+    },
+    {
+     "t": "reihung",
+     "werte": [
+      60,
+      20,
+      50,
+      80,
+      30
+     ],
+     "indizes": true
+    },
+    {
+     "t": "text",
+     "md": "Wähle nacheinander die beiden Indizes jeder Vertauschung, genau in der Reihenfolge, in der das Verfahren tauscht. Wenn keine Vertauschung mehr folgt, drücke „fertig\"."
+    }
+   ],
+   "interaktion": {
+    "kind": "array",
+    "modus": "tausch",
+    "start": [
+     60,
+     20,
+     50,
+     80,
+     30
+    ],
+    "fertigKnopf": true
+   },
+   "loesung": {
+    "tausche": [
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "tipps": [
+    "Notiere dir nebenher den Zustand nach jedem Durchlauf der äußeren Schleife."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Bubblesort vergleicht Nachbarn und tauscht, wenn der rechte besser ist; nach jedem Durchlauf ist hinten ein Platz mehr fertig, ohne Vertauschung im Durchlauf endet das Verfahren. Vertauschungen: (1, 2) → 60, 50, 20, 80, 30 · (2, 3) → 60, 50, 80, 20, 30 · (3, 4) → 60, 50, 80, 30, 20 · (1, 2) → 60, 80, 50, 30, 20 · (0, 1) → 80, 60, 50, 30, 20. Insgesamt 5 Vertauschungen und 10 Aufrufe von `besser`."
+    }
+   ]
+  },
+  {
+   "id": "W2-L2-04",
+   "titel": "Wer hat hier sortiert?",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Funktionsweise erläutern",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Eine Rangliste mit den Punkten 25, 45, 15, 55, 35 wird absteigend sortiert. Die Tabelle zeigt den Zustand nach jedem Durchlauf der äußeren Schleife."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "nach …",
+      "Index 0",
+      "Index 1",
+      "Index 2",
+      "Index 3",
+      "Index 4"
+     ],
+     "zeilen": [
+      [
+       "Start",
+       "25",
+       "45",
+       "15",
+       "55",
+       "35"
+      ],
+      [
+       "Durchlauf 1",
+       "45",
+       "25",
+       "55",
+       "35",
+       "15"
+      ],
+      [
+       "Durchlauf 2",
+       "45",
+       "55",
+       "35",
+       "25",
+       "15"
+      ],
+      [
+       "Durchlauf 3",
+       "55",
+       "45",
+       "35",
+       "25",
+       "15"
+      ],
+      [
+       "Durchlauf 4",
+       "55",
+       "45",
+       "35",
+       "25",
+       "15"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Welches Verfahren war das?"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "mehrfach": false,
+    "optionen": [
+     {
+      "id": "s",
+      "md": "Selectionsort"
+     },
+     {
+      "id": "i",
+      "md": "Insertionsort"
+     },
+     {
+      "id": "b",
+      "md": "Bubblesort mit Abbruch"
+     }
+    ]
+   },
+   "loesung": {
+    "richtig": [
+     "b"
+    ]
+   },
+   "tipps": [
+    "Wo steht nach dem ersten Durchlauf der kleinste Wert?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Nach dem 1. Durchlauf steht der **schlechteste** Wert (15) ganz hinten – typisch für Bubblesort: Nachbarn werden verglichen, der Schlechteste „sinkt\" nach hinten. Selectionsort hätte zuerst den Besten nach vorn getauscht (55, 45, 15, 25, 35), Insertionsort hätte nur die ersten beiden geordnet (45, 25, 15, 55, 35)."
+    }
+   ]
+  },
+  {
+   "id": "W2-L2-05",
+   "titel": "Tracetabelle mit Strichliste",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`insertionSort()` (siehe unten) sortiert die Punkte 35, 75, 55, 95 absteigend. Gib den Zustand nach jedem Durchlauf der äußeren Schleife und die **fortlaufenden Summen** der Aufrufe von `besser` und `vertausche` an."
+    },
+    {
+     "t": "code",
+     "code": "public void insertionSort() {\n    for (int i = 1; i < anzahl; i++) {\n        int j = i;\n        while (j > 0 && besser(eintraege[j], eintraege[j - 1])) {\n            vertausche(j, j - 1);\n            j--;\n        }\n    }\n}",
+     "nummern": true
+    },
+    {
+     "t": "hinweis",
+     "md": "`besser(a, b)` liefert wahr, wenn `a` **mehr** Punkte hat (strikt `>`), und zählt einen Vergleich. Sortiert wird **absteigend** – Platz 1 (meiste Punkte) an Index 0."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "nach …",
+      "Index 0",
+      "Index 1",
+      "Index 2",
+      "Index 3",
+      "Vergleiche (Summe)",
+      "Vertauschungen (Summe)"
+     ],
+     "zeilen": [
+      [
+       "Start",
+       "35",
+       "75",
+       "55",
+       "95",
+       "0",
+       "0"
+      ],
+      [
+       "i = 1",
+       "[[w10]]",
+       "[[w11]]",
+       "[[w12]]",
+       "[[w13]]",
+       "[[c1]]",
+       "[[t1]]"
+      ],
+      [
+       "i = 2",
+       "[[w20]]",
+       "[[w21]]",
+       "[[w22]]",
+       "[[w23]]",
+       "[[c2]]",
+       "[[t2]]"
+      ],
+      [
+       "i = 3",
+       "[[w30]]",
+       "[[w31]]",
+       "[[w32]]",
+       "[[w33]]",
+       "[[c3]]",
+       "[[t3]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "w10": {
+      "typ": "zahl"
+     },
+     "w11": {
+      "typ": "zahl"
+     },
+     "w12": {
+      "typ": "zahl"
+     },
+     "w13": {
+      "typ": "zahl"
+     },
+     "c1": {
+      "typ": "zahl"
+     },
+     "t1": {
+      "typ": "zahl"
+     },
+     "w20": {
+      "typ": "zahl"
+     },
+     "w21": {
+      "typ": "zahl"
+     },
+     "w22": {
+      "typ": "zahl"
+     },
+     "w23": {
+      "typ": "zahl"
+     },
+     "c2": {
+      "typ": "zahl"
+     },
+     "t2": {
+      "typ": "zahl"
+     },
+     "w30": {
+      "typ": "zahl"
+     },
+     "w31": {
+      "typ": "zahl"
+     },
+     "w32": {
+      "typ": "zahl"
+     },
+     "w33": {
+      "typ": "zahl"
+     },
+     "c3": {
+      "typ": "zahl"
+     },
+     "t3": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "w10": [
+     "75"
+    ],
+    "w11": [
+     "35"
+    ],
+    "w12": [
+     "55"
+    ],
+    "w13": [
+     "95"
+    ],
+    "c1": [
+     "1"
+    ],
+    "t1": [
+     "1"
+    ],
+    "w20": [
+     "75"
+    ],
+    "w21": [
+     "55"
+    ],
+    "w22": [
+     "35"
+    ],
+    "w23": [
+     "95"
+    ],
+    "c2": [
+     "3"
+    ],
+    "t2": [
+     "2"
+    ],
+    "w30": [
+     "95"
+    ],
+    "w31": [
+     "75"
+    ],
+    "w32": [
+     "55"
+    ],
+    "w33": [
+     "35"
+    ],
+    "c3": [
+     "6"
+    ],
+    "t3": [
+     "5"
+    ]
+   },
+   "tipps": [
+    "Ist `j > 0` falsch, wird `besser` gar nicht mehr aufgerufen (Kurzschluss von &&)."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "i = 1: 75 > 35 → tauschen, danach j = 0 → Schleifenende ohne weiteren Vergleich (1 Vergleich). i = 2: 55 > 35 tauschen, 55 > 75 nein (2 Vergleiche). i = 3: 95 wandert bis ganz nach vorn (3 Vergleiche, 3 Tausche). Summen: 6 Vergleiche, 5 Vertauschungen."
+    }
+   ]
+  },
+  {
+   "id": "W2-L2-06",
+   "titel": "Lückencode: Die Notbremse",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Lückencode",
+   "fallen": [
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Ergänze `bubbleSort()` der Rangliste (absteigend, mit Abbruch): Die innere Schleife wird nach jedem Durchlauf um 1 kürzer; blieb ein Durchlauf ohne Vertauschung, endet das Verfahren."
+    },
+    {
+     "t": "code",
+     "code": "public void bubbleSort() {\n    boolean getauscht = [[g1]];\n    int durchlauf = 0;\n    while ([[g2]]) {\n        getauscht = [[g3]];\n        for (int j = 0; j < [[g4]]; j++) {\n            if (besser([[g5]], eintraege[j])) {\n                vertausche(j, j + 1);\n                getauscht = [[g6]];\n            }\n        }\n        durchlauf++;\n    }\n}",
+     "nummern": true
+    },
+    {
+     "t": "hinweis",
+     "md": "`besser(a, b)` liefert wahr, wenn `a` **mehr** Punkte hat (strikt `>`), und zählt einen Vergleich. Sortiert wird **absteigend** – Platz 1 (meiste Punkte) an Index 0."
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "g2": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 18
+     },
+     "g3": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "g4": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 24
+     },
+     "g5": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 18
+     },
+     "g6": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "true"
+    ],
+    "g2": [
+     "getauscht",
+     "getauscht == true"
+    ],
+    "g3": [
+     "false"
+    ],
+    "g4": [
+     "anzahl - 1 - durchlauf",
+     "anzahl - durchlauf - 1",
+     "(anzahl - 1) - durchlauf"
+    ],
+    "g5": [
+     "eintraege[j + 1]"
+    ],
+    "g6": [
+     "true"
+    ]
+   },
+   "tipps": [
+    "`getauscht` muss vor dem ersten Durchlauf so stehen, dass die Schleife überhaupt startet.",
+    "Nach dem Durchlauf mit `durchlauf = d` sind hinten d + 1 Plätze fertig."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`getauscht` startet mit true, damit der erste Durchlauf stattfindet; zu Beginn jedes Durchlaufs wird es auf false gesetzt und bei jeder Vertauschung auf true. Die innere Schleife läuft bis `j < anzahl - 1 - durchlauf`: Sie vergleicht `eintraege[j + 1]` mit `eintraege[j]` – ohne `- 1` würde `j + 1` die belegten Plätze verlassen (P6), ohne `- durchlauf` würden fertige Plätze unnötig erneut verglichen."
+    }
+   ]
+  },
+  {
+   "id": "W2-L2-07",
+   "titel": "Gleichstand im Ziel",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Sortieren und Suchen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Bei Punktgleichstand soll vorne stehen, wer die Punkte **zuerst** erreicht hat (kleinerer Index). Die Rangliste enthält:"
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Index",
+      "0",
+      "1",
+      "2",
+      "3",
+      "4"
+     ],
+     "zeilen": [
+      [
+       "Eintrag",
+       "Ola 600",
+       "Ben 400",
+       "Ivo 600",
+       "Kim 750",
+       "Lu 900"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Die Liste wird einmal mit `selectionSort()` und einmal (vom selben Start aus) mit `insertionSort()` sortiert (Methoden wie in Level 2.2)."
+    },
+    {
+     "t": "text",
+     "md": "Index von Ola nach selectionSort: [[g1]] · Index von Ivo nach selectionSort: [[g2]]"
+    },
+    {
+     "t": "text",
+     "md": "Index von Ola nach insertionSort: [[g3]] · Stabil gearbeitet hat hier: [[g4]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "zahl"
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "zahl"
+     },
+     "g4": {
+      "typ": "auswahl",
+      "optionen": [
+       "nur Selectionsort",
+       "nur Insertionsort",
+       "beide",
+       "keines"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "3"
+    ],
+    "g2": [
+     "2"
+    ],
+    "g3": [
+     "2"
+    ],
+    "g4": [
+     "nur Insertionsort"
+    ]
+   },
+   "tipps": [
+    "Verfolge bei Selectionsort jeden weiten Tausch: Wer wird dabei nach hinten geschoben?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Selectionsort: Tausch (0, 4) → Lu, Ben, Ivo, Kim, Ola · Tausch (1, 3) → Lu, Kim, Ivo, Ben, Ola · Tausch (3, 4) → Lu, Kim, Ivo, Ola, Ben – Ergebnis Lu, Kim, Ivo, Ola, Ben. Ein **weiter Tausch** schiebt Ola hinter Ivo, obwohl beide 600 Punkte haben → nicht stabil. Insertionsort tauscht nur Nachbarn und nur bei *strikt* besser – gleich gute überholen sich nie: Lu, Kim, Ola, Ivo, Ben → stabil."
+    }
+   ]
+  },
+  {
+   "id": "W2-L2-08",
+   "titel": "Steckbriefe der Verfahren",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Funktionsweise erläutern",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Ordne jedes Merkmal dem Sortierverfahren aus Level 2.2 zu."
+    }
+   ],
+   "interaktion": {
+    "kind": "match",
+    "elemente": [
+     {
+      "id": "e1",
+      "md": "sucht im unsortierten Rest den besten Eintrag und tauscht ihn an den Anfang des Restes"
+     },
+     {
+      "id": "e2",
+      "md": "lässt den nächsten Eintrag so lange nach links wandern, wie er besser als sein linker Nachbar ist"
+     },
+     {
+      "id": "e3",
+      "md": "vergleicht in jedem Durchlauf benachbarte Einträge über den ganzen restlichen Bereich; der schlechteste sinkt nach hinten"
+     },
+     {
+      "id": "e4",
+      "md": "braucht bei jeder Eingabe der Länge n genau n(n − 1)/2 Vergleiche"
+     },
+     {
+      "id": "e5",
+      "md": "endet, sobald ein Durchlauf ohne Vertauschung blieb"
+     },
+     {
+      "id": "e6",
+      "md": "vertauscht insgesamt höchstens n − 1-mal"
+     }
+    ],
+    "kategorien": [
+     {
+      "id": "s",
+      "md": "Selectionsort"
+     },
+     {
+      "id": "i",
+      "md": "Insertionsort"
+     },
+     {
+      "id": "b",
+      "md": "Bubblesort mit Abbruch"
+     }
+    ]
+   },
+   "loesung": {
+    "e1": "s",
+    "e2": "i",
+    "e3": "b",
+    "e4": "s",
+    "e5": "b",
+    "e6": "s"
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Selectionsort: Maximum-Auswahl im Rest, höchstens ein Tausch pro Durchlauf (≤ n − 1), die Vergleiche hängen nicht von den Daten ab: immer n(n − 1)/2. Insertionsort: Einfügen durch Nachbartausche nach links. Bubblesort: Nachbarvergleiche über den Rest, Abbruch nach einem Durchlauf ohne Vertauschung."
+    }
+   ]
+  },
+  {
+   "id": "W2-L3-01",
+   "titel": "Zählen statt Stoppuhr",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Effizienz",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`selectionSort()` (Level 2.2) sortiert eine Rangliste mit **n = 6** Einträgen. Gib die Zahl der Aufrufe von `besser` an."
+    },
+    {
+     "t": "text",
+     "md": "im 1. Durchlauf der äußeren Schleife: [[g1]] · im letzten Durchlauf: [[g2]] · insgesamt: [[g3]]"
+    },
+    {
+     "t": "text",
+     "md": "insgesamt bei n = 12: [[g4]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "zahl"
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "zahl"
+     },
+     "g4": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "5"
+    ],
+    "g2": [
+     "1"
+    ],
+    "g3": [
+     "15"
+    ],
+    "g4": [
+     "66"
+    ]
+   },
+   "tipps": [
+    "Im Durchlauf i vergleicht die innere Schleife j = i + 1 … n − 1."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Im 1. Durchlauf wird der beste Eintrag unter n Einträgen gesucht: n − 1 = 5 Vergleiche, im 2. Durchlauf 4, … im letzten 1. Zusammen 5 + 4 + 3 + 2 + 1 = 15 = n(n − 1)/2. Für n = 12: 12 · 11 / 2 = **66** – unabhängig davon, wie die Daten aussehen."
+    }
+   ]
+  },
+  {
+   "id": "W2-L3-02",
+   "titel": "Zähl-Warm-up: drei Ausgangslagen",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Effizienz",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`insertionSort()` und `selectionSort()` (Level 2.2, absteigend, jeder Aufruf von `besser` zählt) sortieren drei Ranglisten mit je fünf Einträgen. Gib die Zählerstände am Ende an."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Punkte (Index 0 bis 4)",
+      "Insertionsort: Vergleiche",
+      "Insertionsort: Vertauschungen",
+      "Selectionsort: Vergleiche"
+     ],
+     "zeilen": [
+      [
+       "90, 70, 50, 30, 10",
+       "[[c1]]",
+       "[[t1]]",
+       "[[s1]]"
+      ],
+      [
+       "10, 30, 50, 70, 90",
+       "[[c2]]",
+       "[[t2]]",
+       "[[s2]]"
+      ],
+      [
+       "70, 90, 30, 50, 10",
+       "[[c3]]",
+       "[[t3]]",
+       "[[s3]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "c1": {
+      "typ": "zahl"
+     },
+     "t1": {
+      "typ": "zahl"
+     },
+     "s1": {
+      "typ": "zahl"
+     },
+     "c2": {
+      "typ": "zahl"
+     },
+     "t2": {
+      "typ": "zahl"
+     },
+     "s2": {
+      "typ": "zahl"
+     },
+     "c3": {
+      "typ": "zahl"
+     },
+     "t3": {
+      "typ": "zahl"
+     },
+     "s3": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "c1": [
+     "4"
+    ],
+    "t1": [
+     "0"
+    ],
+    "s1": [
+     "10"
+    ],
+    "c2": [
+     "10"
+    ],
+    "t2": [
+     "10"
+    ],
+    "s2": [
+     "10"
+    ],
+    "c3": [
+     "5"
+    ],
+    "t3": [
+     "2"
+    ],
+    "s3": [
+     "10"
+    ]
+   },
+   "tipps": [
+    "Insertionsort: Jeder Eintrag kostet mindestens einen Vergleich, außer er wandert bis Index 0."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Schon absteigend sortiert = **bester Fall** für Insertionsort: jeder Eintrag nur 1 Vergleich → n − 1 = 4, keine Vertauschung. Aufsteigend = **schlechtester Fall**: jeder wandert ganz nach vorn → 1 + 2 + 3 + 4 = 10 Vergleiche und 10 Vertauschungen. Gemischte Lage: 5 Vergleiche, 2 Vertauschungen. Selectionsort braucht immer 10 = 5 · 4 / 2."
+    }
+   ]
+  },
+  {
+   "id": "W2-L3-03",
+   "titel": "Doppelt so viele Spieler",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Effizienz",
+   "fallen": [
+    "P10"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Das Sortieren von 1000 Einträgen mit Selectionsort dauert auf dem Server 0,8 Sekunden. Wie lange dauert es ungefähr für 2000 Einträge?"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "mehrfach": false,
+    "optionen": [
+     {
+      "id": "a",
+      "md": "etwa 1,6 Sekunden"
+     },
+     {
+      "id": "b",
+      "md": "etwa 3,2 Sekunden"
+     },
+     {
+      "id": "c",
+      "md": "etwa 0,9 Sekunden"
+     },
+     {
+      "id": "d",
+      "md": "etwa 6,4 Sekunden"
+     }
+    ]
+   },
+   "loesung": {
+    "richtig": [
+     "b"
+    ]
+   },
+   "tipps": [
+    "Wie hängt die Zahl der Vergleiche von n ab?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Die Zahl der Vergleiche ist n(n − 1)/2, wächst also **quadratisch**: 2000 · 1999 / 2 ≈ 4 · (1000 · 999 / 2). Verdoppelt man n, vervierfacht sich der Aufwand ungefähr → 4 · 0,8 s ≈ **3,2 s**. Abitur-Formulierung: „Verdoppelt man n, so vervierfacht sich die Zahl der Vergleiche ungefähr, da sie quadratisch von n abhängt.\""
+    }
+   ]
+  },
+  {
+   "id": "W2-L3-04",
+   "titel": "Der ungünstigste Fall",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Effizienz",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`bubbleSort()` mit Abbruch (Level 2.2) sortiert fünf Einträge absteigend."
+    },
+    {
+     "t": "code",
+     "code": "public void bubbleSort() {\n    boolean getauscht = true;\n    int durchlauf = 0;\n    while (getauscht) {\n        getauscht = false;\n        for (int j = 0; j < anzahl - 1 - durchlauf; j++) {\n            if (besser(eintraege[j + 1], eintraege[j])) {\n                vertausche(j, j + 1);\n                getauscht = true;\n            }\n        }\n        durchlauf++;\n    }\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**a)** Höchstzahl der Aufrufe von `besser` bei n = 5: [[g1]] · Mindestzahl: [[g2]]"
+    },
+    {
+     "t": "text",
+     "md": "**b)** Bei welchen Eingaben wird die Höchstzahl erreicht? Wähle alle passenden aus."
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "zahl"
+      },
+      "g2": {
+       "typ": "zahl"
+      }
+     }
+    },
+    {
+     "kind": "choice",
+     "mehrfach": true,
+     "optionen": [
+      {
+       "id": "a",
+       "md": "`10, 20, 30, 40, 50`"
+      },
+      {
+       "id": "b",
+       "md": "`50, 40, 30, 20, 10`"
+      },
+      {
+       "id": "c",
+       "md": "`30, 50, 40, 20, 10`"
+      },
+      {
+       "id": "d",
+       "md": "`50, 10, 20, 30, 40`"
+      }
+     ]
+    }
+   ],
+   "loesung": [
+    {
+     "g1": [
+      "10"
+     ],
+     "g2": [
+      "4"
+     ]
+    },
+    {
+     "richtig": [
+      "a",
+      "d"
+     ]
+    }
+   ],
+   "tipps": [
+    "Wann braucht Bubblesort alle n − 1 Durchläufe?",
+    "Probiere 50, 10, 20, 30, 40 von Hand."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Ohne Abbruch wären es immer 4 + 3 + 2 + 1 = **10** Vergleiche; mehr geht nicht. Im besten Fall (schon sortiert) endet das Verfahren nach dem 1. Durchlauf: **4** = n − 1. Die Höchstzahl entsteht, wenn im 3. Durchlauf noch getauscht wird, sodass auch der 4. Durchlauf (1 Vergleich) stattfindet: Das gilt für die aufsteigende Eingabe – aber auch für 50, 10, 20, 30, 40, weil die 40 pro Durchlauf nur einen Platz nach vorn rücken kann (gute Einträge „steigen\" langsam, schlechte sinken schnell). Die umgekehrte Eingabe 50, 40, … ist schon richtig sortiert (bester Fall)."
+    }
+   ]
+  },
+  {
+   "id": "W2-L3-05",
+   "titel": "Verdopplung im Highscore",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Effizienz",
+   "fallen": [
+    "P10"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`insertionSort()` (Level 2.2, absteigend) – gib die Zahl der Aufrufe von `besser` an (ganze Zahlen ohne Tausenderpunkte)."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "n",
+      "schlechtester Fall",
+      "bester Fall"
+     ],
+     "zeilen": [
+      [
+       "100",
+       "[[g1]]",
+       "[[g2]]"
+      ],
+      [
+       "200",
+       "[[g3]]",
+       "[[g4]]"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Verdoppelt man n, wächst die Zahl der Vergleiche im schlechtesten Fall ungefähr auf das [[g5]]-Fache, im besten Fall ungefähr auf das [[g6]]-Fache (ganze Zahlen)."
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "zahl"
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "zahl"
+     },
+     "g4": {
+      "typ": "zahl"
+     },
+     "g5": {
+      "typ": "zahl"
+     },
+     "g6": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "4950"
+    ],
+    "g2": [
+     "99"
+    ],
+    "g3": [
+     "19900"
+    ],
+    "g4": [
+     "199"
+    ],
+    "g5": [
+     "4"
+    ],
+    "g6": [
+     "2"
+    ]
+   },
+   "tipps": [
+    "Schlechtester Fall: aufsteigend sortierte Eingabe – jeder Eintrag wandert ganz nach vorn."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Schlechtester Fall (aufsteigende Eingabe): 1 + 2 + … + (n − 1) = n(n − 1)/2 → 4950 bzw. 19 900, Faktor ≈ **4** (quadratisch). Bester Fall (schon sortiert): je Eintrag 1 Vergleich → n − 1 = 99 bzw. 199, Faktor ≈ **2** (linear). Im Abitur immer begründen, **welcher** Fall betrachtet wird (P10)."
+    }
+   ]
+  },
+  {
+   "id": "W2-L3-06",
+   "titel": "Fast sortiert",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Sortieren und Suchen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Rangliste ist nach einem Nachtrag **fast** sortiert. Führe `bubbleSort()` mit Abbruch aus (Methode siehe unten)."
+    },
+    {
+     "t": "code",
+     "code": "public void bubbleSort() {\n    boolean getauscht = true;\n    int durchlauf = 0;\n    while (getauscht) {\n        getauscht = false;\n        for (int j = 0; j < anzahl - 1 - durchlauf; j++) {\n            if (besser(eintraege[j + 1], eintraege[j])) {\n                vertausche(j, j + 1);\n                getauscht = true;\n            }\n        }\n        durchlauf++;\n    }\n}",
+     "nummern": true
+    },
+    {
+     "t": "hinweis",
+     "md": "`besser(a, b)` liefert wahr, wenn `a` **mehr** Punkte hat (strikt `>`), und zählt einen Vergleich. Sortiert wird **absteigend** – Platz 1 (meiste Punkte) an Index 0."
+    },
+    {
+     "t": "reihung",
+     "werte": [
+      90,
+      80,
+      50,
+      70,
+      60,
+      40
+     ],
+     "indizes": true
+    },
+    {
+     "t": "text",
+     "md": "Wähle nacheinander die beiden Indizes jeder Vertauschung, genau in der Reihenfolge, in der das Verfahren tauscht. Wenn keine Vertauschung mehr folgt, drücke „fertig\"."
+    },
+    {
+     "t": "text",
+     "md": "Wie viele Aufrufe von `besser` waren es insgesamt? [[g1]] · Wie viele Durchläufe der äußeren Schleife? [[g2]]"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "array",
+     "modus": "tausch",
+     "start": [
+      90,
+      80,
+      50,
+      70,
+      60,
+      40
+     ],
+     "fertigKnopf": true
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "zahl"
+      },
+      "g2": {
+       "typ": "zahl"
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "tausche": [
+      [
+       2,
+       3
+      ],
+      [
+       3,
+       4
+      ]
+     ]
+    },
+    {
+     "g1": [
+      "9"
+     ],
+     "g2": [
+      "2"
+     ]
+    }
+   ],
+   "tipps": [
+    "Auch der Durchlauf, in dem nichts mehr getauscht wird, zählt mit."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Vertauschungen: (2, 3) → 90, 80, 70, 50, 60, 40 · (3, 4) → 90, 80, 70, 60, 50, 40. Durchläufe: 2 – der letzte stellt nur fest, dass nichts mehr zu tun ist (Abbruch). Vergleiche: 5 + 4 = 9 statt 15 ohne Abbruch."
+    }
+   ]
+  },
+  {
+   "id": "W2-L3-07",
+   "titel": "Der Doppelgänger-Detektor",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Effizienz",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`hatDoppelteNamen()` vergleicht jeden Eintrag mit jedem späteren (innere Schleife ab `i + 1`) und gibt beim ersten gleichen Namen sofort true zurück."
+    },
+    {
+     "t": "text",
+     "md": "Gib ganze Zahlen ohne Tausenderpunkte ein. Namensvergleiche bei 1000 Einträgen **ohne** doppelte Namen: [[g1]] · bei 2000 Einträgen ohne doppelte Namen: [[g2]] · bei 1000 Einträgen, wenn Index 0 und Index 1 denselben Namen haben: [[g3]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "zahl"
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "499500"
+    ],
+    "g2": [
+     "1999000"
+    ],
+    "g3": [
+     "1"
+    ]
+   },
+   "tipps": [
+    "Wie viele Paare (i, j) mit i < j gibt es bei n Einträgen?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Ohne Treffer werden alle Paare geprüft: n(n − 1)/2 → 1000 · 999 / 2 = **499 500** und 2000 · 1999 / 2 = **1 999 000** (etwa das Vierfache). Steht das Doppel ganz vorn, ist schon nach dem **1.** Vergleich Schluss – der beste Fall."
+    }
+   ]
+  },
+  {
+   "id": "W2-L3-08",
+   "titel": "Abi-Sätze zur Effizienz",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Effizienz",
+   "fallen": [
+    "P10"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Welche Aussagen über die Verfahren aus Level 2.2 (n Einträge, gezählt werden Aufrufe von `besser`) sind **richtig**?"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "mehrfach": true,
+    "optionen": [
+     {
+      "id": "a",
+      "md": "Verdoppelt man n, so vervierfacht sich die Zahl der Vergleiche von Selectionsort ungefähr, da sie quadratisch von n abhängt."
+     },
+     {
+      "id": "b",
+      "md": "Insertionsort braucht bei einer schon sortierten Liste n(n − 1)/2 Vergleiche."
+     },
+     {
+      "id": "c",
+      "md": "Selectionsort braucht für jede Eingabe der Länge n gleich viele Vergleiche."
+     },
+     {
+      "id": "d",
+      "md": "Die Laufzeit in Sekunden ist ein gutes Maß für den Aufwand eines Algorithmus."
+     },
+     {
+      "id": "e",
+      "md": "Bubblesort mit Abbruch braucht im besten Fall n − 1 Vergleiche."
+     },
+     {
+      "id": "f",
+      "md": "Bubblesort **ohne** Abbruch braucht im besten Fall ebenfalls nur n − 1 Vergleiche."
+     }
+    ]
+   },
+   "loesung": {
+    "richtig": [
+     "a",
+     "c",
+     "e"
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Richtig: a, c, e. Insertionsort braucht auf sortierten Daten nur n − 1 Vergleiche (b falsch). Sekunden hängen von Rechner, Browser und Tempo-Regler ab – gezählt werden Grundoperationen (d falsch). Ohne Abbruch läuft Bubblesort immer alle Durchläufe: n(n − 1)/2 Vergleiche (f falsch)."
+    }
+   ]
+  },
+  {
+   "id": "W2-L4-01",
+   "titel": "Halbieren statt Durchsuchen",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Sortieren und Suchen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Reihung ist **aufsteigend** sortiert. Gesucht wird x = 57 mit der binären Suche:"
+    },
+    {
+     "t": "code",
+     "code": "public static int binaer(int[] r, int x) {\n    int lo = 0;\n    int hi = r.length - 1;\n    while (lo <= hi) {\n        int mid = (lo + hi) / 2;\n        if (r[mid] == x) {\n            return mid;\n        } else if (r[mid] < x) {\n            lo = mid + 1;\n        } else {\n            hi = mid - 1;\n        }\n    }\n    return -1;\n}",
+     "nummern": true
+    },
+    {
+     "t": "reihung",
+     "werte": [
+      4,
+      11,
+      17,
+      23,
+      30,
+      36,
+      42,
+      49,
+      57,
+      63,
+      70,
+      78,
+      85
+     ],
+     "indizes": true
+    },
+    {
+     "t": "text",
+     "md": "Klicke nacheinander die Indizes an, die das Verfahren als `mid` prüft (mid = (lo + hi) / 2, ganzzahlig)."
+    }
+   ],
+   "interaktion": {
+    "kind": "array",
+    "modus": "klick",
+    "start": [
+     4,
+     11,
+     17,
+     23,
+     30,
+     36,
+     42,
+     49,
+     57,
+     63,
+     70,
+     78,
+     85
+    ]
+   },
+   "loesung": {
+    "folge": [
+     6,
+     9,
+     7,
+     8
+    ]
+   },
+   "tipps": [
+    "Erster Schritt: lo = 0, hi = 12 → mid = 6."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Trace: lo = 0, hi = 12, mid = 6, r[mid] = 42 → lo ← mid + 1 · lo = 7, hi = 12, mid = 9, r[mid] = 63 → hi ← mid − 1 · lo = 7, hi = 8, mid = 7, r[mid] = 49 → lo ← mid + 1 · lo = 8, hi = 8, mid = 8, r[mid] = 57 → gib mid zurück. Nach 4 Durchläufen gefunden (lineare Suche: 9 Prüfungen)."
+    }
+   ]
+  },
+  {
+   "id": "W2-L4-02",
+   "titel": "Die Zahl, die es nicht gibt",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Sortieren und Suchen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Gesucht wird x = 50 – diese Zahl kommt **nicht** vor. Die Methode `binaer` ist dieselbe wie oben:"
+    },
+    {
+     "t": "code",
+     "code": "public static int binaer(int[] r, int x) {\n    int lo = 0;\n    int hi = r.length - 1;\n    while (lo <= hi) {\n        int mid = (lo + hi) / 2;\n        if (r[mid] == x) {\n            return mid;\n        } else if (r[mid] < x) {\n            lo = mid + 1;\n        } else {\n            hi = mid - 1;\n        }\n    }\n    return -1;\n}",
+     "nummern": true
+    },
+    {
+     "t": "reihung",
+     "werte": [
+      6,
+      13,
+      21,
+      28,
+      34,
+      41,
+      47,
+      55,
+      62,
+      69,
+      74,
+      88
+     ],
+     "indizes": true
+    },
+    {
+     "t": "text",
+     "md": "Klicke nacheinander die Indizes an, die das Verfahren als `mid` prüft (mid = (lo + hi) / 2, ganzzahlig)."
+    },
+    {
+     "t": "text",
+     "md": "Rückgabewert: [[g1]] · Die Schleife endet mit lo = [[g2]] und hi = [[g3]] · Schleifendurchläufe: [[g4]]"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "array",
+     "modus": "klick",
+     "start": [
+      6,
+      13,
+      21,
+      28,
+      34,
+      41,
+      47,
+      55,
+      62,
+      69,
+      74,
+      88
+     ]
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "zahl"
+      },
+      "g2": {
+       "typ": "zahl"
+      },
+      "g3": {
+       "typ": "zahl"
+      },
+      "g4": {
+       "typ": "zahl"
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "folge": [
+      5,
+      8,
+      6,
+      7
+     ]
+    },
+    {
+     "g1": [
+      "-1"
+     ],
+     "g2": [
+      "7"
+     ],
+     "g3": [
+      "6"
+     ],
+     "g4": [
+      "4"
+     ]
+    }
+   ],
+   "tipps": [
+    "Die Schleife endet, sobald lo > hi ist."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Trace: lo = 0, hi = 11, mid = 5, r[mid] = 41 → lo ← mid + 1 · lo = 6, hi = 11, mid = 8, r[mid] = 62 → hi ← mid − 1 · lo = 6, hi = 7, mid = 6, r[mid] = 47 → lo ← mid + 1 · lo = 7, hi = 7, mid = 7, r[mid] = 55 → hi ← mid − 1. Danach ist lo = 7 > hi = 6: Der Bereich ist leer, Rückgabe **−1**. Übrigens: lo zeigt jetzt genau auf die Stelle, an der 50 eingefügt werden müsste."
+    }
+   ]
+  },
+  {
+   "id": "W2-L4-03",
+   "titel": "Tracetabelle: lo, hi, mid",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Führe `binaer(r, 71)` (iterative binäre Suche, mid = (lo + hi) / 2) für diese aufsteigend sortierte Reihung von Hand aus. Trage die Werte **zu Beginn** jedes Schleifendurchlaufs ein."
+    },
+    {
+     "t": "reihung",
+     "werte": [
+      3,
+      8,
+      14,
+      19,
+      25,
+      31,
+      36,
+      40,
+      47,
+      53,
+      58,
+      66,
+      71,
+      79,
+      84
+     ],
+     "indizes": true
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Durchlauf",
+      "lo",
+      "hi",
+      "mid",
+      "r[mid]",
+      "Aktion"
+     ],
+     "zeilen": [
+      [
+       "1",
+       "[[l1]]",
+       "[[h1]]",
+       "[[m1]]",
+       "[[r1]]",
+       "[[a1]]"
+      ],
+      [
+       "2",
+       "[[l2]]",
+       "[[h2]]",
+       "[[m2]]",
+       "[[r2]]",
+       "[[a2]]"
+      ],
+      [
+       "3",
+       "[[l3]]",
+       "[[h3]]",
+       "[[m3]]",
+       "[[r3]]",
+       "[[a3]]"
+      ],
+      [
+       "4",
+       "[[l4]]",
+       "[[h4]]",
+       "[[m4]]",
+       "[[r4]]",
+       "[[a4]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "l1": {
+      "typ": "zahl"
+     },
+     "h1": {
+      "typ": "zahl"
+     },
+     "m1": {
+      "typ": "zahl"
+     },
+     "r1": {
+      "typ": "zahl"
+     },
+     "a1": {
+      "typ": "auswahl",
+      "optionen": [
+       "lo ← mid + 1",
+       "hi ← mid − 1",
+       "gib mid zurück"
+      ]
+     },
+     "l2": {
+      "typ": "zahl"
+     },
+     "h2": {
+      "typ": "zahl"
+     },
+     "m2": {
+      "typ": "zahl"
+     },
+     "r2": {
+      "typ": "zahl"
+     },
+     "a2": {
+      "typ": "auswahl",
+      "optionen": [
+       "lo ← mid + 1",
+       "hi ← mid − 1",
+       "gib mid zurück"
+      ]
+     },
+     "l3": {
+      "typ": "zahl"
+     },
+     "h3": {
+      "typ": "zahl"
+     },
+     "m3": {
+      "typ": "zahl"
+     },
+     "r3": {
+      "typ": "zahl"
+     },
+     "a3": {
+      "typ": "auswahl",
+      "optionen": [
+       "lo ← mid + 1",
+       "hi ← mid − 1",
+       "gib mid zurück"
+      ]
+     },
+     "l4": {
+      "typ": "zahl"
+     },
+     "h4": {
+      "typ": "zahl"
+     },
+     "m4": {
+      "typ": "zahl"
+     },
+     "r4": {
+      "typ": "zahl"
+     },
+     "a4": {
+      "typ": "auswahl",
+      "optionen": [
+       "lo ← mid + 1",
+       "hi ← mid − 1",
+       "gib mid zurück"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "l1": [
+     "0"
+    ],
+    "h1": [
+     "14"
+    ],
+    "m1": [
+     "7"
+    ],
+    "r1": [
+     "40"
+    ],
+    "a1": [
+     "lo ← mid + 1"
+    ],
+    "l2": [
+     "8"
+    ],
+    "h2": [
+     "14"
+    ],
+    "m2": [
+     "11"
+    ],
+    "r2": [
+     "66"
+    ],
+    "a2": [
+     "lo ← mid + 1"
+    ],
+    "l3": [
+     "12"
+    ],
+    "h3": [
+     "14"
+    ],
+    "m3": [
+     "13"
+    ],
+    "r3": [
+     "79"
+    ],
+    "a3": [
+     "hi ← mid − 1"
+    ],
+    "l4": [
+     "12"
+    ],
+    "h4": [
+     "12"
+    ],
+    "m4": [
+     "12"
+    ],
+    "r4": [
+     "71"
+    ],
+    "a4": [
+     "gib mid zurück"
+    ]
+   },
+   "tipps": [
+    "mid wird abgerundet: (7 + 14) / 2 = 10."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Eine Zeile pro Schleifendurchlauf mit den Werten **zu Beginn** des Durchlaufs und der Aktion. (0, 14) → mid 7, r[mid] = 40: lo ← mid + 1 · (8, 14) → mid 11, r[mid] = 66: lo ← mid + 1 · (12, 14) → mid 13, r[mid] = 79: hi ← mid − 1 · (12, 12) → mid 12, r[mid] = 71: gib mid zurück. Rückgabe 12."
+    }
+   ]
+  },
+  {
+   "id": "W2-L4-04",
+   "titel": "Wie oft höchstens?",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Effizienz",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Gib an, wie viele Schleifendurchläufe die binäre Suche bei n Elementen **höchstens** braucht."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "n",
+      "1",
+      "7",
+      "8",
+      "100",
+      "200",
+      "1 000",
+      "1 000 000"
+     ],
+     "zeilen": [
+      [
+       "max. Durchläufe",
+       "[[n0]]",
+       "[[n1]]",
+       "[[n2]]",
+       "[[n3]]",
+       "[[n4]]",
+       "[[n5]]",
+       "[[n6]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "n0": {
+      "typ": "zahl"
+     },
+     "n1": {
+      "typ": "zahl"
+     },
+     "n2": {
+      "typ": "zahl"
+     },
+     "n3": {
+      "typ": "zahl"
+     },
+     "n4": {
+      "typ": "zahl"
+     },
+     "n5": {
+      "typ": "zahl"
+     },
+     "n6": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "n0": [
+     "1"
+    ],
+    "n1": [
+     "3"
+    ],
+    "n2": [
+     "4"
+    ],
+    "n3": [
+     "7"
+    ],
+    "n4": [
+     "8"
+    ],
+    "n5": [
+     "10"
+    ],
+    "n6": [
+     "20"
+    ]
+   },
+   "tipps": [
+    "Nach jedem erfolglosen Durchlauf bleibt höchstens die Hälfte übrig: 100 → 50 → 25 → 12 → 6 → 3 → 1."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Jeder Durchlauf halbiert den Bereich mindestens. Höchstzahl = Anzahl der Halbierungen, bis 1 Element übrig ist, plus dieser letzte Durchlauf: ⌊log₂ n⌋ + 1. 2⁶ = 64 ≤ 100 < 128 → 7; 1000 < 1024 → 10; 1 000 000 < 2²⁰ → 20. Verdoppelt man n, kommt **höchstens ein** Durchlauf hinzu."
+    }
+   ]
+  },
+  {
+   "id": "W2-L4-05",
+   "titel": "Die Suche hängt sich auf",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Diese binäre Suche enthält **zwei** Fehler: Für r = {5, 9, 14, 20} und x = 20 endet sie nie, und für r = {7} und x = 7 liefert sie −1."
+    },
+    {
+     "t": "code",
+     "code": "public static int binaer(int[] r, int x) {\n    int lo = 0;\n    int hi = r.length - 1;\n    while (lo < hi) {\n        int mid = (lo + hi) / 2;\n        if (r[mid] == x) {\n            return mid;\n        } else if (r[mid] < x) {\n            lo = mid;\n        } else {\n            hi = mid - 1;\n        }\n    }\n    return -1;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**a)** Markiere die beiden fehlerhaften Zeilen. **b)** Korrigierte Schleifenbedingung: [[g1]]"
+    },
+    {
+     "t": "text",
+     "md": "Korrigierte Zeile im `else if`-Zweig: [[g2]]"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 1,
+     "anzahl": 2
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 22
+      },
+      "g2": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 18
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      4,
+      9
+     ]
+    },
+    {
+     "g1": [
+      "while (lo <= hi) {",
+      "while (lo <= hi)",
+      "while (hi >= lo) {",
+      "while (hi >= lo)"
+     ],
+     "g2": [
+      "lo = mid + 1;",
+      "lo = mid + 1",
+      "lo = 1 + mid;",
+      "lo = 1 + mid"
+     ]
+    }
+   ],
+   "tipps": [
+    "Spiele r = {5, 9, 14, 20}, x = 20 Schritt für Schritt durch."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Zeile 4: Mit `lo < hi` wird ein Bereich aus genau einem Element (lo = hi) nicht mehr geprüft – richtig `lo <= hi` (P6). Zeile 9: `lo = mid` schließt mid nicht aus. Bei lo = 2, hi = 3 ist mid = 2, r[2] = 14 < 20 → lo bleibt 2: Endlosschleife. Richtig `lo = mid + 1`."
+    }
+   ]
+  },
+  {
+   "id": "W2-L4-06",
+   "titel": "Das Struktogramm der Halbierung",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Code ↔ Struktogramm",
+   "fallen": [
+    "P9"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Vervollständige das Struktogramm der binären Suche (aufsteigend sortierte Reihung r) nach EH § 5."
+    },
+    {
+     "t": "struktogramm",
+     "kopf": "binaer(r: Reihung von Ganzzahl, x: Ganzzahl): Ganzzahl",
+     "rumpf": [
+      {
+       "anw": "lo ← 0"
+      },
+      {
+       "anw": "hi ← [[g1]]"
+      },
+      {
+       "solange": "lo [[g2]] hi",
+       "rumpf": [
+        {
+         "anw": "mid ← (lo + hi) / 2"
+        },
+        {
+         "wenn": "r[mid] = x",
+         "dann": [
+          {
+           "gib": "mid"
+          }
+         ],
+         "sonst": [
+          {
+           "wenn": "r[mid] < x",
+           "dann": [
+            {
+             "anw": "lo ← [[g3]]"
+            }
+           ],
+           "sonst": [
+            {
+             "anw": "hi ← [[g4]]"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "gib": "[[g5]]"
+      }
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "auswahl",
+      "optionen": [
+       "Länge von r",
+       "Länge von r − 1",
+       "0"
+      ]
+     },
+     "g2": {
+      "typ": "auswahl",
+      "optionen": [
+       "<",
+       "≤",
+       ">",
+       "≠"
+      ]
+     },
+     "g3": {
+      "typ": "auswahl",
+      "optionen": [
+       "mid",
+       "mid + 1",
+       "mid − 1"
+      ]
+     },
+     "g4": {
+      "typ": "auswahl",
+      "optionen": [
+       "mid",
+       "mid + 1",
+       "mid − 1"
+      ]
+     },
+     "g5": {
+      "typ": "auswahl",
+      "optionen": [
+       "−1",
+       "mid",
+       "lo",
+       "hi"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "Länge von r − 1"
+    ],
+    "g2": [
+     "≤"
+    ],
+    "g3": [
+     "mid + 1"
+    ],
+    "g4": [
+     "mid − 1"
+    ],
+    "g5": [
+     "−1"
+    ]
+   },
+   "tipps": [
+    "Der Bereich lo … hi enthält am Anfang alle Indizes."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "hi startet beim letzten Index „Länge von r − 1\". Gesucht wird, **solange lo ≤ hi** (auch ein einzelnes Element wird geprüft). Ist r[mid] < x, liegt x rechts: lo ← mid + 1, sonst links: hi ← mid − 1 – mid selbst ist ja schon geprüft. Ist der Bereich leer, „gib −1 zurück\"."
+    }
+   ]
+  },
+  {
+   "id": "W2-L4-07",
+   "titel": "Puzzle: Die Suchmaschine",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Methode implementieren",
+   "fallen": [
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Setze die iterative binäre Suche `binaer(r: Reihung von Ganzzahl, x: Ganzzahl): Ganzzahl` zusammen: Index eines Vorkommens von x in der aufsteigend sortierten Reihung r, sonst −1. Nicht alle Teile werden gebraucht."
+    }
+   ],
+   "interaktion": {
+    "kind": "order",
+    "teile": [
+     {
+      "id": "a",
+      "code": "public static int binaer(int[] r, int x) {"
+     },
+     {
+      "id": "b",
+      "code": "    int lo = 0;"
+     },
+     {
+      "id": "c",
+      "code": "    int hi = r.length - 1;"
+     },
+     {
+      "id": "d",
+      "code": "    while (lo <= hi) {"
+     },
+     {
+      "id": "e",
+      "code": "        int mid = (lo + hi) / 2;"
+     },
+     {
+      "id": "f",
+      "code": "        if (r[mid] == x) {"
+     },
+     {
+      "id": "g",
+      "code": "            return mid;"
+     },
+     {
+      "id": "h",
+      "code": "        } else if (r[mid] < x) {"
+     },
+     {
+      "id": "i",
+      "code": "            lo = mid + 1;"
+     },
+     {
+      "id": "j",
+      "code": "        } else {"
+     },
+     {
+      "id": "k",
+      "code": "            hi = mid - 1;"
+     },
+     {
+      "id": "l",
+      "code": "        }"
+     },
+     {
+      "id": "m",
+      "code": "    }"
+     },
+     {
+      "id": "n",
+      "code": "    return -1;"
+     },
+     {
+      "id": "o",
+      "code": "}"
+     },
+     {
+      "id": "x",
+      "code": "    while (lo < hi) {"
+     },
+     {
+      "id": "y",
+      "code": "            lo = mid;"
+     },
+     {
+      "id": "z",
+      "code": "    int hi = r.length;"
+     }
+    ]
+   },
+   "loesung": {
+    "reihenfolgen": [
+     [
+      "a",
+      "b",
+      "c",
+      "d",
+      "e",
+      "f",
+      "g",
+      "h",
+      "i",
+      "j",
+      "k",
+      "l",
+      "m",
+      "n",
+      "o"
+     ],
+     [
+      "a",
+      "c",
+      "b",
+      "d",
+      "e",
+      "f",
+      "g",
+      "h",
+      "i",
+      "j",
+      "k",
+      "l",
+      "m",
+      "n",
+      "o"
+     ]
+    ]
+   },
+   "tipps": [
+    "Achte auf die vier Fallen: Bedingung, beide Grenzen, Rückgabe nach der Schleife."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`lo = 0` und `hi = r.length - 1` (Reihenfolge egal), Schleife **solange lo ≤ hi**, mid ganzzahlig, Treffer sofort zurückgeben, sonst eine Hälfte **ohne** mid ausschließen (`mid + 1` bzw. `mid - 1`). −1 erst nach der Schleife. Distraktoren: `lo < hi` prüft ein einzelnes Element nicht, `lo = mid` kann endlos laufen, `hi = r.length` greift hinter das Ende (P6)."
+    }
+   ]
+  },
+  {
+   "id": "W2-L4-08",
+   "titel": "Erst sortieren, dann suchen?",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Effizienz",
+   "fallen": [
+    "P10"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Eine **unsortierte** Bestenliste hat 500 000 Einträge. Es soll 5 000-mal nach einem Wert gesucht werden. Rechne jeweils mit dem **schlechtesten** Fall. Gib Anzahlen als ganze Zahl ohne Tausenderpunkte ein (z. B. 1250000)."
+    },
+    {
+     "t": "text",
+     "md": "Vergleiche, wenn 5 000-mal linear gesucht wird: [[g1]]"
+    },
+    {
+     "t": "text",
+     "md": "Vergleiche, um die Liste zuerst mit Insertionsort zu sortieren: [[g2]]"
+    },
+    {
+     "t": "text",
+     "md": "Durchläufe **einer** binären Suche danach höchstens: [[g3]]"
+    },
+    {
+     "t": "text",
+     "md": "Urteil: [[g4]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "zahl"
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "zahl"
+     },
+     "g4": {
+      "typ": "auswahl",
+      "optionen": [
+       "Sortieren lohnt sich hier",
+       "Sortieren lohnt sich hier nicht"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "2500000000"
+    ],
+    "g2": [
+     "124999750000"
+    ],
+    "g3": [
+     "19"
+    ],
+    "g4": [
+     "Sortieren lohnt sich hier nicht"
+    ]
+   },
+   "tipps": [
+    "Lineare Suche im schlechtesten Fall: alle n Elemente prüfen."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Linear: 5000 · 500 000 = 2,5 · 10⁹ Vergleiche. Insertionsort im schlechtesten Fall: 500 000 · 499 999 / 2 ≈ 1,25 · 10¹¹ – schon das Sortieren kostet etwa 50-mal so viel wie alle linearen Suchen zusammen; die 5000 binären Suchen (je höchstens 19 Durchläufe) fallen kaum ins Gewicht. Erst bei sehr vielen Suchen (oder mit einem schnelleren Sortierverfahren, Welt 3) lohnt sich das Sortieren."
+    }
+   ]
+  },
+  {
+   "id": "W2-B-01",
+   "titel": "Die schwersten Fische nach vorn",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Sortieren und Suchen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "**Das Wettfischen am Drachensee.** Beim Wettfischen meldet jede Anglerin und jeder Angler den schwersten Fang. Ein `Fang` hat die Attribute `angler` (Zeichenkette) und `gewicht` (Ganzzahl, in Gramm). Die Klasse `Wettfischen` verwaltet die Fänge in der Reihung `faenge`; belegt sind lückenlos die Felder 0 bis `anzahl − 1`, alle übrigen enthalten `null`. Platz 1 hat das **größte** Gewicht."
+    },
+    {
+     "t": "text",
+     "md": "Die Gewichte werden mit **Selectionsort** absteigend sortiert: Suche im Rest ab i das größte Gewicht und tausche es an Position i – nur, wenn es nicht schon dort steht."
+    },
+    {
+     "t": "reihung",
+     "werte": [
+      420,
+      980,
+      310,
+      760,
+      550
+     ],
+     "indizes": true
+    },
+    {
+     "t": "text",
+     "md": "Wähle nacheinander die beiden Indizes jeder Vertauschung in der Reihenfolge des Verfahrens; danach „fertig\"."
+    }
+   ],
+   "interaktion": {
+    "kind": "array",
+    "modus": "tausch",
+    "start": [
+     420,
+     980,
+     310,
+     760,
+     550
+    ],
+    "fertigKnopf": true
+   },
+   "loesung": {
+    "tausche": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      4
+     ]
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Durchläufe: i = 0: 980, 420, 310, 760, 550 · i = 1: 980, 760, 310, 420, 550 · i = 2: 980, 760, 550, 420, 310 · i = 3: 980, 760, 550, 420, 310. Tausche: (0, 1), (1, 3), (2, 4) – höchstens ein Tausch pro Durchlauf."
+    }
+   ]
+  },
+  {
+   "id": "W2-B-02",
+   "titel": "Startnummer 15",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Sortieren und Suchen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "**Das Wettfischen am Drachensee.** Beim Wettfischen meldet jede Anglerin und jeder Angler den schwersten Fang. Ein `Fang` hat die Attribute `angler` (Zeichenkette) und `gewicht` (Ganzzahl, in Gramm). Die Klasse `Wettfischen` verwaltet die Fänge in der Reihung `faenge`; belegt sind lückenlos die Felder 0 bis `anzahl − 1`, alle übrigen enthalten `null`. Platz 1 hat das **größte** Gewicht."
+    },
+    {
+     "t": "text",
+     "md": "Die Startnummern stehen **aufsteigend** sortiert in einer Reihung. Mit der binären Suche (lo = 0, hi = Länge − 1, solange lo ≤ hi) wird die Startnummer 15 gesucht."
+    },
+    {
+     "t": "reihung",
+     "werte": [
+      3,
+      9,
+      15,
+      22,
+      27,
+      34,
+      40,
+      46,
+      51,
+      58,
+      64
+     ],
+     "indizes": true
+    },
+    {
+     "t": "text",
+     "md": "Klicke nacheinander die Indizes an, die als `mid` geprüft werden (mid = (lo + hi) / 2, ganzzahlig)."
+    }
+   ],
+   "interaktion": {
+    "kind": "array",
+    "modus": "klick",
+    "start": [
+     3,
+     9,
+     15,
+     22,
+     27,
+     34,
+     40,
+     46,
+     51,
+     58,
+     64
+    ]
+   },
+   "loesung": {
+    "folge": [
+     5,
+     2
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Trace: lo = 0, hi = 10, mid = 5, r[mid] = 34 → hi ← mid − 1 · lo = 0, hi = 4, mid = 2, r[mid] = 15 → gib mid zurück."
+    }
+   ]
+  },
+  {
+   "id": "W2-B-03",
+   "titel": "Zählen am Steg",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Effizienz",
+   "fallen": [
+    "P10"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "**Das Wettfischen am Drachensee.** Beim Wettfischen meldet jede Anglerin und jeder Angler den schwersten Fang. Ein `Fang` hat die Attribute `angler` (Zeichenkette) und `gewicht` (Ganzzahl, in Gramm). Die Klasse `Wettfischen` verwaltet die Fänge in der Reihung `faenge`; belegt sind lückenlos die Felder 0 bis `anzahl − 1`, alle übrigen enthalten `null`. Platz 1 hat das **größte** Gewicht."
+    },
+    {
+     "t": "text",
+     "md": "Die Fänge werden mit Selectionsort sortiert; gezählt werden die Gewichtsvergleiche."
+    },
+    {
+     "t": "text",
+     "md": "Vergleiche bei 8 Fängen: [[g1]] · bei 16 Fängen: [[g2]] · Bei Verdopplung der Fänge wächst die Zahl der Vergleiche etwa auf das [[g3]]-Fache (ganze Zahl)."
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "zahl"
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "28"
+    ],
+    "g2": [
+     "120"
+    ],
+    "g3": [
+     "4"
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Selectionsort vergleicht immer (n − 1) + (n − 2) + … + 1 = n(n − 1)/2: 8 · 7 / 2 = **28**, 16 · 15 / 2 = **120** (≈ 4,3-fach, für große n gegen 4): Die Vergleichszahl hängt quadratisch von n ab."
+    }
+   ]
+  },
+  {
+   "id": "W2-B-04",
+   "titel": "Welches Verfahren angelt hier?",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Funktionsweise erläutern",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "code",
+     "code": "public static void ordne(int[] r) {\n    for (int i = 1; i < r.length; i++) {\n        int j = i;\n        while (j > 0 && r[j] < r[j - 1]) {\n            int h = r[j];\n            r[j] = r[j - 1];\n            r[j - 1] = h;\n            j--;\n        }\n    }\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Um welches Verfahren handelt es sich, und in welche Richtung wird sortiert?"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "mehrfach": false,
+    "optionen": [
+     {
+      "id": "a",
+      "md": "Insertionsort, aufsteigend"
+     },
+     {
+      "id": "b",
+      "md": "Insertionsort, absteigend"
+     },
+     {
+      "id": "c",
+      "md": "Selectionsort, aufsteigend"
+     },
+     {
+      "id": "d",
+      "md": "Bubblesort, aufsteigend"
+     }
+    ]
+   },
+   "loesung": {
+    "richtig": [
+     "a"
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Der Eintrag an Position i wandert durch **Nachbartausche nach links**, solange er kleiner als sein linker Nachbar ist – typisch für Insertionsort. Weil kleinere Werte nach vorn wandern (`r[j] < r[j − 1]`), wird **aufsteigend** sortiert."
+    }
+   ]
+  },
+  {
+   "id": "W2-B-05",
+   "titel": "Die Waage am Steg",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Sortieren und Suchen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "**Das Wettfischen am Drachensee.** Beim Wettfischen meldet jede Anglerin und jeder Angler den schwersten Fang. Ein `Fang` hat die Attribute `angler` (Zeichenkette) und `gewicht` (Ganzzahl, in Gramm). Die Klasse `Wettfischen` verwaltet die Fänge in der Reihung `faenge`; belegt sind lückenlos die Felder 0 bis `anzahl − 1`, alle übrigen enthalten `null`. Platz 1 hat das **größte** Gewicht."
+    },
+    {
+     "t": "klassenkarte",
+     "name": "Fang",
+     "attribute": [
+      "- angler: Zeichenkette",
+      "- gewicht: Ganzzahl"
+     ],
+     "methoden": [
+      "+ c Fang(angler: Zeichenkette, gewicht: Ganzzahl)",
+      "+ getAngler(): Zeichenkette",
+      "+ getGewicht(): Ganzzahl"
+     ]
+    },
+    {
+     "t": "klassenkarte",
+     "name": "Wettfischen",
+     "attribute": [
+      "- faenge: Reihung von Fang",
+      "- anzahl: Ganzzahl"
+     ],
+     "methoden": [
+      "+ c Wettfischen(plaetze: Ganzzahl)",
+      "+ melden(f: Fang): Wahrheitswert",
+      "+ getFang(i: Ganzzahl): Fang",
+      "+ schwersterFang(): Fang",
+      "+ anzahlUeber(grenze: Ganzzahl): Ganzzahl",
+      "+ indexVon(angler: Zeichenkette): Ganzzahl",
+      "+ kleinstesGewicht(): Ganzzahl",
+      "…"
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Gemeldet sind (Index 0 bis 4): Ada 820 g, Bo 1340 g, Cem 760 g, Dina 1340 g, Eli 590 g. `schwersterFang()` liefert bei Gleichstand den ersten, `anzahlUeber` zählt echt größere Gewichte."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Aufruf",
+      "Ergebnis"
+     ],
+     "zeilen": [
+      [
+       "`schwersterFang().getAngler()`",
+       "[[g1]]"
+      ],
+      [
+       "`anzahlUeber(800)`",
+       "[[g2]]"
+      ],
+      [
+       "`indexVon(\"Eli\")`",
+       "[[g3]]"
+      ],
+      [
+       "`kleinstesGewicht()`",
+       "[[g4]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "auswahl",
+      "optionen": [
+       "Ada",
+       "Bo",
+       "Cem",
+       "Dina",
+       "Eli"
+      ]
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "zahl"
+     },
+     "g4": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "Bo"
+    ],
+    "g2": [
+     "3"
+    ],
+    "g3": [
+     "4"
+    ],
+    "g4": [
+     "590"
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Maximum: Bo und Dina haben 1340 g – bei Gleichstand bleibt der **erste** (Bo). Über 800 g: 820, 1340, 1340 → **3**. Eli steht an Index **4**. Minimum: **590**."
+    }
+   ]
+  },
+  {
+   "id": "W2-B-06",
+   "titel": "Einsortieren am Steg",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Sortieren und Suchen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "**Das Wettfischen am Drachensee.** Beim Wettfischen meldet jede Anglerin und jeder Angler den schwersten Fang. Ein `Fang` hat die Attribute `angler` (Zeichenkette) und `gewicht` (Ganzzahl, in Gramm). Die Klasse `Wettfischen` verwaltet die Fänge in der Reihung `faenge`; belegt sind lückenlos die Felder 0 bis `anzahl − 1`, alle übrigen enthalten `null`. Platz 1 hat das **größte** Gewicht."
+    },
+    {
+     "t": "text",
+     "md": "Die Gewichte werden mit **Insertionsort** absteigend sortiert: Für i = 1, 2, … wandert das Gewicht an Position i durch Nachbartausche nach links, solange es **größer** als sein linker Nachbar ist."
+    },
+    {
+     "t": "reihung",
+     "werte": [
+      350,
+      610,
+      480,
+      720,
+      290,
+      500
+     ],
+     "indizes": true
+    },
+    {
+     "t": "text",
+     "md": "Wähle nacheinander die beiden Indizes jeder Vertauschung in der Reihenfolge des Verfahrens; danach „fertig\"."
+    }
+   ],
+   "interaktion": {
+    "kind": "array",
+    "modus": "tausch",
+    "start": [
+     350,
+     610,
+     480,
+     720,
+     290,
+     500
+    ],
+    "fertigKnopf": true
+   },
+   "loesung": {
+    "tausche": [
+     [
+      1,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      1,
+      0
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      3,
+      2
+     ]
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Zustände nach jedem Durchlauf: i = 1: 610, 350, 480, 720, 290, 500 · i = 2: 610, 480, 350, 720, 290, 500 · i = 3: 720, 610, 480, 350, 290, 500 · i = 4: 720, 610, 480, 350, 290, 500 · i = 5: 720, 610, 500, 480, 350, 290. 8 Nachbartausche, 11 Vergleiche."
+    }
+   ]
+  },
+  {
+   "id": "W2-B-07",
+   "titel": "Tracetabelle: Blasen im See",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "**Das Wettfischen am Drachensee.** Beim Wettfischen meldet jede Anglerin und jeder Angler den schwersten Fang. Ein `Fang` hat die Attribute `angler` (Zeichenkette) und `gewicht` (Ganzzahl, in Gramm). Die Klasse `Wettfischen` verwaltet die Fänge in der Reihung `faenge`; belegt sind lückenlos die Felder 0 bis `anzahl − 1`, alle übrigen enthalten `null`. Platz 1 hat das **größte** Gewicht."
+    },
+    {
+     "t": "text",
+     "md": "Die Gewichte (in 10 g) werden mit **Bubblesort mit Abbruch** absteigend sortiert: In jedem Durchlauf werden Nachbarn von links nach rechts verglichen und getauscht, wenn der rechte größer ist; die innere Schleife wird nach jedem Durchlauf um 1 kürzer; ein Durchlauf ohne Tausch beendet das Verfahren."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "nach …",
+      "Index 0",
+      "Index 1",
+      "Index 2",
+      "Index 3",
+      "Index 4",
+      "Vergleiche (Summe)",
+      "Vertauschungen (Summe)"
+     ],
+     "zeilen": [
+      [
+       "Start",
+       "45",
+       "30",
+       "60",
+       "55",
+       "20",
+       "0",
+       "0"
+      ],
+      [
+       "Durchlauf 1",
+       "[[w10]]",
+       "[[w11]]",
+       "[[w12]]",
+       "[[w13]]",
+       "[[w14]]",
+       "[[c1]]",
+       "[[t1]]"
+      ],
+      [
+       "Durchlauf 2",
+       "[[w20]]",
+       "[[w21]]",
+       "[[w22]]",
+       "[[w23]]",
+       "[[w24]]",
+       "[[c2]]",
+       "[[t2]]"
+      ],
+      [
+       "Durchlauf 3",
+       "[[w30]]",
+       "[[w31]]",
+       "[[w32]]",
+       "[[w33]]",
+       "[[w34]]",
+       "[[c3]]",
+       "[[t3]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "w10": {
+      "typ": "zahl"
+     },
+     "w11": {
+      "typ": "zahl"
+     },
+     "w12": {
+      "typ": "zahl"
+     },
+     "w13": {
+      "typ": "zahl"
+     },
+     "w14": {
+      "typ": "zahl"
+     },
+     "c1": {
+      "typ": "zahl"
+     },
+     "t1": {
+      "typ": "zahl"
+     },
+     "w20": {
+      "typ": "zahl"
+     },
+     "w21": {
+      "typ": "zahl"
+     },
+     "w22": {
+      "typ": "zahl"
+     },
+     "w23": {
+      "typ": "zahl"
+     },
+     "w24": {
+      "typ": "zahl"
+     },
+     "c2": {
+      "typ": "zahl"
+     },
+     "t2": {
+      "typ": "zahl"
+     },
+     "w30": {
+      "typ": "zahl"
+     },
+     "w31": {
+      "typ": "zahl"
+     },
+     "w32": {
+      "typ": "zahl"
+     },
+     "w33": {
+      "typ": "zahl"
+     },
+     "w34": {
+      "typ": "zahl"
+     },
+     "c3": {
+      "typ": "zahl"
+     },
+     "t3": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "w10": [
+     "45"
+    ],
+    "w11": [
+     "60"
+    ],
+    "w12": [
+     "55"
+    ],
+    "w13": [
+     "30"
+    ],
+    "w14": [
+     "20"
+    ],
+    "c1": [
+     "4"
+    ],
+    "t1": [
+     "2"
+    ],
+    "w20": [
+     "60"
+    ],
+    "w21": [
+     "55"
+    ],
+    "w22": [
+     "45"
+    ],
+    "w23": [
+     "30"
+    ],
+    "w24": [
+     "20"
+    ],
+    "c2": [
+     "7"
+    ],
+    "t2": [
+     "4"
+    ],
+    "w30": [
+     "60"
+    ],
+    "w31": [
+     "55"
+    ],
+    "w32": [
+     "45"
+    ],
+    "w33": [
+     "30"
+    ],
+    "w34": [
+     "20"
+    ],
+    "c3": [
+     "9"
+    ],
+    "t3": [
+     "4"
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Es sind 3 Durchläufe – der letzte bleibt ohne Vertauschung und beendet das Verfahren. Summen: 9 Vergleiche, 4 Vertauschungen."
+    }
+   ]
+  },
+  {
+   "id": "W2-B-08",
+   "titel": "Der Null-Gramm-Fisch",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "**Das Wettfischen am Drachensee.** Beim Wettfischen meldet jede Anglerin und jeder Angler den schwersten Fang. Ein `Fang` hat die Attribute `angler` (Zeichenkette) und `gewicht` (Ganzzahl, in Gramm). Die Klasse `Wettfischen` verwaltet die Fänge in der Reihung `faenge`; belegt sind lückenlos die Felder 0 bis `anzahl − 1`, alle übrigen enthalten `null`. Platz 1 hat das **größte** Gewicht."
+    },
+    {
+     "t": "text",
+     "md": "`kleinstesGewicht()` soll das kleinste gemeldete Gewicht liefern (−1, wenn nichts gemeldet ist)."
+    },
+    {
+     "t": "code",
+     "code": "public int kleinstesGewicht() {\n    if (anzahl == 0) {\n        return -1;\n    }\n    int min = 0;\n    for (int i = 0; i < anzahl; i++) {\n        if (faenge[i].getGewicht() < min) {\n            min = faenge[i].getGewicht();\n        }\n    }\n    return min;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**a)** Markiere die fehlerhafte Zeile. **b)** Korrigierte Zeile: [[g1]] **c)** Für die Gewichte 820, 760, 590 liefert die fehlerhafte Methode: [[g2]]"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 2,
+     "anzahl": 1
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 36
+      },
+      "g2": {
+       "typ": "zahl"
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      5
+     ]
+    },
+    {
+     "g1": [
+      "int min = faenge[0].getGewicht();",
+      "int min = faenge[0].getGewicht()",
+      "int min = this.faenge[0].getGewicht();",
+      "int min = this.faenge[0].getGewicht()"
+     ],
+     "g2": [
+      "0"
+     ]
+    }
+   ],
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Zeile 5: Der Rekord startet mit 0 – kein echtes Gewicht ist kleiner, die Methode liefert immer **0**. Der Rekordhalter muss das **erste** gemeldete Gewicht sein: `int min = faenge[0].getGewicht();` (sicher, weil vorher auf `anzahl == 0` geprüft wird). Die Schleife darf dann bei 0 oder 1 beginnen."
+    }
+   ]
+  },
+  {
+   "id": "W2-B-09",
+   "titel": "Startnummer 50 – gibt es nicht",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Sortieren und Suchen",
+   "fallen": [
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "**Das Wettfischen am Drachensee.** Beim Wettfischen meldet jede Anglerin und jeder Angler den schwersten Fang. Ein `Fang` hat die Attribute `angler` (Zeichenkette) und `gewicht` (Ganzzahl, in Gramm). Die Klasse `Wettfischen` verwaltet die Fänge in der Reihung `faenge`; belegt sind lückenlos die Felder 0 bis `anzahl − 1`, alle übrigen enthalten `null`. Platz 1 hat das **größte** Gewicht."
+    },
+    {
+     "t": "text",
+     "md": "Gesucht wird die Startnummer 50 in den aufsteigend sortierten Startnummern (binäre Suche wie üblich)."
+    },
+    {
+     "t": "reihung",
+     "werte": [
+      3,
+      9,
+      15,
+      22,
+      27,
+      34,
+      40,
+      46,
+      51,
+      58,
+      64
+     ],
+     "indizes": true
+    },
+    {
+     "t": "text",
+     "md": "Klicke nacheinander die Indizes an, die als `mid` geprüft werden (mid = (lo + hi) / 2, ganzzahlig)."
+    },
+    {
+     "t": "text",
+     "md": "Rückgabewert: [[g1]] · Schleifendurchläufe: [[g2]] · Endwerte: lo = [[g3]], hi = [[g4]]"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "array",
+     "modus": "klick",
+     "start": [
+      3,
+      9,
+      15,
+      22,
+      27,
+      34,
+      40,
+      46,
+      51,
+      58,
+      64
+     ]
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "zahl"
+      },
+      "g2": {
+       "typ": "zahl"
+      },
+      "g3": {
+       "typ": "zahl"
+      },
+      "g4": {
+       "typ": "zahl"
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "folge": [
+      5,
+      8,
+      6,
+      7
+     ]
+    },
+    {
+     "g1": [
+      "-1"
+     ],
+     "g2": [
+      "4"
+     ],
+     "g3": [
+      "8"
+     ],
+     "g4": [
+      "7"
+     ]
+    }
+   ],
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Trace: lo = 0, hi = 10, mid = 5, r[mid] = 34 → lo ← mid + 1 · lo = 6, hi = 10, mid = 8, r[mid] = 51 → hi ← mid − 1 · lo = 6, hi = 7, mid = 6, r[mid] = 40 → lo ← mid + 1 · lo = 7, hi = 7, mid = 7, r[mid] = 46 → lo ← mid + 1. Dann lo = 8 > hi = 7 → Rückgabe −1."
+    }
+   ]
+  },
+  {
+   "id": "W2-B-10",
+   "titel": "Wie viel Arbeit macht das Einsortieren?",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Effizienz",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "**Das Wettfischen am Drachensee.** Beim Wettfischen meldet jede Anglerin und jeder Angler den schwersten Fang. Ein `Fang` hat die Attribute `angler` (Zeichenkette) und `gewicht` (Ganzzahl, in Gramm). Die Klasse `Wettfischen` verwaltet die Fänge in der Reihung `faenge`; belegt sind lückenlos die Felder 0 bis `anzahl − 1`, alle übrigen enthalten `null`. Platz 1 hat das **größte** Gewicht."
+    },
+    {
+     "t": "text",
+     "md": "Insertionsort sortiert absteigend nach Gewicht; gezählt wird jeder Gewichtsvergleich (der Vergleich entfällt, wenn j = 0 ist)."
+    },
+    {
+     "t": "text",
+     "md": "**a)** Gewichte 500, 200, 400, 300: Vergleiche [[g1]], Vertauschungen [[g2]]"
+    },
+    {
+     "t": "text",
+     "md": "**b)** Vergleiche im schlechtesten Fall bei 6 Fängen: [[g3]]"
+    },
+    {
+     "t": "text",
+     "md": "**c)** Welche Eingabe führt bei 6 Fängen zum schlechtesten Fall?"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "zahl"
+      },
+      "g2": {
+       "typ": "zahl"
+      },
+      "g3": {
+       "typ": "zahl"
+      }
+     }
+    },
+    {
+     "kind": "choice",
+     "mehrfach": false,
+     "optionen": [
+      {
+       "id": "a",
+       "md": "`60, 50, 40, 30, 20, 10`"
+      },
+      {
+       "id": "b",
+       "md": "`10, 20, 30, 40, 50, 60`"
+      },
+      {
+       "id": "c",
+       "md": "`10, 60, 20, 50, 30, 40`"
+      },
+      {
+       "id": "d",
+       "md": "`60, 10, 50, 20, 40, 30`"
+      }
+     ]
+    }
+   ],
+   "loesung": [
+    {
+     "g1": [
+      "5"
+     ],
+     "g2": [
+      "2"
+     ],
+     "g3": [
+      "15"
+     ]
+    },
+    {
+     "richtig": [
+      "b"
+     ]
+    }
+   ],
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "a) i = 1: 200 > 500 nein (1). i = 2: 400 > 200 tauschen, 400 > 500 nein (2). i = 3: 300 > 200 tauschen, 300 > 400 nein (2) → 5 Vergleiche, 2 Vertauschungen. b/c) Am meisten Arbeit, wenn **jeder** Eintrag bis ganz nach vorn wandern muss – bei aufsteigend sortierter Eingabe: 1 + 2 + 3 + 4 + 5 = **15** = 6 · 5 / 2."
+    }
+   ]
+  },
+  {
+   "id": "W2-B-11",
+   "titel": "Steckbriefe am Steg",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Funktionsweise erläutern",
+   "fallen": [
+    "P10"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Ordne jede Aussage dem passenden Verfahren zu."
+    }
+   ],
+   "interaktion": {
+    "kind": "match",
+    "elemente": [
+     {
+      "id": "e1",
+      "md": "funktioniert nur auf sortierten Daten"
+     },
+     {
+      "id": "e2",
+      "md": "braucht bei jeder Eingabe der Länge n genau n(n − 1)/2 Vergleiche"
+     },
+     {
+      "id": "e3",
+      "md": "endet, sobald ein Durchlauf ohne Vertauschung blieb"
+     },
+     {
+      "id": "e4",
+      "md": "fügt das nächste Element durch Nachbartausche in den sortierten linken Teil ein"
+     },
+     {
+      "id": "e5",
+      "md": "Verdopplung von n → höchstens ein Durchlauf mehr"
+     },
+     {
+      "id": "e6",
+      "md": "vertauscht insgesamt höchstens n − 1-mal"
+     }
+    ],
+    "kategorien": [
+     {
+      "id": "s",
+      "md": "Selectionsort"
+     },
+     {
+      "id": "i",
+      "md": "Insertionsort"
+     },
+     {
+      "id": "b",
+      "md": "Bubblesort mit Abbruch"
+     },
+     {
+      "id": "bs",
+      "md": "binäre Suche"
+     }
+    ]
+   },
+   "loesung": {
+    "e1": "bs",
+    "e2": "s",
+    "e3": "b",
+    "e4": "i",
+    "e5": "bs",
+    "e6": "s"
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Binäre Suche: nur auf sortierten Daten, halbiert den Bereich → Verdopplung kostet höchstens einen Durchlauf. Selectionsort: Vergleichszahl unabhängig von den Daten, höchstens ein Tausch je Durchlauf. Bubblesort: Abbruch nach einem Durchlauf ohne Tausch. Insertionsort: Einfügen durch Nachbartausche."
+    }
+   ]
+  },
+  {
+   "id": "W2-B-12",
+   "titel": "Puzzle: Nachmeldung",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Methode implementieren",
+   "fallen": [
+    "P1",
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "**Das Wettfischen am Drachensee.** Beim Wettfischen meldet jede Anglerin und jeder Angler den schwersten Fang. Ein `Fang` hat die Attribute `angler` (Zeichenkette) und `gewicht` (Ganzzahl, in Gramm). Die Klasse `Wettfischen` verwaltet die Fänge in der Reihung `faenge`; belegt sind lückenlos die Felder 0 bis `anzahl − 1`, alle übrigen enthalten `null`. Platz 1 hat das **größte** Gewicht."
+    },
+    {
+     "t": "text",
+     "md": "`eintragen(f: Fang): Wahrheitswert` fügt `f` so in die absteigend nach Gewicht sortierte Reihung ein, dass sie sortiert bleibt: Leichtere Fänge rücken eine Position nach hinten, bei gleichem Gewicht kommt `f` dahinter. Ist `f` null oder sind alle Plätze belegt, wird false geliefert. Nicht alle Teile werden gebraucht."
+    }
+   ],
+   "interaktion": {
+    "kind": "order",
+    "teile": [
+     {
+      "id": "a",
+      "code": "public boolean eintragen(Fang f) {"
+     },
+     {
+      "id": "b",
+      "code": "    if (f == null || anzahl == faenge.length) {"
+     },
+     {
+      "id": "c",
+      "code": "        return false;"
+     },
+     {
+      "id": "d",
+      "code": "    }"
+     },
+     {
+      "id": "e",
+      "code": "    int i = anzahl;"
+     },
+     {
+      "id": "f",
+      "code": "    while (i > 0 && faenge[i - 1].getGewicht() < f.getGewicht()) {"
+     },
+     {
+      "id": "g",
+      "code": "        faenge[i] = faenge[i - 1];"
+     },
+     {
+      "id": "h",
+      "code": "        i--;"
+     },
+     {
+      "id": "i",
+      "code": "    }"
+     },
+     {
+      "id": "j",
+      "code": "    faenge[i] = f;"
+     },
+     {
+      "id": "k",
+      "code": "    anzahl++;"
+     },
+     {
+      "id": "l",
+      "code": "    return true;"
+     },
+     {
+      "id": "m",
+      "code": "}"
+     },
+     {
+      "id": "x",
+      "code": "    while (faenge[i - 1].getGewicht() < f.getGewicht() && i > 0) {"
+     },
+     {
+      "id": "y",
+      "code": "        faenge[i - 1] = faenge[i];"
+     },
+     {
+      "id": "z",
+      "code": "    int i = anzahl - 1;"
+     }
+    ]
+   },
+   "loesung": {
+    "reihenfolgen": [
+     [
+      "a",
+      "b",
+      "c",
+      "d",
+      "e",
+      "f",
+      "g",
+      "h",
+      "i",
+      "j",
+      "k",
+      "l",
+      "m"
+     ],
+     [
+      "a",
+      "b",
+      "c",
+      "d",
+      "e",
+      "f",
+      "g",
+      "h",
+      "i",
+      "k",
+      "j",
+      "l",
+      "m"
+     ]
+    ]
+   },
+   "tipps": [
+    "Von hinten beginnen: Der erste freie Platz hat den Index `anzahl`."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Erst die Abfrage gegen Laufzeitfehler (P1). Dann von hinten (`i = anzahl`) jeden **leichteren** Fang nach rechts schieben (`faenge[i] = faenge[i - 1]`). `i > 0` muss **vor** dem Zugriff auf `faenge[i - 1]` stehen – sonst wird bei i = 0 der Index −1 angefasst (P6). Bei gleichem Gewicht stoppt die Schleife (`<` ist strikt) → stabil. Zum Schluss f in die Lücke, `anzahl` erhöhen (diese beiden Zeilen dürfen auch vertauscht sein)."
+    }
+   ]
+  },
+  {
+   "id": "W2-B-13",
+   "titel": "Tausend Startnummern",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Effizienz",
+   "fallen": [
+    "P10"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "**Das Wettfischen am Drachensee.** Beim Wettfischen meldet jede Anglerin und jeder Angler den schwersten Fang. Ein `Fang` hat die Attribute `angler` (Zeichenkette) und `gewicht` (Ganzzahl, in Gramm). Die Klasse `Wettfischen` verwaltet die Fänge in der Reihung `faenge`; belegt sind lückenlos die Felder 0 bis `anzahl − 1`, alle übrigen enthalten `null`. Platz 1 hat das **größte** Gewicht."
+    },
+    {
+     "t": "text",
+     "md": "Die Startnummern liegen aufsteigend sortiert vor. Rechne mit dem **schlechtesten** Fall."
+    },
+    {
+     "t": "text",
+     "md": "Durchläufe der binären Suche bei 500 Startnummern: [[g1]] · bei 1000 Startnummern: [[g2]]"
+    },
+    {
+     "t": "text",
+     "md": "Geprüfte Elemente der linearen Suche bei 1000 Startnummern: [[g3]]"
+    },
+    {
+     "t": "text",
+     "md": "Die Zahl der Startnummern verdoppelt sich. Dann braucht die binäre Suche höchstens [[g4]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "zahl"
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "zahl"
+     },
+     "g4": {
+      "typ": "auswahl",
+      "optionen": [
+       "einen Durchlauf mehr",
+       "doppelt so viele Durchläufe",
+       "viermal so viele Durchläufe",
+       "gleich viele Durchläufe"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "9"
+    ],
+    "g2": [
+     "10"
+    ],
+    "g3": [
+     "1000"
+    ],
+    "g4": [
+     "einen Durchlauf mehr"
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "2⁸ = 256 ≤ 500 < 512 → höchstens 8 + 1 = **9** Durchläufe; 512 ≤ 1000 < 1024 → **10**. Jeder Durchlauf halbiert den Bereich – bei doppelt so vielen Nummern braucht man genau eine Halbierung mehr. Die lineare Suche prüft im schlechtesten Fall alle **1000**."
+    }
+   ]
+  },
+  {
+   "id": "W2-B-14",
+   "titel": "Der Absturz am Ufer",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P1",
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Diese Methode soll eine Reihung von Gewichten absteigend sortieren. Bei manchen Eingaben stürzt sie ab."
+    },
+    {
+     "t": "code",
+     "code": "public static void sortiere(int[] r) {\n    for (int i = 1; i < r.length; i++) {\n        int j = i;\n        while (r[j] > r[j - 1] && j > 0) {\n            int h = r[j];\n            r[j] = r[j - 1];\n            r[j - 1] = h;\n            j--;\n        }\n    }\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**a)** Markiere die fehlerhafte Zeile. **b)** Korrigierte Zeile: [[g1]]"
+    },
+    {
+     "t": "text",
+     "md": "**c)** Bei welcher Eingabe stürzt die **ursprüngliche** Methode ab?"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 1,
+     "anzahl": 1
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 40
+      }
+     }
+    },
+    {
+     "kind": "choice",
+     "mehrfach": false,
+     "optionen": [
+      {
+       "id": "a",
+       "md": "`{9, 7, 5}`"
+      },
+      {
+       "id": "b",
+       "md": "`{5, 7, 9}`"
+      },
+      {
+       "id": "c",
+       "md": "`{9, 5, 7}`"
+      },
+      {
+       "id": "d",
+       "md": "`{4}`"
+      }
+     ]
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      4
+     ]
+    },
+    {
+     "g1": [
+      "while (j > 0 && r[j] > r[j - 1]) {",
+      "while (j > 0 && r[j] > r[j - 1])",
+      "while (0 < j && r[j] > r[j - 1]) {",
+      "while (0 < j && r[j] > r[j - 1])"
+     ]
+    },
+    {
+     "richtig": [
+      "b"
+     ]
+    }
+   ],
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Zeile 4: `&&` wertet von links aus. Muss ein Element bis ganz nach vorn wandern, ist irgendwann j = 0 – dann wird zuerst `r[0] > r[-1]` ausgewertet → **ArrayIndexOutOfBoundsException** (P1/P6). Richtig: erst `j > 0`, dann der Vergleich. Bei {5, 7, 9} muss die 7 an Index 0 → Absturz; {9, 7, 5} und {9, 5, 7} lassen kein Element bis ganz nach vorn wandern."
+    }
+   ]
+  },
+  {
+   "id": "W2-B-15",
+   "titel": "Das fremde Ordnungsritual",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Struktogramm lesen",
+   "fallen": [
+    "P8",
+    "P9"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Operation `ordne` ist als Struktogramm gegeben (r ist eine Reihung von Ganzzahlen)."
+    },
+    {
+     "t": "struktogramm",
+     "kopf": "ordne(r: Reihung von Ganzzahl): nichts",
+     "rumpf": [
+      {
+       "zaehle": "i von 0 bis Länge von r − 2",
+       "rumpf": [
+        {
+         "zaehle": "j von Länge von r − 1 abwärts bis i + 1",
+         "rumpf": [
+          {
+           "wenn": "r[j] < r[j − 1]",
+           "dann": [
+            {
+             "anw": "h ← r[j]"
+            },
+            {
+             "anw": "r[j] ← r[j − 1]"
+            },
+            {
+             "anw": "r[j − 1] ← h"
+            }
+           ],
+           "sonst": []
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Dokumentiere die Belegung von r = {6, 2, 8, 1} nach jedem Durchlauf der äußeren Schleife."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "nach …",
+      "r[0]",
+      "r[1]",
+      "r[2]",
+      "r[3]"
+     ],
+     "zeilen": [
+      [
+       "Start",
+       "6",
+       "2",
+       "8",
+       "1"
+      ],
+      [
+       "i = 0",
+       "[[w00]]",
+       "[[w01]]",
+       "[[w02]]",
+       "[[w03]]"
+      ],
+      [
+       "i = 1",
+       "[[w10]]",
+       "[[w11]]",
+       "[[w12]]",
+       "[[w13]]"
+      ],
+      [
+       "i = 2",
+       "[[w20]]",
+       "[[w21]]",
+       "[[w22]]",
+       "[[w23]]"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Vertauschungen insgesamt: [[t]] · Es handelt sich um: [[v]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "w00": {
+      "typ": "zahl"
+     },
+     "w01": {
+      "typ": "zahl"
+     },
+     "w02": {
+      "typ": "zahl"
+     },
+     "w03": {
+      "typ": "zahl"
+     },
+     "w10": {
+      "typ": "zahl"
+     },
+     "w11": {
+      "typ": "zahl"
+     },
+     "w12": {
+      "typ": "zahl"
+     },
+     "w13": {
+      "typ": "zahl"
+     },
+     "w20": {
+      "typ": "zahl"
+     },
+     "w21": {
+      "typ": "zahl"
+     },
+     "w22": {
+      "typ": "zahl"
+     },
+     "w23": {
+      "typ": "zahl"
+     },
+     "t": {
+      "typ": "zahl"
+     },
+     "v": {
+      "typ": "auswahl",
+      "optionen": [
+       "Selectionsort",
+       "Insertionsort",
+       "Bubblesort",
+       "binäre Suche"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "w00": [
+     "1"
+    ],
+    "w01": [
+     "6"
+    ],
+    "w02": [
+     "2"
+    ],
+    "w03": [
+     "8"
+    ],
+    "w10": [
+     "1"
+    ],
+    "w11": [
+     "2"
+    ],
+    "w12": [
+     "6"
+    ],
+    "w13": [
+     "8"
+    ],
+    "w20": [
+     "1"
+    ],
+    "w21": [
+     "2"
+    ],
+    "w22": [
+     "6"
+    ],
+    "w23": [
+     "8"
+    ],
+    "t": [
+     "4"
+    ],
+    "v": [
+     "Bubblesort"
+    ]
+   },
+   "tipps": [
+    "Die innere Schleife läuft von rechts nach links."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Die innere Schleife vergleicht von rechts nach links **Nachbarn** und tauscht, wenn das kleinere rechts steht. So wandert das kleinste Element des Restes in jedem Durchlauf nach vorn an Position i („steigt auf\") – das ist **Bubblesort** (aufsteigend). Zustände: 1, 6, 2, 8 · 1, 2, 6, 8 · 1, 2, 6, 8; 4 Vertauschungen."
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,825 @@
+// =====================================================================
+//  WELT 2 – DIE RANGLISTE – SORTIER-DUELL – MUSTERLÖSUNG (Lehrerexemplar)
+//  Informatik LK · Online-IDE · Algo Quest · DS 15 (Effizienz)
+//
+//  Das ist das ausgefuellte Duell-Geruest: Die Klassen Vis und Duell
+//  sind unveraendert, in MeinSortierer stehen die Trainingsverfahren,
+//  ein deutlich besseres duellSort (binaeres Einfuegen) und zum Vergleich
+//  BubbleSort mit Abbruch, binaeres Einfuegen mit Vorab-Test und
+//  Quicksort. Die Klasse Referenz misst alle Verfahren auf den vier
+//  Duell-Ausgangslagen nach (Tabelle siehe unten).
+//
+//  ANLEITUNG FUER SCHUELER UND DUELL-REGELN: siehe Geruest-Datei.
+//
+//  AENDERUNGEN GEGENUEBER DEM VISUALISIERUNGS-GERUEST AUS AB 09
+//  - Der Kopfkommentar nannte "Vis.tausche", die Methode hiess
+//    "vertausche" -> jetzt ueberall einheitlich Vis.vertausche(i, j).
+//  - Alle Daten und Zaehler in Vis sind private. Schueler kommen nur
+//    ueber laenge/kleiner/vertausche/wert (und die Getter) an die Balken
+//    - Vis.werte oder Vis.vergleiche direkt zu veraendern ist nicht mehr
+//    moeglich.
+//  - Kein Math.random fuer die Duell-Daten: eigener Pseudozufalls-
+//    generator (LCG saat <- (saat * 8121 + 28411) mod 134456, alle
+//    Zwischenwerte < 2^31). Vis.starten(40, "zufall") liefert damit immer
+//    dieselben 40 Werte (Startwert 2027). Nur Vis.starten(40) ohne Art
+//    mischt jedes Mal neu (Startwert aus Math.random).
+//  - "sortiert", "fast sortiert" und "umgekehrt" benutzen die Werte
+//    25, 50, ..., 1000 (alle verschieden) - die Zaehlerstaende sind
+//    damit exakt die Lehrbuchwerte (z. B. 780 Vertauschungen bei
+//    InsertionSort auf "umgekehrt").
+//  - Die World wird nur einmal erzeugt; bei jedem Neustart werden die
+//    alten Balken mit destroy() entfernt. Die Balkenbreite passt sich der
+//    Anzahl an (bei 40 Balken wie bisher: Abstand 21, Breite 17).
+//  - Duell-Modus: Vis.wert liefert -1, Vis.starten/Vis.fertig/
+//    Duell.starten sind gesperrt; jeder Versuch macht das Ergebnis
+//    ungueltig. Eine Kontrollrunde mit 37 Werten und zufaelligem
+//    Startwert entlarvt fest eingebaute Tauschfolgen und eine fest
+//    eingetragene 40 statt Vis.laenge().
+//
+//  DIDAKTISCHE ENTSCHEIDUNGEN
+//  - Wertung nur ueber Vergleiche (Tiebreak Vertauschungen), nicht ueber
+//    die Laufzeit: Die Laufzeit in der Online-IDE haengt vom Tempo-Regler
+//    und vom Rechner ab, die Zaehler nicht. Genau so wird Effizienz auch
+//    im Abitur bewertet (Zaehlen statt O-Notation).
+//  - Vier Ausgangslagen statt einer: Kein Verfahren gewinnt ueberall.
+//    InsertionSort ist auf "fast sortiert" unschlagbar billig, auf
+//    "umgekehrt" maximal teuer - die Summe zwingt zum Abwaegen.
+//  - Vertauschungen nur als Tiebreak: Mit kleiner/vertausche laesst sich
+//    nichts "verschieben"; jedes Einfuege-Verfahren braucht so viele
+//    Nachbartausche, wie es Fehlstaende gibt. Wer Vertauschungen sparen
+//    will, landet bei SelectionSort (wenige Tausche, viele Vergleiche) -
+//    ein schoener Gespraechsanlass ("Was ist teurer?").
+//  - Die Ergebniszeile "DUELL-ERGEBNIS: ..." haelt die Lehrkraft in der
+//    Ergebnistabelle an der Tafel fest (Vergleiche, weniger ist besser,
+//    Gleichstand: weniger Vertauschungen; nur gueltige Ergebnisse).
+// =====================================================================
+
+
+// ---------------------------------------------------------------------
+//  GERÜST – unveraendert
+// ---------------------------------------------------------------------
+
+class Vis {
+
+    // ----- Daten und Zaehler (private: nur ueber die Befehle erreichbar) -----
+    private static int[] werte;
+    private static Rectangle[] balken;
+    private static int vergleiche = 0;
+    private static int vertauschungen = 0;
+
+    // ----- Grafik -----
+    private static Text info;
+    private static Text titel;
+    private static boolean grafikBereit = false;
+
+    private static int BREITE_GESAMT = 900;    // Breite des Grafikbereichs
+    private static int HOEHE_GESAMT = 1500;    // Hoehe des Grafikbereichs
+    private static int MAXWERT = 1000;         // groesster moeglicher Wert
+    private static int RAND = 20;
+    private static int BODEN = 1400;           // untere Kante der Balken
+    private static double SKALA = 1.3;         // Umrechnung Wert -> Pixel
+                                               // 1000 * 1.3 = 1300 Pixel hoch
+    private static int abstand = 21;           // wird an die Anzahl angepasst
+    private static int breite = 17;
+
+    // ----- Duell -----
+    private static boolean duellModus = false;
+    private static boolean regelverstoss = false;
+    private static String verstossGrund = "";
+
+    // ----- Pseudozufallsgenerator (LCG) -----
+    // saat <- (saat * 8121 + 28411) mod 134456
+    // Gleicher Startwert -> gleiche Zahlenfolge: Alle Teams bekommen im
+    // Duell exakt dieselben Daten. Alle Zwischenergebnisse bleiben unter
+    // 2^31, es gibt also keinen Ueberlauf.
+    private static int saat = 2027;
+    private static int LCG_M = 134456;
+    private static int LCG_A = 8121;
+    private static int LCG_C = 28411;
+
+    // Ganzzahlige Pseudozufallszahl von 0 bis grenze - 1 (grenze <= 15000)
+    private static int zufall(int grenze) {
+        saat = (saat * LCG_A + LCG_C) % LCG_M;
+        return (saat * grenze) / LCG_M;
+    }
+
+
+    // =============== Befehle fuer MeinSortierer ===============
+
+    // Anzahl der Balken
+    static int laenge() {
+        return werte.length;
+    }
+
+    // true, wenn Balken i KLEINER ist als Balken j. Zaehlt einen Vergleich.
+    // Die Anzeige wird hier absichtlich NICHT aktualisiert: Bei 40 Balken
+    // gibt es mehrere hundert Vergleiche, und jedes setText kostet einen
+    // Ausfuehrungsschritt. Der Zaehler wird bei jedem Tausch und am Ende
+    // aktualisiert - das reicht voellig.
+    static boolean kleiner(int i, int j) {
+        vergleiche++;
+        return werte[i] < werte[j];
+    }
+
+    // Vertauscht die Balken i und j. Zaehlt eine Vertauschung
+    // (vertausche(i, i) aendert nichts und zaehlt nicht).
+    static void vertausche(int i, int j) {
+        if (i == j) {
+            return;
+        }
+
+        vertauschungen++;
+
+        int h = werte[i];
+        werte[i] = werte[j];
+        werte[j] = h;
+
+        // Beide betroffenen Balken neu zeichnen. So kann die Anzeige
+        // gar nicht von den Werten abweichen.
+        zeichneBalken(i);
+        zeichneBalken(j);
+
+        zeigeStand();
+    }
+
+    // Zahlenwert von Balken i - NUR im Trainingsmodus.
+    // Im Duell liefert wert(i) immer -1 und das Duell wird ungueltig.
+    static int wert(int i) {
+        if (duellModus) {
+            verstoss("Vis.wert(...) im Duell benutzt");
+            return -1;
+        }
+        return werte[i];
+    }
+
+    static int getVergleiche() {
+        return vergleiche;
+    }
+
+    static int getVertauschungen() {
+        return vertauschungen;
+    }
+
+
+    // =============== Trainingsmodus ===============
+
+    // anzahl Balken mit zufaelligen Werten von 0 bis 1000 (jedes Mal anders).
+    static void starten(int anzahl) {
+        laden(anzahl, "zufaellig (neu)", (int) (Math.random() * LCG_M));
+    }
+
+    // anzahl Balken in einer festen Ausgangslage - genau wie im Duell:
+    //   "zufall"         Pseudozufall mit Startwert 2027 (immer gleich)
+    //   "fast sortiert"  aufsteigend, dann 4 feste Vertauschungen
+    //   "umgekehrt"      absteigend (der schlechteste Fall)
+    //   "viele gleiche"  nur die Werte 100, 200, 300, 400, 500 (Startwert 2028)
+    //   "sortiert"       aufsteigend (der beste Fall)
+    static void starten(int anzahl, String art) {
+        laden(anzahl, art, 0);
+    }
+
+    // Prueft, ob wirklich sortiert wurde, und faerbt das Ergebnis ein.
+    static void fertig() {
+        if (duellModus) {
+            verstoss("Vis.fertig() im Duell aufgerufen");
+            return;
+        }
+        boolean ok = istAufsteigend();
+        faerben(ok);
+        if (ok) {
+            info.setText("Sortiert!   Vergleiche: " + vergleiche
+                         + "   Vertauschungen: " + vertauschungen);
+        } else {
+            info.setText("NICHT sortiert!   Vergleiche: " + vergleiche
+                         + "   Vertauschungen: " + vertauschungen);
+        }
+        println("Vergleiche: " + vergleiche);
+        println("Vertauschungen: " + vertauschungen);
+    }
+
+
+    // =============== Duell (aufgerufen von Duell.starten()) ===============
+
+    static void duell() {
+        if (duellModus) {
+            verstoss("Duell.starten() im Duell aufgerufen");
+            return;
+        }
+        regelverstoss = false;
+        verstossGrund = "";
+        String[] runden = {"zufall", "fast sortiert", "umgekehrt", "viele gleiche"};
+        int summeVergleiche = 0;
+        int summeVertauschungen = 0;
+        boolean gueltig = true;
+
+        println("================ SORTIER-DUELL ================");
+        for (int r = 0; r < runden.length; r++) {
+            laden(40, runden[r], 0);
+            titel.setText("Duell-Runde " + (r + 1) + " von 4: " + runden[r]);
+            duellModus = true;
+            MeinSortierer.duellSort();
+            duellModus = false;
+            boolean ok = istAufsteigend();
+            faerben(ok);
+            if (!ok) {
+                gueltig = false;
+            }
+            println("Runde " + (r + 1) + " (" + runden[r] + "): Vergleiche = " + vergleiche
+                    + ", Vertauschungen = " + vertauschungen + ", sortiert = " + jaNein(ok));
+            summeVergleiche = summeVergleiche + vergleiche;
+            summeVertauschungen = summeVertauschungen + vertauschungen;
+        }
+
+        // Kontrollrunde: 37 Werte mit unbekanntem Startwert. Zaehlt nicht,
+        // muss aber sortiert werden - fest eingebaute Tauschfolgen fliegen auf.
+        laden(37, "kontrolle", 1 + (int) (Math.random() * (LCG_M - 1)));
+        titel.setText("Kontrollrunde: 37 unbekannte Werte");
+        duellModus = true;
+        MeinSortierer.duellSort();
+        duellModus = false;
+        boolean kontrolleOk = istAufsteigend();
+        faerben(kontrolleOk);
+        if (!kontrolleOk) {
+            gueltig = false;
+        }
+        println("Kontrollrunde (37 unbekannte Werte, zaehlt nicht): sortiert = " + jaNein(kontrolleOk));
+
+        if (regelverstoss) {
+            gueltig = false;
+            println("REGELVERSTOSS: " + verstossGrund);
+        }
+        println("DUELL-ERGEBNIS: Vergleiche = " + summeVergleiche + ", Vertauschungen = "
+                + summeVertauschungen + ", gueltig = " + jaNein(gueltig));
+        titel.setText("DUELL-ERGEBNIS (gueltig: " + jaNein(gueltig) + ")");
+        info.setText("Vergleiche: " + summeVergleiche + "   Vertauschungen: " + summeVertauschungen);
+    }
+
+
+    // =============== intern ===============
+
+    private static void laden(int anzahl, String art, int startwert) {
+        if (duellModus) {
+            verstoss("Vis.starten(...) im Duell aufgerufen");
+            return;
+        }
+        grafikVorbereiten();
+
+        // alte Balken entfernen
+        if (balken != null) {
+            for (int i = 0; i < balken.length; i++) {
+                if (balken[i] != null) {
+                    balken[i].destroy();
+                }
+            }
+        }
+
+        werte = new int[anzahl];
+        balken = new Rectangle[anzahl];
+        erzeugeWerte(art, startwert);
+
+        abstand = (BREITE_GESAMT - 2 * RAND) / anzahl;
+        if (abstand > 21) {
+            abstand = 21;
+        }
+        breite = abstand - 4;
+        if (breite < 1) {
+            breite = 1;
+        }
+        for (int i = 0; i < anzahl; i++) {
+            zeichneBalken(i);
+        }
+
+        vergleiche = 0;
+        vertauschungen = 0;
+        titel.setText("Ausgangslage: " + art + " (" + anzahl + " Balken)");
+        zeigeStand();
+    }
+
+    private static void erzeugeWerte(String art, int startwert) {
+        int n = werte.length;
+        int schritt = MAXWERT / n;
+        if (schritt < 1) {
+            schritt = 1;
+        }
+        if (art.equals("fast sortiert") || art.equals("sortiert")) {
+            for (int i = 0; i < n; i++) {
+                werte[i] = (i + 1) * schritt;
+            }
+            if (art.equals("fast sortiert")) {
+                tauscheIntern(2, 3);
+                tauscheIntern(10, 25);
+                tauscheIntern(18, 19);
+                tauscheIntern(33, 38);
+            }
+        } else if (art.equals("umgekehrt")) {
+            for (int i = 0; i < n; i++) {
+                werte[i] = (n - i) * schritt;
+            }
+        } else if (art.equals("viele gleiche")) {
+            saat = 2028;
+            for (int i = 0; i < n; i++) {
+                werte[i] = (zufall(5) + 1) * 100;
+            }
+        } else {
+            // "zufall" (Startwert 2027), sonst der uebergebene Startwert
+            saat = 2027;
+            if (startwert > 0) {
+                saat = startwert;
+            }
+            for (int i = 0; i < n; i++) {
+                werte[i] = zufall(MAXWERT + 1);
+            }
+        }
+    }
+
+    // Tausch beim Erzeugen der Daten (zaehlt nicht, zeichnet nicht)
+    private static void tauscheIntern(int i, int j) {
+        if (i < werte.length && j < werte.length) {
+            int h = werte[i];
+            werte[i] = werte[j];
+            werte[j] = h;
+        }
+    }
+
+    private static void grafikVorbereiten() {
+        if (!grafikBereit) {
+            new World(BREITE_GESAMT, HOEHE_GESAMT);
+            titel = new Text(20, 40, 36, "");
+            titel.setFillColor("#1F4E79");
+            info = new Text(20, 1430, 36, "");
+            info.setFillColor("#333333");
+            grafikBereit = true;
+        }
+    }
+
+    // Zeichnet den Balken an Position i passend zu werte[i] neu.
+    // Ein eventuell vorhandener alter Balken wird vorher geloescht.
+    private static void zeichneBalken(int i) {
+        if (balken[i] != null) {
+            balken[i].destroy();
+        }
+
+        int hoehe = (int) (werte[i] * SKALA);
+        if (hoehe < 2) {
+            hoehe = 2;                 // damit auch der Wert 0 sichtbar ist
+        }
+
+        Rectangle r = new Rectangle(RAND + i * abstand, BODEN - hoehe, breite, hoehe);
+        r.setFillColor("#1F4E79");
+        balken[i] = r;
+    }
+
+    private static void zeigeStand() {
+        info.setText("Vergleiche: " + vergleiche
+                     + "   Vertauschungen: " + vertauschungen);
+    }
+
+    private static boolean istAufsteigend() {
+        for (int i = 0; i < werte.length - 1; i++) {
+            if (werte[i] > werte[i + 1]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static void faerben(boolean ok) {
+        for (int i = 0; i < balken.length; i++) {
+            if (ok) {
+                balken[i].setFillColor("#548235");
+            } else {
+                balken[i].setFillColor("#C00000");
+            }
+        }
+    }
+
+    private static void verstoss(String grund) {
+        regelverstoss = true;
+        if (verstossGrund.equals("")) {
+            verstossGrund = grund;
+        }
+    }
+
+    private static String jaNein(boolean b) {
+        if (b) {
+            return "ja";
+        }
+        return "nein";
+    }
+}
+
+
+// Startet das Sortier-Duell: MeinSortierer.duellSort() auf vier Runden
+// (je 40 Balken) plus Kontrollrunde, danach die Ergebniszeile.
+class Duell {
+
+    static void starten() {
+        Vis.duell();
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  LÖSUNGEN
+// ---------------------------------------------------------------------
+
+class MeinSortierer {
+
+    // ---------------- Vorlage aus dem Geruest ----------------
+
+    static void bubbleSort() {
+        for (int i = 0; i < Vis.laenge() - 1; i++) {
+            for (int j = 0; j < Vis.laenge() - 1 - i; j++) {
+                if (Vis.kleiner(j + 1, j)) {
+                    Vis.vertausche(j, j + 1);
+                }
+            }
+        }
+    }
+
+
+    // ---------------- Training 1: SelectionSort ----------------
+    // Minimum des Restes i .. n-1 suchen, an Position i tauschen.
+    // Vergleiche immer n(n-1)/2 = 780; Vertauschungen hoechstens n - 1
+    // (vertausche(i, i) zaehlt nicht).
+    // Beobachtung im Bild: Ein "Suchbalken" wandert langsam nach rechts,
+    // danach springt genau ein Balken an seinen Platz.
+
+    static void selectionSort() {
+        for (int i = 0; i < Vis.laenge() - 1; i++) {
+            int min = i;
+            for (int j = i + 1; j < Vis.laenge(); j++) {
+                if (Vis.kleiner(j, min)) {
+                    min = j;
+                }
+            }
+            Vis.vertausche(i, min);
+        }
+    }
+
+
+    // ---------------- Training 2: InsertionSort ----------------
+    // WICHTIG: j > 0 muss VOR dem Vergleich stehen (Kurzschluss von &&),
+    // sonst wird Vis.kleiner(0, -1) aufgerufen.
+    // Beobachtung im Bild: Links waechst ein sortierter Block, aus dem
+    // rechten Bereich wandert jeweils ein Balken hinein.
+
+    static void insertionSort() {
+        for (int i = 1; i < Vis.laenge(); i++) {
+            int j = i;
+            while (j > 0 && Vis.kleiner(j, j - 1)) {
+                Vis.vertausche(j, j - 1);
+                j--;
+            }
+        }
+    }
+
+
+    // ---------------- DUELL: binaeres Einfuegen ----------------
+    //
+    // Idee: InsertionSort verschwendet Vergleiche, weil es die Einfuegestelle
+    // LINEAR sucht (Balken fuer Balken nach links). Der linke Bereich
+    // 0 .. i-1 ist aber schon sortiert - dort kann man BINAER suchen
+    // (Level 2.3!).
+    //
+    //   1. Binaere Suche im Bereich 0 .. i nach der kleinsten Position pos
+    //      mit Balken i < Balken pos. Findet sich keine, ist pos = i und
+    //      Balken i steht schon richtig. Waehrend der Suche steht Balken i
+    //      noch unveraendert an Position i.
+    //      -> hoechstens ca. log2(i + 1) Vergleiche statt bis zu i.
+    //   2. Mit nur kleiner/vertausche gibt es kein "Verschieben": Balken i
+    //      wandert per Nachbartausch nach pos. Die Vertauschungen bleiben
+    //      deshalb so viele wie bei InsertionSort (= Zahl der Fehlstaende) -
+    //      sie zaehlen im Duell aber nur als Tiebreak.
+    //   Gleiche Werte: pos liegt HINTER gleichen Werten (stabil, keine
+    //   unnoetigen Tausche bei "viele gleiche").
+    //
+    // Ausblick (nur fuer die Lehrkraft): Kein Verfahren, das nur vergleicht,
+    // kann ALLE Anordnungen von 40 Werten mit weniger als log2(40!) = ca. 160
+    // Vergleichen sortieren (im schlechtesten Fall). Auf einzelnen Daten geht
+    // es knapp darunter (Runde "zufall": 158). Auf "zufall" ist binaeres
+    // Einfuegen also schon nahe am Optimum. Adaptive Ideen (z. B. erst
+    // pruefen, ob die Daten fast sortiert oder umgekehrt sind, und dann
+    // anders vorgehen) koennen auf "fast sortiert" und "umgekehrt" noch
+    // deutlich weniger brauchen. Solche Loesungen sind erlaubt, solange
+    // sie JEDE Eingabe korrekt sortieren (Kontrollrunde!).
+
+    static void duellSort() {
+        for (int i = 1; i < Vis.laenge(); i++) {
+            int lo = 0;
+            int hi = i;
+            while (lo < hi) {
+                int mid = (lo + hi) / 2;
+                if (Vis.kleiner(i, mid)) {
+                    hi = mid;
+                } else {
+                    lo = mid + 1;
+                }
+            }
+            for (int j = i; j > lo; j--) {
+                Vis.vertausche(j, j - 1);
+            }
+        }
+    }
+
+
+    // ---------------- Zusatz: binaeres Einfuegen MIT Vorab-Test ----------------
+    // Naheliegende "Verbesserung" aus vielen Teams: Zuerst nur mit dem
+    // linken Nachbarn vergleichen - steht Balken i schon richtig, kostet
+    // er nur 1 Vergleich. Gewinnt bei "fast sortiert", verliert aber auf
+    // den anderen drei Runden (1 Vergleich extra fuer jeden Balken, der
+    // doch wandern muss). In der Summe SCHLECHTER als duellSort - schoenes
+    // Beispiel dafuer, dass man Optimierungen messen muss.
+
+    static void duellSortMitVorabTest() {
+        for (int i = 1; i < Vis.laenge(); i++) {
+            if (Vis.kleiner(i, i - 1)) {
+                int lo = 0;
+                int hi = i - 1;
+                while (lo < hi) {
+                    int mid = (lo + hi) / 2;
+                    if (Vis.kleiner(i, mid)) {
+                        hi = mid;
+                    } else {
+                        lo = mid + 1;
+                    }
+                }
+                for (int j = i; j > lo; j--) {
+                    Vis.vertausche(j, j - 1);
+                }
+            }
+        }
+    }
+
+
+    // ---------------- Zusatz: BubbleSort mit Abbruch ----------------
+    // Wurde in einem Durchlauf nicht mehr getauscht, ist die Reihung
+    // fertig. Bei sortierter Eingabe nur 39 statt 780 Vergleiche.
+
+    static void bubbleSortVerbessert() {
+        boolean getauscht = true;
+        int durchlauf = 0;
+        while (getauscht) {
+            getauscht = false;
+            for (int j = 0; j < Vis.laenge() - 1 - durchlauf; j++) {
+                if (Vis.kleiner(j + 1, j)) {
+                    Vis.vertausche(j, j + 1);
+                    getauscht = true;
+                }
+            }
+            durchlauf++;
+        }
+    }
+
+
+    // ---------------- Zusatz: Quicksort (Welt 3, Teile und herrsche) ----------------
+    // Pivot = letztes Element des Abschnitts. Aufruf:
+    //     MeinSortierer.quickSort(0, Vis.laenge() - 1);
+    // Als duellSort ungeeignet: "fast sortiert" und "umgekehrt" sind fuer
+    // dieses Pivot genau die entarteten Faelle (siehe Tabelle).
+
+    static void quickSort(int von, int bis) {
+        if (von >= bis) {
+            return;
+        }
+        int grenze = von;
+        for (int i = von; i < bis; i++) {
+            if (Vis.kleiner(i, bis)) {
+                Vis.vertausche(i, grenze);
+                grenze++;
+            }
+        }
+        Vis.vertausche(grenze, bis);
+        quickSort(von, grenze - 1);
+        quickSort(grenze + 1, bis);
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  Lehrerwerkzeug: Referenzwerte selbst nachmessen
+//  Aufruf im Hauptprogramm:  Referenz.tabelle();   (Tempo auf Maximum)
+//  Laesst jedes Verfahren auf den vier Duell-Ausgangslagen laufen und
+//  gibt Vergleiche/Vertauschungen aus. Benutzt nur die oeffentlichen
+//  Vis-Befehle (Vis.wert ist im Trainingsmodus erlaubt).
+// ---------------------------------------------------------------------
+
+class Referenz {
+
+    static void tabelle() {
+        String[] runden = {"zufall", "fast sortiert", "umgekehrt", "viele gleiche"};
+        String[] namen = {"bubbleSort", "bubbleSortVerbessert", "selectionSort",
+                          "insertionSort", "quickSort", "duellSort (LSG)",
+                          "duellSortMitVorabTest"};
+        println("Verfahren: V/T je Runde (zufall | fast sortiert | umgekehrt | viele gleiche) | Summe");
+        for (int v = 0; v < namen.length; v++) {
+            String zeile = namen[v] + ":";
+            int summeV = 0;
+            int summeT = 0;
+            boolean alleOk = true;
+            for (int r = 0; r < runden.length; r++) {
+                Vis.starten(40, runden[r]);
+                sortiere(v);
+                if (!sortiert()) {
+                    alleOk = false;
+                }
+                zeile = zeile + "  " + Vis.getVergleiche() + "/" + Vis.getVertauschungen();
+                summeV = summeV + Vis.getVergleiche();
+                summeT = summeT + Vis.getVertauschungen();
+            }
+            zeile = zeile + "  | " + summeV + "/" + summeT;
+            if (!alleOk) {
+                zeile = zeile + "  NICHT SORTIERT!";
+            }
+            println(zeile);
+        }
+    }
+
+    private static void sortiere(int v) {
+        if (v == 0) {
+            MeinSortierer.bubbleSort();
+        }
+        if (v == 1) {
+            MeinSortierer.bubbleSortVerbessert();
+        }
+        if (v == 2) {
+            MeinSortierer.selectionSort();
+        }
+        if (v == 3) {
+            MeinSortierer.insertionSort();
+        }
+        if (v == 4) {
+            MeinSortierer.quickSort(0, Vis.laenge() - 1);
+        }
+        if (v == 5) {
+            MeinSortierer.duellSort();
+        }
+        if (v == 6) {
+            MeinSortierer.duellSortMitVorabTest();
+        }
+    }
+
+    private static boolean sortiert() {
+        for (int i = 0; i < Vis.laenge() - 1; i++) {
+            if (Vis.wert(i) > Vis.wert(i + 1)) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+
+// =====================================================================
+//  REFERENZWERTE – gemessen mit Referenz.tabelle(), je 40 Balken
+//  (exakt reproduzierbar: gleiche Daten, gleiche Zaehlerstaende)
+//
+//  Vergleiche / Vertauschungen
+//
+//  Verfahren             zufall    fast sort.  umgekehrt   viele gl.  | SUMME
+//  ------------------------------------------------------------------------------
+//  bubbleSort (Vorlage)  780/356    780/40     780/780     780/325    | 3120/1501
+//  bubbleSortVerbessert  770/356    504/40     780/780     752/325    | 2806/1501
+//  selectionSort         780/34     780/4      780/20      780/30     | 3120/88
+//  insertionSort         391/356     79/40     780/780     362/325    | 1612/1501
+//  quickSort (Welt 3)    188/80     456/4      780/20      208/69     | 1632/173
+//  duellSort (LSG)       158/356    150/40     177/780     154/325    |  639/1501
+//  duellSortMitVorabTest 185/356    121/40     210/780     147/325    |  663/1501
+//
+//  So ordnest du die Duell-Ergebnisse ein (Summe der Vergleiche):
+//    3120          bubbleSort/selectionSort unveraendert eingereicht
+//    um 2800       BubbleSort mit Abbruch
+//    1612          InsertionSort - der STANDARD des Geruests (duellSort
+//                  ruft insertionSort auf). Wer hier landet, hat nur
+//                  Training 2 erledigt.
+//    640 - 1612    Teilverbesserungen (z. B. Quicksort mit Mittelwert-
+//                  Pivot, oder Umschalten je nach Ausgangslage)
+//    um 640        binaeres Einfuegen (Musterloesung)
+//    unter 600     sehr gut: adaptive Ideen (z. B. umgekehrte Daten
+//                  erkennen) - unbedingt vorstellen lassen!
+//
+//  Beobachtungen fuer die Sicherung:
+//  1. SelectionSort vergleicht IMMER n(n-1)/2 = 40 * 39 / 2 = 780-mal,
+//     egal wie die Daten aussehen - tauscht aber am wenigsten (hoechstens
+//     n - 1 = 39; bei "umgekehrt" nur 20, bei "fast sortiert" genau 4).
+//  2. Die Vertauschungen von Bubble- und InsertionSort sind GLEICH: Jeder
+//     Nachbartausch beseitigt genau einen Fehlstand (Paar in falscher
+//     Reihenfolge). "umgekehrt" hat 780 Fehlstaende, "fast sortiert" 40.
+//  3. InsertionSort: bester Fall n - 1 = 39 Vergleiche (sortiert),
+//     schlechtester Fall n(n-1)/2 = 780 (umgekehrt). "fast sortiert"
+//     liegt mit 79 nahe am besten Fall.
+//  4. Die Abbruchbedingung hilft BubbleSort nur, wenn die Daten fast
+//     sortiert sind (504 statt 780) - im schlechtesten Fall gar nicht.
+//  5. Quicksort (Pivot = letztes Element) entartet auf "umgekehrt" und
+//     wird auf "fast sortiert" schlecht -> Ausblick Welt 3.
+//  6. Binaeres Einfuegen spart Vergleiche, aber keine Vertauschungen.
+//     Der Vorab-Test lohnt sich nur bei fast sortierten Daten: in der
+//     Summe 663 statt 639 - Optimierungen immer messen!
+//
+//  VERDOPPLUNG (Vergleiche, gemessen mit derselben Vis-Klasse)
+//
+//  Ausgangslage  n     selectionSort  insertionSort  bubbleSortVerb.  duellSort
+//  ---------------------------------------------------------------------------
+//  umgekehrt     20        190            190             190             69
+//                40        780            780             780            177
+//                80       3160           3160            3160            433
+//                160     12720          12720           12720           1025
+//  zufall        20        190            108             189             59
+//                40        780            391             770            158
+//                80       3160           1629            3145            397
+//                160     12720           6544           12600            958
+//  sortiert      20        190             19              19             54
+//                40        780             39              39            143
+//                80       3160             79              79            360
+//
+//  -> n verdoppeln: n(n-1)/2 wird (fast) VIERmal so gross
+//     (780 -> 3160 = Faktor 4,05). Im besten Fall (n - 1) nur doppelt.
+//     Binaeres Einfuegen: nur gut zweimal so viel (Ausblick: n log n).
+//  -> Abi-Formulierung: "Verdoppelt man die Anzahl der Elemente, so
+//     vervierfacht sich die Anzahl der Vergleiche ungefaehr, da sie
+//     quadratisch von n abhaengt: 2n(2n-1)/2 = n(2n-1) ~ 4 * n(n-1)/2."
+// =====================================================================
+
+
+// =====================================================================
+//  HÄUFIGE SCHÜLERFEHLER (Lehrerhinweise)
+// =====================================================================
+//
+//  Training 1 – SelectionSort
+//  - min mit dem WERT statt mit dem INDEX gemerkt -> mit Vis.kleiner
+//    gar nicht moeglich; gut so: Es zwingt zum Index-Denken.
+//  - Innere Schleife ab j = i statt j = i + 1 -> 39 Vergleiche zu viel
+//    (819 statt 780 auf "zufall"). Am Zaehler sofort sichtbar!
+//  - Tausch in der inneren Schleife (bei jedem kleineren Element) ->
+//    sortiert zwar, aber viele Vertauschungen: das ist kein
+//    SelectionSort mehr. Zaehler vergleichen lassen.
+//  - Vergleich falsch herum (Vis.kleiner(min, j)) -> absteigend
+//    sortiert, Vis.fertig() zeigt rot.
+//
+//  Training 2 – InsertionSort
+//  - while (Vis.kleiner(j, j - 1) && j > 0) -> Vis.kleiner(0, -1) ->
+//    Indexfehler. Die Reihenfolge der Bedingungen ist entscheidend
+//    (Kurzschluss-Auswertung von &&).
+//  - Kein Abbruch: innere Schleife laeuft immer bis 0 und tauscht nur
+//    bei Bedarf -> sortiert richtig, aber auf "sortiert" 780 statt 39
+//    Vergleiche. Genau das zeigt der Vergleich mit der Tabelle.
+//  - j wird nicht verringert -> Endlosschleife (Balken springt hin und
+//    her). Tempo herunterdrehen und zusehen lassen.
+//
+//  Training 3 – Messen
+//  - Mit Vis.starten(40) gemessen (jedes Mal andere Daten) -> Werte
+//    nicht vergleichbar. Fuer Tabellen IMMER die festen Arten benutzen.
+//  - Tempo zu niedrig -> "haengt". Regler hochdrehen.
+//
+//  Duell
+//  - Fest eingetragene 40 statt Vis.laenge() -> Kontrollrunde (37 Werte)
+//    stuerzt mit Indexfehler ab oder bleibt unsortiert -> ungueltig.
+//  - Vis.wert(i) zum "Nachsehen" benutzt (auch nur in einem println zum
+//    Debuggen) -> gueltig = nein. Debuggen im Training!
+//  - Binaere Suche der Einfuegestelle mit Vis.kleiner(mid, i) statt
+//    Vis.kleiner(i, mid) oder mit hi = mid - 1 -> falsche Stelle; die
+//    Kontrollrunde bzw. Vis.fertig() im Training deckt das auf.
+//  - Waehrend der binaeren Suche schon tauschen -> Balken i ist nicht
+//    mehr an Position i, die Vergleiche gehen auf den falschen Balken.
+//  - "Optimierungen" ohne Messung (z. B. Vorab-Test, siehe Tabelle) ->
+//    schlechter als vorher. Jede Idee an allen vier Runden messen.
+//  - Rekursive Ideen (Mergesort) scheitern oft daran, dass es keinen
+//    Hilfsspeicher gibt: Mit nur kleiner/vertausche ist Mergesort sehr
+//    aufwendig. Quicksort geht, ist aber auf "umgekehrt" schlecht.
+//
+//  ABI-BEZUG
+//  - Vergleiche zaehlen: SelectionSort immer n(n-1)/2; Insertion-/Bubble-
+//    Sort mit Abbruch im besten Fall n - 1, im schlechtesten n(n-1)/2.
+//    Zahlen mit n = 40 an der Tafel herleiten: 39 + 38 + ... + 1 = 780.
+//  - Schlechtester / bester Fall: zu einem Verfahren eine Eingabe ANGEBEN
+//    koennen ("umgekehrt sortiert" fuer InsertionSort; fuer SelectionSort
+//    gibt es keinen Unterschied bei den Vergleichen).
+//  - Verdopplung: quadratisch -> etwa vierfach; linear (bester Fall) ->
+//    doppelt; binaere Suche -> nur EIN Durchlauf mehr (Level 2.3).
+//  - Trace: Fuer Boss 2 die Zustaende der Reihung nach jedem aeusseren
+//    Durchlauf notieren lassen (mit kleinem n = 5 oder 6, Tempo 200).
+//  - O-Notation hoechstens als Ausblick - im Abitur wird gezaehlt.
+// =====================================================================
+
+
+// ---------------------------------------------------------------------
+//  Programmstart – zum Vorfuehren jeweils eine Zeile aktivieren
+// ---------------------------------------------------------------------
+
+// GESCHWINDIGKEIT
+//   Zum Zusehen:   200 bis 1000  (Schieberegler wirkt auch waehrend des Laufs)
+//   Zum Messen:    10000
+SystemTools.setSpeed(10000);
+
+// ----- TRAINING / VORFUEHREN -----
+// Vis.starten(40, "umgekehrt");
+// MeinSortierer.insertionSort();
+// Vis.fertig();
+
+// ----- REFERENZWERTE NACHMESSEN (dauert etwas) -----
+// Referenz.tabelle();
+
+// ----- SORTIER-DUELL mit der Musterloesung -----
+// Erwartete Ausgabe:
+//   DUELL-ERGEBNIS: Vergleiche = 639, Vertauschungen = 1501, gueltig = ja
+Duell.starten();

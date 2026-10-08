@@ -1,0 +1,4962 @@
+{
+ "version": 2,
+ "welt": 6,
+ "titel": "Der Endgegner",
+ "farbe": "#7A1F2B",
+ "levels": [
+  {
+   "id": "W6-L1",
+   "nr": "6.1",
+   "titel": "Fallenjagd I – P1 bis P5",
+   "ds": [
+    38
+   ],
+   "ab": "AB 1 Korrektur und Fehlerjagd, Teil 4 (P1–P5)",
+   "ide": "– (Papier-Training; Papier-Compiler: AQ_W6_Probeklausur_Papier-Compiler.txt)",
+   "intro": [
+    {
+     "t": "text",
+     "md": "Die meisten Abiturpunkte gehen nicht durch fehlendes Wissen verloren, sondern durch **immer dieselben zehn Fehler**. Jede Aufgabe trainiert genau eine Falle."
+    },
+    {
+     "t": "hinweis",
+     "md": "P1 Laufzeitfehler nicht ausgeschlossen · P2 Struktur zerstört · P3 Signatur verfehlt · P4 Typen und Casts · P5 == statt equals / verbotene String-Operationen"
+    }
+   ],
+   "aufgaben": [
+    "W6-L1-01",
+    "W6-L1-02",
+    "W6-L1-03",
+    "W6-L1-04",
+    "W6-L1-05",
+    "W6-L1-06",
+    "W6-L1-07",
+    "W6-L1-08"
+   ]
+  },
+  {
+   "id": "W6-L2",
+   "nr": "6.2",
+   "titel": "Fallenjagd II – P6 bis P10",
+   "ds": [
+    38
+   ],
+   "ab": "AB 1 Korrektur und Fehlerjagd, Teil 4 (P6–P10)",
+   "ide": "– (Papier-Training; Papier-Compiler: AQ_W6_Probeklausur_Papier-Compiler.txt)",
+   "intro": [
+    {
+     "t": "text",
+     "md": "Zweite Runde der Fehlerjagd: Grenzen, Rekursion, Tabellen, Struktogramme und Operatoren."
+    },
+    {
+     "t": "hinweis",
+     "md": "P6 Off-by-one · P7 Rekursion (Basisfall, Ergebnis verwenden, Tiefe 0) · P8 Trace-/Rekursionstabelle vollständig · P9 Struktogramm nach EH §5 · P10 Operator verfehlt"
+    }
+   ],
+   "aufgaben": [
+    "W6-L2-01",
+    "W6-L2-02",
+    "W6-L2-03",
+    "W6-L2-04",
+    "W6-L2-05",
+    "W6-L2-06",
+    "W6-L2-07",
+    "W6-L2-08"
+   ]
+  },
+  {
+   "id": "W6-L3",
+   "nr": "6.3",
+   "titel": "Abi-Mix I – Welten 0 bis 2",
+   "ds": [
+    39
+   ],
+   "ab": "AB 1 Korrektur und Fehlerjagd, Teil 5 (Abi-Fahrplan) · Warm-up W6-11/W6-12",
+   "ide": "– (Wiederholung Welten 0–2)",
+   "intro": [
+    {
+     "t": "text",
+     "md": "Abitur-Klassiker aus Portal, Heldenschmiede und Rangliste – jede Aufgabe mit der Falle, die dort typischerweise Punkte kostet."
+    },
+    {
+     "t": "hinweis",
+     "md": "Abi-Check: Signatur · Leer?/Index? · Cast · equals · return auf jedem Pfad · Struktur unverändert · Struktogramm ohne Java · Operator erfüllt"
+    }
+   ],
+   "aufgaben": [
+    "W6-L3-01",
+    "W6-L3-02",
+    "W6-L3-03",
+    "W6-L3-04",
+    "W6-L3-05",
+    "W6-L3-06",
+    "W6-L3-07",
+    "W6-L3-08"
+   ]
+  },
+  {
+   "id": "W6-L4",
+   "nr": "6.4",
+   "titel": "Abi-Mix II – Welten 3 bis 5",
+   "ds": [
+    39,
+    40
+   ],
+   "ab": "AB 1 Korrektur und Fehlerjagd, Teil 5 (Abi-Fahrplan) · Warm-up W6-13/W6-14",
+   "ide": "– (Wiederholung Welten 3–5)",
+   "intro": [
+    {
+     "t": "text",
+     "md": "Rekursion, 2D-Reihungen, Stapel/Schlange/DynArray und Bäume – die Klassiker der zweiten Hälfte, jeweils mit ihrer typischen Falle."
+    },
+    {
+     "t": "hinweis",
+     "md": "Zeitplan im Abitur: ≈ 2,5 Minuten je BE. Erst Methodenkopf, dann Leer-/Indexabfragen, dann der Rest."
+    }
+   ],
+   "aufgaben": [
+    "W6-L4-01",
+    "W6-L4-02",
+    "W6-L4-03",
+    "W6-L4-04",
+    "W6-L4-05",
+    "W6-L4-06",
+    "W6-L4-07",
+    "W6-L4-08"
+   ]
+  }
+ ],
+ "boss": {
+  "id": "W6-BOSS",
+  "titel": "Generalprobe online",
+  "dauerMin": 30,
+  "anzahl": 8,
+  "mix": {
+   "1": 3,
+   "2": 3,
+   "3": 2
+  },
+  "pool": [
+   "W6-B-01",
+   "W6-B-02",
+   "W6-B-03",
+   "W6-B-04",
+   "W6-B-05",
+   "W6-B-06",
+   "W6-B-07",
+   "W6-B-08",
+   "W6-B-09",
+   "W6-B-10",
+   "W6-B-11",
+   "W6-B-12",
+   "W6-B-13",
+   "W6-B-14",
+   "W6-B-15"
+  ]
+ },
+ "aufgaben": [
+  {
+   "id": "W6-L1-01",
+   "titel": "P1: Leerer Stapel, voller Absturz",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P1"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P1 – Laufzeitfehler nicht ausgeschlossen**"
+    },
+    {
+     "t": "text",
+     "md": "In der Schatzkammer liegen Truhen in einem Stapel vom Inhaltstyp Truhe. Die Methode stürzt ab, wenn der Stapel leer ist."
+    },
+    {
+     "t": "code",
+     "code": "// liefert das Gold der obersten Truhe; -1, wenn der Stapel leer ist\npublic static int obersteTruhe(Stack s) {\n    Truhe t = (Truhe) s.top();\n    if (s.isEmpty()) {\n        return -1;\n    }\n    return t.getGold();\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Teil 1: Markiere die Zeile, in der der Laufzeitfehler auftritt. Teil 2: Wie behebst du ihn?"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 2,
+     "anzahl": 1
+    },
+    {
+     "kind": "choice",
+     "optionen": [
+      {
+       "id": "a",
+       "md": "Die Abfrage `if (s.isEmpty())` mit `return -1;` **vor** den Zugriff `s.top()` setzen."
+      },
+      {
+       "id": "b",
+       "md": "`s.pop()` statt `s.top()` verwenden."
+      },
+      {
+       "id": "c",
+       "md": "`if (s == null)` abfragen."
+      },
+      {
+       "id": "d",
+       "md": "Nichts – die Abfrage in Zeile 4 fängt den Fehler ab."
+      }
+     ],
+     "mehrfach": false
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      3
+     ]
+    },
+    {
+     "richtig": [
+      "a"
+     ]
+    }
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Zeile 3: `top()` auf einem leeren Stapel → IllegalStateException. Die Abfrage in Zeile 4 kommt zu spät – der Absturz ist schon passiert. Korrigiert liefert die Methode für den leeren Stapel -1."
+    },
+    {
+     "t": "hinweis",
+     "md": "P1: Erst fragen, dann zugreifen – `isEmpty()` vor `top`, `pop`, `head`, `dequeue`, `getItem`, `getLeft`. Ein leerer Stapel ist nicht `null`."
+    }
+   ]
+  },
+  {
+   "id": "W6-L1-02",
+   "titel": "P1: Indexgrenzen bewachen",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Lückencode",
+   "fallen": [
+    "P1",
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P1 – Laufzeitfehler nicht ausgeschlossen + P6 – Off-by-one**"
+    },
+    {
+     "t": "text",
+     "md": "Die Truhen liegen in einer dynamischen Reihung vom Inhaltstyp Truhe. Ergänze die Abfrage so, dass für **jeden** ungültigen Index −1 geliefert wird und kein Laufzeitfehler auftreten kann."
+    },
+    {
+     "t": "code",
+     "code": "// Gold der Truhe an Position index; -1 bei ungueltigem Index\npublic static int goldAn(DynArray d, int index) {\n    if (index < [[g1]] || index > [[g2]]) {\n        return -1;\n    }\n    Truhe t = (Truhe) d.getItem(index);\n    return t.getGold();\n}",
+     "nummern": true
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 4
+     },
+     "g2": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 18
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "0"
+    ],
+    "g2": [
+     "d.getLength()-1",
+     "(d.getLength()-1)"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Gültig sind die Indizes 0 bis `d.getLength() - 1`. Mit `index > d.getLength()` bliebe `index == d.getLength()` erlaubt → IndexOutOfBoundsException (P6). Getestet mit den Indizes −2 … 4 und einer leeren Reihung: kein Laufzeitfehler."
+    },
+    {
+     "t": "hinweis",
+     "md": "Gleichwertig wäre `index >= d.getLength()` – hier ist der Vergleich mit `>` vorgegeben."
+    }
+   ]
+  },
+  {
+   "id": "W6-L1-03",
+   "titel": "P2: Die vertauschten Edelsteine",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [
+    "P2"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P2 – Struktur zerstört statt unverändert**"
+    },
+    {
+     "t": "text",
+     "md": "Der Stapel s enthält vor dem Aufruf (unten → oben): Rubin, Saphir, Gold, Smaragd. `zaehle(s)` soll s **unverändert** lassen."
+    },
+    {
+     "t": "adt",
+     "art": "stapel",
+     "inhalt": [
+      "Rubin",
+      "Saphir",
+      "Gold",
+      "Smaragd"
+     ]
+    },
+    {
+     "t": "code",
+     "code": "// zaehlt die Edelsteine im Stapel s; s soll danach unveraendert sein\npublic static int zaehle(Stack s) {\n    int anzahl = 0;\n    Queue hilf = new Queue();\n    while (!s.isEmpty()) {\n        hilf.enqueue(s.pop());\n        anzahl = anzahl + 1;\n    }\n    while (!hilf.isEmpty()) {\n        s.push(hilf.dequeue());\n    }\n    return anzahl;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Teil 1: Gib den Inhalt von s **nach** dem Aufruf an (unten → oben). Teil 2: Welche Änderung lässt s wirklich unverändert?"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "adtsim",
+     "art": "stapel",
+     "start": [
+      "Rubin",
+      "Saphir",
+      "Gold",
+      "Smaragd"
+     ]
+    },
+    {
+     "kind": "choice",
+     "optionen": [
+      {
+       "id": "a",
+       "md": "Einen Hilfs**stapel** statt der Hilfsschlange verwenden (push/pop statt enqueue/dequeue)."
+      },
+      {
+       "id": "b",
+       "md": "Die zweite Schleife weglassen."
+      },
+      {
+       "id": "c",
+       "md": "Am Ende `s = hilf;` schreiben."
+      },
+      {
+       "id": "d",
+       "md": "In der ersten Schleife `s.top()` statt `s.pop()` verwenden."
+      }
+     ],
+     "mehrfach": false
+    }
+   ],
+   "loesung": [
+    {
+     "inhalt": [
+      "Smaragd",
+      "Gold",
+      "Saphir",
+      "Rubin"
+     ]
+    },
+    {
+     "richtig": [
+      "a"
+     ]
+    }
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Die Schlange gibt die Edelsteine in der Reihenfolge zurück, in der sie vom Stapel kamen (Smaragd zuerst). Smaragd wird also zuerst wieder gepusht und liegt danach **unten**: s = Smaragd, Gold, Saphir, Rubin (unten → oben) – umgekehrt!"
+    },
+    {
+     "t": "text",
+     "md": "Mit einem Hilfsstapel wird zweimal umgekehrt → Originalreihenfolge Rubin, Saphir, Gold, Smaragd. `s = hilf;` ändert nur die lokale Variable (Referenz), `s.top()` in der Schleife wäre eine Endlosschleife."
+    },
+    {
+     "t": "hinweis",
+     "md": "P2: „unverändert“ = dieselben Elemente in derselben Reihenfolge. Stapel → Hilfsstapel, Schlange → Hilfsschlange."
+    }
+   ]
+  },
+  {
+   "id": "W6-L1-04",
+   "titel": "P3: Vom Kopf zum Methodenkopf",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Methodenkopf und Signatur",
+   "fallen": [
+    "P3"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P3 – Signatur verfehlt**"
+    },
+    {
+     "t": "text",
+     "md": "Übersetze die Signaturen (EH-Notation) in Java-Methodenköpfe (alle `public static`)."
+    },
+    {
+     "t": "text",
+     "md": "`anzahlReicher(truhen: Reihung von Truhe, grenze: Ganzzahl): Ganzzahl`\n\npublic static [[a1]] anzahlReicher([[a2]] truhen, [[a3]] grenze)"
+    },
+    {
+     "t": "text",
+     "md": "`istLeer(q: Schlange vom Inhaltstyp Ganzzahl): Wahrheitswert`\n\npublic static [[b1]] istLeer([[b2]] q)"
+    },
+    {
+     "t": "text",
+     "md": "`durchschnitt(r: Reihung von Ganzzahl): Kommazahl`\n\npublic static [[c1]] durchschnitt([[c2]] r)"
+    },
+    {
+     "t": "text",
+     "md": "`zeigen(t: Truhe): nichts`\n\npublic static [[d1]] zeigen([[d2]] t)"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "a1": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 9
+     },
+     "a2": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 9
+     },
+     "a3": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 9
+     },
+     "b1": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 9
+     },
+     "b2": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 9
+     },
+     "c1": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 9
+     },
+     "c2": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 9
+     },
+     "d1": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 9
+     },
+     "d2": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 9
+     }
+    }
+   },
+   "loesung": {
+    "a1": [
+     "int"
+    ],
+    "a2": [
+     "Truhe[]"
+    ],
+    "a3": [
+     "int"
+    ],
+    "b1": [
+     "boolean"
+    ],
+    "b2": [
+     "Queue"
+    ],
+    "c1": [
+     "double"
+    ],
+    "c2": [
+     "int[]"
+    ],
+    "d1": [
+     "void"
+    ],
+    "d2": [
+     "Truhe"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Ganzzahl → `int`, Wahrheitswert → `boolean`, Kommazahl → `double`, nichts → `void`, Reihung von Truhe → `Truhe[]`, Schlange vom Inhaltstyp Ganzzahl → `Queue` (nicht generisch!). Alle vier Köpfe wurden mit javac übersetzt."
+    },
+    {
+     "t": "hinweis",
+     "md": "P3: Die Signatur ist Vertrag – falscher Rückgabetyp oder falscher Parametertyp kostet im Abitur Punkte, auch wenn der Rumpf stimmt."
+    }
+   ]
+  },
+  {
+   "id": "W6-L1-05",
+   "titel": "P3: Rückgabe vergessen",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P3"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P3 – Signatur verfehlt**"
+    },
+    {
+     "t": "text",
+     "md": "`indexVon` soll den Index des ersten Vorkommens liefern, sonst −1. Der Compiler meldet einen Fehler."
+    },
+    {
+     "t": "code",
+     "code": "public static int indexVon(String[] namen, String gesucht) {\n    for (int i = 0; i < namen.length; i++) {\n        if (namen[i].equals(gesucht)) {\n            return i;\n        }\n    }\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Teil 1: Markiere die Zeile, die der Compiler meldet. Teil 2: Welche Anweisung fehlt direkt davor? [[k]]"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 2,
+     "anzahl": 1
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "k": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 12
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      7
+     ]
+    },
+    {
+     "k": [
+      "return -1;"
+     ]
+    }
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "javac meldet in Zeile 7: „missing return statement“. Wird `gesucht` nicht gefunden, endet die Schleife ohne `return` – auf diesem Pfad fehlt die Rückgabe."
+    },
+    {
+     "t": "text",
+     "md": "Mit `return -1;` vor der letzten Klammer: `indexVon({\"Ork\", \"Elf\"}, \"Elf\")` = 1, nicht gefunden = −1."
+    },
+    {
+     "t": "hinweis",
+     "md": "P3: Rückgabe auf **jedem** Pfad – auch nach der Schleife."
+    }
+   ]
+  },
+  {
+   "id": "W6-L1-06",
+   "titel": "P4: Typen und Werte",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Datentypen und Ausdrücke",
+   "fallen": [
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P4 – Typen und Casts**"
+    },
+    {
+     "t": "text",
+     "md": "Gib Wert und Typ jedes Ausdrucks an (Kommazahlen mit Punkt oder Komma, Zeichenketten ohne Anführungszeichen)."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Ausdruck",
+      "Wert",
+      "Typ"
+     ],
+     "zeilen": [
+      [
+       "`7 / 2`",
+       "[[wa]]",
+       "[[ta]]"
+      ],
+      [
+       "`7 / 2.0`",
+       "[[wb]]",
+       "[[tb]]"
+      ],
+      [
+       "`(double) (7 / 2)`",
+       "[[wc]]",
+       "[[tc]]"
+      ],
+      [
+       "`\"Gold\" + 1 + 2`",
+       "[[wd]]",
+       "[[td]]"
+      ],
+      [
+       "`1 + 2 + \"Gold\"`",
+       "[[we]]",
+       "[[te]]"
+      ],
+      [
+       "`(int) 'A' + 2`",
+       "[[wf]]",
+       "[[tf]]"
+      ],
+      [
+       "`(char) ('A' + 2)`",
+       "[[wg]]",
+       "[[tg]]"
+      ],
+      [
+       "`17 % 5`",
+       "[[wh]]",
+       "[[th]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "wa": {
+      "typ": "zahl",
+      "breite": 5
+     },
+     "ta": {
+      "typ": "auswahl",
+      "optionen": [
+       "int",
+       "double",
+       "String",
+       "char",
+       "boolean"
+      ]
+     },
+     "wb": {
+      "typ": "zahl",
+      "breite": 5
+     },
+     "tb": {
+      "typ": "auswahl",
+      "optionen": [
+       "int",
+       "double",
+       "String",
+       "char",
+       "boolean"
+      ]
+     },
+     "wc": {
+      "typ": "zahl",
+      "breite": 5
+     },
+     "tc": {
+      "typ": "auswahl",
+      "optionen": [
+       "int",
+       "double",
+       "String",
+       "char",
+       "boolean"
+      ]
+     },
+     "wd": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 8
+     },
+     "td": {
+      "typ": "auswahl",
+      "optionen": [
+       "int",
+       "double",
+       "String",
+       "char",
+       "boolean"
+      ]
+     },
+     "we": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 8
+     },
+     "te": {
+      "typ": "auswahl",
+      "optionen": [
+       "int",
+       "double",
+       "String",
+       "char",
+       "boolean"
+      ]
+     },
+     "wf": {
+      "typ": "zahl",
+      "breite": 5
+     },
+     "tf": {
+      "typ": "auswahl",
+      "optionen": [
+       "int",
+       "double",
+       "String",
+       "char",
+       "boolean"
+      ]
+     },
+     "wg": {
+      "typ": "text",
+      "norm": "exakt",
+      "breite": 8
+     },
+     "tg": {
+      "typ": "auswahl",
+      "optionen": [
+       "int",
+       "double",
+       "String",
+       "char",
+       "boolean"
+      ]
+     },
+     "wh": {
+      "typ": "zahl",
+      "breite": 5
+     },
+     "th": {
+      "typ": "auswahl",
+      "optionen": [
+       "int",
+       "double",
+       "String",
+       "char",
+       "boolean"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "wa": [
+     "3"
+    ],
+    "ta": [
+     "int"
+    ],
+    "wb": [
+     "3.5"
+    ],
+    "tb": [
+     "double"
+    ],
+    "wc": [
+     "3.0"
+    ],
+    "tc": [
+     "double"
+    ],
+    "wd": [
+     "Gold12"
+    ],
+    "td": [
+     "String"
+    ],
+    "we": [
+     "3Gold"
+    ],
+    "te": [
+     "String"
+    ],
+    "wf": [
+     "67"
+    ],
+    "tf": [
+     "int"
+    ],
+    "wg": [
+     "C"
+    ],
+    "tg": [
+     "char"
+    ],
+    "wh": [
+     "2"
+    ],
+    "th": [
+     "int"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "- `7 / 2` → 3 (int)\n- `7 / 2.0` → 3.5 (double)\n- `(double) (7 / 2)` → 3.0 (double)\n- `\"Gold\" + 1 + 2` → Gold12 (String)\n- `1 + 2 + \"Gold\"` → 3Gold (String)\n- `(int) 'A' + 2` → 67 (int)\n- `(char) ('A' + 2)` → C (char)\n- `17 % 5` → 2 (int)"
+    },
+    {
+     "t": "text",
+     "md": "Ganzzahlige Division schneidet ab (7 / 2 = 3); erst ein Kommazahl-Operand macht 3.5. `(double) (7 / 2)` castet zu spät → 3.0. Verkettung wird von links ausgewertet: \"Gold\" + 1 + 2 = \"Gold12\", aber 1 + 2 + \"Gold\" = \"3Gold\". `'A' + 2` ist int (67), erst `(char)` macht wieder ein Zeichen."
+    }
+   ]
+  },
+  {
+   "id": "W6-L1-07",
+   "titel": "P5: Gleich ist nicht gleich",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P5"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P5 – Zeichenketten mit == statt equals**"
+    },
+    {
+     "t": "text",
+     "md": "`zaehle` liefert für die Reihung {\"Ork\", \"Elf\", \"Ork\"} und den Namen \"Ork\" manchmal 0 statt 2."
+    },
+    {
+     "t": "code",
+     "code": "// zaehlt, wie oft name in der Reihung namen vorkommt\npublic static int zaehle(String[] namen, String name) {\n    int anzahl = 0;\n    for (int i = 0; i < namen.length; i++) {\n        if (namen[i] == name) {\n            anzahl = anzahl + 1;\n        }\n    }\n    return anzahl;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Teil 1: Markiere die fehlerhafte Zeile. Teil 2: Korrigiere die Bedingung: `if ([[k]]) {`"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 2,
+     "anzahl": 1
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "k": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 22
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      5
+     ]
+    },
+    {
+     "k": [
+      "namen[i].equals(name)",
+      "name.equals(namen[i])"
+     ]
+    }
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`==` vergleicht bei Objekten die **Referenzen**, nicht den Inhalt. Im Java-Test mit neu erzeugten Zeichenketten liefert die Methode 0 statt 2; mit `equals` 2."
+    },
+    {
+     "t": "hinweis",
+     "md": "P5: In der Online-IDE vergleicht `==` Zeichenketten zwar inhaltlich – im Abitur wird trotzdem `equals` verlangt."
+    }
+   ]
+  },
+  {
+   "id": "W6-L1-08",
+   "titel": "P5: Erlaubte Zeichenketten-Operationen",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Datentypen und Ausdrücke",
+   "fallen": [
+    "P5"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P5 – Zeichenketten mit == statt equals**"
+    },
+    {
+     "t": "text",
+     "md": "Welche Zeichenketten-Operationen sind laut Ergänzenden Hinweisen im Abitur erlaubt?"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "optionen": [
+     {
+      "id": "o0",
+      "md": "`length()`"
+     },
+     {
+      "id": "o1",
+      "md": "`charAt(i)`"
+     },
+     {
+      "id": "o2",
+      "md": "`substring(a, b)`"
+     },
+     {
+      "id": "o3",
+      "md": "`equals(t)`"
+     },
+     {
+      "id": "o4",
+      "md": "`contains(t)`"
+     },
+     {
+      "id": "o5",
+      "md": "`compareTo(t)`"
+     },
+     {
+      "id": "o6",
+      "md": "`toUpperCase()`"
+     },
+     {
+      "id": "o7",
+      "md": "`indexOf(c)`"
+     },
+     {
+      "id": "o8",
+      "md": "`split(\" \")`"
+     },
+     {
+      "id": "o9",
+      "md": "`trim()`"
+     },
+     {
+      "id": "o10",
+      "md": "`replace(a, b)`"
+     }
+    ],
+    "mehrfach": true
+   },
+   "loesung": {
+    "richtig": [
+     "o0",
+     "o1",
+     "o2",
+     "o3",
+     "o4",
+     "o5"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Erlaubt (abschließende Liste): Länge, Zeichen an Position, Teilzeichenkette, Verketten, Gleichheit, enthält, lexikographischer Vergleich, ASCII-Wert ↔ Zeichen – in Java `length()`, `charAt(i)`, `substring(a, b)`, `+`, `equals`, `contains`, `compareTo`, `(int) c` / `(char) n`."
+    },
+    {
+     "t": "text",
+     "md": "Nicht erlaubt: `toUpperCase`, `indexOf`, `split`, `trim`, `replace` (und auch `Integer.parseInt`) – wer sie benutzt, verliert Punkte, selbst wenn das Programm läuft."
+    }
+   ]
+  },
+  {
+   "id": "W6-L2-01",
+   "titel": "P6: Eins zu weit",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P6 – Off-by-one**"
+    },
+    {
+     "t": "text",
+     "md": "`maximum({4, 11, 7})` bricht mit einer ArrayIndexOutOfBoundsException ab."
+    },
+    {
+     "t": "code",
+     "code": "// groesstes Gold in der Reihung r (r nicht leer)\npublic static int maximum(int[] r) {\n    int max = r[0];\n    for (int i = 1; i <= r.length; i++) {\n        if (r[i] > max) {\n            max = r[i];\n        }\n    }\n    return max;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Teil 1: Markiere die Zeile, in der die **Ursache** steht. Teil 2: Korrigiere: `i [[op]] r.length`"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 2,
+     "anzahl": 1
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "op": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 3
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      4
+     ]
+    },
+    {
+     "op": [
+      "<"
+     ]
+    }
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Der Absturz passiert in Zeile 5 (`r[i]` mit i = 3), die Ursache ist die Schleifenbedingung in Zeile 4: Der letzte gültige Index ist `r.length - 1`."
+    },
+    {
+     "t": "text",
+     "md": "Mit `i < r.length`: maximum({4, 11, 7}) = 11, maximum({20}) = 20."
+    },
+    {
+     "t": "hinweis",
+     "md": "P6: Grenzen prüfen – `<` statt `<=`, Start bei 0 oder 1, `getLength() - 1`."
+    }
+   ]
+  },
+  {
+   "id": "W6-L2-02",
+   "titel": "P6: Die binäre Suche nach Truhe 50",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Sortieren und Suchen",
+   "fallen": [
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P6 – Off-by-one**"
+    },
+    {
+     "t": "text",
+     "md": "Klicke nacheinander die Indizes an, die `binaer(r, 50)` als `mid` untersucht."
+    },
+    {
+     "t": "reihung",
+     "werte": [
+      3,
+      8,
+      12,
+      17,
+      21,
+      26,
+      33,
+      40,
+      47,
+      52,
+      58
+     ],
+     "indizes": true
+    },
+    {
+     "t": "code",
+     "code": "public static int binaer(int[] r, int x) {\n    int lo = 0;\n    int hi = r.length - 1;\n    while (lo <= hi) {\n        int mid = (lo + hi) / 2;\n        if (r[mid] == x) {\n            return mid;\n        }\n        if (r[mid] < x) {\n            lo = mid + 1;\n        } else {\n            hi = mid - 1;\n        }\n    }\n    return -1;\n}",
+     "nummern": true
+    }
+   ],
+   "interaktion": {
+    "kind": "array",
+    "modus": "klick",
+    "start": [
+     3,
+     8,
+     12,
+     17,
+     21,
+     26,
+     33,
+     40,
+     47,
+     52,
+     58
+    ]
+   },
+   "loesung": {
+    "folge": [
+     5,
+     8,
+     9
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "lo = 0, hi = 10 → mid = 5 (26 < 50) → lo = 6; mid = 8 (47 < 50) → lo = 9; mid = 9 (52 > 50) → hi = 8; lo > hi → −1."
+    },
+    {
+     "t": "hinweis",
+     "md": "P6: `lo = mid + 1` bzw. `hi = mid - 1` – mit `lo = mid` entstünde bei lo = hi − 1 eine Endlosschleife."
+    }
+   ]
+  },
+  {
+   "id": "W6-L2-03",
+   "titel": "P7: Die Zerlegung der Zauberzahl",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Rekursionstabelle",
+   "fallen": [
+    "P7",
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P7 – Rekursion + P8 – Trace-/Dokumentationstabelle**"
+    },
+    {
+     "t": "text",
+     "md": "Dokumentiere `zerlege(50)` in der Rekursionstabelle. Der Erstaufruf hat die Rekursionstiefe 0."
+    },
+    {
+     "t": "code",
+     "code": "public static int zerlege(int n) {\n    if (n < 3) {\n        return n;\n    }\n    return zerlege(n / 3) + n % 3;\n}",
+     "nummern": true
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Rekursionstiefe",
+      "n",
+      "Rückgabe"
+     ],
+     "zeilen": [
+      [
+       "[[z1a]]",
+       "[[z1b]]",
+       "[[z1c]]"
+      ],
+      [
+       "[[z2a]]",
+       "[[z2b]]",
+       "[[z2c]]"
+      ],
+      [
+       "[[z3a]]",
+       "[[z3b]]",
+       "[[z3c]]"
+      ],
+      [
+       "[[z4a]]",
+       "[[z4b]]",
+       "[[z4c]]"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Wie viele Aufrufe erzeugt `zerlege(500)`? [[a]] · Ergebnis von `zerlege(500)`: [[e]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "z1a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z1b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z1c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "a": {
+      "typ": "zahl"
+     },
+     "e": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "z1a": [
+     "0"
+    ],
+    "z1b": [
+     "50"
+    ],
+    "z1c": [
+     "6"
+    ],
+    "z2a": [
+     "1"
+    ],
+    "z2b": [
+     "16"
+    ],
+    "z2c": [
+     "4"
+    ],
+    "z3a": [
+     "2"
+    ],
+    "z3b": [
+     "5"
+    ],
+    "z3c": [
+     "3"
+    ],
+    "z4a": [
+     "3"
+    ],
+    "z4b": [
+     "1"
+    ],
+    "z4c": [
+     "1"
+    ],
+    "a": [
+     "6"
+    ],
+    "e": [
+     "6"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "50 → 16 → 5 → 1 (ganzzahlige Division durch 3). Rückgaben von innen nach außen: 1, 1 + 5 % 3 = 3, 3 + 16 % 3 = 4, 4 + 50 % 3 = **6**."
+    },
+    {
+     "t": "text",
+     "md": "zerlege bildet die Quersumme in der Dreierdarstellung (50 = 1212₃). 500 → 166 → 55 → 18 → 6 → 2: **6 Aufrufe**, Ergebnis 6."
+    },
+    {
+     "t": "hinweis",
+     "md": "P7: Erstaufruf = Tiefe 0. P8: Jede Zeile vollständig – auch die Rückgabe des Basisfalls."
+    }
+   ]
+  },
+  {
+   "id": "W6-L2-04",
+   "titel": "P7: Das vergessene Ergebnis",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P7"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P7 – Rekursion**"
+    },
+    {
+     "t": "text",
+     "md": "`zaehleGerade({4, 7, 2, 8, 5}, 0)` soll 3 liefern, liefert aber 1."
+    },
+    {
+     "t": "code",
+     "code": "// zaehlt die geraden Werte in r ab Index i\npublic static int zaehleGerade(int[] r, int i) {\n    if (i == r.length) {\n        return 0;\n    }\n    int rest = zaehleGerade(r, i + 1);\n    if (r[i] % 2 == 0) {\n        return 1;\n    }\n    return 0;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Teil 1: Markiere die **zwei** fehlerhaften Zeilen. Teil 2: Korrigiere: Zeile 8 `return [[a]];` und Zeile 10 `return [[b]];`"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 2,
+     "anzahl": 2
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "a": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 10
+      },
+      "b": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 8
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      8,
+      10
+     ]
+    },
+    {
+     "a": [
+      "rest+1",
+      "1+rest"
+     ],
+     "b": [
+      "rest"
+     ]
+    }
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Das Ergebnis des rekursiven Aufrufs (`rest`) wird berechnet, aber nie verwendet – zurückgegeben wird nur, ob r[0] gerade ist."
+    },
+    {
+     "t": "text",
+     "md": "Korrigiert: `return rest + 1;` bzw. `return rest;` → 3 (leere Reihung: 0)."
+    },
+    {
+     "t": "hinweis",
+     "md": "P7: Rekursive Aufrufe liefern Teilergebnisse – sie müssen in die eigene Rückgabe eingehen."
+    }
+   ]
+  },
+  {
+   "id": "W6-L2-05",
+   "titel": "P8: Das Protokoll des Schatzmeisters",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P8 – Trace-/Dokumentationstabelle**"
+    },
+    {
+     "t": "text",
+     "md": "Dokumentiere den Ablauf: eine Zeile vor der Schleife, eine Zeile je Schleifendurchlauf (Werte **am Ende** des Durchlaufs) und eine Zeile mit den Endwerten."
+    },
+    {
+     "t": "code",
+     "code": "int[] r = {4, 9, 2, 9, 6};\nint max = r[0];\nint anzahl = 1;\nfor (int i = 1; i < r.length; i++) {\n    if (r[i] > max) {\n        max = r[i];\n        anzahl = 1;\n    } else if (r[i] == max) {\n        anzahl = anzahl + 1;\n    }\n}",
+     "nummern": true
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "i",
+      "r[i]",
+      "max",
+      "anzahl"
+     ],
+     "zeilen": [
+      [
+       "vor der Schleife",
+       "–",
+       "4",
+       "1"
+      ],
+      [
+       "1",
+       "[[z2b]]",
+       "[[z2c]]",
+       "[[z2d]]"
+      ],
+      [
+       "2",
+       "[[z3b]]",
+       "[[z3c]]",
+       "[[z3d]]"
+      ],
+      [
+       "3",
+       "[[z4b]]",
+       "[[z4c]]",
+       "[[z4d]]"
+      ],
+      [
+       "4",
+       "[[z5b]]",
+       "[[z5c]]",
+       "[[z5d]]"
+      ],
+      [
+       "Ende: i = [[ie]]",
+       "–",
+       "[[z6c]]",
+       "[[z6d]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "z2c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2d": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3d": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4d": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z5c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z5d": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z6c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z6d": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "ie": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z5b": {
+      "typ": "zahl",
+      "breite": 4
+     }
+    }
+   },
+   "loesung": {
+    "z2c": [
+     "9"
+    ],
+    "z2d": [
+     "1"
+    ],
+    "z3c": [
+     "9"
+    ],
+    "z3d": [
+     "1"
+    ],
+    "z4c": [
+     "9"
+    ],
+    "z4d": [
+     "2"
+    ],
+    "z5c": [
+     "9"
+    ],
+    "z5d": [
+     "2"
+    ],
+    "z6c": [
+     "9"
+    ],
+    "z6d": [
+     "2"
+    ],
+    "ie": [
+     "5"
+    ],
+    "z2b": [
+     "9"
+    ],
+    "z3b": [
+     "2"
+    ],
+    "z4b": [
+     "9"
+    ],
+    "z5b": [
+     "6"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "max und anzahl werden nur geändert, wenn ein größerer bzw. gleich großer Wert kommt: Bei der zweiten 9 (i = 3) wird anzahl 2. Nach der Schleife ist i = 5 – die Schleife bricht ab, weil i < r.length falsch ist. Ergebnis: max = 9, anzahl = 2."
+    },
+    {
+     "t": "hinweis",
+     "md": "P8: Vorgegebene Spalten vollständig, jede Wertänderung, und die **Endwerte** (auch der Zähler hat einen Endwert!)."
+    }
+   ]
+  },
+  {
+   "id": "W6-L2-06",
+   "titel": "P9: Notations-Polizei",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Fehler im Struktogramm",
+   "fallen": [
+    "P9",
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P9 – Struktogramm nicht nach EH §5 + P6 – Off-by-one**"
+    },
+    {
+     "t": "text",
+     "md": "Inhaltlich soll das Struktogramm die Summe der geraden Werte liefern. Welche Mängel würden im Abitur Punkte kosten?"
+    },
+    {
+     "t": "struktogramm",
+     "kopf": "summeGerade(r: Reihung von Ganzzahl): Ganzzahl",
+     "rumpf": [
+      {
+       "anw": "summe = 0"
+      },
+      {
+       "zaehle": "für i von 0 bis r.length",
+       "rumpf": [
+        {
+         "wenn": "r[i] % 2 == 0",
+         "dann": [
+          {
+           "anw": "summe += r[i];"
+          }
+         ],
+         "sonst": []
+        }
+       ]
+      },
+      {
+       "anw": "return summe;"
+      }
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "optionen": [
+     {
+      "id": "a",
+      "md": "Zuweisung mit `=` statt `←`"
+     },
+     {
+      "id": "b",
+      "md": "Zählschleife bis `r.length` statt bis `r.length − 1`"
+     },
+     {
+      "id": "c",
+      "md": "Java-Operatoren in der Bedingung bzw. Anweisung (`%`, `==`, `+=`, `;`) statt `mod`, `=`, `←`"
+     },
+     {
+      "id": "d",
+      "md": "`return summe;` statt „gib summe zurück“"
+     },
+     {
+      "id": "e",
+      "md": "Die Verzweigung bräuchte einen Sonst-Zweig mit Inhalt"
+     },
+     {
+      "id": "f",
+      "md": "Der Kopf dürfte keinen Rückgabetyp enthalten"
+     }
+    ],
+    "mehrfach": true
+   },
+   "loesung": {
+    "richtig": [
+     "a",
+     "b",
+     "c",
+     "d"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Richtig nach EH §5: „summe ← 0“, „für i von 0 bis r.length − 1“, Bedingung „r[i] mod 2 = 0“, „summe ← summe + r[i]“, „gib summe zurück“."
+    },
+    {
+     "t": "text",
+     "md": "Ein leerer Sonst-Zweig ist erlaubt, und der Kopf enthält die vollständige Signatur mit Rückgabetyp."
+    }
+   ]
+  },
+  {
+   "id": "W6-L2-07",
+   "titel": "P9: Vom Code zum Struktogramm",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Code ↔ Struktogramm",
+   "fallen": [
+    "P9",
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P9 – Struktogramm nicht nach EH §5 + P6 – Off-by-one**"
+    },
+    {
+     "t": "text",
+     "md": "Übersetze die Methode in ein Struktogramm nach EH §5 – ergänze die Lücken (keine Java-Syntax!)."
+    },
+    {
+     "t": "code",
+     "code": "public static int anzahlUeber(int[] r, int grenze) {\n    int anzahl = 0;\n    for (int i = 0; i < r.length; i++) {\n        if (r[i] > grenze) {\n            anzahl++;\n        }\n    }\n    return anzahl;\n}",
+     "nummern": true
+    },
+    {
+     "t": "struktogramm",
+     "kopf": "anzahlUeber(r: Reihung von Ganzzahl, grenze: Ganzzahl): Ganzzahl",
+     "rumpf": [
+      {
+       "anw": "anzahl ← [[a]]"
+      },
+      {
+       "zaehle": "für i von 0 bis [[b]]",
+       "rumpf": [
+        {
+         "wenn": "r[i] > grenze",
+         "dann": [
+          {
+           "anw": "anzahl ← [[c]]"
+          }
+         ],
+         "sonst": []
+        }
+       ]
+      },
+      {
+       "gib": "[[d]]"
+      }
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "a": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 4
+     },
+     "b": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 14
+     },
+     "c": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 12
+     },
+     "d": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 8
+     }
+    }
+   },
+   "loesung": {
+    "a": [
+     "0"
+    ],
+    "b": [
+     "r.length − 1",
+     "r.length - 1",
+     "r.length−1",
+     "r.length-1",
+     "Länge(r) − 1",
+     "Länge(r) - 1",
+     "länge(r)-1",
+     "länge(r)−1"
+    ],
+    "c": [
+     "anzahl + 1",
+     "anzahl+1",
+     "1 + anzahl"
+    ],
+    "d": [
+     "anzahl"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`i < r.length` heißt in der Zählschleife „für i von 0 bis r.length − 1“ (P6). `anzahl++` wird zu „anzahl ← anzahl + 1“, `return` zu „gib anzahl zurück“ (P9)."
+    },
+    {
+     "t": "hinweis",
+     "md": "Im Struktogramm keine `;`, kein `++`, kein `==` – Zuweisung immer mit ←."
+    }
+   ]
+  },
+  {
+   "id": "W6-L2-08",
+   "titel": "P10: Behaupten ist nicht begründen",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Funktionsweise erläutern",
+   "fallen": [
+    "P10"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P10 – Operator verfehlt**"
+    },
+    {
+     "t": "text",
+     "md": "Aufgabe im Abi-Stil: „**Begründen** Sie, dass für die Rückgängig-Funktion des Level-Editors ein Stapel geeignet ist.“ [2 BE] – Welche Antwort erhält die volle Punktzahl?"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "optionen": [
+     {
+      "id": "a",
+      "md": "Ein Stapel arbeitet nach dem LIFO-Prinzip."
+     },
+     {
+      "id": "b",
+      "md": "Weil man beim Stapel nur oben etwas ablegen und wegnehmen kann, ist er besser als eine Schlange."
+     },
+     {
+      "id": "c",
+      "md": "Rückgängig gemacht wird immer die **zuletzt** ausgeführte Änderung. Jede Änderung wird mit push oben abgelegt; pop liefert genau die jüngste – nach dem LIFO-Prinzip. Wiederholtes Rückgängigmachen geht so Schritt für Schritt in umgekehrter Reihenfolge zurück; beliebigen Zugriff wie bei einer dynamischen Reihung braucht man nicht."
+     },
+     {
+      "id": "d",
+      "md": "Stapel sind schneller als dynamische Reihungen."
+     }
+    ],
+    "mehrfach": false
+   },
+   "loesung": {
+    "richtig": [
+     "c"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "a) nennt nur das Prinzip – ohne Bezug zur Rückgängig-Funktion (0–1 BE). b) behauptet „besser“ ohne Grund. d) ist eine unbegründete (und so falsche) Behauptung."
+    },
+    {
+     "t": "text",
+     "md": "c) verbindet Anforderung (die jüngste Änderung zuerst zurücknehmen) mit der Arbeitsweise (push/pop, LIFO) und grenzt ab – das ist **begründen**."
+    },
+    {
+     "t": "hinweis",
+     "md": "P10: „begründen“ = Aussage auf Eigenschaften der Struktur **und** auf den Kontext aus dem Material zurückführen."
+    }
+   ]
+  },
+  {
+   "id": "W6-L3-01",
+   "titel": "Welt 0: Ausdrücke am Portal",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Datentypen und Ausdrücke",
+   "fallen": [
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P4 – Typen und Casts**"
+    },
+    {
+     "t": "text",
+     "md": "Es gilt `int x = 14;`. Gib den Wert jedes Ausdrucks an."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Ausdruck",
+      "Wert"
+     ],
+     "zeilen": [
+      [
+       "`x % 4 == 2`",
+       "[[a]]"
+      ],
+      [
+       "`x / 4 * 4`",
+       "[[b]]"
+      ],
+      [
+       "`x > 10 && x % 2 == 1`",
+       "[[c]]"
+      ],
+      [
+       "`!(x < 10) || x == 3`",
+       "[[d]]"
+      ],
+      [
+       "`(double) x / 4`",
+       "[[e]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "a": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "b": {
+      "typ": "zahl",
+      "breite": 5
+     },
+     "c": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "d": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "e": {
+      "typ": "zahl",
+      "breite": 5
+     }
+    }
+   },
+   "loesung": {
+    "a": [
+     "true"
+    ],
+    "b": [
+     "12"
+    ],
+    "c": [
+     "false"
+    ],
+    "d": [
+     "true"
+    ],
+    "e": [
+     "3.5"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "- `x % 4 == 2` → true\n- `x / 4 * 4` → 12\n- `x > 10 && x % 2 == 1` → false\n- `!(x < 10) || x == 3` → true\n- `(double) x / 4` → 3.5"
+    },
+    {
+     "t": "text",
+     "md": "14 / 4 = 3 (ganzzahlig), · 4 = 12. Erst `(double) x` macht aus der Division eine Kommazahl-Division: 3.5."
+    }
+   ]
+  },
+  {
+   "id": "W6-L3-02",
+   "titel": "Welt 1: Zwei Namen, ein Held",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Objektkarten und Referenzen",
+   "fallen": [
+    "P5"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P5 – Zeichenketten mit == statt equals**"
+    },
+    {
+     "t": "text",
+     "md": "Held wie in der Heldenschmiede (`Held(name)` setzt leben = 100; `nimmSchaden` und `heilen` verändern leben). Nach dem Code:"
+    },
+    {
+     "t": "code",
+     "code": "Held a = new Held(\"Aria\");\nHeld b = new Held(\"Bo\");\nHeld c = a;\nc.nimmSchaden(30);\nb = c;\nb.heilen(10);\na = new Held(\"Aria\");",
+     "nummern": true
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Frage",
+      "Antwort"
+     ],
+     "zeilen": [
+      [
+       "Wie viele Held-Objekte wurden erzeugt?",
+       "[[n]]"
+      ],
+      [
+       "`c.getLeben()`",
+       "[[c]]"
+      ],
+      [
+       "`a.getLeben()`",
+       "[[a]]"
+      ],
+      [
+       "`a == c`",
+       "[[ac]]"
+      ],
+      [
+       "`b == c`",
+       "[[bc]]"
+      ],
+      [
+       "`a.getName().equals(c.getName())`",
+       "[[eq]]"
+      ],
+      [
+       "Auf welches Objekt zeigt keine Variable mehr? (Name)",
+       "[[weg]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "n": {
+      "typ": "zahl"
+     },
+     "c": {
+      "typ": "zahl"
+     },
+     "a": {
+      "typ": "zahl"
+     },
+     "ac": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "bc": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "eq": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "weg": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 6
+     }
+    }
+   },
+   "loesung": {
+    "n": [
+     "3"
+    ],
+    "c": [
+     "80"
+    ],
+    "a": [
+     "100"
+    ],
+    "ac": [
+     "false"
+    ],
+    "bc": [
+     "true"
+    ],
+    "eq": [
+     "true"
+    ],
+    "weg": [
+     "Bo"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`new` wird dreimal ausgeführt → 3 Objekte. c zeigt auf die erste Aria (leben 100 − 30 + 10 = 80), ab Zeile 5 auch b. In Zeile 7 bekommt a ein **neues** Objekt (leben 100)."
+    },
+    {
+     "t": "text",
+     "md": "`a == c` vergleicht Referenzen → false (zwei verschiedene Objekte), `b == c` → true. Die Namen sind inhaltlich gleich → `equals` liefert true. Das Objekt „Bo“ ist nicht mehr erreichbar."
+    },
+    {
+     "t": "hinweis",
+     "md": "P5: `==` prüft Identität (dasselbe Objekt), `equals` den Inhalt – deshalb Zeichenketten immer mit equals."
+    }
+   ]
+  },
+  {
+   "id": "W6-L3-03",
+   "titel": "Welt 1: Klassendiagramm lesen",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Klassendiagramm",
+   "fallen": [
+    "P10"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P10 – Operator verfehlt**"
+    },
+    {
+     "t": "text",
+     "md": "Ordne jedes Element eines Klassendiagramms nach EH §6 dem richtigen Fachbegriff zu."
+    },
+    {
+     "t": "klassenkarte",
+     "name": "Held",
+     "attribute": [
+      "- leben: Ganzzahl",
+      "…"
+     ],
+     "methoden": [
+      "+ c Held(name: Zeichenkette)",
+      "+ getLeben(): Ganzzahl",
+      "+ nimmSchaden(schaden: Ganzzahl): nichts"
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "match",
+    "elemente": [
+     {
+      "id": "e1",
+      "md": "`- leben: Ganzzahl`"
+     },
+     {
+      "id": "e2",
+      "md": "`+ c Held(name: Zeichenkette)`"
+     },
+     {
+      "id": "e3",
+      "md": "`+ getLeben(): Ganzzahl`"
+     },
+     {
+      "id": "e4",
+      "md": "`+ nimmSchaden(schaden: Ganzzahl): nichts`"
+     },
+     {
+      "id": "e5",
+      "md": "Linie mit hohler Dreiecksspitze von Waffe zu Gegenstand"
+     },
+     {
+      "id": "e6",
+      "md": "einfache, unbeschriftete Linie zwischen Held und Waffe"
+     }
+    ],
+    "kategorien": [
+     {
+      "id": "k1",
+      "md": "privates Attribut"
+     },
+     {
+      "id": "k2",
+      "md": "Konstruktor"
+     },
+     {
+      "id": "k3",
+      "md": "Methode mit Rückgabe (Anfrage)"
+     },
+     {
+      "id": "k4",
+      "md": "Methode ohne Rückgabe (Auftrag)"
+     },
+     {
+      "id": "k5",
+      "md": "Vererbung"
+     },
+     {
+      "id": "k6",
+      "md": "Assoziation"
+     }
+    ]
+   },
+   "loesung": {
+    "e1": "k1",
+    "e2": "k2",
+    "e3": "k3",
+    "e4": "k4",
+    "e5": "k5",
+    "e6": "k6"
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`-` = privat, `+` = öffentlich, `c` kennzeichnet den Konstruktor. „nichts“ als Rückgabetyp = Auftrag (void). Vererbung: hohle Dreiecksspitze zur Oberklasse; Assoziation: einfache Linie ohne Kardinalitäten."
+    },
+    {
+     "t": "hinweis",
+     "md": "P10: In Erläuterungen die Fachbegriffe verwenden (Attribut, Konstruktor, Sichtbarkeit, Vererbung) – nicht „das Ding mit dem c“."
+    }
+   ]
+  },
+  {
+   "id": "W6-L3-04",
+   "titel": "Welt 2: Selectionsort in der Rangliste",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Sortieren und Suchen",
+   "fallen": [
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P6 – Off-by-one**"
+    },
+    {
+     "t": "text",
+     "md": "Sortiere **aufsteigend** mit Selectionsort: Für i von 0 bis n − 2 wird das Minimum von r[i] … r[n − 1] gesucht und mit r[i] getauscht – aber nur, wenn es nicht schon an Position i steht. Führe alle Tausche aus und klicke dann auf „fertig“."
+    }
+   ],
+   "interaktion": {
+    "kind": "array",
+    "modus": "tausch",
+    "start": [
+     29,
+     14,
+     37,
+     8,
+     21
+    ],
+    "fertigKnopf": true
+   },
+   "loesung": {
+    "tausche": [
+     [
+      0,
+      3
+     ],
+     [
+      2,
+      4
+     ]
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "i = 0: Minimum 8 (Index 3) → tausche 0 und 3. i = 1: Minimum 14 steht schon richtig → kein Tausch. i = 2: Minimum 21 (Index 4) → tausche 2 und 4. i = 3: 29 steht richtig. Ergebnis [8, 14, 21, 29, 37] mit 10 Vergleichen (= 5 · 4 / 2)."
+    },
+    {
+     "t": "hinweis",
+     "md": "P6: Die äußere Schleife läuft nur bis n − 2, die innere Suche beginnt bei i + 1."
+    }
+   ]
+  },
+  {
+   "id": "W6-L3-05",
+   "titel": "Welt 2: Insertionsort mit Nachbartauschen",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Sortieren und Suchen",
+   "fallen": [
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P6 – Off-by-one**"
+    },
+    {
+     "t": "text",
+     "md": "Sortiere **aufsteigend** mit Insertionsort: Für i von 1 bis n − 1 wandert r[i] durch **Tausche benachbarter Elemente** nach links, solange sein linker Nachbar größer ist. Führe alle Tausche in der richtigen Reihenfolge aus."
+    }
+   ],
+   "interaktion": {
+    "kind": "array",
+    "modus": "tausch",
+    "start": [
+     5,
+     2,
+     8,
+     1,
+     6
+    ],
+    "fertigKnopf": true
+   },
+   "loesung": {
+    "tausche": [
+     [
+      0,
+      1
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      0,
+      1
+     ],
+     [
+      3,
+      4
+     ]
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "i = 1: 2 < 5 → (0,1). i = 2: 8 bleibt. i = 3: 1 wandert dreimal: (2,3), (1,2), (0,1). i = 4: 6 < 8 → (3,4), dann 6 > 5 – Stopp. Ergebnis [1, 2, 5, 6, 8]."
+    },
+    {
+     "t": "hinweis",
+     "md": "P6: Die Schleife beginnt bei i = 1 (ein einzelnes Element ist schon sortiert) und muss bei j = 0 stoppen."
+    }
+   ]
+  },
+  {
+   "id": "W6-L3-06",
+   "titel": "Welt 2: Verdopplung abschätzen",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Effizienz",
+   "fallen": [
+    "P10"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P10 – Operator verfehlt**"
+    },
+    {
+     "t": "text",
+     "md": "Selectionsort braucht bei n Werten n(n − 1)/2 Vergleiche. Die binäre Suche braucht höchstens ⌊log₂ n⌋ + 1 Schleifendurchläufe.\n\n- Vergleiche bei n = 10: [[v10]] · bei n = 20: [[v20]]\n- Durchläufe der binären Suche höchstens bei n = 1000: [[b1000]] · bei n = 2000: [[b2000]]"
+    },
+    {
+     "t": "text",
+     "md": "Welche Abschätzung ist richtig begründet?"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "gaps",
+     "felder": {
+      "v10": {
+       "typ": "zahl"
+      },
+      "v20": {
+       "typ": "zahl"
+      },
+      "b1000": {
+       "typ": "zahl"
+      },
+      "b2000": {
+       "typ": "zahl"
+      }
+     }
+    },
+    {
+     "kind": "choice",
+     "optionen": [
+      {
+       "id": "a",
+       "md": "Verdoppelt sich n, vervierfacht sich ungefähr die Zahl der Vergleiche von Selectionsort (n² wächst mit 2² = 4), die binäre Suche braucht nur einen Durchlauf mehr, weil sich der Suchbereich je Durchlauf halbiert."
+      },
+      {
+       "id": "b",
+       "md": "Beide Verfahren brauchen bei doppeltem n doppelt so viele Schritte."
+      },
+      {
+       "id": "c",
+       "md": "Selectionsort braucht doppelt so viele, die binäre Suche gleich viele Schritte."
+      },
+      {
+       "id": "d",
+       "md": "Man kann das ohne O-Notation nicht abschätzen."
+      }
+     ],
+     "mehrfach": false
+    }
+   ],
+   "loesung": [
+    {
+     "v10": [
+      "45"
+     ],
+     "v20": [
+      "190"
+     ],
+     "b1000": [
+      "10"
+     ],
+     "b2000": [
+      "11"
+     ]
+    },
+    {
+     "richtig": [
+      "a"
+     ]
+    }
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "10 · 9 / 2 = 45, 20 · 19 / 2 = 190 ≈ 4 · 45. Binäre Suche: 2⁹ = 512 ≤ 1000 < 1024 → 10 Durchläufe, 2000 → 11 (per Java für alle Suchwerte nachgezählt)."
+    },
+    {
+     "t": "hinweis",
+     "md": "P10: Im Abitur wird Effizienz durch **Zählen** und **Verdopplung** beurteilt – mit Begründung, nicht als bloße Zahl."
+    }
+   ]
+  },
+  {
+   "id": "W6-L3-07",
+   "titel": "Welt 2: Trace der binären Suche",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P8",
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P8 – Trace-/Dokumentationstabelle + P6 – Off-by-one**"
+    },
+    {
+     "t": "text",
+     "md": "Dokumentiere `binaer(r, 52)`: eine Zeile je Schleifendurchlauf mit den Werten von lo, hi, mid und r[mid] **zu Beginn der Prüfung**. Gib danach die Rückgabe an: [[erg]]"
+    },
+    {
+     "t": "reihung",
+     "werte": [
+      6,
+      11,
+      17,
+      24,
+      30,
+      36,
+      45,
+      52,
+      60
+     ],
+     "indizes": true
+    },
+    {
+     "t": "code",
+     "code": "public static int binaer(int[] r, int x) {\n    int lo = 0;\n    int hi = r.length - 1;\n    while (lo <= hi) {\n        int mid = (lo + hi) / 2;\n        if (r[mid] == x) {\n            return mid;\n        }\n        if (r[mid] < x) {\n            lo = mid + 1;\n        } else {\n            hi = mid - 1;\n        }\n    }\n    return -1;\n}",
+     "nummern": true
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "lo",
+      "hi",
+      "mid",
+      "r[mid]"
+     ],
+     "zeilen": [
+      [
+       "[[z1a]]",
+       "[[z1b]]",
+       "[[z1c]]",
+       "[[z1d]]"
+      ],
+      [
+       "[[z2a]]",
+       "[[z2b]]",
+       "[[z2c]]",
+       "[[z2d]]"
+      ],
+      [
+       "[[z3a]]",
+       "[[z3b]]",
+       "[[z3c]]",
+       "[[z3d]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "z1a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z1b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z1c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z1d": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2d": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3d": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "erg": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "z1a": [
+     "0"
+    ],
+    "z1b": [
+     "8"
+    ],
+    "z1c": [
+     "4"
+    ],
+    "z1d": [
+     "30"
+    ],
+    "z2a": [
+     "5"
+    ],
+    "z2b": [
+     "8"
+    ],
+    "z2c": [
+     "6"
+    ],
+    "z2d": [
+     "45"
+    ],
+    "z3a": [
+     "7"
+    ],
+    "z3b": [
+     "8"
+    ],
+    "z3c": [
+     "7"
+    ],
+    "z3d": [
+     "52"
+    ],
+    "erg": [
+     "7"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "lo = 0, hi = 8 → mid = 4 (r[mid] = 30); lo = 5, hi = 8 → mid = 6 (r[mid] = 45); lo = 7, hi = 8 → mid = 7 (r[mid] = 52) → gefunden, Rückgabe **7**. Bei r[mid] < x wird lo = mid + 1, sonst hi = mid − 1."
+    },
+    {
+     "t": "hinweis",
+     "md": "P8: mid ganzzahlig berechnen; jede Zeile vollständig ausfüllen."
+    }
+   ]
+  },
+  {
+   "id": "W6-L3-08",
+   "titel": "Welt 1: Klasse oder Objekt?",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Klasse vs. Objekt",
+   "fallen": [
+    "P10"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P10 – Operator verfehlt**"
+    },
+    {
+     "t": "text",
+     "md": "Welche Aussagen sind fachlich richtig?"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "optionen": [
+     {
+      "id": "a",
+      "md": "Ein Objekt ist ein Exemplar einer Klasse mit eigenen Attributwerten."
+     },
+     {
+      "id": "b",
+      "md": "Der Konstruktor erzeugt ein Objekt und belegt seine Attribute mit Anfangswerten."
+     },
+     {
+      "id": "c",
+      "md": "Von einer Klasse kann es nur ein Objekt geben."
+     },
+     {
+      "id": "d",
+      "md": "Private Attribute sind nur innerhalb der Klasse zugreifbar; von außen greift man über öffentliche Methoden zu (Kapselung)."
+     },
+     {
+      "id": "e",
+      "md": "Zwei Variablen, die auf dasselbe Objekt zeigen, bedeuten zwei Objekte."
+     }
+    ],
+    "mehrfach": true
+   },
+   "loesung": {
+    "richtig": [
+     "a",
+     "b",
+     "d"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Eine Klasse ist der Bauplan, beliebig viele Objekte können nach ihr erzeugt werden. Zwei Referenzen auf dasselbe Objekt sind **ein** Objekt (siehe „Zwei Namen, ein Held“)."
+    },
+    {
+     "t": "hinweis",
+     "md": "P10: „erläutern“ heißt, diese Begriffe am Material zu zeigen – z. B. welcher Konstruktor welche Attribute setzt."
+    }
+   ]
+  },
+  {
+   "id": "W6-L4-01",
+   "titel": "Welt 3: Rekursive binäre Suche",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Rekursionstabelle",
+   "fallen": [
+    "P7",
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P7 – Rekursion + P8 – Trace-/Dokumentationstabelle**"
+    },
+    {
+     "t": "text",
+     "md": "Dokumentiere `binaerRek(r, 10, 0, 7)` in der Rekursionstabelle (bei lo > hi bleibt mid „–“)."
+    },
+    {
+     "t": "reihung",
+     "werte": [
+      2,
+      5,
+      9,
+      13,
+      18,
+      24,
+      30,
+      37
+     ],
+     "indizes": true
+    },
+    {
+     "t": "code",
+     "code": "public static int binaerRek(int[] r, int x, int lo, int hi) {\n    if (lo > hi) {\n        return -1;\n    }\n    int mid = (lo + hi) / 2;\n    if (r[mid] == x) {\n        return mid;\n    }\n    if (r[mid] < x) {\n        return binaerRek(r, x, mid + 1, hi);\n    }\n    return binaerRek(r, x, lo, mid - 1);\n}",
+     "nummern": true
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Rekursionstiefe",
+      "lo",
+      "hi",
+      "mid",
+      "Rückgabe"
+     ],
+     "zeilen": [
+      [
+       "0",
+       "0",
+       "7",
+       "3",
+       "[[r0]]"
+      ],
+      [
+       "[[z2a]]",
+       "[[z2b]]",
+       "[[z2c]]",
+       "[[z2d]]",
+       "[[z2e]]"
+      ],
+      [
+       "[[z3a]]",
+       "[[z3b]]",
+       "[[z3c]]",
+       "[[z3d]]",
+       "[[z3e]]"
+      ],
+      [
+       "[[z4a]]",
+       "[[z4b]]",
+       "[[z4c]]",
+       "–",
+       "[[z4e]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "z2a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2d": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2e": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3d": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3e": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4e": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "r0": {
+      "typ": "zahl",
+      "breite": 4
+     }
+    }
+   },
+   "loesung": {
+    "z2a": [
+     "1"
+    ],
+    "z2b": [
+     "0"
+    ],
+    "z2c": [
+     "2"
+    ],
+    "z2d": [
+     "1"
+    ],
+    "z2e": [
+     "-1"
+    ],
+    "z3a": [
+     "2"
+    ],
+    "z3b": [
+     "2"
+    ],
+    "z3c": [
+     "2"
+    ],
+    "z3d": [
+     "2"
+    ],
+    "z3e": [
+     "-1"
+    ],
+    "z4a": [
+     "3"
+    ],
+    "z4b": [
+     "3"
+    ],
+    "z4c": [
+     "2"
+    ],
+    "z4e": [
+     "-1"
+    ],
+    "r0": [
+     "-1"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "(0, 7, mid 3): 13 > 10 → links. (0, 2, mid 1): 5 < 10 → rechts. (2, 2, mid 2): 9 < 10 → rechts. (3, 2): lo > hi → −1. Die −1 wird unverändert nach außen gereicht."
+    },
+    {
+     "t": "hinweis",
+     "md": "P7: Erstaufruf Tiefe 0, auch der Basisfall-Aufruf bekommt eine Zeile."
+    }
+   ]
+  },
+  {
+   "id": "W6-L4-02",
+   "titel": "Welt 3: Nebel lüften",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Funktionsweise erläutern",
+   "fallen": [
+    "P1"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P1 – Laufzeitfehler nicht ausgeschlossen**"
+    },
+    {
+     "t": "text",
+     "md": "Die Dungeon-Karte ist eine 2D-Reihung [Zeile][Spalte]: 0 = frei, 1 = Wand. Der rekursive Flood-Fill startet bei [0][0] und lüftet alle freien Felder, die über die 4er-Nachbarschaft (oben, rechts, unten, links) erreichbar sind. Markiere alle gelüfteten Felder."
+    },
+    {
+     "t": "raster",
+     "zeilen": [
+      [
+       0,
+       0,
+       1,
+       0,
+       0,
+       0
+      ],
+      [
+       1,
+       0,
+       1,
+       0,
+       1,
+       0
+      ],
+      [
+       0,
+       0,
+       0,
+       0,
+       1,
+       0
+      ],
+      [
+       0,
+       1,
+       1,
+       1,
+       1,
+       1
+      ],
+      [
+       0,
+       0,
+       1,
+       0,
+       0,
+       0
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "grid",
+    "raster": [
+     [
+      0,
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     [
+      1,
+      0,
+      1,
+      0,
+      1,
+      0
+     ],
+     [
+      0,
+      0,
+      0,
+      0,
+      1,
+      0
+     ],
+     [
+      0,
+      1,
+      1,
+      1,
+      1,
+      1
+     ],
+     [
+      0,
+      0,
+      1,
+      0,
+      0,
+      0
+     ]
+    ]
+   },
+   "loesung": {
+    "zellen": [
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      1
+     ],
+     [
+      0,
+      3
+     ],
+     [
+      0,
+      4
+     ],
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      3,
+      0
+     ],
+     [
+      4,
+      0
+     ],
+     [
+      4,
+      1
+     ]
+    ],
+    "reihenfolge": false
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Erreichbar sind 16 freie Felder – auch über den Umweg durch Zeile 0 bis in Spalte 5 und über [3][0] nach unten links. Nicht erreichbar: [4][3], [4][4], [4][5] – die Wände [3][1] bis [3][5] und [4][2] schneiden sie ab, diagonal geht es nicht weiter."
+    },
+    {
+     "t": "hinweis",
+     "md": "P1: Vor jedem Zugriff `karte[z][s]` prüfen, ob 0 ≤ z < Zeilenzahl und 0 ≤ s < Spaltenzahl – sonst stürzt der Flood-Fill am Rand ab."
+    }
+   ]
+  },
+  {
+   "id": "W6-L4-03",
+   "titel": "Welt 4: Stapel und Schlange im Wechsel",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P8 – Trace-/Dokumentationstabelle**"
+    },
+    {
+     "t": "text",
+     "md": "q ist eine Schlange vom Inhaltstyp Ganzzahl mit (vorn → hinten) 3, 7, 1, 9; s ist ein leerer Stapel. Danach wird ausgeführt:"
+    },
+    {
+     "t": "adt",
+     "art": "schlange",
+     "inhalt": [
+      3,
+      7,
+      1,
+      9
+     ]
+    },
+    {
+     "t": "code",
+     "code": "s.push(q.dequeue());\nq.enqueue(s.top());\ns.push(q.dequeue());\nq.enqueue(s.pop());\ns.push(q.dequeue());\ns.push(q.head());",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Teil 1: Inhalt von s (unten → oben). Teil 2: Inhalt von q (vorn → hinten)."
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "adtsim",
+     "art": "stapel",
+     "start": []
+    },
+    {
+     "kind": "adtsim",
+     "art": "schlange",
+     "start": [
+      3,
+      7,
+      1,
+      9
+     ]
+    }
+   ],
+   "loesung": [
+    {
+     "inhalt": [
+      "3",
+      "1",
+      "9"
+     ]
+    },
+    {
+     "inhalt": [
+      "9",
+      "3",
+      "7"
+     ]
+    }
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "1: s = 3; q = 7 1 9 · 2: q = 7 1 9 3 (top lässt die 3 im Stapel) · 3: s = 3 7; q = 1 9 3 · 4: q = 1 9 3 7; s = 3 · 5: s = 3 1; q = 9 3 7 · 6: `head` entnimmt nicht → s = 3 1 9, q = 9 3 7."
+    },
+    {
+     "t": "hinweis",
+     "md": "P8: Nach jedem Befehl den Zustand notieren; `top`/`head` lesen nur, `pop`/`dequeue` entnehmen."
+    }
+   ]
+  },
+  {
+   "id": "W6-L4-04",
+   "titel": "Welt 4: Das Inventar als dynamische Reihung",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P6 – Off-by-one**"
+    },
+    {
+     "t": "text",
+     "md": "Gib den Inhalt von d nach allen Befehlen an (Index 0 zuerst)."
+    },
+    {
+     "t": "code",
+     "code": "DynArray d = new DynArray();\nd.append(\"Axt\");\nd.append(\"Bogen\");\nd.insertAt(1, \"Dolch\");\nd.append(\"Elixier\");\nd.delete(0);\nd.setItem(1, \"Fackel\");\nd.insertAt(3, \"Gift\");",
+     "nummern": true
+    }
+   ],
+   "interaktion": {
+    "kind": "adtsim",
+    "art": "dynarray",
+    "start": []
+   },
+   "loesung": {
+    "inhalt": [
+     "Dolch",
+     "Fackel",
+     "Elixier",
+     "Gift"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Axt, Bogen → insertAt(1) schiebt Bogen nach rechts: Axt, Dolch, Bogen → + Elixier → delete(0): Dolch, Bogen, Elixier → setItem(1) ersetzt Bogen: Dolch, Fackel, Elixier → insertAt(3, …) mit 3 = getLength() hängt an: **Dolch, Fackel, Elixier, Gift**."
+    },
+    {
+     "t": "hinweis",
+     "md": "P6: Nach insertAt und delete verschieben sich die Indizes der folgenden Elemente."
+    }
+   ]
+  },
+  {
+   "id": "W6-L4-05",
+   "titel": "Welt 5: Suche ohne Boden",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P1",
+    "P7"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P1 – Laufzeitfehler nicht ausgeschlossen + P7 – Rekursion**"
+    },
+    {
+     "t": "text",
+     "md": "Die Suche im binären Suchbaum funktioniert, solange x vorkommt. `suche(20(10,30), 25)` stürzt ab."
+    },
+    {
+     "t": "code",
+     "code": "public static boolean suche(BinTree b, int x) {\n    int wert = (Integer) b.getItem();\n    if (x == wert) {\n        return true;\n    }\n    if (x < wert) {\n        return suche(b.getLeft(), x);\n    }\n    return suche(b.getRight(), x);\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Teil 1: Markiere die Zeile mit dem Laufzeitfehler. Teil 2: Ergänze den fehlenden Basisfall am Anfang der Methode: `if ([[a]]) { return [[b]]; }`"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 2,
+     "anzahl": 1
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "a": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 14
+      },
+      "b": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 6
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      2
+     ]
+    },
+    {
+     "a": [
+      "b.isEmpty()"
+     ],
+     "b": [
+      "false"
+     ]
+    }
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Bei 25 geht die Suche 20 → rechts → 30 → links in den **leeren** Teilbaum; dort ruft Zeile 2 `getItem()` auf → IllegalStateException."
+    },
+    {
+     "t": "text",
+     "md": "Mit dem Basisfall `if (b.isEmpty()) { return false; }`: 25 → false, 10 → true, leerer Baum → false."
+    },
+    {
+     "t": "hinweis",
+     "md": "P1 + P7: Der Basisfall „leerer Baum“ steht in jeder rekursiven Baummethode ganz oben."
+    }
+   ]
+  },
+  {
+   "id": "W6-L4-06",
+   "titel": "Welt 3: Quicksort zerlegt",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Sortieren und Suchen",
+   "fallen": [
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P6 – Off-by-one**"
+    },
+    {
+     "t": "text",
+     "md": "Führe `zerlege(r, 0, 6)` aus: Pivot = r[lo]; grenze ← lo; für i von lo + 1 bis hi: falls r[i] < pivot, dann grenze ← grenze + 1 und tausche r[grenze] und r[i]. Zum Schluss tausche r[lo] und r[grenze]. Führe genau diese Tausche aus."
+    }
+   ],
+   "interaktion": {
+    "kind": "array",
+    "modus": "tausch",
+    "start": [
+     6,
+     9,
+     2,
+     7,
+     1,
+     8,
+     4
+    ]
+   },
+   "loesung": {
+    "tausche": [
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      0,
+      3
+     ]
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Pivot 6. Kleinere Werte 2, 1, 4 wandern nacheinander an die Positionen 1, 2, 3: Tausche (1,2), (2,4), (3,6). Zum Schluss kommt das Pivot an Position grenze = 3: [4, 2, 1, 6, 9, 8, 7]."
+    },
+    {
+     "t": "hinweis",
+     "md": "P6: Die Schleife beginnt bei lo + 1 und läuft **bis einschließlich** hi."
+    }
+   ]
+  },
+  {
+   "id": "W6-L4-07",
+   "titel": "Welt 4: Schlange unverändert – als Struktogramm",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Code ↔ Struktogramm",
+   "fallen": [
+    "P2",
+    "P9"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P2 – Struktur zerstört statt unverändert + P9 – Struktogramm nicht nach EH §5**"
+    },
+    {
+     "t": "text",
+     "md": "Ergänze das Struktogramm zur Methode `summe`, die die Schlange q unverändert zurücklässt."
+    },
+    {
+     "t": "code",
+     "code": "public static int summe(Queue q) {\n    int s = 0;\n    Queue hilf = new Queue();\n    while (!q.isEmpty()) {\n        int x = (Integer) q.dequeue();\n        s = s + x;\n        hilf.enqueue(x);\n    }\n    while (!hilf.isEmpty()) {\n        q.enqueue(hilf.dequeue());\n    }\n    return s;\n}",
+     "nummern": true
+    },
+    {
+     "t": "struktogramm",
+     "kopf": "summe(q: Schlange vom Inhaltstyp Ganzzahl): Ganzzahl",
+     "rumpf": [
+      {
+       "anw": "s ← 0"
+      },
+      {
+       "anw": "hilf ← erzeuge Schlange()"
+      },
+      {
+       "solange": "nicht q.isEmpty()",
+       "rumpf": [
+        {
+         "anw": "x ← q.dequeue()"
+        },
+        {
+         "anw": "s ← s + x"
+        },
+        {
+         "aufruf": "[[a]]"
+        }
+       ]
+      },
+      {
+       "solange": "[[b]]",
+       "rumpf": [
+        {
+         "aufruf": "[[c]]"
+        }
+       ]
+      },
+      {
+       "gib": "s"
+      }
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "a": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 16
+     },
+     "b": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 22
+     },
+     "c": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 24
+     }
+    }
+   },
+   "loesung": {
+    "a": [
+     "hilf.enqueue(x)"
+    ],
+    "b": [
+     "nicht hilf.isEmpty()",
+     "nicht(hilf.isEmpty())"
+    ],
+    "c": [
+     "q.enqueue(hilf.dequeue())"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Jedes entnommene Element kommt in die Hilfsschlange; danach wandert alles in derselben Reihenfolge zurück nach q (Java-Test: Summe 15, q danach 4, 9, 2)."
+    },
+    {
+     "t": "hinweis",
+     "md": "P9: „nicht“ statt `!`, kein Semikolon. P2: Ohne die zweite Schleife wäre q am Ende leer."
+    }
+   ]
+  },
+  {
+   "id": "W6-L4-08",
+   "titel": "Welten 4–5: Die richtige Struktur",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Funktionsweise erläutern",
+   "fallen": [
+    "P10"
+   ],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Falle P10 – Operator verfehlt**"
+    },
+    {
+     "t": "text",
+     "md": "Ordne jedem Spielmodul die **geeignetste** Datenstruktur zu."
+    }
+   ],
+   "interaktion": {
+    "kind": "match",
+    "elemente": [
+     {
+      "id": "e1",
+      "md": "Rückgängig-Funktion im Level-Editor"
+     },
+     {
+      "id": "e2",
+      "md": "Warteschlange am Händlerstand: Wer zuerst kommt, wird zuerst bedient"
+     },
+     {
+      "id": "e3",
+      "md": "Inventar, in dem man direkt auf den dritten Gegenstand zugreift"
+     },
+     {
+      "id": "e4",
+      "md": "Klammerprüfung eines Zauberspruchs"
+     },
+     {
+      "id": "e5",
+      "md": "Gegner ebenenweise durchlaufen (Levelorder)"
+     },
+     {
+      "id": "e6",
+      "md": "Items blitzschnell nach ihrer Nummer finden"
+     }
+    ],
+    "kategorien": [
+     {
+      "id": "k1",
+      "md": "Stapel"
+     },
+     {
+      "id": "k2",
+      "md": "Schlange"
+     },
+     {
+      "id": "k3",
+      "md": "dynamische Reihung"
+     },
+     {
+      "id": "k4",
+      "md": "binärer Suchbaum"
+     }
+    ]
+   },
+   "loesung": {
+    "e1": "k1",
+    "e2": "k2",
+    "e3": "k3",
+    "e4": "k1",
+    "e5": "k2",
+    "e6": "k4"
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "LIFO (zuletzt hinein, zuerst heraus): Rückgängig, Klammerprüfung → Stapel. FIFO: Warteschlange, Levelorder → Schlange. Zugriff über den Index → dynamische Reihung. Suche nach Schlüssel mit wenigen Vergleichen → binärer Suchbaum (ausgeglichen)."
+    },
+    {
+     "t": "hinweis",
+     "md": "P10: Beim „beurteilen“ das Kriterium nennen (Zugriffsart, Reihenfolge, Aufwand) und auf das Spielmodul beziehen."
+    }
+   ]
+  },
+  {
+   "id": "W6-B-01",
+   "titel": "P1: Die Gegnerwelle",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P1"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Gegnerwelle ist eine Schlange vom Inhaltstyp Zeichenkette."
+    },
+    {
+     "t": "code",
+     "code": "// Name des naechsten Gegners in der Welle; \"\" wenn die Welle leer ist\npublic static String naechster(Queue welle) {\n    String name = (String) welle.dequeue();\n    if (welle.isEmpty()) {\n        return \"\";\n    }\n    return name;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Markiere die Zeile, in der bei leerer Welle der Laufzeitfehler entsteht."
+    }
+   ],
+   "interaktion": {
+    "kind": "lines",
+    "block": 1,
+    "anzahl": 1
+   },
+   "loesung": {
+    "zeilen": [
+     3
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`dequeue()` auf der leeren Schlange (Zeile 3) → IllegalStateException – die Abfrage danach kommt zu spät. Zusätzlich falsch: Bei genau einem Gegner liefert die Methode \"\" (Java-Test: []), weil nach dem Entnehmen geprüft wird. Richtig: erst `if (welle.isEmpty()) return \"\";`, dann entnehmen (P1)."
+    }
+   ]
+  },
+  {
+   "id": "W6-B-02",
+   "titel": "P4: Rechnen im Drachenhort",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Datentypen und Ausdrücke",
+   "fallen": [
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Gib Wert und Typ an."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Ausdruck",
+      "Wert",
+      "Typ"
+     ],
+     "zeilen": [
+      [
+       "`11 / 4`",
+       "[[wa]]",
+       "[[ta]]"
+      ],
+      [
+       "`11 % 4`",
+       "[[wb]]",
+       "[[tb]]"
+      ],
+      [
+       "`11 / 4.0`",
+       "[[wc]]",
+       "[[tc]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "wa": {
+      "typ": "zahl",
+      "breite": 5
+     },
+     "ta": {
+      "typ": "auswahl",
+      "optionen": [
+       "int",
+       "double",
+       "String",
+       "char",
+       "boolean"
+      ]
+     },
+     "wb": {
+      "typ": "zahl",
+      "breite": 5
+     },
+     "tb": {
+      "typ": "auswahl",
+      "optionen": [
+       "int",
+       "double",
+       "String",
+       "char",
+       "boolean"
+      ]
+     },
+     "wc": {
+      "typ": "zahl",
+      "breite": 5
+     },
+     "tc": {
+      "typ": "auswahl",
+      "optionen": [
+       "int",
+       "double",
+       "String",
+       "char",
+       "boolean"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "wa": [
+     "2"
+    ],
+    "ta": [
+     "int"
+    ],
+    "wb": [
+     "3"
+    ],
+    "tb": [
+     "int"
+    ],
+    "wc": [
+     "2.75"
+    ],
+    "tc": [
+     "double"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "11 / 4 = 2 (ganzzahlig), 11 % 4 = 3 (Rest), 11 / 4.0 = 2.75 (Kommazahl, weil ein Operand double ist) – P4."
+    }
+   ]
+  },
+  {
+   "id": "W6-B-03",
+   "titel": "P5: Wer heißt hier Smaug?",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P5"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`name` und `gesucht` sind Zeichenketten. Welche Bedingungen prüfen im Sinne des Abiturs korrekt, ob beide **inhaltlich** gleich sind?"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "optionen": [
+     {
+      "id": "a",
+      "md": "`name.equals(gesucht)`"
+     },
+     {
+      "id": "b",
+      "md": "`name == gesucht`"
+     },
+     {
+      "id": "c",
+      "md": "`gesucht.equals(name)`"
+     },
+     {
+      "id": "d",
+      "md": "`name.compareTo(gesucht) == 0`"
+     },
+     {
+      "id": "e",
+      "md": "`name.toUpperCase().equals(gesucht.toUpperCase())`"
+     }
+    ],
+    "mehrfach": true
+   },
+   "loesung": {
+    "richtig": [
+     "a",
+     "c",
+     "d"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`equals` (in beide Richtungen) und `compareTo(…) == 0` vergleichen den Inhalt und sind erlaubte Operationen. `==` vergleicht Referenzen (P5), `toUpperCase` ist nicht erlaubt."
+    }
+   ]
+  },
+  {
+   "id": "W6-B-04",
+   "titel": "P6: Binäre Suche nach der 6",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Sortieren und Suchen",
+   "fallen": [
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Klicke die Indizes an, die die binäre Suche (mid = (lo + hi) / 2, lo = mid + 1 bzw. hi = mid − 1) nach 6 als mid untersucht."
+    },
+    {
+     "t": "reihung",
+     "werte": [
+      2,
+      6,
+      11,
+      15,
+      19,
+      24,
+      28,
+      35,
+      41
+     ],
+     "indizes": true
+    }
+   ],
+   "interaktion": {
+    "kind": "array",
+    "modus": "klick",
+    "start": [
+     2,
+     6,
+     11,
+     15,
+     19,
+     24,
+     28,
+     35,
+     41
+    ]
+   },
+   "loesung": {
+    "folge": [
+     4,
+     1
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "lo = 0, hi = 8 → mid 4 (19 > 6) → hi = 3 → mid 1 (6) gefunden. Index 1."
+    },
+    {
+     "t": "hinweis",
+     "md": "P6: `lo = mid + 1` bzw. `hi = mid - 1` – sonst Endlosschleife oder übersprungene Werte."
+    }
+   ]
+  },
+  {
+   "id": "W6-B-05",
+   "titel": "P3: Köpfe mit Bibliotheksklassen",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Methodenkopf und Signatur",
+   "fallen": [
+    "P3"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Übersetze die Signaturen in Java-Methodenköpfe (`public static`)."
+    },
+    {
+     "t": "text",
+     "md": "`summeAb(b: BinTree vom Inhaltstyp Ganzzahl, grenze: Ganzzahl): Ganzzahl`\n\npublic static [[a1]] summeAb([[a2]] b, [[a3]] grenze)"
+    },
+    {
+     "t": "text",
+     "md": "`letzteTruhe(d: dynamische Reihung vom Inhaltstyp Truhe): Truhe`\n\npublic static [[b1]] letzteTruhe([[b2]] d)"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "a1": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 9
+     },
+     "a2": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 9
+     },
+     "a3": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 9
+     },
+     "b1": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 9
+     },
+     "b2": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 9
+     }
+    }
+   },
+   "loesung": {
+    "a1": [
+     "int"
+    ],
+    "a2": [
+     "BinTree"
+    ],
+    "a3": [
+     "int"
+    ],
+    "b1": [
+     "Truhe"
+    ],
+    "b2": [
+     "DynArray"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "BinTree vom Inhaltstyp Ganzzahl → `BinTree` (nicht generisch), dynamische Reihung → `DynArray`, Rückgabe Truhe → Klassenname `Truhe` (P3). Beide Köpfe mit javac geprüft."
+    }
+   ]
+  },
+  {
+   "id": "W6-B-06",
+   "titel": "P2 + P6: Der verlorene Schatz",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [
+    "P2",
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "q enthält (vorn → hinten) 12, 40, 7, 25. Gib den Inhalt von q nach `maxGold(q)` an."
+    },
+    {
+     "t": "adt",
+     "art": "schlange",
+     "inhalt": [
+      12,
+      40,
+      7,
+      25
+     ]
+    },
+    {
+     "t": "code",
+     "code": "// liefert das groesste Gold in q; q soll unveraendert bleiben\npublic static int maxGold(Queue q) {\n    int max = -1;\n    int n = 0;\n    Queue hilf = new Queue();\n    while (!q.isEmpty()) {\n        int x = (Integer) q.dequeue();\n        if (x > max) {\n            max = x;\n        }\n        hilf.enqueue(x);\n        n = n + 1;\n    }\n    for (int i = 0; i < n - 1; i++) {\n        q.enqueue(hilf.dequeue());\n    }\n    return max;\n}",
+     "nummern": true
+    }
+   ],
+   "interaktion": {
+    "kind": "adtsim",
+    "art": "schlange",
+    "start": [
+     12,
+     40,
+     7,
+     25
+    ]
+   },
+   "loesung": {
+    "inhalt": [
+     "12",
+     "40",
+     "7"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Die Rückgabe 40 stimmt, aber die zweite Schleife läuft nur n − 1 = 3-mal: q = 12, 40, 7 – die 25 bleibt in der Hilfsschlange zurück (P6), die Struktur ist zerstört (P2)."
+    }
+   ]
+  },
+  {
+   "id": "W6-B-07",
+   "titel": "P7: Die Runenkette",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Rekursionstabelle",
+   "fallen": [
+    "P7",
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Dokumentiere `runen(7)` (Rückgaben als Zeichenkette in Anführungszeichen; die leere Zeichenkette als `\"\"`)."
+    },
+    {
+     "t": "code",
+     "code": "public static String runen(int n) {\n    if (n <= 0) {\n        return \"\";\n    }\n    if (n % 2 == 0) {\n        return runen(n - 2) + \"#\";\n    }\n    return \"*\" + runen(n - 1);\n}",
+     "nummern": true
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Rekursionstiefe",
+      "n",
+      "Rückgabe"
+     ],
+     "zeilen": [
+      [
+       "[[z1a]]",
+       "[[z1b]]",
+       "[[z1c]]"
+      ],
+      [
+       "[[z2a]]",
+       "[[z2b]]",
+       "[[z2c]]"
+      ],
+      [
+       "[[z3a]]",
+       "[[z3b]]",
+       "[[z3c]]"
+      ],
+      [
+       "[[z4a]]",
+       "[[z4b]]",
+       "[[z4c]]"
+      ],
+      [
+       "[[z5a]]",
+       "[[z5b]]",
+       "[[z5c]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "z1a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z1b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z1c": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 8
+     },
+     "z2a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2c": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 8
+     },
+     "z3a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3c": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 8
+     },
+     "z4a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4c": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 8
+     },
+     "z5a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z5b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z5c": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 8
+     }
+    }
+   },
+   "loesung": {
+    "z1a": [
+     "0"
+    ],
+    "z1b": [
+     "7"
+    ],
+    "z1c": [
+     "\"*###\"",
+     "*###"
+    ],
+    "z2a": [
+     "1"
+    ],
+    "z2b": [
+     "6"
+    ],
+    "z2c": [
+     "\"###\"",
+     "###"
+    ],
+    "z3a": [
+     "2"
+    ],
+    "z3b": [
+     "4"
+    ],
+    "z3c": [
+     "\"##\"",
+     "##"
+    ],
+    "z4a": [
+     "3"
+    ],
+    "z4b": [
+     "2"
+    ],
+    "z4c": [
+     "\"#\"",
+     "#"
+    ],
+    "z5a": [
+     "4"
+    ],
+    "z5b": [
+     "0"
+    ],
+    "z5c": [
+     "\"\"",
+     "leer",
+     "(leer)"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "7 ist ungerade → \"*\" + runen(6); 6, 4, 2 sind gerade → runen(n − 2) + \"#\"; runen(0) = \"\". Auf dem Rückweg entsteht \"#\", \"##\", \"###\" und schließlich **\"*###\"**."
+    },
+    {
+     "t": "hinweis",
+     "md": "P7: Erstaufruf Tiefe 0, Rückgaben entstehen von innen nach außen. P8: Auch der Basisfall mit \"\" bekommt eine Zeile."
+    }
+   ]
+  },
+  {
+   "id": "W6-B-08",
+   "titel": "P8: Die Quersumme der Schatzkiste",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Dokumentiere den Ablauf für n = 4073 (Werte am Ende jedes Durchlaufs)."
+    },
+    {
+     "t": "code",
+     "code": "int n = 4073;\nint s = 0;\nint k = 0;\nwhile (n > 0) {\n    s = s + n % 10;\n    n = n / 10;\n    k = k + 1;\n}",
+     "nummern": true
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Durchlauf",
+      "n",
+      "s",
+      "k"
+     ],
+     "zeilen": [
+      [
+       "vor der Schleife",
+       "4073",
+       "0",
+       "0"
+      ],
+      [
+       "1",
+       "[[z2b]]",
+       "[[z2c]]",
+       "[[z2d]]"
+      ],
+      [
+       "2",
+       "[[z3b]]",
+       "[[z3c]]",
+       "[[z3d]]"
+      ],
+      [
+       "3",
+       "[[z4b]]",
+       "[[z4c]]",
+       "[[z4d]]"
+      ],
+      [
+       "4",
+       "[[z5b]]",
+       "[[z5c]]",
+       "[[z5d]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "z2b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2d": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3d": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4d": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z5b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z5c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z5d": {
+      "typ": "zahl",
+      "breite": 4
+     }
+    }
+   },
+   "loesung": {
+    "z2b": [
+     "407"
+    ],
+    "z2c": [
+     "3"
+    ],
+    "z2d": [
+     "1"
+    ],
+    "z3b": [
+     "40"
+    ],
+    "z3c": [
+     "10"
+    ],
+    "z3d": [
+     "2"
+    ],
+    "z4b": [
+     "4"
+    ],
+    "z4c": [
+     "10"
+    ],
+    "z4d": [
+     "3"
+    ],
+    "z5b": [
+     "0"
+    ],
+    "z5c": [
+     "14"
+    ],
+    "z5d": [
+     "4"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Jeder Durchlauf trennt die letzte Ziffer ab: 3, 7, 0, 4 → s = 14, k = 4 Ziffern. Auch der Durchlauf mit der Ziffer 0 bekommt eine Zeile (P8)."
+    }
+   ]
+  },
+  {
+   "id": "W6-B-09",
+   "titel": "P9: Struktogramm mit Java-Resten",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Fehler im Struktogramm",
+   "fallen": [
+    "P9",
+    "P3"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Das Struktogramm zählt die leeren Truhen einer dynamischen Reihung vom Inhaltstyp Truhe. Welche Notationsfehler nach EH §5 enthält es?"
+    },
+    {
+     "t": "struktogramm",
+     "kopf": "zaehleLeer(d)",
+     "rumpf": [
+      {
+       "anw": "anzahl := 0"
+      },
+      {
+       "anw": "i ← 0"
+      },
+      {
+       "solange": "i < d.getLength()",
+       "rumpf": [
+        {
+         "wenn": "d.getItem(i).getGold() = 0",
+         "dann": [
+          {
+           "anw": "anzahl++"
+          }
+         ],
+         "sonst": []
+        },
+        {
+         "anw": "i ← i + 1"
+        }
+       ]
+      },
+      {
+       "gib": "anzahl"
+      }
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "optionen": [
+     {
+      "id": "a",
+      "md": "Der Kopf enthält keine Parameter- und Rückgabetypen."
+     },
+     {
+      "id": "b",
+      "md": "`:=` statt `←` bei der Zuweisung"
+     },
+     {
+      "id": "c",
+      "md": "`anzahl++` ist Java-Syntax"
+     },
+     {
+      "id": "d",
+      "md": "Statt „solange“ müsste eine Zählschleife stehen."
+     },
+     {
+      "id": "e",
+      "md": "„gib anzahl zurück“ ist falsch notiert."
+     }
+    ],
+    "mehrfach": true
+   },
+   "loesung": {
+    "richtig": [
+     "a",
+     "b",
+     "c"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Richtig wäre der Kopf `zaehleLeer(d: dynamische Reihung vom Inhaltstyp Truhe): Ganzzahl`, „anzahl ← 0“ und „anzahl ← anzahl + 1“. Eine solange-Schleife mit eigenem Zähler ist erlaubt, „gib … zurück“ ist korrekt (P9, P3)."
+    }
+   ]
+  },
+  {
+   "id": "W6-B-10",
+   "titel": "P10: Erläutern statt nennen",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Funktionsweise erläutern",
+   "fallen": [
+    "P10"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "„**Erläutern** Sie, warum die Suche im binären Suchbaum in jedem Schritt nur einen Teilbaum betreten muss.“ [2 BE] – Welche Antwort erfüllt den Operator?"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "optionen": [
+     {
+      "id": "a",
+      "md": "Weil der Baum sortiert ist."
+     },
+     {
+      "id": "b",
+      "md": "Für jeden Knoten sind alle Werte links kleiner und alle rechts größer. Ist x kleiner als der Wert des Knotens, kann x nur links liegen, sonst nur rechts – der andere Teilbaum kann x nicht enthalten. Beispiel: Bei der Suche nach 25 in 20(10,30) wird der Teilbaum mit der 10 nie betreten."
+     },
+     {
+      "id": "c",
+      "md": "Weil die Suche rekursiv ist."
+     },
+     {
+      "id": "d",
+      "md": "Suchbäume sind effizient."
+     }
+    ],
+    "mehrfach": false
+   },
+   "loesung": {
+    "richtig": [
+     "b"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Erläutern = nachvollziehbar machen: Ordnungsregel nennen, daraus folgern, warum der andere Teilbaum ausscheidet, mit Beispiel. a), c), d) sind bloße Nennungen (P10)."
+    }
+   ]
+  },
+  {
+   "id": "W6-B-11",
+   "titel": "P6: Löschen im Vorwärtslauf",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "d enthält (Index 0 zuerst) die Truhen Eiche:5, Buche:0, Birke:0, Linde:8, Ulme:0 (Name:Gold). Gib den Inhalt von d nach `entferneLeere(d)` an (Schreibweise Name:Gold)."
+    },
+    {
+     "t": "adt",
+     "art": "dynarray",
+     "inhalt": [
+      "Eiche:5",
+      "Buche:0",
+      "Birke:0",
+      "Linde:8",
+      "Ulme:0"
+     ]
+    },
+    {
+     "t": "code",
+     "code": "// entfernt alle Truhen mit 0 Gold aus d\npublic static void entferneLeere(DynArray d) {\n    for (int i = 0; i < d.getLength(); i++) {\n        Truhe t = (Truhe) d.getItem(i);\n        if (t.getGold() == 0) {\n            d.delete(i);\n        }\n    }\n}",
+     "nummern": true
+    }
+   ],
+   "interaktion": {
+    "kind": "adtsim",
+    "art": "dynarray",
+    "start": [
+     "Eiche:5",
+     "Buche:0",
+     "Birke:0",
+     "Linde:8",
+     "Ulme:0"
+    ]
+   },
+   "loesung": {
+    "inhalt": [
+     "Eiche:5",
+     "Birke:0",
+     "Linde:8"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Nach `delete(1)` rückt Birke auf Index 1 nach – i wird aber auf 2 erhöht, Birke wird übersprungen. Ergebnis: Eiche:5, Birke:0, Linde:8. Abhilfe: rückwärts laufen oder i nur erhöhen, wenn nichts gelöscht wurde (P6)."
+    }
+   ]
+  },
+  {
+   "id": "W6-B-12",
+   "titel": "P7: Puzzle – rekursiv zählen",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Methode implementieren",
+   "fallen": [
+    "P7",
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Setze `zaehleAb(r: Reihung von Ganzzahl, i: Ganzzahl, x: Ganzzahl): Ganzzahl` zusammen: Wie oft kommt x in r[i] … r[r.length − 1] vor? Rekursiv, ohne Schleife. Drei Teile sind Fallen."
+    }
+   ],
+   "interaktion": {
+    "kind": "order",
+    "teile": [
+     {
+      "id": "t1",
+      "code": "public static int zaehleAb(int[] r, int i, int x) {"
+     },
+     {
+      "id": "t2",
+      "code": "if (i == r.length) {\n    return 0;\n}"
+     },
+     {
+      "id": "t3",
+      "code": "int rest = zaehleAb(r, i + 1, x);"
+     },
+     {
+      "id": "t4",
+      "code": "if (r[i] == x) {\n    return rest + 1;\n}"
+     },
+     {
+      "id": "t5",
+      "code": "return rest;\n}"
+     },
+     {
+      "id": "d1",
+      "code": "if (i == r.length - 1) {\n    return 0;\n}"
+     },
+     {
+      "id": "d2",
+      "code": "zaehleAb(r, i + 1, x);"
+     },
+     {
+      "id": "d3",
+      "code": "if (r[i] == x) {\n    return 1;\n}"
+     }
+    ]
+   },
+   "loesung": {
+    "reihenfolgen": [
+     [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5"
+     ]
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "code",
+     "code": "public static int zaehleAb(int[] r, int i, int x) {\nif (i == r.length) {\n    return 0;\n}\nint rest = zaehleAb(r, i + 1, x);\nif (r[i] == x) {\n    return rest + 1;\n}\nreturn rest;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Basisfall `i == r.length` (nicht `r.length - 1`, sonst fehlt das letzte Element – P6). Das Ergebnis des rekursiven Aufrufs wird gespeichert und verwendet (P7); `return 1;` würde alle weiteren Treffer verwerfen."
+    }
+   ]
+  },
+  {
+   "id": "W6-B-13",
+   "titel": "P8: Selectionsort mit Zählwerk",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P8",
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "r = {7, 3, 9, 1, 5} wird aufsteigend mit Selectionsort sortiert (Minimum suchen, mit r[i] tauschen, nur wenn nötig; jeder Vergleich r[j] < r[min] zählt). Fülle je Durchlauf der äußeren Schleife eine Zeile aus (Reihung mit Komma getrennt)."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "i",
+      "Index des Minimums",
+      "Tausch?",
+      "Reihung danach",
+      "Vergleiche bisher"
+     ],
+     "zeilen": [
+      [
+       "0",
+       "[[z1b]]",
+       "[[z1c]]",
+       "[[z1d]]",
+       "[[z1e]]"
+      ],
+      [
+       "1",
+       "[[z2b]]",
+       "[[z2c]]",
+       "[[z2d]]",
+       "[[z2e]]"
+      ],
+      [
+       "2",
+       "[[z3b]]",
+       "[[z3c]]",
+       "[[z3d]]",
+       "[[z3e]]"
+      ],
+      [
+       "3",
+       "[[z4b]]",
+       "[[z4c]]",
+       "[[z4d]]",
+       "[[z4e]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "z1b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z1c": {
+      "typ": "auswahl",
+      "optionen": [
+       "ja",
+       "nein"
+      ]
+     },
+     "z1d": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 14
+     },
+     "z1e": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2c": {
+      "typ": "auswahl",
+      "optionen": [
+       "ja",
+       "nein"
+      ]
+     },
+     "z2d": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 14
+     },
+     "z2e": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3c": {
+      "typ": "auswahl",
+      "optionen": [
+       "ja",
+       "nein"
+      ]
+     },
+     "z3d": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 14
+     },
+     "z3e": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4c": {
+      "typ": "auswahl",
+      "optionen": [
+       "ja",
+       "nein"
+      ]
+     },
+     "z4d": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 14
+     },
+     "z4e": {
+      "typ": "zahl",
+      "breite": 4
+     }
+    }
+   },
+   "loesung": {
+    "z1b": [
+     "3"
+    ],
+    "z1c": [
+     "ja"
+    ],
+    "z1d": [
+     "1, 3, 9, 7, 5",
+     "1,3,9,7,5",
+     "1 3 9 7 5"
+    ],
+    "z1e": [
+     "4"
+    ],
+    "z2b": [
+     "1"
+    ],
+    "z2c": [
+     "nein"
+    ],
+    "z2d": [
+     "1, 3, 9, 7, 5",
+     "1,3,9,7,5",
+     "1 3 9 7 5"
+    ],
+    "z2e": [
+     "7"
+    ],
+    "z3b": [
+     "4"
+    ],
+    "z3c": [
+     "ja"
+    ],
+    "z3d": [
+     "1, 3, 5, 7, 9",
+     "1,3,5,7,9",
+     "1 3 5 7 9"
+    ],
+    "z3e": [
+     "9"
+    ],
+    "z4b": [
+     "3"
+    ],
+    "z4c": [
+     "nein"
+    ],
+    "z4d": [
+     "1, 3, 5, 7, 9",
+     "1,3,5,7,9",
+     "1 3 5 7 9"
+    ],
+    "z4e": [
+     "10"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Die innere Suche vergleicht in Durchlauf i genau n − 1 − i Paare: 4 + 3 + 2 + 1 = 10 = 5 · 4 / 2. Getauscht wird nur bei i = 0 und i = 2."
+    },
+    {
+     "t": "hinweis",
+     "md": "P8: Je Durchlauf alle Spalten ausfüllen, auch wenn nicht getauscht wird. P6: Die innere Suche beginnt bei i + 1, die äußere endet bei n − 2."
+    }
+   ]
+  },
+  {
+   "id": "W6-B-14",
+   "titel": "P2 + P9: Den Stapel heil lassen",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Code ↔ Struktogramm",
+   "fallen": [
+    "P2",
+    "P9"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Ergänze das Struktogramm zur Methode `anzahl`, die einen Stapel zählt und ihn **unverändert** zurücklässt."
+    },
+    {
+     "t": "code",
+     "code": "public static int anzahl(Stack s) {\n    int n = 0;\n    Stack hilf = new Stack();\n    while (!s.isEmpty()) {\n        hilf.push(s.pop());\n        n = n + 1;\n    }\n    while (!hilf.isEmpty()) {\n        s.push(hilf.pop());\n    }\n    return n;\n}",
+     "nummern": true
+    },
+    {
+     "t": "struktogramm",
+     "kopf": "anzahl(s: Stapel): Ganzzahl",
+     "rumpf": [
+      {
+       "anw": "n ← 0"
+      },
+      {
+       "anw": "hilf ← erzeuge Stapel()"
+      },
+      {
+       "solange": "nicht s.isEmpty()",
+       "rumpf": [
+        {
+         "aufruf": "[[a]]"
+        },
+        {
+         "anw": "n ← [[b]]"
+        }
+       ]
+      },
+      {
+       "solange": "[[c]]",
+       "rumpf": [
+        {
+         "aufruf": "[[d]]"
+        }
+       ]
+      },
+      {
+       "gib": "n"
+      }
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "a": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 18
+     },
+     "b": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 8
+     },
+     "c": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 22
+     },
+     "d": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 18
+     }
+    }
+   },
+   "loesung": {
+    "a": [
+     "hilf.push(s.pop())"
+    ],
+    "b": [
+     "n+1",
+     "1+n"
+    ],
+    "c": [
+     "nicht hilf.isEmpty()",
+     "nicht(hilf.isEmpty())"
+    ],
+    "d": [
+     "s.push(hilf.pop())"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Zweimal Umstapeln stellt die ursprüngliche Reihenfolge wieder her (Java-Test: A, B, C bleibt A, B, C). Notation: ←, „nicht“, keine Semikolons (P9); ohne zweite Schleife wäre s leer (P2)."
+    }
+   ]
+  },
+  {
+   "id": "W6-B-15",
+   "titel": "P4 + P5: Zahlen lesen ohne parseInt",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Lückencode",
+   "fallen": [
+    "P4",
+    "P5"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`zahl(\"907\")` soll 907 liefern – nur mit erlaubten Zeichenketten-Operationen (kein `Integer.parseInt`). Ergänze den Ausdruck."
+    },
+    {
+     "t": "code",
+     "code": "public static int zahl(String s) {\n    int z = 0;\n    for (int i = 0; i < s.length(); i++) {\n        z = z * 10 + [[a]];\n    }\n    return z;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Warum darfst du im Abitur nicht `Integer.parseInt(s)` schreiben?"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "gaps",
+     "felder": {
+      "a": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 26
+      }
+     }
+    },
+    {
+     "kind": "choice",
+     "optionen": [
+      {
+       "id": "a",
+       "md": "Die Umwandlung gehört nicht zu den in den Ergänzenden Hinweisen erlaubten Zeichenketten-Operationen."
+      },
+      {
+       "id": "b",
+       "md": "parseInt gibt es in Java nicht."
+      },
+      {
+       "id": "c",
+       "md": "parseInt liefert eine Kommazahl."
+      },
+      {
+       "id": "d",
+       "md": "parseInt ist zu langsam."
+      }
+     ],
+     "mehrfach": false
+    }
+   ],
+   "loesung": [
+    {
+     "a": [
+      "(int)s.charAt(i)-(int)'0'",
+      "s.charAt(i)-'0'",
+      "(int)s.charAt(i)-48",
+      "s.charAt(i)-48",
+      "(int)s.charAt(i)-'0'",
+      "(int)(s.charAt(i)-'0')"
+     ]
+    },
+    {
+     "richtig": [
+      "a"
+     ]
+    }
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Ziffernwert = ASCII-Wert des Zeichens minus ASCII-Wert von '0' (48): `(int) s.charAt(i) - (int) '0'`. Jede Stelle verschiebt die bisherige Zahl um eine Zehnerstelle (z · 10). Alle akzeptierten Schreibweisen liefern im Test 907, 0 und 12 (P4: char ↔ int)."
+    },
+    {
+     "t": "text",
+     "md": "Erlaubt sind nur length, charAt, substring, +, equals, contains, compareTo und (int)/(char) – P5."
+    }
+   ]
+  }
+ ]
+}

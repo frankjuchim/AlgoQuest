@@ -1,0 +1,6026 @@
+{
+ "version": 2,
+ "welt": 4,
+ "titel": "Der Hafen",
+ "farbe": "#2E75B6",
+ "levels": [
+  {
+   "id": "W4-L1",
+   "nr": "4.1",
+   "titel": "Kistenturm und Schiffsschlange: Stapel und Schlange",
+   "ds": [
+    24
+   ],
+   "ab": "AB 1 Stapel und Schlange – Teil 1 (Aufgaben 1–4, 9)",
+   "ide": "AQ_W4_L4_Hafen_Geruest.txt – Level 4.1 (Klasse Hafen)",
+   "intro": [
+    {
+     "t": "hinweis",
+     "md": "**Merke:** Stapel = LIFO (push, pop, top), Schlange = FIFO (enqueue, dequeue, head). Die Abitur-Klassen sind **nicht generisch**: Beim Herausholen wird gecastet, z. B. `(Kiste) s.pop()`, `(Integer) q.dequeue()`. **Leer?** – vor pop/top/dequeue/head immer `isEmpty()` prüfen."
+    },
+    {
+     "t": "hinweis",
+     "md": "Schreibweise wie im AB: **Stapel oben zuerst**, **Schlange vorne zuerst**, dynamische Reihung **Index 0 zuerst**, Elemente mit Komma getrennt, leere Struktur: `–`."
+    }
+   ],
+   "aufgaben": [
+    "W4-L1-01",
+    "W4-L1-02",
+    "W4-L1-03",
+    "W4-L1-04",
+    "W4-L1-05",
+    "W4-L1-06",
+    "W4-L1-07",
+    "W4-L1-08"
+   ]
+  },
+  {
+   "id": "W4-L2",
+   "nr": "4.2",
+   "titel": "Kür: Zugbuch und Initiative – Spielmodule",
+   "ds": [
+    25
+   ],
+   "ab": "AB 1 Stapel und Schlange – Teil 2 (Aufgaben 6–8)",
+   "ide": "AQ_W4_L4_Hafen_Geruest.txt – Level 4.2 (Klassen Zugbuch und Initiative)",
+   "intro": [
+    {
+     "t": "hinweis",
+     "md": "**Merke:** Rückgängig/Wiederholen = zwei Stapel; Zugreihenfolge = Schlange mit Rotieren. Eignung begründen: Zugriffsprinzip (LIFO, FIFO, Index) + benötigte Operationen."
+    },
+    {
+     "t": "text",
+     "md": "Kür-Level: Baue Spielmodule für dein Dungeon-Spiel."
+    }
+   ],
+   "aufgaben": [
+    "W4-L2-01",
+    "W4-L2-02",
+    "W4-L2-03",
+    "W4-L2-04",
+    "W4-L2-05",
+    "W4-L2-06",
+    "W4-L2-07"
+   ]
+  },
+  {
+   "id": "W4-L3",
+   "nr": "4.3",
+   "titel": "Inventur: Struktur unverändert lassen",
+   "ds": [
+    26
+   ],
+   "ab": "AB 2 – Teil 1 (Aufgaben 1–5)",
+   "ide": "AQ_W4_L4_Hafen_Geruest.txt – Level 4.3 (Klasse Unveraendert)",
+   "intro": [
+    {
+     "t": "hinweis",
+     "md": "**Merke:** Unverändert = **dieselben Objekte in derselben Reihenfolge**. Rezept: auswerten – zwischenlagern – zurückschichten – erst dann `return`. Stapel über Hilfsstapel, Schlange über Hilfsschlange oder Rotieren mit bekannter Anzahl."
+    },
+    {
+     "t": "hinweis",
+     "md": "Schreibweise wie im AB: **Stapel oben zuerst**, **Schlange vorne zuerst**, dynamische Reihung **Index 0 zuerst**, Elemente mit Komma getrennt, leere Struktur: `–`."
+    }
+   ],
+   "aufgaben": [
+    "W4-L3-01",
+    "W4-L3-02",
+    "W4-L3-03",
+    "W4-L3-04",
+    "W4-L3-05",
+    "W4-L3-06",
+    "W4-L3-07",
+    "W4-L3-08"
+   ]
+  },
+  {
+   "id": "W4-L4",
+   "nr": "4.4",
+   "titel": "Ladeliste: dynamische Reihung",
+   "ds": [
+    27
+   ],
+   "ab": "AB 2 – Teil 2 (Aufgaben 6–10)",
+   "ide": "AQ_W4_L4_Hafen_Geruest.txt – Level 4.4 (Klasse Ladeliste)",
+   "intro": [
+    {
+     "t": "hinweis",
+     "md": "**Merke:** DynArray: getItem, setItem, delete nur für 0 ≤ i < getLength(); insertAt bis getLength(). insertAt schiebt nach hinten, delete nach vorn. Löschen in Schleifen: rückwärts laufen oder i nur ohne Löschen erhöhen. Erst merken (getItem), dann löschen."
+    },
+    {
+     "t": "hinweis",
+     "md": "Schreibweise wie im AB: **Stapel oben zuerst**, **Schlange vorne zuerst**, dynamische Reihung **Index 0 zuerst**, Elemente mit Komma getrennt, leere Struktur: `–`."
+    }
+   ],
+   "aufgaben": [
+    "W4-L4-01",
+    "W4-L4-02",
+    "W4-L4-03",
+    "W4-L4-04",
+    "W4-L4-05",
+    "W4-L4-06",
+    "W4-L4-07",
+    "W4-L4-08"
+   ]
+  },
+  {
+   "id": "W4-L5",
+   "nr": "4.5",
+   "titel": "Zollamt: Umformen, Klammern, Postfix",
+   "ds": [
+    28
+   ],
+   "ab": "AB 3 – Teil 1 (Aufgaben 1–4)",
+   "ide": "AQ_W4_L4_Hafen_Geruest.txt – Level 4.5 (Klasse Umformen)",
+   "intro": [
+    {
+     "t": "hinweis",
+     "md": "**Merke:** Jeder Weg durch einen Stapel dreht die Reihenfolge um, Schlange und append erhalten sie. Klammerprüfung: Leer? vor jedem pop, am Ende `isEmpty()`. Postfix: Der zuerst entnommene Wert ist der rechte Operand."
+    },
+    {
+     "t": "hinweis",
+     "md": "Schreibweise wie im AB: **Stapel oben zuerst**, **Schlange vorne zuerst**, dynamische Reihung **Index 0 zuerst**, Elemente mit Komma getrennt, leere Struktur: `–`."
+    }
+   ],
+   "aufgaben": [
+    "W4-L5-01",
+    "W4-L5-02",
+    "W4-L5-03",
+    "W4-L5-04",
+    "W4-L5-05",
+    "W4-L5-06",
+    "W4-L5-07",
+    "W4-L5-08"
+   ]
+  },
+  {
+   "id": "W4-L6",
+   "nr": "4.6",
+   "titel": "Kür: Die Flut – Schlange gegen Stapel",
+   "ds": [
+    29
+   ],
+   "ab": "AB 3 – Teil 2 (Aufgaben 5–7)",
+   "ide": "AQ_W4_L4_Hafen_Geruest.txt – Level 4.6 (Klassen Expertenpfad, Knoten, MeinStapel)",
+   "intro": [
+    {
+     "t": "hinweis",
+     "md": "**Merke:** Iterativer Flood-Fill: mit Schlange in Wellen (Breitensuche), mit Stapel in die Tiefe – dieselben Felder, andere Reihenfolge. Markiert wird beim Einfügen."
+    },
+    {
+     "t": "text",
+     "md": "Kür-Level: Die Flut läuft ins Hafenbecken – und du baust einen Stapel aus Knoten."
+    }
+   ],
+   "aufgaben": [
+    "W4-L6-01",
+    "W4-L6-02",
+    "W4-L6-03",
+    "W4-L6-04",
+    "W4-L6-05",
+    "W4-L6-06",
+    "W4-L6-07"
+   ]
+  }
+ ],
+ "boss": {
+  "id": "W4-BOSS",
+  "titel": "Die Postkutschenstation",
+  "dauerMin": 25,
+  "anzahl": 8,
+  "mix": {
+   "1": 3,
+   "2": 3,
+   "3": 2
+  },
+  "pool": [
+   "W4-B-01",
+   "W4-B-02",
+   "W4-B-03",
+   "W4-B-04",
+   "W4-B-05",
+   "W4-B-06",
+   "W4-B-07",
+   "W4-B-08",
+   "W4-B-09",
+   "W4-B-10",
+   "W4-B-11",
+   "W4-B-12",
+   "W4-B-13",
+   "W4-B-14",
+   "W4-B-15"
+  ]
+ },
+ "aufgaben": [
+  {
+   "id": "W4-L1-01",
+   "titel": "Der Kistenturm",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Der Kran stapelt Kisten. Führe die Anweisungen aus und gib den Inhalt des Stapels **am Ende** an."
+    },
+    {
+     "t": "code",
+     "code": "Stack s = new Stack();\ns.push(\"Tee\");\ns.push(\"Zimt\");\ns.push(\"Reis\");\ns.pop();\ns.push(\"Seide\");\ns.push(s.top());\ns.pop();\ns.push(\"Zinn\");",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Baue den Endzustand mit den Chips auf: beim **Stapel von unten nach oben** (erster Chip = unterstes Element), bei der **Schlange von vorne nach hinten**, bei der dynamischen Reihung ab Index 0."
+    }
+   ],
+   "interaktion": {
+    "kind": "adtsim",
+    "art": "stapel",
+    "start": []
+   },
+   "loesung": {
+    "inhalt": [
+     "Tee",
+     "Zimt",
+     "Seide",
+     "Zinn"
+    ]
+   },
+   "tipps": [
+    "push legt oben auf, pop nimmt das oberste weg, top liest nur.",
+    "Zeile 7: s.push(s.top()) legt eine Kopie des Verweises auf das oberste Element noch einmal oben auf."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Ablauf (oben zuerst): Tee → Zimt, Tee → Reis, Zimt, Tee → (pop) Zimt, Tee → Seide, Zimt, Tee → Seide, Seide, Zimt, Tee → (pop) Seide, Zimt, Tee → Zinn, Seide, Zimt, Tee. Von unten nach oben also Tee, Zimt, Seide, Zinn. Typischer Fehler: nach top() ein Element entfernen – top liest nur."
+    }
+   ]
+  },
+  {
+   "id": "W4-L1-02",
+   "titel": "Die Schiffsschlange",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Vor der Mole warten Schiffe. Führe die Anweisungen aus und gib den Inhalt der Schlange am Ende an."
+    },
+    {
+     "t": "code",
+     "code": "Queue q = new Queue();\nq.enqueue(\"Möwe\");\nq.enqueue(\"Albatros\");\nq.enqueue(q.head());\nq.dequeue();\nq.enqueue(\"Kormoran\");\nq.enqueue(q.dequeue());\nq.dequeue();",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Baue den Endzustand mit den Chips auf: beim **Stapel von unten nach oben** (erster Chip = unterstes Element), bei der **Schlange von vorne nach hinten**, bei der dynamischen Reihung ab Index 0."
+    }
+   ],
+   "interaktion": {
+    "kind": "adtsim",
+    "art": "schlange",
+    "start": []
+   },
+   "loesung": {
+    "inhalt": [
+     "Kormoran",
+     "Albatros"
+    ]
+   },
+   "tipps": [
+    "enqueue stellt hinten an, dequeue nimmt vorne weg, head liest nur.",
+    "q.enqueue(q.dequeue()) rotiert: das vorderste Schiff wandert nach hinten."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Ablauf (vorne zuerst): Möwe → Möwe, Albatros → Möwe, Albatros, Möwe → (dequeue) Albatros, Möwe → Albatros, Möwe, Kormoran → (rotieren) Möwe, Kormoran, Albatros → (dequeue) Kormoran, Albatros."
+    }
+   ]
+  },
+  {
+   "id": "W4-L1-03",
+   "titel": "Was liefert der Kran?",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Gib zu den Zeilen 4, 5, 6, 8 und 9 die Rückgabe an."
+    },
+    {
+     "t": "code",
+     "code": "Stack s = new Stack();\ns.push(12);\ns.push(5);\ns.isEmpty();\ns.top();\ns.pop();\ns.push(30);\ns.pop();\ns.top();",
+     "nummern": true
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Zeile",
+      "Anweisung",
+      "Rückgabe"
+     ],
+     "zeilen": [
+      [
+       "4",
+       "s.isEmpty()",
+       "[[g4]]"
+      ],
+      [
+       "5",
+       "s.top()",
+       "[[g5]]"
+      ],
+      [
+       "6",
+       "s.pop()",
+       "[[g6]]"
+      ],
+      [
+       "8",
+       "s.pop()",
+       "[[g8]]"
+      ],
+      [
+       "9",
+       "s.top()",
+       "[[g9]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g4": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "g5": {
+      "typ": "zahl"
+     },
+     "g6": {
+      "typ": "zahl"
+     },
+     "g8": {
+      "typ": "zahl"
+     },
+     "g9": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "g4": [
+     "false"
+    ],
+    "g5": [
+     "5"
+    ],
+    "g6": [
+     "5"
+    ],
+    "g8": [
+     "30"
+    ],
+    "g9": [
+     "12"
+    ]
+   },
+   "tipps": [
+    "top() und pop() liefern beide das oberste Element – nur pop() entfernt es."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Nach Zeile 3 liegt 5 auf 12. isEmpty() → false, top() → 5 (bleibt liegen), pop() → 5 (wird entfernt), dann 30 auflegen und wieder entnehmen → 30, zum Schluss top() → 12."
+    }
+   ]
+  },
+  {
+   "id": "W4-L1-04",
+   "titel": "Kräne im Wechselspiel",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [
+    "P4",
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Ein Stapel s und eine Schlange q (Inhaltstyp Ganzzahl) haben den Startzustand **s = 8, 2, 6 (oben zuerst)** und **q = 3, 7, 5 (vorne zuerst)**. Ergänze die Zustände nach jeder Zeile."
+    },
+    {
+     "t": "hinweis",
+     "md": "Schreibweise wie im AB: **Stapel oben zuerst**, **Schlange vorne zuerst**, dynamische Reihung **Index 0 zuerst**, Elemente mit Komma getrennt, leere Struktur: `–`."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Nr.",
+      "Anweisung",
+      "q (vorne → hinten)",
+      "s (oben → unten)"
+     ],
+     "zeilen": [
+      [
+       "0",
+       "(Start)",
+       "3, 7, 5",
+       "8, 2, 6"
+      ],
+      [
+       "1",
+       "q.enqueue(s.pop());",
+       "3, 7, 5, 8",
+       "2, 6"
+      ],
+      [
+       "2",
+       "s.push(q.dequeue());",
+       "[[q2]]",
+       "[[s2]]"
+      ],
+      [
+       "3",
+       "q.enqueue(q.head());",
+       "[[q3]]",
+       "[[s3]]"
+      ],
+      [
+       "4",
+       "int x = (Integer) s.pop() * (Integer) q.dequeue();",
+       "5, 8, 7",
+       "2, 6"
+      ],
+      [
+       "5",
+       "s.push(x);",
+       "[[q5]]",
+       "[[s5]]"
+      ],
+      [
+       "6",
+       "s.push(q.dequeue());",
+       "8, 7",
+       "5, 21, 2, 6"
+      ],
+      [
+       "7",
+       "q.enqueue(s.top());",
+       "[[q7]]",
+       "[[s7]]"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Wert von x nach Zeile 4: [[x]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "q2": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 14
+     },
+     "s2": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 14
+     },
+     "q3": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 14
+     },
+     "s3": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 14
+     },
+     "q5": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 14
+     },
+     "s5": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 14
+     },
+     "q7": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 14
+     },
+     "s7": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 14
+     },
+     "x": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "q2": [
+     "7, 5, 8",
+     "7; 5; 8",
+     "{7, 5, 8}"
+    ],
+    "s2": [
+     "3, 2, 6",
+     "3; 2; 6",
+     "{3, 2, 6}"
+    ],
+    "q3": [
+     "7, 5, 8, 7",
+     "7; 5; 8; 7",
+     "{7, 5, 8, 7}"
+    ],
+    "s3": [
+     "3, 2, 6",
+     "3; 2; 6",
+     "{3, 2, 6}"
+    ],
+    "q5": [
+     "5, 8, 7",
+     "5; 8; 7",
+     "{5, 8, 7}"
+    ],
+    "s5": [
+     "21, 2, 6",
+     "21; 2; 6",
+     "{21, 2, 6}"
+    ],
+    "q7": [
+     "8, 7, 5",
+     "8; 7; 5",
+     "{8, 7, 5}"
+    ],
+    "s7": [
+     "5, 21, 2, 6",
+     "5; 21; 2; 6",
+     "{5, 21, 2, 6}"
+    ],
+    "x": [
+     "21"
+    ]
+   },
+   "tipps": [
+    "In Zeile 4 wird zuerst s.pop() ausgewertet, dann q.dequeue().",
+    "Zeile 7: top() liest nur – das Element bleibt auf s."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Endzustand q = 8, 7, 5, s = 5, 21, 2, 6 (oben zuerst), x = 21. In Zeile 4 muss gecastet werden: pop() und dequeue() liefern Object, gerechnet wird erst nach (Integer) (P4). Beim Hineinlegen (push, enqueue) wird die Zahl automatisch verpackt."
+    }
+   ]
+  },
+  {
+   "id": "W4-L1-05",
+   "titel": "Wo kracht es?",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P1"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Das Programmstück wird ausgeführt. In einer Zeile bricht es mit einem Laufzeitfehler ab."
+    },
+    {
+     "t": "code",
+     "code": "Queue q = new Queue();\nq.enqueue(\"Kogge\");\nq.enqueue(\"Galeone\");\nString a = (String) q.dequeue();\nq.enqueue(a);\nq.dequeue();\nq.dequeue();\nString b = (String) q.head();\nq.enqueue(b);",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**Teil 1:** Markiere die Zeile, in der der Laufzeitfehler auftritt.\n\n**Teil 2:** Welcher Laufzeitfehler ist es? [[g1]]"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 1,
+     "anzahl": 1
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "auswahl",
+       "optionen": [
+        "IllegalStateException",
+        "ClassCastException",
+        "IndexOutOfBoundsException",
+        "NullPointerException"
+       ]
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      8
+     ]
+    },
+    {
+     "g1": [
+      "IllegalStateException"
+     ]
+    }
+   ],
+   "tipps": [
+    "Skizziere die Schlange nach jeder Zeile.",
+    "head() auf einer leeren Schlange ist nicht erlaubt."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Nach Zeile 5: Galeone, Kogge; Zeile 6 und 7 entnehmen beide – die Schlange ist leer. In Zeile 8 greift head() auf die leere Schlange zu → IllegalStateException. Im Abitur müssen solche Laufzeitfehler durch eine Abfrage wie `if (!q.isEmpty())` ausgeschlossen werden (P1)."
+    }
+   ]
+  },
+  {
+   "id": "W4-L1-06",
+   "titel": "Casten am Kai",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Datentypen und Ausdrücke",
+   "fallen": [
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Klassen der Bibliothek „Niedersachsen“ speichern alles als `Object`. Ergänze die Casts."
+    },
+    {
+     "t": "code",
+     "code": "Stack kran = new Stack();     // Stapel vom Inhaltstyp Kiste\nQueue zoll = new Queue();     // Schlange vom Inhaltstyp Ganzzahl\nStack zeichen = new Stack();  // Stapel vom Inhaltstyp Zeichen\nkran.push(new Kiste(\"Zinn\", 6));\nzoll.enqueue(17);\nzeichen.push('#');\nKiste k = [[g1]] kran.top();\nint nummer = [[g2]] zoll.dequeue();\nchar c = [[g3]] zeichen.pop();",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Ein Mitschüler schreibt zusätzlich `int n = (Integer) kran.top();`. Was passiert? [[g4]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 10
+     },
+     "g2": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 10
+     },
+     "g3": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "g4": {
+      "typ": "auswahl",
+      "optionen": [
+       "Der Compiler meldet einen Fehler.",
+       "Es kompiliert, beim Ausführen kommt es zur ClassCastException.",
+       "n erhält das Gewicht der Kiste.",
+       "n erhält den Wert 0."
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "(Kiste)"
+    ],
+    "g2": [
+     "(Integer)"
+    ],
+    "g3": [
+     "(Character)"
+    ],
+    "g4": [
+     "Es kompiliert, beim Ausführen kommt es zur ClassCastException."
+    ]
+   },
+   "tipps": [
+    "Gecastet wird beim Herausholen, nicht beim Hineinlegen.",
+    "Zahlen und Zeichen stecken als Integer bzw. Character im Stapel."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Kiste k = (Kiste) kran.top(); int nummer = (Integer) zoll.dequeue(); char c = (Character) zeichen.pop();. Ohne Cast meldet javac „incompatible types: Object cannot be converted to Kiste“. Ein Cast von Object nach Integer ist für den Compiler erlaubt (es könnte ja eine Zahl sein) – geprüft wird erst beim Ausführen: Dort liegt eine Kiste → ClassCastException (P4)."
+    }
+   ]
+  },
+  {
+   "id": "W4-L1-07",
+   "titel": "Bug-Hunt: Die Gewichtsdifferenz",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P1",
+    "P2",
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`differenz(s)` soll für einen Stapel vom Inhaltstyp Kiste liefern, um wie viel die oberste Kiste schwerer ist als die darunter. Liegen weniger als zwei Kisten auf dem Stapel, soll 0 geliefert werden. s muss danach unverändert sein."
+    },
+    {
+     "t": "code",
+     "code": "public static int differenz(Stack s) {\n    Kiste oben = s.pop();\n    Kiste darunter = (Kiste) s.top();\n    s.push(oben);\n    return oben.getGewicht() - darunter.getGewicht();\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**Teil 1:** Der Compiler meldet einen Fehler. Markiere die Zeile."
+    },
+    {
+     "t": "text",
+     "md": "**Teil 2:** Nach Korrektur des Compilerfehlers: Bei einem Stapel mit genau einer Kiste tritt ein Laufzeitfehler in Zeile [[g1]] auf, bei einem leeren Stapel in Zeile [[g2]]."
+    },
+    {
+     "t": "text",
+     "md": "Drei Mitschüler schlagen Korrekturen vor:"
+    },
+    {
+     "t": "text",
+     "md": "**Fassung A**"
+    },
+    {
+     "t": "code",
+     "code": "public static int differenz(Stack s) {\n    if (s.isEmpty()) {\n        return 0;\n    }\n    Kiste oben = (Kiste) s.pop();\n    int d = 0;\n    if (!s.isEmpty()) {\n        d = oben.getGewicht() - ((Kiste) s.top()).getGewicht();\n    }\n    s.push(oben);\n    return d;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**Fassung B**"
+    },
+    {
+     "t": "code",
+     "code": "public static int differenz(Stack s) {\n    if (s.isEmpty()) {\n        return 0;\n    }\n    Kiste oben = (Kiste) s.pop();\n    if (s.isEmpty()) {\n        return 0;\n    }\n    Kiste darunter = (Kiste) s.top();\n    s.push(oben);\n    return oben.getGewicht() - darunter.getGewicht();\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**Fassung C**"
+    },
+    {
+     "t": "code",
+     "code": "public static int differenz(Stack s) {\n    Kiste oben = (Kiste) s.pop();\n    if (s.isEmpty()) {\n        s.push(oben);\n        return 0;\n    }\n    Kiste darunter = (Kiste) s.top();\n    s.push(oben);\n    return oben.getGewicht() - darunter.getGewicht();\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**Teil 3:** Welche Fassung erfüllt alle Anforderungen?"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 1,
+     "anzahl": 1
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "zahl"
+      },
+      "g2": {
+       "typ": "zahl"
+      }
+     }
+    },
+    {
+     "kind": "choice",
+     "optionen": [
+      {
+       "id": "a",
+       "md": "Fassung A"
+      },
+      {
+       "id": "b",
+       "md": "Fassung B"
+      },
+      {
+       "id": "c",
+       "md": "Fassung C"
+      }
+     ],
+     "mehrfach": false
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      2
+     ]
+    },
+    {
+     "g1": [
+      "3"
+     ],
+     "g2": [
+      "2"
+     ]
+    },
+    {
+     "richtig": [
+      "a"
+     ]
+    }
+   ],
+   "tipps": [
+    "pop() liefert Object.",
+    "Fassung B: Was passiert mit der entnommenen Kiste, wenn nur eine da war? Fassung C: Was passiert bei einem leeren Stapel?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Zeile 2: `s.pop()` liefert Object – ohne `(Kiste)` meldet javac „incompatible types“ (P4). Mit nur einer Kiste nimmt Zeile 2 sie weg, `s.top()` in Zeile 3 trifft den leeren Stapel; bei leerem Stapel scheitert schon pop() in Zeile 2 (P1). Getestet mit 0 bis 3 Kisten: A 0 Kisten → 0, unverändert; 1 Kiste → 0, unverändert; 2 Kisten → 3, unverändert; 3 Kisten → -1, unverändert · B 0 Kisten → 0, unverändert; 1 Kiste → 0, VERÄNDERT; 2 Kisten → 3, unverändert; 3 Kisten → -1, unverändert (eine Kiste bleibt verschwunden, P2) · C 0 Kisten → IllegalStateException; 1 Kiste → 0, unverändert; 2 Kisten → 3, unverändert; 3 Kisten → -1, unverändert (Absturz bei leerem Stapel, P1). Nur A ist korrekt."
+    }
+   ]
+  },
+  {
+   "id": "W4-L1-08",
+   "titel": "Kranfolgen",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Kisten 1, 2, 3, 4 kommen in dieser Reihenfolge am Kran an. Der Kran darf jederzeit die nächste ankommende Kiste auf seinen Stapel legen (push) oder die oberste Kiste abgeben (pop). Am Ende sind alle Kisten abgegeben. Welche Reihenfolgen der abgegebenen Kisten sind möglich? (Mehrere Antworten möglich.)"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "optionen": [
+     {
+      "id": "a",
+      "md": "4, 3, 2, 1"
+     },
+     {
+      "id": "b",
+      "md": "1, 2, 3, 4"
+     },
+     {
+      "id": "c",
+      "md": "2, 4, 3, 1"
+     },
+     {
+      "id": "d",
+      "md": "3, 1, 2, 4"
+     },
+     {
+      "id": "e",
+      "md": "1, 4, 2, 3"
+     },
+     {
+      "id": "f",
+      "md": "2, 1, 4, 3"
+     }
+    ],
+    "mehrfach": true
+   },
+   "loesung": {
+    "richtig": [
+     "a",
+     "b",
+     "c",
+     "f"
+    ]
+   },
+   "tipps": [
+    "Wird eine Kiste abgegeben, liegen alle früher angekommenen, noch nicht abgegebenen Kisten in umgekehrter Reihenfolge darunter."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Möglich sind 4, 3, 2, 1, 1, 2, 3, 4, 2, 4, 3, 1, 2, 1, 4, 3. Bei 3, 1, 2, 4 liegt nach Abgabe von 3 die 2 über der 1 – 1 kann nicht vor 2 kommen. Bei 1, 4, 2, 3 liegt nach Abgabe von 4 die 3 oben, also muss 3 vor 2 kommen. Bei vier Kisten gibt es insgesamt 14 mögliche Folgen."
+    }
+   ]
+  },
+  {
+   "id": "W4-L2-01",
+   "titel": "Welche Struktur passt?",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Funktionsweise erläutern",
+   "fallen": [
+    "P10"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Ordne jeder Anwendung die am besten geeignete Datenstruktur zu."
+    }
+   ],
+   "interaktion": {
+    "kind": "match",
+    "elemente": [
+     {
+      "id": "e1",
+      "md": "Zurück-Knopf im Browser: die zuletzt besuchte Seite zuerst"
+     },
+     {
+      "id": "e2",
+      "md": "Support-Tickets werden in der Reihenfolge ihres Eingangs bearbeitet"
+     },
+     {
+      "id": "e3",
+      "md": "Bestenliste: neue Ergebnisse werden an der passenden Stelle einsortiert"
+     },
+     {
+      "id": "e4",
+      "md": "Tastaturpuffer: Tastendrücke werden der Reihe nach verarbeitet"
+     },
+     {
+      "id": "e5",
+      "md": "Rückgängig im Zeichenprogramm"
+     },
+     {
+      "id": "e6",
+      "md": "Spielerliste, aus der Spieler an beliebiger Stelle entfernt werden"
+     }
+    ],
+    "kategorien": [
+     {
+      "id": "st",
+      "md": "Stapel (LIFO)"
+     },
+     {
+      "id": "sc",
+      "md": "Schlange (FIFO)"
+     },
+     {
+      "id": "da",
+      "md": "dynamische Reihung (Zugriff über Index)"
+     }
+    ]
+   },
+   "loesung": {
+    "e1": "st",
+    "e2": "sc",
+    "e3": "da",
+    "e4": "sc",
+    "e5": "st",
+    "e6": "da"
+   },
+   "tipps": [
+    "Wird immer das Neueste, immer das Älteste oder ein Element an beliebiger Stelle gebraucht?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "LIFO (zuletzt hinein, zuerst heraus) → Stapel: Zurück-Knopf, Rückgängig. FIFO → Schlange: Tickets, Tastaturpuffer. Einfügen/Entfernen an beliebiger Stelle → dynamische Reihung. Eine Begründung im Abitur nennt Zugriffsprinzip UND benötigte Operationen (P10)."
+    }
+   ]
+  },
+  {
+   "id": "W4-L2-02",
+   "titel": "Das Zauberbuch: Rückgängig und Wiederholen",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "klassenkarte",
+     "name": "Zugbuch",
+     "attribute": [
+      "- erledigt: Stapel",
+      "- zurueckgenommen: Stapel"
+     ],
+     "methoden": [
+      "+ c Zugbuch()",
+      "+ zug(z: Zeichenkette): nichts",
+      "+ rueckgaengig(): Zeichenkette",
+      "+ wiederholen(): Zeichenkette",
+      "+ anzahlZuege(): Ganzzahl"
+     ]
+    },
+    {
+     "t": "text",
+     "md": "`zug(z)` legt z auf **erledigt** und leert **zurueckgenommen**. `rueckgaengig()` nimmt den obersten Zug von erledigt, legt ihn auf zurueckgenommen und liefert ihn (`\"\"`, wenn nichts da ist). `wiederholen()` arbeitet genau umgekehrt."
+    },
+    {
+     "t": "text",
+     "md": "Ein neues Zugbuch b erhält nacheinander diese Aufrufe:"
+    },
+    {
+     "t": "code",
+     "code": "b.zug(\"Feuer\");\nb.zug(\"Eis\");\nb.rueckgaengig();\nb.zug(\"Blitz\");\nb.zug(\"Heilung\");\nb.rueckgaengig();\nb.rueckgaengig();\nb.wiederholen();\nb.wiederholen();\nb.rueckgaengig();\nb.zug(\"Schild\");\nb.wiederholen();",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Gib den Inhalt beider Stapel am Ende an. Baue den Endzustand mit den Chips auf: beim **Stapel von unten nach oben** (erster Chip = unterstes Element), bei der **Schlange von vorne nach hinten**, bei der dynamischen Reihung ab Index 0.\n\n**Teil 1:** erledigt · **Teil 2:** zurueckgenommen"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "adtsim",
+     "art": "stapel",
+     "start": []
+    },
+    {
+     "kind": "adtsim",
+     "art": "stapel",
+     "start": []
+    }
+   ],
+   "loesung": [
+    {
+     "inhalt": [
+      "Feuer",
+      "Blitz",
+      "Schild"
+     ]
+    },
+    {
+     "inhalt": []
+    }
+   ],
+   "tipps": [
+    "Ein neuer Zug leert den Stapel zurueckgenommen – danach kann nichts mehr wiederholt werden.",
+    "rueckgaengig() auf leerem erledigt passiert nichts (Rückgabe \"\")."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Zustände (unten → oben) nach jedem Aufruf: 1: erledigt Feuer / zurück – | 2: erledigt Feuer, Eis / zurück – | 3: erledigt Feuer / zurück Eis | 4: erledigt Feuer, Blitz / zurück – | 5: erledigt Feuer, Blitz, Heilung / zurück – | 6: erledigt Feuer, Blitz / zurück Heilung | 7: erledigt Feuer / zurück Heilung, Blitz | 8: erledigt Feuer, Blitz / zurück Heilung | 9: erledigt Feuer, Blitz, Heilung / zurück – | 10: erledigt Feuer, Blitz / zurück Heilung | 11: erledigt Feuer, Blitz, Schild / zurück – | 12: erledigt Feuer, Blitz, Schild / zurück –. Entscheidend: zug(\"Schild\") leert zurueckgenommen, deshalb liefert das letzte wiederholen() nur \"\"."
+    }
+   ]
+  },
+  {
+   "id": "W4-L2-03",
+   "titel": "Was liefert das Zauberbuch?",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`zug(z)` legt z auf **erledigt** und leert **zurueckgenommen**. `rueckgaengig()` nimmt den obersten Zug von erledigt, legt ihn auf zurueckgenommen und liefert ihn (`\"\"`, wenn nichts da ist). `wiederholen()` arbeitet genau umgekehrt."
+    },
+    {
+     "t": "text",
+     "md": "Gleiche Aufruffolge wie in der vorigen Aufgabe:"
+    },
+    {
+     "t": "code",
+     "code": "b.zug(\"Feuer\");\nb.zug(\"Eis\");\nb.rueckgaengig();\nb.zug(\"Blitz\");\nb.zug(\"Heilung\");\nb.rueckgaengig();\nb.rueckgaengig();\nb.wiederholen();\nb.wiederholen();\nb.rueckgaengig();\nb.zug(\"Schild\");\nb.wiederholen();",
+     "nummern": true
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Nr.",
+      "Aufruf",
+      "Rückgabe"
+     ],
+     "zeilen": [
+      [
+       "3",
+       "b.rueckgaengig()",
+       "[[g3]]"
+      ],
+      [
+       "6",
+       "b.rueckgaengig()",
+       "[[g6]]"
+      ],
+      [
+       "7",
+       "b.rueckgaengig()",
+       "[[g7]]"
+      ],
+      [
+       "8",
+       "b.wiederholen()",
+       "[[g8]]"
+      ],
+      [
+       "9",
+       "b.wiederholen()",
+       "[[g9]]"
+      ],
+      [
+       "10",
+       "b.rueckgaengig()",
+       "[[g10]]"
+      ],
+      [
+       "12",
+       "b.wiederholen()",
+       "[[g12]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g3": {
+      "typ": "auswahl",
+      "optionen": [
+       "\"Feuer\"",
+       "\"Eis\"",
+       "\"Blitz\"",
+       "\"Heilung\"",
+       "\"Schild\"",
+       "\"\" (leer)"
+      ]
+     },
+     "g6": {
+      "typ": "auswahl",
+      "optionen": [
+       "\"Feuer\"",
+       "\"Eis\"",
+       "\"Blitz\"",
+       "\"Heilung\"",
+       "\"Schild\"",
+       "\"\" (leer)"
+      ]
+     },
+     "g7": {
+      "typ": "auswahl",
+      "optionen": [
+       "\"Feuer\"",
+       "\"Eis\"",
+       "\"Blitz\"",
+       "\"Heilung\"",
+       "\"Schild\"",
+       "\"\" (leer)"
+      ]
+     },
+     "g8": {
+      "typ": "auswahl",
+      "optionen": [
+       "\"Feuer\"",
+       "\"Eis\"",
+       "\"Blitz\"",
+       "\"Heilung\"",
+       "\"Schild\"",
+       "\"\" (leer)"
+      ]
+     },
+     "g9": {
+      "typ": "auswahl",
+      "optionen": [
+       "\"Feuer\"",
+       "\"Eis\"",
+       "\"Blitz\"",
+       "\"Heilung\"",
+       "\"Schild\"",
+       "\"\" (leer)"
+      ]
+     },
+     "g10": {
+      "typ": "auswahl",
+      "optionen": [
+       "\"Feuer\"",
+       "\"Eis\"",
+       "\"Blitz\"",
+       "\"Heilung\"",
+       "\"Schild\"",
+       "\"\" (leer)"
+      ]
+     },
+     "g12": {
+      "typ": "auswahl",
+      "optionen": [
+       "\"Feuer\"",
+       "\"Eis\"",
+       "\"Blitz\"",
+       "\"Heilung\"",
+       "\"Schild\"",
+       "\"\" (leer)"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "g3": [
+     "\"Eis\""
+    ],
+    "g6": [
+     "\"Heilung\""
+    ],
+    "g7": [
+     "\"Blitz\""
+    ],
+    "g8": [
+     "\"Blitz\""
+    ],
+    "g9": [
+     "\"Heilung\""
+    ],
+    "g10": [
+     "\"Heilung\""
+    ],
+    "g12": [
+     "\"\" (leer)"
+    ]
+   },
+   "tipps": [
+    "Skizziere nach jedem Aufruf beide Stapel."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Rückgaben: 3: \"Eis\", 6: \"Heilung\", 7: \"Blitz\", 8: \"Blitz\", 9: \"Heilung\", 10: \"Heilung\", 12: \"\". Aufruf 12 liefert \"\", weil zug(\"Schild\") in Aufruf 11 den Stapel zurueckgenommen geleert hat."
+    }
+   ]
+  },
+  {
+   "id": "W4-L2-04",
+   "titel": "Initiative im Kampf",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "klassenkarte",
+     "name": "Initiative",
+     "attribute": [
+      "- reihe: Schlange"
+     ],
+     "methoden": [
+      "+ c Initiative()",
+      "+ beitreten(name: Zeichenkette): nichts",
+      "+ amZug(): Zeichenkette",
+      "+ ausscheiden(name: Zeichenkette): Wahrheitswert"
+     ]
+    },
+    {
+     "t": "text",
+     "md": "`beitreten` stellt hinten an. `amZug()` entnimmt den Vordersten, stellt ihn sofort hinten wieder an und liefert seinen Namen. `ausscheiden(name)` entfernt das erste Vorkommen; die Reihenfolge der übrigen bleibt (Rückgabe: war name dabei?)."
+    },
+    {
+     "t": "text",
+     "md": "Ein neues Initiative-Objekt ini erhält nacheinander:"
+    },
+    {
+     "t": "code",
+     "code": "ini.beitreten(\"Aria\");\nini.beitreten(\"Borin\");\nini.beitreten(\"Cyra\");\nini.beitreten(\"Drak\");\nini.amZug();\nini.amZug();\nini.ausscheiden(\"Cyra\");\nini.amZug();\nini.beitreten(\"Elva\");\nini.ausscheiden(\"Ork\");\nini.amZug();\nini.amZug();",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Gib den Inhalt von reihe am Ende an. Baue den Endzustand mit den Chips auf: beim **Stapel von unten nach oben** (erster Chip = unterstes Element), bei der **Schlange von vorne nach hinten**, bei der dynamischen Reihung ab Index 0."
+    }
+   ],
+   "interaktion": {
+    "kind": "adtsim",
+    "art": "schlange",
+    "start": []
+   },
+   "loesung": {
+    "inhalt": [
+     "Drak",
+     "Elva",
+     "Aria",
+     "Borin"
+    ]
+   },
+   "tipps": [
+    "amZug() rotiert: vorne raus, hinten wieder rein.",
+    "ausscheiden entfernt aus der Mitte – die anderen behalten ihre Reihenfolge."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Zustände (vorne zuerst): 1: Aria | 2: Aria, Borin | 3: Aria, Borin, Cyra | 4: Aria, Borin, Cyra, Drak | 5: Borin, Cyra, Drak, Aria | 6: Cyra, Drak, Aria, Borin | 7: Drak, Aria, Borin | 8: Aria, Borin, Drak | 9: Aria, Borin, Drak, Elva | 10: Aria, Borin, Drak, Elva | 11: Borin, Drak, Elva, Aria | 12: Drak, Elva, Aria, Borin."
+    }
+   ]
+  },
+  {
+   "id": "W4-L2-05",
+   "titel": "Wer ist am Zug?",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`beitreten` stellt hinten an. `amZug()` entnimmt den Vordersten, stellt ihn sofort hinten wieder an und liefert seinen Namen. `ausscheiden(name)` entfernt das erste Vorkommen; die Reihenfolge der übrigen bleibt (Rückgabe: war name dabei?)."
+    },
+    {
+     "t": "text",
+     "md": "Gleiche Aufruffolge wie in der vorigen Aufgabe:"
+    },
+    {
+     "t": "code",
+     "code": "ini.beitreten(\"Aria\");\nini.beitreten(\"Borin\");\nini.beitreten(\"Cyra\");\nini.beitreten(\"Drak\");\nini.amZug();\nini.amZug();\nini.ausscheiden(\"Cyra\");\nini.amZug();\nini.beitreten(\"Elva\");\nini.ausscheiden(\"Ork\");\nini.amZug();\nini.amZug();",
+     "nummern": true
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Nr.",
+      "Aufruf",
+      "Rückgabe"
+     ],
+     "zeilen": [
+      [
+       "5",
+       "ini.amZug()",
+       "[[g5]]"
+      ],
+      [
+       "6",
+       "ini.amZug()",
+       "[[g6]]"
+      ],
+      [
+       "7",
+       "ini.ausscheiden(\"Cyra\")",
+       "[[g7]]"
+      ],
+      [
+       "8",
+       "ini.amZug()",
+       "[[g8]]"
+      ],
+      [
+       "10",
+       "ini.ausscheiden(\"Ork\")",
+       "[[g10]]"
+      ],
+      [
+       "11",
+       "ini.amZug()",
+       "[[g11]]"
+      ],
+      [
+       "12",
+       "ini.amZug()",
+       "[[g12]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g5": {
+      "typ": "auswahl",
+      "optionen": [
+       "Aria",
+       "Borin",
+       "Cyra",
+       "Drak",
+       "Elva",
+       "\"\" (leer)"
+      ]
+     },
+     "g6": {
+      "typ": "auswahl",
+      "optionen": [
+       "Aria",
+       "Borin",
+       "Cyra",
+       "Drak",
+       "Elva",
+       "\"\" (leer)"
+      ]
+     },
+     "g7": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "g8": {
+      "typ": "auswahl",
+      "optionen": [
+       "Aria",
+       "Borin",
+       "Cyra",
+       "Drak",
+       "Elva",
+       "\"\" (leer)"
+      ]
+     },
+     "g10": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "g11": {
+      "typ": "auswahl",
+      "optionen": [
+       "Aria",
+       "Borin",
+       "Cyra",
+       "Drak",
+       "Elva",
+       "\"\" (leer)"
+      ]
+     },
+     "g12": {
+      "typ": "auswahl",
+      "optionen": [
+       "Aria",
+       "Borin",
+       "Cyra",
+       "Drak",
+       "Elva",
+       "\"\" (leer)"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "g5": [
+     "Aria"
+    ],
+    "g6": [
+     "Borin"
+    ],
+    "g7": [
+     "true"
+    ],
+    "g8": [
+     "Drak"
+    ],
+    "g10": [
+     "false"
+    ],
+    "g11": [
+     "Aria"
+    ],
+    "g12": [
+     "Borin"
+    ]
+   },
+   "tipps": [
+    "Nach vier beitreten-Aufrufen steht Aria vorne."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Rückgaben: 5: Aria, 6: Borin, 7: true, 8: Drak, 10: false, 11: Aria, 12: Borin. ausscheiden(\"Ork\") liefert false und lässt die Reihe unverändert."
+    }
+   ]
+  },
+  {
+   "id": "W4-L2-06",
+   "titel": "Bug-Hunt: Ausscheiden mit Nebenwirkungen",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P1",
+    "P2"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Ein Mitschüler schreibt `ausscheiden` so:"
+    },
+    {
+     "t": "code",
+     "code": "public boolean ausscheiden(String name) {\n    while (!((String) reihe.head()).equals(name)) {\n        reihe.enqueue(reihe.dequeue());\n    }\n    reihe.dequeue();\n    return true;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Welche Aussagen treffen zu? (Mehrere Antworten möglich.)"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "optionen": [
+     {
+      "id": "a",
+      "md": "Ist name nicht in der Reihe, läuft die Schleife endlos."
+     },
+     {
+      "id": "b",
+      "md": "Bei leerer Reihe führt `reihe.head()` zu einem Laufzeitfehler."
+     },
+     {
+      "id": "c",
+      "md": "Die Reihenfolge der übrigen Teilnehmer kann sich ändern: Aus Aria, Borin, Cyra wird nach `ausscheiden(\"Borin\")` die Reihe Cyra, Aria."
+     },
+     {
+      "id": "d",
+      "md": "Die Methode liefert nie false."
+     },
+     {
+      "id": "e",
+      "md": "Die Methode ist korrekt, nur unnötig langsam."
+     }
+    ],
+    "mehrfach": true
+   },
+   "loesung": {
+    "richtig": [
+     "a",
+     "b",
+     "c",
+     "d"
+    ]
+   },
+   "tipps": [
+    "Spiele ausscheiden(\"Ork\") und ausscheiden(\"Borin\") für Aria, Borin, Cyra durch."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Gemessen: fehlender Name → endlos, leere Reihe → IllegalStateException, Aria, Borin, Cyra nach ausscheiden(\"Borin\") → Cyra, Aria (Aria ist nach hinten rotiert und verliert ihren Platz, P2). Außerdem gibt es kein return false. Richtig: über eine Hilfsschlange laufen und nur das erste Vorkommen nicht wieder anstellen (nächste Aufgabe)."
+    }
+   ]
+  },
+  {
+   "id": "W4-L2-07",
+   "titel": "Puzzle: Ausscheiden, aber richtig",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Methode implementieren",
+   "fallen": [
+    "P1",
+    "P2",
+    "P5"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Baue `ausscheiden(name: Zeichenkette): Wahrheitswert` der Klasse Initiative (Attribut `reihe: Schlange`): Das **erste** Vorkommen von name wird entfernt, die übrigen behalten ihre Reihenfolge; Rückgabe true, wenn name dabei war. Drei Zeilen gehören nicht hinein."
+    }
+   ],
+   "interaktion": {
+    "kind": "order",
+    "teile": [
+     {
+      "id": "t1",
+      "code": "public boolean ausscheiden(String name) {"
+     },
+     {
+      "id": "t2",
+      "code": "    Queue hilf = new Queue();"
+     },
+     {
+      "id": "t3",
+      "code": "    boolean gefunden = false;"
+     },
+     {
+      "id": "t4",
+      "code": "    while (!reihe.isEmpty()) {"
+     },
+     {
+      "id": "t5",
+      "code": "        String n = (String) reihe.dequeue();"
+     },
+     {
+      "id": "t6",
+      "code": "        if (!gefunden && n.equals(name)) {"
+     },
+     {
+      "id": "t7",
+      "code": "            gefunden = true;"
+     },
+     {
+      "id": "t8",
+      "code": "        } else {"
+     },
+     {
+      "id": "t9",
+      "code": "            hilf.enqueue(n);"
+     },
+     {
+      "id": "t10",
+      "code": "        }"
+     },
+     {
+      "id": "t11",
+      "code": "    }"
+     },
+     {
+      "id": "t12",
+      "code": "    reihe = hilf;"
+     },
+     {
+      "id": "t13",
+      "code": "    return gefunden;"
+     },
+     {
+      "id": "t14",
+      "code": "}"
+     },
+     {
+      "id": "d1",
+      "code": "        if (n.equals(name)) {"
+     },
+     {
+      "id": "d2",
+      "code": "            return true;"
+     },
+     {
+      "id": "d3",
+      "code": "    while (reihe.head() != null) {"
+     }
+    ]
+   },
+   "loesung": {
+    "reihenfolgen": [
+     [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6",
+      "t7",
+      "t8",
+      "t9",
+      "t10",
+      "t11",
+      "t12",
+      "t13",
+      "t14"
+     ],
+     [
+      "t1",
+      "t3",
+      "t2",
+      "t4",
+      "t5",
+      "t6",
+      "t7",
+      "t8",
+      "t9",
+      "t10",
+      "t11",
+      "t12",
+      "t13",
+      "t14"
+     ]
+    ]
+   },
+   "tipps": [
+    "Alle Namen wandern durch eine Hilfsschlange – nur das erste Vorkommen nicht.",
+    "Die Hilfsschlange wird am Ende zur neuen reihe."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Die Schleife entnimmt alle Namen (Leer-Abfrage, P1), stellt alle außer dem ersten Vorkommen in hilf an (Vergleich mit equals, P5) und ersetzt reihe durch hilf – die Reihenfolge bleibt. `n.equals(name)` ohne `!gefunden` entfernte alle Vorkommen, ein `return true` mitten in der Schleife ließe die Reihe halb leer zurück (P2). Test: Aria, Borin, Cyra, Borin → ausscheiden(\"Borin\") = true, danach Aria, Cyra, Borin; ausscheiden(\"Ork\") = false."
+    }
+   ]
+  },
+  {
+   "id": "W4-L3-01",
+   "titel": "Die Umkehr-Maschine",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Ein Stapel s = A, B, C (oben zuerst) bzw. eine Schlange q = A, B, C (vorne zuerst) wird vollständig in eine leere Hilfsstruktur umgeschichtet und danach vollständig zurück. Ordne zu, wie die Struktur danach aussieht (gelesen oben bzw. vorne zuerst)."
+    }
+   ],
+   "interaktion": {
+    "kind": "match",
+    "elemente": [
+     {
+      "id": "e1",
+      "md": "Stapel → Hilfsstapel → Stapel"
+     },
+     {
+      "id": "e2",
+      "md": "Stapel → Hilfsschlange → Stapel"
+     },
+     {
+      "id": "e3",
+      "md": "Schlange → Hilfsschlange → Schlange"
+     },
+     {
+      "id": "e4",
+      "md": "Schlange → Hilfsstapel → Schlange"
+     },
+     {
+      "id": "e5",
+      "md": "Schlange → Hilfsstapel → zweiter Hilfsstapel → Schlange"
+     }
+    ],
+    "kategorien": [
+     {
+      "id": "k1",
+      "md": "A, B, C – unverändert"
+     },
+     {
+      "id": "k2",
+      "md": "C, B, A – umgedreht"
+     }
+    ]
+   },
+   "loesung": {
+    "e1": "k1",
+    "e2": "k2",
+    "e3": "k1",
+    "e4": "k2",
+    "e5": "k1"
+   },
+   "tipps": [
+    "Jeder Weg durch einen Stapel dreht die Reihenfolge um."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Gemessen: Stapel über Hilfsstapel A, B, C · Stapel über Hilfsschlange C, B, A · Schlange über Hilfsschlange A, B, C · Schlange über Hilfsstapel C, B, A · Schlange über zwei Hilfsstapel A, B, C. Regel: Jeder Durchgang durch einen Stapel dreht um; gerade Anzahl Umkehrungen → unverändert."
+    }
+   ]
+  },
+  {
+   "id": "W4-L3-02",
+   "titel": "Zu früh zurückgekehrt",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [
+    "P2"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Der Stapel s enthält (oben zuerst) Tee 4, Seide 3, Pfeffer 5, Zinn 6, Kaffee 4. Es wird `enthaelt(s, \"Pfeffer\")` aufgerufen:"
+    },
+    {
+     "t": "code",
+     "code": "public static boolean enthaelt(Stack s, String name) {\n    Stack hilf = new Stack();\n    while (!s.isEmpty()) {\n        Kiste k = (Kiste) s.pop();\n        hilf.push(k);\n        if (k.getName().equals(name)) {\n            return true;\n        }\n    }\n    while (!hilf.isEmpty()) {\n        s.push(hilf.pop());\n    }\n    return false;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Wie sieht s nach dem Aufruf aus? Baue den Endzustand mit den Chips auf: beim **Stapel von unten nach oben** (erster Chip = unterstes Element), bei der **Schlange von vorne nach hinten**, bei der dynamischen Reihung ab Index 0."
+    }
+   ],
+   "interaktion": {
+    "kind": "adtsim",
+    "art": "stapel",
+    "start": [
+     "Kaffee",
+     "Zinn",
+     "Pfeffer",
+     "Seide",
+     "Tee"
+    ]
+   },
+   "loesung": {
+    "inhalt": [
+     "Kaffee",
+     "Zinn"
+    ]
+   },
+   "tipps": [
+    "Was passiert mit den Kisten in hilf, wenn mitten in der Schleife return ausgeführt wird?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Tee, Seide und Pfeffer werden entnommen und auf hilf gelegt; bei Pfeffer kehrt die Methode sofort mit true zurück. Die zweite Schleife wird nie erreicht: hilf ist eine lokale Variable – die drei Kisten sind verloren. s = Kaffee, Zinn (von unten). Regel: Ergebnis in einer Variablen merken, return erst nach dem Zurückschichten (P2)."
+    }
+   ]
+  },
+  {
+   "id": "W4-L3-03",
+   "titel": "Inventur über die Hilfsschlange",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`summe(q)` wird für q = 8, 3, 6, 2 (vorne zuerst) aufgerufen. Vervollständige die Tabelle: eine Zeile pro Schleifendurchlauf."
+    },
+    {
+     "t": "code",
+     "code": "public static int summe(Queue q) {\n    Queue hilf = new Queue();\n    int summe = 0;\n    while (!q.isEmpty()) {\n        int x = (Integer) q.dequeue();\n        summe = summe + x;\n        hilf.enqueue(x);\n    }\n    while (!hilf.isEmpty()) {\n        q.enqueue(hilf.dequeue());\n    }\n    return summe;\n}",
+     "nummern": true
+    },
+    {
+     "t": "hinweis",
+     "md": "Schreibweise wie im AB: **Stapel oben zuerst**, **Schlange vorne zuerst**, dynamische Reihung **Index 0 zuerst**, Elemente mit Komma getrennt, leere Struktur: `–`."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Phase",
+      "x",
+      "summe",
+      "q (vorne → hinten)",
+      "hilf (vorne → hinten)"
+     ],
+     "zeilen": [
+      [
+       "Start",
+       "–",
+       "0",
+       "8, 3, 6, 2",
+       "–"
+      ],
+      [
+       "auswerten",
+       "8",
+       "[[s1]]",
+       "[[q1]]",
+       "8"
+      ],
+      [
+       "auswerten",
+       "3",
+       "[[s2]]",
+       "6, 2",
+       "[[h2]]"
+      ],
+      [
+       "auswerten",
+       "6",
+       "[[s3]]",
+       "[[q3]]",
+       "8, 3, 6"
+      ],
+      [
+       "auswerten",
+       "2",
+       "[[s4]]",
+       "–",
+       "[[h4]]"
+      ],
+      [
+       "zurück",
+       "–",
+       "19",
+       "[[q5]]",
+       "[[h5]]"
+      ],
+      [
+       "zurück",
+       "–",
+       "19",
+       "[[q6]]",
+       "[[h6]]"
+      ],
+      [
+       "zurück",
+       "–",
+       "19",
+       "[[q7]]",
+       "[[h7]]"
+      ],
+      [
+       "zurück",
+       "–",
+       "19",
+       "[[q8]]",
+       "[[h8]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "s1": {
+      "typ": "zahl"
+     },
+     "q1": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "s2": {
+      "typ": "zahl"
+     },
+     "h2": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "s3": {
+      "typ": "zahl"
+     },
+     "q3": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "s4": {
+      "typ": "zahl"
+     },
+     "h4": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "q5": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "h5": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "q6": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "h6": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "q7": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "h7": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "q8": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "h8": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     }
+    }
+   },
+   "loesung": {
+    "s1": [
+     "8"
+    ],
+    "q1": [
+     "3, 6, 2",
+     "3; 6; 2",
+     "{3, 6, 2}"
+    ],
+    "s2": [
+     "11"
+    ],
+    "h2": [
+     "8, 3",
+     "8; 3",
+     "{8, 3}"
+    ],
+    "s3": [
+     "17"
+    ],
+    "q3": [
+     "2",
+     "{2}"
+    ],
+    "s4": [
+     "19"
+    ],
+    "h4": [
+     "8, 3, 6, 2",
+     "8; 3; 6; 2",
+     "{8, 3, 6, 2}"
+    ],
+    "q5": [
+     "8",
+     "{8}"
+    ],
+    "h5": [
+     "3, 6, 2",
+     "3; 6; 2",
+     "{3, 6, 2}"
+    ],
+    "q6": [
+     "8, 3",
+     "8; 3",
+     "{8, 3}"
+    ],
+    "h6": [
+     "6, 2",
+     "6; 2",
+     "{6, 2}"
+    ],
+    "q7": [
+     "8, 3, 6",
+     "8; 3; 6",
+     "{8, 3, 6}"
+    ],
+    "h7": [
+     "2",
+     "{2}"
+    ],
+    "q8": [
+     "8, 3, 6, 2",
+     "8; 3; 6; 2",
+     "{8, 3, 6, 2}"
+    ],
+    "h8": [
+     "–",
+     "-",
+     "leer",
+     "—"
+    ]
+   },
+   "tipps": [
+    "Beim Auswerten wandert jede Zahl von vorne aus q nach hinten in hilf.",
+    "Eine Schlange über eine Hilfsschlange behält die Reihenfolge."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Nach dem Auswerten ist q leer und hilf = 8, 3, 6, 2; beim Zurückstellen wandert alles in derselben Reihenfolge zurück. Rückgabe 19, q danach wieder 8, 3, 6, 2 – unverändert. In Tracetabellen gehört jede Änderung in eine eigene Zeile (P8)."
+    }
+   ]
+  },
+  {
+   "id": "W4-L3-04",
+   "titel": "Puzzle: Schwere Kisten zählen",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Methode implementieren",
+   "fallen": [
+    "P1",
+    "P2",
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`anzahlSchwere(s: Stapel vom Inhaltstyp Kiste, grenze: Ganzzahl): Ganzzahl` soll zählen, wie viele Kisten schwerer als grenze sind. **s muss danach unverändert sein** (dieselben Kisten in derselben Reihenfolge). Drei Zeilen gehören nicht hinein."
+    }
+   ],
+   "interaktion": {
+    "kind": "order",
+    "teile": [
+     {
+      "id": "t1",
+      "code": "public static int anzahlSchwere(Stack s, int grenze) {"
+     },
+     {
+      "id": "t2",
+      "code": "    Stack hilf = new Stack();"
+     },
+     {
+      "id": "t3",
+      "code": "    int anzahl = 0;"
+     },
+     {
+      "id": "t4",
+      "code": "    while (!s.isEmpty()) {"
+     },
+     {
+      "id": "t5",
+      "code": "        Kiste k = (Kiste) s.pop();"
+     },
+     {
+      "id": "t6",
+      "code": "        if (k.getGewicht() > grenze) {"
+     },
+     {
+      "id": "t7",
+      "code": "            anzahl++;"
+     },
+     {
+      "id": "t8",
+      "code": "        }"
+     },
+     {
+      "id": "t9",
+      "code": "        hilf.push(k);"
+     },
+     {
+      "id": "t10",
+      "code": "    } // Ende auswerten"
+     },
+     {
+      "id": "t11",
+      "code": "    while (!hilf.isEmpty()) {"
+     },
+     {
+      "id": "t12",
+      "code": "        s.push(hilf.pop());"
+     },
+     {
+      "id": "t13",
+      "code": "    } // Ende zurueckschichten"
+     },
+     {
+      "id": "t14",
+      "code": "    return anzahl;"
+     },
+     {
+      "id": "t15",
+      "code": "}"
+     },
+     {
+      "id": "d1",
+      "code": "        hilf.push(new Kiste(k.getName(), k.getGewicht()));"
+     },
+     {
+      "id": "d2",
+      "code": "        Kiste k = s.pop();"
+     },
+     {
+      "id": "d3",
+      "code": "    while (s.top() != null) {"
+     }
+    ]
+   },
+   "loesung": {
+    "reihenfolgen": [
+     [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6",
+      "t7",
+      "t8",
+      "t9",
+      "t10",
+      "t11",
+      "t12",
+      "t13",
+      "t14",
+      "t15"
+     ],
+     [
+      "t1",
+      "t3",
+      "t2",
+      "t4",
+      "t5",
+      "t6",
+      "t7",
+      "t8",
+      "t9",
+      "t10",
+      "t11",
+      "t12",
+      "t13",
+      "t14",
+      "t15"
+     ],
+     [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t9",
+      "t6",
+      "t7",
+      "t8",
+      "t10",
+      "t11",
+      "t12",
+      "t13",
+      "t14",
+      "t15"
+     ],
+     [
+      "t1",
+      "t3",
+      "t2",
+      "t4",
+      "t5",
+      "t9",
+      "t6",
+      "t7",
+      "t8",
+      "t10",
+      "t11",
+      "t12",
+      "t13",
+      "t14",
+      "t15"
+     ]
+    ]
+   },
+   "tipps": [
+    "Muster: auswerten – zwischenlagern – zurückschichten – erst dann return.",
+    "Ein Stapel über einen Hilfsstapel und zurück ergibt wieder die alte Reihenfolge."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Leer-Abfrage in der Schleife (P1), Cast `(Kiste)` beim pop (P4), dieselbe Kiste k auf hilf legen – eine neue Kiste mit gleichen Werten wäre nicht „dieselbe“ (P2) – und alles zurückschichten. Getestet: Stapel Zimt 2, Reis 7, Tee 4, Kupfer 9 (oben zuerst), grenze 5 → 2, danach dieselben Objekte in derselben Reihenfolge: true."
+    }
+   ]
+  },
+  {
+   "id": "W4-L3-05",
+   "titel": "Rotieren ohne Ende",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Lückencode",
+   "fallen": [
+    "P2"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Diese Methode soll das größte Gewicht in q liefern (−1 bei leerer Schlange) und q unverändert lassen:"
+    },
+    {
+     "t": "code",
+     "code": "public static int maxGewicht(Queue q) {\n    int max = -1;\n    while (!q.isEmpty()) {\n        Kiste k = (Kiste) q.dequeue();\n        if (k.getGewicht() > max) {\n            max = k.getGewicht();\n        }\n        q.enqueue(k);\n    }\n    return max;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "- Was passiert bei einer nicht leeren Schlange? [[g1]]\n- Was liefert der Aufruf für eine leere Schlange? [[g2]]"
+    },
+    {
+     "t": "text",
+     "md": "Korrektur nach Muster 3 „Rotieren mit Zähler“: Die Anzahl n der Kisten wird mitgegeben."
+    },
+    {
+     "t": "code",
+     "code": "public static int maxGewicht(Queue q, int n) {\n    int max = -1;\n    for (int i = 0; i < [[g3]]; i++) {\n        Kiste k = (Kiste) q.dequeue();\n        if (k.getGewicht() > max) {\n            max = k.getGewicht();\n        }\n        q.enqueue([[g4]]);\n    }\n    return max;\n}",
+     "nummern": true
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "auswahl",
+      "optionen": [
+       "Die Schleife läuft endlos.",
+       "Es kommt zu einer IllegalStateException.",
+       "Sie liefert das richtige Ergebnis.",
+       "Sie liefert −1."
+      ]
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "text",
+      "norm": "code"
+     },
+     "g4": {
+      "typ": "text",
+      "norm": "code"
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "Die Schleife läuft endlos."
+    ],
+    "g2": [
+     "-1"
+    ],
+    "g3": [
+     "n"
+    ],
+    "g4": [
+     "k"
+    ]
+   },
+   "tipps": [
+    "Wird q in der ersten Fassung jemals leer?",
+    "Nach genau n Runden ist jede Kiste einmal von vorne nach hinten gewandert."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Jede entnommene Kiste wird sofort wieder angestellt – q wird nie leer: Endlosschleife (gemessen: endlos). Für die leere Schlange läuft die Schleife nicht → −1. Mit bekannter Anzahl n reichen n Runden: Danach steht dieselbe Kiste wieder vorne (geprüft: Maximum 7, q unverändert: true). Ohne bekannte Anzahl braucht man eine Hilfsschlange."
+    }
+   ]
+  },
+  {
+   "id": "W4-L3-06",
+   "titel": "Lückencode: Die schwerste Kiste",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Lückencode",
+   "fallen": [
+    "P1",
+    "P2"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`schwerste(s)` liefert die schwerste Kiste des Stapels (null bei leerem Stapel), bei Gleichstand die **oberste** davon. s bleibt unverändert."
+    },
+    {
+     "t": "code",
+     "code": "public static Kiste schwerste(Stack s) {\n    Stack hilf = new Stack();\n    Kiste beste = null;\n    while (!s.isEmpty()) {\n        Kiste k = (Kiste) s.pop();\n        if (beste == null || k.getGewicht() [[g1]] beste.getGewicht()) {\n            beste = k;\n        }\n        hilf.push(k);\n    }\n    while (!hilf.isEmpty()) {\n        s.push([[g2]]);\n    }\n    return [[g3]];\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Für s = Zinn 6, Reis 7, Kupfer 7, Tee 4 (oben zuerst) liefert die Methode die Kiste [[g4]]."
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "auswahl",
+      "optionen": [
+       ">",
+       ">=",
+       "<",
+       "=="
+      ]
+     },
+     "g2": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "g3": {
+      "typ": "text",
+      "norm": "code"
+     },
+     "g4": {
+      "typ": "auswahl",
+      "optionen": [
+       "Zinn",
+       "Reis",
+       "Kupfer",
+       "Tee"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     ">"
+    ],
+    "g2": [
+     "hilf.pop()"
+    ],
+    "g3": [
+     "beste"
+    ],
+    "g4": [
+     "Reis"
+    ]
+   },
+   "tipps": [
+    "Die Kisten werden von oben nach unten entnommen. Welche der beiden 7-kg-Kisten kommt zuerst?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Mit `>` gewinnt bei Gleichstand die zuerst entnommene, also die obere Kiste: Reis. Mit `>=` würde die spätere (untere) Kiste Kupfer gewinnen. Zurückgeschichtet wird mit `s.push(hilf.pop())`, zurückgegeben `beste` – erst nach dem Zurückschichten (P2). `beste == null` als erste Prüfung verhindert den Zugriff auf null (P1)."
+    }
+   ]
+  },
+  {
+   "id": "W4-L3-07",
+   "titel": "Unverändert – wirklich?",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Funktionsweise erläutern",
+   "fallen": [
+    "P2"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "In einer Methode soll ein übergebener Stapel s vom Inhaltstyp Kiste nach der Auswertung **unverändert** sein. Welche Aussagen sind richtig? (Mehrere Antworten möglich.)"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "optionen": [
+     {
+      "id": "a",
+      "md": "Wer `hilf.push(new Kiste(k.getName(), k.getGewicht()))` zwischenlagert und zurückschichtet, hat s nicht unverändert gelassen."
+     },
+     {
+      "id": "b",
+      "md": "Ein `return` mitten in der Auswerte-Schleife ist erlaubt, wenn das Ergebnis schon feststeht."
+     },
+     {
+      "id": "c",
+      "md": "Stapel und Schlange werden als Referenz übergeben – jedes pop() in der Methode verändert den Stapel des Aufrufers."
+     },
+     {
+      "id": "d",
+      "md": "Wer den Stapel über eine Hilfsschlange zwischenlagert und direkt zurückschichtet, erhält die umgekehrte Reihenfolge."
+     },
+     {
+      "id": "e",
+      "md": "Es genügt, den Stapel am Ende neu zu erzeugen: `s = new Stack();` und alle Kisten hineinzulegen."
+     }
+    ],
+    "mehrfach": true
+   },
+   "loesung": {
+    "richtig": [
+     "a",
+     "c",
+     "d"
+    ]
+   },
+   "tipps": [
+    "„Unverändert“ heißt: dieselben Objekte in derselben Reihenfolge – und zwar im Stapel des Aufrufers."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "a: Neue Kisten mit gleichen Werten sind nicht dieselben Objekte – Verweise von anderswo zeigen ins Leere (P2). b: Der halb abgebaute Stapel bleibt zurück. c: richtig – deshalb ist Zurückschichten nötig. d: richtig – Stapel → Schlange → Stapel dreht um. e: `s = new Stack()` ändert nur die lokale Variable s; der Stapel des Aufrufers bleibt leer zurück."
+    }
+   ]
+  },
+  {
+   "id": "W4-L3-08",
+   "titel": "Rotieren mit Zähler",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Schlange q = A, B, C, D, E (vorne zuerst) wird k-mal rotiert: `for (int i = 0; i < k; i++) { q.enqueue(q.dequeue()); }`. Gib q danach an (vorne zuerst, mit Komma)."
+    },
+    {
+     "t": "text",
+     "md": "k = 3: [[g1]] · k = 5: [[g2]] · k = 7: [[g3]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 14
+     },
+     "g2": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 14
+     },
+     "g3": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 14
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "D, E, A, B, C",
+     "D; E; A; B; C",
+     "{D, E, A, B, C}"
+    ],
+    "g2": [
+     "A, B, C, D, E",
+     "A; B; C; D; E",
+     "{A, B, C, D, E}"
+    ],
+    "g3": [
+     "C, D, E, A, B",
+     "C; D; E; A; B",
+     "{C, D, E, A, B}"
+    ]
+   },
+   "tipps": [
+    "Jede Runde wandert das vorderste Element nach hinten."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "k = 3: D, E, A, B, C; nach k = 5 = Länge ist alles wieder wie vorher: A, B, C, D, E; k = 7 wirkt wie 7 mod 5 = 2 Runden: C, D, E, A, B. Genau so bleibt eine Schlange mit bekannter Anzahl beim Auswerten unverändert."
+    }
+   ]
+  },
+  {
+   "id": "W4-L4-01",
+   "titel": "Die Ladeliste wächst und schrumpft",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Containernummern stehen in einer dynamischen Reihung. Führe die Anweisungen aus und gib den Inhalt am Ende an."
+    },
+    {
+     "t": "code",
+     "code": "DynArray d = new DynArray();\nd.append(14);\nd.append(3);\nd.insertAt(0, 27);\nd.insertAt(2, 9);\nd.setItem(1, 50);\nd.delete(0);\nd.append(d.getItem(1));\nd.insertAt(d.getLength(), 8);",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Baue den Endzustand mit den Chips auf: beim **Stapel von unten nach oben** (erster Chip = unterstes Element), bei der **Schlange von vorne nach hinten**, bei der dynamischen Reihung ab Index 0."
+    }
+   ],
+   "interaktion": {
+    "kind": "adtsim",
+    "art": "dynarray",
+    "start": []
+   },
+   "loesung": {
+    "inhalt": [
+     "50",
+     "9",
+     "3",
+     "9",
+     "8"
+    ]
+   },
+   "tipps": [
+    "insertAt verschiebt die folgenden Elemente nach hinten, delete nach vorn – die Indizes ändern sich!",
+    "setItem ersetzt nur, die Länge bleibt."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Ablauf: 14 → 14, 3 → 27, 14, 3 → 27, 14, 9, 3 → 27, 50, 9, 3 → 50, 9, 3 → 50, 9, 3, 9 (getItem(1) = 9 angehängt) → 50, 9, 3, 9, 8 (insertAt(getLength(), 8) hängt an)."
+    }
+   ]
+  },
+  {
+   "id": "W4-L4-02",
+   "titel": "Index?",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [
+    "P1",
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die dynamische Reihung d enthält genau 4 Elemente. Welche Aufrufe führen zu einem Laufzeitfehler? (Mehrere Antworten möglich.)"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "optionen": [
+     {
+      "id": "a",
+      "md": "`d.getItem(4)`"
+     },
+     {
+      "id": "b",
+      "md": "`d.insertAt(4, x)`"
+     },
+     {
+      "id": "c",
+      "md": "`d.delete(4)`"
+     },
+     {
+      "id": "d",
+      "md": "`d.setItem(3, x)`"
+     },
+     {
+      "id": "e",
+      "md": "`d.insertAt(5, x)`"
+     },
+     {
+      "id": "f",
+      "md": "`d.getItem(-1)`"
+     },
+     {
+      "id": "g",
+      "md": "`d.delete(0)`"
+     }
+    ],
+    "mehrfach": true
+   },
+   "loesung": {
+    "richtig": [
+     "a",
+     "c",
+     "e",
+     "f"
+    ]
+   },
+   "tipps": [
+    "Gültige Indizes für getItem, setItem und delete: 0 bis getLength() − 1. insertAt darf zusätzlich getLength()."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Laufzeitfehler (IndexOutOfBoundsException) bei getItem(4), delete(4), insertAt(5, x) und getItem(−1). insertAt(4, x) hängt an (i = getLength() ist erlaubt), setItem(3, x) und delete(0) sind gültig (P6: Grenzen genau kennen)."
+    }
+   ]
+  },
+  {
+   "id": "W4-L4-03",
+   "titel": "Die Kiste, die übersprungen wurde",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P6",
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`entferneName(d, \"Tee\")` soll alle Tee-Kisten entfernen. d = Zimt, Tee, Tee, Reis, Tee, Tee (Index 0 zuerst)."
+    },
+    {
+     "t": "code",
+     "code": "public static void entferneName(DynArray d, String name) {\n    for (int i = 0; i < d.getLength(); i++) {\n        Kiste k = (Kiste) d.getItem(i);\n        if (k.getName().equals(name)) {\n            d.delete(i);\n        }\n    }\n}",
+     "nummern": true
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "i",
+      "d.getLength()",
+      "Name an Index i",
+      "Aktion",
+      "d danach"
+     ],
+     "zeilen": [
+      [
+       "0",
+       "6",
+       "Zimt",
+       "–",
+       "Zimt, Tee, Tee, Reis, Tee, Tee"
+      ],
+      [
+       "1",
+       "[[l1]]",
+       "[[n1]]",
+       "delete(1)",
+       "[[d1]]"
+      ],
+      [
+       "2",
+       "[[l2]]",
+       "[[n2]]",
+       "–",
+       "[[d2]]"
+      ],
+      [
+       "3",
+       "[[l3]]",
+       "[[n3]]",
+       "delete(3)",
+       "[[d3]]"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Ergebnis nach dem Aufruf: [[e]] – richtig wäre: Zimt, Reis."
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "l1": {
+      "typ": "zahl"
+     },
+     "n1": {
+      "typ": "auswahl",
+      "optionen": [
+       "Zimt",
+       "Tee",
+       "Reis"
+      ]
+     },
+     "d1": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 18
+     },
+     "l2": {
+      "typ": "zahl"
+     },
+     "n2": {
+      "typ": "auswahl",
+      "optionen": [
+       "Zimt",
+       "Tee",
+       "Reis"
+      ]
+     },
+     "d2": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 18
+     },
+     "l3": {
+      "typ": "zahl"
+     },
+     "n3": {
+      "typ": "auswahl",
+      "optionen": [
+       "Zimt",
+       "Tee",
+       "Reis"
+      ]
+     },
+     "d3": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 18
+     },
+     "e": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 18
+     }
+    }
+   },
+   "loesung": {
+    "l1": [
+     "6"
+    ],
+    "n1": [
+     "Tee"
+    ],
+    "d1": [
+     "Zimt, Tee, Reis, Tee, Tee",
+     "Zimt; Tee; Reis; Tee; Tee",
+     "{Zimt, Tee, Reis, Tee, Tee}"
+    ],
+    "l2": [
+     "5"
+    ],
+    "n2": [
+     "Reis"
+    ],
+    "d2": [
+     "Zimt, Tee, Reis, Tee, Tee",
+     "Zimt; Tee; Reis; Tee; Tee",
+     "{Zimt, Tee, Reis, Tee, Tee}"
+    ],
+    "l3": [
+     "5"
+    ],
+    "n3": [
+     "Tee"
+    ],
+    "d3": [
+     "Zimt, Tee, Reis, Tee",
+     "Zimt; Tee; Reis; Tee",
+     "{Zimt, Tee, Reis, Tee}"
+    ],
+    "e": [
+     "Zimt, Tee, Reis, Tee",
+     "Zimt; Tee; Reis; Tee",
+     "{Zimt, Tee, Reis, Tee}"
+    ]
+   },
+   "tipps": [
+    "Nach delete(i) rückt der Nachfolger auf Index i – und dann kommt i++."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Nach jedem delete(i) rückt die nächste Kiste auf Index i, das anschließende i++ springt über sie hinweg. Übrig bleiben Zimt, Tee, Reis, Tee. Der Fehler tritt nur auf, wenn zwei zu löschende Kisten direkt hintereinander stehen. Abhilfe: rückwärts laufen oder i nur erhöhen, wenn nicht gelöscht wurde (P6)."
+    }
+   ]
+  },
+  {
+   "id": "W4-L4-04",
+   "titel": "Bug-Hunt: Die leichteste Kiste",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`entferneLeichteste(d)` soll die leichteste Kiste (bei Gleichstand die erste) entfernen und liefern; bei leerer Liste null."
+    },
+    {
+     "t": "code",
+     "code": "public static Kiste entferneLeichteste(DynArray d) {\n    if (d.isEmpty()) {\n        return null;\n    }\n    int minIndex = 0;\n    for (int i = 1; i <= d.getLength(); i++) {\n        Kiste k = (Kiste) d.getItem(i);\n        if (k.getGewicht() < ((Kiste) d.getItem(minIndex)).getGewicht()) {\n            minIndex = i;\n        }\n    }\n    Kiste leicht = (Kiste) d.getItem(minIndex);\n    d.delete(minIndex);\n    return leicht;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**Teil 1:** Markiere die fehlerhafte Zeile.\n\n**Teil 2:** Korrigiere die Schleifenbedingung: `for (int i = 1; [[g1]]; i++)`\n\n**Teil 3:** Nach der Korrektur liefert der Aufruf für d = Zinn 6, Tee 4, Reis 7, Kaffee 4 die Kiste [[g2]]; danach ist d = [[g3]] (nur Namen, mit Komma)."
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 1,
+     "anzahl": 1
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 18
+      },
+      "g2": {
+       "typ": "auswahl",
+       "optionen": [
+        "Zinn",
+        "Tee",
+        "Reis",
+        "Kaffee"
+       ]
+      },
+      "g3": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 20
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      6
+     ]
+    },
+    {
+     "g1": [
+      "i<d.getLength()",
+      "i<=d.getLength()-1"
+     ],
+     "g2": [
+      "Tee"
+     ],
+     "g3": [
+      "Zinn, Reis, Kaffee",
+      "Zinn; Reis; Kaffee",
+      "{Zinn, Reis, Kaffee}"
+     ]
+    }
+   ],
+   "tipps": [
+    "Der größte gültige Index ist d.getLength() − 1."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Mit `i <= d.getLength()` greift getItem in der letzten Runde auf Index getLength() zu → IndexOutOfBoundsException (P6). Korrigiert: `i < d.getLength()`. Wegen `<` gewinnt bei Gleichstand die erste 4-kg-Kiste: Tee; d danach Zinn, Reis, Kaffee."
+    }
+   ]
+  },
+  {
+   "id": "W4-L4-05",
+   "titel": "Sortiert verladen",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P1"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Ladeliste ist aufsteigend nach Gewicht sortiert: d = Zimt 2, Seide 3, Tee 4, Zinn 6, Reis 7. Es wird `einfuegenSortiert(d, new Kiste(\"Kaffee\", 4))` aufgerufen."
+    },
+    {
+     "t": "code",
+     "code": "public static void einfuegenSortiert(DynArray d, Kiste k) {\n    int pos = 0;\n    while (pos < d.getLength() && ((Kiste) d.getItem(pos)).getGewicht() <= k.getGewicht()) {\n        pos++;\n    }\n    d.insertAt(pos, k);\n}",
+     "nummern": true
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "pos",
+      "d.getItem(pos)",
+      "schwerer als 4 kg?"
+     ],
+     "zeilen": [
+      [
+       "0",
+       "[[k0]]",
+       "[[a0]]"
+      ],
+      [
+       "1",
+       "[[k1]]",
+       "[[a1]]"
+      ],
+      [
+       "2",
+       "[[k2]]",
+       "[[a2]]"
+      ],
+      [
+       "3",
+       "[[k3]]",
+       "[[a3]]"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Kaffee wird an Index [[ix]] eingefügt. Ist die Liste leer, wird `getItem` [[lee]] aufgerufen."
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "k0": {
+      "typ": "auswahl",
+      "optionen": [
+       "Zimt 2",
+       "Seide 3",
+       "Tee 4",
+       "Zinn 6",
+       "Reis 7"
+      ]
+     },
+     "a0": {
+      "typ": "auswahl",
+      "optionen": [
+       "ja",
+       "nein"
+      ]
+     },
+     "k1": {
+      "typ": "auswahl",
+      "optionen": [
+       "Zimt 2",
+       "Seide 3",
+       "Tee 4",
+       "Zinn 6",
+       "Reis 7"
+      ]
+     },
+     "a1": {
+      "typ": "auswahl",
+      "optionen": [
+       "ja",
+       "nein"
+      ]
+     },
+     "k2": {
+      "typ": "auswahl",
+      "optionen": [
+       "Zimt 2",
+       "Seide 3",
+       "Tee 4",
+       "Zinn 6",
+       "Reis 7"
+      ]
+     },
+     "a2": {
+      "typ": "auswahl",
+      "optionen": [
+       "ja",
+       "nein"
+      ]
+     },
+     "k3": {
+      "typ": "auswahl",
+      "optionen": [
+       "Zimt 2",
+       "Seide 3",
+       "Tee 4",
+       "Zinn 6",
+       "Reis 7"
+      ]
+     },
+     "a3": {
+      "typ": "auswahl",
+      "optionen": [
+       "ja",
+       "nein"
+      ]
+     },
+     "ix": {
+      "typ": "zahl"
+     },
+     "lee": {
+      "typ": "auswahl",
+      "optionen": [
+       "nie",
+       "einmal mit Index 0",
+       "einmal mit Index −1"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "k0": [
+     "Zimt 2"
+    ],
+    "a0": [
+     "nein"
+    ],
+    "k1": [
+     "Seide 3"
+    ],
+    "a1": [
+     "nein"
+    ],
+    "k2": [
+     "Tee 4"
+    ],
+    "a2": [
+     "nein"
+    ],
+    "k3": [
+     "Zinn 6"
+    ],
+    "a3": [
+     "ja"
+    ],
+    "ix": [
+     "3"
+    ],
+    "lee": [
+     "nie"
+    ]
+   },
+   "tipps": [
+    "Die Schleife läuft, solange die Kiste an pos höchstens so schwer ist wie die neue.",
+    "Kurzschluss: Ist pos < d.getLength() falsch, wird der rechte Teil nicht mehr ausgewertet."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "pos läuft über Zimt, Seide und Tee (nicht schwerer als 4 kg) und stoppt bei Zinn 6: insertAt(3, Kaffee) – hinter der gleich schweren Tee-Kiste. Ergebnis: Zimt, Seide, Tee, Kaffee, Zinn, Reis. Bei leerer Liste ist `pos < d.getLength()` sofort falsch – wegen des Kurzschlusses wird getItem nie aufgerufen, insertAt(0, k) ist erlaubt (P1)."
+    }
+   ]
+  },
+  {
+   "id": "W4-L4-06",
+   "titel": "Vom Code zum Struktogramm: Leichtgut entfernen",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Code ↔ Struktogramm",
+   "fallen": [
+    "P6",
+    "P9"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`entferneLeichte(d, grenze)` entfernt alle Kisten, die leichter als grenze sind, und liefert ihre Anzahl:"
+    },
+    {
+     "t": "code",
+     "code": "public static int entferneLeichte(DynArray d, int grenze) {\n    int anzahl = 0;\n    int i = 0;\n    while (i < d.getLength()) {\n        Kiste k = (Kiste) d.getItem(i);\n        if (k.getGewicht() < grenze) {\n            d.delete(i);\n            anzahl++;\n        } else {\n            i++;\n        }\n    }\n    return anzahl;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Vervollständige das Struktogramm nach EH § 5 (in Struktogrammen stehen keine Casts):"
+    },
+    {
+     "t": "struktogramm",
+     "kopf": "entferneLeichte(d: dynamische Reihung vom Inhaltstyp Kiste, grenze: Ganzzahl): Ganzzahl",
+     "rumpf": [
+      {
+       "anw": "anzahl ← 0"
+      },
+      {
+       "anw": "i ← 0"
+      },
+      {
+       "solange": "[[g1]]",
+       "rumpf": [
+        {
+         "wenn": "d.getItem(i).getGewicht() < grenze",
+         "dann": [
+          {
+           "aufruf": "[[g2]]"
+          },
+          {
+           "anw": "anzahl ← anzahl + 1"
+          }
+         ],
+         "sonst": [
+          {
+           "anw": "[[g3]]"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "gib": "anzahl"
+      }
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Für d = Zimt 2, Seide 3, Zinn 6, Wolle 3, Reis 7 und grenze 4 liefert der Aufruf [[g4]]."
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 18
+     },
+     "g2": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "g3": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 10
+     },
+     "g4": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "i<d.getLength()",
+     "i<Längevond",
+     "d.getLength()>i"
+    ],
+    "g2": [
+     "d.delete(i)"
+    ],
+    "g3": [
+     "i←i+1",
+     "i<-i+1",
+     "i←1+i"
+    ],
+    "g4": [
+     "3"
+    ]
+   },
+   "tipps": [
+    "Die Länge wird in jeder Runde neu abgefragt.",
+    "Zuweisung im Struktogramm: ←"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Schleife „solange i < d.getLength()“, im wahr-Zweig `d.delete(i)` und zählen, im falsch-Zweig `i ← i + 1` – nach einem Löschen bleibt i stehen, weil der Nachfolger nachrückt. Zuweisungen mit ←, keine Java-Syntax wie `i++` (P9). Ergebnis 3, übrig bleiben Zinn, Reis."
+    }
+   ]
+  },
+  {
+   "id": "W4-L4-07",
+   "titel": "Doppelt geladen",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Effizienz",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`entferneDuplikate(d)` entfernt Kisten mit gleichem Namen; nur das erste Vorkommen bleibt, die Reihenfolge bleibt erhalten."
+    },
+    {
+     "t": "code",
+     "code": "public static void entferneDuplikate(DynArray d) {\n    for (int i = 0; i < d.getLength(); i++) {\n        String name = ((Kiste) d.getItem(i)).getName();\n        int j = i + 1;\n        while (j < d.getLength()) {\n            if (((Kiste) d.getItem(j)).getName().equals(name)) {\n                d.delete(j);\n            } else {\n                j++;\n            }\n        }\n    }\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "d = Tee 4, Reis 7, Tee 3, Zimt 2, Reis 5, Tee 1.\n\n- d nach dem Aufruf (Name Gewicht, mit Komma, z. B. `Tee 4, Reis 7`): [[g1]]\n- Anzahl der Namensvergleiche (`equals`) dabei: [[g2]]\n- Anzahl der Namensvergleiche für eine Liste aus 6 Kisten mit lauter verschiedenen Namen: [[g3]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 24
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "Tee 4, Reis 7, Zimt 2",
+     "Tee 4; Reis 7; Zimt 2",
+     "{Tee 4, Reis 7, Zimt 2}"
+    ],
+    "g2": [
+     "7"
+    ],
+    "g3": [
+     "15"
+    ]
+   },
+   "tipps": [
+    "Gelöschte Kisten werden später nicht mehr verglichen.",
+    "Ohne Duplikate wird jede Kiste mit jeder späteren verglichen."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Übrig bleiben Tee 4, Reis 7, Zimt 2 mit 7 Vergleichen (i = 0: 5 Vergleiche, dabei werden Tee 3 und Tee 1 gelöscht; i = 1: 2 Vergleiche, Reis 5 gelöscht; i = 2: keiner). Ohne Duplikate: 5 + 4 + 3 + 2 + 1 = 15 = n(n − 1)/2 – quadratischer Aufwand."
+    }
+   ]
+  },
+  {
+   "id": "W4-L4-08",
+   "titel": "Durch die Ladeliste laufen",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Lückencode",
+   "fallen": [
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "d ist eine dynamische Reihung vom Inhaltstyp Ganzzahl mit d = 4, 9, 1. Welche Schleifen addieren **alle** Werte ohne Laufzeitfehler? (Mehrere Antworten möglich.)"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "optionen": [
+     {
+      "id": "a",
+      "md": "`for (int i = 0; i < d.getLength(); i++) { s += (Integer) d.getItem(i); }`"
+     },
+     {
+      "id": "b",
+      "md": "`for (Object o : d) { s += (Integer) o; }`"
+     },
+     {
+      "id": "c",
+      "md": "`for (int i = 0; i <= d.getLength(); i++) { s += (Integer) d.getItem(i); }`"
+     },
+     {
+      "id": "d",
+      "md": "`for (int i = 1; i < d.getLength(); i++) { s += (Integer) d.getItem(i); }`"
+     }
+    ],
+    "mehrfach": true
+   },
+   "loesung": {
+    "richtig": [
+     "a",
+     "b"
+    ]
+   },
+   "tipps": [
+    "Indizes von 0 bis getLength() − 1."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "a und b liefern 14 (DynArray ist in der Online-IDE mit for-each durchlaufbar – vor dem Einsatz prüfen). c greift auf Index 3 zu → IndexOutOfBoundsException; d beginnt bei 1 und vergisst den ersten Wert (10) – beides P6."
+    }
+   ]
+  },
+  {
+   "id": "W4-L5-01",
+   "titel": "Von der Liste in den Kran",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Ladeliste wird in einen Stapel umgeladen:"
+    },
+    {
+     "t": "code",
+     "code": "DynArray d = new DynArray();\nd.append(\"Tee\");\nd.append(\"Zinn\");\nd.append(\"Reis\");\nd.append(\"Seide\");\nStack s = new Stack();\nfor (int i = 0; i < d.getLength(); i++) {\n    s.push(d.getItem(i));\n}\ns.pop();",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Gib den Inhalt von s am Ende an. Baue den Endzustand mit den Chips auf: beim **Stapel von unten nach oben** (erster Chip = unterstes Element), bei der **Schlange von vorne nach hinten**, bei der dynamischen Reihung ab Index 0."
+    }
+   ],
+   "interaktion": {
+    "kind": "adtsim",
+    "art": "stapel",
+    "start": []
+   },
+   "loesung": {
+    "inhalt": [
+     "Tee",
+     "Zinn",
+     "Reis"
+    ]
+   },
+   "tipps": [
+    "Index 0 wird zuerst gepusht und liegt deshalb unten."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Nach der Schleife liegt Tee unten, Seide oben; pop() entfernt Seide. s (unten → oben) = Tee, Zinn, Reis."
+    }
+   ]
+  },
+  {
+   "id": "W4-L5-02",
+   "titel": "Umladen: Wer steht wo?",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Ordne jedem Umladevorgang das Ergebnis zu. Ausgangslage jeweils: Schlange q = A, B, C (vorne zuerst), Stapel s = A, B, C (oben zuerst) bzw. dynamische Reihung d = A, B, C (Index 0 zuerst). Das Ergebnis wird gelesen: Schlange vorne zuerst, Stapel oben zuerst, Reihung ab Index 0."
+    }
+   ],
+   "interaktion": {
+    "kind": "match",
+    "elemente": [
+     {
+      "id": "e1",
+      "md": "q → d mit `d.append(q.dequeue())`"
+     },
+     {
+      "id": "e2",
+      "md": "d → s mit `s.push(d.getItem(i))` für i = 0, 1, 2"
+     },
+     {
+      "id": "e3",
+      "md": "s → q mit `q.enqueue(s.pop())`"
+     },
+     {
+      "id": "e4",
+      "md": "q → d mit `d.insertAt(0, q.dequeue())`"
+     },
+     {
+      "id": "e5",
+      "md": "s → d mit `d.append(s.pop())`"
+     }
+    ],
+    "kategorien": [
+     {
+      "id": "k1",
+      "md": "A, B, C"
+     },
+     {
+      "id": "k2",
+      "md": "C, B, A"
+     }
+    ]
+   },
+   "loesung": {
+    "e1": "k1",
+    "e2": "k2",
+    "e3": "k1",
+    "e4": "k2",
+    "e5": "k1"
+   },
+   "tipps": [
+    "Wer zuerst herauskommt, steht im Ziel vorne/an Index 0/unten."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Gemessen: e1 A, B, C, e2 C, B, A (A liegt unten), e3 A, B, C, e4 C, B, A (jedes neue Element vorne), e5 A, B, C. Merke: Umgedreht wird beim Durchgang durch einen Stapel (push, dann von oben lesen) und mit insertAt(0, …)."
+    }
+   ]
+  },
+  {
+   "id": "W4-L5-03",
+   "titel": "Umladen im Zollamt",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die dynamische Reihung d enthält Kupfer, Tee, Zimt, Wolle (Index 0 zuerst)."
+    },
+    {
+     "t": "code",
+     "code": "Queue q = new Queue();\nfor (int i = d.getLength() - 1; i >= 0; i--) {\n    q.enqueue(d.getItem(i));\n}\nStack s = new Stack();\nwhile (!q.isEmpty()) {\n    s.push(q.dequeue());\n}\nDynArray e = new DynArray();\nwhile (!s.isEmpty()) {\n    e.append(s.pop());\n}",
+     "nummern": true
+    },
+    {
+     "t": "hinweis",
+     "md": "Schreibweise wie im AB: **Stapel oben zuerst**, **Schlange vorne zuerst**, dynamische Reihung **Index 0 zuerst**, Elemente mit Komma getrennt, leere Struktur: `–`."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "nach Zeile",
+      "d",
+      "q (vorne zuerst)",
+      "s (oben zuerst)",
+      "e"
+     ],
+     "zeilen": [
+      [
+       "4",
+       "[[d4]]",
+       "[[q4]]",
+       "–",
+       "–"
+      ],
+      [
+       "8",
+       "Kupfer, Tee, Zimt, Wolle",
+       "[[q8]]",
+       "[[s8]]",
+       "–"
+      ],
+      [
+       "12",
+       "Kupfer, Tee, Zimt, Wolle",
+       "–",
+       "[[s12]]",
+       "[[e12]]"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Vergleiche e mit d: [[g]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "d4": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 22
+     },
+     "q4": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 22
+     },
+     "q8": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 22
+     },
+     "s8": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 22
+     },
+     "s12": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 22
+     },
+     "e12": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 22
+     },
+     "g": {
+      "typ": "auswahl",
+      "optionen": [
+       "gleiche Reihenfolge",
+       "umgekehrte Reihenfolge",
+       "andere Elemente"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "d4": [
+     "Kupfer, Tee, Zimt, Wolle",
+     "Kupfer; Tee; Zimt; Wolle",
+     "{Kupfer, Tee, Zimt, Wolle}"
+    ],
+    "q4": [
+     "Wolle, Zimt, Tee, Kupfer",
+     "Wolle; Zimt; Tee; Kupfer",
+     "{Wolle, Zimt, Tee, Kupfer}"
+    ],
+    "q8": [
+     "–",
+     "-",
+     "leer",
+     "—"
+    ],
+    "s8": [
+     "Kupfer, Tee, Zimt, Wolle",
+     "Kupfer; Tee; Zimt; Wolle",
+     "{Kupfer, Tee, Zimt, Wolle}"
+    ],
+    "s12": [
+     "–",
+     "-",
+     "leer",
+     "—"
+    ],
+    "e12": [
+     "Kupfer, Tee, Zimt, Wolle",
+     "Kupfer; Tee; Zimt; Wolle",
+     "{Kupfer, Tee, Zimt, Wolle}"
+    ],
+    "g": [
+     "gleiche Reihenfolge"
+    ]
+   },
+   "tipps": [
+    "Zeilen 2–4 laufen rückwärts durch d.",
+    "getItem liest nur – d bleibt unverändert."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Nach Zeile 4: q = Wolle, Zimt, Tee, Kupfer (rückwärts gelesen). Nach Zeile 8: q leer, s (oben zuerst) = Kupfer, Tee, Zimt, Wolle. Nach Zeile 12: e = Kupfer, Tee, Zimt, Wolle. Zwei Umkehrungen (rückwärts lesen, Stapel) heben sich auf – e hat dieselbe Reihenfolge wie d."
+    }
+   ]
+  },
+  {
+   "id": "W4-L5-04",
+   "titel": "Klammern im Frachtbrief",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Welche Ausdrücke sind richtig geklammert? (Mehrere Antworten möglich; andere Zeichen werden ignoriert.)"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "optionen": [
+     {
+      "id": "a",
+      "md": "`{a[b(c)]}`"
+     },
+     {
+      "id": "b",
+      "md": "`([)]`"
+     },
+     {
+      "id": "c",
+      "md": "`(()`"
+     },
+     {
+      "id": "d",
+      "md": "`x(y)[z]{}`"
+     },
+     {
+      "id": "e",
+      "md": "`}{`"
+     },
+     {
+      "id": "f",
+      "md": "`[(a+b)*(c-d)]`"
+     }
+    ],
+    "mehrfach": true
+   },
+   "loesung": {
+    "richtig": [
+     "a",
+     "d",
+     "f"
+    ]
+   },
+   "tipps": [
+    "Jede schließende Klammer muss zur zuletzt geöffneten, noch offenen Klammer passen."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Richtig: {a[b(c)]}, x(y)[z]{}, [(a+b)*(c-d)]. `([)]`: Bei ) liegt [ oben. `(()`: am Ende bleibt ( offen. `}{`: } kommt bei leerem Stapel. Ein Zähler (+1/−1) würde `([)]` und `}{` fälschlich durchgehen lassen – man braucht einen Stapel."
+    }
+   ]
+  },
+  {
+   "id": "W4-L5-05",
+   "titel": "Klammer-Trace",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Verfolge `klammernOk(\"({x}[y](z))\")` mit dem Klammer-Stapel. Gib nach jedem Klammerzeichen den Stapel an (oben zuerst, Zeichen ohne Anführungszeichen, z. B. `{, (`; leer: `–`)."
+    },
+    {
+     "t": "code",
+     "code": "public static boolean passt(char auf, char zu) {\n    return (auf == '(' && zu == ')') || (auf == '[' && zu == ']') || (auf == '{' && zu == '}');\n}\n\npublic static boolean klammernOk(String s) {\n    Stack offen = new Stack();\n    for (int i = 0; i < s.length(); i++) {\n        char c = s.charAt(i);\n        if (c == '(' || c == '[' || c == '{') {\n            offen.push(c);\n        } else if (c == ')' || c == ']' || c == '}') {\n            if (offen.isEmpty()) {\n                return false;\n            }\n            char auf = (Character) offen.pop();\n            if (!passt(auf, c)) {\n                return false;\n            }\n        }\n    }\n    return offen.isEmpty();\n}",
+     "nummern": true
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Zeichen",
+      "Aktion",
+      "Stapel (oben → unten)"
+     ],
+     "zeilen": [
+      [
+       "(",
+       "push",
+       "[[s0]]"
+      ],
+      [
+       "{",
+       "push",
+       "[[s1]]"
+      ],
+      [
+       "}",
+       "pop → passt",
+       "[[s2]]"
+      ],
+      [
+       "[",
+       "push",
+       "[[s3]]"
+      ],
+      [
+       "]",
+       "pop → passt",
+       "[[s4]]"
+      ],
+      [
+       "(",
+       "push",
+       "[[s5]]"
+      ],
+      [
+       ")",
+       "pop → passt",
+       "[[s6]]"
+      ],
+      [
+       ")",
+       "pop → passt",
+       "[[s7]]"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Rückgabe: [[r]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "s0": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "s1": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "s2": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "s3": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "s4": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "s5": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "s6": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "s7": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "r": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "s0": [
+     "("
+    ],
+    "s1": [
+     "{, (",
+     "{; ("
+    ],
+    "s2": [
+     "("
+    ],
+    "s3": [
+     "[, (",
+     "[; ("
+    ],
+    "s4": [
+     "("
+    ],
+    "s5": [
+     "(, (",
+     "(; ("
+    ],
+    "s6": [
+     "("
+    ],
+    "s7": [
+     "–",
+     "-",
+     "leer",
+     "—"
+    ],
+    "r": [
+     "true"
+    ]
+   },
+   "tipps": [
+    "Buchstaben werden ignoriert und erscheinen nicht in der Tabelle."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Öffnende Klammern kommen oben auf, jede schließende entnimmt die passende: (, dann {, (, wieder (, dann [, (, …; am Ende ist der Stapel leer → true. Der Stapel hat den Inhaltstyp Zeichen: push(c) verpackt automatisch, beim pop wird mit (Character) gecastet."
+    }
+   ]
+  },
+  {
+   "id": "W4-L5-06",
+   "titel": "Der Rechenschieber des Zollmeisters",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Werte den Postfix-Ausdruck `83-52*+` aus (einstellige Zahlen, Rechenzeichen + − *). Gib nach jedem Zeichen den Stapel an (oben zuerst)."
+    },
+    {
+     "t": "code",
+     "code": "public static int postfix(String ausdruck) {\n    Stack werte = new Stack();\n    for (int i = 0; i < ausdruck.length(); i++) {\n        char c = ausdruck.charAt(i);\n        if (c >= '0' && c <= '9') {\n            werte.push((int) c - (int) '0');\n        } else {\n            int b = (Integer) werte.pop();\n            int a = (Integer) werte.pop();\n            if (c == '+') {\n                werte.push(a + b);\n            } else if (c == '-') {\n                werte.push(a - b);\n            } else {\n                werte.push(a * b);\n            }\n        }\n    }\n    return (Integer) werte.pop();\n}",
+     "nummern": true
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Zeichen",
+      "Aktion",
+      "Stapel (oben → unten)"
+     ],
+     "zeilen": [
+      [
+       "8",
+       "push 8",
+       "[[s0]]"
+      ],
+      [
+       "3",
+       "push 3",
+       "[[s1]]"
+      ],
+      [
+       "-",
+       "rechnen",
+       "[[s2]]"
+      ],
+      [
+       "5",
+       "push 5",
+       "[[s3]]"
+      ],
+      [
+       "2",
+       "push 2",
+       "[[s4]]"
+      ],
+      [
+       "*",
+       "rechnen",
+       "[[s5]]"
+      ],
+      [
+       "+",
+       "rechnen",
+       "[[s6]]"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Ergebnis: [[e]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "s0": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "s1": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "s2": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "s3": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "s4": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "s5": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "s6": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "e": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "s0": [
+     "8",
+     "{8}"
+    ],
+    "s1": [
+     "3, 8",
+     "3; 8",
+     "{3, 8}"
+    ],
+    "s2": [
+     "5",
+     "{5}"
+    ],
+    "s3": [
+     "5, 5",
+     "5; 5",
+     "{5, 5}"
+    ],
+    "s4": [
+     "2, 5, 5",
+     "2; 5; 5",
+     "{2, 5, 5}"
+    ],
+    "s5": [
+     "10, 5",
+     "10; 5",
+     "{10, 5}"
+    ],
+    "s6": [
+     "15",
+     "{15}"
+    ],
+    "e": [
+     "15"
+    ]
+   },
+   "tipps": [
+    "Beim Rechenzeichen ist der zuerst entnommene Wert der RECHTE Operand b."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "8, 3 → 8 − 3 = 5; dann 5, 2 → 5 · 2 = 10 (Stapel 10, 5); + → 5 + 10 = 15. Die Ziffer wird mit `(int) c - (int) '0'` zur Zahl."
+    }
+   ]
+  },
+  {
+   "id": "W4-L5-07",
+   "titel": "Postfix übersetzen",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Funktionsweise erläutern",
+   "fallen": [
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Übersetze in Postfix-Schreibweise (Operanden in derselben Reihenfolge, ohne Leerzeichen) und berechne mit dem Postfix-Rechner."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Ausdruck",
+      "Postfix",
+      "Wert"
+     ],
+     "zeilen": [
+      [
+       "(7 − 2) · (3 + 1)",
+       "[[p1]]",
+       "[[w1]]"
+      ],
+      [
+       "9 − 4 − 2 (von links)",
+       "[[p2]]",
+       "[[w2]]"
+      ],
+      [
+       "9 − (4 − 2)",
+       "[[p3]]",
+       "[[w3]]"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Ein Mitschüler entnimmt beim Rechenzeichen zuerst den **linken** Operanden. Sein Rechner liefert für `94-2-` den Wert [[f]]."
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "p1": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 10
+     },
+     "w1": {
+      "typ": "zahl"
+     },
+     "p2": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 10
+     },
+     "w2": {
+      "typ": "zahl"
+     },
+     "p3": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 10
+     },
+     "w3": {
+      "typ": "zahl"
+     },
+     "f": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "p1": [
+     "72-31+*"
+    ],
+    "w1": [
+     "20"
+    ],
+    "p2": [
+     "94-2-"
+    ],
+    "w2": [
+     "3"
+    ],
+    "p3": [
+     "942--"
+    ],
+    "w3": [
+     "7"
+    ],
+    "f": [
+     "7"
+    ]
+   },
+   "tipps": [
+    "Das Rechenzeichen steht hinter seinen beiden Operanden.",
+    "Klammern legen fest, welches Rechenzeichen zuletzt angewandt wird."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "72-31+* = 20, 94-2- = 3, 942-- = 7. Mit vertauschten Operanden: 4 − 9 = −5, dann 2 − (−5) = 7 statt 3 – betroffen sind nur nicht kommutative Rechenzeichen wie −."
+    }
+   ]
+  },
+  {
+   "id": "W4-L5-08",
+   "titel": "Bug-Hunt: Klammerprüfung",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P1"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Diese Fassung von klammernOk enthält zwei Fehler (`passt(auf, zu)` prüft, ob die Klammerarten zusammengehören)."
+    },
+    {
+     "t": "code",
+     "code": "public static boolean klammernOk(String s) {\n    Stack offen = new Stack();\n    for (int i = 0; i < s.length(); i++) {\n        char c = s.charAt(i);\n        if (c == '(' || c == '[' || c == '{') {\n            offen.push(c);\n        } else if (c == ')' || c == ']' || c == '}') {\n            char auf = (Character) offen.pop();\n            if (!passt(auf, c)) {\n                return false;\n            }\n        }\n    }\n    return true;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**Teil 1:** `klammernOk(\"(()\")` liefert [[g1]], `klammernOk(\"())\")` führt zu [[g2]].\n\n**Teil 2:** Markiere die **zwei** fehlerhaften Zeilen.\n\n**Teil 3:** Korrigiere die letzte Anweisung: `return [[g3]];`"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "auswahl",
+       "optionen": [
+        "true",
+        "false"
+       ]
+      },
+      "g2": {
+       "typ": "auswahl",
+       "optionen": [
+        "true",
+        "false",
+        "IllegalStateException",
+        "ClassCastException"
+       ]
+      },
+      "g3": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 16
+      }
+     }
+    },
+    {
+     "kind": "lines",
+     "block": 1,
+     "anzahl": 2
+    }
+   ],
+   "loesung": [
+    {
+     "g1": [
+      "true"
+     ],
+     "g2": [
+      "IllegalStateException"
+     ],
+     "g3": [
+      "offen.isEmpty()"
+     ]
+    },
+    {
+     "zeilen": [
+      8,
+      14
+     ]
+    }
+   ],
+   "tipps": [
+    "Was passiert bei einer schließenden Klammer, wenn der Stapel leer ist?",
+    "Was bedeutet es, wenn am Ende noch Klammern auf dem Stapel liegen?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Zeile 8: pop() ohne Leer-Abfrage – bei \"())\" kommt die letzte ) bei leerem Stapel → IllegalStateException (P1). Richtig: vorher `if (offen.isEmpty()) { return false; }`. Zeile 14: `return true` übersieht noch offene Klammern – \"(()\" liefert fälschlich true. Richtig: `return offen.isEmpty();`."
+    }
+   ]
+  },
+  {
+   "id": "W4-L6-01",
+   "titel": "Schlange oder Stapel?",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Funktionsweise erläutern",
+   "fallen": [
+    "P10"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Der iterative Flood-Fill (Level 4.6) merkt sich die noch zu bearbeitenden Felder in einer Ablage – einer Schlange oder einem Stapel. Markiert wird beim Einfügen. Welche Aussagen sind richtig? (Mehrere Antworten möglich.)"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "optionen": [
+     {
+      "id": "a",
+      "md": "Beide Varianten markieren am Ende dieselben Felder."
+     },
+     {
+      "id": "b",
+      "md": "Die Schlangen-Variante breitet sich in Wellen um den Start aus (Breitensuche)."
+     },
+     {
+      "id": "c",
+      "md": "Die Stapel-Variante markiert die Felder in derselben Reihenfolge wie das rekursive Lüften aus Welt 3."
+     },
+     {
+      "id": "d",
+      "md": "Weil beim Einfügen markiert wird, kommt kein Feld zweimal in die Ablage."
+     },
+     {
+      "id": "e",
+      "md": "Mit der Schlange kann ein Feld zweimal markiert werden."
+     }
+    ],
+    "mehrfach": true
+   },
+   "loesung": {
+    "richtig": [
+     "a",
+     "b",
+     "d"
+    ]
+   },
+   "tipps": [
+    "Markiert wird genau die Menge der vom Start erreichbaren Felder – egal mit welcher Ablage."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "a, b, d sind richtig. c ist falsch: Die Stapel-Variante markiert alle freien Nachbarn eines Feldes sofort beim Einfügen und geht erst dann vom zuletzt eingefügten aus weiter – die Rekursion geht sofort vom ersten Nachbarn in die Tiefe. e ist falsch: Markierte Felder werden nicht erneut eingefügt."
+    }
+   ]
+  },
+  {
+   "id": "W4-L6-02",
+   "titel": "Die Flut mit Schlange",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Tracetabelle",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Algorithmus: Start markieren und in die Ablage legen. Solange die Ablage nicht leer ist: ein Feld entnehmen und seine Nachbarn in der Reihenfolge **oben, rechts, unten, links** prüfen – jeder freie, noch nicht markierte Nachbar wird **sofort markiert** und in die Ablage gelegt. Positionen werden als z · 1000 + s gespeichert."
+    },
+    {
+     "t": "text",
+     "md": "Im Hafenbecken (ohne Randmauer, '#' Mole) läuft die Flut ab (1|0) mit einer **Schlange**. Klicke die Felder in der Reihenfolge an, in der sie markiert werden (Start zuerst)."
+    }
+   ],
+   "interaktion": {
+    "kind": "grid",
+    "raster": [
+     [
+      ".",
+      ".",
+      ".",
+      "."
+     ],
+     [
+      ".",
+      "#",
+      ".",
+      "."
+     ],
+     [
+      ".",
+      ".",
+      ".",
+      "#"
+     ]
+    ]
+   },
+   "loesung": {
+    "zellen": [
+     [
+      1,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      2,
+      0
+     ],
+     [
+      0,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      3
+     ]
+    ],
+    "reihenfolge": true
+   },
+   "tipps": [
+    "Die Schlange arbeitet die Felder in der Reihenfolge ab, in der sie markiert wurden.",
+    "Von (1|0) aus werden zuerst (0|0) und (2|0) markiert."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Reihenfolge: (1|0), (0|0), (2|0), (0|1), (2|1), (0|2), (2|2), (0|3), (1|2), (1|3). Erst alle Felder mit Abstand 1 vom Start, dann Abstand 2 usw. – Wellen (Breitensuche)."
+    }
+   ]
+  },
+  {
+   "id": "W4-L6-03",
+   "titel": "Die Flut mit Stapel",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Tracetabelle",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Algorithmus: Start markieren und in die Ablage legen. Solange die Ablage nicht leer ist: ein Feld entnehmen und seine Nachbarn in der Reihenfolge **oben, rechts, unten, links** prüfen – jeder freie, noch nicht markierte Nachbar wird **sofort markiert** und in die Ablage gelegt. Positionen werden als z · 1000 + s gespeichert."
+    },
+    {
+     "t": "text",
+     "md": "Gleiches Hafenbecken, Start (1|0), jetzt mit einem **Stapel** als Ablage. Klicke die Felder in der Reihenfolge an, in der sie markiert werden (Start zuerst)."
+    }
+   ],
+   "interaktion": {
+    "kind": "grid",
+    "raster": [
+     [
+      ".",
+      ".",
+      ".",
+      "."
+     ],
+     [
+      ".",
+      "#",
+      ".",
+      "."
+     ],
+     [
+      ".",
+      ".",
+      ".",
+      "#"
+     ]
+    ]
+   },
+   "loesung": {
+    "zellen": [
+     [
+      1,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      0,
+      3
+     ],
+     [
+      0,
+      1
+     ]
+    ],
+    "reihenfolge": true
+   },
+   "tipps": [
+    "Nach dem Start werden (0|0) und (2|0) markiert – entnommen wird aber das zuletzt eingefügte Feld (2|0)."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Reihenfolge: (1|0), (0|0), (2|0), (2|1), (2|2), (1|2), (0|2), (1|3), (0|3), (0|1). Der Stapel macht immer beim zuletzt eingefügten Feld weiter und läuft deshalb zuerst die untere Reihe entlang. Markiert werden dieselben 10 Felder wie mit der Schlange – nur die Reihenfolge ist anders."
+    }
+   ]
+  },
+  {
+   "id": "W4-L6-04",
+   "titel": "Positionen verpacken",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Datentypen und Ausdrücke",
+   "fallen": [
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Eine Position (z|s) wird als eine Ganzzahl gespeichert: pos = z · 1000 + s, zurück mit z = pos / 1000 und s = pos % 1000 (ganzzahlig)."
+    },
+    {
+     "t": "text",
+     "md": "- (3|7) → pos = [[g1]]\n- pos = 12045 → z = [[g2]], s = [[g3]]\n- Mit pos = z · 10 + s hätten (1|12) und (2|2) denselben Wert [[g4]]."
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "zahl"
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "zahl"
+     },
+     "g4": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "3007"
+    ],
+    "g2": [
+     "12"
+    ],
+    "g3": [
+     "45"
+    ],
+    "g4": [
+     "22"
+    ]
+   },
+   "tipps": [
+    "/ ist bei Ganzzahlen die ganzzahlige Division, % der Rest."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "3 · 1000 + 7 = 3007; 12045 / 1000 = 12, 12045 % 1000 = 45. Mit z · 10 + s: 1 · 10 + 12 = 22 = 2 · 10 + 2 – ab 10 Spalten fallen Positionen zusammen. z · 1000 + s funktioniert für alle Karten mit weniger als 1000 Spalten (P4: ganzzahlige Division)."
+    }
+   ]
+  },
+  {
+   "id": "W4-L6-05",
+   "titel": "Eine Frage des Aufwands",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Effizienz",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Eine Schlange wird mit einer dynamischen Reihung nachgebaut: enqueue = `append(x)`, dequeue = `getItem(0)` und danach `delete(0)`. Intern verschiebt `delete(0)` jedes folgende Element um eine Stelle (ein Schritt je Verschiebung). n Kisten werden eingereiht und danach alle wieder entnommen."
+    },
+    {
+     "t": "text",
+     "md": "Verschiebungen beim Entnehmen: n = 6: [[g1]] · n = 50: [[g2]] · Wie wächst die Zahl, wenn sich n verdoppelt? [[g3]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "zahl"
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "auswahl",
+      "optionen": [
+       "etwa vervierfacht",
+       "etwa verdoppelt",
+       "bleibt gleich"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "15"
+    ],
+    "g2": [
+     "1225"
+    ],
+    "g3": [
+     "etwa vervierfacht"
+    ]
+   },
+   "tipps": [
+    "Beim ersten delete(0) rücken n − 1 Elemente nach, beim zweiten n − 2 …"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "(n − 1) + (n − 2) + … + 0 = n(n − 1)/2: 15 für n = 6, 1225 für n = 50 – quadratisch. Die Schlange der Bibliothek braucht pro Operation nur konstant viele Schritte. Die dynamische Reihung lohnt sich, wenn man an beliebigen Stellen zugreifen muss."
+    }
+   ]
+  },
+  {
+   "id": "W4-L6-06",
+   "titel": "Expertenpfad: pop aus Knoten",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Methode implementieren",
+   "fallen": [
+    "P1"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "MeinStapel merkt sich nur den obersten Knoten `kopf` (null = leer). Jeder Knoten kennt seinen Inhalt und den Knoten darunter."
+    },
+    {
+     "t": "klassenkarte",
+     "name": "Knoten",
+     "attribute": [
+      "- inhalt: Object",
+      "- naechster: Knoten"
+     ],
+     "methoden": [
+      "+ c Knoten(inhalt: Object, naechster: Knoten)",
+      "+ getInhalt(): Object",
+      "+ getNaechster(): Knoten"
+     ]
+    },
+    {
+     "t": "code",
+     "code": "public void push(Object inhalt) {\n    kopf = new Knoten(inhalt, kopf);\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Baue `pop()`: Bei leerem Stapel soll wie bei Stack eine IllegalStateException ausgelöst werden. Drei Zeilen gehören nicht hinein."
+    }
+   ],
+   "interaktion": {
+    "kind": "order",
+    "teile": [
+     {
+      "id": "t1",
+      "code": "public Object pop() {"
+     },
+     {
+      "id": "t2",
+      "code": "    if (kopf == null) {"
+     },
+     {
+      "id": "t3",
+      "code": "        throw new IllegalStateException(\"Der Stapel ist leer.\");"
+     },
+     {
+      "id": "t4",
+      "code": "    }"
+     },
+     {
+      "id": "t5",
+      "code": "    Object o = kopf.getInhalt();"
+     },
+     {
+      "id": "t6",
+      "code": "    kopf = kopf.getNaechster();"
+     },
+     {
+      "id": "t7",
+      "code": "    return o;"
+     },
+     {
+      "id": "t8",
+      "code": "}"
+     },
+     {
+      "id": "d1",
+      "code": "    kopf = new Knoten(o, kopf);"
+     },
+     {
+      "id": "d2",
+      "code": "    return kopf.getInhalt();"
+     },
+     {
+      "id": "d3",
+      "code": "    if (kopf.getNaechster() == null) {"
+     }
+    ]
+   },
+   "loesung": {
+    "reihenfolgen": [
+     [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6",
+      "t7",
+      "t8"
+     ]
+    ]
+   },
+   "tipps": [
+    "Erst den Inhalt sichern, dann kopf weiterschieben."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Leer-Abfrage `kopf == null` zuerst (sonst NullPointerException, P1), Inhalt merken, kopf auf den nächsten Knoten setzen, Inhalt liefern. Mit `return kopf.getInhalt();` vor dem Weiterschieben würde nie etwas entfernt. In 400 zufälligen Befehlen verhält sich MeinStapel wie Stack: true; push Erz, Holz, Gold → pop liefert Gold, dann Holz."
+    }
+   ]
+  },
+  {
+   "id": "W4-L6-07",
+   "titel": "Eine Schlange aus zwei Stapeln",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Eine Schlange wird aus zwei Stapeln gebaut:"
+    },
+    {
+     "t": "code",
+     "code": "static class ZweiStapelSchlange {\n    private Stack ein = new Stack();\n    private Stack aus = new Stack();\n    int umgeschichtet = 0;\n\n    public void enqueue(Object x) {\n        ein.push(x);\n    }\n\n    public Object dequeue() {\n        if (aus.isEmpty()) {\n            while (!ein.isEmpty()) {\n                aus.push(ein.pop());\n                umgeschichtet++;\n            }\n        }\n        return aus.pop();\n    }\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Aufrufe: enqueue A, B, C · dequeue · enqueue D · dequeue · dequeue · enqueue E · dequeue · dequeue.\n\n- Ausgabe aller dequeue-Rückgaben hintereinander (ohne Trennzeichen, z. B. `XYZ`): [[g1]]\n- Wert von `umgeschichtet` nach dem ersten dequeue: [[g2]] · am Ende: [[g3]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 8
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "ABCDE"
+    ],
+    "g2": [
+     "3"
+    ],
+    "g3": [
+     "5"
+    ]
+   },
+   "tipps": [
+    "Umgeschichtet wird nur, wenn aus leer ist – dann alles von ein nach aus.",
+    "Ein Durchgang durch zwei Stapel dreht die Reihenfolge zweimal um."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Das erste dequeue schichtet A, B, C um (3) und liefert A. B und C kommen aus aus; D und E liegen in ein und werden erst beim vierten dequeue umgeschichtet (insgesamt 5). Ausgabe ABCDE – genau die FIFO-Reihenfolge. Jedes Element wird höchstens einmal umgeschichtet."
+    }
+   ]
+  },
+  {
+   "id": "W4-B-01",
+   "titel": "Der Postsack",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Im Postsack liegen die Sendungen übereinander. Gib den Inhalt des Stapels am Ende an."
+    },
+    {
+     "t": "code",
+     "code": "Stack sack = new Stack();\nsack.push(\"Brief\");\nsack.push(\"Paket\");\nsack.push(sack.pop());\nsack.push(\"Karte\");\nsack.pop();\nsack.push(\"Zeitung\");\nsack.push(sack.top());",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Baue den Endzustand mit den Chips auf: beim **Stapel von unten nach oben** (erster Chip = unterstes Element), bei der **Schlange von vorne nach hinten**, bei der dynamischen Reihung ab Index 0."
+    }
+   ],
+   "interaktion": {
+    "kind": "adtsim",
+    "art": "stapel",
+    "start": []
+   },
+   "loesung": {
+    "inhalt": [
+     "Brief",
+     "Paket",
+     "Zeitung",
+     "Zeitung"
+    ]
+   },
+   "tipps": [
+    "sack.push(sack.pop()) ändert nichts."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Brief → Paket, Brief → (pop und wieder push) unverändert → Karte oben → wieder weg → Zeitung oben → noch einmal Zeitung. Von unten: Brief, Paket, Zeitung, Zeitung."
+    }
+   ]
+  },
+  {
+   "id": "W4-B-02",
+   "titel": "Am Schalter",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Reisende warten am Schalter. Gib die Schlange am Ende an."
+    },
+    {
+     "t": "code",
+     "code": "Queue warte = new Queue();\nwarte.enqueue(\"Lotte\");\nwarte.enqueue(\"Mats\");\nwarte.enqueue(\"Nele\");\nwarte.enqueue(warte.dequeue());\nwarte.dequeue();\nwarte.enqueue(\"Ole\");\nwarte.enqueue(warte.head());",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Baue den Endzustand mit den Chips auf: beim **Stapel von unten nach oben** (erster Chip = unterstes Element), bei der **Schlange von vorne nach hinten**, bei der dynamischen Reihung ab Index 0."
+    }
+   ],
+   "interaktion": {
+    "kind": "adtsim",
+    "art": "schlange",
+    "start": []
+   },
+   "loesung": {
+    "inhalt": [
+     "Nele",
+     "Lotte",
+     "Ole",
+     "Nele"
+    ]
+   },
+   "tipps": [
+    "warte.enqueue(warte.dequeue()) rotiert."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Lotte, Mats, Nele → Mats, Nele, Lotte → Nele, Lotte → Nele, Lotte, Ole → Nele, Lotte, Ole, Nele."
+    }
+   ]
+  },
+  {
+   "id": "W4-B-03",
+   "titel": "Der Fahrplan",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [
+    "P4",
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Abfahrtszeiten stehen in einer dynamischen Reihung. Gib sie am Ende an."
+    },
+    {
+     "t": "code",
+     "code": "DynArray plan = new DynArray();\nplan.append(9);\nplan.append(13);\nplan.insertAt(1, 11);\nplan.insertAt(0, 7);\nplan.delete(2);\nplan.setItem(plan.getLength() - 1, 15);\nplan.insertAt(2, (Integer) plan.getItem(0) + 5);",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Baue den Endzustand mit den Chips auf: beim **Stapel von unten nach oben** (erster Chip = unterstes Element), bei der **Schlange von vorne nach hinten**, bei der dynamischen Reihung ab Index 0."
+    }
+   ],
+   "interaktion": {
+    "kind": "adtsim",
+    "art": "dynarray",
+    "start": []
+   },
+   "loesung": {
+    "inhalt": [
+     "7",
+     "9",
+     "12",
+     "15"
+    ]
+   },
+   "tipps": [
+    "insertAt(1, 11) schiebt 13 nach hinten."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "9 → 9, 13 → 9, 11, 13 → 7, 9, 11, 13 → 7, 9, 13 → 7, 9, 15 → 7, 9, 12, 15 (getItem(0) = 7, gecastet, + 5)."
+    }
+   ]
+  },
+  {
+   "id": "W4-B-04",
+   "titel": "Die richtige Struktur für die Station",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Funktionsweise erläutern",
+   "fallen": [
+    "P10"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Ordne jeder Aufgabe der Station die am besten geeignete Datenstruktur zu."
+    }
+   ],
+   "interaktion": {
+    "kind": "match",
+    "elemente": [
+     {
+      "id": "e1",
+      "md": "Am Pferdewechsel werden die zuletzt abgelegten Sättel zuerst wieder aufgelegt."
+     },
+     {
+      "id": "e2",
+      "md": "Fahrgäste steigen in der Reihenfolge ihrer Ankunft ein."
+     },
+     {
+      "id": "e3",
+      "md": "Der Fahrplan: Verbindungen werden nach Uhrzeit einsortiert, einzelne gestrichen."
+     },
+     {
+      "id": "e4",
+      "md": "Die Werkstatt repariert Kutschen der Reihe nach."
+     },
+     {
+      "id": "e5",
+      "md": "Im Sortierfach wird der oberste Brief zuerst bearbeitet."
+     }
+    ],
+    "kategorien": [
+     {
+      "id": "st",
+      "md": "Stapel"
+     },
+     {
+      "id": "sc",
+      "md": "Schlange"
+     },
+     {
+      "id": "da",
+      "md": "dynamische Reihung"
+     }
+    ]
+   },
+   "loesung": {
+    "e1": "st",
+    "e2": "sc",
+    "e3": "da",
+    "e4": "sc",
+    "e5": "st"
+   },
+   "tipps": [
+    "LIFO, FIFO oder Index?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "LIFO → Stapel (Sättel, Sortierfach), FIFO → Schlange (Fahrgäste, Werkstatt), Einfügen/Löschen an beliebiger Stelle → dynamische Reihung (Fahrplan)."
+    }
+   ]
+  },
+  {
+   "id": "W4-B-05",
+   "titel": "Der Methodenkopf",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Methodenkopf und Signatur",
+   "fallen": [
+    "P3",
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Gegeben ist die Signatur `anzahlNach(q: Schlange vom Inhaltstyp Reisender, ziel: Zeichenkette): Ganzzahl` (statische Methode). Ergänze den Java-Code."
+    },
+    {
+     "t": "code",
+     "code": "public static [[g1]] anzahlNach([[g2]] q, [[g3]] ziel) {\n    int anzahl = 0;\n    // ...\n    Reisender r = [[g4]] q.dequeue();\n    // ...\n    return anzahl;\n}",
+     "nummern": false
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "text",
+      "norm": "code"
+     },
+     "g2": {
+      "typ": "text",
+      "norm": "code"
+     },
+     "g3": {
+      "typ": "text",
+      "norm": "code"
+     },
+     "g4": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "int"
+    ],
+    "g2": [
+     "Queue"
+    ],
+    "g3": [
+     "String"
+    ],
+    "g4": [
+     "(Reisender)"
+    ]
+   },
+   "tipps": [
+    "Die Bibliotheksklassen sind nicht generisch: kein Queue<Reisender>."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Ganzzahl → int, Schlange → Queue (ohne spitze Klammern), Zeichenkette → String; dequeue liefert Object, deshalb der Cast (Reisender) (P3, P4)."
+    }
+   ]
+  },
+  {
+   "id": "W4-B-06",
+   "titel": "Gepäck und Fahrkarten",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Stapel s und Schlange q (Inhaltstyp Ganzzahl) starten mit **s = 9, 4 (oben zuerst)** und **q = 6, 1, 3 (vorne zuerst)**."
+    },
+    {
+     "t": "hinweis",
+     "md": "Schreibweise wie im AB: **Stapel oben zuerst**, **Schlange vorne zuerst**, dynamische Reihung **Index 0 zuerst**, Elemente mit Komma getrennt, leere Struktur: `–`."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Nr.",
+      "Anweisung",
+      "q (vorne → hinten)",
+      "s (oben → unten)"
+     ],
+     "zeilen": [
+      [
+       "0",
+       "(Start)",
+       "6, 1, 3",
+       "9, 4"
+      ],
+      [
+       "1",
+       "s.push(q.dequeue());",
+       "1, 3",
+       "6, 9, 4"
+      ],
+      [
+       "2",
+       "q.enqueue((Integer) s.pop() + (Integer) q.head());",
+       "[[q2]]",
+       "[[s2]]"
+      ],
+      [
+       "3",
+       "s.push(q.dequeue());",
+       "[[q3]]",
+       "[[s3]]"
+      ],
+      [
+       "4",
+       "q.enqueue(s.top());",
+       "3, 7, 1",
+       "1, 9, 4"
+      ],
+      [
+       "5",
+       "int y = (Integer) s.pop() - (Integer) s.pop();",
+       "[[q5]]",
+       "[[s5]]"
+      ],
+      [
+       "6",
+       "s.push(y);",
+       "[[q6]]",
+       "[[s6]]"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Wert von y: [[y]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "q2": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "s2": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "q3": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "s3": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "q5": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "s5": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "q6": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "s6": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 12
+     },
+     "y": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "q2": [
+     "1, 3, 7",
+     "1; 3; 7",
+     "{1, 3, 7}"
+    ],
+    "s2": [
+     "9, 4",
+     "9; 4",
+     "{9, 4}"
+    ],
+    "q3": [
+     "3, 7",
+     "3; 7",
+     "{3, 7}"
+    ],
+    "s3": [
+     "1, 9, 4",
+     "1; 9; 4",
+     "{1, 9, 4}"
+    ],
+    "q5": [
+     "3, 7, 1",
+     "3; 7; 1",
+     "{3, 7, 1}"
+    ],
+    "s5": [
+     "4",
+     "{4}"
+    ],
+    "q6": [
+     "3, 7, 1",
+     "3; 7; 1",
+     "{3, 7, 1}"
+    ],
+    "s6": [
+     "-8, 4",
+     "-8; 4",
+     "{-8, 4}"
+    ],
+    "y": [
+     "-8"
+    ]
+   },
+   "tipps": [
+    "Java wertet von links nach rechts aus: Im Ausdruck von Zeile 5 wird das erste pop() zuerst ausgeführt."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Zeile 5: Das erste pop() liefert 1, das zweite 9 → y = 1 − 9 = -8. Endzustand q = 3, 7, 1, s = -8, 4 (oben zuerst)."
+    }
+   ]
+  },
+  {
+   "id": "W4-B-07",
+   "titel": "Die ersten beiden Reisenden",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P1",
+    "P2"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Methode soll die Namen der beiden vordersten Reisenden liefern; q soll unverändert bleiben."
+    },
+    {
+     "t": "code",
+     "code": "public static String ersteZwei(Queue q) {\n    String a = (String) q.dequeue();\n    String b = (String) q.dequeue();\n    q.enqueue(a);\n    q.enqueue(b);\n    return a + \" und \" + b;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**Teil 1:** Markiere die Zeile, in der es bei einer Schlange mit genau einem Namen zum Laufzeitfehler kommt.\n\n**Teil 2:** Wie sieht q = Lotte, Mats, Nele nach dem Aufruf aus (vorne zuerst)? [[g1]]"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 1,
+     "anzahl": 1
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 18
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      3
+     ]
+    },
+    {
+     "g1": [
+      "Nele, Lotte, Mats",
+      "Nele; Lotte; Mats",
+      "{Nele, Lotte, Mats}"
+     ]
+    }
+   ],
+   "tipps": [
+    "a und b werden hinten wieder angestellt – aber stehen sie dann noch vorne?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Bei nur einem Namen trifft das zweite dequeue() in Zeile 3 die leere Schlange (P1). Und selbst bei drei Namen ist q danach Nele, Lotte, Mats statt Lotte, Mats, Nele: a und b stehen jetzt hinten (P2). Richtig: über eine Hilfsschlange vollständig umschichten oder mit bekannter Anzahl rotieren."
+    }
+   ]
+  },
+  {
+   "id": "W4-B-08",
+   "titel": "Puzzle: Reisende zählen",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Methode implementieren",
+   "fallen": [
+    "P1",
+    "P2",
+    "P5"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`anzahlNach(q, ziel)` zählt die Reisenden (Klasse Reisender mit getZiel()) mit dem angegebenen Ziel. q muss danach unverändert sein. Drei Zeilen gehören nicht hinein."
+    }
+   ],
+   "interaktion": {
+    "kind": "order",
+    "teile": [
+     {
+      "id": "t1",
+      "code": "public static int anzahlNach(Queue q, String ziel) {"
+     },
+     {
+      "id": "t2",
+      "code": "    Queue hilf = new Queue();"
+     },
+     {
+      "id": "t3",
+      "code": "    int anzahl = 0;"
+     },
+     {
+      "id": "t4",
+      "code": "    while (!q.isEmpty()) {"
+     },
+     {
+      "id": "t5",
+      "code": "        Reisender r = (Reisender) q.dequeue();"
+     },
+     {
+      "id": "t6",
+      "code": "        if (r.getZiel().equals(ziel)) {"
+     },
+     {
+      "id": "t7",
+      "code": "            anzahl++;"
+     },
+     {
+      "id": "t8",
+      "code": "        }"
+     },
+     {
+      "id": "t9",
+      "code": "        hilf.enqueue(r);"
+     },
+     {
+      "id": "t10",
+      "code": "    } // Ende auswerten"
+     },
+     {
+      "id": "t11",
+      "code": "    while (!hilf.isEmpty()) {"
+     },
+     {
+      "id": "t12",
+      "code": "        q.enqueue(hilf.dequeue());"
+     },
+     {
+      "id": "t13",
+      "code": "    } // Ende zurueckstellen"
+     },
+     {
+      "id": "t14",
+      "code": "    return anzahl;"
+     },
+     {
+      "id": "t15",
+      "code": "}"
+     },
+     {
+      "id": "d1",
+      "code": "        if (r.getZiel() == ziel) {"
+     },
+     {
+      "id": "d2",
+      "code": "    Stack hilf = new Stack();"
+     },
+     {
+      "id": "d3",
+      "code": "    while (q.head() != null) {"
+     }
+    ]
+   },
+   "loesung": {
+    "reihenfolgen": [
+     [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6",
+      "t7",
+      "t8",
+      "t9",
+      "t10",
+      "t11",
+      "t12",
+      "t13",
+      "t14",
+      "t15"
+     ],
+     [
+      "t1",
+      "t3",
+      "t2",
+      "t4",
+      "t5",
+      "t6",
+      "t7",
+      "t8",
+      "t9",
+      "t10",
+      "t11",
+      "t12",
+      "t13",
+      "t14",
+      "t15"
+     ],
+     [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t9",
+      "t6",
+      "t7",
+      "t8",
+      "t10",
+      "t11",
+      "t12",
+      "t13",
+      "t14",
+      "t15"
+     ],
+     [
+      "t1",
+      "t3",
+      "t2",
+      "t4",
+      "t5",
+      "t9",
+      "t6",
+      "t7",
+      "t8",
+      "t10",
+      "t11",
+      "t12",
+      "t13",
+      "t14",
+      "t15"
+     ]
+    ]
+   },
+   "tipps": [
+    "Schlange über Hilfsschlange – die Reihenfolge bleibt."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Hilfsschlange (ein Hilfsstapel würde umdrehen), Leer-Abfrage (P1), equals statt == (P5), dieselben Objekte zurückstellen (P2). Getestet: 2 Reisende zum Hafen, q unverändert: true."
+    }
+   ]
+  },
+  {
+   "id": "W4-B-09",
+   "titel": "Die Fahrkarten werden umgeordnet",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Schlange q enthält die Fahrkartennummern 4, 7, 2, 9, 5, 8 (vorne zuerst). Es wird `umordnen(q, 6)` aufgerufen."
+    },
+    {
+     "t": "code",
+     "code": "public static void umordnen(Queue q, int n) {\n    Queue hilf = new Queue();\n    for (int i = 0; i < n; i++) {\n        int t = (Integer) q.dequeue();\n        if (t % 2 == 0) {\n            hilf.enqueue(t);\n        } else {\n            q.enqueue(t);\n        }\n    }\n    while (!hilf.isEmpty()) {\n        q.enqueue(hilf.dequeue());\n    }\n}",
+     "nummern": true
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "i",
+      "t",
+      "q nach dem Durchlauf (vorne zuerst)",
+      "hilf (vorne zuerst)"
+     ],
+     "zeilen": [
+      [
+       "0",
+       "4",
+       "[[q0]]",
+       "4"
+      ],
+      [
+       "1",
+       "7",
+       "2, 9, 5, 8, 7",
+       "[[h1]]"
+      ],
+      [
+       "2",
+       "2",
+       "[[q2]]",
+       "4, 2"
+      ],
+      [
+       "3",
+       "9",
+       "5, 8, 7, 9",
+       "[[h3]]"
+      ],
+      [
+       "4",
+       "5",
+       "[[q4]]",
+       "4, 2"
+      ],
+      [
+       "5",
+       "8",
+       "7, 9, 5",
+       "[[h5]]"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "q am Ende: [[e]] · Funktionsweise: [[w]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "q0": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 16
+     },
+     "h1": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 16
+     },
+     "q2": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 16
+     },
+     "h3": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 16
+     },
+     "q4": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 16
+     },
+     "h5": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 16
+     },
+     "e": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 16
+     },
+     "w": {
+      "typ": "auswahl",
+      "optionen": [
+       "ungerade Nummern zuerst, dann gerade – jeweils in alter Reihenfolge",
+       "aufsteigend sortiert",
+       "umgekehrte Reihenfolge",
+       "gerade Nummern zuerst"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "q0": [
+     "7, 2, 9, 5, 8",
+     "7; 2; 9; 5; 8",
+     "{7, 2, 9, 5, 8}"
+    ],
+    "h1": [
+     "4",
+     "{4}"
+    ],
+    "q2": [
+     "9, 5, 8, 7",
+     "9; 5; 8; 7",
+     "{9, 5, 8, 7}"
+    ],
+    "h3": [
+     "4, 2",
+     "4; 2",
+     "{4, 2}"
+    ],
+    "q4": [
+     "8, 7, 9, 5",
+     "8; 7; 9; 5",
+     "{8, 7, 9, 5}"
+    ],
+    "h5": [
+     "4, 2, 8",
+     "4; 2; 8",
+     "{4, 2, 8}"
+    ],
+    "e": [
+     "7, 9, 5, 4, 2, 8",
+     "7; 9; 5; 4; 2; 8",
+     "{7, 9, 5, 4, 2, 8}"
+    ],
+    "w": [
+     "ungerade Nummern zuerst, dann gerade – jeweils in alter Reihenfolge"
+    ]
+   },
+   "tipps": [
+    "Ungerade Nummern werden in q hinten wieder angestellt, gerade wandern nach hilf."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Nach 6 Runden stehen die ungeraden Nummern 7, 9, 5 in q, die geraden 4, 2, 8 in hilf; danach wird hilf angehängt: 7, 9, 5, 4, 2, 8. Beide Gruppen behalten ihre Reihenfolge (stabil)."
+    }
+   ]
+  },
+  {
+   "id": "W4-B-10",
+   "titel": "Verbindungen streichen",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`streiche(d, grenze)` soll alle Abfahrtszeiten kleiner als grenze entfernen."
+    },
+    {
+     "t": "code",
+     "code": "public static void streiche(DynArray d, int grenze) {\n    for (int i = 0; i < d.getLength(); i++) {\n        if ((Integer) d.getItem(i) < grenze) {\n            d.delete(i);\n        }\n    }\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Für d = 6, 7, 12, 5, 9 und grenze 8 liefert die Methode d = [[g1]] (richtig wäre 12, 9)."
+    },
+    {
+     "t": "text",
+     "md": "Welche Änderungen beheben den Fehler? (Mehrere Antworten möglich.)"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 14
+      }
+     }
+    },
+    {
+     "kind": "choice",
+     "optionen": [
+      {
+       "id": "a",
+       "md": "Die Schleife rückwärts laufen lassen: `for (int i = d.getLength() - 1; i >= 0; i--)`"
+      },
+      {
+       "id": "b",
+       "md": "Nach `d.delete(i);` die Anweisung `i--;` einfügen."
+      },
+      {
+       "id": "c",
+       "md": "`i <= d.getLength()` statt `i < d.getLength()`"
+      },
+      {
+       "id": "d",
+       "md": "`<= grenze` statt `< grenze`"
+      }
+     ],
+     "mehrfach": true
+    }
+   ],
+   "loesung": [
+    {
+     "g1": [
+      "7, 12, 9",
+      "7; 12; 9",
+      "{7, 12, 9}"
+     ]
+    },
+    {
+     "richtig": [
+      "a",
+      "b"
+     ]
+    }
+   ],
+   "tipps": [
+    "Nach delete(i) rückt der Nachfolger auf Index i."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Gemessen: Original 7, 12, 9 · rückwärts 12, 9 · mit i-- 12, 9 · mit <= getLength() IndexOutOfBoundsException · mit <= grenze 7, 12, 9. Nach einem delete rückt der Nachfolger nach und wird durch i++ übersprungen (P6)."
+    }
+   ]
+  },
+  {
+   "id": "W4-B-11",
+   "titel": "Struktogramm: Einbuchen nach Uhrzeit",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Code ↔ Struktogramm",
+   "fallen": [
+    "P1",
+    "P9"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Der Fahrplan (dynamische Reihung vom Inhaltstyp Ganzzahl) ist aufsteigend sortiert. `einbuchen(plan, zeit)` fügt zeit so ein, dass er sortiert bleibt – hinter gleiche Zeiten. Laufzeitfehler sind auszuschließen."
+    },
+    {
+     "t": "struktogramm",
+     "kopf": "einbuchen(plan: dynamische Reihung vom Inhaltstyp Ganzzahl, zeit: Ganzzahl): nichts",
+     "rumpf": [
+      {
+       "anw": "pos ← 0"
+      },
+      {
+       "solange": "[[g1]]",
+       "rumpf": [
+        {
+         "anw": "pos ← pos + 1"
+        }
+       ]
+      },
+      {
+       "aufruf": "plan.insertAt([[g2]], zeit)"
+      }
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Für plan = 7, 9, 11, 14 ergibt `einbuchen(plan, 11)` den Fahrplan [[g3]]."
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "auswahl",
+      "optionen": [
+       "pos < plan.getLength() und plan.getItem(pos) ≤ zeit",
+       "plan.getItem(pos) ≤ zeit und pos < plan.getLength()",
+       "pos < plan.getLength() und plan.getItem(pos) < zeit",
+       "pos ≤ plan.getLength() und plan.getItem(pos) ≤ zeit"
+      ]
+     },
+     "g2": {
+      "typ": "text",
+      "norm": "code"
+     },
+     "g3": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 18
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "pos < plan.getLength() und plan.getItem(pos) ≤ zeit"
+    ],
+    "g2": [
+     "pos"
+    ],
+    "g3": [
+     "7, 9, 11, 11, 14",
+     "7; 9; 11; 11; 14",
+     "{7, 9, 11, 11, 14}"
+    ]
+   },
+   "tipps": [
+    "Die Index-Abfrage muss LINKS stehen.",
+    "≤ statt <: gleiche Zeiten werden übersprungen."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Die Index-Abfrage steht links, damit `getItem(pos)` bei pos = Länge nicht mehr ausgewertet wird (vertauscht: IndexOutOfBoundsException beim Anhängen, P1); ≤ fügt hinter gleiche Zeiten ein. Ergebnis 7, 9, 11, 11, 14; eine leere Liste ergibt einfach {8}."
+    }
+   ]
+  },
+  {
+   "id": "W4-B-12",
+   "titel": "Der unterste Postsack",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P1",
+    "P2"
+   ],
+   "inhalt": [
+    {
+     "t": "code",
+     "code": "public static String untersterSack(Stack s) {\n    Stack hilf = new Stack();\n    while (!s.isEmpty()) {\n        hilf.push(s.pop());\n    }\n    String unten = (String) hilf.top();\n    while (!hilf.isEmpty()) {\n        s.push(hilf.pop());\n    }\n    return unten;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Welche Aussagen über `untersterSack(s)` (Stapel vom Inhaltstyp Zeichenkette) sind richtig? (Mehrere Antworten möglich.)"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "optionen": [
+     {
+      "id": "a",
+      "md": "Für einen leeren Stapel kommt es zu einem Laufzeitfehler."
+     },
+     {
+      "id": "b",
+      "md": "s ist nach dem Aufruf umgedreht."
+     },
+     {
+      "id": "c",
+      "md": "Die Methode liefert das oberste Element."
+     },
+     {
+      "id": "d",
+      "md": "Für einen nicht leeren Stapel liefert sie das unterste Element, und s ist danach unverändert."
+     },
+     {
+      "id": "e",
+      "md": "Der Cast (String) ist überflüssig."
+     }
+    ],
+    "mehrfach": true
+   },
+   "loesung": {
+    "richtig": [
+     "a",
+     "d"
+    ]
+   },
+   "tipps": [
+    "Nach dem Umschichten liegt das unterste Element von s oben auf hilf."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Für Brief, Paket, Karte (Brief unten) liefert die Methode Brief, s ist unverändert (true). Bei leerem s ist hilf leer → hilf.top() → IllegalStateException (P1). Korrektur: vorher `if (s.isEmpty()) { return \"\"; }` o. ä. Der Cast ist nötig, weil top() Object liefert."
+    }
+   ]
+  },
+  {
+   "id": "W4-B-13",
+   "titel": "Der Fahrpreis-Rechner",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Funktionsweise erläutern",
+   "fallen": [
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Station berechnet Fahrpreise mit dem Postfix-Rechner aus Level 4.5 (einstellige Zahlen, + − *)."
+    },
+    {
+     "t": "text",
+     "md": "- `62*43-+` ergibt [[g1]]\n- `95-3*` ergibt [[g2]]; als Ausdruck mit Klammern: [[g3]]\n- Ein Rechner, der beim Rechenzeichen zuerst den linken Operanden entnimmt, liefert für `95-3*` den Wert [[g4]]."
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "zahl"
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "auswahl",
+      "optionen": [
+       "(9 − 5) · 3",
+       "9 − 5 · 3",
+       "9 − (5 · 3)",
+       "(9 − 3) · 5"
+      ]
+     },
+     "g4": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "13"
+    ],
+    "g2": [
+     "12"
+    ],
+    "g3": [
+     "(9 − 5) · 3"
+    ],
+    "g4": [
+     "-12"
+    ]
+   },
+   "tipps": [
+    "Der zuerst entnommene Wert ist der rechte Operand."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "62* = 12, 43- = 1, 12 + 1 = 13. 95- = 4, 4 · 3 = 12. Mit vertauschten Operanden: 5 − 9 = −4, dann 3 · (−4) = -12."
+    }
+   ]
+  },
+  {
+   "id": "W4-B-14",
+   "titel": "Der Fahrplan-Editor",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "klassenkarte",
+     "name": "Zugbuch",
+     "attribute": [
+      "- erledigt: Stapel",
+      "- zurueckgenommen: Stapel"
+     ],
+     "methoden": [
+      "+ c Zugbuch()",
+      "+ zug(z: Zeichenkette): nichts",
+      "+ rueckgaengig(): Zeichenkette",
+      "+ wiederholen(): Zeichenkette",
+      "+ anzahlZuege(): Ganzzahl"
+     ]
+    },
+    {
+     "t": "text",
+     "md": "`zug(z)` legt z auf **erledigt** und leert **zurueckgenommen**. `rueckgaengig()` nimmt den obersten Zug von erledigt, legt ihn auf zurueckgenommen und liefert ihn (`\"\"`, wenn nichts da ist). `wiederholen()` arbeitet genau umgekehrt."
+    },
+    {
+     "t": "text",
+     "md": "Der Fahrplan-Editor der Station benutzt ein Zugbuch b:"
+    },
+    {
+     "t": "code",
+     "code": "b.zug(\"Abfahrt 8\");\nb.zug(\"Abfahrt 10\");\nb.zug(\"Abfahrt 12\");\nb.rueckgaengig();\nb.rueckgaengig();\nb.wiederholen();\nb.zug(\"Abfahrt 15\");\nb.rueckgaengig();\nb.rueckgaengig();\nb.wiederholen();",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Gib beide Stapel am Ende an. Baue den Endzustand mit den Chips auf: beim **Stapel von unten nach oben** (erster Chip = unterstes Element), bei der **Schlange von vorne nach hinten**, bei der dynamischen Reihung ab Index 0.\n\n**Teil 1:** erledigt · **Teil 2:** zurueckgenommen"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "adtsim",
+     "art": "stapel",
+     "start": []
+    },
+    {
+     "kind": "adtsim",
+     "art": "stapel",
+     "start": []
+    }
+   ],
+   "loesung": [
+    {
+     "inhalt": [
+      "Abfahrt 8",
+      "Abfahrt 10"
+     ]
+    },
+    {
+     "inhalt": [
+      "Abfahrt 15"
+     ]
+    }
+   ],
+   "tipps": [
+    "Ein neuer Zug leert zurueckgenommen."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Nach zug(\"Abfahrt 15\") ist zurueckgenommen leer. Danach: rueckgaengig → Abfahrt 15, rueckgaengig → Abfahrt 10, wiederholen → Abfahrt 10. Ende: erledigt (unten → oben) Abfahrt 8, Abfahrt 10, zurueckgenommen Abfahrt 15."
+    }
+   ]
+  },
+  {
+   "id": "W4-B-15",
+   "titel": "Umsteigen",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Der Stapel s enthält Lotte, Mats, Nele (**oben zuerst**). Zuerst wird mit `while (!s.isEmpty()) { q.enqueue(s.pop()); }` in eine leere Schlange q umgeladen, danach mit `while (!q.isEmpty()) { s.push(q.dequeue()); }` zurück."
+    },
+    {
+     "t": "hinweis",
+     "md": "Schreibweise wie im AB: **Stapel oben zuerst**, **Schlange vorne zuerst**, dynamische Reihung **Index 0 zuerst**, Elemente mit Komma getrennt, leere Struktur: `–`."
+    },
+    {
+     "t": "text",
+     "md": "- q nach dem ersten Umladen (vorne zuerst): [[g1]]\n- s nach dem zweiten Umladen (oben zuerst): [[g2]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 16
+     },
+     "g2": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 16
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "Lotte, Mats, Nele",
+     "Lotte; Mats; Nele",
+     "{Lotte, Mats, Nele}"
+    ],
+    "g2": [
+     "Nele, Mats, Lotte",
+     "Nele; Mats; Lotte",
+     "{Nele, Mats, Lotte}"
+    ]
+   },
+   "tipps": [
+    "Das oberste Element von s steht danach vorne in q."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "q = Lotte, Mats, Nele; zurück in den Stapel kommt Lotte zuerst und liegt unten: s = Nele, Mats, Lotte (oben zuerst) – umgedreht. Für „unverändert“ braucht man einen Hilfsstapel statt der Schlange."
+    }
+   ]
+  }
+ ]
+}

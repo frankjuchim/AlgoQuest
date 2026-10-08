@@ -1,0 +1,1025 @@
+// =====================================================================
+//  WELT 1 – DIE HELDENSCHMIEDE – GERÜST
+//  Informatik LK · Online-IDE · Algo Quest · Level 1.1 bis 1.4
+//
+//  Euer Game-Studio braucht Figuren: einen Helden mit Leben, Staerke und
+//  Inventar, Monster zum Bekaempfen und Gegenstaende zum Einsammeln.
+//  In der Heldenschmiede baust du diese Klassen Schritt fuer Schritt -
+//  jede Doppelstunde ein Level.
+//
+//  ANLEITUNG:
+//  1. Du arbeitest NUR im Abschnitt "DEIN TEIL". Ersetze dort die Zeilen
+//     mit "// TODO Level 1.x" und die vorlaeufigen return-Anweisungen
+//     durch deine Loesung. Die Klassenkarten in den Kommentaren zeigen
+//     dir, welche Attribute und Methoden es gibt.
+//
+//  2. Tests starten: Oeffne den Reiter "Testrunner" und klicke auf den
+//     gruenen Dreieckspfeil neben einer Testklasse (alle Tests dieses
+//     Levels) oder neben einem einzelnen Test. Gruen = bestanden,
+//     rot = noch nicht bestanden. Lies bei roten Tests die Meldung!
+//
+//  3. Die Level und ihre Testklassen:
+//
+//      Level  DS  Testklasse         Inhalt
+//      ----------------------------------------------------------------
+//      1.1    3   L11HeldTest        Held: Attribute, Konstruktor, Getter,
+//                                    nimmSchaden, heilen, istBesiegt,
+//                                    erhalteGold
+//      1.2    4   L12MonsterTest     zweiter Konstruktor, Monster,
+//                                    angriffswert, angreifen, Referenzen
+//      1.3    5   L13InventarTest    Gegenstand, Inventar (Reihung von
+//                                    Gegenstand): aufnehmen, gesamtWert,
+//                                    wertvollsterGegenstand, enthaelt
+//      1.4    6   L14VererbungTest   Waffe, Trank, Schluessel (Vererbung),
+//                                    ausruesten, trinken, inventarAusgeben
+//
+//     In jedem Level gibt es drei Stufen. Du erkennst sie am Anfang des
+//     Testnamens:
+//          basis_...         Basis
+//          erweiterung_...   Erweiterung
+//          experte_...       Experte
+//     Eine Stufe ist geschafft, wenn ALLE Tests mit diesem Anfang gruen
+//     sind. Ein paar Tests sind schon am Anfang zufaellig gruen, weil
+//     die vorlaeufigen return-Werte passen - das zaehlt noch nicht.
+//
+//  4. LEVEL 1.4 FREISCHALTEN: Die Klassen Waffe, Trank und Schluessel
+//     gibt es noch nicht - du schreibst sie in Level 1.4 komplett selbst
+//     (Klassenkarten siehe unten). Damit das Programm vorher trotzdem
+//     kompiliert, sind alle Stellen, die diese Klassen benutzen,
+//     auskommentiert. Es sind genau DREI Bloecke:
+//          - in der Klasse Held (getWaffe, ausruesten, trinken)
+//          - die Testklasse L14VererbungTest
+//          - der Level-1.4-Teil im Hauptprogramm
+//     Jeder Block beginnt mit einer Zeile "/* LEVEL-1.4-START" und endet
+//     mit einer Zeile "LEVEL-1.4-ENDE */". Zum Freischalten loeschst du
+//     genau diese beiden Zeilen. Schalte erst frei, wenn deine drei
+//     Klassen kompilieren.
+//
+//  5. Die Testklassen darfst du NICHT veraendern (ausser dem Freischalten
+//     in Schritt 4) - sonst zaehlt der Test nicht. Du glaubst, ein Test ist
+//     falsch? Melde ihn deiner Lehrkraft (Bug-Meldung).
+//
+//  6. Mit dem gruenen Startknopf oben laeuft das Hauptprogramm ganz unten
+//     (Kampf Aria gegen den Goblin).
+//
+//  SPIELREGELN (wie im Abitur):
+//  - Alle Attribute private, alle Methoden public.
+//  - Zeichenketten IMMER mit equals vergleichen - nie mit ==.
+//    (Die Online-IDE vergleicht mit == zwar den Inhalt, echtes Java
+//    und das Abitur aber nicht!)
+//  - Vor jedem Zugriff ueberlegen: Kann hier null stehen? Ist die
+//    Reihung voll oder leer?
+// =====================================================================
+
+
+// ---------------------------------------------------------------------
+//  GERÜST – hier nichts veraendern
+// ---------------------------------------------------------------------
+
+class Wuerfel {
+
+    // wuerfeln(seiten: Ganzzahl): Ganzzahl
+    // Liefert eine ganzzahlige Zufallszahl von 1 bis seiten.
+    // Math.random() liefert eine Kommazahl von 0 (inklusive) bis 1 (exklusive).
+    public static int wuerfeln(int seiten) {
+        return (int) (Math.random() * seiten) + 1;
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  DEIN TEIL – hier arbeitest du!
+// ---------------------------------------------------------------------
+//  Klassenkarte Held (Notation wie im Abitur):
+//
+//      Held
+//      ---------------------------------------------------------------
+//      - name: Zeichenkette
+//      - leben: Ganzzahl
+//      - maxLeben: Ganzzahl
+//      - staerke: Ganzzahl
+//      - gold: Ganzzahl
+//      - inventar: Reihung von Gegenstand        (ab Level 1.3)
+//      - anzahl: Ganzzahl                        (ab Level 1.3)
+//      - waffe: Waffe                            (ab Level 1.4)
+//      ---------------------------------------------------------------
+//      + c Held(name: Zeichenkette)
+//      + c Held(name: Zeichenkette, maxLeben: Ganzzahl, staerke: Ganzzahl)
+//      + getName(): Zeichenkette
+//      + getLeben(): Ganzzahl
+//      + ...
+// ---------------------------------------------------------------------
+
+class Held {
+
+    // TODO Level 1.1: Lege hier die Attribute name, leben, maxLeben,
+    //                 staerke und gold an (alle private, siehe Klassenkarte).
+    // TODO Level 1.3: Attribute inventar (Reihung von Gegenstand) und anzahl.
+    // TODO Level 1.4: Attribut waffe (Typ Waffe) - erst, wenn es die
+    //                 Klasse Waffe gibt.
+
+
+    // Ein neuer Held hat 100 Leben (= maxLeben), Staerke 10 und 0 Gold.
+    public Held(String name) {
+        // TODO Level 1.1
+        // TODO Level 1.3: inventar = Reihung der Laenge 5, anzahl = 0
+    }
+
+    // Wie oben, aber maxLeben und staerke werden uebergeben.
+    // Der Held startet mit vollem Leben (leben = maxLeben).
+    public Held(String name, int maxLeben, int staerke) {
+        // TODO Level 1.2
+        // TODO Level 1.3: auch hier das Inventar anlegen!
+    }
+
+
+    // ---------- Level 1.1: Getter ----------
+
+    public String getName() {
+        // TODO Level 1.1
+        return "";
+    }
+
+    public int getLeben() {
+        // TODO Level 1.1
+        return -1;
+    }
+
+    public int getMaxLeben() {
+        // TODO Level 1.1
+        return -1;
+    }
+
+    public int getStaerke() {
+        // TODO Level 1.1
+        return -1;
+    }
+
+    public int getGold() {
+        // TODO Level 1.1
+        return -1;
+    }
+
+
+    // ---------- Level 1.1: Zustand veraendern ----------
+
+    // Nur wenn betrag > 0 ist, wird das Gold erhoeht.
+    public void erhalteGold(int betrag) {
+        // TODO Level 1.1
+    }
+
+    // true, wenn leben <= 0
+    public boolean istBesiegt() {
+        // TODO Level 1.1
+        return false;
+    }
+
+    // leben um schaden verringern - aber nie unter 0.
+    public void nimmSchaden(int schaden) {
+        // TODO Level 1.1
+    }
+
+    // leben um punkte erhoehen - aber nie ueber maxLeben.
+    public void heilen(int punkte) {
+        // TODO Level 1.1
+    }
+
+
+    // ---------- Level 1.2: Kampf ----------
+
+    // Level 1.2: Der Angriffswert ist erst einmal nur die Staerke.
+    // Level 1.4: Hat der Held eine Waffe, kommt ihr Schaden dazu.
+    public int angriffswert() {
+        // TODO Level 1.2 (und spaeter Level 1.4)
+        return -1;
+    }
+
+    // Der Held greift das Monster m mit seinem Angriffswert an.
+    public void angreifen(Monster m) {
+        // TODO Level 1.2
+    }
+
+
+    // ---------- Level 1.3: Inventar ----------
+
+    public int getAnzahl() {
+        // TODO Level 1.3
+        return -1;
+    }
+
+    // false, wenn g null ist oder das Inventar voll ist.
+    // Sonst: g ans Ende einfuegen, anzahl erhoehen, true liefern.
+    public boolean aufnehmen(Gegenstand g) {
+        // TODO Level 1.3
+        return false;
+    }
+
+    // Summe der Werte aller Gegenstaende im Inventar.
+    public int gesamtWert() {
+        // TODO Level 1.3
+        return -1;
+    }
+
+    // Der Gegenstand mit dem hoechsten Wert; bei Gleichstand der erste.
+    // Leeres Inventar -> null.
+    public Gegenstand wertvollsterGegenstand() {
+        // TODO Level 1.3
+        return null;
+    }
+
+    // true, wenn ein Gegenstand mit genau diesem Namen im Inventar ist.
+    public boolean enthaelt(String name) {
+        // TODO Level 1.3
+        return false;
+    }
+
+
+    // ---------- Level 1.4: Ausruestung und Polymorphie ----------
+
+    // Gibt fuer jeden Gegenstand im Inventar seine beschreibung() aus.
+    public void inventarAusgeben() {
+        // TODO Level 1.4
+    }
+
+    // Die folgenden drei Methoden benutzen die Klassen Waffe und Trank,
+    // die du in Level 1.4 erst selbst schreibst. Bis dahin sind sie
+    // auskommentiert, damit das Programm kompiliert.
+    // Zum Freischalten von Level 1.4: Kommentarzeichen entfernen
+    // (loesche die Zeile mit LEVEL-1.4-START und die Zeile mit LEVEL-1.4-ENDE)
+    /* LEVEL-1.4-START
+
+    public Waffe getWaffe() {
+        // TODO Level 1.4
+        return null;
+    }
+
+    // Der Held nimmt die Waffe w in die Hand (eine alte Waffe wird ersetzt).
+    public void ausruesten(Waffe w) {
+        // TODO Level 1.4
+    }
+
+    // Der Held trinkt den Trank t und heilt sich um dessen Heilwert.
+    public void trinken(Trank t) {
+        // TODO Level 1.4
+    }
+
+    LEVEL-1.4-ENDE */
+}
+
+
+// ---------------------------------------------------------------------
+//  Level 1.2: Monster
+//
+//      Monster
+//      ---------------------------------------------------------------
+//      - name: Zeichenkette
+//      - leben: Ganzzahl
+//      - staerke: Ganzzahl
+//      ---------------------------------------------------------------
+//      + c Monster(name: Zeichenkette, leben: Ganzzahl, staerke: Ganzzahl)
+//      + getName(): Zeichenkette
+//      + getLeben(): Ganzzahl
+//      + getStaerke(): Ganzzahl
+//      + nimmSchaden(schaden: Ganzzahl): nichts   // nie unter 0
+//      + istBesiegt(): Wahrheitswert              // leben <= 0
+//      + angreifen(h: Held): nichts               // h nimmt Schaden in Hoehe der Staerke
+// ---------------------------------------------------------------------
+
+class Monster {
+
+    // TODO Level 1.2: Attribute anlegen (siehe Klassenkarte)
+
+    public Monster(String name, int leben, int staerke) {
+        // TODO Level 1.2
+    }
+
+    public String getName() {
+        // TODO Level 1.2
+        return "";
+    }
+
+    public int getLeben() {
+        // TODO Level 1.2
+        return -1;
+    }
+
+    public int getStaerke() {
+        // TODO Level 1.2
+        return -1;
+    }
+
+    public void nimmSchaden(int schaden) {
+        // TODO Level 1.2
+    }
+
+    public boolean istBesiegt() {
+        // TODO Level 1.2
+        return false;
+    }
+
+    public void angreifen(Held h) {
+        // TODO Level 1.2
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  Level 1.3: Gegenstand
+//
+//      Gegenstand
+//      ---------------------------------------------------------------
+//      - name: Zeichenkette
+//      - wert: Ganzzahl                           // Wert in Gold
+//      ---------------------------------------------------------------
+//      + c Gegenstand(name: Zeichenkette, wert: Ganzzahl)
+//      + getName(): Zeichenkette
+//      + getWert(): Ganzzahl
+//      + beschreibung(): Zeichenkette             // z. B. "Fackel (5 Gold)"
+// ---------------------------------------------------------------------
+
+class Gegenstand {
+
+    private String name;
+    private int wert;
+
+    public Gegenstand(String name, int wert) {
+        // TODO Level 1.3
+    }
+
+    public String getName() {
+        // TODO Level 1.3
+        return "";
+    }
+
+    public int getWert() {
+        // TODO Level 1.3
+        return -1;
+    }
+
+    public String beschreibung() {
+        // TODO Level 1.3
+        return "";
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  Level 1.4: Vererbung – diese drei Klassen schreibst du SELBST!
+//
+//  Alle drei sind Unterklassen von Gegenstand (class ... extends Gegenstand).
+//  Sie erben name, wert, getName(), getWert() und beschreibung().
+//  Tipp: Jeder Konstruktor ruft als ERSTE Anweisung super(name, wert) auf.
+//
+//      Waffe  (Unterklasse von Gegenstand)
+//      - schaden: Ganzzahl
+//      + c Waffe(name: Zeichenkette, wert: Ganzzahl, schaden: Ganzzahl)
+//      + getSchaden(): Ganzzahl
+//      + beschreibung(): Zeichenkette     // ueberschreibt die Version aus Gegenstand
+//                                         // "Waffe: Schwert (50 Gold), Schaden 12"
+//
+//      Trank  (Unterklasse von Gegenstand)
+//      - heilwert: Ganzzahl
+//      + c Trank(name: Zeichenkette, wert: Ganzzahl, heilwert: Ganzzahl)
+//      + getHeilwert(): Ganzzahl
+//      + beschreibung(): Zeichenkette     // ueberschreibt die Version aus Gegenstand
+//                                         // "Trank: Heiltrank (20 Gold), heilt 30"
+//
+//      Schluessel  (Unterklasse von Gegenstand)
+//      - tuer: Ganzzahl                   // Nummer der Tuer, die er oeffnet
+//      + c Schluessel(name: Zeichenkette, wert: Ganzzahl, tuer: Ganzzahl)
+//      + getTuer(): Ganzzahl
+//      (beschreibung() wird NICHT ueberschrieben -> "Rostiger Schluessel (2 Gold)")
+//
+//  Denkanstoss: name und wert sind in Gegenstand private. Wie kommt die
+//  Waffe trotzdem an den Text "Schwert (50 Gold)"?
+//
+//  Wenn deine drei Klassen fertig sind:
+//    1. In Held: Attribut waffe anlegen und den Level-1.4-Block freischalten.
+//    2. Unten bei den Tests: L14VererbungTest freischalten.
+//    3. Im Hauptprogramm: Level-1.4-Block freischalten.
+// ---------------------------------------------------------------------
+
+// TODO Level 1.4: class Waffe extends Gegenstand { ... }
+
+
+// TODO Level 1.4: class Trank extends Gegenstand { ... }
+
+
+// TODO Level 1.4: class Schluessel extends Gegenstand { ... }
+
+
+// ---------------------------------------------------------------------
+//  TESTS – hier nichts veraendern!
+// ---------------------------------------------------------------------
+//  Eine Testklasse pro Level. Die Stufe erkennst du am Anfang des
+//  Testnamens:
+//      basis_...        Basis       
+//      erweiterung_...  Erweiterung 
+//      experte_...      Experte     
+//  Eine Stufe ist geschafft, wenn ALLE Tests mit diesem Anfang gruen sind.
+// ---------------------------------------------------------------------
+
+// ======================= Level 1.1 – Der Held ========================
+
+class L11HeldTest {
+
+    @Test
+    public void basis_konstruktor_name() {
+        Held h = new Held("Aria");
+        assertEquals("Aria", h.getName(), "getName() muss den Namen aus dem Konstruktor liefern");
+    }
+
+    @Test
+    public void basis_konstruktor_startwerte() {
+        Held h = new Held("Aria");
+        assertEquals(100, h.getLeben(), "Ein neuer Held startet mit 100 Leben");
+        assertEquals(100, h.getMaxLeben(), "Ein neuer Held hat maxLeben 100");
+        assertEquals(10, h.getStaerke(), "Ein neuer Held hat Staerke 10");
+        assertEquals(0, h.getGold(), "Ein neuer Held startet mit 0 Gold");
+    }
+
+    @Test
+    public void basis_nimmSchaden_normal() {
+        Held h = new Held("Aria");
+        h.nimmSchaden(30);
+        assertEquals(70, h.getLeben(), "Nach nimmSchaden(30) muss der Held 70 Leben haben");
+    }
+
+    @Test
+    public void basis_istBesiegt_neuerHeld() {
+        Held h = new Held("Aria");
+        assertFalse(h.istBesiegt(), "Ein neuer Held mit 100 Leben ist nicht besiegt");
+    }
+
+    @Test
+    public void erweiterung_nimmSchaden_nichtUnterNull() {
+        Held h = new Held("Aria");
+        h.nimmSchaden(150);
+        assertEquals(0, h.getLeben(), "nimmSchaden darf leben nicht unter 0 senken");
+    }
+
+    @Test
+    public void erweiterung_nimmSchaden_genauAufNull() {
+        Held h = new Held("Aria");
+        h.nimmSchaden(100);
+        assertEquals(0, h.getLeben(), "Nach nimmSchaden(100) muss der Held genau 0 Leben haben");
+        assertTrue(h.istBesiegt(), "Ein Held mit 0 Leben ist besiegt");
+    }
+
+    @Test
+    public void erweiterung_istBesiegt_beiEinemLeben() {
+        Held h = new Held("Aria");
+        h.nimmSchaden(99);
+        assertFalse(h.istBesiegt(), "Mit 1 Leben ist der Held noch NICHT besiegt");
+    }
+
+    @Test
+    public void erweiterung_heilen_normal() {
+        Held h = new Held("Aria");
+        h.nimmSchaden(40);
+        h.heilen(25);
+        assertEquals(85, h.getLeben(), "100 - 40 + 25 = 85: heilen muss die Punkte addieren");
+    }
+
+    @Test
+    public void erweiterung_heilen_nichtUeberMaxLeben() {
+        Held h = new Held("Aria");
+        h.nimmSchaden(10);
+        h.heilen(50);
+        assertEquals(100, h.getLeben(), "heilen darf leben nicht ueber maxLeben erhoehen");
+    }
+
+    @Test
+    public void erweiterung_erhalteGold_positiv() {
+        Held h = new Held("Aria");
+        h.erhalteGold(15);
+        assertEquals(15, h.getGold(), "Nach erhalteGold(15) muss der Held 15 Gold haben");
+        h.erhalteGold(5);
+        assertEquals(20, h.getGold(), "Gold muss sich aufsummieren: 15 + 5 = 20");
+    }
+
+    @Test
+    public void experte_erhalteGold_nullUndNegativ() {
+        Held h = new Held("Aria");
+        h.erhalteGold(10);
+        h.erhalteGold(0);
+        assertEquals(10, h.getGold(), "erhalteGold(0) darf nichts veraendern");
+        h.erhalteGold(-7);
+        assertEquals(10, h.getGold(), "erhalteGold mit negativem Betrag darf kein Gold abziehen");
+    }
+
+    @Test
+    public void experte_heilen_genauAufMaxLeben() {
+        Held h = new Held("Aria");
+        h.nimmSchaden(30);
+        h.heilen(30);
+        assertEquals(100, h.getLeben(), "70 + 30 = 100 - genau maxLeben ist erlaubt");
+        h.heilen(0);
+        assertEquals(100, h.getLeben(), "heilen(0) darf nichts veraendern");
+    }
+
+    @Test
+    public void experte_mehrereTreffer() {
+        Held h = new Held("Aria");
+        h.nimmSchaden(40);
+        h.nimmSchaden(40);
+        assertEquals(20, h.getLeben(), "Zwei Treffer mit je 40: 100 - 80 = 20");
+        assertFalse(h.istBesiegt(), "Mit 20 Leben ist der Held nicht besiegt");
+        h.nimmSchaden(40);
+        assertEquals(0, h.getLeben(), "Dritter Treffer: leben darf nicht unter 0 fallen");
+        assertTrue(h.istBesiegt(), "Nach drei Treffern mit je 40 ist der Held besiegt");
+    }
+
+    @Test
+    public void experte_zweiHeldenUnabhaengig() {
+        Held a = new Held("Aria");
+        Held b = new Held("Brann");
+        a.nimmSchaden(50);
+        a.erhalteGold(30);
+        assertEquals(100, b.getLeben(), "Schaden an Aria darf Brann nicht treffen - jedes Objekt hat eigene Attribute (kein static!)");
+        assertEquals(0, b.getGold(), "Gold von Aria darf nicht bei Brann landen - jedes Objekt hat eigene Attribute");
+        assertEquals("Brann", b.getName(), "Jeder Held behaelt seinen eigenen Namen");
+    }
+}
+
+
+// ================== Level 1.2 – Monster und Kampf ===================
+
+class L12MonsterTest {
+
+    @Test
+    public void basis_heldKonstruktorMitWerten() {
+        Held h = new Held("Brann", 150, 14);
+        assertEquals("Brann", h.getName(), "Der zweite Konstruktor muss den Namen setzen");
+        assertEquals(150, h.getMaxLeben(), "Brann (maxLeben 150, Staerke 14) muss maxLeben 150 haben");
+        assertEquals(150, h.getLeben(), "Der Held startet mit vollem Leben: leben = maxLeben");
+        assertEquals(14, h.getStaerke(), "Brann (maxLeben 150, Staerke 14) muss Staerke 14 haben");
+        assertEquals(0, h.getGold(), "Auch mit dem zweiten Konstruktor startet der Held mit 0 Gold");
+    }
+
+    @Test
+    public void basis_monsterKonstruktor() {
+        Monster m = new Monster("Goblin", 30, 6);
+        assertEquals("Goblin", m.getName(), "getName() muss den Namen des Monsters liefern");
+        assertEquals(30, m.getLeben(), "Der Goblin (30 Leben, Staerke 6) muss 30 Leben haben");
+        assertEquals(6, m.getStaerke(), "Der Goblin (30 Leben, Staerke 6) muss Staerke 6 haben");
+    }
+
+    @Test
+    public void basis_monsterNimmSchaden() {
+        Monster m = new Monster("Goblin", 30, 6);
+        m.nimmSchaden(10);
+        assertEquals(20, m.getLeben(), "Nach nimmSchaden(10) muss der Goblin 20 Leben haben");
+    }
+
+    @Test
+    public void erweiterung_monsterNimmSchaden_nichtUnterNull() {
+        Monster m = new Monster("Goblin", 30, 6);
+        m.nimmSchaden(45);
+        assertEquals(0, m.getLeben(), "nimmSchaden darf leben des Monsters nicht unter 0 senken");
+    }
+
+    @Test
+    public void erweiterung_monsterIstBesiegt() {
+        Monster m = new Monster("Goblin", 30, 6);
+        assertFalse(m.istBesiegt(), "Ein neues Monster ist nicht besiegt");
+        m.nimmSchaden(30);
+        assertTrue(m.istBesiegt(), "Ein Monster mit 0 Leben ist besiegt");
+    }
+
+    @Test
+    public void erweiterung_angriffswertOhneWaffe() {
+        Held a = new Held("Aria");
+        Held b = new Held("Brann", 150, 14);
+        assertEquals(10, a.angriffswert(), "Ohne Waffe ist der Angriffswert gleich der Staerke (10)");
+        assertEquals(14, b.angriffswert(), "Ohne Waffe ist der Angriffswert gleich der Staerke (14)");
+    }
+
+    @Test
+    public void erweiterung_heldGreiftMonsterAn() {
+        Held h = new Held("Aria");
+        Monster m = new Monster("Goblin", 30, 6);
+        h.angreifen(m);
+        assertEquals(20, m.getLeben(), "Aria (Angriffswert 10) greift an: Goblin hat danach 30 - 10 = 20 Leben");
+        assertEquals(100, h.getLeben(), "Der Angreifer selbst darf beim Angreifen keinen Schaden nehmen");
+    }
+
+    @Test
+    public void erweiterung_monsterGreiftHeldAn() {
+        Held h = new Held("Aria");
+        Monster m = new Monster("Goblin", 30, 6);
+        m.angreifen(h);
+        assertEquals(94, h.getLeben(), "Goblin (Staerke 6) greift an: Aria hat danach 100 - 6 = 94 Leben");
+    }
+
+    @Test
+    public void experte_kampfBisZumSieg() {
+        Held h = new Held("Aria");
+        Monster m = new Monster("Goblin", 30, 6);
+        int runde = 0;
+        while (!m.istBesiegt() && !h.istBesiegt() && runde < 10) {
+            runde++;
+            h.angreifen(m);
+            if (!m.istBesiegt()) {
+                m.angreifen(h);
+            }
+        }
+        assertEquals(3, runde, "Aria braucht genau 3 Runden fuer den Goblin (30 Leben, 10 Schaden pro Treffer)");
+        assertTrue(m.istBesiegt(), "Nach dem Kampf muss der Goblin besiegt sein");
+        assertEquals(88, h.getLeben(), "Der Goblin trifft nur in Runde 1 und 2: 100 - 2 * 6 = 88");
+    }
+
+    @Test
+    public void experte_zweiVariablenEinObjekt() {
+        Held a = new Held("Aria");
+        Held b = a;
+        b.nimmSchaden(30);
+        assertTrue(a == b, "a und b verweisen auf dasselbe Objekt");
+        assertEquals(70, a.getLeben(), "b = a kopiert nur die Referenz: Schaden ueber b trifft auch a");
+    }
+
+    @Test
+    public void experte_heilenMitEigenemMaxLeben() {
+        Held h = new Held("Brann", 150, 14);
+        h.nimmSchaden(20);
+        h.heilen(100);
+        assertEquals(150, h.getLeben(), "heilen muss maxLeben benutzen, nicht die feste Zahl 100");
+    }
+
+    @Test
+    public void experte_zweiMonsterUnabhaengig() {
+        Monster m1 = new Monster("Goblin", 30, 6);
+        Monster m2 = new Monster("Ork", 60, 11);
+        m1.nimmSchaden(30);
+        assertEquals(60, m2.getLeben(), "Schaden am Goblin darf den Ork nicht treffen");
+        assertFalse(m2.istBesiegt(), "Der Ork ist nicht besiegt, nur weil der Goblin besiegt ist");
+        assertEquals("Ork", m2.getName(), "Jedes Monster behaelt seinen eigenen Namen");
+    }
+}
+
+
+// ================== Level 1.3 – Gegenstand und Inventar =============
+
+class L13InventarTest {
+
+    @Test
+    public void basis_gegenstandKonstruktor() {
+        Gegenstand g = new Gegenstand("Fackel", 5);
+        assertEquals("Fackel", g.getName(), "getName() muss den Namen des Gegenstands liefern");
+        assertEquals(5, g.getWert(), "getWert() muss den Wert in Gold liefern");
+    }
+
+    @Test
+    public void basis_gegenstandBeschreibung() {
+        Gegenstand g = new Gegenstand("Fackel", 5);
+        assertEquals("Fackel (5 Gold)", g.beschreibung(), "beschreibung() muss genau so aussehen: Fackel (5 Gold)");
+    }
+
+    @Test
+    public void basis_inventarAnfangsLeer() {
+        Held h = new Held("Aria");
+        assertEquals(0, h.getAnzahl(), "Ein neuer Held hat 0 Gegenstaende im Inventar");
+    }
+
+    @Test
+    public void basis_aufnehmenEinGegenstand() {
+        Held h = new Held("Aria");
+        boolean ok = h.aufnehmen(new Gegenstand("Fackel", 5));
+        assertTrue(ok, "aufnehmen muss true liefern, wenn noch Platz ist");
+        assertEquals(1, h.getAnzahl(), "Nach einem aufnehmen muss getAnzahl() 1 liefern");
+    }
+
+    @Test
+    public void erweiterung_aufnehmenBisVoll() {
+        Held h = new Held("Aria");
+        for (int i = 1; i <= 5; i++) {
+            boolean ok = h.aufnehmen(new Gegenstand("Stein " + i, 1));
+            assertTrue(ok, "Gegenstand Nr. " + i + " muss noch ins Inventar passen (Platz fuer 5)");
+        }
+        assertEquals(5, h.getAnzahl(), "Nach 5 aufnehmen muss getAnzahl() 5 liefern");
+    }
+
+    @Test
+    public void erweiterung_aufnehmenWennVoll() {
+        Held h = new Held("Aria");
+        for (int i = 1; i <= 5; i++) {
+            h.aufnehmen(new Gegenstand("Stein " + i, 1));
+        }
+        boolean ok = h.aufnehmen(new Gegenstand("Stein 6", 1));
+        assertFalse(ok, "Das Inventar ist voll: aufnehmen muss false liefern");
+        assertEquals(5, h.getAnzahl(), "Bei vollem Inventar darf anzahl nicht weiter steigen");
+    }
+
+    @Test
+    public void erweiterung_aufnehmenNull() {
+        Held h = new Held("Aria");
+        boolean ok = h.aufnehmen(null);
+        assertFalse(ok, "aufnehmen(null) muss false liefern - null ist kein Gegenstand");
+        assertEquals(0, h.getAnzahl(), "aufnehmen(null) darf anzahl nicht erhoehen");
+    }
+
+    @Test
+    public void erweiterung_gesamtWert() {
+        Held h = new Held("Aria");
+        h.aufnehmen(new Gegenstand("Fackel", 5));
+        h.aufnehmen(new Gegenstand("Krone", 50));
+        h.aufnehmen(new Gegenstand("Seil", 20));
+        assertEquals(75, h.gesamtWert(), "gesamtWert: 5 + 50 + 20 = 75");
+    }
+
+    @Test
+    public void erweiterung_gesamtWertLeer() {
+        Held h = new Held("Aria");
+        assertEquals(0, h.gesamtWert(), "Der Gesamtwert eines leeren Inventars ist 0");
+    }
+
+    @Test
+    public void erweiterung_enthaelt() {
+        Held h = new Held("Aria");
+        h.aufnehmen(new Gegenstand("Fackel", 5));
+        h.aufnehmen(new Gegenstand("Seil", 20));
+        assertTrue(h.enthaelt("Fackel"), "Die Fackel ist im Inventar: enthaelt muss true liefern");
+        assertTrue(h.enthaelt("Seil"), "Das Seil (letzter Gegenstand) ist im Inventar: enthaelt muss true liefern");
+        assertFalse(h.enthaelt("Schwert"), "Ein Schwert ist nicht im Inventar: enthaelt muss false liefern");
+    }
+
+    @Test
+    public void erweiterung_enthaeltLeer() {
+        Held h = new Held("Aria");
+        assertFalse(h.enthaelt("Fackel"), "Im leeren Inventar ist nichts enthalten - Vorsicht vor null-Eintraegen!");
+    }
+
+    @Test
+    public void experte_wertvollsterLeer() {
+        Held h = new Held("Aria");
+        assertTrue(h.wertvollsterGegenstand() == null, "Bei leerem Inventar muss wertvollsterGegenstand() null liefern");
+    }
+
+    @Test
+    public void experte_wertvollsterNormal() {
+        Held h = new Held("Aria");
+        Gegenstand krone = new Gegenstand("Krone", 50);
+        h.aufnehmen(new Gegenstand("Fackel", 5));
+        h.aufnehmen(krone);
+        h.aufnehmen(new Gegenstand("Seil", 20));
+        assertTrue(h.wertvollsterGegenstand() == krone, "Die Krone (50 Gold) ist der wertvollste Gegenstand");
+    }
+
+    @Test
+    public void experte_wertvollsterAmAnfangUndAmEnde() {
+        Held h = new Held("Aria");
+        Gegenstand krone = new Gegenstand("Krone", 50);
+        h.aufnehmen(krone);
+        h.aufnehmen(new Gegenstand("Fackel", 5));
+        assertTrue(h.wertvollsterGegenstand() == krone, "Die Krone steht ganz vorne und ist trotzdem der wertvollste Gegenstand");
+        Gegenstand juwel = new Gegenstand("Juwel", 80);
+        h.aufnehmen(juwel);
+        assertTrue(h.wertvollsterGegenstand() == juwel, "Das Juwel (80 Gold) steht ganz hinten und ist jetzt der wertvollste");
+    }
+
+    @Test
+    public void experte_wertvollsterGleichstand() {
+        Held h = new Held("Aria");
+        Gegenstand erste = new Gegenstand("Krone", 50);
+        Gegenstand zweite = new Gegenstand("Zepter", 50);
+        h.aufnehmen(new Gegenstand("Fackel", 5));
+        h.aufnehmen(erste);
+        h.aufnehmen(zweite);
+        assertTrue(h.wertvollsterGegenstand() == erste, "Bei Gleichstand muss der ERSTE Gegenstand geliefert werden (Krone, nicht Zepter)");
+    }
+
+    @Test
+    public void experte_enthaeltMitEquals() {
+        Held h = new Held("Aria");
+        h.aufnehmen(new Gegenstand("Fackel", 5));
+        String teil = "Fa";
+        String gesucht = teil + "ckel";
+        assertTrue(h.enthaelt(gesucht), "enthaelt muss Zeichenketten mit equals vergleichen, nicht mit ==");
+    }
+
+    @Test
+    public void experte_enthaeltNurExakterName() {
+        Held h = new Held("Aria");
+        h.aufnehmen(new Gegenstand("Fackel", 5));
+        assertFalse(h.enthaelt("Fack"), "Gesucht ist der exakte Name: 'Fack' ist nicht 'Fackel' (equals statt contains)");
+        assertFalse(h.enthaelt("fackel"), "Gross- und Kleinschreibung zaehlt: 'fackel' ist nicht 'Fackel'");
+        assertFalse(h.enthaelt(""), "Die leere Zeichenkette ist kein Gegenstandsname");
+    }
+
+    @Test
+    public void experte_gesamtWertBeiVollemInventar() {
+        Held h = new Held("Aria");
+        for (int i = 1; i <= 6; i++) {
+            h.aufnehmen(new Gegenstand("Muenze " + i, 10));
+        }
+        assertEquals(50, h.gesamtWert(), "Nur 5 Muenzen passen ins Inventar: gesamtWert muss 50 sein, nicht 60");
+    }
+
+    @Test
+    public void experte_inventarMitZweitemKonstruktor() {
+        Held h = new Held("Brann", 150, 14);
+        boolean ok = h.aufnehmen(new Gegenstand("Fackel", 5));
+        assertTrue(ok, "Auch ein Held aus dem zweiten Konstruktor braucht ein Inventar (Laenge 5)");
+        assertEquals(1, h.getAnzahl(), "Auch beim zweiten Konstruktor muss aufnehmen anzahl erhoehen");
+        assertEquals(5, h.gesamtWert(), "Auch beim zweiten Konstruktor muss gesamtWert funktionieren");
+    }
+}
+
+
+// ===================== Level 1.4 – Vererbung =========================
+
+// Diese Testklasse benutzt Waffe, Trank und Schluessel.
+// Zum Freischalten von Level 1.4: Kommentarzeichen entfernen
+// (loesche die Zeile mit LEVEL-1.4-START und die Zeile mit LEVEL-1.4-ENDE)
+/* LEVEL-1.4-START
+class L14VererbungTest {
+
+    @Test
+    public void basis_waffe() {
+        Waffe w = new Waffe("Schwert", 50, 12);
+        assertEquals("Schwert", w.getName(), "Waffe erbt getName() von Gegenstand");
+        assertEquals(50, w.getWert(), "Waffe erbt getWert() von Gegenstand");
+        assertEquals(12, w.getSchaden(), "getSchaden() muss den Schaden der Waffe liefern");
+    }
+
+    @Test
+    public void basis_trank() {
+        Trank t = new Trank("Heiltrank", 20, 30);
+        assertEquals("Heiltrank", t.getName(), "Trank erbt getName() von Gegenstand");
+        assertEquals(20, t.getWert(), "Trank erbt getWert() von Gegenstand");
+        assertEquals(30, t.getHeilwert(), "getHeilwert() muss den Heilwert des Tranks liefern");
+    }
+
+    @Test
+    public void basis_schluessel() {
+        Schluessel s = new Schluessel("Rostiger Schluessel", 2, 7);
+        assertEquals("Rostiger Schluessel", s.getName(), "Schluessel erbt getName() von Gegenstand");
+        assertEquals(2, s.getWert(), "Schluessel erbt getWert() von Gegenstand");
+        assertEquals(7, s.getTuer(), "getTuer() muss die Nummer der Tuer liefern");
+    }
+
+    @Test
+    public void erweiterung_waffeBeschreibung() {
+        Waffe w = new Waffe("Schwert", 50, 12);
+        assertEquals("Waffe: Schwert (50 Gold), Schaden 12", w.beschreibung(), "Waffe muss beschreibung() ueberschreiben - Tipp: super.beschreibung()");
+    }
+
+    @Test
+    public void erweiterung_trankBeschreibung() {
+        Trank t = new Trank("Heiltrank", 20, 30);
+        assertEquals("Trank: Heiltrank (20 Gold), heilt 30", t.beschreibung(), "Trank muss beschreibung() ueberschreiben - Tipp: super.beschreibung()");
+    }
+
+    @Test
+    public void erweiterung_schluesselBeschreibungGeerbt() {
+        Schluessel s = new Schluessel("Rostiger Schluessel", 2, 7);
+        assertEquals("Rostiger Schluessel (2 Gold)", s.beschreibung(), "Schluessel ueberschreibt beschreibung() NICHT - es gilt die geerbte Version");
+    }
+
+    @Test
+    public void erweiterung_ausruesten() {
+        Held h = new Held("Aria");
+        assertTrue(h.getWaffe() == null, "Ein neuer Held hat noch keine Waffe: getWaffe() muss null liefern");
+        Waffe w = new Waffe("Schwert", 50, 12);
+        h.ausruesten(w);
+        assertTrue(h.getWaffe() == w, "Nach ausruesten(w) muss getWaffe() genau diese Waffe liefern");
+    }
+
+    @Test
+    public void erweiterung_angriffswertMitWaffe() {
+        Held h = new Held("Aria");
+        h.ausruesten(new Waffe("Schwert", 50, 12));
+        assertEquals(22, h.angriffswert(), "Angriffswert mit Schwert: Staerke 10 + Schaden 12 = 22");
+    }
+
+    @Test
+    public void experte_trinkenHeilt() {
+        Held h = new Held("Aria");
+        h.nimmSchaden(50);
+        h.trinken(new Trank("Heiltrank", 20, 30));
+        assertEquals(80, h.getLeben(), "trinken: 100 - 50 + 30 = 80");
+    }
+
+    @Test
+    public void experte_trinkenNichtUeberMaxLeben() {
+        Held h = new Held("Aria");
+        h.nimmSchaden(10);
+        h.trinken(new Trank("Heiltrank", 20, 30));
+        assertEquals(100, h.getLeben(), "Auch ein Trank heilt nicht ueber maxLeben - Tipp: heilen() wiederverwenden");
+    }
+
+    @Test
+    public void experte_angreifenMitWaffe() {
+        Held h = new Held("Aria");
+        Monster m = new Monster("Goblin", 30, 6);
+        h.ausruesten(new Waffe("Schwert", 50, 12));
+        h.angreifen(m);
+        assertEquals(8, m.getLeben(), "angreifen muss angriffswert() benutzen: 30 - 22 = 8");
+    }
+
+    @Test
+    public void experte_waffeWechseln() {
+        Held h = new Held("Aria");
+        h.ausruesten(new Waffe("Dolch", 10, 4));
+        h.ausruesten(new Waffe("Axt", 40, 15));
+        assertEquals(25, h.angriffswert(), "Die neue Waffe ersetzt die alte: 10 + 15 = 25 (nicht 10 + 4 + 15)");
+        assertEquals(10, h.getStaerke(), "Ausruesten darf die Staerke selbst nicht veraendern");
+    }
+
+    @Test
+    public void experte_waffeAblegen() {
+        Held h = new Held("Aria");
+        h.ausruesten(new Waffe("Schwert", 50, 12));
+        h.ausruesten(null);
+        assertTrue(h.getWaffe() == null, "ausruesten(null) legt die Waffe ab");
+        assertEquals(10, h.angriffswert(), "Ohne Waffe gilt wieder nur die Staerke - angriffswert braucht eine null-Abfrage");
+    }
+
+    @Test
+    public void experte_polymorphieImInventar() {
+        Held h = new Held("Aria");
+        Waffe schwert = new Waffe("Schwert", 50, 12);
+        h.aufnehmen(new Gegenstand("Fackel", 5));
+        h.aufnehmen(schwert);
+        h.aufnehmen(new Trank("Heiltrank", 20, 30));
+        assertEquals(3, h.getAnzahl(), "Waffen und Traenke SIND Gegenstaende und passen ins Inventar");
+        assertEquals(75, h.gesamtWert(), "gesamtWert zaehlt alle Gegenstaende: 5 + 50 + 20 = 75");
+        assertTrue(h.wertvollsterGegenstand() == schwert, "Das Schwert (50 Gold) ist der wertvollste Gegenstand");
+        assertEquals("Waffe: Schwert (50 Gold), Schaden 12", h.wertvollsterGegenstand().beschreibung(), "Dynamisches Binden: Auch als Gegenstand gespeichert wird die beschreibung() der Waffe aufgerufen");
+    }
+}
+LEVEL-1.4-ENDE */
+
+// ---------------------------------------------------------------------
+//  Programmstart – das Hauptprogramm
+// ---------------------------------------------------------------------
+
+// ----- Level 1.1 / 1.2: Der erste Kampf -----
+Held aria = new Held("Aria");
+Monster goblin = new Monster("Goblin", 30, 6);
+
+println("Ein " + goblin.getName() + " versperrt " + aria.getName() + " den Weg!");
+
+int runde = 0;
+// runde < 20 ist eine Notbremse, damit das Programm auch dann endet,
+// wenn noch nicht alle Methoden fertig sind.
+while (!aria.istBesiegt() && !goblin.istBesiegt() && runde < 20) {
+    runde++;
+    println("--- Runde " + runde + " ---");
+    aria.angreifen(goblin);
+    println(aria.getName() + " trifft. " + goblin.getName() + " hat noch " + goblin.getLeben() + " Leben.");
+    if (!goblin.istBesiegt()) {
+        int wurf = Wuerfel.wuerfeln(6);
+        if (wurf == 1) {
+            println(goblin.getName() + " wuerfelt eine 1 und verfehlt!");
+        } else {
+            goblin.angreifen(aria);
+            println(goblin.getName() + " trifft. " + aria.getName() + " hat noch " + aria.getLeben() + " Leben.");
+        }
+    }
+}
+
+if (goblin.istBesiegt()) {
+    println(aria.getName() + " siegt nach " + runde + " Runden!");
+    aria.erhalteGold(15);
+    println("Beute: 15 Gold. " + aria.getName() + " hat jetzt " + aria.getGold() + " Gold.");
+} else {
+    if (aria.istBesiegt()) {
+        println(aria.getName() + " wurde besiegt ...");
+    } else {
+        println("Kein Sieger nach 20 Runden - sind alle Methoden schon fertig?");
+    }
+}
+
+// ----- Level 1.2: Referenz-Raetsel -----
+// Ueberlege ZUERST auf Papier, was ausgegeben wird, und zeichne die
+// Objektkarten. Erst dann starten!
+Held a = new Held("Brann");
+Held b = a;
+b.nimmSchaden(30);
+println("Referenz-Raetsel: a hat " + a.getLeben() + " Leben.");
+
+// ----- Level 1.3: Schaetze sammeln -----
+aria.aufnehmen(new Gegenstand("Fackel", 5));
+aria.aufnehmen(new Gegenstand("Krone", 50));
+println("Gegenstaende: " + aria.getAnzahl() + ", Gesamtwert: " + aria.gesamtWert() + " Gold");
+Gegenstand bester = aria.wertvollsterGegenstand();
+if (bester != null) {
+    println("Wertvollster Gegenstand: " + bester.beschreibung());
+}
+println("Fackel dabei? " + aria.enthaelt("Fackel"));
+
+// ----- Level 1.4: Waffen, Traenke, Schluessel -----
+// Zum Freischalten von Level 1.4: Kommentarzeichen entfernen
+// (loesche die Zeile mit LEVEL-1.4-START und die Zeile mit LEVEL-1.4-ENDE)
+/* LEVEL-1.4-START
+Waffe schwert = new Waffe("Schwert", 50, 12);
+aria.aufnehmen(schwert);
+aria.aufnehmen(new Trank("Heiltrank", 20, 30));
+aria.aufnehmen(new Schluessel("Rostiger Schluessel", 2, 7));
+aria.ausruesten(schwert);
+println("Angriffswert mit Schwert: " + aria.angriffswert());
+aria.trinken(new Trank("Heiltrank", 20, 30));
+println("Nach dem Trank: " + aria.getLeben() + " Leben");
+aria.inventarAusgeben();
+LEVEL-1.4-ENDE */

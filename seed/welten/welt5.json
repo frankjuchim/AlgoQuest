@@ -1,0 +1,5868 @@
+{
+ "version": 2,
+ "welt": 5,
+ "titel": "Der Wald",
+ "farbe": "#3B7A3B",
+ "levels": [
+  {
+   "id": "W5-L1",
+   "nr": "5.1",
+   "titel": "Wegweiser im Wald – Binärbäume und Traversierungen",
+   "ds": [
+    31
+   ],
+   "ab": "AB 1 Binärbäume, Teil 1 (DS 31)",
+   "ide": "AQ_W5_L5_Wald_Geruest.txt – Level 5.1 (Klasse Baum, Testklasse L51BaumTest)",
+   "intro": [
+    {
+     "t": "text",
+     "md": "Ein **Binärbaum** ist leer oder besteht aus einer Wurzel mit Inhalt und zwei Teilbäumen. **Höhe**: leerer Baum 0, Blatt 1, sonst 1 + größere Höhe der Teilbäume. **Ebene**: Wurzel = Ebene 0."
+    },
+    {
+     "t": "hinweis",
+     "md": "**Traversierungen:** Preorder = Wurzel, links, rechts · Inorder = links, Wurzel, rechts · Postorder = links, rechts, Wurzel. `BinTree` ist nicht generisch: `int x = (Integer) b.getItem();`"
+    }
+   ],
+   "aufgaben": [
+    "W5-L1-01",
+    "W5-L1-02",
+    "W5-L1-03",
+    "W5-L1-04",
+    "W5-L1-05",
+    "W5-L1-06",
+    "W5-L1-07",
+    "W5-L1-08"
+   ]
+  },
+  {
+   "id": "W5-L2",
+   "nr": "5.2",
+   "titel": "Rekursion im Geäst – rekursive Baumalgorithmen",
+   "ds": [
+    32
+   ],
+   "ab": "AB 1 Binärbäume, Teil 2 (DS 32)",
+   "ide": "AQ_W5_L5_Wald_Geruest.txt – Level 5.2 (Klasse Rekursiv, Testklasse L52RekursivTest)",
+   "intro": [
+    {
+     "t": "text",
+     "md": "**Bauplan rekursiver Baummethoden:** 1. Basisfall `if (b.isEmpty())` – ganz oben. 2. Wurzel auswerten (Cast!). 3. Teilbäume rekursiv. 4. Ergebnisse verknüpfen."
+    },
+    {
+     "t": "hinweis",
+     "md": "Rekursionstabelle: Erstaufruf = Tiefe 0, Aufrufe in der Reihenfolge ihres Beginns, leere Teilbäume mitzählen. Ein Baum mit n Knoten erzeugt bei einem vollständigen Durchlauf 2n + 1 Aufrufe."
+    }
+   ],
+   "aufgaben": [
+    "W5-L2-01",
+    "W5-L2-02",
+    "W5-L2-03",
+    "W5-L2-04",
+    "W5-L2-05",
+    "W5-L2-06",
+    "W5-L2-07",
+    "W5-L2-08"
+   ]
+  },
+  {
+   "id": "W5-L3",
+   "nr": "5.3",
+   "titel": "Kür: Der Akinator lernt – Entscheidungsbaum und Level-Order",
+   "ds": [
+    33
+   ],
+   "ab": "AB 1 Binärbäume, Teil 3 (DS 33, Kür)",
+   "ide": "AQ_W5_L5_Wald_Geruest.txt – Level 5.3 (Klasse Akinator, Testklasse L53AkinatorTest); Baumzeichner Aufgabe 3",
+   "intro": [
+    {
+     "t": "text",
+     "md": "Im **Entscheidungsbaum** sind innere Knoten Ja/Nein-Fragen und Blätter Monster: ja → links, nein → rechts. Beim Lernen wird ein Blatt zur Frage – deshalb gilt immer Monster = Fragen + 1."
+    },
+    {
+     "t": "hinweis",
+     "md": "**Levelorder** (Ebene für Ebene) braucht eine **Schlange vom Inhaltstyp BinTree**: entnehmen, ausgeben, nicht leere Kinder hinten anstellen. Cast: `BinTree k = (BinTree) q.dequeue();`"
+    }
+   ],
+   "aufgaben": [
+    "W5-L3-01",
+    "W5-L3-02",
+    "W5-L3-03",
+    "W5-L3-04",
+    "W5-L3-05",
+    "W5-L3-06",
+    "W5-L3-07",
+    "W5-L3-08"
+   ]
+  },
+  {
+   "id": "W5-L4",
+   "nr": "5.4",
+   "titel": "Die Item-Datenbank – binäre Suchbäume",
+   "ds": [
+    34
+   ],
+   "ab": "AB 2 Suchbäume, Teil 1 (DS 34)",
+   "ide": "AQ_W5_L5_Wald_Geruest.txt – Level 5.4 Basis/Erweiterung (Klasse Suchbaum, Testklasse L54SuchbaumTest); Baumzeichner Aufgaben 4–8",
+   "intro": [
+    {
+     "t": "text",
+     "md": "**Binärer Suchbaum:** Für **jeden** Knoten sind alle Werte im linken Teilbaum kleiner, alle im rechten größer. Suchen und Einfügen gehen nur **einen** Weg nach unten."
+    },
+    {
+     "t": "hinweis",
+     "md": "**Löschen:** Blatt → entfernen · ein Kind → Kind rückt nach · zwei Kinder → Wert durch den Nachfolger (kleinster im rechten Teilbaum) oder Vorgänger (größter im linken) ersetzen. Probe: Inorder ohne den gelöschten Wert."
+    }
+   ],
+   "aufgaben": [
+    "W5-L4-01",
+    "W5-L4-02",
+    "W5-L4-03",
+    "W5-L4-04",
+    "W5-L4-05",
+    "W5-L4-06",
+    "W5-L4-07",
+    "W5-L4-08"
+   ]
+  },
+  {
+   "id": "W5-L5",
+   "nr": "5.5",
+   "titel": "Krumm oder buschig? – ausgeglichen, entartet, isBST",
+   "ds": [
+    35
+   ],
+   "ab": "AB 2 Suchbäume, Teil 2 (DS 35)",
+   "ide": "AQ_W5_L5_Wald_Geruest.txt – Level 5.4 Experte (Klasse Suchbaum: istBST, ausgeglichenAus, nachfolger)",
+   "intro": [
+    {
+     "t": "text",
+     "md": "Die Suche untersucht höchstens so viele Knoten, wie der Baum **hoch** ist. Entartet (Kette): Höhe n. Ausgeglichen: Höhe ≈ log₂(n)."
+    },
+    {
+     "t": "hinweis",
+     "md": "**Verdopplung → ein Vergleich mehr** (ausgeglichen). isBST-Falle: Nicht nur die Kinder prüfen – die Grenzen aller Vorfahren gelten!"
+    }
+   ],
+   "aufgaben": [
+    "W5-L5-01",
+    "W5-L5-02",
+    "W5-L5-03",
+    "W5-L5-04",
+    "W5-L5-05",
+    "W5-L5-06",
+    "W5-L5-07",
+    "W5-L5-08"
+   ]
+  },
+  {
+   "id": "W5-L6",
+   "nr": "5.6",
+   "titel": "Fremde Bäume – Transfer auf unbekannte Baumarten",
+   "ds": [
+    35,
+    36
+   ],
+   "ab": "AB 3 Transfer: Unbekannte Bäume erschließen (Vorbereitung Boss 5)",
+   "ide": "AQ_W5_AB3_Runenbuch_Testumgebung.txt – Papier-Compiler (Klasse Runenbaum, RunenbuchTest)",
+   "intro": [
+    {
+     "t": "text",
+     "md": "Im Abitur steht oft eine **unbekannte Baumart** im Material (B-Baum 2024, Huffman 2025, Heap 2026). Niemand erwartet, dass du sie kennst – du erschließt sie."
+    },
+    {
+     "t": "hinweis",
+     "md": "**Fünf Schritte:** Definition lesen · Beispiel von Hand · Invariante formulieren · auf BinTree abbilden (was heißt links/rechts?) · implementieren (Basisfall leer zuerst)."
+    }
+   ],
+   "aufgaben": [
+    "W5-L6-01",
+    "W5-L6-02",
+    "W5-L6-03",
+    "W5-L6-04",
+    "W5-L6-05",
+    "W5-L6-06",
+    "W5-L6-07"
+   ]
+  }
+ ],
+ "boss": {
+  "id": "W5-BOSS",
+  "titel": "Die drei Baumhüter – Online-Duell",
+  "dauerMin": 25,
+  "anzahl": 8,
+  "mix": {
+   "1": 3,
+   "2": 3,
+   "3": 2
+  },
+  "pool": [
+   "W5-B-01",
+   "W5-B-02",
+   "W5-B-03",
+   "W5-B-04",
+   "W5-B-05",
+   "W5-B-06",
+   "W5-B-07",
+   "W5-B-08",
+   "W5-B-09",
+   "W5-B-10",
+   "W5-B-11",
+   "W5-B-12",
+   "W5-B-13",
+   "W5-B-14",
+   "W5-B-15"
+  ]
+ },
+ "aufgaben": [
+  {
+   "id": "W5-L1-01",
+   "titel": "Begriffe an der Eulen-Eiche",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Eulen des Waldes wohnen in diesem Binärbaum. Beantworte die Fragen mit den Begriffen aus dem Merkkasten des Levels."
+    },
+    {
+     "t": "baum",
+     "baum": "K(E(A,G(-,H)),T(R(P,-),W))"
+    },
+    {
+     "t": "text",
+     "md": "- Wurzel: [[w]]\n- Anzahl der Blätter: [[b]]\n- Anzahl der inneren Knoten: [[i]]\n- Höhe des Baums: [[h]]\n- Ebene des Knotens H: [[e]]\n- Höhe des Teilbaums mit der Wurzel E: [[he]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "w": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 3
+     },
+     "b": {
+      "typ": "zahl"
+     },
+     "i": {
+      "typ": "zahl"
+     },
+     "h": {
+      "typ": "zahl"
+     },
+     "e": {
+      "typ": "zahl"
+     },
+     "he": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "w": [
+     "K"
+    ],
+    "b": [
+     "4"
+    ],
+    "i": [
+     "5"
+    ],
+    "h": [
+     "4"
+    ],
+    "e": [
+     "3"
+    ],
+    "he": [
+     "3"
+    ]
+   },
+   "tipps": [
+    "Höhe = Anzahl der Ebenen. Zähle die Knoten auf dem längsten Weg von der Wurzel nach unten."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Blätter (beide Teilbäume leer): A, H, P, W – also 4. Innere Knoten (mindestens ein Kind): K, E, G, T, R – also 5. Der längste Weg K → E → G → H bzw. K → T → R → P hat 4 Knoten, die Höhe ist **4** (leerer Baum 0, Blatt 1). H liegt auf **Ebene 3** (Wurzel = Ebene 0). Der Teilbaum E(A,G(-,H)) hat die Höhe 3."
+    },
+    {
+     "t": "hinweis",
+     "md": "Achtung: G ist **kein** Blatt – G hat das rechte Kind H. Ein Knoten mit nur einem Kind ist ein innerer Knoten."
+    }
+   ]
+  },
+  {
+   "id": "W5-L1-02",
+   "titel": "Preorder – Wurzel zuerst",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Klicke die Knoten in **Preorder**-Reihenfolge an (Wurzel – links – rechts, rekursiv für jeden Teilbaum)."
+    }
+   ],
+   "interaktion": {
+    "kind": "tree",
+    "modus": "klick",
+    "baum": "6(2(7,4(-,1)),9(-,3(5,8)))"
+   },
+   "loesung": {
+    "folge": [
+     "",
+     "L",
+     "LL",
+     "LR",
+     "LRR",
+     "R",
+     "RR",
+     "RRL",
+     "RRR"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Preorder: **6 2 7 4 1 9 3 5 8**. Erst die Wurzel 6, dann der ganze linke Teilbaum (2, 7, 4, 1), danach der rechte (9, 3, 5, 8)."
+    },
+    {
+     "t": "hinweis",
+     "md": "Tipp „Rundgang“: Umrunde den Baum links an der Wurzel beginnend – notiere jeden Knoten, wenn du **links** an ihm vorbeikommst."
+    }
+   ]
+  },
+  {
+   "id": "W5-L1-03",
+   "titel": "Inorder – links, Wurzel, rechts",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Klicke die Knoten in **Inorder**-Reihenfolge an (links – Wurzel – rechts)."
+    }
+   ],
+   "interaktion": {
+    "kind": "tree",
+    "modus": "klick",
+    "baum": "6(2(7,4(-,1)),9(-,3(5,8)))"
+   },
+   "loesung": {
+    "folge": [
+     "LL",
+     "L",
+     "LR",
+     "LRR",
+     "",
+     "R",
+     "RRL",
+     "RR",
+     "RRR"
+    ]
+   },
+   "tipps": [
+    "Ein leerer linker Teilbaum liefert nichts – dann kommt sofort der Knoten selbst."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Inorder: **7 2 4 1 6 9 5 3 8**. Der linke Teilbaum von 6 liefert 7 2 4 1 (bei 4 ist links leer, also zuerst 4, dann 1). Bei 9 ist der linke Teilbaum leer – deshalb folgt die 9 direkt auf die 6."
+    }
+   ]
+  },
+  {
+   "id": "W5-L1-04",
+   "titel": "Vom Code zum Baum",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Bäume",
+   "fallen": [
+    "P1"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Anweisungen werden nacheinander ausgeführt. Baue den Baum **w** nach Zeile 10 auf. Nicht jeder Wert in der Auswahl wird gebraucht."
+    },
+    {
+     "t": "code",
+     "code": "BinTree w = new BinTree(4);\nw.setLeft(new BinTree(8));\nw.setRight(new BinTree(1));\nw.getRight().getLeft().setItem(6);\nBinTree h = w.getLeft();\nh.getRight().setItem(3);\nh.getRight().setLeft(new BinTree(5));\nw.getRight().setRight(new BinTree(2));\nh = new BinTree(9);\nh.setLeft(new BinTree(7));",
+     "nummern": true
+    }
+   ],
+   "interaktion": {
+    "kind": "tree",
+    "modus": "bauen",
+    "start": "-",
+    "werte": [
+     "4",
+     "8",
+     "1",
+     "6",
+     "3",
+     "5",
+     "2",
+     "9",
+     "7"
+    ]
+   },
+   "loesung": {
+    "baum": "4(8(-,3(5,-)),1(6,2))"
+   },
+   "tipps": [
+    "Zeichne nach jeder Zeile mit. Welche Zeilen ändern wirklich w – und ab wann zeigt h auf etwas anderes?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Ergebnis: `4(8(-,3(5,-)),1(6,2))`."
+    },
+    {
+     "t": "text",
+     "md": "- Zeile 4: `w.getRight().getLeft()` ist ein **leerer** Teilbaum (nicht null) – `setItem(6)` macht ihn zum Blatt.\n- Zeile 5: `h` ist eine **Referenz** auf den linken Teilbaum von w. Zeilen 6 und 7 verändern deshalb w.\n- Zeile 9: `h = new BinTree(9)` lässt h auf ein **neues** Objekt zeigen. Zeilen 9 und 10 ändern w nicht mehr – 9 und 7 gehören nicht in den Baum."
+    },
+    {
+     "t": "hinweis",
+     "md": "P1 im Blick: `getRight()` auf einem leeren Baum wäre ein Laufzeitfehler – `setItem` auf einem leeren Baum ist dagegen erlaubt."
+    }
+   ]
+  },
+  {
+   "id": "W5-L1-05",
+   "titel": "Was liefert der Ausdruck?",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Bäume",
+   "fallen": [
+    "P1",
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Nach Zeile 10 des Codes werden die Ausdrücke ausgewertet. Gib den Wert an – oder „Laufzeitfehler“."
+    },
+    {
+     "t": "code",
+     "code": "BinTree w = new BinTree(4);\nw.setLeft(new BinTree(8));\nw.setRight(new BinTree(1));\nw.getRight().getLeft().setItem(6);\nBinTree h = w.getLeft();\nh.getRight().setItem(3);\nh.getRight().setLeft(new BinTree(5));\nw.getRight().setRight(new BinTree(2));\nh = new BinTree(9);\nh.setLeft(new BinTree(7));",
+     "nummern": true
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Ausdruck",
+      "Wert"
+     ],
+     "zeilen": [
+      [
+       "`w.getLeft().isLeaf()`",
+       "[[a]]"
+      ],
+      [
+       "`h.isLeaf()`",
+       "[[b]]"
+      ],
+      [
+       "`(Integer) w.getRight().getItem() + 5`",
+       "[[c]]"
+      ],
+      [
+       "`w.getLeft().getLeft().isEmpty()`",
+       "[[d]]"
+      ],
+      [
+       "`w.getLeft().getLeft().getItem()`",
+       "[[e]]"
+      ],
+      [
+       "`w.getRight().getRight().isLeaf()`",
+       "[[f]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "a": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false",
+       "Laufzeitfehler"
+      ]
+     },
+     "b": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false",
+       "Laufzeitfehler"
+      ]
+     },
+     "c": {
+      "typ": "zahl"
+     },
+     "d": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false",
+       "Laufzeitfehler"
+      ]
+     },
+     "e": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false",
+       "Laufzeitfehler"
+      ]
+     },
+     "f": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false",
+       "Laufzeitfehler"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "a": [
+     "false"
+    ],
+    "b": [
+     "false"
+    ],
+    "c": [
+     "6"
+    ],
+    "d": [
+     "true"
+    ],
+    "e": [
+     "Laufzeitfehler"
+    ],
+    "f": [
+     "true"
+    ]
+   },
+   "tipps": [
+    "Ein nicht leerer Baum hat immer zwei Teilbäume – notfalls leere, nie null."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "w = `4(8(-,3(5,-)),1(6,2))`, h = `9(7,-)`."
+    },
+    {
+     "t": "text",
+     "md": "- a) 8 hat das rechte Kind 3 → **false**.\n- b) h ist der neue Baum 9 mit dem linken Kind 7 → **false**.\n- c) `(Integer)` castet den Inhalt 1, dann + 5 → **6** (P4: ohne Cast kein Rechnen mit Object).\n- d) links von 8 ist ein leerer Baum → **true**.\n- e) `getItem()` auf dem leeren Baum → **Laufzeitfehler** (P1, IllegalStateException).\n- f) 2 hat zwei leere Teilbäume → **true**."
+    }
+   ]
+  },
+  {
+   "id": "W5-L1-06",
+   "titel": "Rekonstruktion aus Pre- und Inorder",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Von einem Baum kennt man nur zwei Traversierungen:\n\n- Preorder: `E U L A R T S`\n- Inorder: `U A L E T R S`\n\nBaue den Baum auf."
+    }
+   ],
+   "interaktion": {
+    "kind": "tree",
+    "modus": "bauen",
+    "start": "-",
+    "werte": [
+     "E",
+     "U",
+     "L",
+     "A",
+     "R",
+     "T",
+     "S"
+    ]
+   },
+   "loesung": {
+    "baum": "E(U(-,L(A,-)),R(T,S))"
+   },
+   "tipps": [
+    "Erstes Element der Preorder = Wurzel. Teile die Inorder an der Wurzel – links davon liegt der linke Teilbaum.",
+    "Wende dasselbe Verfahren rekursiv auf die beiden Teilbäume an."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Die Preorder beginnt mit der Wurzel **E**. In der Inorder steht links von E der linke Teilbaum (U A L), rechts davon der rechte (T R S)."
+    },
+    {
+     "t": "text",
+     "md": "Links: Preorder U L A → Wurzel U; in der Inorder steht vor U nichts, also ist links von U leer und rechts liegt (A L) mit der Wurzel L und dem linken Kind A. Rechts: Wurzel R mit T links und S rechts."
+    },
+    {
+     "t": "baum",
+     "baum": "E(U(-,L(A,-)),R(T,S))"
+    },
+    {
+     "t": "text",
+     "md": "Ergebnis `E(U(-,L(A,-)),R(T,S))`. Kontrolle Postorder: A L U T S R E."
+    }
+   ]
+  },
+  {
+   "id": "W5-L1-07",
+   "titel": "Ein Termbaum für den Zaubertrank",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Der Alchemist braucht den Termbaum (Inhaltstyp Zeichenkette) zum Term\n\n`(6 + 2) * 5 + 12 / 4`\n\nEs gilt Punkt vor Strich, `/` rechnet ganzzahlig. Baue den Termbaum und gib seinen Wert an: [[wert]]"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "tree",
+     "modus": "bauen",
+     "start": "-",
+     "werte": [
+      "+",
+      "+",
+      "*",
+      "/",
+      "6",
+      "2",
+      "5",
+      "12",
+      "4"
+     ]
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "wert": {
+       "typ": "zahl"
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "baum": "+(*(+(6,2),5),/(12,4))"
+    },
+    {
+     "wert": [
+      "43"
+     ]
+    }
+   ],
+   "tipps": [
+    "Welches Rechenzeichen wird zuletzt ausgeführt? Das ist die Wurzel."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Die **Wurzel** ist das Rechenzeichen, das zuletzt ausgewertet wird – das zweite `+` (Punkt vor Strich). Links steht `(6 + 2) * 5`, rechts `12 / 4`."
+    },
+    {
+     "t": "baum",
+     "baum": "+(*(+(6,2),5),/(12,4))"
+    },
+    {
+     "t": "text",
+     "md": "Wert: (6 + 2) · 5 + 12 / 4 = 40 + 3 = **43**. Kontrolle Postorder: 6 2 + 5 * 12 4 / + – das ist die Postfix-Schreibweise."
+    }
+   ]
+  },
+  {
+   "id": "W5-L1-08",
+   "titel": "Postorder = Postfix",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Klicke die Knoten des Termbaums in **Postorder** an (links – rechts – Wurzel). So entsteht die Postfix-Schreibweise aus Welt 4."
+    }
+   ],
+   "interaktion": {
+    "kind": "tree",
+    "modus": "klick",
+    "baum": "−(*(+(1,3),5),/(8,2))"
+   },
+   "loesung": {
+    "folge": [
+     "LLL",
+     "LLR",
+     "LL",
+     "LR",
+     "L",
+     "RL",
+     "RR",
+     "R",
+     ""
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Postorder: **1 3 + 5 * 8 2 / −**. Jedes Rechenzeichen steht hinter seinen beiden Operanden – genau so rechnet der Postfix-Rechner mit einem Stapel. Wert des Terms: (1 + 3) · 5 − 8 / 2 = **16**."
+    }
+   ]
+  },
+  {
+   "id": "W5-L2-01",
+   "titel": "Vier Fragen an einen Baum",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Methoden aus Level 5.1 und 5.2 werden mit dem Baum b aufgerufen. Gib die Rückgaben an."
+    },
+    {
+     "t": "baum",
+     "baum": "6(9(2,-),4(7(1,5),8))"
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Aufruf",
+      "Rückgabe"
+     ],
+     "zeilen": [
+      [
+       "`anzahlKnoten(b)`",
+       "[[k]]"
+      ],
+      [
+       "`anzahlBlaetter(b)`",
+       "[[bl]]"
+      ],
+      [
+       "`hoehe(b)`",
+       "[[h]]"
+      ],
+      [
+       "`summe(b)`",
+       "[[s]]"
+      ],
+      [
+       "`maximum(b)`",
+       "[[m]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "k": {
+      "typ": "zahl"
+     },
+     "bl": {
+      "typ": "zahl"
+     },
+     "h": {
+      "typ": "zahl"
+     },
+     "s": {
+      "typ": "zahl"
+     },
+     "m": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "k": [
+     "8"
+    ],
+    "bl": [
+     "4"
+    ],
+    "h": [
+     "4"
+    ],
+    "s": [
+     "42"
+    ],
+    "m": [
+     "9"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Knoten: 8. Blätter: 2, 1, 5, 8 (4 Stück). Höhe: 4 (Weg 6 → 4 → 7 → 1). Summe: 42. Maximum: 9 (die 9 ist ein innerer Knoten – das Maximum muss kein Blatt sein)."
+    }
+   ]
+  },
+  {
+   "id": "W5-L2-02",
+   "titel": "Wie hoch reicht der Ast?",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Rekursionstabelle",
+   "fallen": [
+    "P7",
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Dokumentiere den Aufruf `hoehe(t)` für den Baum t in der Rekursionstabelle. Die Aufrufe stehen in der Reihenfolge, in der sie **beginnen**; `hoehe(leer)` ist ein Aufruf mit leerem Teilbaum. Der Erstaufruf hat die Rekursionstiefe 0."
+    },
+    {
+     "t": "baum",
+     "baum": "9(4(-,6),12)"
+    },
+    {
+     "t": "code",
+     "code": "public static int hoehe(BinTree b) {\n    if (b.isEmpty()) {\n        return 0;\n    }\n    int l = hoehe(b.getLeft());\n    int r = hoehe(b.getRight());\n    if (l > r) {\n        return 1 + l;\n    }\n    return 1 + r;\n}",
+     "nummern": true
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Rekursionstiefe",
+      "Aufruf",
+      "l",
+      "r",
+      "Rückgabe"
+     ],
+     "zeilen": [
+      [
+       "0",
+       "hoehe(9)",
+       "[[z1c]]",
+       "[[z1d]]",
+       "[[z1e]]"
+      ],
+      [
+       "[[z2a]]",
+       "hoehe(4)",
+       "[[z2c]]",
+       "[[z2d]]",
+       "[[z2e]]"
+      ],
+      [
+       "[[z3a]]",
+       "hoehe(leer)",
+       "–",
+       "–",
+       "[[z3e]]"
+      ],
+      [
+       "[[z4a]]",
+       "hoehe(6)",
+       "[[z4c]]",
+       "[[z4d]]",
+       "[[z4e]]"
+      ],
+      [
+       "[[z5a]]",
+       "hoehe(leer)",
+       "–",
+       "–",
+       "[[z5e]]"
+      ],
+      [
+       "[[z6a]]",
+       "hoehe(leer)",
+       "–",
+       "–",
+       "[[z6e]]"
+      ],
+      [
+       "[[z7a]]",
+       "hoehe(12)",
+       "[[z7c]]",
+       "[[z7d]]",
+       "[[z7e]]"
+      ],
+      [
+       "[[z8a]]",
+       "hoehe(leer)",
+       "–",
+       "–",
+       "[[z8e]]"
+      ],
+      [
+       "[[z9a]]",
+       "hoehe(leer)",
+       "–",
+       "–",
+       "[[z9e]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "z2a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2d": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2e": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3e": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4d": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4e": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z5a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z5e": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z6a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z6e": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z7a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z7c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z7d": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z7e": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z8a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z8e": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z9a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z9e": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z1c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z1d": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z1e": {
+      "typ": "zahl",
+      "breite": 4
+     }
+    }
+   },
+   "loesung": {
+    "z2a": [
+     "1"
+    ],
+    "z2c": [
+     "0"
+    ],
+    "z2d": [
+     "1"
+    ],
+    "z2e": [
+     "2"
+    ],
+    "z3a": [
+     "2"
+    ],
+    "z3e": [
+     "0"
+    ],
+    "z4a": [
+     "2"
+    ],
+    "z4c": [
+     "0"
+    ],
+    "z4d": [
+     "0"
+    ],
+    "z4e": [
+     "1"
+    ],
+    "z5a": [
+     "3"
+    ],
+    "z5e": [
+     "0"
+    ],
+    "z6a": [
+     "3"
+    ],
+    "z6e": [
+     "0"
+    ],
+    "z7a": [
+     "1"
+    ],
+    "z7c": [
+     "0"
+    ],
+    "z7d": [
+     "0"
+    ],
+    "z7e": [
+     "1"
+    ],
+    "z8a": [
+     "2"
+    ],
+    "z8e": [
+     "0"
+    ],
+    "z9a": [
+     "2"
+    ],
+    "z9e": [
+     "0"
+    ],
+    "z1c": [
+     "2"
+    ],
+    "z1d": [
+     "1"
+    ],
+    "z1e": [
+     "3"
+    ]
+   },
+   "tipps": [
+    "Arbeite wie der Rechner: Erst wird der komplette linke Teilbaum abgearbeitet, dann der rechte."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Jeder der 4 Knoten löst einen Aufruf aus, dazu kommt je ein Aufruf für die 5 leeren Teilbäume: 2 · 4 + 1 = **9 Aufrufe**. Die Rückgaben entstehen von innen nach außen: Blätter liefern 1 + 0 = 1, der Knoten 4 liefert 1 + max(0, 1) = 2, die Wurzel 1 + max(2, 1) = **3**."
+    },
+    {
+     "t": "hinweis",
+     "md": "P7/P8: Erstaufruf = Tiefe 0, leere Teilbäume mitzählen, Rückgabe eines Blatts ist 1 (nicht 0)."
+    }
+   ]
+  },
+  {
+   "id": "W5-L2-03",
+   "titel": "Der Ast bricht",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P1",
+    "P7"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`anzahlBlaetter` soll die Anzahl der Blätter liefern (leerer Baum: 0). Beim Aufruf mit dem zahlenbaum stürzt die Methode ab."
+    },
+    {
+     "t": "baum",
+     "baum": "5(9(2,7),4(-,9(1,-)))"
+    },
+    {
+     "t": "code",
+     "code": "public static int anzahlBlaetter(BinTree b) {\n    if (b.isLeaf()) {\n        return 1;\n    }\n    if (b.isEmpty()) {\n        return 0;\n    }\n    return anzahlBlaetter(b.getLeft()) + anzahlBlaetter(b.getRight());\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Teil 1: Markiere die Zeile, in der der Laufzeitfehler auftritt. Teil 2: Wähle die passende Korrektur."
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 2,
+     "anzahl": 1
+    },
+    {
+     "kind": "choice",
+     "optionen": [
+      {
+       "id": "a",
+       "md": "Die Abfragen tauschen: zuerst `if (b.isEmpty())` mit `return 0;`, danach `if (b.isLeaf())` mit `return 1;`."
+      },
+      {
+       "id": "b",
+       "md": "Zeile 2 ersetzen durch `if (b != null)`."
+      },
+      {
+       "id": "c",
+       "md": "Zeile 8 ersetzen durch `return 1 + anzahlBlaetter(b.getLeft()) + anzahlBlaetter(b.getRight());`"
+      },
+      {
+       "id": "d",
+       "md": "Die Abfrage in Zeilen 5–7 löschen, weil sie nie erreicht wird."
+      }
+     ],
+     "mehrfach": false
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      2
+     ]
+    },
+    {
+     "richtig": [
+      "a"
+     ]
+    }
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Der Knoten 4 hat einen **leeren** linken Teilbaum. Der rekursive Aufruf für diesen leeren Baum führt Zeile 2 aus: `isLeaf()` auf einem leeren Baum → IllegalStateException. Die Prüfung `isEmpty()` in Zeile 5 kommt zu spät."
+    },
+    {
+     "t": "text",
+     "md": "Korrigiert liefert die Methode 3 für den zahlenbaum und 0 für den leeren Baum. `b != null` hilft nicht – ein leerer Teilbaum ist nie null."
+    },
+    {
+     "t": "hinweis",
+     "md": "P1 + P7: Der Basisfall `if (b.isEmpty())` gehört **ganz nach oben**. Fies: Für Bäume, in denen jeder innere Knoten zwei Kinder hat (z. B. `7(3,9)`), läuft die fehlerhafte Methode fehlerfrei (Ergebnis 2) – ein Test nur mit solchen Bäumen findet den Fehler nicht."
+    }
+   ]
+  },
+  {
+   "id": "W5-L2-04",
+   "titel": "Der Compiler meckert",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`summe` soll die Summe aller Werte eines BinTree vom Inhaltstyp Ganzzahl liefern. Der Compiler meldet einen Fehler."
+    },
+    {
+     "t": "code",
+     "code": "public static int summe(BinTree b) {\n    if (b.isEmpty()) {\n        return 0;\n    }\n    int w = b.getItem();\n    return w + summe(b.getLeft()) + summe(b.getRight());\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Teil 1: Markiere die fehlerhafte Zeile. Teil 2: Korrigiere sie: `int w = [[k]] b.getItem();`"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 1,
+     "anzahl": 1
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "k": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 10
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      5
+     ]
+    },
+    {
+     "k": [
+      "(Integer)"
+     ]
+    }
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Zeile 5: `getItem()` liefert `Object` – das passt nicht ohne Cast in eine int-Variable (javac: „incompatible types: Object cannot be converted to int“)."
+    },
+    {
+     "t": "text",
+     "md": "Richtig: `int w = (Integer) b.getItem();` Danach liefert `summe(zahlenbaum)` den Wert 37."
+    },
+    {
+     "t": "hinweis",
+     "md": "P4 – Typen und Casts: Bei den Klassen der Bibliothek „Niedersachsen“ (Stack, Queue, DynArray, BinTree) wird **jeder** Inhalt gecastet."
+    }
+   ]
+  },
+  {
+   "id": "W5-L2-05",
+   "titel": "Puzzle: Das Maximum im Geäst",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Methode implementieren",
+   "fallen": [
+    "P4",
+    "P7"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Setze die Methode `maximum(b: BinTree vom Inhaltstyp Ganzzahl): Ganzzahl` zusammen. Sie liefert den größten Wert, beim leeren Baum −1 (alle Werte sind ≥ 0, der Baum ist **kein** Suchbaum). Drei Teile sind Fallen und gehören nicht hinein."
+    }
+   ],
+   "interaktion": {
+    "kind": "order",
+    "teile": [
+     {
+      "id": "t1",
+      "code": "public static int maximum(BinTree b) {"
+     },
+     {
+      "id": "t2",
+      "code": "if (b.isEmpty()) {\n    return -1;\n}"
+     },
+     {
+      "id": "t3",
+      "code": "int max = (Integer) b.getItem();"
+     },
+     {
+      "id": "t4",
+      "code": "int l = maximum(b.getLeft());"
+     },
+     {
+      "id": "t5",
+      "code": "int r = maximum(b.getRight());"
+     },
+     {
+      "id": "t6",
+      "code": "if (l > max) {\n    max = l;\n}"
+     },
+     {
+      "id": "t7",
+      "code": "if (r > max) {\n    max = r;\n}"
+     },
+     {
+      "id": "t8",
+      "code": "return max;\n}"
+     },
+     {
+      "id": "d1",
+      "code": "int max = b.getItem();"
+     },
+     {
+      "id": "d2",
+      "code": "if (b.isEmpty()) {\n    return 0;\n}"
+     },
+     {
+      "id": "d3",
+      "code": "maximum(b.getLeft());"
+     }
+    ]
+   },
+   "loesung": {
+    "reihenfolgen": [
+     [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6",
+      "t7",
+      "t8"
+     ],
+     [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t7",
+      "t6",
+      "t8"
+     ],
+     [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t6",
+      "t5",
+      "t7",
+      "t8"
+     ],
+     [
+      "t1",
+      "t2",
+      "t3",
+      "t5",
+      "t4",
+      "t6",
+      "t7",
+      "t8"
+     ],
+     [
+      "t1",
+      "t2",
+      "t3",
+      "t5",
+      "t4",
+      "t7",
+      "t6",
+      "t8"
+     ],
+     [
+      "t1",
+      "t2",
+      "t3",
+      "t5",
+      "t7",
+      "t4",
+      "t6",
+      "t8"
+     ],
+     [
+      "t1",
+      "t2",
+      "t4",
+      "t3",
+      "t5",
+      "t6",
+      "t7",
+      "t8"
+     ],
+     [
+      "t1",
+      "t2",
+      "t4",
+      "t3",
+      "t5",
+      "t7",
+      "t6",
+      "t8"
+     ],
+     [
+      "t1",
+      "t2",
+      "t4",
+      "t3",
+      "t6",
+      "t5",
+      "t7",
+      "t8"
+     ],
+     [
+      "t1",
+      "t2",
+      "t4",
+      "t5",
+      "t3",
+      "t6",
+      "t7",
+      "t8"
+     ],
+     [
+      "t1",
+      "t2",
+      "t4",
+      "t5",
+      "t3",
+      "t7",
+      "t6",
+      "t8"
+     ],
+     [
+      "t1",
+      "t2",
+      "t5",
+      "t3",
+      "t4",
+      "t6",
+      "t7",
+      "t8"
+     ],
+     [
+      "t1",
+      "t2",
+      "t5",
+      "t3",
+      "t4",
+      "t7",
+      "t6",
+      "t8"
+     ],
+     [
+      "t1",
+      "t2",
+      "t5",
+      "t3",
+      "t7",
+      "t4",
+      "t6",
+      "t8"
+     ],
+     [
+      "t1",
+      "t2",
+      "t5",
+      "t4",
+      "t3",
+      "t6",
+      "t7",
+      "t8"
+     ],
+     [
+      "t1",
+      "t2",
+      "t5",
+      "t4",
+      "t3",
+      "t7",
+      "t6",
+      "t8"
+     ]
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "code",
+     "code": "public static int maximum(BinTree b) {\nif (b.isEmpty()) {\n    return -1;\n}\nint max = (Integer) b.getItem();\nint l = maximum(b.getLeft());\nint r = maximum(b.getRight());\nif (l > max) {\n    max = l;\n}\nif (r > max) {\n    max = r;\n}\nreturn max;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Der Basisfall steht zuerst – sonst würde `getItem()` auf dem leeren Baum abstürzen. Die Reihenfolge der Zeilen mit `max`, `l` und `r` ist teilweise frei (alle 16 gültigen Reihenfolgen wurden per Testlauf geprüft)."
+    },
+    {
+     "t": "text",
+     "md": "Fallen: `int max = b.getItem();` ohne Cast (P4); `return 0;` im Basisfall verletzt die Vorgabe −1; `maximum(b.getLeft());` verwirft das Ergebnis des rekursiven Aufrufs (P7)."
+    }
+   ]
+  },
+  {
+   "id": "W5-L2-06",
+   "titel": "Das geheime Struktogramm",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Struktogramm lesen",
+   "fallen": [
+    "P10"
+   ],
+   "inhalt": [
+    {
+     "t": "struktogramm",
+     "kopf": "geheim(b: BinTree vom Inhaltstyp Ganzzahl): Ganzzahl",
+     "rumpf": [
+      {
+       "wenn": "b.isEmpty()",
+       "dann": [
+        {
+         "gib": "0"
+        }
+       ],
+       "sonst": []
+      },
+      {
+       "anw": "anzahl ← geheim(b.getLeft()) + geheim(b.getRight())"
+      },
+      {
+       "wenn": "b.getLeft().isEmpty() und nicht b.getRight().isEmpty()",
+       "dann": [
+        {
+         "anw": "anzahl ← anzahl + 1"
+        }
+       ],
+       "sonst": []
+      },
+      {
+       "wenn": "nicht b.getLeft().isEmpty() und b.getRight().isEmpty()",
+       "dann": [
+        {
+         "anw": "anzahl ← anzahl + 1"
+        }
+       ],
+       "sonst": []
+      },
+      {
+       "gib": "anzahl"
+      }
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Gib die Rückgaben an: `geheim(zahlenbaum)` = [[a]], `geheim(entartet())` = [[b]], `geheim(t)` = [[c]] für den Baum t:"
+    },
+    {
+     "t": "baum",
+     "baum": "6(9(2,-),4(7(1,5),8))"
+    },
+    {
+     "t": "text",
+     "md": "Wähle danach die Beschreibung, die genau erläutert, was `geheim` berechnet."
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "gaps",
+     "felder": {
+      "a": {
+       "typ": "zahl"
+      },
+      "b": {
+       "typ": "zahl"
+      },
+      "c": {
+       "typ": "zahl"
+      }
+     }
+    },
+    {
+     "kind": "choice",
+     "optionen": [
+      {
+       "id": "a",
+       "md": "Die Anzahl der Knoten mit **genau einem** Kind – jeder Knoten wird geprüft, die Ergebnisse der Teilbäume werden addiert."
+      },
+      {
+       "id": "b",
+       "md": "Die Anzahl der Blätter."
+      },
+      {
+       "id": "c",
+       "md": "Die Anzahl der inneren Knoten."
+      },
+      {
+       "id": "d",
+       "md": "Die Anzahl der leeren Teilbäume."
+      }
+     ],
+     "mehrfach": false
+    }
+   ],
+   "loesung": [
+    {
+     "a": [
+      "2"
+     ],
+     "b": [
+      "4"
+     ],
+     "c": [
+      "1"
+     ]
+    },
+    {
+     "richtig": [
+      "a"
+     ]
+    }
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Die beiden Verzweigungen sind zusammen genau dann wahr, wenn ein Teilbaum leer ist und der andere nicht – der Knoten hat genau ein Kind."
+    },
+    {
+     "t": "text",
+     "md": "zahlenbaum `5(9(2,7),4(-,9(1,-)))`: Knoten 4 (nur rechts) und die untere 9 (nur links) → **2**. entartet(): 1, 2, 3, 4 haben je nur ein rechtes Kind → **4**. t: nur 9 → **1**."
+    },
+    {
+     "t": "hinweis",
+     "md": "P10: „erläutern“ heißt nicht nur nennen („zählt Knoten“), sondern sagen, **welche** Knoten und **warum** – mit Bezug zu den Bedingungen."
+    }
+   ]
+  },
+  {
+   "id": "W5-L2-07",
+   "titel": "Lückencode: Wer ist größer?",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Lückencode",
+   "fallen": [
+    "P4",
+    "P7"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`anzahlGroesser(b, grenze)` liefert, wie viele Werte im Baum größer als `grenze` sind (beliebiger Baum, kein Suchbaum). Beispiel: zahlenbaum, grenze 4 → 4 (5, 9, 7, 9). Ergänze die Lücken."
+    },
+    {
+     "t": "code",
+     "code": "public static int anzahlGroesser(BinTree b, int grenze) {\n    if ([[g1]]) {\n        return [[g2]];\n    }\n    int anzahl = anzahlGroesser(b.getLeft(), grenze) + [[g3]];\n    if ([[g4]] > grenze) {\n        anzahl = anzahl + 1;\n    }\n    return anzahl;\n}",
+     "nummern": true
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 14
+     },
+     "g2": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 4
+     },
+     "g3": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 30
+     },
+     "g4": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 20
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "b.isEmpty()"
+    ],
+    "g2": [
+     "0"
+    ],
+    "g3": [
+     "anzahlGroesser(b.getRight(),grenze)"
+    ],
+    "g4": [
+     "(Integer)b.getItem()",
+     "((Integer)b.getItem())",
+     "(int)b.getItem()"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "code",
+     "code": "public static int anzahlGroesser(BinTree b, int grenze) {\n    if (b.isEmpty()) {\n        return 0;\n    }\n    int anzahl = anzahlGroesser(b.getLeft(), grenze) + anzahlGroesser(b.getRight(), grenze);\n    if ((Integer) b.getItem() > grenze) {\n        anzahl = anzahl + 1;\n    }\n    return anzahl;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Bauplan: Basisfall leer → 0 · beide Teilbäume rekursiv, Ergebnisse **verwenden** (P7) · Wurzel auswerten mit Cast (P4) · verknüpfen. Mit der Musterlösung: zahlenbaum/4 → 4, beispielBST/7 → 4, leerer Baum → 0."
+    }
+   ]
+  },
+  {
+   "id": "W5-L2-08",
+   "titel": "Kurzschluss im Unterholz",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Rekursionstabelle",
+   "fallen": [
+    "P7",
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Dokumentiere den Aufruf `enthaelt(t, 6)` in der Rekursionstabelle (Aufrufe in der Reihenfolge ihres Beginns, leere Teilbäume als „leer“). Beachte: `||` wertet den rechten Aufruf nur aus, wenn der linke `false` geliefert hat."
+    },
+    {
+     "t": "baum",
+     "baum": "3(8(1,6),5(-,6))"
+    },
+    {
+     "t": "code",
+     "code": "public static boolean enthaelt(BinTree b, int x) {\n    if (b.isEmpty()) {\n        return false;\n    }\n    int wert = (Integer) b.getItem();\n    if (wert == x) {\n        return true;\n    }\n    return enthaelt(b.getLeft(), x) || enthaelt(b.getRight(), x);\n}",
+     "nummern": true
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Rekursionstiefe",
+      "Knoten (Wert oder leer)",
+      "Rückgabe"
+     ],
+     "zeilen": [
+      [
+       "0",
+       "3",
+       "[[z1c]]"
+      ],
+      [
+       "[[z2a]]",
+       "[[z2b]]",
+       "[[z2c]]"
+      ],
+      [
+       "[[z3a]]",
+       "[[z3b]]",
+       "[[z3c]]"
+      ],
+      [
+       "[[z4a]]",
+       "[[z4b]]",
+       "[[z4c]]"
+      ],
+      [
+       "[[z5a]]",
+       "[[z5b]]",
+       "[[z5c]]"
+      ],
+      [
+       "[[z6a]]",
+       "[[z6b]]",
+       "[[z6c]]"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Wie viele Aufrufe gibt es insgesamt? [[n]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "z1c": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "z2a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2b": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 6
+     },
+     "z2c": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "z3a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3b": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 6
+     },
+     "z3c": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "z4a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4b": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 6
+     },
+     "z4c": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "z5a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z5b": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 6
+     },
+     "z5c": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "z6a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z6b": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 6
+     },
+     "z6c": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "n": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "z1c": [
+     "true"
+    ],
+    "z2a": [
+     "1"
+    ],
+    "z2b": [
+     "8"
+    ],
+    "z2c": [
+     "true"
+    ],
+    "z3a": [
+     "2"
+    ],
+    "z3b": [
+     "1"
+    ],
+    "z3c": [
+     "false"
+    ],
+    "z4a": [
+     "3"
+    ],
+    "z4b": [
+     "leer",
+     "–",
+     "-",
+     "leerer Baum",
+     "leererBaum"
+    ],
+    "z4c": [
+     "false"
+    ],
+    "z5a": [
+     "3"
+    ],
+    "z5b": [
+     "leer",
+     "–",
+     "-",
+     "leerer Baum",
+     "leererBaum"
+    ],
+    "z5c": [
+     "false"
+    ],
+    "z6a": [
+     "2"
+    ],
+    "z6b": [
+     "6"
+    ],
+    "z6c": [
+     "true"
+    ],
+    "n": [
+     "6"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Die Suche geht zuerst in den linken Teilbaum (8). Dort findet sie bei 1 nichts (zwei Aufrufe mit leeren Teilbäumen), dann die 6 rechts von 8. `enthaelt(8)` liefert true – damit steht das Ergebnis von `||` in der Wurzel fest: Der rechte Teilbaum mit der 5 (und der zweiten 6) wird **nie** untersucht."
+    },
+    {
+     "t": "text",
+     "md": "6 Aufrufe, größte Rekursionstiefe 3, Rückgabe **true**."
+    },
+    {
+     "t": "hinweis",
+     "md": "P7/P8: Tiefe des Erstaufrufs 0; Kurzschlussauswertung von `||` und `&&` beachten – nicht jeder Teilbaum wird besucht."
+    }
+   ]
+  },
+  {
+   "id": "W5-L3-01",
+   "titel": "Der Akinator rät",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Der Akinator geht von der Wurzel aus je Antwort einen Schritt: `'j'` → links, sonst rechts – bis zu einem Blatt. Überzählige Antworten werden ignoriert; reichen die Antworten nicht bis zu einem Blatt, liefert `raten` `\"?\"`."
+    },
+    {
+     "t": "baum",
+     "baum": "Kann es fliegen?(Speit es Feuer?(Drache,Greif),Lebt es im Wasser?(Kraken,Troll))"
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "antworten",
+      "raten(antworten)"
+     ],
+     "zeilen": [
+      [
+       "`\"nj\"`",
+       "[[r0]]"
+      ],
+      [
+       "`\"jn\"`",
+       "[[r1]]"
+      ],
+      [
+       "`\"j\"`",
+       "[[r2]]"
+      ],
+      [
+       "`\"nnjn\"`",
+       "[[r3]]"
+      ],
+      [
+       "`\"\"`",
+       "[[r4]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "r0": {
+      "typ": "auswahl",
+      "optionen": [
+       "Drache",
+       "Greif",
+       "Kraken",
+       "Troll",
+       "?"
+      ]
+     },
+     "r1": {
+      "typ": "auswahl",
+      "optionen": [
+       "Drache",
+       "Greif",
+       "Kraken",
+       "Troll",
+       "?"
+      ]
+     },
+     "r2": {
+      "typ": "auswahl",
+      "optionen": [
+       "Drache",
+       "Greif",
+       "Kraken",
+       "Troll",
+       "?"
+      ]
+     },
+     "r3": {
+      "typ": "auswahl",
+      "optionen": [
+       "Drache",
+       "Greif",
+       "Kraken",
+       "Troll",
+       "?"
+      ]
+     },
+     "r4": {
+      "typ": "auswahl",
+      "optionen": [
+       "Drache",
+       "Greif",
+       "Kraken",
+       "Troll",
+       "?"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "r0": [
+     "Kraken"
+    ],
+    "r1": [
+     "Greif"
+    ],
+    "r2": [
+     "?"
+    ],
+    "r3": [
+     "Troll"
+    ],
+    "r4": [
+     "?"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "- `\"nj\"`: nein (kann nicht fliegen) → ja (lebt im Wasser) → **Kraken**\n- `\"jn\"`: → **Greif**\n- `\"j\"`: endet bei der Frage „Speit es Feuer?“ → **?**\n- `\"nnjn\"`: nach zwei Schritten ist das Blatt **Troll** erreicht, der Rest wird ignoriert.\n- `\"\"`: keine Antwort, die Wurzel ist eine Frage → **?**"
+    }
+   ]
+  },
+  {
+   "id": "W5-L3-02",
+   "titel": "Der Akinator lernt dazu",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`lernen(antworten, neu, frage, jaFuerNeu)`: Das über `antworten` erreichte Blatt (Monster alt) wird zum Frageknoten `frage`. Seine Kinder sind `neu` und `alt` – `neu` links, wenn `jaFuerNeu` wahr ist, sonst rechts."
+    },
+    {
+     "t": "code",
+     "code": "lernen(\"jj\", \"Phönix\", \"Ist es ein Vogel?\", true);\nlernen(\"nn\", \"Zyklop\", \"Ist es behaart?\", false);",
+     "nummern": false
+    },
+    {
+     "t": "text",
+     "md": "Verändere den Startbaum so, wie er nach beiden Aufrufen aussieht."
+    }
+   ],
+   "interaktion": {
+    "kind": "tree",
+    "modus": "bauen",
+    "start": "Kann es fliegen?(Speit es Feuer?(Drache,Greif),Lebt es im Wasser?(Kraken,Troll))",
+    "werte": [
+     "Ist es ein Vogel?",
+     "Phönix",
+     "Ist es behaart?",
+     "Zyklop",
+     "Drache",
+     "Troll"
+    ]
+   },
+   "loesung": {
+    "baum": "Kann es fliegen?(Speit es Feuer?(Ist es ein Vogel?(Phönix,Drache),Greif),Lebt es im Wasser?(Kraken,Ist es behaart?(Troll,Zyklop)))"
+   },
+   "tipps": [
+    "Bei jaFuerNeu = false steht das neue Monster auf der Nein-Seite (rechts)."
+   ],
+   "erklaerung": [
+    {
+     "t": "baum",
+     "baum": "Kann es fliegen?(Speit es Feuer?(Ist es ein Vogel?(Phönix,Drache),Greif),Lebt es im Wasser?(Kraken,Ist es behaart?(Troll,Zyklop)))"
+    },
+    {
+     "t": "text",
+     "md": "1. `\"jj\"` führt zum Blatt Drache. Es wird zur Frage „Ist es ein Vogel?“; Phönix (ja) links, Drache rechts.\n2. `\"nn\"` führt zu Troll. `jaFuerNeu` ist **false**: Troll (alt) kommt nach links, Zyklop nach rechts – ein behaartes Monster wäre also der Troll."
+    },
+    {
+     "t": "text",
+     "md": "Danach: 6 Monster, 5 Fragen; `raten(\"nnn\")` liefert Zyklop."
+    }
+   ]
+  },
+  {
+   "id": "W5-L3-03",
+   "titel": "Monster zählen",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Ein Akinator startet mit **einem** Monster (ein Blatt) und lernt danach 7-mal mit `lernen` dazu.\n\n- Anzahl der Monster (Blätter): [[m]]\n- Anzahl der Fragen (innere Knoten): [[f]]\n- Anzahl aller Knoten: [[k]]\n\nEin anderer Akinator kennt 20 Monster. Wie viele Fragen enthält sein Baum? [[f20]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "m": {
+      "typ": "zahl"
+     },
+     "f": {
+      "typ": "zahl"
+     },
+     "k": {
+      "typ": "zahl"
+     },
+     "f20": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "m": [
+     "8"
+    ],
+    "f": [
+     "7"
+    ],
+    "k": [
+     "15"
+    ],
+    "f20": [
+     "19"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Jeder `lernen`-Aufruf macht aus einem Blatt eine Frage und hängt zwei Blätter an: Fragen + 1, Monster − 1 + 2 = Monster + 1. Am Anfang gilt Monster = 1, Fragen = 0 – also immer **Monster = Fragen + 1**."
+    },
+    {
+     "t": "text",
+     "md": "Nach 7 Aufrufen: 8 Monster, 7 Fragen, 15 Knoten (per Java nachgebaut). 20 Monster → **19 Fragen**."
+    }
+   ]
+  },
+  {
+   "id": "W5-L3-04",
+   "titel": "Ebene für Ebene",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Klicke die Knoten in **Levelorder** an: Ebene für Ebene, jede Ebene von links nach rechts."
+    }
+   ],
+   "interaktion": {
+    "kind": "tree",
+    "modus": "klick",
+    "baum": "5(8(1,-),3(7(-,2),9))"
+   },
+   "loesung": {
+    "folge": [
+     "",
+     "L",
+     "R",
+     "LL",
+     "RL",
+     "RR",
+     "RLR"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Levelorder: **5 8 3 1 7 9 2**. Ebene 0: 5 · Ebene 1: 8, 3 · Ebene 2: 1, 7, 9 · Ebene 3: 2."
+    },
+    {
+     "t": "hinweis",
+     "md": "Nicht mit der Preorder verwechseln (5 8 1 3 7 2 9) – die geht erst ganz in die Tiefe."
+    }
+   ]
+  },
+  {
+   "id": "W5-L3-05",
+   "titel": "Die Wanderschlange",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`levelorder` benutzt eine Schlange vom Inhaltstyp BinTree. Notiere nach jedem Durchlauf den entnommenen Knoten und den Inhalt der Schlange (vorne zuerst, jeden Teilbaum durch seinen Wurzelwert, mit Komma getrennt; leere Schlange: –)."
+    },
+    {
+     "t": "baum",
+     "baum": "4(7(2,-),6(1,3(8,-)))"
+    },
+    {
+     "t": "code",
+     "code": "public static String levelorder(BinTree b) {\n    String text = \"\";\n    Queue q = new Queue();\n    if (!b.isEmpty()) {\n        q.enqueue(b);\n    }\n    while (!q.isEmpty()) {\n        BinTree k = (BinTree) q.dequeue();\n        text = text + k.getItem() + \" \";\n        if (!k.getLeft().isEmpty()) {\n            q.enqueue(k.getLeft());\n        }\n        if (!k.getRight().isEmpty()) {\n            q.enqueue(k.getRight());\n        }\n    }\n    return text;\n}",
+     "nummern": true
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Durchlauf",
+      "entnommen",
+      "Schlange (vorne → hinten)"
+     ],
+     "zeilen": [
+      [
+       "Start",
+       "–",
+       "4"
+      ],
+      [
+       "1",
+       "[[z2b]]",
+       "[[z2c]]"
+      ],
+      [
+       "2",
+       "[[z3b]]",
+       "[[z3c]]"
+      ],
+      [
+       "3",
+       "[[z4b]]",
+       "[[z4c]]"
+      ],
+      [
+       "4",
+       "[[z5b]]",
+       "[[z5c]]"
+      ],
+      [
+       "5",
+       "[[z6b]]",
+       "[[z6c]]"
+      ],
+      [
+       "6",
+       "[[z7b]]",
+       "[[z7c]]"
+      ],
+      [
+       "7",
+       "[[z8b]]",
+       "[[z8c]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "z2b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2c": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 12
+     },
+     "z3b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3c": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 12
+     },
+     "z4b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4c": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 12
+     },
+     "z5b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z5c": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 12
+     },
+     "z6b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z6c": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 12
+     },
+     "z7b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z7c": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 12
+     },
+     "z8b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z8c": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 12
+     }
+    }
+   },
+   "loesung": {
+    "z2b": [
+     "4"
+    ],
+    "z2c": [
+     "7, 6",
+     "7,6",
+     "7 6"
+    ],
+    "z3b": [
+     "7"
+    ],
+    "z3c": [
+     "6, 2",
+     "6,2",
+     "6 2"
+    ],
+    "z4b": [
+     "6"
+    ],
+    "z4c": [
+     "2, 1, 3",
+     "2,1,3",
+     "2 1 3"
+    ],
+    "z5b": [
+     "2"
+    ],
+    "z5c": [
+     "1, 3",
+     "1,3",
+     "1 3"
+    ],
+    "z6b": [
+     "1"
+    ],
+    "z6c": [
+     "3",
+     "3",
+     "3"
+    ],
+    "z7b": [
+     "3"
+    ],
+    "z7c": [
+     "8",
+     "8",
+     "8"
+    ],
+    "z8b": [
+     "8"
+    ],
+    "z8c": [
+     "leer",
+     "–",
+     "-",
+     "leerer Baum",
+     "leererBaum"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Ausgabe: `\"4 7 6 2 1 3 8 \"`. In der Schlange stehen Teilbäume – wer entnommen wird, stellt seine (nicht leeren) Kinder hinten an. Höchstens 3 Teilbäume stehen gleichzeitig in der Schlange."
+    },
+    {
+     "t": "hinweis",
+     "md": "P8: Jeder Durchlauf bekommt eine Zeile, auch der letzte mit leerer Schlange."
+    }
+   ]
+  },
+  {
+   "id": "W5-L3-06",
+   "titel": "Die Schlange verschluckt sich",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P1"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Diese Fassung von `levelorder` stürzt schon beim zahlenbaum ab."
+    },
+    {
+     "t": "code",
+     "code": "public static String levelorder(BinTree b) {\n    String text = \"\";\n    Queue q = new Queue();\n    q.enqueue(b);\n    while (!q.isEmpty()) {\n        BinTree k = (BinTree) q.dequeue();\n        text = text + k.getItem() + \" \";\n        q.enqueue(k.getLeft());\n        q.enqueue(k.getRight());\n    }\n    return text;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Teil 1: Markiere die Zeile, in der der Laufzeitfehler auftritt. Teil 2: Welche Korrekturen machen die Methode richtig – auch für den leeren Baum?"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 1,
+     "anzahl": 1
+    },
+    {
+     "kind": "choice",
+     "optionen": [
+      {
+       "id": "a",
+       "md": "Die Zeilen 7 bis 9 in `if (!k.isEmpty()) { … }` einschließen."
+      },
+      {
+       "id": "b",
+       "md": "Nur die Zeilen 8 und 9 jeweils mit `if (!k.getLeft().isEmpty())` bzw. `if (!k.getRight().isEmpty())` absichern."
+      },
+      {
+       "id": "c",
+       "md": "Die Schleifenbedingung zu `while (!q.isEmpty() && !((BinTree) q.head()).isEmpty())` ändern."
+      }
+     ],
+     "mehrfach": true
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      7
+     ]
+    },
+    {
+     "richtig": [
+      "a"
+     ]
+    }
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Zeile 7: Ein Blatt reiht seine beiden **leeren** Teilbäume ein. Werden sie entnommen, ruft Zeile 7 `getItem()` auf einem leeren Baum auf → IllegalStateException (P1)."
+    },
+    {
+     "t": "text",
+     "md": "- a) richtig: liefert `\"5 9 4 2 7 9 1 \"`, für den leeren Baum `\"\"`.\n- b) reicht **nicht**: Für den leeren Gesamtbaum wird Zeile 4 trotzdem ausgeführt und Zeile 7 stürzt ab (Testlauf: Laufzeitfehler).\n- c) falsch: Die Schleife bricht beim ersten leeren Teilbaum ab – Ausgabe nur `\"5 9 4 2 7 \"`."
+    },
+    {
+     "t": "hinweis",
+     "md": "Musterlösung (siehe Level-Code): nur **nicht leere** Bäume einreihen – auch die Wurzel."
+    }
+   ]
+  },
+  {
+   "id": "W5-L3-07",
+   "titel": "Stapel statt Schlange",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "ADT-Befehlsfolgen",
+   "fallen": [
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "In `raetsel` wurde die Schlange der Levelorder durch einen **Stapel** ersetzt. Klicke die Knoten in der Reihenfolge an, in der `raetsel(t)` sie an `text` anhängt."
+    },
+    {
+     "t": "code",
+     "code": "public static String raetsel(BinTree b) {\n    String text = \"\";\n    Stack s = new Stack();\n    if (!b.isEmpty()) {\n        s.push(b);\n    }\n    while (!s.isEmpty()) {\n        BinTree k = (BinTree) s.pop();\n        text = text + k.getItem() + \" \";\n        if (!k.getLeft().isEmpty()) {\n            s.push(k.getLeft());\n        }\n        if (!k.getRight().isEmpty()) {\n            s.push(k.getRight());\n        }\n    }\n    return text;\n}",
+     "nummern": true
+    }
+   ],
+   "interaktion": {
+    "kind": "tree",
+    "modus": "klick",
+    "baum": "8(3(1,6),10(-,14))"
+   },
+   "loesung": {
+    "folge": [
+     "",
+     "R",
+     "RR",
+     "L",
+     "LR",
+     "LL"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Ausgabe: `\"8 10 14 3 6 1 \"`. Der Stapel gibt den zuletzt eingelegten Teilbaum zuerst heraus: Nach der 8 liegen 3 (unten) und 10 (oben) im Stapel – also geht es mit dem **rechten** Teilbaum weiter, und zwar gleich in die Tiefe."
+    },
+    {
+     "t": "text",
+     "md": "Das ist eine Tiefensuche: Preorder, aber rechts vor links. Würde man erst rechts und dann links einlegen, entstünde genau die Preorder `8 3 1 6 10 14`."
+    },
+    {
+     "t": "hinweis",
+     "md": "P8: Beim Protokollieren genau der Datenstruktur folgen – ein Stapel arbeitet nach LIFO; nicht aus Gewohnheit die Levelorder hinschreiben."
+    }
+   ]
+  },
+  {
+   "id": "W5-L3-08",
+   "titel": "Der klügste Akinator",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Effizienz",
+   "fallen": [
+    "P10"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Ein Akinator kennt **16** Monster. Jedes Monster muss erraten werden können.\n\n- Wie viele Fragen braucht er für das am schwersten zu erratende Monster **mindestens** (bestmöglicher Baum)? [[min]]\n- Wie viele Fragen sind es dort **höchstens** (ungünstigster Baum)? [[max]]\n- Mindestanzahl Fragen bis zum schwersten Monster bei **1000** Monstern: [[m1000]]"
+    },
+    {
+     "t": "text",
+     "md": "Wähle die Begründung für den ersten Wert."
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "gaps",
+     "felder": {
+      "min": {
+       "typ": "zahl"
+      },
+      "max": {
+       "typ": "zahl"
+      },
+      "m1000": {
+       "typ": "zahl"
+      }
+     }
+    },
+    {
+     "kind": "choice",
+     "optionen": [
+      {
+       "id": "a",
+       "md": "Jede Frage kann die Kandidaten höchstens halbieren; im ausgeglichenen Baum liegen alle 16 = 2⁴ Monster auf Ebene 4, also reichen 4 Fragen."
+      },
+      {
+       "id": "b",
+       "md": "Weil es 16 Monster gibt, braucht man 16 Fragen."
+      },
+      {
+       "id": "c",
+       "md": "Der Baum hat 15 Fragen, also braucht jedes Monster 15 Fragen."
+      },
+      {
+       "id": "d",
+       "md": "Ein Akinator stellt immer genau so viele Fragen, wie der Baum hoch ist."
+      }
+     ],
+     "mehrfach": false
+    }
+   ],
+   "loesung": [
+    {
+     "min": [
+      "4"
+     ],
+     "max": [
+      "15"
+     ],
+     "m1000": [
+      "10"
+     ]
+    },
+    {
+     "richtig": [
+      "a"
+     ]
+    }
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Ausgeglichen: Mit k Fragen erreicht man höchstens 2^k Blätter. 2⁴ = 16 → **4 Fragen**. Bei einer Kette schließt jede Frage nur ein Monster aus: 16 − 1 = **15 Fragen**. 1000 Monster: 2⁹ = 512 < 1000 ≤ 1024 = 2¹⁰ → **10 Fragen**."
+    },
+    {
+     "t": "hinweis",
+     "md": "P10 „begründen“: Der Verweis auf das Halbieren der Kandidaten (Verdopplung → eine Frage mehr) ist die Begründung – die bloße Zahl reicht nicht."
+    }
+   ]
+  },
+  {
+   "id": "W5-L4-01",
+   "titel": "Der Weg zur Truhe 70",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Sortieren und Suchen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "In diesem binären Suchbaum liegen die Truhennummern des Waldlagers. Klicke alle Knoten an, die `suche(b, 70)` **untersucht** (mit 70 vergleicht) – in der richtigen Reihenfolge."
+    }
+   ],
+   "interaktion": {
+    "kind": "tree",
+    "modus": "klick",
+    "baum": "41(20(11,29(-,32)),65(50,91(72,99)))"
+   },
+   "loesung": {
+    "folge": [
+     "",
+     "R",
+     "RR",
+     "RRL"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Suchweg: 41, 65, 91, 72 → leer. 70 > 41 → rechts; 70 > 65 → rechts; 70 < 91 → links; 70 < 72 → links: leerer Teilbaum, `suche` liefert **false**. Es werden 4 Knoten untersucht – der Rest des Baums wird nie betreten."
+    }
+   ]
+  },
+  {
+   "id": "W5-L4-02",
+   "titel": "Neue Truhen einsortieren",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Füge nacheinander **55** und **30** in den Suchbaum ein (Duplikate werden ignoriert, kleinere Werte links, größere rechts)."
+    }
+   ],
+   "interaktion": {
+    "kind": "tree",
+    "modus": "bauen",
+    "start": "41(20(11,29(-,32)),65(50,91(72,99)))",
+    "werte": [
+     "55",
+     "30"
+    ]
+   },
+   "loesung": {
+    "baum": "41(20(11,29(-,32(30,-))),65(50(-,55),91(72,99)))"
+   },
+   "erklaerung": [
+    {
+     "t": "baum",
+     "baum": "41(20(11,29(-,32(30,-))),65(50(-,55),91(72,99)))"
+    },
+    {
+     "t": "text",
+     "md": "55: 41 → 65 → 50 → rechts von 50 ist leer → neues Blatt. 30: 41 → 20 → 29 → 32 → links von 32 ist leer → neues Blatt. Eingefügt wird immer an der Stelle, an der die Suche im Leeren endet."
+    }
+   ]
+  },
+  {
+   "id": "W5-L4-03",
+   "titel": "Ein Suchbaum wächst",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Werte werden in dieser Reihenfolge in einen **leeren** binären Suchbaum eingefügt:\n\n`15, 9, 23, 4, 12, 30, 19, 11, 27`\n\nBaue den entstehenden Baum."
+    }
+   ],
+   "interaktion": {
+    "kind": "tree",
+    "modus": "bauen",
+    "start": "-",
+    "werte": [
+     "15",
+     "9",
+     "23",
+     "4",
+     "12",
+     "30",
+     "19",
+     "11",
+     "27"
+    ]
+   },
+   "loesung": {
+    "baum": "15(9(4,12(11,-)),23(19,30(27,-)))"
+   },
+   "erklaerung": [
+    {
+     "t": "baum",
+     "baum": "15(9(4,12(11,-)),23(19,30(27,-)))"
+    },
+    {
+     "t": "text",
+     "md": "Der erste Wert (15) wird Wurzel. Jeder weitere Wert sucht seinen Platz von der Wurzel aus. Höhe 4, Inorder zur Kontrolle: 4 9 11 12 15 19 23 27 30 (aufsteigend sortiert)."
+    }
+   ]
+  },
+  {
+   "id": "W5-L4-04",
+   "titel": "Suchen mit Zählwerk",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Sortieren und Suchen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`vergleiche(b, x)` zählt die untersuchten (nicht leeren) Knoten bei der Suche nach x. Ergänze für den Suchbaum die Tabelle."
+    },
+    {
+     "t": "baum",
+     "baum": "41(20(11,29(-,32)),65(50,91(72,99)))"
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "x",
+      "vergleiche(b, x)",
+      "suche(b, x)"
+     ],
+     "zeilen": [
+      [
+       "32",
+       "[[v32]]",
+       "[[s32]]"
+      ],
+      [
+       "50",
+       "[[v50]]",
+       "[[s50]]"
+      ],
+      [
+       "95",
+       "[[v95]]",
+       "[[s95]]"
+      ],
+      [
+       "5",
+       "[[v5]]",
+       "[[s5]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "v32": {
+      "typ": "zahl"
+     },
+     "v50": {
+      "typ": "zahl"
+     },
+     "v95": {
+      "typ": "zahl"
+     },
+     "v5": {
+      "typ": "zahl"
+     },
+     "s32": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "s50": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "s95": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "s5": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "v32": [
+     "4"
+    ],
+    "v50": [
+     "3"
+    ],
+    "v95": [
+     "4"
+    ],
+    "v5": [
+     "3"
+    ],
+    "s32": [
+     "true"
+    ],
+    "s50": [
+     "true"
+    ],
+    "s95": [
+     "false"
+    ],
+    "s5": [
+     "false"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "- x = 32: 41, 20, 29, 32 → 4 Knoten\n- x = 50: 41, 65, 50 → 3 Knoten\n- x = 95: 41, 65, 91, 99 → leer → 4 Knoten\n- x = 5: 41, 20, 11 → leer → 3 Knoten"
+    },
+    {
+     "t": "text",
+     "md": "Höchstens so viele Knoten wie der Baum hoch ist (4) – egal ob x vorkommt oder nicht."
+    }
+   ]
+  },
+  {
+   "id": "W5-L4-05",
+   "titel": "Löschen: Blatt und ein Kind",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Lösche jeweils aus dem **ursprünglichen** Baum. Teil 1: Lösche **50**. Teil 2: Lösche **29**."
+    },
+    {
+     "t": "baum",
+     "baum": "41(20(11,29(-,32)),65(50,91(72,99)))"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "tree",
+     "modus": "bauen",
+     "start": "41(20(11,29(-,32)),65(50,91(72,99)))"
+    },
+    {
+     "kind": "tree",
+     "modus": "bauen",
+     "start": "41(20(11,29(-,32)),65(50,91(72,99)))"
+    }
+   ],
+   "loesung": [
+    {
+     "baum": "41(20(11,29(-,32)),65(-,91(72,99)))"
+    },
+    {
+     "baum": "41(20(11,32),65(50,91(72,99)))"
+    }
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Teil 1: 50 ist ein **Blatt** (Fall 1) – es wird einfach entfernt."
+    },
+    {
+     "t": "baum",
+     "baum": "41(20(11,29(-,32)),65(-,91(72,99)))"
+    },
+    {
+     "t": "text",
+     "md": "Teil 2: 29 hat **genau ein Kind** (32, Fall 2) – das Kind rückt mit seinem ganzen Teilbaum an die Stelle von 29."
+    },
+    {
+     "t": "baum",
+     "baum": "41(20(11,32),65(50,91(72,99)))"
+    },
+    {
+     "t": "text",
+     "md": "Probe: Die Inorder ist jeweils die alte Inorder ohne den gelöschten Wert."
+    }
+   ]
+  },
+  {
+   "id": "W5-L4-06",
+   "titel": "Löschen mit Nachfolger",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Lösche **65** (zwei Kinder) mit dem **Nachfolger** – dem kleinsten Wert im rechten Teilbaum. Der Nachfolger von 65 ist [[nf]]. Baue den Baum danach."
+    },
+    {
+     "t": "baum",
+     "baum": "41(20(11,29(-,32)),65(50,91(72,99)))"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "gaps",
+     "felder": {
+      "nf": {
+       "typ": "zahl"
+      }
+     }
+    },
+    {
+     "kind": "tree",
+     "modus": "bauen",
+     "start": "41(20(11,29(-,32)),65(50,91(72,99)))"
+    }
+   ],
+   "loesung": [
+    {
+     "nf": [
+      "72"
+     ]
+    },
+    {
+     "baum": "41(20(11,29(-,32)),72(50,91(-,99)))"
+    }
+   ],
+   "tipps": [
+    "Der Nachfolger hat nie ein linkes Kind – deshalb ist sein Entfernen immer Fall 1 oder 2."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Nachfolger: einmal rechts (91), dann immer links → **72**. 72 ersetzt 65 und wird an seiner alten Stelle entfernt (dort ist es ein Blatt, Fall 1)."
+    },
+    {
+     "t": "baum",
+     "baum": "41(20(11,29(-,32)),72(50,91(-,99)))"
+    },
+    {
+     "t": "text",
+     "md": "Inorder-Probe: 11 20 29 32 41 50 72 91 99 – die alte Inorder ohne 65."
+    }
+   ]
+  },
+  {
+   "id": "W5-L4-07",
+   "titel": "Die Wurzel fällt",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Lösche die Wurzel **41** – diesmal mit dem **Vorgänger** (größter Wert im linken Teilbaum). Der Vorgänger ist [[vg]]."
+    },
+    {
+     "t": "baum",
+     "baum": "41(20(11,29(-,32)),65(50,91(72,99)))"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "gaps",
+     "felder": {
+      "vg": {
+       "typ": "zahl"
+      }
+     }
+    },
+    {
+     "kind": "tree",
+     "modus": "bauen",
+     "start": "41(20(11,29(-,32)),65(50,91(72,99)))"
+    }
+   ],
+   "loesung": [
+    {
+     "vg": [
+      "32"
+     ]
+    },
+    {
+     "baum": "32(20(11,29),65(50,91(72,99)))"
+    }
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Vorgänger: einmal links (20), dann immer rechts → 29 → **32**. 32 wird neue Wurzel; an seiner alten Stelle war 32 ein Blatt (Fall 1)."
+    },
+    {
+     "t": "baum",
+     "baum": "32(20(11,29),65(50,91(72,99)))"
+    },
+    {
+     "t": "text",
+     "md": "Inorder-Probe: 11 20 29 32 50 65 72 91 99. Mit dem Nachfolger (50) entstünde ein anderer, ebenfalls richtiger Suchbaum – im Abitur immer angeben, welche Variante du wählst."
+    }
+   ]
+  },
+  {
+   "id": "W5-L4-08",
+   "titel": "Das falsche Maximum",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P7"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`maximum` soll den größten Wert eines Suchbaums liefern (leerer Baum: −1). Für das Waldlager stimmt das Ergebnis, aber für den Baum t nicht."
+    },
+    {
+     "t": "baum",
+     "baum": "20(10,40(30,-))"
+    },
+    {
+     "t": "code",
+     "code": "public static int maximum(BinTree b) {\n    if (b.isEmpty()) {\n        return -1;\n    }\n    if (b.isLeaf()) {\n        return (Integer) b.getItem();\n    }\n    return maximum(b.getRight());\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "`maximum(t)` liefert [[r]]. Markiere die fehlerhafte Zeile und korrigiere sie: `if ([[k]]) {`"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "gaps",
+     "felder": {
+      "r": {
+       "typ": "zahl"
+      },
+      "k": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 26
+      }
+     }
+    },
+    {
+     "kind": "lines",
+     "block": 2,
+     "anzahl": 1
+    }
+   ],
+   "loesung": [
+    {
+     "r": [
+      "-1"
+     ],
+     "k": [
+      "b.getRight().isEmpty()"
+     ]
+    },
+    {
+     "zeilen": [
+      5
+     ]
+    }
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Das Maximum steht ganz rechts – aber es muss **kein Blatt** sein. Bei t hat 40 nur ein linkes Kind: 40 ist kein Blatt, die Methode geht nach rechts in den leeren Baum und liefert −1."
+    },
+    {
+     "t": "text",
+     "md": "Richtig ist der Basisfall „rechter Teilbaum leer“: `if (b.getRight().isEmpty())`. Dann liefert die Methode 40 für t, 99 für das Waldlager und −1 für den leeren Baum."
+    },
+    {
+     "t": "hinweis",
+     "md": "P7 – falscher Basisfall: Tests nur mit Bäumen, in denen das Maximum zufällig ein Blatt ist, finden den Fehler nicht."
+    }
+   ]
+  },
+  {
+   "id": "W5-L5-01",
+   "titel": "Wäscheleine erkennen",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Werte 1 bis 7 werden in einen leeren Suchbaum eingefügt. Bei welchen Reihenfolgen entsteht ein **entarteter** Baum (Höhe 7)?"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "optionen": [
+     {
+      "id": "a",
+      "md": "`1, 2, 3, 4, 5, 6, 7`"
+     },
+     {
+      "id": "b",
+      "md": "`4, 2, 6, 1, 3, 5, 7`"
+     },
+     {
+      "id": "c",
+      "md": "`7, 1, 6, 2, 5, 3, 4`"
+     },
+     {
+      "id": "d",
+      "md": "`4, 1, 2, 3, 7, 6, 5`"
+     },
+     {
+      "id": "e",
+      "md": "`7, 6, 5, 4, 3, 2, 1`"
+     }
+    ],
+    "mehrfach": true
+   },
+   "loesung": {
+    "richtig": [
+     "a",
+     "c",
+     "e"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "- `1, 2, 3, 4, 5, 6, 7` → Höhe 7\n- `4, 2, 6, 1, 3, 5, 7` → Höhe 3\n- `7, 1, 6, 2, 5, 3, 4` → Höhe 7\n- `4, 1, 2, 3, 7, 6, 5` → Höhe 4\n- `7, 6, 5, 4, 3, 2, 1` → Höhe 7"
+    },
+    {
+     "t": "text",
+     "md": "Entartet heißt: jeder innere Knoten hat nur ein Kind. Das passiert nicht nur bei sortierten Folgen – auch beim Zickzack 7, 1, 6, 2, … ist jeder neue Wert größer bzw. kleiner als alle restlichen, sodass immer nur ein Kind entsteht."
+    }
+   ]
+  },
+  {
+   "id": "W5-L5-02",
+   "titel": "Krumm oder buschig?",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Effizienz",
+   "fallen": [
+    "P10"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Ergänze die Höhe des Suchbaums, wenn die n Werte **sortiert** eingefügt werden, und die **kleinstmögliche** Höhe (ausgeglichener Baum)."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "n",
+      "31",
+      "100",
+      "2000",
+      "4096",
+      "500000"
+     ],
+     "zeilen": [
+      [
+       "Höhe sortiert eingefügt",
+       "[[s0]]",
+       "[[s1]]",
+       "[[s2]]",
+       "[[s3]]",
+       "[[s4]]"
+      ],
+      [
+       "kleinstmögliche Höhe",
+       "[[m0]]",
+       "[[m1]]",
+       "[[m2]]",
+       "[[m3]]",
+       "[[m4]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "s0": {
+      "typ": "zahl",
+      "breite": 8
+     },
+     "s1": {
+      "typ": "zahl",
+      "breite": 8
+     },
+     "s2": {
+      "typ": "zahl",
+      "breite": 8
+     },
+     "s3": {
+      "typ": "zahl",
+      "breite": 8
+     },
+     "s4": {
+      "typ": "zahl",
+      "breite": 8
+     },
+     "m0": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "m1": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "m2": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "m3": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "m4": {
+      "typ": "zahl",
+      "breite": 4
+     }
+    }
+   },
+   "loesung": {
+    "s0": [
+     "31"
+    ],
+    "s1": [
+     "100"
+    ],
+    "s2": [
+     "2000"
+    ],
+    "s3": [
+     "4096"
+    ],
+    "s4": [
+     "500000"
+    ],
+    "m0": [
+     "5"
+    ],
+    "m1": [
+     "7"
+    ],
+    "m2": [
+     "11"
+    ],
+    "m3": [
+     "13"
+    ],
+    "m4": [
+     "19"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Sortiert eingefügt entsteht eine Kette: Höhe = n. Kleinstmögliche Höhe = kleinstes k mit 2^k − 1 ≥ n: n = 31 → 5, n = 100 → 7, n = 2000 → 11, n = 4096 → 13, n = 500000 → 19 (bis n = 4096 mit `ausgeglichenAus` in Java nachgebaut)."
+    },
+    {
+     "t": "text",
+     "md": "Bei 500 000 Werten untersucht die Suche im ausgeglichenen Baum höchstens 19 Knoten, in der Kette bis zu 500 000."
+    },
+    {
+     "t": "hinweis",
+     "md": "4096 = 2¹² braucht schon 13 Ebenen: 12 volle Ebenen fassen nur 2¹² − 1 = 4095 Werte."
+    },
+    {
+     "t": "hinweis",
+     "md": "P10: „abschätzen“ heißt Zahl **und** Begründung – k volle Ebenen fassen 2^k − 1 Knoten."
+    }
+   ]
+  },
+  {
+   "id": "W5-L5-03",
+   "titel": "Doppelt so viele Items",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Effizienz",
+   "fallen": [
+    "P10"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Item-Datenbank ist ein **vollständiger** Suchbaum mit 1023 Items (10 volle Ebenen). Sie wächst auf 2047 Items und bleibt vollständig. Wie viele Knoten untersucht eine Suche jetzt **höchstens**?"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "optionen": [
+     {
+      "id": "a",
+      "md": "11"
+     },
+     {
+      "id": "b",
+      "md": "20"
+     },
+     {
+      "id": "c",
+      "md": "1024"
+     },
+     {
+      "id": "d",
+      "md": "2047"
+     }
+    ],
+    "mehrfach": false
+   },
+   "loesung": {
+    "richtig": [
+     "a"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Eine Ebene mehr bietet Platz für 2¹⁰ = 1024 neue Knoten: 2¹¹ − 1 = 2047. Die Suche geht pro Ebene einen Knoten tiefer – **ein Vergleich mehr**, also höchstens 11."
+    },
+    {
+     "t": "hinweis",
+     "md": "Merke: Verdopplung der Anzahl → im ausgeglichenen Baum **ein** Vergleich mehr, im entarteten Baum doppelt so viele."
+    },
+    {
+     "t": "hinweis",
+     "md": "P10: Im Abitur zählt die Begründung über die Ebenen, nicht die bloße Zahl."
+    }
+   ]
+  },
+  {
+   "id": "W5-L5-04",
+   "titel": "Mitte nach oben",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`ausgeglichenAus(r, 0, r.length − 1)` baut aus der sortierten Reihung einen möglichst niedrigen Suchbaum: Das Element in der Mitte `mitte = (lo + hi) / 2` wird Wurzel, aus den Hälften entstehen rekursiv die Teilbäume. Baue den Baum für"
+    },
+    {
+     "t": "reihung",
+     "werte": [
+      3,
+      8,
+      12,
+      17,
+      21,
+      26,
+      30,
+      34,
+      39,
+      45
+     ],
+     "indizes": true
+    },
+    {
+     "t": "code",
+     "code": "public static BinTree ausgeglichenAus(int[] r, int lo, int hi) {\n    if (lo > hi) {\n        return new BinTree();\n    }\n    int mitte = (lo + hi) / 2;\n    BinTree b = new BinTree(r[mitte]);\n    b.setLeft(ausgeglichenAus(r, lo, mitte - 1));\n    b.setRight(ausgeglichenAus(r, mitte + 1, hi));\n    return b;\n}",
+     "nummern": true
+    }
+   ],
+   "interaktion": {
+    "kind": "tree",
+    "modus": "bauen",
+    "start": "-",
+    "werte": [
+     "3",
+     "8",
+     "12",
+     "17",
+     "21",
+     "26",
+     "30",
+     "34",
+     "39",
+     "45"
+    ]
+   },
+   "loesung": {
+    "baum": "21(8(3,12(-,17)),34(26(-,30),39(-,45)))"
+   },
+   "erklaerung": [
+    {
+     "t": "baum",
+     "baum": "21(8(3,12(-,17)),34(26(-,30),39(-,45)))"
+    },
+    {
+     "t": "text",
+     "md": "lo = 0, hi = 9 → mitte = 4 → Wurzel **21** (ganzzahlige Division rundet ab: bei gerader Länge wird das linke der beiden mittleren Elemente Wurzel). Links entsteht aus 3, 8, 12, 17 der Teilbaum mit Wurzel 8, rechts aus 26 … 45 der mit Wurzel 34. Höhe 4 = kleinstmöglich für 10 Werte."
+    }
+   ]
+  },
+  {
+   "id": "W5-L5-05",
+   "titel": "Rekursionstabelle: Mitte nach oben",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Rekursionstabelle",
+   "fallen": [
+    "P7",
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Dokumentiere den Aufruf `ausgeglichenAus(r, 0, 4)` mit"
+    },
+    {
+     "t": "reihung",
+     "werte": [
+      5,
+      9,
+      14,
+      22,
+      31
+     ],
+     "indizes": true
+    },
+    {
+     "t": "code",
+     "code": "public static BinTree ausgeglichenAus(int[] r, int lo, int hi) {\n    if (lo > hi) {\n        return new BinTree();\n    }\n    int mitte = (lo + hi) / 2;\n    BinTree b = new BinTree(r[mitte]);\n    b.setLeft(ausgeglichenAus(r, lo, mitte - 1));\n    b.setRight(ausgeglichenAus(r, mitte + 1, hi));\n    return b;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Trage die Aufrufe in der Reihenfolge ihres Beginns ein. Bei leerem Bereich (lo > hi) bleibt mitte „–“ und der Aufruf liefert „leer“."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Rekursionstiefe",
+      "lo",
+      "hi",
+      "mitte",
+      "liefert (Wurzelwert oder leer)"
+     ],
+     "zeilen": [
+      [
+       "0",
+       "0",
+       "4",
+       "2",
+       "14"
+      ],
+      [
+       "[[z2a]]",
+       "[[z2b]]",
+       "[[z2c]]",
+       "[[z2d]]",
+       "[[z2e]]"
+      ],
+      [
+       "[[z3a]]",
+       "[[z3b]]",
+       "[[z3c]]",
+       "–",
+       "[[z3e]]"
+      ],
+      [
+       "[[z4a]]",
+       "[[z4b]]",
+       "[[z4c]]",
+       "[[z4d]]",
+       "[[z4e]]"
+      ],
+      [
+       "[[z5a]]",
+       "[[z5b]]",
+       "[[z5c]]",
+       "–",
+       "[[z5e]]"
+      ],
+      [
+       "[[z6a]]",
+       "[[z6b]]",
+       "[[z6c]]",
+       "–",
+       "[[z6e]]"
+      ],
+      [
+       "[[z7a]]",
+       "[[z7b]]",
+       "[[z7c]]",
+       "[[z7d]]",
+       "[[z7e]]"
+      ],
+      [
+       "[[z8a]]",
+       "[[z8b]]",
+       "[[z8c]]",
+       "–",
+       "[[z8e]]"
+      ],
+      [
+       "[[z9a]]",
+       "[[z9b]]",
+       "[[z9c]]",
+       "[[z9d]]",
+       "[[z9e]]"
+      ],
+      [
+       "[[z10a]]",
+       "[[z10b]]",
+       "[[z10c]]",
+       "–",
+       "[[z10e]]"
+      ],
+      [
+       "[[z11a]]",
+       "[[z11b]]",
+       "[[z11c]]",
+       "–",
+       "[[z11e]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "z2a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2d": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2e": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 6
+     },
+     "z3a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3e": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 6
+     },
+     "z4a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4d": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4e": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 6
+     },
+     "z5a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z5b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z5c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z5e": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 6
+     },
+     "z6a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z6b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z6c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z6e": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 6
+     },
+     "z7a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z7b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z7c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z7d": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z7e": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 6
+     },
+     "z8a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z8b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z8c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z8e": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 6
+     },
+     "z9a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z9b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z9c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z9d": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z9e": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 6
+     },
+     "z10a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z10b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z10c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z10e": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 6
+     },
+     "z11a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z11b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z11c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z11e": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 6
+     }
+    }
+   },
+   "loesung": {
+    "z2a": [
+     "1"
+    ],
+    "z2b": [
+     "0"
+    ],
+    "z2c": [
+     "1"
+    ],
+    "z2d": [
+     "0"
+    ],
+    "z2e": [
+     "5"
+    ],
+    "z3a": [
+     "2"
+    ],
+    "z3b": [
+     "0"
+    ],
+    "z3c": [
+     "-1"
+    ],
+    "z3e": [
+     "leer",
+     "–",
+     "-",
+     "leerer Baum",
+     "leererBaum"
+    ],
+    "z4a": [
+     "2"
+    ],
+    "z4b": [
+     "1"
+    ],
+    "z4c": [
+     "1"
+    ],
+    "z4d": [
+     "1"
+    ],
+    "z4e": [
+     "9"
+    ],
+    "z5a": [
+     "3"
+    ],
+    "z5b": [
+     "1"
+    ],
+    "z5c": [
+     "0"
+    ],
+    "z5e": [
+     "leer",
+     "–",
+     "-",
+     "leerer Baum",
+     "leererBaum"
+    ],
+    "z6a": [
+     "3"
+    ],
+    "z6b": [
+     "2"
+    ],
+    "z6c": [
+     "1"
+    ],
+    "z6e": [
+     "leer",
+     "–",
+     "-",
+     "leerer Baum",
+     "leererBaum"
+    ],
+    "z7a": [
+     "1"
+    ],
+    "z7b": [
+     "3"
+    ],
+    "z7c": [
+     "4"
+    ],
+    "z7d": [
+     "3"
+    ],
+    "z7e": [
+     "22"
+    ],
+    "z8a": [
+     "2"
+    ],
+    "z8b": [
+     "3"
+    ],
+    "z8c": [
+     "2"
+    ],
+    "z8e": [
+     "leer",
+     "–",
+     "-",
+     "leerer Baum",
+     "leererBaum"
+    ],
+    "z9a": [
+     "2"
+    ],
+    "z9b": [
+     "4"
+    ],
+    "z9c": [
+     "4"
+    ],
+    "z9d": [
+     "4"
+    ],
+    "z9e": [
+     "31"
+    ],
+    "z10a": [
+     "3"
+    ],
+    "z10b": [
+     "4"
+    ],
+    "z10c": [
+     "3"
+    ],
+    "z10e": [
+     "leer",
+     "–",
+     "-",
+     "leerer Baum",
+     "leererBaum"
+    ],
+    "z11a": [
+     "3"
+    ],
+    "z11b": [
+     "5"
+    ],
+    "z11c": [
+     "4"
+    ],
+    "z11e": [
+     "leer",
+     "–",
+     "-",
+     "leerer Baum",
+     "leererBaum"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Es entsteht der Baum `14(5(-,9),22(-,31))`. 11 Aufrufe = 2 · 5 + 1: Jeder der 5 Werte wird in genau einem Aufruf Wurzel, jeder dieser Aufrufe ruft zweimal auf."
+    },
+    {
+     "t": "text",
+     "md": "Achtung bei lo = 0, hi = 1: mitte = 0, also bleibt links der leere Bereich (0, −1) und rechts (1, 1)."
+    },
+    {
+     "t": "hinweis",
+     "md": "P7: Erst wird der ganze linke Bereich abgearbeitet, dann der rechte – die Reihenfolge der Zeilen ist die Reihenfolge des Beginns."
+    },
+    {
+     "t": "hinweis",
+     "md": "P8: Jede Zeile vollständig – auch die Aufrufe mit leerem Bereich bekommen eine Zeile."
+    }
+   ]
+  },
+  {
+   "id": "W5-L5-06",
+   "titel": "Echt oder gefälscht?",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Welche der Bäume sind binäre Suchbäume?"
+    },
+    {
+     "t": "text",
+     "md": "**Baum A**"
+    },
+    {
+     "t": "baum",
+     "baum": "30(15(8,22),45(38,60))"
+    },
+    {
+     "t": "text",
+     "md": "**Baum B**"
+    },
+    {
+     "t": "baum",
+     "baum": "30(15(8,35),45(38,60))"
+    },
+    {
+     "t": "text",
+     "md": "**Baum C**"
+    },
+    {
+     "t": "baum",
+     "baum": "30(15(8,22),45(28,60))"
+    },
+    {
+     "t": "text",
+     "md": "**Baum D**"
+    },
+    {
+     "t": "baum",
+     "baum": "30(15(-,22),45(-,60(52,70)))"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "optionen": [
+     {
+      "id": "A",
+      "md": "Baum A"
+     },
+     {
+      "id": "B",
+      "md": "Baum B"
+     },
+     {
+      "id": "C",
+      "md": "Baum C"
+     },
+     {
+      "id": "D",
+      "md": "Baum D"
+     }
+    ],
+    "mehrfach": true
+   },
+   "loesung": {
+    "richtig": [
+     "A",
+     "D"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "- A: ja.\n- B: **nein** – 35 steht im linken Teilbaum der Wurzel 30, ist aber größer als 30 (zu ihrem Elternknoten 15 passt sie!).\n- C: **nein** – 28 steht im rechten Teilbaum der 30, ist aber kleiner.\n- D: ja – fehlende Kinder sind erlaubt."
+    },
+    {
+     "t": "hinweis",
+     "md": "Alle vier Bäume bestehen den Test „jeder Knoten passt zu seinen Kindern“. Entscheidend sind die Grenzen **aller Vorfahren** – oder: Die Inorder muss streng aufsteigend sein."
+    }
+   ]
+  },
+  {
+   "id": "W5-L5-07",
+   "titel": "Die isBST-Falle",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Funktionsweise erläutern",
+   "fallen": [
+    "P10"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`nurKinder(b)` vergleicht jeden Knoten nur mit seinen Kindern, `istBST(b, -1, -1)` gibt jedem Teilbaum die Grenzen aller Vorfahren mit. Baum F:"
+    },
+    {
+     "t": "baum",
+     "baum": "40(20(10,30(-,45)),60(50,70))"
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Aufruf",
+      "Rückgabe"
+     ],
+     "zeilen": [
+      [
+       "`nurKinder(F)`",
+       "[[a]]"
+      ],
+      [
+       "`istBST(F, -1, -1)`",
+       "[[b]]"
+      ],
+      [
+       "`suche(F, 45)`",
+       "[[c]]"
+      ],
+      [
+       "`suche(F, 10)`",
+       "[[d]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "a": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "b": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "c": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "d": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "a": [
+     "true"
+    ],
+    "b": [
+     "false"
+    ],
+    "c": [
+     "false"
+    ],
+    "d": [
+     "true"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "45 ist rechtes Kind von 30 – das passt. Aber 45 steht im **linken** Teilbaum der Wurzel 40 und ist größer als 40: F ist kein Suchbaum. Inorder: 10 20 30 45 40 50 60 70 (45 vor 40)."
+    },
+    {
+     "t": "text",
+     "md": "Folge: `suche(F, 45)` geht 40 → rechts → 60 → links → 50 → links → leer und liefert **false**, obwohl 45 im Baum steht."
+    },
+    {
+     "t": "hinweis",
+     "md": "P10: Wer erläutern soll, warum F kein Suchbaum ist, nennt das verletzende Paar (45 im linken Teilbaum der 40) – nicht nur „die Ordnung ist verletzt“."
+    }
+   ]
+  },
+  {
+   "id": "W5-L5-08",
+   "titel": "Puzzle: istBST mit Grenzen",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Methode implementieren",
+   "fallen": [
+    "P1",
+    "P7"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Setze `istBST(b: BinTree vom Inhaltstyp Ganzzahl, min: Ganzzahl, max: Ganzzahl): Wahrheitswert` zusammen. Alle Werte sind ≥ 0, −1 steht für „keine Grenze“; der Erstaufruf lautet `istBST(b, -1, -1)`. Drei Teile sind Fallen."
+    }
+   ],
+   "interaktion": {
+    "kind": "order",
+    "teile": [
+     {
+      "id": "t1",
+      "code": "public static boolean istBST(BinTree b, int min, int max) {"
+     },
+     {
+      "id": "t2",
+      "code": "if (b.isEmpty()) {\n    return true;\n}"
+     },
+     {
+      "id": "t3",
+      "code": "int wert = (Integer) b.getItem();"
+     },
+     {
+      "id": "t4",
+      "code": "if (wert <= min) {\n    return false;\n}"
+     },
+     {
+      "id": "t5",
+      "code": "if (max != -1 && wert >= max) {\n    return false;\n}"
+     },
+     {
+      "id": "t6",
+      "code": "return istBST(b.getLeft(), min, wert) && istBST(b.getRight(), wert, max);\n}"
+     },
+     {
+      "id": "d1",
+      "code": "if (wert >= max) {\n    return false;\n}"
+     },
+     {
+      "id": "d2",
+      "code": "return istBST(b.getLeft(), min, max) && istBST(b.getRight(), min, max);\n}"
+     },
+     {
+      "id": "d3",
+      "code": "return istBST(b.getLeft(), wert, max) && istBST(b.getRight(), min, wert);\n}"
+     }
+    ]
+   },
+   "loesung": {
+    "reihenfolgen": [
+     [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6"
+     ],
+     [
+      "t1",
+      "t2",
+      "t3",
+      "t5",
+      "t4",
+      "t6"
+     ]
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "code",
+     "code": "public static boolean istBST(BinTree b, int min, int max) {\nif (b.isEmpty()) {\n    return true;\n}\nint wert = (Integer) b.getItem();\nif (wert <= min) {\n    return false;\n}\nif (max != -1 && wert >= max) {\n    return false;\n}\nreturn istBST(b.getLeft(), min, wert) && istBST(b.getRight(), wert, max);\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Nach links wird der eigene Wert zur neuen **Obergrenze**, nach rechts zur neuen **Untergrenze** – so gelten die Grenzen aller Vorfahren. Getestet mit beispielBST, zahlenbaum, F, den Fallen `8(3(1,9),10)` und `8(3,10(5,14))`, Duplikat `5(5,-)` und dem leeren Baum."
+    },
+    {
+     "t": "text",
+     "md": "Fallen: `if (wert >= max)` ohne `max != -1` lehnt jeden Baum ab (−1 als Obergrenze); Grenzen unverändert weitergeben oder vertauscht prüft nichts bzw. das Falsche."
+    },
+    {
+     "t": "hinweis",
+     "md": "P1: Der Basisfall `isEmpty` steht vor `getItem`. P7: Beide rekursiven Ergebnisse werden mit && verknüpft und zurückgegeben."
+    }
+   ]
+  },
+  {
+   "id": "W5-L6-01",
+   "titel": "Welche Baumart, welche Regel?",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Ordne jeder Baumart ihre **Invariante** (die Regel, die immer gilt) zu."
+    }
+   ],
+   "interaktion": {
+    "kind": "match",
+    "elemente": [
+     {
+      "id": "e1",
+      "md": "Termbaum"
+     },
+     {
+      "id": "e2",
+      "md": "Akinator-Entscheidungsbaum"
+     },
+     {
+      "id": "e3",
+      "md": "binärer Suchbaum"
+     },
+     {
+      "id": "e4",
+      "md": "Max-Heap"
+     },
+     {
+      "id": "e5",
+      "md": "Huffman-Baum"
+     }
+    ],
+    "kategorien": [
+     {
+      "id": "k1",
+      "md": "Blätter sind Zahlen, innere Knoten Rechenzeichen mit genau zwei Teilbäumen"
+     },
+     {
+      "id": "k2",
+      "md": "Blätter sind Antworten, innere Knoten Ja/Nein-Fragen; Anzahl Blätter = Anzahl Fragen + 1"
+     },
+     {
+      "id": "k3",
+      "md": "für jeden Knoten: links alle kleiner, rechts alle größer"
+     },
+     {
+      "id": "k4",
+      "md": "jeder Knoten ist mindestens so groß wie seine Kinder; alle Ebenen voll, die letzte von links aufgefüllt"
+     },
+     {
+      "id": "k5",
+      "md": "Zeichen stehen nur in Blättern; der Weg (0 = links, 1 = rechts) ergibt den Code"
+     }
+    ]
+   },
+   "loesung": {
+    "e1": "k1",
+    "e2": "k2",
+    "e3": "k3",
+    "e4": "k4",
+    "e5": "k5"
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Bei einer unbekannten Baumart ist die Invariante der Schlüssel: Aus ihr folgen Such- und Prüfverfahren und fast alle Begründungen."
+    },
+    {
+     "t": "hinweis",
+     "md": "Fünf-Schritte-Strategie: Definition lesen – Beispiel von Hand – Invariante formulieren – auf BinTree abbilden – implementieren."
+    }
+   ]
+  },
+  {
+   "id": "W5-L6-02",
+   "titel": "Max-Heap erkennen",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Material – Max-Heap:** Ein Binärbaum ist ein Max-Heap, wenn (1) jeder Knoten **mindestens so groß** ist wie seine Kinder und (2) alle Ebenen vollständig gefüllt sind, nur die letzte darf rechts Lücken haben (sie wird **von links** aufgefüllt)."
+    },
+    {
+     "t": "text",
+     "md": "Welche Bäume sind Max-Heaps?"
+    },
+    {
+     "t": "text",
+     "md": "**Baum A**"
+    },
+    {
+     "t": "baum",
+     "baum": "90(60(30,50),80(70,-))"
+    },
+    {
+     "t": "text",
+     "md": "**Baum B**"
+    },
+    {
+     "t": "baum",
+     "baum": "90(60(30,50),80(-,70))"
+    },
+    {
+     "t": "text",
+     "md": "**Baum C**"
+    },
+    {
+     "t": "baum",
+     "baum": "90(60(30,65),80(70,-))"
+    },
+    {
+     "t": "text",
+     "md": "**Baum D**"
+    },
+    {
+     "t": "baum",
+     "baum": "85(85(40,20),60)"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "optionen": [
+     {
+      "id": "A",
+      "md": "Baum A"
+     },
+     {
+      "id": "B",
+      "md": "Baum B"
+     },
+     {
+      "id": "C",
+      "md": "Baum C"
+     },
+     {
+      "id": "D",
+      "md": "Baum D"
+     }
+    ],
+    "mehrfach": true
+   },
+   "loesung": {
+    "richtig": [
+     "A",
+     "D"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "- A: ja.\n- B: **nein** – die Ordnung stimmt, aber die letzte Ebene ist nicht von links aufgefüllt (links von 80 fehlt ein Knoten, rechts steht 70).\n- C: **nein** – 65 ist größer als sein Elternknoten 60.\n- D: ja – gleiche Werte sind erlaubt („mindestens so groß“)."
+    },
+    {
+     "t": "hinweis",
+     "md": "Unterschied zum Suchbaum: Im Heap gibt es **keine** Ordnung zwischen linkem und rechtem Kind – das Maximum steht immer in der Wurzel."
+    }
+   ]
+  },
+  {
+   "id": "W5-L6-03",
+   "titel": "Ein Heap wächst",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Material – Einfügen in einen Max-Heap:** Der neue Wert kommt an die nächste freie Stelle der untersten Ebene (von links). Solange er größer ist als sein Elternknoten, tauscht er mit ihm den Platz (er „steigt auf“)."
+    },
+    {
+     "t": "text",
+     "md": "Füge nacheinander **85** und **95** ein und baue den Heap danach."
+    },
+    {
+     "t": "baum",
+     "baum": "90(70(40,65),80(55,-))"
+    }
+   ],
+   "interaktion": {
+    "kind": "tree",
+    "modus": "bauen",
+    "start": "90(70(40,65),80(55,-))",
+    "werte": [
+     "85",
+     "95"
+    ]
+   },
+   "loesung": {
+    "baum": "95(90(70(40,-),65),85(55,80))"
+   },
+   "tipps": [
+    "Erst die Form (nächste freie Stelle), dann die Ordnung (aufsteigen) herstellen."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "85 kommt rechts unter 80, ist größer und tauscht mit 80; 85 < 90 → fertig: `90(70(40,65),85(55,80))`."
+    },
+    {
+     "t": "text",
+     "md": "95 kommt links unter 40 (neue Ebene) und steigt auf: tauscht mit 40, dann mit 70, dann mit 90 – 95 ist die neue Wurzel."
+    },
+    {
+     "t": "baum",
+     "baum": "95(90(70(40,-),65),85(55,80))"
+    },
+    {
+     "t": "text",
+     "md": "Als Reihung (Ebene für Ebene): [95, 90, 85, 70, 65, 55, 80, 40]. Der aufsteigende Wert geht nur einen Weg nach oben – höchstens so viele Tausche, wie der Heap hoch ist."
+    }
+   ]
+  },
+  {
+   "id": "W5-L6-04",
+   "titel": "Die Huffman-Botschaft",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Material – Huffman-Baum:** Die Zeichen stehen nur in den Blättern (innere Knoten: •). Der Code eines Zeichens ist der Weg von der Wurzel: 0 = links, 1 = rechts. Zum Dekodieren läuft man von der Wurzel los; erreicht man ein Blatt, ist ein Zeichen fertig und es geht wieder an der Wurzel weiter."
+    },
+    {
+     "t": "baum",
+     "baum": "•(•(E,L),•(F,•(B,N)))"
+    },
+    {
+     "t": "text",
+     "md": "Dekodiere die Bitfolge `010011000111`: [[w]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "w": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 10
+     }
+    }
+   },
+   "loesung": {
+    "w": [
+     "LEBEN"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Codes: E = 00, L = 01, F = 10, B = 110, N = 111."
+    },
+    {
+     "t": "text",
+     "md": "010011000111 → 01 | 00 | 110 | 00 | 111 → **LEBEN**."
+    }
+   ]
+  },
+  {
+   "id": "W5-L6-05",
+   "titel": "Kodieren und begründen",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Funktionsweise erläutern",
+   "fallen": [
+    "P10"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Kodiere mit dem Huffman-Baum das Wort **NEBEL** (Bits ohne Leerzeichen): [[b]]"
+    },
+    {
+     "t": "baum",
+     "baum": "•(•(E,L),•(F,•(B,N)))"
+    },
+    {
+     "t": "text",
+     "md": "Warum kann man die Bitfolge ohne Trennzeichen eindeutig dekodieren? Wähle die Begründung."
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "gaps",
+     "felder": {
+      "b": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 18
+      }
+     }
+    },
+    {
+     "kind": "choice",
+     "optionen": [
+      {
+       "id": "a",
+       "md": "Weil alle Zeichen in Blättern stehen, ist kein Code Anfang eines anderen Codes (präfixfrei): Sobald ein Blatt erreicht ist, ist das Zeichen eindeutig zu Ende."
+      },
+      {
+       "id": "b",
+       "md": "Weil alle Codes gleich lang sind."
+      },
+      {
+       "id": "c",
+       "md": "Weil häufige Zeichen kurze Codes haben."
+      },
+      {
+       "id": "d",
+       "md": "Weil der Huffman-Baum ein Suchbaum ist."
+      }
+     ],
+     "mehrfach": false
+    }
+   ],
+   "loesung": [
+    {
+     "b": [
+      "111001100001"
+     ]
+    },
+    {
+     "richtig": [
+      "a"
+     ]
+    }
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "NEBEL → 111 | 00 | 110 | 00 | 01 = `111001100001`."
+    },
+    {
+     "t": "text",
+     "md": "Die Codes sind verschieden lang (E = 00, B = 110) – eindeutig wird es durch die **Präfixfreiheit**: Ein Code endet an einem Blatt, unter einem Blatt geht kein Weg weiter. Dass häufige Zeichen kurze Codes bekommen, macht den Code kurz, aber nicht eindeutig."
+    },
+    {
+     "t": "hinweis",
+     "md": "P10 „begründen“: auf die Invariante (Zeichen nur in Blättern) zurückführen, nicht nur behaupten."
+    }
+   ]
+  },
+  {
+   "id": "W5-L6-06",
+   "titel": "Der Runenbaum des Försters",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "hinweis",
+     "md": "**Material – Präfixbaum als Binärbaum:** Jeder Knoten enthält einen Buchstaben, `*` markiert ein Wortende. **Links** (K) beginnt das erste Kind (der nächste Buchstabe des Worts), **rechts** (G) das nächste Geschwister (ein anderer Buchstabe an derselben Stelle). Der Binärbaum beginnt mit dem ersten Buchstaben."
+    },
+    {
+     "t": "baum",
+     "baum": "T(A(L*(-,U*),O(R*(F*,-),-)),-)"
+    },
+    {
+     "t": "text",
+     "md": "Welche Wörter sind gespeichert?"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "optionen": [
+     {
+      "id": "tal",
+      "md": "TAL"
+     },
+     {
+      "id": "tau",
+      "md": "TAU"
+     },
+     {
+      "id": "tor",
+      "md": "TOR"
+     },
+     {
+      "id": "torf",
+      "md": "TORF"
+     },
+     {
+      "id": "ta",
+      "md": "TA"
+     },
+     {
+      "id": "to",
+      "md": "TO"
+     },
+     {
+      "id": "talu",
+      "md": "TALU"
+     },
+     {
+      "id": "tof",
+      "md": "TOF"
+     }
+    ],
+    "mehrfach": true
+   },
+   "loesung": {
+    "richtig": [
+     "tal",
+     "tau",
+     "tor",
+     "torf"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Gespeichert: **TAL, TAU, TOR, TORF**. T → A → L* ergibt TAL; U* ist Geschwister von L, also TAU. O ist Geschwister von A: T → O → R* = TOR, darunter F* = TORF."
+    },
+    {
+     "t": "text",
+     "md": "TA und TO sind nur Wortanfänge (A und O nicht markiert). TALU gibt es nicht: U ist **Geschwister** von L, nicht Kind – ein Schritt nach rechts verlängert das Wort nicht."
+    },
+    {
+     "t": "hinweis",
+     "md": "Typischer Fehler: `getRight()` als „rechtes Kind“ lesen. In dieser Darstellung bedeutet rechts „nächstes Geschwister“."
+    }
+   ]
+  },
+  {
+   "id": "W5-L6-07",
+   "titel": "Reicht der Blick auf die Kinder?",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Funktionsweise erläutern",
+   "fallen": [
+    "P10"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`pruefe` vergleicht jeden Knoten nur mit seinen Kindern."
+    },
+    {
+     "t": "code",
+     "code": "public static boolean pruefe(BinTree b) {\n    if (b.isEmpty()) {\n        return true;\n    }\n    int w = (Integer) b.getItem();\n    if (!b.getLeft().isEmpty() && (Integer) b.getLeft().getItem() > w) {\n        return false;\n    }\n    if (!b.getRight().isEmpty() && (Integer) b.getRight().getItem() > w) {\n        return false;\n    }\n    return pruefe(b.getLeft()) && pruefe(b.getRight());\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Gib die Rückgaben für die Bäume A, B und C aus der Aufgabe „Max-Heap erkennen“ an: A [[a]], B [[b]], C [[c]]"
+    },
+    {
+     "t": "baum",
+     "baum": "90(60(30,50),80(70,-))"
+    },
+    {
+     "t": "baum",
+     "baum": "90(60(30,50),80(-,70))"
+    },
+    {
+     "t": "baum",
+     "baum": "90(60(30,65),80(70,-))"
+    },
+    {
+     "t": "text",
+     "md": "Welche Aussagen sind richtig?"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "gaps",
+     "felder": {
+      "a": {
+       "typ": "auswahl",
+       "optionen": [
+        "true",
+        "false"
+       ]
+      },
+      "b": {
+       "typ": "auswahl",
+       "optionen": [
+        "true",
+        "false"
+       ]
+      },
+      "c": {
+       "typ": "auswahl",
+       "optionen": [
+        "true",
+        "false"
+       ]
+      }
+     }
+    },
+    {
+     "kind": "choice",
+     "optionen": [
+      {
+       "id": "a",
+       "md": "Für die **Ordnung** eines Max-Heaps reicht der Vergleich mit den Kindern: Ist jeder Knoten ≥ seinen Kindern, ist er wegen der Transitivität ≥ allen Nachfahren."
+      },
+      {
+       "id": "b",
+       "md": "`pruefe` erkennt keinen Verstoß gegen die **Form** (letzte Ebene von links aufgefüllt) – deshalb liefert es für B true."
+      },
+      {
+       "id": "c",
+       "md": "Beim binären Suchbaum reicht der Vergleich mit den Kindern genauso."
+      },
+      {
+       "id": "d",
+       "md": "`pruefe` stürzt bei Blättern ab, weil `getLeft()` leer ist."
+      }
+     ],
+     "mehrfach": true
+    }
+   ],
+   "loesung": [
+    {
+     "a": [
+      "true"
+     ],
+     "b": [
+      "true"
+     ],
+     "c": [
+      "false"
+     ]
+    },
+    {
+     "richtig": [
+      "a",
+      "b"
+     ]
+    }
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "A: true, B: true (Form wird nicht geprüft), C: false (65 > 60)."
+    },
+    {
+     "t": "text",
+     "md": "Heap-Ordnung ist **transitiv**: Knoten ≥ Kind ≥ Enkel … Beim Suchbaum genügt das nicht – dort muss ein Enkel auch zur Grenze des Großelternknotens passen (isBST-Falle). Abstürze gibt es nicht: Vor `getItem()` der Kinder wird `isEmpty()` geprüft."
+    },
+    {
+     "t": "hinweis",
+     "md": "P10: Bei „beurteilen/begründen“ die Eigenschaft der Struktur (hier Transitivität) nennen und mit dem Gegenbeispiel Suchbaum abgrenzen."
+    }
+   ]
+  },
+  {
+   "id": "W5-B-01",
+   "titel": "Inorder im Dickicht",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Klicke die Knoten in **Inorder**-Reihenfolge an."
+    }
+   ],
+   "interaktion": {
+    "kind": "tree",
+    "modus": "klick",
+    "baum": "3(7(5,-),1(8(2,9),4))"
+   },
+   "loesung": {
+    "folge": [
+     "LL",
+     "L",
+     "",
+     "RLL",
+     "RL",
+     "RLR",
+     "R",
+     "RR"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Inorder (links – Wurzel – rechts): **5 7 3 2 8 9 1 4**."
+    }
+   ]
+  },
+  {
+   "id": "W5-B-02",
+   "titel": "Levelorder im Nebel",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Klicke die Knoten in **Levelorder** an (Ebene für Ebene, jeweils von links nach rechts)."
+    }
+   ],
+   "interaktion": {
+    "kind": "tree",
+    "modus": "klick",
+    "baum": "12(4(9,-),7(3(-,6),1))"
+   },
+   "loesung": {
+    "folge": [
+     "",
+     "L",
+     "R",
+     "LL",
+     "RL",
+     "RR",
+     "RLR"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Levelorder: **12 4 7 9 3 1 6**."
+    }
+   ]
+  },
+  {
+   "id": "W5-B-03",
+   "titel": "Suchweg zur 40",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Sortieren und Suchen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Klicke in der Reihenfolge der Suche alle Knoten an, die `suche(b, 40)` im Suchbaum untersucht."
+    }
+   ],
+   "interaktion": {
+    "kind": "tree",
+    "modus": "klick",
+    "baum": "47(23(12,35(29,40)),71(60(-,66),88))"
+   },
+   "loesung": {
+    "folge": [
+     "",
+     "L",
+     "LR",
+     "LRR"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Suchweg: 47, 23, 35, 40 – 4 untersuchte Knoten (Java: `vergleiche` = 4)."
+    }
+   ]
+  },
+  {
+   "id": "W5-B-04",
+   "titel": "Vermessung eines Baums",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "baum",
+     "baum": "7(3(1,-),9(8,12(10,-)))"
+    },
+    {
+     "t": "text",
+     "md": "Anzahl der Knoten: [[k]] · Anzahl der Blätter: [[b]] · Höhe: [[h]] · Ebene des Knotens 10: [[e]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "k": {
+      "typ": "zahl"
+     },
+     "b": {
+      "typ": "zahl"
+     },
+     "h": {
+      "typ": "zahl"
+     },
+     "e": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "k": [
+     "7"
+    ],
+    "b": [
+     "3"
+    ],
+    "h": [
+     "4"
+    ],
+    "e": [
+     "3"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Blätter: 1, 8, 10. Höhe 4 (leerer Baum 0, Blatt 1). Die 10 liegt auf Ebene 3 (Wurzel = Ebene 0)."
+    }
+   ]
+  },
+  {
+   "id": "W5-B-05",
+   "titel": "Doppelt so groß",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Effizienz",
+   "fallen": [
+    "P10"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Ein ausgeglichener (vollständiger) Suchbaum enthält 4095 Werte. Wie viele Knoten untersucht eine Suche höchstens?"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "optionen": [
+     {
+      "id": "a",
+      "md": "12"
+     },
+     {
+      "id": "b",
+      "md": "13"
+     },
+     {
+      "id": "c",
+      "md": "2048"
+     },
+     {
+      "id": "d",
+      "md": "4095"
+     }
+    ],
+    "mehrfach": false
+   },
+   "loesung": {
+    "richtig": [
+     "a"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "4095 = 2¹² − 1: 12 volle Ebenen → höchstens **12** untersuchte Knoten. Bei 8191 Werten wäre es einer mehr."
+    },
+    {
+     "t": "hinweis",
+     "md": "P10: Begründung über die Ebenen: k volle Ebenen = 2^k − 1 Knoten."
+    }
+   ]
+  },
+  {
+   "id": "W5-B-06",
+   "titel": "Das Inventar wird sortiert",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Füge in einen leeren Suchbaum nacheinander ein: `33, 18, 50, 9, 27, 41, 62, 21, 45`."
+    }
+   ],
+   "interaktion": {
+    "kind": "tree",
+    "modus": "bauen",
+    "start": "-",
+    "werte": [
+     "33",
+     "18",
+     "50",
+     "9",
+     "27",
+     "41",
+     "62",
+     "21",
+     "45"
+    ]
+   },
+   "loesung": {
+    "baum": "33(18(9,27(21,-)),50(41(-,45),62))"
+   },
+   "erklaerung": [
+    {
+     "t": "baum",
+     "baum": "33(18(9,27(21,-)),50(41(-,45),62))"
+    },
+    {
+     "t": "text",
+     "md": "Inorder zur Kontrolle: 9 18 21 27 33 41 45 50 62."
+    }
+   ]
+  },
+  {
+   "id": "W5-B-07",
+   "titel": "Löschen mit zwei Kindern",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Lösche **23** mit dem **Nachfolger** (kleinster Wert im rechten Teilbaum)."
+    },
+    {
+     "t": "baum",
+     "baum": "47(23(12,35(29,40)),71(60(-,66),88))"
+    }
+   ],
+   "interaktion": {
+    "kind": "tree",
+    "modus": "bauen",
+    "start": "47(23(12,35(29,40)),71(60(-,66),88))"
+   },
+   "loesung": {
+    "baum": "47(29(12,35(-,40)),71(60(-,66),88))"
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "23 hat zwei Kinder. Nachfolger: einmal rechts (35), dann immer links → **29**. 29 ersetzt 23, das Blatt 29 wird entfernt."
+    },
+    {
+     "t": "baum",
+     "baum": "47(29(12,35(-,40)),71(60(-,66),88))"
+    }
+   ]
+  },
+  {
+   "id": "W5-B-08",
+   "titel": "Rekursionstabelle: Blätter zählen",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Rekursionstabelle",
+   "fallen": [
+    "P7",
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Dokumentiere `anzahlBlaetter(t)` (Aufrufe in der Reihenfolge ihres Beginns, Erstaufruf Tiefe 0)."
+    },
+    {
+     "t": "baum",
+     "baum": "5(2(-,8),6)"
+    },
+    {
+     "t": "code",
+     "code": "public static int anzahlBlaetter(BinTree b) {\n    if (b.isEmpty()) {\n        return 0;\n    }\n    if (b.isLeaf()) {\n        return 1;\n    }\n    return anzahlBlaetter(b.getLeft()) + anzahlBlaetter(b.getRight());\n}",
+     "nummern": true
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Rekursionstiefe",
+      "Knoten (Wert oder leer)",
+      "Rückgabe"
+     ],
+     "zeilen": [
+      [
+       "[[z1a]]",
+       "[[z1b]]",
+       "[[z1c]]"
+      ],
+      [
+       "[[z2a]]",
+       "[[z2b]]",
+       "[[z2c]]"
+      ],
+      [
+       "[[z3a]]",
+       "[[z3b]]",
+       "[[z3c]]"
+      ],
+      [
+       "[[z4a]]",
+       "[[z4b]]",
+       "[[z4c]]"
+      ],
+      [
+       "[[z5a]]",
+       "[[z5b]]",
+       "[[z5c]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "z1a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z1b": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 6
+     },
+     "z1c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2b": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 6
+     },
+     "z2c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3b": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 6
+     },
+     "z3c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4b": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 6
+     },
+     "z4c": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z5a": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z5b": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 6
+     },
+     "z5c": {
+      "typ": "zahl",
+      "breite": 4
+     }
+    }
+   },
+   "loesung": {
+    "z1a": [
+     "0"
+    ],
+    "z1b": [
+     "5"
+    ],
+    "z1c": [
+     "2"
+    ],
+    "z2a": [
+     "1"
+    ],
+    "z2b": [
+     "2"
+    ],
+    "z2c": [
+     "1"
+    ],
+    "z3a": [
+     "2"
+    ],
+    "z3b": [
+     "leer",
+     "–",
+     "-",
+     "leerer Baum",
+     "leererBaum"
+    ],
+    "z3c": [
+     "0"
+    ],
+    "z4a": [
+     "2"
+    ],
+    "z4b": [
+     "8"
+    ],
+    "z4c": [
+     "1"
+    ],
+    "z5a": [
+     "1"
+    ],
+    "z5b": [
+     "6"
+    ],
+    "z5c": [
+     "1"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Bei Blättern endet die Rekursion ohne weitere Aufrufe (Zeile 5). Nur der leere linke Teilbaum von 2 wird aufgerufen. 5 Aufrufe, Ergebnis 2."
+    },
+    {
+     "t": "hinweis",
+     "md": "P7: Erstaufruf Tiefe 0. P8: Auch der Aufruf mit dem leeren Teilbaum bekommt eine Zeile."
+    }
+   ]
+  },
+  {
+   "id": "W5-B-09",
+   "titel": "Das verschwundene Item",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Nach `einfuegen(b, 44)` ist der Suchbaum unverändert, und ein leerer Baum bleibt nach `einfuegen(leer, 7)` leer."
+    },
+    {
+     "t": "code",
+     "code": "public static void einfuegen(BinTree b, int x) {\n    if (b.isEmpty()) {\n        b = new BinTree(x);\n        return;\n    }\n    int wert = (Integer) b.getItem();\n    if (x < wert) {\n        einfuegen(b.getLeft(), x);\n    } else if (x > wert) {\n        einfuegen(b.getRight(), x);\n    }\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Markiere die fehlerhafte Zeile und gib die richtige Anweisung an: [[k]]"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 1,
+     "anzahl": 1
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "k": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 18
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      3
+     ]
+    },
+    {
+     "k": [
+      "b.setItem(x);"
+     ]
+    }
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`b = new BinTree(x);` ändert nur die **lokale Parametervariable** b – das neue Blatt kennt niemand, der leere Teilbaum im Baum bleibt leer (Java-Test: Baum nach dem Aufruf `47(23(12,35(29,40)),71(60(-,66),88))`, leerer Baum bleibt leer: true)."
+    },
+    {
+     "t": "text",
+     "md": "`b.setItem(x);` verändert das Objekt selbst: Der leere Teilbaum wird zum Blatt → `47(23(12,35(29,40(-,44))),71(60(-,66),88))`."
+    }
+   ]
+  },
+  {
+   "id": "W5-B-10",
+   "titel": "Levelorder-Protokoll",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Führe `levelorder(t)` (Schlange vom Inhaltstyp BinTree, nur nicht leere Teilbäume werden eingereiht) aus. Schlange: vorne zuerst, Wurzelwerte mit Komma, leer: –."
+    },
+    {
+     "t": "baum",
+     "baum": "2(9(4,7),5(-,3))"
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Durchlauf",
+      "entnommen",
+      "Schlange (vorne → hinten)"
+     ],
+     "zeilen": [
+      [
+       "Start",
+       "–",
+       "2"
+      ],
+      [
+       "1",
+       "[[z2b]]",
+       "[[z2c]]"
+      ],
+      [
+       "2",
+       "[[z3b]]",
+       "[[z3c]]"
+      ],
+      [
+       "3",
+       "[[z4b]]",
+       "[[z4c]]"
+      ],
+      [
+       "4",
+       "[[z5b]]",
+       "[[z5c]]"
+      ],
+      [
+       "5",
+       "[[z6b]]",
+       "[[z6c]]"
+      ],
+      [
+       "6",
+       "[[z7b]]",
+       "[[z7c]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "z2b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z2c": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 12
+     },
+     "z3b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z3c": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 12
+     },
+     "z4b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z4c": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 12
+     },
+     "z5b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z5c": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 12
+     },
+     "z6b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z6c": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 12
+     },
+     "z7b": {
+      "typ": "zahl",
+      "breite": 4
+     },
+     "z7c": {
+      "typ": "text",
+      "norm": "text",
+      "breite": 12
+     }
+    }
+   },
+   "loesung": {
+    "z2b": [
+     "2"
+    ],
+    "z2c": [
+     "9, 5",
+     "9,5",
+     "9 5"
+    ],
+    "z3b": [
+     "9"
+    ],
+    "z3c": [
+     "5, 4, 7",
+     "5,4,7",
+     "5 4 7"
+    ],
+    "z4b": [
+     "5"
+    ],
+    "z4c": [
+     "4, 7, 3",
+     "4,7,3",
+     "4 7 3"
+    ],
+    "z5b": [
+     "4"
+    ],
+    "z5c": [
+     "7, 3",
+     "7,3",
+     "7 3"
+    ],
+    "z6b": [
+     "7"
+    ],
+    "z6c": [
+     "3",
+     "3",
+     "3"
+    ],
+    "z7b": [
+     "3"
+    ],
+    "z7c": [
+     "leer",
+     "–",
+     "-",
+     "leerer Baum",
+     "leererBaum"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Ausgabe: `\"2 9 5 4 7 3 \"`."
+    },
+    {
+     "t": "hinweis",
+     "md": "P8: Jeder Durchlauf eine Zeile, auch der letzte mit leerer Schlange."
+    }
+   ]
+  },
+  {
+   "id": "W5-B-11",
+   "titel": "Lückencode: Suche im Suchbaum",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Lückencode",
+   "fallen": [
+    "P4",
+    "P7"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Ergänze die rekursive Suche im binären Suchbaum. In jedem Schritt darf nur **ein** Teilbaum durchsucht werden."
+    },
+    {
+     "t": "code",
+     "code": "public static boolean suche(BinTree b, int x) {\n    if ([[g1]]) {\n        return false;\n    }\n    int wert = [[g2]];\n    if (x == wert) {\n        return true;\n    }\n    if (x < wert) {\n        return [[g3]];\n    }\n    return [[g4]];\n}",
+     "nummern": true
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 14
+     },
+     "g2": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 20
+     },
+     "g3": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 22
+     },
+     "g4": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 22
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "b.isEmpty()"
+    ],
+    "g2": [
+     "(Integer)b.getItem()",
+     "((Integer)b.getItem())",
+     "(int)b.getItem()"
+    ],
+    "g3": [
+     "suche(b.getLeft(),x)"
+    ],
+    "g4": [
+     "suche(b.getRight(),x)"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Basisfall leer → false; Wert casten (P4); bei x < wert nur links, sonst nur rechts weitersuchen – und das Ergebnis **zurückgeben** (P7). Alle akzeptierten Varianten wurden für x = 0 … 100 gegen die Musterlösung getestet."
+    }
+   ]
+  },
+  {
+   "id": "W5-B-12",
+   "titel": "Rekonstruktion aus Post- und Inorder",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Postorder: `D B F G E C A` · Inorder: `B D A F E G C`. Baue den Baum."
+    }
+   ],
+   "interaktion": {
+    "kind": "tree",
+    "modus": "bauen",
+    "start": "-",
+    "werte": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "E",
+     "F",
+     "G"
+    ]
+   },
+   "loesung": {
+    "baum": "A(B(-,D),C(E(F,G),-))"
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Das **letzte** Element der Postorder ist die Wurzel (A). In der Inorder liegt links davon B D, rechts F E G C."
+    },
+    {
+     "t": "baum",
+     "baum": "A(B(-,D),C(E(F,G),-))"
+    }
+   ]
+  },
+  {
+   "id": "W5-B-13",
+   "titel": "Puzzle: Knoten auf Ebene k",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Methode implementieren",
+   "fallen": [
+    "P7"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Setze `anzahlAufEbene(b: BinTree, ebene: Ganzzahl): Ganzzahl` zusammen (Wurzel = Ebene 0). Drei Teile sind Fallen."
+    }
+   ],
+   "interaktion": {
+    "kind": "order",
+    "teile": [
+     {
+      "id": "t1",
+      "code": "public static int anzahlAufEbene(BinTree b, int ebene) {"
+     },
+     {
+      "id": "t2",
+      "code": "if (b.isEmpty()) {\n    return 0;\n}"
+     },
+     {
+      "id": "t3",
+      "code": "if (ebene == 0) {\n    return 1;\n}"
+     },
+     {
+      "id": "t4",
+      "code": "return anzahlAufEbene(b.getLeft(), ebene - 1)\n     + anzahlAufEbene(b.getRight(), ebene - 1);\n}"
+     },
+     {
+      "id": "d1",
+      "code": "return anzahlAufEbene(b.getLeft(), ebene)\n     + anzahlAufEbene(b.getRight(), ebene);\n}"
+     },
+     {
+      "id": "d2",
+      "code": "if (b.isLeaf()) {\n    return 1;\n}"
+     },
+     {
+      "id": "d3",
+      "code": "if (ebene == 0) {\n    return 0;\n}"
+     }
+    ]
+   },
+   "loesung": {
+    "reihenfolgen": [
+     [
+      "t1",
+      "t2",
+      "t3",
+      "t4"
+     ]
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "code",
+     "code": "public static int anzahlAufEbene(BinTree b, int ebene) {\nif (b.isEmpty()) {\n    return 0;\n}\nif (ebene == 0) {\n    return 1;\n}\nreturn anzahlAufEbene(b.getLeft(), ebene - 1)\n     + anzahlAufEbene(b.getRight(), ebene - 1);\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Erst leer prüfen (sonst zählt ein leerer Baum auf Ebene 0 mit), dann Ebene 0 → 1, sonst in beiden Teilbäumen eine Ebene tiefer suchen (`ebene - 1`). `isLeaf` als Basisfall wäre falsch: Ein Blatt auf Ebene 2 darf bei Ebene 0 nicht gezählt werden."
+    },
+    {
+     "t": "hinweis",
+     "md": "P7: Falscher Basisfall (Blatt statt leer, 0 statt 1) oder fehlendes `ebene - 1` liefert falsche Zählungen."
+    }
+   ]
+  },
+  {
+   "id": "W5-B-14",
+   "titel": "Gefälschter Suchbaum",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Funktionsweise erläutern",
+   "fallen": [
+    "P10"
+   ],
+   "inhalt": [
+    {
+     "t": "baum",
+     "baum": "50(30(20,60),70(55,80))"
+    },
+    {
+     "t": "text",
+     "md": "`nurKinder(b)` = [[a]] · `istBST(b, -1, -1)` = [[b]] · `suche(b, 60)` = [[c]] · Welcher Wert verletzt die Suchbaum-Ordnung? [[d]] Gegenüber welchem Vorfahren? [[e]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "a": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "b": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "c": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "d": {
+      "typ": "zahl"
+     },
+     "e": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "a": [
+     "true"
+    ],
+    "b": [
+     "false"
+    ],
+    "c": [
+     "false"
+    ],
+    "d": [
+     "60"
+    ],
+    "e": [
+     "50"
+    ]
+   },
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "60 ist rechtes Kind von 30 (passt), liegt aber im **linken** Teilbaum der Wurzel 50 – zu groß. `suche(b, 60)` geht deshalb nach rechts und findet 60 nie."
+    },
+    {
+     "t": "hinweis",
+     "md": "P10: Beim Begründen das verletzende Paar aus Knoten und Vorfahre nennen."
+    }
+   ]
+  },
+  {
+   "id": "W5-B-15",
+   "titel": "Der Rechenbaum des Orakels",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Bäume",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Gib den Wert des Termbaums an (`/` ganzzahlig): [[w]]. Klicke danach die Knoten in **Preorder** an."
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "gaps",
+     "felder": {
+      "w": {
+       "typ": "zahl"
+      }
+     }
+    },
+    {
+     "kind": "tree",
+     "modus": "klick",
+     "baum": "*(−(9,4),+(/(8,2),3))"
+    }
+   ],
+   "loesung": [
+    {
+     "w": [
+      "35"
+     ]
+    },
+    {
+     "folge": [
+      "",
+      "L",
+      "LL",
+      "LR",
+      "R",
+      "RL",
+      "RLL",
+      "RLR",
+      "RR"
+     ]
+    }
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "(9 − 4) · (8 / 2 + 3) = 5 · 7 = **35**. Preorder (Präfix-Schreibweise): * − 9 4 + / 8 2 3."
+    }
+   ]
+  }
+ ]
+}

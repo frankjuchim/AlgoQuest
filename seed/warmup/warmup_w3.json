@@ -1,0 +1,159 @@
+{
+  "version": 1,
+  "karten": [
+    {
+      "id": "W3-01",
+      "welt": 3,
+      "kategorie": "Tracetabelle",
+      "titel": "Das Echo im Brunnen",
+      "aufgabe": "Ruft man in den Brunnen des Labyrinths eine Zahl, antwortet das Echo mit der Methode echo.\na) Dokumentiere den Aufruf echo(4718) in einer Rekursionstabelle mit den Spalten Rekursionstiefe | Aufruf | Rückgabewert. Rekursionstiefe: Der Erstaufruf hat die Tiefe 0, jeder rekursive Aufruf erhöht die Tiefe um 1.\nb) Beschreibe, was echo(n) für n ≥ 0 allgemein berechnet.\nc) Kennzeichne Basisfall und Rekursionsschritt und begründe, dass die Rekursion für jedes n ≥ 0 endet.",
+      "code": "public static int echo(int n) {\n    if (n < 10) {\n        return n;\n    }\n    return echo(n / 10) + n % 10;\n}",
+      "loesung": "a) Die Aufrufe gehen von oben nach unten „in die Tiefe“; die Rückgabewerte entstehen in umgekehrter Reihenfolge von unten nach oben: 4 → 4 + 7 = 11 → 11 + 1 = 12 → 12 + 8 = 20. Rückgabewert von echo(4718): 20.\nb) echo liefert die Quersumme von n: n % 10 ist die letzte Ziffer, n / 10 ist die Zahl ohne die letzte Ziffer.\nc) Basisfall: n < 10 (einstellige Zahl, Rückgabe ohne Selbstaufruf). Rekursionsschritt: echo(n / 10) + n % 10. Die Rekursion endet, weil n / 10 für n ≥ 10 echt kleiner als n ist und nie negativ wird – nach so vielen Schritten, wie n Ziffern hat, ist der Basisfall erreicht.",
+      "loesungCode": "Rekursionstiefe | Aufruf     | Rückgabewert\n----------------+------------+-------------\n       0        | echo(4718) |     20\n       1        | echo(471)  |     12\n       2        | echo(47)   |     11\n       3        | echo(4)    |      4",
+      "minuten": 6
+    },
+    {
+      "id": "W3-02",
+      "welt": 3,
+      "kategorie": "Funktionsweise erläutern",
+      "titel": "Die Hydra des Labyrinths",
+      "aufgabe": "Für jeden abgeschlagenen Kopf wachsen der Hydra neue nach – die Methode koepfe beschreibt das.\na) Zeichne den Aufrufbaum für koepfe(4) und gib den Rückgabewert an.\nb) Gib die Anzahl aller Aufrufe (einschließlich des Erstaufrufs) für koepfe(4) und koepfe(5) an. Wie oft wird bei koepfe(5) der Aufruf koepfe(2) ausgeführt?\nc) Für die Anzahl A(n) der Aufrufe gilt A(0) = A(1) = 1. Stelle eine Formel für A(n) bei n ≥ 2 auf und schätze ab, wie sich A(n) verändert, wenn n um 1 wächst. Was bedeutet das für koepfe(40)?",
+      "code": "public static int koepfe(int n) {\n    if (n <= 1) {\n        return 1;\n    }\n    return koepfe(n - 1) + koepfe(n - 2);\n}",
+      "loesung": "a) Rückgabewert von koepfe(4): 5. Jeder Aufruf mit n ≥ 2 verzweigt in zwei Aufrufe (Baumrekursion), Blätter sind die Aufrufe mit n = 1 oder n = 0 (Rückgabe 1).\nb) koepfe(4): 9 Aufrufe · koepfe(5): 15 Aufrufe · koepfe(2) wird bei koepfe(5) dreimal berechnet – dieselbe Teilaufgabe wird mehrfach gelöst.\nc) A(n) = A(n − 1) + A(n − 2) + 1 (die beiden Teilbäume plus der Aufruf selbst): 1, 1, 3, 5, 9, 15, 25, … Wächst n um 1, steigt die Anzahl etwa auf das 1,6-Fache (25 / 15 ≈ 1,67; Tendenz zum goldenen Schnitt ≈ 1,618). Es gilt sogar A(n) = 2 · koepfe(n) − 1. koepfe(40) braucht damit 331 160 281 Aufrufe – über 300 Millionen. Abhilfe: iterativ rechnen oder Zwischenergebnisse speichern.",
+      "loesungCode": "koepfe(4)                                  Rückgabe 5\n├── koepfe(3)                              Rückgabe 3\n│   ├── koepfe(2)                          Rückgabe 2\n│   │   ├── koepfe(1) → 1\n│   │   └── koepfe(0) → 1\n│   └── koepfe(1) → 1\n└── koepfe(2)                              Rückgabe 2\n    ├── koepfe(1) → 1\n    └── koepfe(0) → 1",
+      "minuten": 7
+    },
+    {
+      "id": "W3-03",
+      "welt": 3,
+      "kategorie": "Fehler im Java-Code",
+      "titel": "Der endlose Abstieg",
+      "aufgabe": "Jede Methode enthält einen Fehler, der zu einer Endlosrekursion führen kann – Java bricht dann mit einem StackOverflowError ab (der Aufrufstapel läuft über). Es gilt jeweils n ≥ 0 bzw. exponent ≥ 0.\na) Beschreibe jeweils den Fehler und was bei summeBis(3), potenz(2, 3) und jedeZweite(7) geschieht.\nb) Gib je Methode einen Aufruf an, der trotz des Fehlers korrekt endet – oder begründe, dass es keinen gibt.\nc) Korrigiere die Methoden und nenne die zwei Bedingungen, die jede Rekursion erfüllen muss.",
+      "code": "// soll 0 + 1 + 2 + ... + n liefern\npublic static int summeBis(int n) {\n    return n + summeBis(n - 1);\n}\n// soll basis hoch exponent liefern\npublic static int potenz(int basis, int exponent) {\n    if (exponent == 0) {\n        return 1;\n    }\n    return basis * potenz(basis, exponent);\n}\n// soll n + (n - 2) + (n - 4) + ... liefern, z. B. 7 + 5 + 3 + 1 = 16\npublic static int jedeZweite(int n) {\n    if (n == 0) {\n        return 0;\n    }\n    return n + jedeZweite(n - 2);\n}",
+      "loesung": "a) summeBis: Der Basisfall fehlt. summeBis(3) ruft summeBis(2), (1), (0), (−1), … auf – ohne Ende → StackOverflowError.\npotenz: Der Rekursionsschritt verkleinert das Problem nicht (exponent statt exponent − 1). potenz(2, 3) ruft immer wieder potenz(2, 3) auf → StackOverflowError.\njedeZweite: Der Basisfall wird bei ungeradem n übersprungen: 7, 5, 3, 1, −1, −3, … → StackOverflowError.\nb) summeBis: kein Aufruf endet. potenz: nur exponent = 0 (z. B. potenz(2, 0) = 1). jedeZweite: jedes gerade n ≥ 0, z. B. jedeZweite(6) = 12.\nc) Bedingungen: (1) Es gibt einen Basisfall ohne Selbstaufruf. (2) Jeder Rekursionsschritt verkleinert das Problem so, dass der Basisfall sicher erreicht wird.",
+      "loesungCode": "public static int summeBis(int n) {\n    if (n == 0) {\n        return 0;\n    }\n    return n + summeBis(n - 1);\n}\n\npublic static int potenz(int basis, int exponent) {\n    if (exponent == 0) {\n        return 1;\n    }\n    return basis * potenz(basis, exponent - 1);\n}\n\npublic static int jedeZweite(int n) {\n    if (n <= 0) {\n        return 0;\n    }\n    return n + jedeZweite(n - 2);\n}",
+      "minuten": 7
+    },
+    {
+      "id": "W3-04",
+      "welt": 3,
+      "kategorie": "Methodenkopf und Signatur",
+      "titel": "Zählen ohne Schleife",
+      "aufgabe": "Im Labyrinth wirkt ein Bann: Schleifen sind verboten. Die Methode zaehle(s: Zeichenkette, c: Zeichen): Ganzzahl zählt, wie oft das Zeichen c in s vorkommt – bisher mit einer Schleife. Die rekursive Fassung braucht eine Hilfsoperation zaehleAb(s: Zeichenkette, c: Zeichen, i: Ganzzahl): Ganzzahl, die die Vorkommen von c ab dem Index i zählt.\na) Gib den Java-Methodenkopf von zaehleAb an. Gib an, wie zaehle die Hilfsoperation startet (Rumpf von zaehle).\nb) Implementiere zaehleAb rekursiv ohne Schleife (Basisfall: i == s.length()).\nc) Gib zum Java-Kopf public static boolean enthaeltAb(int[] r, int x, int i) die Signatur in Abi-Notation an. Erläutere, was in der rekursiven Fassung an die Stelle der Schleifenvariablen i und der Variablen anzahl tritt.",
+      "code": "public static int zaehle(String s, char c) {\n    int anzahl = 0;\n    for (int i = 0; i < s.length(); i++) {\n        if (s.charAt(i) == c) {\n            anzahl++;\n        }\n    }\n    return anzahl;\n}",
+      "loesung": "a) public static int zaehleAb(String s, char c, int i) – Start in zaehle: return zaehleAb(s, c, 0); (zaehle ist jetzt nur noch eine „Hülle“ mit der vorgegebenen Signatur).\nb) siehe Code. Probe: zaehle(\"Abrakadabra\", 'a') = 4 (das große A zählt nicht mit, Vergleich mit == bei Zeichen ist erlaubt).\nc) enthaeltAb(r: Reihung von Ganzzahl, x: Ganzzahl, i: Ganzzahl): Wahrheitswert. Die Schleifenvariable i wird zum Parameter, der bei jedem Selbstaufruf um 1 wächst; die Abbruchbedingung der Schleife wird zum Basisfall. Statt anzahl schrittweise zu erhöhen, werden die Rückgabewerte beim Zurückkehren aus den Aufrufen addiert – die Zwischenstände liegen auf dem Aufrufstapel.",
+      "loesungCode": "public static int zaehle(String s, char c) {\n    return zaehleAb(s, c, 0);\n}\n\npublic static int zaehleAb(String s, char c, int i) {\n    if (i == s.length()) {\n        return 0;\n    }\n    if (s.charAt(i) == c) {\n        return 1 + zaehleAb(s, c, i + 1);\n    }\n    return zaehleAb(s, c, i + 1);\n}",
+      "minuten": 7
+    },
+    {
+      "id": "W3-05",
+      "welt": 3,
+      "kategorie": "Lückencode",
+      "titel": "Koordinaten im Dungeon",
+      "aufgabe": "Die Dungeon-Karte ist eine 2D-Reihung feld von Zeichen; feld[z][s] ist das Feld in Zeile z und Spalte s. Unten siehst du die Karte „Höhle“ aus dem Kartenbuch der Online-IDE.\na) Gib an: feld.length, feld[0].length, feld[1][1], feld[3][5], feld[2][3]. Was geschieht bei feld[5][0] und bei feld[1][7]?\nb) Ergänze die Lücken (1) bis (5) der Methoden istImFeld und anzahlFrei (zählt die Felder mit '.').\nc) Gib den Rückgabewert von anzahlFrei() an und erläutere, warum in istImFeld(z, s) && feld[z][s] != '#' die Reihenfolge der beiden Bedingungen wichtig ist.",
+      "code": "Karte (feld: Reihung von Reihung von Zeichen, [Zeile][Spalte]):\n\n    s:  0 1 2 3 4 5 6\nz = 0:  # # # # # # #\nz = 1:  # S . . . . #\nz = 2:  # . . # . . #\nz = 3:  # . . . . Z #\nz = 4:  # # # # # # #\n\npublic boolean istImFeld(int z, int s) {\n    return z >= 0 && z < ___(1)___ && s >= 0 && s < ___(2)___;\n}\n\npublic int anzahlFrei() {\n    int anzahl = 0;\n    for (int z = 0; z < ___(3)___; z++) {\n        for (int s = 0; s < ___(4)___; s++) {\n            if (___(5)___ == '.') {\n                anzahl++;\n            }\n        }\n    }\n    return anzahl;\n}",
+      "loesung": "a) feld.length = 5 (Anzahl der Zeilen) · feld[0].length = 7 (Anzahl der Spalten) · feld[1][1] = 'S' · feld[3][5] = 'Z' · feld[2][3] = '#'. feld[5][0] und feld[1][7] greifen auf nicht vorhandene Indizes zu (Zeilen 0–4, Spalten 0–6) → Laufzeitfehler ArrayIndexOutOfBoundsException.\nb) (1) feld.length · (2) feld[0].length · (3) feld.length · (4) feld[z].length oder feld[0].length · (5) feld[z][s]. Achtung: In (2) nicht feld[z].length – bei ungültigem z würde schon dieser Zugriff scheitern.\nc) anzahlFrei() liefert 12 (S und Z zählen nicht mit). && wertet von links nach rechts aus und bricht ab, sobald der linke Teil falsch ist (Kurzschlussauswertung). Nur so wird feld[z][s] nie mit einem Index außerhalb der Karte gelesen; in umgekehrter Reihenfolge gäbe es am Rand einen Laufzeitfehler.",
+      "loesungCode": "public boolean istImFeld(int z, int s) {\n    return z >= 0 && z < feld.length && s >= 0 && s < feld[0].length;\n}\n\npublic int anzahlFrei() {\n    int anzahl = 0;\n    for (int z = 0; z < feld.length; z++) {\n        for (int s = 0; s < feld[z].length; s++) {\n            if (feld[z][s] == '.') {\n                anzahl++;\n            }\n        }\n    }\n    return anzahl;\n}",
+      "minuten": 6
+    },
+    {
+      "id": "W3-06",
+      "welt": 3,
+      "kategorie": "Methode implementieren",
+      "titel": "Der Fallen-Sensor",
+      "aufgabe": "Ein Fallen-Sensor zählt die Wände ('#') in der 8er-Nachbarschaft eines Feldes – also auch diagonal. Felder außerhalb der Karte zählen nicht. In der Klasse Karte gibt es bereits istImFeld(z: Ganzzahl, s: Ganzzahl): Wahrheitswert und getFeld(z: Ganzzahl, s: Ganzzahl): Zeichen.\na) Gib die Koordinaten (z|s) aller acht Nachbarn von (1|1) an.\nb) Implementiere die Methode wandNachbarn8(z: Ganzzahl, s: Ganzzahl): Ganzzahl in Java. Tipp: zwei Zählschleifen für die Verschiebungen dz und ds von −1 bis 1.\nc) Gib für die Karte „Höhle“ unten die Rückgabewerte für (1|1), (0|0) und (2|2) an.",
+      "code": "Karte (feld: Reihung von Reihung von Zeichen, [Zeile][Spalte]):\n\n    s:  0 1 2 3 4 5 6\nz = 0:  # # # # # # #\nz = 1:  # S . . . . #\nz = 2:  # . . # . . #\nz = 3:  # . . . . Z #\nz = 4:  # # # # # # #",
+      "loesung": "a) (0|0), (0|1), (0|2), (1|0), (1|2), (2|0), (2|1), (2|2) – Zeile z − 1 bis z + 1, Spalte s − 1 bis s + 1, ohne (1|1) selbst.\nKernpunkte b): Zähler mit 0 starten · Verschiebung (0|0) ausschließen · istImFeld VOR getFeld prüfen (Kurzschluss) · Vergleich von Zeichen mit == · Rückgabe der Anzahl.\nc) wandNachbarn8(1, 1) = 5 · wandNachbarn8(0, 0) = 2 (nur drei Nachbarn liegen in der Karte: (0|1) und (1|0) sind Wände, (1|1) ist S) · wandNachbarn8(2, 2) = 1 (nur (2|3)).",
+      "loesungCode": "public int wandNachbarn8(int z, int s) {\n    int anzahl = 0;\n    for (int dz = -1; dz <= 1; dz++) {\n        for (int ds = -1; ds <= 1; ds++) {\n            if (!(dz == 0 && ds == 0) && istImFeld(z + dz, s + ds)\n                    && getFeld(z + dz, s + ds) == '#') {\n                anzahl++;\n            }\n        }\n    }\n    return anzahl;\n}",
+      "minuten": 7
+    },
+    {
+      "id": "W3-07",
+      "welt": 3,
+      "kategorie": "Struktogramm lesen",
+      "titel": "Den Nebel lüften",
+      "aufgabe": "Die „Lichtung“ aus dem Kartenbuch ist noch vernebelt und hat am Rand KEINE Wände. lueften markiert alle vom Startfeld aus erreichbaren begehbaren Felder; istBegehbar(z, s) prüft zuerst, ob (z|s) in der Karte liegt, und dann, ob dort '.', 'S' oder 'Z' steht. Am Ende sind alle erreichten '.' gelüftet ('+'), S und Z bleiben sichtbar.\na) Führe lueften(1, 1) aus. Nummeriere die Felder (auch S und Z) in der Reihenfolge, in der sie auf '+' gesetzt werden, und gib jeweils die Rekursionstiefe an. Rekursionstiefe: Der Erstaufruf hat die Tiefe 0, jeder rekursive Aufruf erhöht die Tiefe um 1.\nb) Gib die Anzahl aller Aufrufe von lueften an – auch derer, die sofort enden – und begründe sie ohne Nachzählen.\nc) Erläutere, was passiert, wenn feld[z][s] ← '+' erst nach den vier Selbstaufrufen ausgeführt wird, und warum auch S und Z vorübergehend '+' werden.",
+      "code": "lueften(z: Ganzzahl, s: Ganzzahl): nichts\n  falls istBegehbar(z, s)\n    dann: alt ← feld[z][s]\n          feld[z][s] ← '+'\n          lueften(z − 1, s)      // oben\n          lueften(z, s + 1)      // rechts\n          lueften(z + 1, s)      // unten\n          lueften(z, s − 1)      // links\n          falls alt = 'S' oder alt = 'Z'\n            dann: feld[z][s] ← alt\n    sonst: –\n\n    s:  0 1 2 3\nz = 0:  . . # .\nz = 1:  . S . .\nz = 2:  # . . Z",
+      "loesung": "a) Reihenfolge (Nr. (z|s) Tiefe): 1 (1|1) 0 · 2 (0|1) 1 · 3 (0|0) 2 · 4 (1|0) 3 · 5 (1|2) 1 · 6 (1|3) 2 · 7 (0|3) 3 · 8 (2|3) 3 · 9 (2|2) 4 · 10 (2|1) 5. Größte Tiefe, in der ein Feld markiert wird: 5. Am Ende sind 8 Felder gelüftet; S und Z sind wieder sichtbar.\nb) 41 Aufrufe: der Erstaufruf plus genau 4 Selbstaufrufe für jedes der 10 markierten Felder (8 × '.', S und Z): 1 + 4 · 10 = 41. Alle anderen Aufrufe (Wand, außerhalb, schon '+') enden sofort.\nc) Endlosrekursion: (1|1) ruft (0|1) auf, (0|1) ruft wieder (1|1) auf, das noch nicht markiert ist, usw. → StackOverflowError. Die Markierung wirkt als „Besucht“-Merker und muss vor den Selbstaufrufen gesetzt werden. Bliebe S während der Rekursion 'S', wäre es weiter begehbar und würde von (0|1) aus erneut betreten – auch S und Z müssen deshalb vorübergehend als besucht gelten.",
+      "loesungCode": "Nummer (Reihenfolge):           Endzustand:\n    s:   0  1  2  3                  s:  0 1 2 3\nz = 0:   3  2  #  7              z = 0:  + + # +\nz = 1:   4  1  5  6              z = 1:  + S + +\nz = 2:   #  10 9  8              z = 2:  # + + Z",
+      "minuten": 7
+    },
+    {
+      "id": "W3-08",
+      "welt": 3,
+      "kategorie": "Tracetabelle",
+      "titel": "Der Weg durchs Labyrinth",
+      "aufgabe": "findeWeg sucht per Backtracking einen Weg vom Start zum Ziel 'Z' (wie Level 3.2 Experte). Betretene Felder werden '*'; führt von einem Feld kein Weg zum Ziel, wird der Schritt zurückgenommen ('x' = Sackgasse). „oder“ bricht beim ersten wahr ab. Start: findeWeg(1, 1) auf der Lichtung, schritte = 0.\na) Dokumentiere alle Aufrufe, die ein Feld betreten ('.' oder 'S'), in einer Tabelle Rekursionstiefe | Feld (z|s) | Zeichen am Ende. Rekursionstiefe: Der Erstaufruf hat die Tiefe 0, jeder rekursive Aufruf erhöht die Tiefe um 1.\nb) Gib die Karte nach dem Ende und den Wert von schritte an.\nc) Erläutere, was „einen Schritt zurücknehmen“ hier bedeutet, und begründe, warum das Feld dabei 'x' und nicht wieder '.' wird.",
+      "code": "findeWeg(z: Ganzzahl, s: Ganzzahl): Wahrheitswert\n  schritte ← schritte + 1\n  falls nicht istImFeld(z, s): gib falsch zurück\n  alt ← feld[z][s]\n  falls alt = 'Z': gib wahr zurück\n  falls alt ≠ '.' und alt ≠ 'S': gib falsch zurück\n  feld[z][s] ← '*'\n  falls findeWeg(z − 1, s) oder findeWeg(z, s + 1)\n        oder findeWeg(z + 1, s) oder findeWeg(z, s − 1)\n    dann: falls alt = 'S': feld[z][s] ← 'S'\n          gib wahr zurück\n  feld[z][s] ← 'x'                       // zurücknehmen\n  falls alt = 'S': feld[z][s] ← 'S'\n  gib falsch zurück\n\n    s:  0 1 2 3\nz = 0:  . . # .\nz = 1:  . S . .\nz = 2:  # . . Z",
+      "loesung": "a) siehe Tabelle: Von S geht es zuerst nach oben in die Sackgasse (0|1), (0|0), (1|0); diese drei Felder werden auf dem Rückweg zu 'x'. Dann führt der Weg von S nach rechts über (1|2) und (1|3); dort scheitert zuerst „oben“ (0|3) (Sackgasse 'x'), „rechts“ liegt außerhalb, „unten“ ist das Ziel (2|3) in Tiefe 3. findeWeg(1, 1) liefert wahr.\nb) Endzustand siehe unten, schritte = 24 (jeder Aufruf zählt, auch die, die sofort enden: außerhalb, Wand, schon besucht). Die Felder (2|1) und (2|2) wurden nie betreten und bleiben '.'.\nc) Zurücknehmen: Wenn keiner der vier Nachbarn zum Ziel führt, kehrt der Aufruf mit falsch zum Aufrufer zurück; das Feld gehört nicht mehr zum Weg ('*' wird 'x'), und der Aufrufer probiert seine nächste Richtung. 'x' statt '.': Das Feld ist bereits vollständig untersucht – von dort gibt es keinen Weg. Mit '.' würde es später über einen anderen Nachbarn erneut durchsucht (unnötige Schritte); 'x' wirkt als Besucht-Markierung.",
+      "loesungCode": "Rekursionstiefe | Feld (z|s) | Zeichen am Ende\n----------------+------------+----------------\n       0        |   (1|1)    |      S\n       1        |   (0|1)    |      x\n       2        |   (0|0)    |      x\n       3        |   (1|0)    |      x\n       1        |   (1|2)    |      *\n       2        |   (1|3)    |      *\n       3        |   (0|3)    |      x\n\nEndzustand:   x x # x\n              x S * *\n              # . . Z",
+      "minuten": 8
+    },
+    {
+      "id": "W3-09",
+      "welt": 3,
+      "kategorie": "Tracetabelle",
+      "titel": "Die Schatzkammer-Suche",
+      "aufgabe": "Die Schatztruhen der Kammer sind aufsteigend nach Gold sortiert: r = [3, 8, 12, 17, 21, 26, 30, 35, 41, 47] (Indizes 0 bis 9). binaerRek sucht rekursiv nach dem Wert x.\na) Dokumentiere die Aufrufe binaerRek(r, 30, 0, 9) und binaerRek(r, 9, 0, 9) jeweils in einer Tabelle Rekursionstiefe | lo | hi | mid | r[mid] | Rückgabewert. Rekursionstiefe: Der Erstaufruf hat die Tiefe 0, jeder rekursive Aufruf erhöht die Tiefe um 1.\nb) Erläutere an der Methode das Prinzip „Teile und herrsche“.\nc) Gib an, wie viele Aufrufe bei 10 Elementen höchstens nötig sind (einschließlich eines Aufrufs mit lo > hi), und wie viele zusätzliche Aufrufe eine Verdopplung auf 20 Elemente höchstens kostet.",
+      "code": "public static int binaerRek(int[] r, int x, int lo, int hi) {\n    if (lo > hi) {\n        return -1;\n    }\n    int mid = (lo + hi) / 2;\n    if (r[mid] == x) {\n        return mid;\n    }\n    if (r[mid] < x) {\n        return binaerRek(r, x, mid + 1, hi);\n    }\n    return binaerRek(r, x, lo, mid - 1);\n}",
+      "loesung": "a) Die Rückgabewerte werden unverändert nach oben durchgereicht (Endrekursion): 6 für x = 30, −1 für x = 9.\nb) Teilen: mid zerlegt den Bereich lo … hi in eine linke und eine rechte Hälfte. Herrschen: Durch den Vergleich mit r[mid] steht fest, in welcher Hälfte x nur liegen kann; nur diese wird rekursiv weiter durchsucht, die andere wird verworfen. Basisfälle: Treffer (r[mid] = x) oder leerer Bereich (lo > hi).\nc) Höchstens 5 Aufrufe: Der Bereich schrumpft 10 → 5 → 2 → 1 → 0 (leer). Bei 20 Elementen höchstens 6 Aufrufe – eine Verdopplung kostet nur einen Aufruf mehr.",
+      "loesungCode": "binaerRek(r, 30, 0, 9):\nTiefe | lo | hi | mid | r[mid] | Rückgabe\n------+----+----+-----+--------+---------\n  0   |  0 |  9 |  4  |   21   |    6\n  1   |  5 |  9 |  7  |   35   |    6\n  2   |  5 |  6 |  5  |   26   |    6\n  3   |  6 |  6 |  6  |   30   |    6\n\nbinaerRek(r, 9, 0, 9):\nTiefe | lo | hi | mid | r[mid] | Rückgabe\n------+----+----+-----+--------+---------\n  0   |  0 |  9 |  4  |   21   |   -1\n  1   |  0 |  3 |  1  |    8   |   -1\n  2   |  2 |  3 |  2  |   12   |   -1\n  3   |  2 |  1 |  -  |    -   |   -1",
+      "minuten": 7
+    },
+    {
+      "id": "W3-10",
+      "welt": 3,
+      "kategorie": "Funktionsweise erläutern",
+      "titel": "Der Spaltzauber",
+      "aufgabe": "mergeSort teilt eine Reihung mit mitte = länge / 2 in links = r[0 … mitte − 1] und rechts = r[mitte … länge − 1], sortiert beide Teile rekursiv und verschmilzt sie mit verschmelze. Reihungen der Länge ≤ 1 werden direkt (als Kopie) zurückgegeben.\na) Zeichne für r = [38, 27, 43, 3, 9, 82, 10] den Teilungsbaum bis zu den Reihungen der Länge 1 und darunter den Verschmelzungsbaum.\nb) Gib an, wie oft mergeSort (einschließlich des Erstaufrufs) und wie oft verschmelze aufgerufen werden.\nc) verschmelze vergleicht nur, solange beide Teile noch Elemente haben. Gib an, wie viele Vergleiche das Verschmelzen von [3, 27, 38] und [9, 10, 43, 82] benötigt.",
+      "code": "",
+      "loesung": "a) siehe Bäume. Wegen mitte = länge / 2 (ganzzahlig) ist die linke Hälfte bei ungerader Länge die kürzere: [38, 27, 43] → [38] | [27, 43].\nb) mergeSort: 13 Aufrufe (ein Aufruf je Knoten des Teilungsbaums, allgemein 2n − 1 = 13). verschmelze: 6 Aufrufe (für jeden Knoten mit Länge ≥ 2, allgemein n − 1 = 6).\nc) 5 Vergleiche: 3|9 → 3 · 27|9 → 9 · 27|10 → 10 · 27|43 → 27 · 38|43 → 38; danach ist der linke Teil leer, 43 und 82 werden ohne Vergleich angehängt.",
+      "loesungCode": "Teilen:\nTiefe 0:          [38, 27, 43, 3, 9, 82, 10]\nTiefe 1:   [38, 27, 43]          [3, 9, 82, 10]\nTiefe 2:  [38]  [27, 43]       [3, 9]    [82, 10]\nTiefe 3:       [27] [43]      [3] [9]   [82] [10]\n\nVerschmelzen:\nTiefe 2:  [38]  [27, 43]       [3, 9]    [10, 82]\nTiefe 1:   [27, 38, 43]          [3, 9, 10, 82]\nTiefe 0:          [3, 9, 10, 27, 38, 43, 82]",
+      "minuten": 7
+    },
+    {
+      "id": "W3-11",
+      "welt": 3,
+      "kategorie": "Code ↔ Struktogramm",
+      "titel": "Der stärkste Golem",
+      "aufgabe": "maximumTH bestimmt nach dem Prinzip „Teile und herrsche“ den größten Wert in r[von] … r[bis] (von ≤ bis).\na) Übertrage die Methode in ein Struktogramm nach den Abi-Konventionen. Rekursive Aufrufe sind normale Anweisungen, z. B. links ← maximumTH(r, von, mitte).\nb) Gib die Anzahl der Aufrufe und die größte Rekursionstiefe für maximumTH(r, 0, 7) an (8 Elemente). Rekursionstiefe: Der Erstaufruf hat die Tiefe 0, jeder rekursive Aufruf erhöht die Tiefe um 1.\nc) Ein Golem-Bauer ändert die Mitte zu mitte = (von + bis + 1) / 2 und lässt die Aufrufe unverändert. Erläutere am Aufruf maximumTH(r, 0, 1), was passiert.",
+      "code": "public static int maximumTH(int[] r, int von, int bis) {\n    if (von == bis) {\n        return r[von];\n    }\n    int mitte = (von + bis) / 2;\n    int links = maximumTH(r, von, mitte);\n    int rechts = maximumTH(r, mitte + 1, bis);\n    if (links > rechts) {\n        return links;\n    }\n    return rechts;\n}",
+      "loesung": "Kernpunkte a): Kopf mit Signatur · Basisfall als Verzweigung mit „gib r[von] zurück“ · Zuweisungen mit ← · Aufrufe als Anweisungen · Rückgabe des größeren Wertes (auch als Verzweigung mit zwei „gib … zurück“).\nb) 15 Aufrufe (8 Blätter + 7 innere Aufrufe = 2 · 8 − 1), größte Rekursionstiefe 3 (8 → 4 → 2 → 1).\nc) mitte = (0 + 1 + 1) / 2 = 1: Der Aufruf maximumTH(r, von, mitte) = maximumTH(r, 0, 1) ist derselbe Aufruf wie zuvor – das Problem wird nicht kleiner → Endlosrekursion (StackOverflowError). Bei jedem Bereich mit zwei Elementen tritt das auf.",
+      "loesungCode": "maximumTH(r: Reihung von Ganzzahl, von: Ganzzahl, bis: Ganzzahl): Ganzzahl\n  falls von = bis\n    dann: gib r[von] zurück\n    sonst: –\n  mitte ← (von + bis) / 2\n  links ← maximumTH(r, von, mitte)\n  rechts ← maximumTH(r, mitte + 1, bis)\n  falls links > rechts\n    dann: gib links zurück\n    sonst: gib rechts zurück",
+      "minuten": 7
+    },
+    {
+      "id": "W3-12",
+      "welt": 3,
+      "kategorie": "Tracetabelle",
+      "titel": "Die Pivot-Wache",
+      "aufgabe": "quickSort(r, lo, hi) ruft für lo < hi zuerst p ← zerlege(r, lo, hi) auf und sortiert danach rekursiv r[lo … p − 1] und r[p + 1 … hi]. Für lo ≥ hi endet der Aufruf sofort. Startaufruf: quickSort(r, 0, 6) mit r = [5, 8, 2, 9, 1, 7, 3].\na) Gib die Belegung von r nach zerlege(r, 0, 6), den Rückgabewert und die Anzahl der Vergleiche r[i] < pivot an.\nb) Dokumentiere alle Aufrufe mit lo < hi in einer Tabelle Rekursionstiefe | Aufruf | Rückgabe von zerlege | r nach zerlege. Wie viele Aufrufe von quickSort gibt es insgesamt?\nc) Gib die Anzahl der Vergleiche für die bereits sortierte Reihung [1, 2, 3, 4, 5, 6, 7] an und erläutere, warum das der ungünstigste Fall ist.",
+      "code": "public static int zerlege(int[] r, int lo, int hi) {\n    int pivot = r[lo];\n    int grenze = lo;\n    for (int i = lo + 1; i <= hi; i++) {\n        if (r[i] < pivot) {\n            grenze = grenze + 1;\n            int hilf = r[grenze];\n            r[grenze] = r[i];\n            r[i] = hilf;\n        }\n    }\n    int hilf = r[lo];\n    r[lo] = r[grenze];\n    r[grenze] = hilf;\n    return grenze;\n}",
+      "loesung": "a) Nach zerlege(r, 0, 6): [3, 2, 1, 5, 8, 7, 9], Rückgabe 3, 6 Vergleiche (i = 1 bis 6). Alle kleineren Werte stehen links vom Pivot 5, alle größeren rechts; 5 steht an seiner endgültigen Position.\nb) siehe Tabelle. Insgesamt 9 Aufrufe von quickSort: die 4 aus der Tabelle und 5, die sofort enden: (0, −1), (1, 1), (3, 2), (4, 4), (6, 6). Vergleiche insgesamt: 6 + 2 + 1 + 2 = 11.\nc) 21 Vergleiche = 6 + 5 + 4 + 3 + 2 + 1 = 7 · 6 / 2. Das Pivot r[lo] ist jedes Mal das kleinste Element: Ein Teil ist leer, der andere nur um 1 kürzer. Statt Halbierung entsteht eine Kette der Tiefe 6.",
+      "loesungCode": "Tiefe | Aufruf             | zerlege | r nach zerlege\n------+--------------------+---------+----------------------\n  0   | quickSort(r, 0, 6) |    3    | [3, 2, 1, 5, 8, 7, 9]\n  1   | quickSort(r, 0, 2) |    2    | [1, 2, 3, 5, 8, 7, 9]\n  2   | quickSort(r, 0, 1) |    0    | [1, 2, 3, 5, 8, 7, 9]\n  1   | quickSort(r, 4, 6) |    5    | [1, 2, 3, 5, 7, 8, 9]",
+      "minuten": 8
+    },
+    {
+      "id": "W3-13",
+      "welt": 3,
+      "kategorie": "Fehler im Struktogramm",
+      "titel": "Das falsche Echo",
+      "aufgabe": "anzahlGroesser soll rekursiv zählen, wie viele Werte ab dem Index i größer als grenze sind. Gestartet wird mit i = 0. Das Struktogramm enthält zwei Fehler.\na) Erläutere, was beim Aufruf anzahlGroesser([4, 9, 2, 7], 5, 0) geschieht.\nb) Nimm an, nur der Fehler aus a) ist behoben. Gib den Rückgabewert für dieselbe Eingabe an (richtig wäre 2) und erläutere den zweiten Fehler. Was geschieht zusätzlich bei einer leeren Reihung?\nc) Gib ein korrigiertes Struktogramm an.",
+      "code": "anzahlGroesser(r: Reihung von Ganzzahl, grenze: Ganzzahl, i: Ganzzahl): Ganzzahl\n  falls i = Länge von r − 1\n    dann: gib 0 zurück\n    sonst: –\n  falls r[i] > grenze\n    dann: gib 1 + anzahlGroesser(r, grenze, i + 1) zurück\n    sonst: gib anzahlGroesser(r, grenze, i) zurück",
+      "loesung": "a) Fehler 1: Im sonst-Zweig wird i nicht erhöht. Schon bei i = 0 ist r[0] = 4 nicht größer als 5, also folgt derselbe Aufruf anzahlGroesser(r, 5, 0) immer wieder → Endlosrekursion (StackOverflowError). Der Rekursionsschritt verkleinert das Problem nicht.\nb) Rückgabe 1 statt 2. Fehler 2: Der Basisfall greift schon bei i = Länge − 1 und liefert 0 – das letzte Element (7) wird nie geprüft. Bei einer leeren Reihung ist Länge − 1 = −1; i = 0 erreicht diesen Wert nie, es kommt zum Zugriff auf r[0] → Laufzeitfehler (Index außerhalb).\nc) Basisfall i = Länge von r (leerer Rest, gib 0 zurück) und Selbstaufruf mit i + 1 im sonst-Zweig.",
+      "loesungCode": "anzahlGroesser(r: Reihung von Ganzzahl, grenze: Ganzzahl, i: Ganzzahl): Ganzzahl\n  falls i = Länge von r\n    dann: gib 0 zurück\n    sonst: –\n  falls r[i] > grenze\n    dann: gib 1 + anzahlGroesser(r, grenze, i + 1) zurück\n    sonst: gib anzahlGroesser(r, grenze, i + 1) zurück",
+      "minuten": 6
+    },
+    {
+      "id": "W3-14",
+      "welt": 3,
+      "kategorie": "Funktionsweise erläutern",
+      "titel": "Das Rätsel des Turmwächters",
+      "aufgabe": "Der Turmwächter ordnet seine Schlüssel mit einer Methode, deren Namen er geheim hält. Gestartet wird mit raetsel(r, r.length).\na) Dokumentiere den Aufruf raetsel(r, 4) für r = [6, 2, 9, 4] in einer Tabelle Rekursionstiefe | Aufruf | Belegung von r zum Zeitpunkt des Aufrufs. Rekursionstiefe: Der Erstaufruf hat die Tiefe 0, jeder rekursive Aufruf erhöht die Tiefe um 1.\nb) Beschreibe, was raetsel bewirkt, und benenne das bekannte Sortierverfahren, das hier rekursiv umgesetzt ist. Was ist der Basisfall, was wird im Rekursionsschritt kleiner?\nc) Gib die Anzahl der Vergleiche r[i] > r[m] für n = 4 und allgemein für n Elemente an. Wie verändert sich die Anzahl ungefähr, wenn n verdoppelt wird?",
+      "code": "public static void raetsel(int[] r, int n) {\n    if (n <= 1) {\n        return;\n    }\n    int m = 0;\n    for (int i = 1; i < n; i++) {\n        if (r[i] > r[m]) {\n            m = i;\n        }\n    }\n    int hilf = r[m];\n    r[m] = r[n - 1];\n    r[n - 1] = hilf;\n    raetsel(r, n - 1);\n}",
+      "loesung": "a) siehe Tabelle; nach dem Ende ist r = [2, 4, 6, 9].\nb) raetsel sortiert r[0 … n − 1] aufsteigend: Es sucht im Bereich r[0 … n − 1] den Index des größten Wertes, tauscht ihn an die letzte Position n − 1 und sortiert dann rekursiv den Rest r[0 … n − 2]. Das ist Selectionsort (Auswahl des Maximums) – die äußere Schleife ist durch die Rekursion ersetzt. Basisfall: n ≤ 1 (ein Element ist sortiert); im Rekursionsschritt wird der unsortierte Bereich um 1 kürzer.\nc) n = 4: 3 + 2 + 1 = 6 Vergleiche; allgemein (n − 1) + (n − 2) + … + 1 = n(n − 1)/2. Bei Verdopplung von n etwa viermal so viele Vergleiche.",
+      "loesungCode": "Tiefe | Aufruf         | Belegung von r beim Aufruf\n------+----------------+---------------------------\n  0   | raetsel(r, 4)  | [6, 2, 9, 4]\n  1   | raetsel(r, 3)  | [6, 2, 4, 9]\n  2   | raetsel(r, 2)  | [4, 2, 6, 9]\n  3   | raetsel(r, 1)  | [2, 4, 6, 9]",
+      "minuten": 7
+    }
+  ]
+}

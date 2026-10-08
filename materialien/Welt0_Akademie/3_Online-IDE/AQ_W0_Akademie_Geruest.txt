@@ -1,0 +1,1474 @@
+// =====================================================================
+//  WELT 0 – DIE AKADEMIE – GERÜST
+//  Informatik LK · Online-IDE · Algo Quest · Level 0.2 bis 0.5 und
+//  Papier-Compiler 0
+//
+//  Bevor euer Studio Helden schmieden darf, durchlaeuft es die Akademie
+//  der Baumeister: In der Werkstatt schaerfst du deine Werkzeuge
+//  (Datentypen, Operatoren, Verzweigungen, Schleifen), in der
+//  Vorratskammer ordnest du Reihungen, und in der Zauberschule lernst
+//  du, eigene Zauberformeln zu schreiben - Methoden mit Namen, Zutaten
+//  (Parametern) und Wirkung (Rueckgabewert). Im Abitur ist JEDE
+//  Implementierung eine Methode mit vorgegebener Signatur. Hier lernst
+//  du, sie sicher zu bauen.
+//
+//  ANLEITUNG:
+//  1. Du arbeitest NUR im Abschnitt "DEIN TEIL". Ueber jeder Methode
+//     stehen ihre Signatur in Abi-Notation und eine kurze Beschreibung.
+//     Ersetze die Zeilen "// TODO Level 0.x" und die vorlaeufigen
+//     return-Anweisungen durch deine Loesung.
+//
+//  2. Tests starten: Oeffne den Reiter "Testrunner" und klicke auf den
+//     gruenen Dreieckspfeil neben einer Testklasse (alle Tests dieses
+//     Levels) oder neben einem einzelnen Test. Gruen = bestanden,
+//     rot = noch nicht bestanden. Lies bei roten Tests die Meldung!
+//
+//  3. Die Level und ihre Testklassen:
+//
+//      Level  DS  Klasse             Testklasse            Inhalt
+//      ----------------------------------------------------------------
+//      0.2    2   Werkstatt          L02WerkstattTest      Datentypen,
+//                                                          / und %, Casting,
+//                                                          Verzweigung,
+//                                                          Schleifen
+//      0.3    3   Vorrat             L03VorratTest         Reihungen,
+//                                                          Zeichenketten
+//      0.4    4   Zauber             L04ZauberTest         eigene Methoden:
+//                                                          Methodenkopf,
+//                                                          return, Hilfs-
+//                                                          methoden, Zufall
+//      0.5    5   ZauberII           L05ZauberIITest       Reihungen als
+//                                                          Parameter und
+//                                                          Rueckgabe, Wert
+//                                                          vs. Referenz
+//      PC 0   6   Werkstattpruefung  PapierCompiler0Test   Papier-Compiler
+//
+//     In jedem Level gibt es drei Stufen. Du erkennst sie am Anfang des
+//     Testnamens:
+//          basis_...         Basis
+//          erweiterung_...   Erweiterung
+//          experte_...       Experte
+//     Eine Stufe ist geschafft, wenn ALLE Tests mit diesem Anfang gruen
+//     sind. Ein paar Tests sind schon am Anfang zufaellig gruen, weil
+//     die vorlaeufigen return-Werte passen - das zaehlt noch nicht.
+//
+//  4. LEVEL 0.4 – METHODENKOEPFE SELBST SCHREIBEN UND FREISCHALTEN:
+//     In der Klasse Zauber sind nur die Methodenkoepfe der Stufe Basis
+//     vorgegeben. Fuer Erweiterung und Experte steht nur die Signatur
+//     in Abi-Notation im Kommentar - den Java-Methodenkopf schreibst du
+//     selbst (Uebersetzungstabelle am Anfang von "DEIN TEIL").
+//     Damit das Programm trotzdem kompiliert, sind die Tests und die
+//     Teile des Hauptprogramms, die diese Methoden benutzen,
+//     auskommentiert - je Stufe genau ZWEI Bloecke:
+//          Stufe Erweiterung:  in L04ZauberTest und im Hauptprogramm
+//               erste Zeile    /* LEVEL-0.4-START Erweiterung
+//               letzte Zeile   LEVEL-0.4-ENDE Erweiterung */
+//          Stufe Experte:      in L04ZauberTest und im Hauptprogramm
+//               erste Zeile    /* LEVEL-0.4-START Experte
+//               letzte Zeile   LEVEL-0.4-ENDE Experte */
+//     Zum Freischalten loeschst du genau diese beiden Zeilen (in beiden
+//     Bloecken der Stufe). Schalte eine Stufe erst frei, wenn alle drei
+//     Methoden dieser Stufe einen Kopf haben. Meldet der Compiler danach
+//     "Methode nicht gefunden" o. Ae., vergleiche Name, Parametertypen
+//     und Rueckgabetyp mit der Abi-Signatur.
+//
+//  5. PAPIER-COMPILER 0 (DS 6): Die Klasse Werkstattpruefung ist leer.
+//     Die Methode anzahlUeberDurchschnitt schreibst du zuerst auf Papier
+//     (AB 5) und tippst sie dann unveraendert ab. Freischalten wie in
+//     Punkt 4, wieder genau ZWEI Bloecke (PapierCompiler0Test und
+//     Hauptprogramm):
+//               erste Zeile    /* PAPIER-COMPILER-0-START
+//               letzte Zeile   PAPIER-COMPILER-0-ENDE */
+//     Hier muessen ALLE Tests gruen sein - am besten schon beim
+//     ersten Versuch.
+//
+//  6. Die Testklassen darfst du NICHT veraendern (ausser dem
+//     Freischalten in Punkt 4 und 5) - sonst zaehlt der Test nicht. Du
+//     glaubst, ein Test ist falsch? Melde ihn deiner Lehrkraft (Bug-Meldung).
+//
+//  7. Mit dem gruenen Startknopf oben laeuft das Hauptprogramm ganz
+//     unten (ein Rundgang durch die Akademie mit zwei Raetseln).
+//
+//  SPIELREGELN (wie im Abitur):
+//  - Math.round, Math.floor, Math.ceil und Math.pow sind in der
+//    Akademie verboten: Runden und Potenzieren baust du selbst.
+//    Math.random() ist erlaubt.
+//  - Zeichenketten nur mit length(), charAt(i), substring(a, b), +,
+//    equals(...), contains(...), compareTo(...) bearbeiten.
+//    NICHT erlaubt: toLowerCase, toUpperCase, split, indexOf, replace ...
+//    Zeichenketten IMMER mit equals vergleichen - nie mit ==.
+//  - Reihungen: Index von 0 bis r.length - 1. Vor jedem Zugriff
+//    ueberlegen: Kann die Reihung leer sein?
+//  - Jede Methode mit Rueckgabetyp braucht in JEDEM Fall ein return.
+// =====================================================================
+
+
+// ---------------------------------------------------------------------
+//  GERÜST – hier nichts veraendern
+// ---------------------------------------------------------------------
+//  Die Klasse Anzeige hilft beim Ausgeben von Reihungen. Die Tests
+//  benutzen sie, um dir in der Meldung die ganze Reihung zu zeigen,
+//  z. B. "[erwartet: {4, 3, 2, 1}, tatsaechlich: {1, 2, 3, 4}]".
+//  Du darfst sie auch selbst im Hauptprogramm benutzen.
+// ---------------------------------------------------------------------
+
+class Anzeige {
+
+    // text(r: Reihung von Ganzzahl): Zeichenkette
+    // Liefert die Reihung als Text, z. B. "{4, 8, 15}".
+    // Leere Reihung -> "{}", null (noch keine Reihung) -> "null".
+    public static String text(int[] r) {
+        if (r == null) {
+            return "null";
+        }
+        String s = "{";
+        for (int i = 0; i < r.length; i++) {
+            if (i > 0) {
+                s = s + ", ";
+            }
+            s = s + r[i];
+        }
+        return s + "}";
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  DEIN TEIL – hier arbeitest du!
+// ---------------------------------------------------------------------
+//  Ueber jeder Methode steht ihre Signatur in Abi-Notation:
+//      name(p: Typ, q: Typ): Rueckgabetyp
+//  So stehen Methoden auch in den Abituraufgaben ("Implementieren Sie
+//  die Methode ..."). Uebersetzung in Java (alle Methoden der Akademie
+//  sind public static):
+//
+//      Abi-Notation                 Java
+//      ------------------------------------------------------------
+//      Ganzzahl                     int
+//      Kommazahl                    double
+//      Wahrheitswert                boolean
+//      Zeichen                      char
+//      Zeichenkette                 String
+//      Reihung von Ganzzahl         int[]
+//      nichts                       void
+//
+//      name(p: Typ, q: Typ): Rueckgabetyp
+//      ->  public static Rueckgabetyp name(Typ p, Typ q) { ... }
+//
+//  Beispiel:  heilwert(stufe: Ganzzahl): Ganzzahl
+//         ->  public static int heilwert(int stufe) { ... }
+// ---------------------------------------------------------------------
+
+// ===================== Level 0.2 – Die Werkstatt ======================
+//  Datentypen, Operatoren (/ und % bei Ganzzahlen, Casting, Vergleiche),
+//  Verzweigungen und Schleifen. Math.round, Math.floor und Math.ceil
+//  sind in der Akademie VERBOTEN - du rundest selbst!
+
+class Werkstatt {
+
+    // ===================== Stufe BASIS =====================
+
+    // istGerade(n: Ganzzahl): Wahrheitswert
+    // true, wenn n gerade ist (auch fuer 0 und negative Zahlen).
+    public static boolean istGerade(int n) {
+        // TODO Level 0.2 · Basis
+        return false;
+    }
+
+    // restGold(gold: Ganzzahl, preis: Ganzzahl): Ganzzahl
+    // Ein Held kauft so viele Traenke zum Preis preis, wie sein Gold
+    // reicht. Wie viel Gold bleibt uebrig? (preis > 0)
+    public static int restGold(int gold, int preis) {
+        // TODO Level 0.2 · Basis
+        return -1;
+    }
+
+    // kistenBenoetigt(anzahl: Ganzzahl, proKiste: Ganzzahl): Ganzzahl
+    // In eine Kiste passen proKiste Traenke. Wie viele Kisten braucht man
+    // fuer anzahl Traenke? Eine angefangene Kiste zaehlt mit (aufrunden!).
+    // anzahl >= 0, proKiste > 0. Ohne Math.ceil - nur mit / und %.
+    public static int kistenBenoetigt(int anzahl, int proKiste) {
+        // TODO Level 0.2 · Basis
+        return -1;
+    }
+
+
+    // ================== Stufe ERWEITERUNG ==================
+
+    // schadensstufe(schaden: Ganzzahl): Zeichenkette
+    // "kein" (schaden <= 0), "leicht" (1 bis 9), "mittel" (10 bis 29),
+    // "schwer" (ab 30).
+    public static String schadensstufe(int schaden) {
+        // TODO Level 0.2 · Erweiterung
+        return "";
+    }
+
+    // durchschnitt(a: Ganzzahl, b: Ganzzahl, c: Ganzzahl): Kommazahl
+    // Der exakte Durchschnitt der drei Zahlen, z. B. 2.333... fuer 1, 2, 4.
+    public static double durchschnitt(int a, int b, int c) {
+        // TODO Level 0.2 · Erweiterung
+        return -1.0;
+    }
+
+    // quersumme(n: Ganzzahl): Ganzzahl
+    // Summe der Ziffern von n (n >= 0), z. B. quersumme(1234) = 10.
+    // Mit einer Schleife, % 10 und / 10. quersumme(0) = 0.
+    public static int quersumme(int n) {
+        // TODO Level 0.2 · Erweiterung
+        return -1;
+    }
+
+
+    // ==================== Stufe EXPERTE ====================
+
+    // potenz(basis: Ganzzahl, exponent: Ganzzahl): Ganzzahl
+    // basis hoch exponent (exponent >= 0) mit einer Schleife - ohne
+    // Math.pow. potenz(x, 0) = 1.
+    public static int potenz(int basis, int exponent) {
+        // TODO Level 0.2 · Experte
+        return -1;
+    }
+
+    // ggT(a: Ganzzahl, b: Ganzzahl): Ganzzahl
+    // Groesster gemeinsamer Teiler von a und b (a, b > 0) mit dem
+    // euklidischen Algorithmus (Schleife).
+    public static int ggT(int a, int b) {
+        // TODO Level 0.2 · Experte
+        return -1;
+    }
+
+    // istPrimzahl(n: Ganzzahl): Wahrheitswert
+    // true, wenn n eine Primzahl ist. Fuer n < 2 -> false.
+    public static boolean istPrimzahl(int n) {
+        // TODO Level 0.2 · Experte
+        return false;
+    }
+}
+
+
+// =================== Level 0.3 – Die Vorratskammer ===================
+//  Reihungen: Index von 0 bis r.length - 1, for und for-each, Kopie vs.
+//  Referenz, neue Reihung zurueckgeben. Zeichenketten nur mit length(),
+//  charAt(i), substring(a, b), +, equals(...), contains(...),
+//  compareTo(...).
+
+class Vorrat {
+
+    // ===================== Stufe BASIS =====================
+
+    // anzahlLeer(r: Reihung von Ganzzahl): Ganzzahl
+    // Anzahl der leeren Faecher, also der Elemente mit dem Wert 0.
+    public static int anzahlLeer(int[] r) {
+        // TODO Level 0.3 · Basis
+        return -1;
+    }
+
+    // letzterWert(r: Reihung von Ganzzahl): Ganzzahl
+    // Das letzte Element von r. Leere Reihung -> -1.
+    public static int letzterWert(int[] r) {
+        // TODO Level 0.3 · Basis
+        return -1;
+    }
+
+    // enthaelt(r: Reihung von Ganzzahl, x: Ganzzahl): Wahrheitswert
+    // true, wenn x in r vorkommt.
+    public static boolean enthaelt(int[] r, int x) {
+        // TODO Level 0.3 · Basis
+        return false;
+    }
+
+
+    // ================== Stufe ERWEITERUNG ==================
+
+    // umgedreht(r: Reihung von Ganzzahl): Reihung von Ganzzahl
+    // Liefert eine NEUE Reihung mit den Werten von r in umgekehrter
+    // Reihenfolge. r selbst bleibt unveraendert.
+    public static int[] umgedreht(int[] r) {
+        // TODO Level 0.3 · Erweiterung
+        return null;
+    }
+
+    // verdopple(r: Reihung von Ganzzahl): nichts
+    // Verdoppelt jeden Wert IN r (r wird veraendert, keine neue Reihung).
+    public static void verdopple(int[] r) {
+        // TODO Level 0.3 · Erweiterung
+    }
+
+    // anzahlAnstiege(r: Reihung von Ganzzahl): Ganzzahl
+    // Wie oft ist ein Element ECHT groesser als sein linker Nachbar?
+    // (Anzahl der i mit r[i] > r[i - 1])
+    public static int anzahlAnstiege(int[] r) {
+        // TODO Level 0.3 · Erweiterung
+        return -1;
+    }
+
+
+    // ==================== Stufe EXPERTE ====================
+
+    // zaehleZeichen(s: Zeichenkette, c: Zeichen): Ganzzahl
+    // Wie oft kommt das Zeichen c in s vor? ('a' und 'A' sind verschieden.)
+    public static int zaehleZeichen(String s, char c) {
+        // TODO Level 0.3 · Experte
+        return -1;
+    }
+
+    // ohneVokale(s: Zeichenkette): Zeichenkette
+    // Liefert s ohne die Vokale a, e, i, o, u (klein UND gross).
+    // Nur mit length(), charAt(i) und + - KEIN replace, KEIN toLowerCase.
+    public static String ohneVokale(String s) {
+        // TODO Level 0.3 · Experte
+        return "";
+    }
+
+    // beginntMit(s: Zeichenkette, anfang: Zeichenkette): Wahrheitswert
+    // true, wenn s mit anfang beginnt. Ist anfang laenger als s -> false.
+    // Nur mit length()/charAt(i) bzw. substring(...) und equals(...).
+    public static boolean beginntMit(String s, String anfang) {
+        // TODO Level 0.3 · Experte
+        return false;
+    }
+}
+
+
+// ==================== Level 0.4 – Die Zauberschule ===================
+//  Eigene Methoden = Zauberformeln: Name, Zutaten (Parameter) und
+//  Wirkung (Rueckgabewert).
+//  - Basis: Die Methodenkoepfe sind vorgegeben - vergleiche sie mit der
+//    Abi-Signatur darueber!
+//  - Erweiterung und Experte: Hier steht NUR die Abi-Signatur. Den
+//    Java-Methodenkopf schreibst du SELBST (Tabelle oben). Danach
+//    schaltest du die Tests frei (ANLEITUNG, Punkt 4).
+
+class Zauber {
+
+    // ===================== Stufe BASIS =====================
+
+    // heilwert(stufe: Ganzzahl): Ganzzahl
+    // Ein Heilzauber heilt 15 Leben pro Stufe.
+    public static int heilwert(int stufe) {
+        // TODO Level 0.4 · Basis
+        return -1;
+    }
+
+    // istStaerker(a: Ganzzahl, b: Ganzzahl): Wahrheitswert
+    // true, wenn a ECHT groesser als b ist.
+    public static boolean istStaerker(int a, int b) {
+        // TODO Level 0.4 · Basis
+        return false;
+    }
+
+    // spruchtext(name: Zeichenkette, stufe: Ganzzahl): Zeichenkette
+    // Text des Zauberspruchs, z. B. "Feuerball (Stufe 3)".
+    public static String spruchtext(String name, int stufe) {
+        // TODO Level 0.4 · Basis
+        return "";
+    }
+
+    // max2(a: Ganzzahl, b: Ganzzahl): Ganzzahl
+    // Die groessere der beiden Zahlen. (Hilfsmethode fuer max3!)
+    public static int max2(int a, int b) {
+        // TODO Level 0.4 · Basis
+        return -1;
+    }
+
+
+    // ================== Stufe ERWEITERUNG ==================
+    // Schreibe zu jeder Signatur den Java-Methodenkopf und den Rumpf.
+
+    // manaKosten(stufe: Ganzzahl, verstaerkt: Wahrheitswert): Ganzzahl
+    // Ein Zauber kostet 10 Mana pro Stufe. Ist er verstaerkt, kostet er
+    // das Doppelte.
+    // TODO Level 0.4 · Erweiterung: Methodenkopf + Rumpf
+
+
+    // kannZaubern(mana: Ganzzahl, stufe: Ganzzahl, verstaerkt: Wahrheitswert): Wahrheitswert
+    // true, wenn das Mana fuer den Zauber reicht (mana >= Kosten).
+    // Benutze dafuer DEINE Methode manaKosten - nicht neu rechnen!
+    // TODO Level 0.4 · Erweiterung: Methodenkopf + Rumpf
+
+
+    // max3(a: Ganzzahl, b: Ganzzahl, c: Ganzzahl): Ganzzahl
+    // Die groesste der drei Zahlen. Benutze die Hilfsmethode max2.
+    // TODO Level 0.4 · Erweiterung: Methodenkopf + Rumpf
+
+
+
+    // ==================== Stufe EXPERTE ====================
+    // Schreibe zu jeder Signatur den Java-Methodenkopf und den Rumpf.
+
+    // runden(wert: Kommazahl): Ganzzahl
+    // Rundet wert (wert >= 0) kaufmaennisch: ab .5 auf, sonst ab.
+    // Ohne Math.round - nur mit einem Cast (int).
+    // TODO Level 0.4 · Experte: Methodenkopf + Rumpf
+
+
+    // wuerfelImBereich(von: Ganzzahl, bis: Ganzzahl): Ganzzahl
+    // Eine Zufallszahl von von bis bis (beide Grenzen moeglich, alle
+    // gleich wahrscheinlich), von <= bis. Math.random() liefert eine
+    // Kommazahl von 0 (inklusive) bis 1 (exklusive).
+    // TODO Level 0.4 · Experte: Methodenkopf + Rumpf
+
+
+    // zauberkette(stufe: Ganzzahl): Zeichenkette
+    // Die Zahlen von 1 bis stufe, mit "-" verbunden: zauberkette(3) ist
+    // "1-2-3". Fuer stufe <= 0 -> "" (leere Zeichenkette).
+    // TODO Level 0.4 · Experte: Methodenkopf + Rumpf
+
+}
+
+
+// ================ Level 0.5 – Die Zauberschule, Teil II ==============
+//  Reihungen als Parameter und Rueckgabe. Merke:
+//  - Ein int-Parameter ist eine KOPIE: ihn zu aendern, wirkt nicht nach
+//    aussen.
+//  - Ein Reihungs-Parameter ist eine REFERENZ: r[i] = ... aendert die
+//    Reihung des Aufrufers. r = new int[...] dagegen nicht!
+//  - Soll das Original unveraendert bleiben: NEUE Reihung anlegen.
+
+class ZauberII {
+
+    // ===================== Stufe BASIS =====================
+
+    // fuelle(r: Reihung von Ganzzahl, wert: Ganzzahl): nichts
+    // Setzt jedes Element von r auf wert.
+    public static void fuelle(int[] r, int wert) {
+        // TODO Level 0.5 · Basis
+    }
+
+    // erhoeheAlle(r: Reihung von Ganzzahl, bonus: Ganzzahl): nichts
+    // Erhoeht jedes Element von r um bonus (r wird veraendert).
+    public static void erhoeheAlle(int[] r, int bonus) {
+        // TODO Level 0.5 · Basis
+    }
+
+    // erhoehteKopie(r: Reihung von Ganzzahl, bonus: Ganzzahl): Reihung von Ganzzahl
+    // Liefert eine NEUE Reihung, in der jedes Element um bonus groesser
+    // ist als in r. r selbst bleibt unveraendert.
+    public static int[] erhoehteKopie(int[] r, int bonus) {
+        // TODO Level 0.5 · Basis
+        return null;
+    }
+
+
+    // ================== Stufe ERWEITERUNG ==================
+
+    // istImBereich(x: Ganzzahl, von: Ganzzahl, bis: Ganzzahl): Wahrheitswert
+    // true, wenn von <= x <= bis (beide Grenzen gehoeren dazu).
+    public static boolean istImBereich(int x, int von, int bis) {
+        // TODO Level 0.5 · Erweiterung
+        return false;
+    }
+
+    // zaehleImBereich(r: Reihung von Ganzzahl, von: Ganzzahl, bis: Ganzzahl): Ganzzahl
+    // Wie viele Elemente von r liegen im Bereich von bis bis?
+    // Benutze die Hilfsmethode istImBereich.
+    public static int zaehleImBereich(int[] r, int von, int bis) {
+        // TODO Level 0.5 · Erweiterung
+        return -1;
+    }
+
+    // indexDesMinimums(r: Reihung von Ganzzahl): Ganzzahl
+    // Index des kleinsten Elements; bei mehreren der ERSTE.
+    // Leere Reihung -> -1.
+    public static int indexDesMinimums(int[] r) {
+        // TODO Level 0.5 · Erweiterung
+        return -1;
+    }
+
+    // tauscheErstesUndLetztes(r: Reihung von Ganzzahl): nichts
+    // Vertauscht das erste und das letzte Element von r.
+    // Bei einer Laenge kleiner als 2 passiert nichts.
+    public static void tauscheErstesUndLetztes(int[] r) {
+        // TODO Level 0.5 · Erweiterung
+    }
+
+
+    // ==================== Stufe EXPERTE ====================
+
+    // zweitgroesster(r: Reihung von Ganzzahl): Ganzzahl
+    // Der zweitgroesste WERT unter den verschiedenen Werten von r,
+    // z. B. 5 fuer {3, 9, 5, 9}. Gibt es keinen (Laenge < 2 oder alle
+    // Werte gleich) -> -1. r bleibt unveraendert.
+    public static int zweitgroesster(int[] r) {
+        // TODO Level 0.5 · Experte
+        return -1;
+    }
+
+    // verschmelze(a: Reihung von Ganzzahl, b: Reihung von Ganzzahl): Reihung von Ganzzahl
+    // a und b sind aufsteigend sortiert. Liefert eine NEUE, aufsteigend
+    // sortierte Reihung mit allen Werten aus a und b (Reissverschluss).
+    // Nicht einfach aneinanderhaengen und sortieren!
+    public static int[] verschmelze(int[] a, int[] b) {
+        // TODO Level 0.5 · Experte
+        return null;
+    }
+}
+
+
+// ================= Papier-Compiler 0 – Werkstattpruefung ===============
+//  Aufgabe (AB 5, wie im Abitur):
+//    Implementieren Sie die Methode
+//        anzahlUeberDurchschnitt(r: Reihung von Ganzzahl): Ganzzahl,
+//    die die Anzahl der Werte in r liefert, die ECHT groesser als der
+//    Durchschnitt (Kommazahl) aller Werte sind. Fuer eine leere Reihung
+//    liefert sie 0.
+//
+//  So geht der Papier-Compiler:
+//    1. Schreibe die Methode zuerst OHNE Geraet auf Papier - mit
+//       Methodenkopf (public static ...).
+//    2. Tippe sie danach UNVERAENDERT hier in die Klasse ab - jeder
+//       Tippfehler zaehlt wie im Abitur.
+//    3. Schalte den Test PapierCompiler0Test und den Teil im
+//       Hauptprogramm frei (ANLEITUNG, Punkt 5) und starte die Tests.
+//    Ziel: alle Tests gruen beim ersten Versuch.
+
+class Werkstattpruefung {
+
+    // TODO Papier-Compiler 0: deine Methode von Papier abtippen
+
+}
+
+
+// ---------------------------------------------------------------------
+//  TESTS – hier nichts veraendern!
+// ---------------------------------------------------------------------
+//  Eine Testklasse pro Level. Die Stufe erkennst du am Anfang des
+//  Testnamens:
+//      basis_...        Basis       
+//      erweiterung_...  Erweiterung 
+//      experte_...      Experte     
+//  Eine Stufe ist geschafft, wenn ALLE Tests mit diesem Anfang gruen sind.
+//  Die Tests des Papier-Compilers 0 haben keinen Stufen-Anfang: Dort
+//  muessen ALLE Tests gruen sein.
+// ---------------------------------------------------------------------
+
+// ===================== Level 0.2 – Die Werkstatt ======================
+
+class L02WerkstattTest {
+
+    @Test
+    public void basis_istGerade_positiv() {
+        assertTrue(Werkstatt.istGerade(4), "4 ist gerade: istGerade(4) muss true liefern");
+        assertFalse(Werkstatt.istGerade(7), "7 ist ungerade: istGerade(7) muss false liefern");
+        assertTrue(Werkstatt.istGerade(0), "0 ist gerade (0 % 2 ergibt 0)");
+    }
+
+    @Test
+    public void basis_istGerade_negativ() {
+        assertTrue(Werkstatt.istGerade(-6), "-6 ist gerade: istGerade(-6) muss true liefern");
+        assertFalse(Werkstatt.istGerade(-3), "-3 ist ungerade - Achtung: -3 % 2 ergibt in Java -1, nicht 1! Pruefe besser auf n % 2 == 0");
+    }
+
+    @Test
+    public void basis_restGold() {
+        assertEquals(5, Werkstatt.restGold(50, 15), "50 Gold, Trank kostet 15: 3 Traenke (45 Gold), Rest 5 - Tipp: Operator %");
+        assertEquals(0, Werkstatt.restGold(45, 15), "45 Gold, Trank kostet 15: genau 3 Traenke, Rest 0");
+        assertEquals(10, Werkstatt.restGold(10, 15), "10 Gold reichen fuer keinen Trank zu 15 Gold: Es bleiben alle 10 Gold uebrig");
+    }
+
+    @Test
+    public void basis_restGold_randfaelle() {
+        assertEquals(2, Werkstatt.restGold(8, 3), "8 Gold, Trank kostet 3: 2 Traenke (6 Gold), Rest 2");
+        assertEquals(0, Werkstatt.restGold(0, 7), "Wer 0 Gold hat, behaelt 0 Gold");
+        assertEquals(0, Werkstatt.restGold(9, 1), "Kostet ein Trank 1 Gold, bleibt nichts uebrig");
+    }
+
+    @Test
+    public void basis_kistenBenoetigt_passtGenau() {
+        assertEquals(2, Werkstatt.kistenBenoetigt(10, 5), "10 Traenke, 5 pro Kiste: genau 2 Kisten");
+        assertEquals(3, Werkstatt.kistenBenoetigt(12, 4), "12 Traenke, 4 pro Kiste: genau 3 Kisten - keine Kiste zu viel!");
+    }
+
+    @Test
+    public void basis_kistenBenoetigt_aufrunden() {
+        assertEquals(3, Werkstatt.kistenBenoetigt(11, 5), "11 Traenke, 5 pro Kiste: 2 volle Kisten + 1 Kiste fuer den Rest = 3 (aufrunden!)");
+        assertEquals(3, Werkstatt.kistenBenoetigt(14, 5), "14 Traenke, 5 pro Kiste: 3 Kisten");
+        assertEquals(1, Werkstatt.kistenBenoetigt(1, 5), "Auch ein einzelner Trank braucht eine Kiste");
+    }
+
+    @Test
+    public void basis_kistenBenoetigt_randfaelle() {
+        assertEquals(0, Werkstatt.kistenBenoetigt(0, 5), "Keine Traenke - keine Kiste");
+        assertEquals(7, Werkstatt.kistenBenoetigt(7, 1), "7 Traenke, 1 pro Kiste: 7 Kisten");
+    }
+
+    @Test
+    public void erweiterung_schadensstufe_kein() {
+        assertEquals("kein", Werkstatt.schadensstufe(0), "Schaden 0 ist 'kein' Schaden");
+        assertEquals("kein", Werkstatt.schadensstufe(-5), "Negativer Schaden zaehlt als 'kein' Schaden (schaden <= 0)");
+    }
+
+    @Test
+    public void erweiterung_schadensstufe_grenzen() {
+        assertEquals("leicht", Werkstatt.schadensstufe(1), "Schaden 1 ist 'leicht' (1 bis 9)");
+        assertEquals("leicht", Werkstatt.schadensstufe(9), "Schaden 9 ist noch 'leicht' (1 bis 9)");
+        assertEquals("mittel", Werkstatt.schadensstufe(10), "Schaden 10 ist schon 'mittel' (10 bis 29) - pruefe die Grenze genau");
+        assertEquals("mittel", Werkstatt.schadensstufe(29), "Schaden 29 ist noch 'mittel' (10 bis 29)");
+        assertEquals("schwer", Werkstatt.schadensstufe(30), "Schaden 30 ist schon 'schwer' (ab 30)");
+        assertEquals("schwer", Werkstatt.schadensstufe(250), "Schaden 250 ist 'schwer'");
+    }
+
+    @Test
+    public void erweiterung_durchschnitt_ganzzahlig() {
+        assertEquals(4.0, Werkstatt.durchschnitt(2, 4, 6), "durchschnitt(2, 4, 6) muss 4.0 ergeben");
+        assertEquals(-1.0, Werkstatt.durchschnitt(-1, -2, 0), "durchschnitt(-1, -2, 0) muss -1.0 ergeben");
+    }
+
+    @Test
+    public void erweiterung_durchschnitt_kommazahl() {
+        double d = Werkstatt.durchschnitt(1, 2, 4);
+        assertTrue(Math.abs(d - 7.0 / 3) < 0.000001, "durchschnitt(1, 2, 4) muss 2.333... ergeben, nicht " + d + " - Vorsicht: (a + b + c) / 3 rechnet GANZZAHLIG! Teile durch 3.0");
+        d = Werkstatt.durchschnitt(0, 0, 1);
+        assertTrue(Math.abs(d - 1.0 / 3) < 0.000001, "durchschnitt(0, 0, 1) muss 0.333... ergeben, nicht " + d);
+        d = Werkstatt.durchschnitt(1, 1, 2);
+        assertTrue(Math.abs(d - 4.0 / 3) < 0.000001, "durchschnitt(1, 1, 2) muss 1.333... ergeben, nicht " + d + " - (double) (summe / 3) castet zu spaet!");
+    }
+
+    @Test
+    public void erweiterung_quersumme() {
+        assertEquals(10, Werkstatt.quersumme(1234), "quersumme(1234) = 1 + 2 + 3 + 4 = 10 - Tipp: n % 10 ist die letzte Ziffer, n / 10 streicht sie");
+        assertEquals(36, Werkstatt.quersumme(9999), "quersumme(9999) = 36");
+        assertEquals(7, Werkstatt.quersumme(7), "Die Quersumme einer einstelligen Zahl ist die Zahl selbst");
+    }
+
+    @Test
+    public void erweiterung_quersumme_nullUndNullen() {
+        assertEquals(0, Werkstatt.quersumme(0), "quersumme(0) muss 0 sein");
+        assertEquals(1, Werkstatt.quersumme(1000), "quersumme(1000) = 1 - die Nullen am Ende zaehlen nichts, aber die 1 vorne muss mit!");
+        assertEquals(10, Werkstatt.quersumme(505), "quersumme(505) = 5 + 0 + 5 = 10");
+    }
+
+    @Test
+    public void experte_potenz() {
+        assertEquals(1024, Werkstatt.potenz(2, 10), "potenz(2, 10) = 1024");
+        assertEquals(81, Werkstatt.potenz(3, 4), "potenz(3, 4) = 3 * 3 * 3 * 3 = 81 - wie oft laeuft deine Schleife?");
+        assertEquals(7, Werkstatt.potenz(7, 1), "potenz(7, 1) = 7");
+    }
+
+    @Test
+    public void experte_potenz_exponentNull() {
+        assertEquals(1, Werkstatt.potenz(5, 0), "potenz(5, 0) = 1 - starte mit ergebnis = 1, nicht mit 0");
+        assertEquals(1, Werkstatt.potenz(0, 0), "potenz(0, 0) = 1 (Festlegung: x hoch 0 ist immer 1)");
+    }
+
+    @Test
+    public void experte_potenz_negativeBasis() {
+        assertEquals(-8, Werkstatt.potenz(-2, 3), "potenz(-2, 3) = -8");
+        assertEquals(9, Werkstatt.potenz(-3, 2), "potenz(-3, 2) = 9");
+        assertEquals(0, Werkstatt.potenz(0, 5), "potenz(0, 5) = 0");
+    }
+
+    @Test
+    public void experte_ggT() {
+        assertEquals(6, Werkstatt.ggT(12, 18), "ggT(12, 18) = 6");
+        assertEquals(6, Werkstatt.ggT(18, 12), "ggT(18, 12) = 6 - die Reihenfolge der Zahlen darf keine Rolle spielen");
+        assertEquals(25, Werkstatt.ggT(100, 75), "ggT(100, 75) = 25");
+        assertEquals(12, Werkstatt.ggT(48, 180), "ggT(48, 180) = 12");
+    }
+
+    @Test
+    public void experte_ggT_sonderfaelle() {
+        assertEquals(1, Werkstatt.ggT(7, 13), "7 und 13 sind teilerfremd: ggT = 1");
+        assertEquals(5, Werkstatt.ggT(5, 5), "ggT(5, 5) = 5");
+        assertEquals(3, Werkstatt.ggT(9, 3), "3 teilt 9: ggT(9, 3) = 3");
+        assertEquals(1, Werkstatt.ggT(1, 9), "ggT(1, 9) = 1");
+    }
+
+    @Test
+    public void experte_istPrimzahl_klein() {
+        assertTrue(Werkstatt.istPrimzahl(2), "2 ist die kleinste Primzahl");
+        assertTrue(Werkstatt.istPrimzahl(3), "3 ist eine Primzahl");
+        assertFalse(Werkstatt.istPrimzahl(4), "4 = 2 * 2 ist keine Primzahl");
+        assertTrue(Werkstatt.istPrimzahl(97), "97 ist eine Primzahl");
+    }
+
+    @Test
+    public void experte_istPrimzahl_quadratzahlen() {
+        assertFalse(Werkstatt.istPrimzahl(9), "9 = 3 * 3 ist keine Primzahl - laeuft dein Teiler weit genug?");
+        assertFalse(Werkstatt.istPrimzahl(25), "25 = 5 * 5 ist keine Primzahl - Grenze t * t <= n (mit Gleichheit!)");
+        assertFalse(Werkstatt.istPrimzahl(91), "91 = 7 * 13 ist keine Primzahl");
+        assertTrue(Werkstatt.istPrimzahl(29), "29 ist eine Primzahl");
+    }
+
+    @Test
+    public void experte_istPrimzahl_kleinerZwei() {
+        assertTrue(Werkstatt.istPrimzahl(5), "5 ist eine Primzahl");
+        assertFalse(Werkstatt.istPrimzahl(1), "1 ist KEINE Primzahl (fuer n < 2 gilt: false)");
+        assertFalse(Werkstatt.istPrimzahl(0), "0 ist keine Primzahl");
+        assertFalse(Werkstatt.istPrimzahl(-7), "Negative Zahlen sind keine Primzahlen");
+    }
+}
+
+
+// =================== Level 0.3 – Die Vorratskammer ===================
+
+class L03VorratTest {
+
+    @Test
+    public void basis_anzahlLeer() {
+        int[] r = {0, 3, 0, 0, 5};
+        assertEquals(3, Vorrat.anzahlLeer(r), "{0, 3, 0, 0, 5} hat 3 leere Faecher (Wert 0)");
+        int[] hinten = {4, 0};
+        assertEquals(1, Vorrat.anzahlLeer(hinten), "{4, 0}: Das letzte Fach ist leer - laeuft deine Schleife bis zum Ende?");
+        int[] voll = {1, 2};
+        assertEquals(0, Vorrat.anzahlLeer(voll), "{1, 2} hat kein leeres Fach");
+    }
+
+    @Test
+    public void basis_anzahlLeer_randfaelle() {
+        int[] eins = {0};
+        assertEquals(1, Vorrat.anzahlLeer(eins), "{0} hat genau 1 leeres Fach");
+        int[] leer = new int[0];
+        assertEquals(0, Vorrat.anzahlLeer(leer), "Eine leere Reihung hat 0 leere Faecher (es gibt gar keine Faecher)");
+        int[] neu = new int[4];
+        assertEquals(4, Vorrat.anzahlLeer(neu), "new int[4] ist mit 0 gefuellt: 4 leere Faecher");
+    }
+
+    @Test
+    public void basis_letzterWert() {
+        int[] r = {3, 8, 5};
+        assertEquals(5, Vorrat.letzterWert(r), "letzterWert({3, 8, 5}) = 5 - der letzte Index ist r.length - 1");
+        int[] negativ = {2, -4};
+        assertEquals(-4, Vorrat.letzterWert(negativ), "letzterWert({2, -4}) = -4");
+    }
+
+    @Test
+    public void basis_letzterWert_randfaelle() {
+        int[] eins = {9};
+        assertEquals(9, Vorrat.letzterWert(eins), "Bei einem Element ist das erste auch das letzte: 9");
+        int[] leer = new int[0];
+        assertEquals(-1, Vorrat.letzterWert(leer), "Leere Reihung: letzterWert muss -1 liefern - frage r.length == 0 VOR dem Zugriff ab");
+    }
+
+    @Test
+    public void basis_enthaelt() {
+        int[] r = {4, 7, 9};
+        assertTrue(Vorrat.enthaelt(r, 4), "4 steht ganz vorne in {4, 7, 9}");
+        assertTrue(Vorrat.enthaelt(r, 9), "9 steht ganz hinten in {4, 7, 9} - wird das letzte Element geprueft?");
+        assertTrue(Vorrat.enthaelt(r, 7), "7 steht in {4, 7, 9}");
+        assertFalse(Vorrat.enthaelt(r, 5), "5 steht NICHT in {4, 7, 9}");
+    }
+
+    @Test
+    public void basis_enthaelt_leerUndNegativ() {
+        int[] r = {-3, 0};
+        assertTrue(Vorrat.enthaelt(r, -3), "-3 steht in {-3, 0}");
+        assertTrue(Vorrat.enthaelt(r, 0), "0 steht in {-3, 0}");
+        assertFalse(Vorrat.enthaelt(r, 3), "3 steht nicht in {-3, 0}");
+        int[] leer = new int[0];
+        assertFalse(Vorrat.enthaelt(leer, 1), "In einer leeren Reihung ist nichts enthalten");
+    }
+
+    @Test
+    public void erweiterung_umgedreht() {
+        int[] gerade = {1, 2, 3, 4};
+        assertEquals("{4, 3, 2, 1}", Anzeige.text(Vorrat.umgedreht(gerade)), "umgedreht({1, 2, 3, 4}) falsch");
+        int[] ungerade = {1, 2, 3};
+        assertEquals("{3, 2, 1}", Anzeige.text(Vorrat.umgedreht(ungerade)), "umgedreht({1, 2, 3}) falsch - neu[i] = r[r.length - 1 - i]");
+    }
+
+    @Test
+    public void erweiterung_umgedreht_originalUnveraendert() {
+        int[] r = {1, 2, 3};
+        int[] ergebnis = Vorrat.umgedreht(r);
+        assertTrue(ergebnis != null, "umgedreht liefert noch null - erzeuge eine NEUE Reihung mit new int[r.length]");
+        assertEquals("{1, 2, 3}", Anzeige.text(r), "Die Reihung r muss UNVERAENDERT bleiben - schreibe in eine neue Reihung");
+        assertTrue(ergebnis != r, "umgedreht muss eine NEUE Reihung liefern, nicht r selbst");
+    }
+
+    @Test
+    public void erweiterung_umgedreht_randfaelle() {
+        int[] eins = {5};
+        int[] e = Vorrat.umgedreht(eins);
+        assertEquals("{5}", Anzeige.text(e), "umgedreht({5}) muss {5} ergeben");
+        assertTrue(e != eins, "Auch bei einem Element muss eine NEUE Reihung entstehen");
+        int[] leer = new int[0];
+        assertEquals("{}", Anzeige.text(Vorrat.umgedreht(leer)), "umgedreht einer leeren Reihung ist eine leere Reihung (nicht null)");
+    }
+
+    @Test
+    public void erweiterung_verdopple() {
+        int[] r = {1, -2, 3};
+        Vorrat.verdopple(r);
+        assertEquals("{2, -4, 6}", Anzeige.text(r), "verdopple muss die Werte IN r veraendern - die Aenderung ist ausserhalb sichtbar");
+    }
+
+    @Test
+    public void erweiterung_verdopple_randfaelle() {
+        int[] r = {0, 5};
+        Vorrat.verdopple(r);
+        assertEquals("{0, 10}", Anzeige.text(r), "verdopple({0, 5}) muss {0, 10} ergeben - for-each (for (int x : r)) kann r NICHT veraendern!");
+        int[] leer = new int[0];
+        Vorrat.verdopple(leer);
+        assertEquals(0, leer.length, "verdopple einer leeren Reihung darf nichts tun");
+    }
+
+    @Test
+    public void erweiterung_anzahlAnstiege() {
+        int[] r = {1, 3, 2, 5, 5, 6};
+        assertEquals(3, Vorrat.anzahlAnstiege(r), "{1, 3, 2, 5, 5, 6} hat 3 Anstiege (von 1 auf 3, von 2 auf 5, von 5 auf 6)");
+        int[] zwei = {1, 2};
+        assertEquals(1, Vorrat.anzahlAnstiege(zwei), "{1, 2} hat 1 Anstieg - wird das letzte Paar verglichen?");
+        int[] fallend = {5, 4, 3};
+        assertEquals(0, Vorrat.anzahlAnstiege(fallend), "{5, 4, 3} hat keinen Anstieg");
+    }
+
+    @Test
+    public void erweiterung_anzahlAnstiege_randfaelle() {
+        int[] gleich = {7, 7, 7};
+        assertEquals(0, Vorrat.anzahlAnstiege(gleich), "{7, 7, 7}: gleiche Nachbarn sind KEIN Anstieg (echt groesser)");
+        int[] eins = {4};
+        assertEquals(0, Vorrat.anzahlAnstiege(eins), "Ein Element hat keinen Nachbarn: 0 Anstiege - Vorsicht vor r[-1] bzw. r[1]!");
+        int[] leer = new int[0];
+        assertEquals(0, Vorrat.anzahlAnstiege(leer), "Eine leere Reihung hat 0 Anstiege");
+    }
+
+    @Test
+    public void experte_zaehleZeichen() {
+        assertEquals(4, Vorrat.zaehleZeichen("Abrakadabra", 'a'), "'Abrakadabra' enthaelt 4 kleine a (das grosse A zaehlt nicht)");
+        assertEquals(1, Vorrat.zaehleZeichen("Abrakadabra", 'A'), "'Abrakadabra' enthaelt 1 grosses A");
+        assertEquals(2, Vorrat.zaehleZeichen("Abrakadabra", 'b'), "'Abrakadabra' enthaelt 2 b");
+        assertEquals(0, Vorrat.zaehleZeichen("Abrakadabra", 'z'), "'Abrakadabra' enthaelt kein z");
+    }
+
+    @Test
+    public void experte_zaehleZeichen_randfaelle() {
+        assertEquals(3, Vorrat.zaehleZeichen("aaa", 'a'), "'aaa' enthaelt 3 a - auch das letzte Zeichen zaehlt");
+        assertEquals(0, Vorrat.zaehleZeichen("", 'a'), "Die leere Zeichenkette enthaelt kein Zeichen");
+    }
+
+    @Test
+    public void experte_ohneVokale() {
+        assertEquals("Zbrsprch", Vorrat.ohneVokale("Zauberspruch"), "ohneVokale('Zauberspruch') falsch");
+        assertEquals("s", Vorrat.ohneVokale("Oase"), "ohneVokale('Oase') falsch - auch grosse Vokale entfernen");
+        assertEquals("Drchn", Vorrat.ohneVokale("Drachen"), "ohneVokale('Drachen') falsch");
+    }
+
+    @Test
+    public void experte_ohneVokale_randfaelle() {
+        assertEquals("xyz", Vorrat.ohneVokale("xyz"), "Ohne Vokale bleibt die Zeichenkette gleich");
+        assertEquals("", Vorrat.ohneVokale("AEIOUaeiou"), "Nur Vokale: Es bleibt die leere Zeichenkette");
+        assertEquals("", Vorrat.ohneVokale(""), "Aus der leeren Zeichenkette wird die leere Zeichenkette");
+    }
+
+    @Test
+    public void experte_beginntMit() {
+        assertTrue(Vorrat.beginntMit("Feuerball", "Feuer"), "'Feuerball' beginnt mit 'Feuer'");
+        assertTrue(Vorrat.beginntMit("Feuerball", "F"), "'Feuerball' beginnt mit 'F'");
+        assertTrue(Vorrat.beginntMit("Feuerball", "Feuerball"), "Jede Zeichenkette beginnt mit sich selbst");
+        assertFalse(Vorrat.beginntMit("Eisball", "Feuer"), "'Eisball' beginnt nicht mit 'Feuer'");
+        assertFalse(Vorrat.beginntMit("Feuerball", "Fenster"), "'Feuerball' beginnt nicht mit 'Fenster' - es muessen ALLE Zeichen von anfang verglichen werden, nicht nur das erste");
+        assertFalse(Vorrat.beginntMit("Feuerball", "ball"), "'Feuerball' ENTHAELT 'ball', beginnt aber nicht damit");
+        assertFalse(Vorrat.beginntMit("Feuerball", "feuer"), "Gross-/Kleinschreibung zaehlt: 'Feuerball' beginnt nicht mit 'feuer'");
+    }
+
+    @Test
+    public void experte_beginntMit_randfaelle() {
+        assertTrue(Vorrat.beginntMit("Feuer", ""), "Jede Zeichenkette beginnt mit der leeren Zeichenkette");
+        assertFalse(Vorrat.beginntMit("Feu", "Feuer"), "anfang ist laenger als s: false - pruefe die Laengen VOR dem Zugriff");
+        assertFalse(Vorrat.beginntMit("", "a"), "Die leere Zeichenkette beginnt mit keinem Zeichen");
+        assertTrue(Vorrat.beginntMit("", ""), "'' beginnt mit ''");
+    }
+}
+
+
+// ==================== Level 0.4 – Die Zauberschule ===================
+
+class L04ZauberTest {
+
+    @Test
+    public void basis_heilwert() {
+        assertEquals(15, Zauber.heilwert(1), "Ein Heilzauber der Stufe 1 heilt 15 Leben");
+        assertEquals(45, Zauber.heilwert(3), "Ein Heilzauber der Stufe 3 heilt 3 * 15 = 45 Leben");
+        assertEquals(150, Zauber.heilwert(10), "Ein Heilzauber der Stufe 10 heilt 150 Leben");
+    }
+
+    @Test
+    public void basis_heilwert_stufeNull() {
+        assertEquals(0, Zauber.heilwert(0), "Stufe 0 heilt 0 Leben");
+    }
+
+    @Test
+    public void basis_istStaerker() {
+        assertTrue(Zauber.istStaerker(5, 3), "5 ist staerker als 3");
+        assertFalse(Zauber.istStaerker(3, 5), "3 ist nicht staerker als 5");
+        assertFalse(Zauber.istStaerker(4, 4), "Gleich stark ist NICHT staerker (a > b, nicht a >= b)");
+    }
+
+    @Test
+    public void basis_spruchtext() {
+        assertEquals("Feuerball (Stufe 3)", Zauber.spruchtext("Feuerball", 3), "Achte genau auf Leerzeichen und Klammern");
+        assertEquals("Eislanze (Stufe 12)", Zauber.spruchtext("Eislanze", 12), "spruchtext muss die Parameter benutzen, nicht feste Werte");
+    }
+
+    @Test
+    public void basis_max2() {
+        assertEquals(8, Zauber.max2(3, 8), "max2(3, 8) = 8");
+        assertEquals(8, Zauber.max2(8, 3), "max2(8, 3) = 8 - die Reihenfolge darf keine Rolle spielen");
+        assertEquals(5, Zauber.max2(5, 5), "max2(5, 5) = 5");
+        assertEquals(-2, Zauber.max2(-2, -7), "max2(-2, -7) = -2");
+    }
+
+    // Die folgenden Tests benutzen Methoden, deren Kopf du selbst schreibst.
+    // Zum Freischalten der Stufe Erweiterung: loesche die Zeile mit
+    // LEVEL-0.4-START Erweiterung und die Zeile mit LEVEL-0.4-ENDE Erweiterung
+    /* LEVEL-0.4-START Erweiterung
+
+    @Test
+    public void erweiterung_manaKosten() {
+        assertEquals(30, Zauber.manaKosten(3, false), "Stufe 3, nicht verstaerkt: 10 * 3 = 30 Mana");
+        assertEquals(10, Zauber.manaKosten(1, false), "Stufe 1, nicht verstaerkt: 10 Mana");
+        assertEquals(60, Zauber.manaKosten(3, true), "Stufe 3, verstaerkt: doppelt so teuer = 60 Mana");
+        assertEquals(100, Zauber.manaKosten(5, true), "Stufe 5, verstaerkt: 2 * 50 = 100 Mana");
+    }
+
+    @Test
+    public void erweiterung_manaKosten_stufeNull() {
+        assertEquals(0, Zauber.manaKosten(0, false), "Stufe 0 kostet 0 Mana");
+        assertEquals(0, Zauber.manaKosten(0, true), "Stufe 0 kostet auch verstaerkt 0 Mana");
+    }
+
+    @Test
+    public void erweiterung_kannZaubern() {
+        assertTrue(Zauber.kannZaubern(30, 3, false), "30 Mana reichen GENAU fuer Stufe 3 (30 Mana) - mana >= Kosten");
+        assertFalse(Zauber.kannZaubern(29, 3, false), "29 Mana reichen nicht fuer Stufe 3 (30 Mana)");
+        assertFalse(Zauber.kannZaubern(59, 3, true), "59 Mana reichen nicht fuer Stufe 3 verstaerkt (60 Mana)");
+        assertTrue(Zauber.kannZaubern(60, 3, true), "60 Mana reichen genau fuer Stufe 3 verstaerkt");
+        assertTrue(Zauber.kannZaubern(100, 1, true), "100 Mana reichen fuer Stufe 1 verstaerkt (20 Mana)");
+    }
+
+    @Test
+    public void erweiterung_kannZaubern_passtZuManaKosten() {
+        for (int stufe = 0; stufe <= 6; stufe++) {
+            for (int mana = 0; mana <= 130; mana = mana + 5) {
+                boolean normal = mana >= Zauber.manaKosten(stufe, false);
+                if (Zauber.kannZaubern(mana, stufe, false) != normal) {
+                    fail("kannZaubern(" + mana + ", " + stufe + ", false) passt nicht zu manaKosten(" + stufe + ", false) = " + Zauber.manaKosten(stufe, false) + " - rufe manaKosten auf, statt neu zu rechnen");
+                }
+                boolean verstaerkt = mana >= Zauber.manaKosten(stufe, true);
+                if (Zauber.kannZaubern(mana, stufe, true) != verstaerkt) {
+                    fail("kannZaubern(" + mana + ", " + stufe + ", true) passt nicht zu manaKosten(" + stufe + ", true) = " + Zauber.manaKosten(stufe, true) + " - rufe manaKosten auf, statt neu zu rechnen");
+                }
+            }
+        }
+    }
+
+    @Test
+    public void erweiterung_max3() {
+        assertEquals(9, Zauber.max3(9, 1, 2), "max3(9, 1, 2) = 9 (Maximum vorne)");
+        assertEquals(9, Zauber.max3(1, 9, 2), "max3(1, 9, 2) = 9 (Maximum in der Mitte)");
+        assertEquals(9, Zauber.max3(1, 2, 9), "max3(1, 2, 9) = 9 (Maximum hinten)");
+    }
+
+    @Test
+    public void erweiterung_max3_gleicheUndNegative() {
+        assertEquals(4, Zauber.max3(4, 4, 4), "max3(4, 4, 4) = 4");
+        assertEquals(7, Zauber.max3(7, 7, 2), "max3(7, 7, 2) = 7");
+        assertEquals(-3, Zauber.max3(-5, -3, -9), "max3(-5, -3, -9) = -3 - starte nicht mit 0");
+    }
+
+    LEVEL-0.4-ENDE Erweiterung */
+
+    // Zum Freischalten der Stufe Experte: loesche die Zeile mit
+    // LEVEL-0.4-START Experte und die Zeile mit LEVEL-0.4-ENDE Experte
+    /* LEVEL-0.4-START Experte
+
+    @Test
+    public void experte_runden() {
+        assertEquals(2, Zauber.runden(2.4), "runden(2.4) = 2");
+        assertEquals(3, Zauber.runden(2.5), "runden(2.5) = 3 (kaufmaennisch: ab .5 aufrunden)");
+        assertEquals(3, Zauber.runden(2.6), "runden(2.6) = 3 - (int) schneidet nur ab, es rundet nicht! Tipp: erst 0.5 addieren");
+        assertEquals(7, Zauber.runden(7.0), "runden(7.0) = 7");
+    }
+
+    @Test
+    public void experte_runden_randfaelle() {
+        assertEquals(0, Zauber.runden(0.0), "runden(0.0) = 0");
+        assertEquals(0, Zauber.runden(0.49), "runden(0.49) = 0");
+        assertEquals(1, Zauber.runden(0.5), "runden(0.5) = 1");
+        assertEquals(100, Zauber.runden(99.5), "runden(99.5) = 100");
+        assertEquals(13, Zauber.runden(12.999), "runden(12.999) = 13");
+    }
+
+    @Test
+    public void experte_wuerfelImBereich_grenzen() {
+        boolean vonGetroffen = false;
+        boolean bisGetroffen = false;
+        for (int i = 0; i < 2000; i++) {
+            int w = Zauber.wuerfelImBereich(3, 8);
+            if (w < 3 || w > 8) {
+                fail("wuerfelImBereich(3, 8) lieferte " + w + " - erlaubt sind nur 3 bis 8");
+            }
+            if (w == 3) {
+                vonGetroffen = true;
+            }
+            if (w == 8) {
+                bisGetroffen = true;
+            }
+        }
+        assertTrue(vonGetroffen, "wuerfelImBereich(3, 8): In 2000 Wuerfen kam nie eine 3 - fehlt + von?");
+        assertTrue(bisGetroffen, "wuerfelImBereich(3, 8): In 2000 Wuerfen kam nie eine 8 - wie viele Zahlen liegen von 3 bis 8? (bis - von + 1)");
+    }
+
+    @Test
+    public void experte_wuerfelImBereich_gleichverteilt() {
+        int[] haeufigkeit = new int[6];
+        for (int i = 0; i < 2000; i++) {
+            int w = Zauber.wuerfelImBereich(3, 8);
+            if (w < 3 || w > 8) {
+                fail("wuerfelImBereich(3, 8) lieferte " + w + " - erlaubt sind nur 3 bis 8");
+            }
+            haeufigkeit[w - 3] = haeufigkeit[w - 3] + 1;
+        }
+        for (int k = 0; k < 6; k++) {
+            assertTrue(haeufigkeit[k] >= 250, "Bei 2000 Wuerfen sollte jede Zahl etwa 333-mal kommen, " + (k + 3) + " kam nur " + haeufigkeit[k] + "-mal - alle Zahlen muessen gleich wahrscheinlich sein (nicht runden!)");
+        }
+    }
+
+    @Test
+    public void experte_wuerfelImBereich_sonderfaelle() {
+        for (int i = 0; i < 50; i++) {
+            assertEquals(5, Zauber.wuerfelImBereich(5, 5), "wuerfelImBereich(5, 5) muss immer 5 liefern");
+        }
+        boolean minus2 = false;
+        boolean plus2 = false;
+        for (int i = 0; i < 1000; i++) {
+            int w = Zauber.wuerfelImBereich(-2, 2);
+            if (w < -2 || w > 2) {
+                fail("wuerfelImBereich(-2, 2) lieferte " + w + " - erlaubt sind nur -2 bis 2");
+            }
+            if (w == -2) {
+                minus2 = true;
+            }
+            if (w == 2) {
+                plus2 = true;
+            }
+        }
+        assertTrue(minus2 && plus2, "wuerfelImBereich(-2, 2) muss auch mit negativen Grenzen beide Grenzen treffen");
+    }
+
+    @Test
+    public void experte_zauberkette() {
+        assertEquals("1-2-3", Zauber.zauberkette(3), "zauberkette(3) = '1-2-3' - kein Strich am Anfang oder Ende");
+        assertEquals("1", Zauber.zauberkette(1), "zauberkette(1) = '1'");
+        assertEquals("1-2-3-4-5-6-7-8-9-10", Zauber.zauberkette(10), "zauberkette(10) falsch");
+    }
+
+    @Test
+    public void experte_zauberkette_randfaelle() {
+        assertEquals("", Zauber.zauberkette(0), "zauberkette(0) = '' (leere Zeichenkette)");
+        assertEquals("", Zauber.zauberkette(-4), "zauberkette(-4) = '' (leere Zeichenkette)");
+    }
+
+    LEVEL-0.4-ENDE Experte */
+}
+
+
+// ================ Level 0.5 – Die Zauberschule, Teil II ==============
+
+class L05ZauberIITest {
+
+    @Test
+    public void basis_fuelle() {
+        int[] r = new int[4];
+        ZauberII.fuelle(r, 7);
+        assertEquals("{7, 7, 7, 7}", Anzeige.text(r), "fuelle muss die Reihung r SELBST veraendern - die Aenderung ist ausserhalb sichtbar");
+    }
+
+    @Test
+    public void basis_fuelle_ueberschreibt() {
+        int[] r = {1, 2, 3};
+        ZauberII.fuelle(r, 0);
+        assertEquals("{0, 0, 0}", Anzeige.text(r), "fuelle(r, 0) muss alle alten Werte ueberschreiben - r = new int[...] in der Methode wirkt NICHT nach aussen");
+        int[] leer = new int[0];
+        ZauberII.fuelle(leer, 5);
+        assertEquals(0, leer.length, "fuelle einer leeren Reihung darf nichts tun");
+    }
+
+    @Test
+    public void basis_erhoeheAlle() {
+        int[] r = {1, 2, 3};
+        ZauberII.erhoeheAlle(r, 5);
+        assertEquals("{6, 7, 8}", Anzeige.text(r), "erhoeheAlle({1, 2, 3}, 5) muss r zu {6, 7, 8} veraendern");
+        int[] s = {10, -4};
+        ZauberII.erhoeheAlle(s, -4);
+        assertEquals("{6, -8}", Anzeige.text(s), "erhoeheAlle({10, -4}, -4) muss {6, -8} ergeben (negativer Bonus)");
+    }
+
+    @Test
+    public void basis_erhoeheAlle_randfaelle() {
+        int[] eins = {0};
+        ZauberII.erhoeheAlle(eins, 1);
+        assertEquals("{1}", Anzeige.text(eins), "erhoeheAlle({0}, 1) muss {1} ergeben - for-each (for (int x : r)) veraendert r NICHT");
+        int[] leer = new int[0];
+        ZauberII.erhoeheAlle(leer, 3);
+        assertEquals(0, leer.length, "erhoeheAlle einer leeren Reihung darf nichts tun");
+    }
+
+    @Test
+    public void basis_erhoehteKopie_ergebnis() {
+        int[] r = {1, 2, 3};
+        assertEquals("{11, 12, 13}", Anzeige.text(ZauberII.erhoehteKopie(r, 10)), "erhoehteKopie({1, 2, 3}, 10) muss {11, 12, 13} liefern");
+    }
+
+    @Test
+    public void basis_erhoehteKopie_originalUnveraendert() {
+        int[] r = {1, 2, 3};
+        int[] kopie = ZauberII.erhoehteKopie(r, 10);
+        assertTrue(kopie != null, "erhoehteKopie liefert noch null - erzeuge eine neue Reihung mit new int[r.length]");
+        assertEquals("{1, 2, 3}", Anzeige.text(r), "Das Original r muss UNVERAENDERT bleiben - int[] kopie = r; kopiert nur die Referenz!");
+        assertTrue(kopie != r, "erhoehteKopie muss eine NEUE Reihung liefern, nicht r selbst");
+    }
+
+    @Test
+    public void basis_erhoehteKopie_leer() {
+        int[] leer = new int[0];
+        int[] kopie = ZauberII.erhoehteKopie(leer, 4);
+        assertEquals("{}", Anzeige.text(kopie), "Die Kopie einer leeren Reihung ist eine leere Reihung (nicht null)");
+        assertTrue(kopie != leer, "Auch bei einer leeren Reihung muss eine NEUE Reihung entstehen");
+    }
+
+    @Test
+    public void erweiterung_istImBereich() {
+        assertTrue(ZauberII.istImBereich(5, 1, 10), "5 liegt im Bereich 1 bis 10");
+        assertTrue(ZauberII.istImBereich(1, 1, 10), "1 liegt im Bereich 1 bis 10 - die Grenze von gehoert dazu");
+        assertTrue(ZauberII.istImBereich(10, 1, 10), "10 liegt im Bereich 1 bis 10 - die Grenze bis gehoert dazu");
+        assertFalse(ZauberII.istImBereich(0, 1, 10), "0 liegt NICHT im Bereich 1 bis 10");
+        assertFalse(ZauberII.istImBereich(11, 1, 10), "11 liegt NICHT im Bereich 1 bis 10");
+    }
+
+    @Test
+    public void erweiterung_istImBereich_negativ() {
+        assertTrue(ZauberII.istImBereich(-3, -5, -1), "-3 liegt im Bereich -5 bis -1");
+        assertFalse(ZauberII.istImBereich(-6, -5, -1), "-6 liegt nicht im Bereich -5 bis -1");
+        assertFalse(ZauberII.istImBereich(0, -5, -1), "0 liegt nicht im Bereich -5 bis -1");
+        assertTrue(ZauberII.istImBereich(4, 4, 4), "4 liegt im Bereich 4 bis 4");
+    }
+
+    @Test
+    public void erweiterung_zaehleImBereich() {
+        int[] r = {1, 5, 10, 11, 0, 7};
+        assertEquals(4, ZauberII.zaehleImBereich(r, 1, 10), "In {1, 5, 10, 11, 0, 7} liegen 4 Werte im Bereich 1 bis 10 (1, 5, 10, 7)");
+        assertEquals(1, ZauberII.zaehleImBereich(r, 11, 20), "In {1, 5, 10, 11, 0, 7} liegt 1 Wert im Bereich 11 bis 20");
+        int[] leer = new int[0];
+        assertEquals(0, ZauberII.zaehleImBereich(leer, 1, 10), "In einer leeren Reihung liegt nichts im Bereich");
+    }
+
+    @Test
+    public void erweiterung_zaehleImBereich_passtZuIstImBereich() {
+        int[] r = {-4, -2, 0, 3, 3, 8, 12};
+        for (int von = -5; von <= 13; von = von + 3) {
+            for (int bis = von; bis <= 13; bis = bis + 2) {
+                int erwartet = 0;
+                for (int x : r) {
+                    if (ZauberII.istImBereich(x, von, bis)) {
+                        erwartet++;
+                    }
+                }
+                assertEquals(erwartet, ZauberII.zaehleImBereich(r, von, bis), "zaehleImBereich(r, " + von + ", " + bis + ") passt nicht zu istImBereich - nutze deine Hilfsmethode istImBereich");
+            }
+        }
+    }
+
+    @Test
+    public void erweiterung_indexDesMinimums() {
+        int[] mitte = {4, 2, 7, 1, 9};
+        assertEquals(3, ZauberII.indexDesMinimums(mitte), "Das Minimum 1 steht in {4, 2, 7, 1, 9} an Index 3 - gesucht ist der INDEX, nicht der Wert");
+        int[] vorne = {1, 5, 4};
+        assertEquals(0, ZauberII.indexDesMinimums(vorne), "Das Minimum steht ganz vorne: Index 0");
+        int[] hinten = {5, 4, 1};
+        assertEquals(2, ZauberII.indexDesMinimums(hinten), "Das Minimum steht ganz hinten: Index 2 - laeuft deine Schleife bis zum Ende?");
+    }
+
+    @Test
+    public void erweiterung_indexDesMinimums_erstesMinimum() {
+        int[] r = {4, 2, 7, 2};
+        assertEquals(1, ZauberII.indexDesMinimums(r), "Bei mehreren Minima zaehlt das ERSTE: Index 1 (Vergleich mit <, nicht <=)");
+        int[] gleich = {3, 3};
+        assertEquals(0, ZauberII.indexDesMinimums(gleich), "{3, 3}: Das erste Minimum steht an Index 0");
+    }
+
+    @Test
+    public void erweiterung_indexDesMinimums_randfaelle() {
+        int[] eins = {6};
+        assertEquals(0, ZauberII.indexDesMinimums(eins), "Bei einem Element ist Index 0 das Minimum");
+        int[] negativ = {-1, -8, -3};
+        assertEquals(1, ZauberII.indexDesMinimums(negativ), "Das Minimum von {-1, -8, -3} steht an Index 1");
+        int[] leer = new int[0];
+        assertEquals(-1, ZauberII.indexDesMinimums(leer), "Leere Reihung: -1 - frage r.length == 0 VOR dem Zugriff auf r[0] ab");
+    }
+
+    @Test
+    public void erweiterung_tauscheErstesUndLetztes() {
+        int[] r = {1, 2, 3, 4};
+        ZauberII.tauscheErstesUndLetztes(r);
+        assertEquals("{4, 2, 3, 1}", Anzeige.text(r), "Erstes und letztes Element tauschen - Tipp: Hilfsvariable (Dreieckstausch)");
+    }
+
+    @Test
+    public void erweiterung_tauscheErstesUndLetztes_kurz() {
+        int[] zwei = {8, 9};
+        ZauberII.tauscheErstesUndLetztes(zwei);
+        assertEquals("{9, 8}", Anzeige.text(zwei), "{8, 9} wird zu {9, 8}");
+        int[] eins = {5};
+        ZauberII.tauscheErstesUndLetztes(eins);
+        assertEquals("{5}", Anzeige.text(eins), "Bei Laenge 1 passiert nichts");
+        int[] leer = new int[0];
+        ZauberII.tauscheErstesUndLetztes(leer);
+        assertEquals(0, leer.length, "Bei einer leeren Reihung passiert nichts (und es gibt keinen Indexfehler)");
+    }
+
+    @Test
+    public void experte_zweitgroesster() {
+        int[] r = {3, 9, 5, 9};
+        assertEquals(5, ZauberII.zweitgroesster(r), "{3, 9, 5, 9}: Der zweitgroesste WERT ist 5 (die zweite 9 zaehlt nicht)");
+        int[] maxVorne = {9, 1, 5};
+        assertEquals(5, ZauberII.zweitgroesster(maxVorne), "{9, 1, 5}: zweitgroesster = 5");
+        int[] aufsteigend = {1, 2, 3};
+        assertEquals(2, ZauberII.zweitgroesster(aufsteigend), "{1, 2, 3}: zweitgroesster = 2 - wenn ein neues Maximum kommt, wird das alte zum Zweitgroessten!");
+        int[] zwei = {8, 2};
+        assertEquals(2, ZauberII.zweitgroesster(zwei), "{8, 2}: zweitgroesster = 2");
+    }
+
+    @Test
+    public void experte_zweitgroesster_negativ() {
+        int[] r = {-1, -5, -3};
+        assertEquals(-3, ZauberII.zweitgroesster(r), "{-1, -5, -3}: zweitgroesster = -3 - starte nicht mit 0");
+        int[] zwei = {-7, -2};
+        assertEquals(-7, ZauberII.zweitgroesster(zwei), "{-7, -2}: zweitgroesster = -7");
+    }
+
+    @Test
+    public void experte_zweitgroesster_keiner() {
+        int[] r = {4, 4, 1};
+        assertEquals(1, ZauberII.zweitgroesster(r), "{4, 4, 1}: zweitgroesster = 1");
+        int[] gleich = {7, 7, 7};
+        assertEquals(-1, ZauberII.zweitgroesster(gleich), "{7, 7, 7}: Es gibt keinen zweiten verschiedenen Wert: -1");
+        int[] eins = {4};
+        assertEquals(-1, ZauberII.zweitgroesster(eins), "Bei einem Element gibt es keinen Zweitgroessten: -1");
+        int[] leer = new int[0];
+        assertEquals(-1, ZauberII.zweitgroesster(leer), "Leere Reihung: -1");
+    }
+
+    @Test
+    public void experte_zweitgroesster_reihungUnveraendert() {
+        int[] r = {3, 9, 5};
+        assertEquals(5, ZauberII.zweitgroesster(r), "{3, 9, 5}: zweitgroesster = 5");
+        assertEquals("{3, 9, 5}", Anzeige.text(r), "zweitgroesster darf r NICHT veraendern (z. B. nicht sortieren)");
+    }
+
+    @Test
+    public void experte_verschmelze() {
+        int[] a = {1, 4, 9};
+        int[] b = {2, 3, 10, 11};
+        assertEquals("{1, 2, 3, 4, 9, 10, 11}", Anzeige.text(ZauberII.verschmelze(a, b)), "verschmelze({1, 4, 9}, {2, 3, 10, 11}) falsch");
+    }
+
+    @Test
+    public void experte_verschmelze_duplikateUndNegativ() {
+        int[] a = {1, 3};
+        int[] b = {1, 3};
+        assertEquals("{1, 1, 3, 3}", Anzeige.text(ZauberII.verschmelze(a, b)), "Gleiche Werte bleiben alle erhalten");
+        int[] c = {-5, 0};
+        int[] d = {-7, -1, 8};
+        assertEquals("{-7, -5, -1, 0, 8}", Anzeige.text(ZauberII.verschmelze(c, d)), "verschmelze({-5, 0}, {-7, -1, 8}) falsch");
+    }
+
+    @Test
+    public void experte_verschmelze_eineSeiteZuerstLeer() {
+        int[] a = {1, 2, 3};
+        int[] b = {7, 8};
+        assertEquals("{1, 2, 3, 7, 8}", Anzeige.text(ZauberII.verschmelze(a, b)), "Ist a zuerst aufgebraucht, muss der Rest von b angehaengt werden");
+        assertEquals("{1, 2, 3, 7, 8}", Anzeige.text(ZauberII.verschmelze(b, a)), "Ist b zuerst aufgebraucht, muss der Rest von a angehaengt werden");
+    }
+
+    @Test
+    public void experte_verschmelze_leer() {
+        int[] leer = new int[0];
+        int[] b = {1, 2};
+        int[] c = {4};
+        assertEquals("{1, 2}", Anzeige.text(ZauberII.verschmelze(leer, b)), "verschmelze({}, {1, 2}) = {1, 2}");
+        assertEquals("{4}", Anzeige.text(ZauberII.verschmelze(c, leer)), "verschmelze({4}, {}) = {4}");
+        assertEquals("{}", Anzeige.text(ZauberII.verschmelze(leer, leer)), "verschmelze({}, {}) = {} (leere Reihung, nicht null)");
+    }
+
+    @Test
+    public void experte_verschmelze_neueReihung() {
+        int[] a = {2, 6};
+        int[] b = {1, 5};
+        int[] e = ZauberII.verschmelze(a, b);
+        assertTrue(e != null, "verschmelze liefert noch null");
+        assertEquals(4, e.length, "Die neue Reihung muss a.length + b.length = 4 Elemente haben");
+        assertEquals("{2, 6}", Anzeige.text(a), "a muss unveraendert bleiben");
+        assertEquals("{1, 5}", Anzeige.text(b), "b muss unveraendert bleiben");
+    }
+}
+
+
+// ================= Papier-Compiler 0 – Werkstattpruefung ===============
+
+// Diese Testklasse benutzt die Methode, die du auf Papier geschrieben hast.
+// Zum Freischalten: loesche die Zeile mit PAPIER-COMPILER-0-START und die
+// Zeile mit PAPIER-COMPILER-0-ENDE
+/* PAPIER-COMPILER-0-START
+class PapierCompiler0Test {
+
+    @Test
+    public void normalfall() {
+        int[] r = {1, 2, 3, 4, 10};
+        assertEquals(1, Werkstattpruefung.anzahlUeberDurchschnitt(r), "{1, 2, 3, 4, 10}: Durchschnitt 4.0, nur 10 liegt darueber");
+        int[] s = {2, 8, 9, 1};
+        assertEquals(2, Werkstattpruefung.anzahlUeberDurchschnitt(s), "{2, 8, 9, 1}: Durchschnitt 5.0, darueber liegen 8 und 9");
+    }
+
+    @Test
+    public void echtGroesser() {
+        int[] gleich = {5, 5, 5};
+        assertEquals(0, Werkstattpruefung.anzahlUeberDurchschnitt(gleich), "{5, 5, 5}: Durchschnitt 5.0 - kein Wert ist ECHT groesser (> statt >=)");
+        int[] r = {3, 5, 7};
+        assertEquals(1, Werkstattpruefung.anzahlUeberDurchschnitt(r), "{3, 5, 7}: Durchschnitt 5.0 - nur die 7 zaehlt, die 5 nicht");
+    }
+
+    @Test
+    public void durchschnittIstKommazahl() {
+        int[] r = {1, 2};
+        assertEquals(1, Werkstattpruefung.anzahlUeberDurchschnitt(r), "{1, 2}: Durchschnitt 1.5, nur die 2 liegt darueber");
+        int[] negativ = {-1, -2};
+        assertEquals(1, Werkstattpruefung.anzahlUeberDurchschnitt(negativ), "{-1, -2}: Durchschnitt -1.5, also liegt -1 darueber. Ganzzahlige Division liefert -3 / 2 = -1 - der Durchschnitt muss eine Kommazahl sein!");
+    }
+
+    @Test
+    public void leereReihung() {
+        int[] leer = new int[0];
+        assertEquals(0, Werkstattpruefung.anzahlUeberDurchschnitt(leer), "Leere Reihung: 0 - und keine Division durch 0!");
+    }
+
+    @Test
+    public void einWert() {
+        int[] eins = {7};
+        assertEquals(0, Werkstattpruefung.anzahlUeberDurchschnitt(eins), "{7}: Durchschnitt 7.0, die 7 liegt nicht darueber");
+    }
+
+    @Test
+    public void reihungUnveraendert() {
+        int[] r = {9, 1, 4, 6};
+        assertEquals(2, Werkstattpruefung.anzahlUeberDurchschnitt(r), "{9, 1, 4, 6}: Durchschnitt 5.0, darueber liegen 9 und 6");
+        assertEquals("{9, 1, 4, 6}", Anzeige.text(r), "Die Reihung darf nicht veraendert werden");
+    }
+}
+PAPIER-COMPILER-0-ENDE */
+
+
+// ---------------------------------------------------------------------
+//  Programmstart – das Hauptprogramm
+// ---------------------------------------------------------------------
+
+println("=== Willkommen in der Akademie der Baumeister ===");
+
+// ----- Level 0.2: Die Werkstatt -----
+println("");
+println("--- Die Werkstatt ---");
+int gold = 50;
+int preis = 15;
+println("Mit " + gold + " Gold kaufst du " + (gold / preis) + " Traenke zu je " + preis + " Gold.");
+println("Restgold: " + Werkstatt.restGold(gold, preis) + " (erwartet: 5)");
+println("Kisten fuer 11 Traenke, 5 pro Kiste: " + Werkstatt.kistenBenoetigt(11, 5) + " (erwartet: 3)");
+println("Ein Treffer mit 17 Schaden ist " + Werkstatt.schadensstufe(17) + ".");
+println("Durchschnitt von 1, 2 und 4: " + Werkstatt.durchschnitt(1, 2, 4));
+println("2 hoch 10 = " + Werkstatt.potenz(2, 10));
+println("ggT(48, 180) = " + Werkstatt.ggT(48, 180));
+String primzahlen = "";
+for (int z = 1; z <= 30; z++) {
+    if (Werkstatt.istPrimzahl(z)) {
+        primzahlen = primzahlen + z + " ";
+    }
+}
+println("Primzahlen bis 30: " + primzahlen);
+
+// Wert-Raetsel (erst auf Papier ueberlegen, dann starten!):
+// quersumme veraendert ihren Parameter n bis auf 0. Was passiert mit jahr?
+int jahr = 2026;
+int qs = Werkstatt.quersumme(jahr);
+println("Quersumme von " + jahr + ": " + qs + " - und jahr ist danach immer noch " + jahr);
+
+// ----- Level 0.3: Die Vorratskammer -----
+println("");
+println("--- Die Vorratskammer ---");
+int[] vorrat = {4, 0, 7, 0, 12, 9};
+println("Vorrat: " + Anzeige.text(vorrat));
+println("Leere Faecher: " + Vorrat.anzahlLeer(vorrat) + ", letzter Wert: " + Vorrat.letzterWert(vorrat));
+println("Ist eine 12 im Vorrat? " + Vorrat.enthaelt(vorrat, 12));
+println("Umgedreht: " + Anzeige.text(Vorrat.umgedreht(vorrat)) + " - Original: " + Anzeige.text(vorrat));
+println("Anstiege: " + Vorrat.anzahlAnstiege(vorrat));
+Vorrat.verdopple(vorrat);
+println("Nach verdopple: " + Anzeige.text(vorrat));
+println("Wie viele a in 'Abrakadabra'? " + Vorrat.zaehleZeichen("Abrakadabra", 'a'));
+println("Zauberspruch ohne Vokale: " + Vorrat.ohneVokale("Zauberspruch"));
+println("Beginnt 'Feuerball' mit 'Feuer'? " + Vorrat.beginntMit("Feuerball", "Feuer"));
+
+// Referenz-Raetsel (erst auf Papier ueberlegen, dann starten!):
+int[] a = {1, 2, 3};
+int[] b = a;
+b[0] = 99;
+println("Referenz-Raetsel: a[0] = " + a[0]);
+
+// ----- Level 0.4: Die Zauberschule -----
+println("");
+println("--- Die Zauberschule ---");
+println(Zauber.spruchtext("Heilung", 3) + " heilt " + Zauber.heilwert(3) + " Leben.");
+println("Ist Stufe 7 staerker als Stufe 4? " + Zauber.istStaerker(7, 4));
+println("max2(3, 8) = " + Zauber.max2(3, 8));
+
+// Zum Freischalten der Stufe Erweiterung: loesche die Zeile mit
+// LEVEL-0.4-START Erweiterung und die Zeile mit LEVEL-0.4-ENDE Erweiterung
+/* LEVEL-0.4-START Erweiterung
+int mana = 50;
+println("Feuerball Stufe 3 kostet " + Zauber.manaKosten(3, false) + " Mana, verstaerkt " + Zauber.manaKosten(3, true) + " Mana.");
+println("Mit " + mana + " Mana: normal moeglich? " + Zauber.kannZaubern(mana, 3, false) + " - verstaerkt moeglich? " + Zauber.kannZaubern(mana, 3, true));
+println("max3(4, 11, 7) = " + Zauber.max3(4, 11, 7));
+LEVEL-0.4-ENDE Erweiterung */
+
+// Zum Freischalten der Stufe Experte: loesche die Zeile mit
+// LEVEL-0.4-START Experte und die Zeile mit LEVEL-0.4-ENDE Experte
+/* LEVEL-0.4-START Experte
+println("2.5 gerundet: " + Zauber.runden(2.5) + ", 2.4 gerundet: " + Zauber.runden(2.4));
+String wuerfe = "";
+for (int i = 0; i < 10; i++) {
+    wuerfe = wuerfe + Zauber.wuerfelImBereich(1, 6) + " ";
+}
+println("Zehn Wuerfe mit dem W6: " + wuerfe);
+println("Zauberkette Stufe 5: " + Zauber.zauberkette(5));
+LEVEL-0.4-ENDE Experte */
+
+// ----- Level 0.5: Die Zauberschule, Teil II -----
+println("");
+println("--- Die Zauberschule, Teil II ---");
+int[] traenke = {10, 20, 30};
+int[] kopie = ZauberII.erhoehteKopie(traenke, 5);
+println("erhoehteKopie: " + Anzeige.text(kopie) + " - Original: " + Anzeige.text(traenke));
+ZauberII.erhoeheAlle(traenke, 1);
+println("Nach erhoeheAlle(traenke, 1): " + Anzeige.text(traenke));
+int[] fass = new int[3];
+ZauberII.fuelle(fass, 8);
+println("Nach fuelle(fass, 8): " + Anzeige.text(fass));
+int[] staerken = {12, 3, 25, 3, 18};
+println("Staerken: " + Anzeige.text(staerken));
+println("Zwischen 10 und 20: " + ZauberII.zaehleImBereich(staerken, 10, 20));
+println("Index des Minimums: " + ZauberII.indexDesMinimums(staerken));
+println("Zweitgroesster Wert: " + ZauberII.zweitgroesster(staerken));
+ZauberII.tauscheErstesUndLetztes(staerken);
+println("Nach dem Tausch: " + Anzeige.text(staerken));
+int[] links = {1, 4, 9};
+int[] rechts = {2, 3, 10};
+println("verschmelze: " + Anzeige.text(ZauberII.verschmelze(links, rechts)));
+
+// ----- Papier-Compiler 0: Werkstattpruefung -----
+// Zum Freischalten: loesche die Zeile mit PAPIER-COMPILER-0-START und die
+// Zeile mit PAPIER-COMPILER-0-ENDE
+/* PAPIER-COMPILER-0-START
+int[] pruefung = {12, 7, 15, 9, 3};
+println("");
+println("--- Werkstattpruefung ---");
+println("Punkte: " + Anzeige.text(pruefung));
+println("Ueber dem Durchschnitt: " + Werkstattpruefung.anzahlUeberDurchschnitt(pruefung) + " Lehrlinge (erwartet: 2)");
+PAPIER-COMPILER-0-ENDE */

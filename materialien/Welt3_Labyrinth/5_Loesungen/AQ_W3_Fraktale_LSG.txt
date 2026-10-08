@@ -1,0 +1,505 @@
+// =====================================================================
+//  WELT 3 – DAS LABYRINTH – DEKO-WERKSTATT: FRAKTALE –
+//  MUSTERLÖSUNG (Lehrerexemplar)
+//  Informatik LK · Online-IDE · Algo Quest · DS 18 (Rekursion)
+//
+//  Das ausgefuellte Fraktal-Geruest: Die Klasse Werkstatt ist
+//  unveraendert, in Fraktal stehen alle Loesungen (Baum, Baum mit drei
+//  Aesten, Koch-Kurve, Schneeflocke, Sierpinski-Dreieck, H-Baum). Die
+//  Kennzahlen am Ende der Datei sind durch Ausfuehren ermittelt
+//  (Werkstatt.tabelle), die Lage der Bilder ist nachgerechnet.
+//
+//  ANLEITUNG FUER SCHUELER: siehe Geruest-Datei.
+//
+//  DREHRICHTUNG IN DER ONLINE-IDE
+//  turn(+w) dreht nach LINKS (gegen den Uhrzeigersinn), turn(-w) nach
+//  RECHTS; eine neue Turtle blickt nach rechts. Das zeigen die
+//  Beispiele der Online-IDE-Doku (learnj.de): Der fraktale Baum startet
+//  unten mit turn(90) und waechst nach oben. -> In der echten IDE
+//  einmal mit Werkstatt.zeichne("sierpinski", 0) pruefen: Die Spitze
+//  muss nach OBEN zeigen.
+//
+//  AENDERUNGEN GEGENUEBER "10_Rekursive_Grafik" / "10_RekursionGrafik_LSG"
+//  - SIERPINSKI (bekannter Fehler): Geruest und Loesung drehten
+//    verschieden. Das alte Geruest startete mit turn(-60) und drehte im
+//    Basisfall um +120 - das Dreieck hing dann von y = 600 bis y = 1033
+//    nach UNTEN aus dem Bild. Die alte Loesung startete mit turn(90) und
+//    drehte um -120 - das ergab ein Dreieck mit senkrechter linker Seite
+//    und Spitze nach RECHTS (x 150..583, y 100..600), nicht wie im
+//    Kommentar behauptet "Spitze nach oben, x 150..650, y 167..600".
+//    JETZT: keine Startdrehung (Blick nach rechts), im Basisfall UND im
+//    Rekursionsschritt turn(120). Ergebnis: Spitze nach oben, Start
+//    (150/630), Laenge 500 -> x 150..650, y 197..630. Die Startdrehung
+//    steht in der Werkstatt (GERÜST) und ist damit in beiden Dateien
+//    identisch.
+//  - Sierpinski-TODO: Das alte Geruest verlangte "laenge/2 vorwaerts" -
+//    das zeichnet eine falsche, viel kleinere Figur (genau der Fehler,
+//    den die alte LSG als "haeufigen Schuelerfehler" beschrieb). Jetzt:
+//    die GANZE Seite laenge laufen, und zwar mit angehobenem Stift.
+//    Vorher wurden die Aussenseiten mit gesenktem Stift doppelt
+//    gezeichnet (Tiefe 5: 1092 statt 729 Striche) - das Bild war gleich,
+//    die Strichzahl aber kaum zu deuten. Jetzt: Striche = 3^(n+1).
+//  - Baum: Der Kommentar "turn(-30) nach links" war falsch (-30 dreht
+//    nach rechts). Jetzt turn(30) links, turn(-60) rechts, turn(30).
+//    Startlaenge 150 statt 200: Bei 200 und Tiefe 10 ragte der Baum oben
+//    aus dem Bild.
+//  - Koch-Kurve: Mit -60, +120, -60 zeigen die Zacken bei Blick nach
+//    rechts nach UNTEN (alte LSG: "y = 227..400" stimmte nicht, richtig
+//    war 400..573). Jetzt bewusst als "Eiszapfen" genutzt: Start
+//    (100/150) -> x 100..700, y 150..323.
+//  - Schneeflocke: Das alte Geruest startete bei (150/250) - die Flocke
+//    ragte oben aus dem Bild (bis y = -183). Jetzt Start (150/470):
+//    x 150..650, y 37..614.
+//  - NEU: Aufrufzaehler "aufrufe" in jeder rekursiven Methode (erste
+//    Anweisung), Ausgabe "Aufrufe: ..." und "Striche: ...", dazu
+//    Werkstatt.tabelle(deko, bisTiefe) fuer die Analyse.
+//  - NEU: Werkstatt (GERÜST) stellt die Turtle auf, begrenzt die Tiefe
+//    und erzeugt die World nur einmal. Schueler aendern nur noch den
+//    Aufruf im Programmstart, nicht mehr Startpunkt und Startdrehung.
+//  - NEU: Deko 5 H-Baum (Experte), schneeflocke als eigene Methode.
+//  - Benutzte Turtle-API wie im Original: forward, turn, penUp,
+//    penDown, setBorderColor (dazu new World, SystemTools.setSpeed).
+// =====================================================================
+
+
+// ---------------------------------------------------------------------
+//  GERÜST – unveraendert
+// ---------------------------------------------------------------------
+
+// Die Werkstatt stellt fuer jede Deko die Turtle auf (Startpunkt,
+// Startrichtung, Farbe), setzt die Zaehler auf 0, ruft deine Methode
+// auf und gibt danach die Zaehlerstaende aus.
+//
+// Startrichtungen (die Turtle blickt anfangs nach RECHTS):
+//   baum, baum3    Start unten in der Mitte, Drehung +90 -> Blick nach oben
+//   koch           Start links oben, keine Drehung -> Blick nach rechts,
+//                  die Zacken zeigen nach UNTEN (Eiszapfen)
+//   schneeflocke   Start links, keine Drehung -> Blick nach rechts
+//   sierpinski     Start links unten, KEINE Drehung -> Blick nach rechts,
+//                  die Spitze des Dreiecks zeigt nach oben
+//   hbaum          Start in der Mitte, keine Drehung -> Blick nach rechts
+class Werkstatt {
+
+    private static boolean weltBereit = false;
+
+    // Zeichnet eine Deko und gibt Aufrufe und Striche aus.
+    // deko: "baum", "baum3", "koch", "schneeflocke", "sierpinski", "hbaum"
+    static void zeichne(String deko, int tiefe) {
+        if (!pruefe(deko, tiefe)) {
+            return;
+        }
+        welt();
+        Fraktal.aufrufe = 0;
+        Fraktal.striche = 0;
+        Turtle t = aufstellen(deko, 0);
+        starte(deko, t, tiefe);
+        println("Deko '" + deko + "', Tiefe " + tiefe);
+        println("Aufrufe: " + Fraktal.aufrufe);
+        println("Striche: " + Fraktal.striche);
+    }
+
+    // Zaehlt fuer die Tiefen 0 bis bisTiefe die Aufrufe und Striche und
+    // gibt eine Tabelle aus. Gezeichnet wird dabei AUSSERHALB des
+    // sichtbaren Bereichs - du siehst also nichts, bekommst aber schnell
+    // alle Zahlen. Erst selbst vorhersagen, dann nachpruefen!
+    static void tabelle(String deko, int bisTiefe) {
+        if (!pruefe(deko, bisTiefe)) {
+            return;
+        }
+        welt();
+        println("Deko '" + deko + "'");
+        println("Tiefe | Aufrufe | Striche");
+        for (int tiefe = 0; tiefe <= bisTiefe; tiefe++) {
+            Fraktal.aufrufe = 0;
+            Fraktal.striche = 0;
+            Turtle t = aufstellen(deko, 5000);
+            starte(deko, t, tiefe);
+            println("  " + tiefe + "   | " + Fraktal.aufrufe + " | " + Fraktal.striche);
+        }
+    }
+
+
+    // =============== intern ===============
+
+    private static void welt() {
+        if (!weltBereit) {
+            new World(800, 700);
+            weltBereit = true;
+        }
+    }
+
+    // Prueft den Namen und begrenzt die Tiefe (sonst rechnet die
+    // Online-IDE minutenlang).
+    private static boolean pruefe(String deko, int tiefe) {
+        int max = maxTiefe(deko);
+        if (max < 0) {
+            println("Unbekannte Deko '" + deko + "'. Erlaubt: baum, baum3, koch, schneeflocke, sierpinski, hbaum");
+            return false;
+        }
+        if (tiefe < 0 || tiefe > max) {
+            println("Tiefe " + tiefe + " geht nicht: fuer '" + deko + "' sind 0 bis " + max + " erlaubt.");
+            return false;
+        }
+        return true;
+    }
+
+    private static int maxTiefe(String deko) {
+        if (deko.equals("baum")) {
+            return 12;
+        }
+        if (deko.equals("baum3")) {
+            return 8;
+        }
+        if (deko.equals("koch")) {
+            return 6;
+        }
+        if (deko.equals("schneeflocke")) {
+            return 5;
+        }
+        if (deko.equals("sierpinski")) {
+            return 7;
+        }
+        if (deko.equals("hbaum")) {
+            return 10;
+        }
+        return -1;
+    }
+
+    // Stellt die Turtle auf. verschiebung > 0 schiebt alles nach rechts
+    // aus dem sichtbaren Bereich (fuer die Tabelle).
+    private static Turtle aufstellen(String deko, int verschiebung) {
+        Turtle t;
+        if (deko.equals("baum") || deko.equals("baum3")) {
+            t = new Turtle(400 + verschiebung, 680);
+            t.turn(90);                          // Blick nach oben
+            t.setBorderColor("#C8A165");
+        } else if (deko.equals("koch")) {
+            t = new Turtle(100 + verschiebung, 150);
+            t.setBorderColor("#6FB7E9");
+        } else if (deko.equals("schneeflocke")) {
+            t = new Turtle(150 + verschiebung, 470);
+            t.setBorderColor("#6FB7E9");
+        } else if (deko.equals("sierpinski")) {
+            t = new Turtle(150 + verschiebung, 630);
+            t.setBorderColor("#E8743B");     // KEINE Startdrehung
+        } else {
+            t = new Turtle(400 + verschiebung, 350);
+            t.setBorderColor("#7FBF5F");
+        }
+        return t;
+    }
+
+    private static void starte(String deko, Turtle t, int tiefe) {
+        if (deko.equals("baum")) {
+            Fraktal.baum(t, 150, tiefe);
+        } else if (deko.equals("baum3")) {
+            Fraktal.baum3(t, 130, tiefe);
+        } else if (deko.equals("koch")) {
+            Fraktal.koch(t, 600, tiefe);
+        } else if (deko.equals("schneeflocke")) {
+            Fraktal.schneeflocke(t, 500, tiefe);
+        } else if (deko.equals("sierpinski")) {
+            Fraktal.sierpinski(t, 500, tiefe);
+        } else {
+            Fraktal.hBaum(t, 300, tiefe);
+        }
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  LÖSUNGEN
+// ---------------------------------------------------------------------
+
+class Fraktal {
+
+    static int aufrufe = 0;
+    static int striche = 0;
+
+    // Laeuft die angegebene Strecke rueckwaerts zurueck, ohne zu zeichnen.
+    // Die zweite Drehung ist -180, damit sich beide exakt aufheben.
+    static void zurueck(Turtle t, double laenge) {
+        t.penUp();
+        t.turn(180);
+        t.forward(laenge);
+        t.turn(-180);
+        t.penDown();
+    }
+
+
+    // ---------------- Deko 1: Baum (Beispiel aus dem Geruest) ----------------
+    // Aufrufe A(n) = 1 + 2 * A(n-1), A(0) = 1   ->  A(n) = 2^(n+1) - 1
+    // Striche S(n) = 1 + 2 * S(n-1), S(0) = 0   ->  S(n) = 2^n - 1
+
+    static void baum(Turtle t, double laenge, int tiefe) {
+        aufrufe++;
+        if (tiefe == 0) {
+            return;                            // Basisfall
+        }
+
+        t.forward(laenge);                     // Stamm zeichnen
+        striche++;
+
+        t.turn(30);                            // nach links drehen
+        baum(t, laenge * 0.7, tiefe - 1);      // linker Teilbaum
+        t.turn(-60);                           // nach rechts drehen
+        baum(t, laenge * 0.7, tiefe - 1);      // rechter Teilbaum
+        t.turn(30);                            // Blickrichtung zurueck
+
+        zurueck(t, laenge);                    // zum Astansatz zurueck
+    }
+
+
+    // ---------------- Deko 2: Baum mit drei Aesten ----------------
+    // Die Drehungen +30, -30, -30, +30 ergeben in der Summe 0: Die Turtle
+    // blickt am Ende wieder in die Ausgangsrichtung.
+    // A(n) = 1 + 3 * A(n-1), A(0) = 1   ->  A(n) = (3^(n+1) - 1) / 2
+    // S(n) = 1 + 3 * S(n-1), S(0) = 0   ->  S(n) = (3^n - 1) / 2
+
+    static void baum3(Turtle t, double laenge, int tiefe) {
+        aufrufe++;
+        if (tiefe == 0) {
+            return;
+        }
+
+        t.forward(laenge);
+        striche++;
+
+        t.turn(30);
+        baum3(t, laenge * 0.7, tiefe - 1);     // links
+        t.turn(-30);
+        baum3(t, laenge * 0.7, tiefe - 1);     // geradeaus
+        t.turn(-30);
+        baum3(t, laenge * 0.7, tiefe - 1);     // rechts
+        t.turn(30);
+
+        zurueck(t, laenge);
+    }
+
+
+    // ---------------- Deko 3: Koch-Kurve ----------------
+    // Eine Strecke wird ersetzt durch vier Strecken von je einem Drittel
+    // der Laenge, dazwischen die Drehungen -60, +120, -60:
+    //
+    //        ____        wird zu        _  _
+    //                                    \/      (Zacke nach RECHTS =
+    //                                             unten bei Blick nach rechts)
+    //
+    // Die Drehungen ergeben in der Summe 0; die Turtle steht am Ende genau
+    // "laenge" weiter in der urspruenglichen Richtung.
+    // A(n) = 1 + 4 * A(n-1), A(0) = 1   ->  A(n) = (4^(n+1) - 1) / 3
+    // S(n) = 4 * S(n-1),     S(0) = 1   ->  S(n) = 4^n
+
+    static void koch(Turtle t, double laenge, int tiefe) {
+        aufrufe++;
+        if (tiefe == 0) {
+            t.forward(laenge);
+            striche++;
+            return;                            // Basisfall
+        }
+
+        koch(t, laenge / 3, tiefe - 1);
+        t.turn(-60);
+        koch(t, laenge / 3, tiefe - 1);
+        t.turn(120);
+        koch(t, laenge / 3, tiefe - 1);
+        t.turn(-60);
+        koch(t, laenge / 3, tiefe - 1);
+    }
+
+
+    // ---------------- Deko 3: Schneeflocke ----------------
+    // Drei Koch-Kurven, nach jeder +120 (links). Das Dreieck wird gegen
+    // den Uhrzeigersinn umlaufen, die Zacken (nach rechts) zeigen damit
+    // nach AUSSEN. schneeflocke selbst ist nicht rekursiv und zaehlt
+    // keinen Aufruf: Aufrufe = 3 * (4^(n+1) - 1) / 3 = 4^(n+1) - 1.
+
+    static void schneeflocke(Turtle t, double laenge, int tiefe) {
+        for (int i = 0; i < 3; i++) {
+            koch(t, laenge, tiefe);
+            t.turn(120);
+        }
+    }
+
+
+    // ---------------- Deko 4: Sierpinski-Dreieck ----------------
+    // Ein Sierpinski-Dreieck der Seitenlaenge l besteht aus drei
+    // Sierpinski-Dreiecken der Seitenlaenge l/2 an den drei Ecken.
+    //
+    // Pro Ecke: Teildreieck zeichnen, dann mit angehobenem Stift die
+    // GANZE Seite zur naechsten Ecke laufen und um 120 Grad nach LINKS
+    // drehen. Nach drei Durchlaeufen steht die Turtle wieder am Start und
+    // blickt wie zu Beginn nach rechts.
+    // Startrichtung "nach rechts" + Drehung +120 (links) -> die Spitze
+    // zeigt nach oben. Basisfall und Rekursionsschritt drehen GLEICH.
+    // A(n) = 1 + 3 * A(n-1), A(0) = 1   ->  A(n) = (3^(n+1) - 1) / 2
+    // S(n) = 3 * S(n-1),     S(0) = 3   ->  S(n) = 3^(n+1)
+
+    static void sierpinski(Turtle t, double laenge, int tiefe) {
+        aufrufe++;
+        if (tiefe == 0) {
+            for (int i = 0; i < 3; i++) {      // einfaches Dreieck
+                t.forward(laenge);
+                striche++;
+                t.turn(120);
+            }
+            return;                            // Basisfall
+        }
+
+        for (int i = 0; i < 3; i++) {
+            sierpinski(t, laenge / 2, tiefe - 1);
+            t.penUp();
+            t.forward(laenge);                 // zur naechsten Ecke
+            t.penDown();
+            t.turn(120);
+        }
+    }
+
+
+    // ---------------- Deko 5: H-Baum ----------------
+    // Die Turtle steht in der MITTE einer Strecke der Laenge laenge.
+    // Fuer beide Haelften: halbe Strecke zeichnen, um 90 Grad drehen,
+    // am Ende einen kleineren H-Baum (Faktor 0.71, etwa 1 / Wurzel 2)
+    // quer dazu ansetzen, zurueckdrehen, zur Mitte zuruecklaufen und
+    // umdrehen (180). Zweimal 180 = 360: Blickrichtung wie am Anfang.
+    // A(n) = 1 + 2 * A(n-1), A(0) = 1   ->  A(n) = 2^(n+1) - 1
+    // S(n) = 2 + 2 * S(n-1), S(0) = 0   ->  S(n) = 2^(n+1) - 2
+
+    static void hBaum(Turtle t, double laenge, int tiefe) {
+        aufrufe++;
+        if (tiefe == 0) {
+            return;
+        }
+
+        // vordere Haelfte
+        t.forward(laenge / 2);
+        striche++;
+        t.turn(90);
+        hBaum(t, laenge * 0.71, tiefe - 1);
+        t.turn(-90);
+        zurueck(t, laenge / 2);
+        t.turn(180);
+
+        // hintere Haelfte (jetzt in Gegenrichtung)
+        t.forward(laenge / 2);
+        striche++;
+        t.turn(90);
+        hBaum(t, laenge * 0.71, tiefe - 1);
+        t.turn(-90);
+        zurueck(t, laenge / 2);
+        t.turn(180);
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  Programmstart
+// ---------------------------------------------------------------------
+
+SystemTools.setSpeed(2000);
+
+Werkstatt.zeichne("sierpinski", 5);
+
+// Werkstatt.zeichne("baum", 8);
+// Werkstatt.zeichne("baum3", 5);
+// Werkstatt.zeichne("koch", 4);
+// Werkstatt.zeichne("schneeflocke", 4);
+// Werkstatt.zeichne("hbaum", 7);
+
+// Alle Kennzahlen auf einmal (Tempo auf Maximum):
+// Werkstatt.tabelle("baum", 8);
+// Werkstatt.tabelle("baum3", 6);
+// Werkstatt.tabelle("koch", 5);
+// Werkstatt.tabelle("schneeflocke", 5);
+// Werkstatt.tabelle("sierpinski", 6);
+// Werkstatt.tabelle("hbaum", 8);
+
+
+// =====================================================================
+//  KENNZAHLEN – ermittelt mit Werkstatt.tabelle(...)
+//
+//  Aufrufe (A) und Striche (S) in Abhaengigkeit von der Tiefe n
+//
+//  Tiefe n      0    1    2    3     4     5     6     8   | Formel A(n)
+//  -----------------------------------------------------------------------
+//  baum     A   1    3    7   15    31    63   127   511   | 2^(n+1) - 1
+//           S   0    1    3    7    15    31    63   255   | 2^n - 1
+//  baum3    A   1    4   13   40   121   364  1093         | (3^(n+1) - 1) / 2
+//           S   0    1    4   13    40   121   364         | (3^n - 1) / 2
+//  koch     A   1    5   21   85   341  1365               | (4^(n+1) - 1) / 3
+//           S   1    4   16   64   256  1024               | 4^n
+//  schnee-  A   3   15   63  255  1023  4095               | 4^(n+1) - 1
+//  flocke   S   3   12   48  192   768  3072               | 3 * 4^n
+//  sierp.   A   1    4   13   40   121   364  1093         | (3^(n+1) - 1) / 2
+//           S   3    9   27   81   243   729  2187         | 3^(n+1)
+//  hbaum    A   1    3    7   15    31    63   127   511   | 2^(n+1) - 1
+//           S   0    2    6   14    30    62   126   510   | 2^(n+1) - 2
+//
+//  Begruendung (Abi-Formulierung): Jeder Aufruf mit Tiefe n > 0 loest k
+//  Aufrufe mit Tiefe n - 1 aus (Baum, H-Baum: k = 2; Baum3, Sierpinski:
+//  k = 3; Koch: k = 4). Also A(0) = 1 und A(n) = 1 + k * A(n - 1). Auf
+//  Ebene i gibt es k^i Aufrufe, insgesamt 1 + k + k^2 + ... + k^n =
+//  (k^(n+1) - 1) / (k - 1). Steigt die Tiefe um 1, wird die Zahl der
+//  Aufrufe also etwa VER-k-FACHT (exponentielles Wachstum).
+//  Gleiche Aufrufzahl, verschiedene Striche: baum3 und sierpinski haben
+//  beide k = 3, zeichnen aber an verschiedenen Stellen (baum3: ein Strich
+//  in jedem Aufruf mit n > 0, sierpinski: drei Striche nur im Basisfall).
+//
+//  Lage im Bild (World 800 x 700, nachgerechnet; maximale Tiefe):
+//    baum         Start (400/680), Laenge 150      x 128..672, y 214..680
+//    baum3        Start (400/680), Laenge 130      x 176..624, y 272..680
+//    koch         Start (100/150), Laenge 600      x 100..700, y 150..323
+//    schneeflocke Start (150/470), Laenge 500      x 150..650, y  37..614
+//    sierpinski   Start (150/630), Laenge 500      x 150..650, y 197..630
+//    hbaum        Start (400/350), Laenge 300      x 107..693, y 142..558
+//  Nach jeder Deko (ausser koch) steht die Turtle wieder am Start und
+//  blickt in die Startrichtung; koch endet 600 weiter rechts, Blick
+//  nach rechts. Sierpinski: alle 3^n Teildreiecke liegen an der
+//  richtigen Stelle, Spitze nach oben (geprueft bis Tiefe 7).
+// =====================================================================
+
+
+// =====================================================================
+//  HÄUFIGE SCHÜLERFEHLER (Lehrerhinweise)
+// =====================================================================
+//
+//  Allgemein
+//  - "aufrufe++" hinter die Basisfall-Abfrage geschoben -> Basisfall-
+//    Aufrufe fehlen (Baum Tiefe 3: 7 statt 15). Gute Gelegenheit zu
+//    klaeren, dass auch der Basisfall ein Aufruf ist.
+//  - Blickrichtung am Ende nicht wiederhergestellt (Summe der Drehungen
+//    nicht 0) -> das Bild "verdreht" sich von Ast zu Ast. Mit Tempo 50
+//    sofort zu sehen. Merksatz: Jede Methode hinterlaesst die Turtle so,
+//    wie sie sie vorgefunden hat (Ort UND Richtung).
+//
+//  Deko 2 – baum3
+//  - Drehfolge +30, +30, -30 ... statt +30, -30, -30, +30 -> schiefe
+//    Baeume. Zum Pruefen: Summe der Drehungen muss 0 sein.
+//  - zurueck(t, laenge * 0.7) statt zurueck(t, laenge) -> die Turtle
+//    landet nicht mehr am Astansatz.
+//
+//  Deko 3 – koch / schneeflocke
+//  - laenge / 3 nur im ersten Aufruf -> die Kurve wird zu lang.
+//  - Drehungen +60, -120, +60 -> Zacken nach oben; die Schneeflocke
+//    bekommt dann Zacken nach INNEN ("Anti-Schneeflocke"). Kein Fehler
+//    im engeren Sinn - schoener Gespraechsanlass.
+//  - In schneeflocke turn(-120) statt turn(120) -> das Dreieck wird im
+//    Uhrzeigersinn umlaufen, die Flocke haengt nach unten aus dem Bild
+//    (y bis 903) und die Zacken zeigen nach innen.
+//
+//  Deko 4 – sierpinski
+//  - laenge / 2 statt laenge vorwaerts laufen -> falsche, kleinere Figur.
+//  - Stift beim Weiterlaufen nicht angehoben -> Bild gleich, aber zu
+//    viele Striche (Tiefe 5: 1092 statt 729). Gut fuer die Analyse:
+//    "Warum stimmt die Strichzahl nicht mit 3^(n+1) ueberein?"
+//  - turn(-120) im Rekursionsschritt, turn(120) im Basisfall -> die
+//    Teildreiecke liegen ausserhalb des grossen Dreiecks und haengen
+//    unten aus dem Bild (genau der Fehler des alten Materials:
+//    Drehrichtungen muessen in Basisfall und Rekursion gleich sein).
+//
+//  Deko 5 – hBaum
+//  - Die zweite Drehung turn(180) am Ende vergessen -> die Turtle
+//    blickt in die Gegenrichtung und steht nicht mehr in der Mitte; die
+//    Teilbaeume verrutschen und ragen aus dem Bild (Tiefe 3 schon).
+//  - Rekursiver Aufruf ohne turn(90) -> alle Striche auf einer Linie.
+// =====================================================================

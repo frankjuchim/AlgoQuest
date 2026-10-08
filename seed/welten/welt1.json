@@ -1,0 +1,4403 @@
+{
+ "version": 2,
+ "welt": 1,
+ "titel": "Die Heldenschmiede",
+ "farbe": "#A0522D",
+ "levels": [
+  {
+   "id": "W1-L1",
+   "nr": "1.1",
+   "titel": "Die Schmiede öffnet – Klasse und Objekt",
+   "ds": [
+    8
+   ],
+   "ab": "AB W1·1 Klassen und Objekte – Infoteile 1–3, Aufgaben 0–2",
+   "ide": "AQ_W1_L1_Heldenschmiede_Geruest.txt – Level 1.1 (Klasse Held, Testklasse L11HeldTest)",
+   "intro": [
+    {
+     "t": "text",
+     "md": "Eine **Klasse** ist ein Bauplan (Attribute + Methoden), ein **Objekt** ein mit `new` erzeugtes Exemplar mit eigenen Attributwerten."
+    },
+    {
+     "t": "hinweis",
+     "md": "**Merke:** Attribute `private` (−), Methoden und Konstruktoren `public` (+). Der Konstruktor heißt wie die Klasse und hat keinen Rückgabetyp. `this.name` ist das Attribut, `name` der Parameter."
+    }
+   ],
+   "aufgaben": [
+    "W1-L1-01",
+    "W1-L1-02",
+    "W1-L1-03",
+    "W1-L1-04",
+    "W1-L1-05",
+    "W1-L1-06",
+    "W1-L1-07",
+    "W1-L1-08"
+   ]
+  },
+  {
+   "id": "W1-L2",
+   "nr": "1.2",
+   "titel": "Doppelgänger – Konstruktoren und Referenzen",
+   "ds": [
+    9
+   ],
+   "ab": "AB W1·1 Klassen und Objekte – Infoteil 4, Aufgaben 3–5",
+   "ide": "AQ_W1_L1_Heldenschmiede_Geruest.txt – Level 1.2 (zweiter Konstruktor, Klasse Monster, Testklasse L12MonsterTest)",
+   "intro": [
+    {
+     "t": "text",
+     "md": "Eine Klasse darf mehrere **Konstruktoren** haben, wenn sich die Parameterlisten unterscheiden (Überladen). Eine Objektvariable speichert eine **Referenz** (einen Pfeil) auf ein Objekt."
+    },
+    {
+     "t": "hinweis",
+     "md": "**Merke:** `Held b = a;` kopiert nur den Pfeil – es gibt danach immer noch **ein** Objekt. `==` vergleicht Referenzen, Inhalte vergleicht man mit `equals`. `null` = kein Objekt."
+    }
+   ],
+   "aufgaben": [
+    "W1-L2-01",
+    "W1-L2-02",
+    "W1-L2-03",
+    "W1-L2-04",
+    "W1-L2-05",
+    "W1-L2-06",
+    "W1-L2-07",
+    "W1-L2-08"
+   ]
+  },
+  {
+   "id": "W1-L3",
+   "nr": "1.3",
+   "titel": "Der Rucksack – Reihung von Objekten",
+   "ds": [
+    10
+   ],
+   "ab": "AB W1·1 Klassen und Objekte – Infoteil 5, Aufgaben 6–8 (Papier-Compiler)",
+   "ide": "AQ_W1_L1_Heldenschmiede_Geruest.txt – Level 1.3 (Gegenstand, Inventar, Testklasse L13InventarTest)",
+   "intro": [
+    {
+     "t": "text",
+     "md": "Das Inventar ist eine **Reihung von Gegenstand** mit Füllstand `anzahl`: belegt sind die Indizes 0 bis `anzahl − 1`, dahinter steht `null`."
+    },
+    {
+     "t": "hinweis",
+     "md": "**Achtung Abi:** Schleifen bis `anzahl − 1`, nicht bis `inventar.length − 1`; vor dem Einfügen auf `null` und „voll\" prüfen; Namen mit `equals` vergleichen. Assoziation = einfache Linie ohne Kardinalität."
+    }
+   ],
+   "aufgaben": [
+    "W1-L3-01",
+    "W1-L3-02",
+    "W1-L3-03",
+    "W1-L3-04",
+    "W1-L3-05",
+    "W1-L3-06",
+    "W1-L3-07",
+    "W1-L3-08"
+   ]
+  },
+  {
+   "id": "W1-L4",
+   "nr": "1.4",
+   "titel": "Die Waffenkammer – Vererbung und Polymorphie",
+   "ds": [
+    11
+   ],
+   "ab": "AB W1·2 Vererbung – Infoteile 1–2, Aufgaben 1–5",
+   "ide": "AQ_W1_L1_Heldenschmiede_Geruest.txt – Level 1.4 (Waffe, Trank, Schluessel; Testklasse L14VererbungTest)",
+   "intro": [
+    {
+     "t": "text",
+     "md": "Eine **Unterklasse** (`extends`) erbt Attribute und Methoden und ergänzt eigene. Ihr Konstruktor ruft zuerst `super(…)` auf. Überschreiben = gleiche Signatur neu definieren."
+    },
+    {
+     "t": "hinweis",
+     "md": "**Merke:** Der Typ der **Variable** entscheidet, was aufgerufen werden *darf*; der Typ des **Objekts** entscheidet, welche Version *läuft* (dynamisches Binden)."
+    }
+   ],
+   "aufgaben": [
+    "W1-L4-01",
+    "W1-L4-02",
+    "W1-L4-03",
+    "W1-L4-04",
+    "W1-L4-05",
+    "W1-L4-06",
+    "W1-L4-07",
+    "W1-L4-08"
+   ]
+  }
+ ],
+ "boss": {
+  "id": "W1-BOSS",
+  "titel": "Der Reitstall der Heldenschmiede",
+  "dauerMin": 25,
+  "anzahl": 8,
+  "mix": {
+   "1": 3,
+   "2": 3,
+   "3": 2
+  },
+  "pool": [
+   "W1-B-01",
+   "W1-B-02",
+   "W1-B-03",
+   "W1-B-04",
+   "W1-B-05",
+   "W1-B-06",
+   "W1-B-07",
+   "W1-B-08",
+   "W1-B-09",
+   "W1-B-10",
+   "W1-B-11",
+   "W1-B-12",
+   "W1-B-13",
+   "W1-B-14",
+   "W1-B-15"
+  ]
+ },
+ "aufgaben": [
+  {
+   "id": "W1-L1-01",
+   "titel": "Bauplan, Exemplar oder Zustand?",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Klasse vs. Objekt",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Im Hauptprogramm der Heldenschmiede steht:"
+    },
+    {
+     "t": "code",
+     "code": "Held lio = new Held(\"Lio\");\nMonster ork = new Monster(\"Ork\", 45, 7);\nlio.nimmSchaden(30);",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Ordne jede Beschreibung zu: Ist das eine **Klasse** (Bauplan), ein **Objekt** (konkretes Exemplar) oder ein **Attributwert** (Teil des Zustands eines Objekts)?"
+    }
+   ],
+   "interaktion": {
+    "kind": "match",
+    "elemente": [
+     {
+      "id": "e1",
+      "md": "`Held` – legt fest, dass jeder Held einen Namen, Leben und Stärke hat"
+     },
+     {
+      "id": "e2",
+      "md": "das Exemplar, das `new Held(\"Lio\")` erzeugt"
+     },
+     {
+      "id": "e3",
+      "md": "`leben = 70` bei Lio nach Zeile 3"
+     },
+     {
+      "id": "e4",
+      "md": "`Monster` – beschreibt, was alle Gegner können"
+     },
+     {
+      "id": "e5",
+      "md": "der Ork mit 45 Leben und Stärke 7"
+     },
+     {
+      "id": "e6",
+      "md": "`name = \"Lio\"`"
+     }
+    ],
+    "kategorien": [
+     {
+      "id": "k",
+      "md": "Klasse"
+     },
+     {
+      "id": "o",
+      "md": "Objekt"
+     },
+     {
+      "id": "w",
+      "md": "Attributwert"
+     }
+    ]
+   },
+   "loesung": {
+    "e1": "k",
+    "e2": "o",
+    "e3": "w",
+    "e4": "k",
+    "e5": "o",
+    "e6": "w"
+   },
+   "tipps": [
+    "Eine Klasse gibt es einmal im Programm, Objekte entstehen erst mit `new` – beliebig viele."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Die **Klasse** ist der Bauplan (`Held`, `Monster`): Sie legt fest, *welche* Attribute und Methoden es gibt. Ein **Objekt** ist ein mit `new` erzeugtes Exemplar mit eigenen Werten (Lio, der Ork). Ein **Attributwert** gehört zum Zustand genau eines Objekts: Lio hat nach `nimmSchaden(30)` den Wert `leben = 70`, der Ork behält seine 45 – Schaden für Lio ändert nichts an anderen Objekten."
+    }
+   ]
+  },
+  {
+   "id": "W1-L1-02",
+   "titel": "Anatomie eines Helden",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Bestandteile einer Klasse",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Hier siehst du das Gerüst der Klasse `Held` (Methodenrümpfe ausgelassen)."
+    },
+    {
+     "t": "code",
+     "code": "public class Held {\n    private String name;\n    private int leben;\n    private int maxLeben;\n    private int staerke;\n    private int gold;\n\n    public Held(String name) { ... }\n    public int getGold() { ... }\n    public boolean istBesiegt() { ... }\n    public void heilen(int punkte) { ... }\n    public void erhalteGold(int betrag) { ... }\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Ordne jedes Element dem passenden Bestandteil zu. *Sondierend* = liefert nur eine Information, ändert nichts; *verändernd* = ändert den Zustand des Objekts."
+    }
+   ],
+   "interaktion": {
+    "kind": "match",
+    "elemente": [
+     {
+      "id": "e1",
+      "md": "`private int gold;`"
+     },
+     {
+      "id": "e2",
+      "md": "`public Held(String name)`"
+     },
+     {
+      "id": "e3",
+      "md": "`public int getGold()`"
+     },
+     {
+      "id": "e4",
+      "md": "`public boolean istBesiegt()`"
+     },
+     {
+      "id": "e5",
+      "md": "`public void heilen(int punkte)`"
+     },
+     {
+      "id": "e6",
+      "md": "`public void erhalteGold(int betrag)`"
+     },
+     {
+      "id": "e7",
+      "md": "`private int maxLeben;`"
+     }
+    ],
+    "kategorien": [
+     {
+      "id": "att",
+      "md": "Attribut"
+     },
+     {
+      "id": "kon",
+      "md": "Konstruktor"
+     },
+     {
+      "id": "son",
+      "md": "sondierende Methode"
+     },
+     {
+      "id": "ver",
+      "md": "verändernde Methode"
+     }
+    ]
+   },
+   "loesung": {
+    "e1": "att",
+    "e2": "kon",
+    "e3": "son",
+    "e4": "son",
+    "e5": "ver",
+    "e6": "ver",
+    "e7": "att"
+   },
+   "tipps": [
+    "Der Konstruktor heißt wie die Klasse und hat keinen Rückgabetyp."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "**Attribute** (`gold`, `maxLeben`) speichern den Zustand und sind privat. Der **Konstruktor** `Held(String name)` heißt wie die Klasse, hat keinen Rückgabetyp und setzt die Startwerte. **Sondierend** sind `getGold()` und `istBesiegt()` – sie liefern nur einen Wert. **Verändernd** sind `heilen` und `erhalteGold`: Sie ändern `leben` bzw. `gold` – kontrolliert (nie über `maxLeben`, nur positive Beträge)."
+    }
+   ]
+  },
+  {
+   "id": "W1-L1-03",
+   "titel": "Privat ist Absicht",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Bestandteile einer Klasse",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Welche Aussagen über die Klasse `Held` (Attribute privat, Methoden öffentlich, kein Setter für `leben`) sind **richtig**? Wähle alle richtigen aus."
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "mehrfach": true,
+    "optionen": [
+     {
+      "id": "a",
+      "md": "Weil `leben` privat ist, kann ein Hauptprogramm nur über Methoden wie `nimmSchaden` oder `heilen` darauf einwirken."
+     },
+     {
+      "id": "b",
+      "md": "Ein Konstruktor hat den Rückgabetyp `void`."
+     },
+     {
+      "id": "c",
+      "md": "Ein Konstruktor heißt genauso wie die Klasse und wird bei `new` aufgerufen."
+     },
+     {
+      "id": "d",
+      "md": "Die Anweisung `aria.leben = 500;` im Hauptprogramm ist erlaubt, weil `leben` ein Attribut von `aria` ist."
+     },
+     {
+      "id": "e",
+      "md": "Dass es keinen Setter für `leben` gibt, ist Absicht: So kann die Klasse selbst darauf achten, dass `leben` nie unter 0 oder über `maxLeben` liegt."
+     },
+     {
+      "id": "f",
+      "md": "Im Konstruktor bezeichnet `this.name` den Parameter `name`."
+     }
+    ]
+   },
+   "loesung": {
+    "richtig": [
+     "a",
+     "c",
+     "e"
+    ]
+   },
+   "tipps": [
+    "Prüfe jede Aussage einzeln. Was bedeutet das Minuszeichen in der Klassenkarte?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Richtig sind a, c und e. Das ist **Kapselung**: Private Attribute sind nur innerhalb der Klasse zugreifbar – `aria.leben = 500;` ist ein Übersetzungsfehler (d falsch). Ein Konstruktor hat **keinen** Rückgabetyp (b falsch); schreibt man `public void Held(…)`, entsteht eine gewöhnliche Methode und die Attribute behalten ihre Standardwerte. `this.name` ist das **Attribut** des eigenen Objekts, `name` allein der Parameter (f falsch)."
+    }
+   ]
+  },
+  {
+   "id": "W1-L1-04",
+   "titel": "Die Klassenkarte des Helden",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Klassendiagramm",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Übertrage den Java-Code in die Klassenkarte nach EH § 6 (Sichtbarkeit, deutsche Typnamen, Konstruktor mit `c`)."
+    },
+    {
+     "t": "code",
+     "code": "public class Held {\n    private String name;\n    private int leben;\n    private int maxLeben;\n    private int staerke;\n    private int gold;\n\n    public Held(String name) { ... }\n    public String getName() { ... }\n    public int getLeben() { ... }\n    public boolean istBesiegt() { ... }\n    public void nimmSchaden(int schaden) { ... }\n    public void heilen(int punkte) { ... }\n    public void erhalteGold(int betrag) { ... }\n}",
+     "nummern": true
+    },
+    {
+     "t": "klassenkarte",
+     "name": "Held",
+     "attribute": [
+      "[[g1]] name: Zeichenkette",
+      "- leben: [[g2]]",
+      "- maxLeben: Ganzzahl",
+      "- staerke: Ganzzahl",
+      "- gold: Ganzzahl"
+     ],
+     "methoden": [
+      "+ c Held(name: [[g3]])",
+      "+ getName(): Zeichenkette",
+      "+ getLeben(): Ganzzahl",
+      "+ istBesiegt(): [[g4]]",
+      "+ nimmSchaden(schaden: Ganzzahl): [[g5]]",
+      "+ heilen(punkte: Ganzzahl): nichts",
+      "+ erhalteGold(betrag: Ganzzahl): nichts"
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "auswahl",
+      "optionen": [
+       "+",
+       "-"
+      ]
+     },
+     "g2": {
+      "typ": "auswahl",
+      "optionen": [
+       "Ganzzahl",
+       "Kommazahl",
+       "Wahrheitswert",
+       "Zeichen",
+       "Zeichenkette",
+       "nichts"
+      ]
+     },
+     "g3": {
+      "typ": "auswahl",
+      "optionen": [
+       "Ganzzahl",
+       "Kommazahl",
+       "Wahrheitswert",
+       "Zeichen",
+       "Zeichenkette",
+       "nichts"
+      ]
+     },
+     "g4": {
+      "typ": "auswahl",
+      "optionen": [
+       "Ganzzahl",
+       "Kommazahl",
+       "Wahrheitswert",
+       "Zeichen",
+       "Zeichenkette",
+       "nichts"
+      ]
+     },
+     "g5": {
+      "typ": "auswahl",
+      "optionen": [
+       "Ganzzahl",
+       "Kommazahl",
+       "Wahrheitswert",
+       "Zeichen",
+       "Zeichenkette",
+       "nichts"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "-"
+    ],
+    "g2": [
+     "Ganzzahl"
+    ],
+    "g3": [
+     "Zeichenkette"
+    ],
+    "g4": [
+     "Wahrheitswert"
+    ],
+    "g5": [
+     "nichts"
+    ]
+   },
+   "tipps": [
+    "Übersetzung: int → Ganzzahl, String → Zeichenkette, boolean → Wahrheitswert, void → nichts."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`private` wird zu **−**, `public` zu **+**. Java-Typen werden in die deutschen Typnamen der Ergänzenden Hinweise übersetzt: `int` → Ganzzahl, `String` → Zeichenkette, `boolean` → Wahrheitswert. Eine Methode ohne Rückgabe (`void`) bekommt `: nichts`. Der Konstruktor steht mit vorangestelltem `c` und ohne Rückgabetyp in der Karte."
+    }
+   ]
+  },
+  {
+   "id": "W1-L1-05",
+   "titel": "Brann im Dauerstress",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Objektkarten und Referenzen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Der Code wird ausgeführt (alle Methoden wie in Level 1.1 implementiert: `leben` nie unter 0 und nie über `maxLeben`, `erhalteGold` nur bei positivem Betrag)."
+    },
+    {
+     "t": "code",
+     "code": "Held h = new Held(\"Brann\");\nh.nimmSchaden(35);\nh.erhalteGold(-5);\nh.erhalteGold(12);\nh.heilen(50);\nh.nimmSchaden(120);\nh.heilen(15);\nh.erhalteGold(8);",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Vervollständige die Objektkarte von `h` **nach** Zeile 8 und gib an, was `h.istBesiegt()` dann liefert."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "h: Held",
+      "Wert"
+     ],
+     "zeilen": [
+      [
+       "name",
+       "\"Brann\""
+      ],
+      [
+       "leben",
+       "[[g1]]"
+      ],
+      [
+       "maxLeben",
+       "[[g2]]"
+      ],
+      [
+       "staerke",
+       "[[g3]]"
+      ],
+      [
+       "gold",
+       "[[g4]]"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "`h.istBesiegt()` liefert [[g5]]."
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "zahl"
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "zahl"
+     },
+     "g4": {
+      "typ": "zahl"
+     },
+     "g5": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "15"
+    ],
+    "g2": [
+     "100"
+    ],
+    "g3": [
+     "10"
+    ],
+    "g4": [
+     "20"
+    ],
+    "g5": [
+     "false"
+    ]
+   },
+   "tipps": [
+    "Gehe Zeile für Zeile vor und notiere nach jeder Zeile `leben` und `gold`.",
+    "Achte auf die Grenzen: Zeile 5 heilt nicht über 100, Zeile 6 setzt nicht unter 0."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Ablauf von `leben`: 100 → 65 (Z. 2) → Z. 5: 65 + 50 = 115, begrenzt auf `maxLeben` = 100 → Z. 6: 100 − 120 < 0, also 0 → Z. 7: 15. `gold`: −5 wird ignoriert, dann 12 und 8 → **20**. `staerke` bleibt 10, `maxLeben` 100. Da `leben` = 15 > 0 ist, liefert `istBesiegt()` **false** – ein Held mit 0 Leben kann durch Heilen wieder kampffähig werden."
+    }
+   ]
+  },
+  {
+   "id": "W1-L1-06",
+   "titel": "Der namenlose Held",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Nach `Held h = new Held(\"Lio\");` liefert `h.getName()` nicht `\"Lio\"`. Der Compiler meldet keinen Fehler."
+    },
+    {
+     "t": "code",
+     "code": "public class Held {\n    private String name;\n    private int leben;\n    private int maxLeben;\n\n    public Held(String name) {\n        name = name;\n        maxLeben = 100;\n        leben = maxLeben;\n    }\n\n    public String getName() {\n        return name;\n    }\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**a)** Markiere die fehlerhafte Zeile. **b)** Korrigierte Zeile: [[g1]] **c)** Was liefert `h.getName()` mit dem fehlerhaften Code? [[g2]]"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 1,
+     "anzahl": 1
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 30
+      },
+      "g2": {
+       "typ": "auswahl",
+       "optionen": [
+        "\"Lio\"",
+        "null",
+        "\"\"",
+        "Übersetzungsfehler"
+       ]
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      7
+     ]
+    },
+    {
+     "g1": [
+      "this.name = name;",
+      "this.name = name"
+     ],
+     "g2": [
+      "null"
+     ]
+    }
+   ],
+   "tipps": [
+    "Der Parameter heißt genauso wie das Attribut. Welches `name` ist in Zeile 7 links gemeint?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "In Zeile 7 verdeckt der Parameter `name` das gleichnamige Attribut: `name = name;` weist den Parameter sich selbst zu. Das Attribut behält seinen Standardwert `null`, deshalb liefert `getName()` **null** – und kein Compiler warnt. Korrektur: `this.name = name;` – `this.name` ist das Attribut des eigenen Objekts."
+    }
+   ]
+  },
+  {
+   "id": "W1-L1-07",
+   "titel": "Puzzle: Schaden mit Grenze",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Methode implementieren",
+   "fallen": [
+    "P3"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Setze die Methode `nimmSchaden(schaden: Ganzzahl): nichts` der Klasse `Held` zusammen: Der Schaden wird von `leben` abgezogen, `leben` fällt aber **nie unter 0**. Nicht alle Teile werden gebraucht."
+    }
+   ],
+   "interaktion": {
+    "kind": "order",
+    "teile": [
+     {
+      "id": "a",
+      "code": "public void nimmSchaden(int schaden) {"
+     },
+     {
+      "id": "b",
+      "code": "    leben = leben - schaden;"
+     },
+     {
+      "id": "c",
+      "code": "    if (leben < 0) {"
+     },
+     {
+      "id": "d",
+      "code": "        leben = 0;"
+     },
+     {
+      "id": "e",
+      "code": "    }"
+     },
+     {
+      "id": "f",
+      "code": "}"
+     },
+     {
+      "id": "x",
+      "code": "    return leben;"
+     },
+     {
+      "id": "y",
+      "code": "    if (leben > maxLeben) {"
+     },
+     {
+      "id": "z",
+      "code": "public int nimmSchaden(int schaden) {"
+     }
+    ]
+   },
+   "loesung": {
+    "reihenfolgen": [
+     [
+      "a",
+      "b",
+      "c",
+      "d",
+      "e",
+      "f"
+     ]
+    ]
+   },
+   "tipps": [
+    "`: nichts` in der Signatur bedeutet in Java `void` – und dann gibt es kein `return` mit Wert."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Erst abziehen, dann korrigieren: `leben = leben - schaden;` und danach `if (leben < 0) { leben = 0; }`. Die Distraktoren: `public int …` und `return leben;` widersprechen der Signatur `: nichts` (P3 Signatur verfehlt); `if (leben > maxLeben)` gehört zu `heilen`, nicht zu `nimmSchaden`."
+    }
+   ]
+  },
+  {
+   "id": "W1-L1-08",
+   "titel": "Die richtige Objektkarte",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Objektkarten und Referenzen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Ein Objekt wurde mit `Held held1 = new Held(\"Aria\");` erzeugt. Welche Darstellung ist eine korrekte **Objektkarte** nach EH § 6?"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "mehrfach": false,
+    "optionen": [
+     {
+      "id": "a",
+      "md": "Kopf `held1: Held` · Zeilen `name = \"Aria\"`, `leben = 100`, `maxLeben = 100`, …"
+     },
+     {
+      "id": "b",
+      "md": "Kopf `Held: held1` · Zeilen `name = \"Aria\"`, `leben = 100`, …"
+     },
+     {
+      "id": "c",
+      "md": "Kopf `held1: Held` · Zeilen `- name: Zeichenkette`, `- leben: Ganzzahl`, …"
+     },
+     {
+      "id": "d",
+      "md": "Kopf `Held` · Zeilen `+ c Held(name: Zeichenkette)`, `+ getLeben(): Ganzzahl`, …"
+     }
+    ]
+   },
+   "loesung": {
+    "richtig": [
+     "a"
+    ]
+   },
+   "tipps": [
+    "Eine Objektkarte zeigt ein Exemplar mit konkreten Werten zu einem Zeitpunkt."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Richtig ist a: Kopf **objektname: Klasse**, darunter jedes Attribut mit seinem **konkreten Wert** (Zeichenketten in Anführungszeichen). b vertauscht Objektname und Klasse, c zeigt Attribute mit Typen – das ist der Aufbau einer **Klassenkarte**, d ist der Methodenteil einer Klassenkarte."
+    }
+   ]
+  },
+  {
+   "id": "W1-L2-01",
+   "titel": "Zwei Wege in die Schmiede",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Bestandteile einer Klasse",
+   "fallen": [
+    "P3"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`Held` hat zwei Konstruktoren: `Held(name: Zeichenkette)` und `Held(name: Zeichenkette, maxLeben: Ganzzahl, staerke: Ganzzahl)`. `Monster` hat nur `Monster(name: Zeichenkette, leben: Ganzzahl, staerke: Ganzzahl)`. Gib an, welcher Konstruktor aufgerufen wird – oder ob der Compiler meckert."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Aufruf",
+      "Konstruktor"
+     ],
+     "zeilen": [
+      [
+       "`new Held(\"Lio\")`",
+       "[[g1]]"
+      ],
+      [
+       "`new Held(\"Mira\", 120, 9)`",
+       "[[g2]]"
+      ],
+      [
+       "`new Held(\"Tom\", 90)`",
+       "[[g3]]"
+      ],
+      [
+       "`new Held(120, 9, \"Kai\")`",
+       "[[g4]]"
+      ],
+      [
+       "`new Monster(\"Ork\")`",
+       "[[g5]]"
+      ],
+      [
+       "`new Monster(\"Ork\", 45, 7)`",
+       "[[g6]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "auswahl",
+      "optionen": [
+       "Held(name)",
+       "Held(name, maxLeben, staerke)",
+       "Monster(name, leben, staerke)",
+       "Übersetzungsfehler"
+      ]
+     },
+     "g2": {
+      "typ": "auswahl",
+      "optionen": [
+       "Held(name)",
+       "Held(name, maxLeben, staerke)",
+       "Monster(name, leben, staerke)",
+       "Übersetzungsfehler"
+      ]
+     },
+     "g3": {
+      "typ": "auswahl",
+      "optionen": [
+       "Held(name)",
+       "Held(name, maxLeben, staerke)",
+       "Monster(name, leben, staerke)",
+       "Übersetzungsfehler"
+      ]
+     },
+     "g4": {
+      "typ": "auswahl",
+      "optionen": [
+       "Held(name)",
+       "Held(name, maxLeben, staerke)",
+       "Monster(name, leben, staerke)",
+       "Übersetzungsfehler"
+      ]
+     },
+     "g5": {
+      "typ": "auswahl",
+      "optionen": [
+       "Held(name)",
+       "Held(name, maxLeben, staerke)",
+       "Monster(name, leben, staerke)",
+       "Übersetzungsfehler"
+      ]
+     },
+     "g6": {
+      "typ": "auswahl",
+      "optionen": [
+       "Held(name)",
+       "Held(name, maxLeben, staerke)",
+       "Monster(name, leben, staerke)",
+       "Übersetzungsfehler"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "Held(name)"
+    ],
+    "g2": [
+     "Held(name, maxLeben, staerke)"
+    ],
+    "g3": [
+     "Übersetzungsfehler"
+    ],
+    "g4": [
+     "Übersetzungsfehler"
+    ],
+    "g5": [
+     "Übersetzungsfehler"
+    ],
+    "g6": [
+     "Monster(name, leben, staerke)"
+    ]
+   },
+   "tipps": [
+    "Java wählt den Konstruktor nach Anzahl, Reihenfolge und Typen der Argumente."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Beim **Überladen** entscheidet die Parameterliste: Ein Argument vom Typ Zeichenkette → `Held(name)`, Zeichenkette + zwei Ganzzahlen → der zweite Konstruktor. `new Held(\"Tom\", 90)` passt zu keiner Parameterliste, `new Held(120, 9, \"Kai\")` hat die richtige Anzahl, aber die falsche Reihenfolge der Typen. `Monster` hat keinen Konstruktor mit nur einem Namen → Übersetzungsfehler."
+    }
+   ]
+  },
+  {
+   "id": "W1-L2-02",
+   "titel": "Die Referenz wird umgebogen",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Objektkarten und Referenzen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "code",
+     "code": "Held x = new Held(\"Kira\");\nHeld y = new Held(\"Kira\", 120, 8);\nHeld z = x;\nx = y;\nz.nimmSchaden(30);\nx.nimmSchaden(10);\nprintln(y.getLeben());\nprintln(z.getLeben());\nprintln(x == y);\nprintln(z == x);",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Nach Zeile 4 gibt es [[g1]] Held-Objekte. Gib die vier Ausgaben an: Zeile 7: [[g2]] · Zeile 8: [[g3]] · Zeile 9: [[g4]] · Zeile 10: [[g5]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "zahl"
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "zahl"
+     },
+     "g4": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "g5": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "2"
+    ],
+    "g2": [
+     "110"
+    ],
+    "g3": [
+     "70"
+    ],
+    "g4": [
+     "true"
+    ],
+    "g5": [
+     "false"
+    ]
+   },
+   "tipps": [
+    "Zeichne Variablen als Kästchen mit Pfeil. Zeile 3 kopiert nur den Pfeil, Zeile 4 biegt den Pfeil von x um."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Nur `new` erzeugt Objekte – es gibt **2**. Nach Zeile 3 zeigen x und z auf Kira (maxLeben 100). Zeile 4 biegt **nur x** auf das Objekt von y um; z zeigt weiter auf die erste Kira. Also trifft `z.nimmSchaden(30)` die erste Kira (100 → 70) und `x.nimmSchaden(10)` das Objekt von y (120 → 110). `x == y` ist **true** (dieselbe Referenz), `z == x` ist **false**."
+    }
+   ]
+  },
+  {
+   "id": "W1-L2-03",
+   "titel": "Aria gegen den Ork",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Aria (100 Leben, Stärke 10) kämpft gegen einen Ork. `angriffswert()` ist hier noch einfach die Stärke."
+    },
+    {
+     "t": "code",
+     "code": "Held h = new Held(\"Aria\");\nMonster m = new Monster(\"Ork\", 45, 7);\nint runde = 0;\nwhile (!m.istBesiegt()) {\n    runde++;\n    h.angreifen(m);\n    if (!m.istBesiegt()) {\n        m.angreifen(h);\n    }\n}\nprintln(runde + \" / \" + h.getLeben());",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Vervollständige die Tracetabelle: Werte **am Ende** jedes Schleifendurchlaufs."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "runde",
+      "m.getLeben()",
+      "h.getLeben()"
+     ],
+     "zeilen": [
+      [
+       "0",
+       "45",
+       "100"
+      ],
+      [
+       "1",
+       "[[c1]]",
+       "[[c2]]"
+      ],
+      [
+       "2",
+       "[[c3]]",
+       "[[c4]]"
+      ],
+      [
+       "3",
+       "[[c5]]",
+       "[[c6]]"
+      ],
+      [
+       "4",
+       "[[c7]]",
+       "[[c8]]"
+      ],
+      [
+       "5",
+       "[[c9]]",
+       "[[c10]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "c1": {
+      "typ": "zahl"
+     },
+     "c2": {
+      "typ": "zahl"
+     },
+     "c3": {
+      "typ": "zahl"
+     },
+     "c4": {
+      "typ": "zahl"
+     },
+     "c5": {
+      "typ": "zahl"
+     },
+     "c6": {
+      "typ": "zahl"
+     },
+     "c7": {
+      "typ": "zahl"
+     },
+     "c8": {
+      "typ": "zahl"
+     },
+     "c9": {
+      "typ": "zahl"
+     },
+     "c10": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "c1": [
+     "35"
+    ],
+    "c2": [
+     "93"
+    ],
+    "c3": [
+     "25"
+    ],
+    "c4": [
+     "86"
+    ],
+    "c5": [
+     "15"
+    ],
+    "c6": [
+     "79"
+    ],
+    "c7": [
+     "5"
+    ],
+    "c8": [
+     "72"
+    ],
+    "c9": [
+     "0"
+    ],
+    "c10": [
+     "72"
+    ]
+   },
+   "tipps": [
+    "Der Ork schlägt nur zurück, wenn er nach Arias Schlag noch lebt."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "In jeder Runde nimmt der Ork 10 Schaden (45 → 35 → 25 → 15 → 5 → 0). In den Runden 1–4 lebt er danach noch und schlägt mit Stärke 7 zurück (100 → 93 → 86 → 79 → 72). In Runde 5 ist er besiegt und schlägt nicht mehr zurück. Ausgabe: `5 / 72`. Merke für Tracetabellen (P8): jede Wertänderung, eine Zeile pro Durchlauf, Endwerte nicht vergessen."
+    }
+   ]
+  },
+  {
+   "id": "W1-L2-04",
+   "titel": "Ein Held aus dem Nichts",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P1"
+   ],
+   "inhalt": [
+    {
+     "t": "code",
+     "code": "Held h = null;\nh.nimmSchaden(10);\nprintln(h.getLeben());",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Was passiert, wenn dieses Hauptprogramm ausgeführt wird?"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "mehrfach": false,
+    "optionen": [
+     {
+      "id": "a",
+      "md": "Übersetzungsfehler in Zeile 1, weil eine Variable vom Typ `Held` nicht `null` sein darf."
+     },
+     {
+      "id": "b",
+      "md": "Laufzeitfehler (NullPointerException) in Zeile 2: Es gibt kein Objekt, das Schaden nehmen könnte."
+     },
+     {
+      "id": "c",
+      "md": "Ausgabe `90` – Java legt automatisch einen Standard-Helden an."
+     },
+     {
+      "id": "d",
+      "md": "Ausgabe `0`, weil `h` noch keine Leben hat."
+     }
+    ]
+   },
+   "loesung": {
+    "richtig": [
+     "b"
+    ]
+   },
+   "tipps": [
+    "`null` heißt: Die Variable verweist auf **kein** Objekt."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Der Code wird übersetzt – `null` ist für jede Objektvariable erlaubt. Beim Ausführen von Zeile 2 soll aber eine Methode eines Objekts aufgerufen werden, das es nicht gibt: **NullPointerException**, das Programm bricht ab. Im Abitur gilt (P1): Laufzeitfehler müssen ausgeschlossen werden, z. B. mit `if (h != null) { … }`."
+    }
+   ]
+  },
+  {
+   "id": "W1-L2-05",
+   "titel": "Gleich oder dasselbe?",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Objektkarten und Referenzen",
+   "fallen": [
+    "P5"
+   ],
+   "inhalt": [
+    {
+     "t": "code",
+     "code": "Held a = new Held(\"Ilka\");\nHeld b = new Held(\"Ilka\");\nHeld c = a;\nc.erhalteGold(10);",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Ordne jeden Ausdruck seinem Wert **nach Zeile 4** zu."
+    }
+   ],
+   "interaktion": {
+    "kind": "match",
+    "elemente": [
+     {
+      "id": "e1",
+      "md": "`a == b`"
+     },
+     {
+      "id": "e2",
+      "md": "`a == c`"
+     },
+     {
+      "id": "e3",
+      "md": "`a.getName().equals(b.getName())`"
+     },
+     {
+      "id": "e4",
+      "md": "`b == c`"
+     },
+     {
+      "id": "e5",
+      "md": "`a.getGold() == c.getGold()`"
+     },
+     {
+      "id": "e6",
+      "md": "`a.getGold() == b.getGold()`"
+     }
+    ],
+    "kategorien": [
+     {
+      "id": "w",
+      "md": "true"
+     },
+     {
+      "id": "f",
+      "md": "false"
+     }
+    ]
+   },
+   "loesung": {
+    "e1": "f",
+    "e2": "w",
+    "e3": "w",
+    "e4": "f",
+    "e5": "w",
+    "e6": "f"
+   },
+   "tipps": [
+    "`==` vergleicht bei Objekten die Referenzen (Pfeile), nicht die Inhalte."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`a` und `b` sind zwei verschiedene Objekte mit gleichen Werten → `a == b` ist false, `b == c` auch. `c = a` kopiert die Referenz → `a == c` ist true, und `c.erhalteGold(10)` ändert genau dieses Objekt (a und c haben 10 Gold, b hat 0). Inhalte von Zeichenketten vergleicht man mit **equals** (P5) – in der Online-IDE vergleicht `==` Zeichenketten zwar inhaltlich, im Abitur und in echtem Java aber nicht."
+    }
+   ]
+  },
+  {
+   "id": "W1-L2-06",
+   "titel": "Das unbesiegbare Monster",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P3"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "In dieser Klasse `Monster` stecken **zwei** Fehler: Einer verhindert das Übersetzen, der andere sorgt dafür, dass kein Monster jemals besiegt ist."
+    },
+    {
+     "t": "code",
+     "code": "public class Monster {\n    private String name;\n    private int leben;\n    private int staerke;\n\n    public Monster(String name, int leben, int staerke) {\n        this.name = name;\n        this.leben = leben;\n        this.staerke = staerke;\n    }\n\n    public void nimmSchaden(int schaden) {\n        leben = leben - schaden;\n        if (leben < 0) {\n            leben = 0;\n        }\n    }\n\n    public boolean istBesiegt() {\n        return leben < 0;\n    }\n\n    public void angreifen(Held h) {\n        h.leben = h.leben - staerke;\n    }\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**a)** Markiere die beiden fehlerhaften Zeilen. **b)** Korrigiere sie (je eine Zeile Java)."
+    },
+    {
+     "t": "text",
+     "md": "Korrektur der Zeile mit `istBesiegt`: [[g1]]"
+    },
+    {
+     "t": "text",
+     "md": "Korrektur der Zeile in `angreifen`: [[g2]]"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 1,
+     "anzahl": 2
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 28
+      },
+      "g2": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 34
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      20,
+      24
+     ]
+    },
+    {
+     "g1": [
+      "return leben <= 0;",
+      "return leben <= 0",
+      "return leben == 0;",
+      "return leben == 0",
+      "return leben < 1;",
+      "return leben < 1",
+      "return this.leben <= 0;",
+      "return this.leben <= 0"
+     ],
+     "g2": [
+      "h.nimmSchaden(staerke);",
+      "h.nimmSchaden(staerke)",
+      "h.nimmSchaden(this.staerke);",
+      "h.nimmSchaden(this.staerke)",
+      "h.nimmSchaden(getStaerke());",
+      "h.nimmSchaden(getStaerke())",
+      "h.nimmSchaden(this.getStaerke());",
+      "h.nimmSchaden(this.getStaerke())"
+     ]
+    }
+   ],
+   "tipps": [
+    "`leben` kann wegen `nimmSchaden` nie negativ werden …",
+    "`leben` ist in `Held` privat."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Zeile 20: `leben` wird in `nimmSchaden` nie kleiner als 0, also ist `leben < 0` immer falsch – richtig ist `return leben <= 0;`. Zeile 24: `leben` ist in `Held` **privat**, der Zugriff `h.leben` aus `Monster` ist ein Übersetzungsfehler. Außerdem würde direkter Zugriff die Grenze „nie unter 0\" umgehen. Richtig: `h.nimmSchaden(staerke);` – der Held kümmert sich selbst um seinen Zustand (Kapselung)."
+    }
+   ]
+  },
+  {
+   "id": "W1-L2-07",
+   "titel": "Puzzle: Die Arena",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Methode implementieren",
+   "fallen": [
+    "P3"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Klassenmethode `kampf(h: Held, m: Monster): Ganzzahl` lässt Held und Monster kämpfen, bis einer besiegt ist, und liefert die Zahl der Runden. In jeder Runde schlägt der Held zuerst; das Monster schlägt nur zurück, wenn es danach noch nicht besiegt ist. Setze die Methode zusammen – nicht alle Teile werden gebraucht."
+    }
+   ],
+   "interaktion": {
+    "kind": "order",
+    "teile": [
+     {
+      "id": "a",
+      "code": "public static int kampf(Held h, Monster m) {"
+     },
+     {
+      "id": "b",
+      "code": "    int runde = 0;"
+     },
+     {
+      "id": "c",
+      "code": "    while (!m.istBesiegt() && !h.istBesiegt()) {"
+     },
+     {
+      "id": "d",
+      "code": "        runde++;"
+     },
+     {
+      "id": "e",
+      "code": "        h.angreifen(m);"
+     },
+     {
+      "id": "f",
+      "code": "        if (!m.istBesiegt()) {"
+     },
+     {
+      "id": "g",
+      "code": "            m.angreifen(h);"
+     },
+     {
+      "id": "h",
+      "code": "        }"
+     },
+     {
+      "id": "i",
+      "code": "    }"
+     },
+     {
+      "id": "j",
+      "code": "    return runde;"
+     },
+     {
+      "id": "k",
+      "code": "}"
+     },
+     {
+      "id": "x",
+      "code": "        m.nimmSchaden(h.staerke);"
+     },
+     {
+      "id": "y",
+      "code": "    while (m.istBesiegt() || h.istBesiegt()) {"
+     },
+     {
+      "id": "z",
+      "code": "    return h.getLeben();"
+     }
+    ]
+   },
+   "loesung": {
+    "reihenfolgen": [
+     [
+      "a",
+      "b",
+      "c",
+      "d",
+      "e",
+      "f",
+      "g",
+      "h",
+      "i",
+      "j",
+      "k"
+     ],
+     [
+      "a",
+      "b",
+      "c",
+      "e",
+      "d",
+      "f",
+      "g",
+      "h",
+      "i",
+      "j",
+      "k"
+     ],
+     [
+      "a",
+      "b",
+      "c",
+      "e",
+      "f",
+      "g",
+      "h",
+      "d",
+      "i",
+      "j",
+      "k"
+     ]
+    ]
+   },
+   "tipps": [
+    "Welche Bedingung muss gelten, damit **weitergekämpft** wird?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Gekämpft wird, **solange** beide noch nicht besiegt sind: `!m.istBesiegt() && !h.istBesiegt()`. Pro Runde: Zähler erhöhen, Held greift an, Monster schlägt nur zurück, falls es noch lebt. Der Rundenzähler darf auch nach dem Angriff erhöht werden – das ändert das Ergebnis nicht. Distraktoren: `h.staerke` ist privat; die `while`-Bedingung mit `||` und ohne `!` bricht sofort ab; `return h.getLeben()` verfehlt die Signatur (Rundenzahl, P3)."
+    }
+   ]
+  },
+  {
+   "id": "W1-L2-08",
+   "titel": "Von der Karte zum Kopf",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Methodenkopf und Signatur",
+   "fallen": [
+    "P3"
+   ],
+   "inhalt": [
+    {
+     "t": "klassenkarte",
+     "name": "Monster",
+     "attribute": [
+      "- name: Zeichenkette",
+      "- leben: Ganzzahl",
+      "- staerke: Ganzzahl"
+     ],
+     "methoden": [
+      "+ c Monster(name: Zeichenkette, leben: Ganzzahl, staerke: Ganzzahl)",
+      "+ getName(): Zeichenkette",
+      "+ getLeben(): Ganzzahl",
+      "+ getStaerke(): Ganzzahl",
+      "+ nimmSchaden(schaden: Ganzzahl): nichts",
+      "+ istBesiegt(): Wahrheitswert",
+      "+ angreifen(h: Held): nichts"
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Schreibe die Java-Köpfe mit Sichtbarkeit (ohne `{`, Parameternamen wie in der Klassenkarte):"
+    },
+    {
+     "t": "text",
+     "md": "Konstruktor: [[g1]]"
+    },
+    {
+     "t": "text",
+     "md": "`istBesiegt`: [[g2]]"
+    },
+    {
+     "t": "text",
+     "md": "`angreifen`: [[g3]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 48
+     },
+     "g2": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 30
+     },
+     "g3": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 32
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "public Monster(String name, int leben, int staerke)",
+     "public Monster(String name, int leben, int staerke) {"
+    ],
+    "g2": [
+     "public boolean istBesiegt()",
+     "public boolean istBesiegt() {"
+    ],
+    "g3": [
+     "public void angreifen(Held h)",
+     "public void angreifen(Held h) {"
+    ]
+   },
+   "tipps": [
+    "Ganzzahl → int, Zeichenkette → String, Wahrheitswert → boolean, nichts → void. Ein Konstruktor hat keinen Rückgabetyp."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`+` wird zu `public`. Der Konstruktor heißt wie die Klasse und hat **keinen** Rückgabetyp: `public Monster(String name, int leben, int staerke)`. `: Wahrheitswert` → `boolean`, `: nichts` → `void`; der Parametertyp `Held` bleibt als Klassenname stehen: `public void angreifen(Held h)`."
+    }
+   ]
+  },
+  {
+   "id": "W1-L3-01",
+   "titel": "Was steckt im Rucksack?",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Objektkarten und Referenzen",
+   "fallen": [
+    "P1"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`inventar` ist eine Reihung von Gegenstand der Länge 5, `anzahl` zählt die belegten Plätze. `aufnehmen` legt einen Gegenstand an den Index `anzahl` und liefert false bei `null` oder vollem Inventar."
+    },
+    {
+     "t": "code",
+     "code": "Held h = new Held(\"Aria\");\nh.aufnehmen(new Gegenstand(\"Seil\", 3));\nboolean ok = h.aufnehmen(null);\nh.aufnehmen(new Gegenstand(\"Kompass\", 25));",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Nach Zeile 4 gilt: `anzahl` = [[g1]] · `inventar.length` = [[g2]] · der Kompass liegt an Index [[g3]] · `inventar[2]` enthält [[g4]] · `ok` hat den Wert [[g5]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "zahl"
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "zahl"
+     },
+     "g4": {
+      "typ": "auswahl",
+      "optionen": [
+       "null",
+       "den Kompass",
+       "das Seil",
+       "einen leeren Gegenstand"
+      ]
+     },
+     "g5": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "2"
+    ],
+    "g2": [
+     "5"
+    ],
+    "g3": [
+     "1"
+    ],
+    "g4": [
+     "null"
+    ],
+    "g5": [
+     "false"
+    ]
+   },
+   "tipps": [
+    "`new Gegenstand[5]` erzeugt fünf leere Plätze – noch keinen Gegenstand."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Das Seil kommt an Index 0, `anzahl` wird 1. `aufnehmen(null)` liefert **false** und ändert nichts. Der Kompass kommt an Index `anzahl` = **1**, danach ist `anzahl` = **2**. Die Reihung hat weiterhin die Länge **5**; die Plätze 2 bis 4 enthalten **null**. Deshalb laufen Schleifen nur bis `anzahl − 1` (P1)."
+    }
+   ]
+  },
+  {
+   "id": "W1-L3-02",
+   "titel": "Eine Linie zum Rucksack",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Klassendiagramm",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Im Klassendiagramm ist `Held` durch eine Linie mit `Gegenstand` verbunden, aber **nicht** mit `Monster` – obwohl `Held` die Methode `angreifen(m: Monster): nichts` hat. Welche Begründung ist richtig?"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "mehrfach": false,
+    "optionen": [
+     {
+      "id": "a",
+      "md": "`Held` hat ein Attribut vom Typ „Reihung von Gegenstand\" (dauerhafte Beziehung); ein Monster wird nur als Parameter kurz benutzt und nicht gespeichert."
+     },
+     {
+      "id": "b",
+      "md": "Linien zeichnet man nur zu Klassen, die weniger Methoden haben."
+     },
+     {
+      "id": "c",
+      "md": "`angreifen` liefert nichts zurück, deshalb gibt es keine Beziehung."
+     },
+     {
+      "id": "d",
+      "md": "Die Linie zu `Gegenstand` muss eigentlich die Kardinalität 0..5 tragen; zu `Monster` fehlt sie nur aus Platzgründen."
+     }
+    ]
+   },
+   "loesung": {
+    "richtig": [
+     "a"
+    ]
+   },
+   "tipps": [
+    "Wann zeichnen wir nach EH § 6 eine Linie zwischen zwei Klassen?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Eine **Assoziation** zeichnen wir, wenn eine Klasse ein **Attribut** vom Typ der anderen Klasse hat (auch als Reihung): `- inventar: Reihung von Gegenstand`. Ein Monster wird nur als Parameter übergeben und nicht gespeichert. Nach EH § 6 sind Assoziationen einfache, unbeschriftete Linien **ohne** Kardinalitäten."
+    }
+   ]
+  },
+  {
+   "id": "W1-L3-03",
+   "titel": "Absturz im Schatzzimmer",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P1",
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Ein Held mit zwei Gegenständen ruft `gesamtWert()` auf – das Programm stürzt ab."
+    },
+    {
+     "t": "code",
+     "code": "public int gesamtWert() {\n    int summe = 0;\n    for (int i = 0; i < inventar.length; i++) {\n        summe = summe + inventar[i].getWert();\n    }\n    return summe;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**a)** Markiere die fehlerhafte Zeile. **b)** Korrigierte Zeile: [[g1]] **c)** Welcher Laufzeitfehler tritt auf? [[g2]]"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 1,
+     "anzahl": 1
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 36
+      },
+      "g2": {
+       "typ": "auswahl",
+       "optionen": [
+        "NullPointerException",
+        "ArrayIndexOutOfBoundsException",
+        "kein Fehler, Ergebnis 0"
+       ]
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      3
+     ]
+    },
+    {
+     "g1": [
+      "for (int i = 0; i < anzahl; i++) {",
+      "for (int i = 0; i < anzahl; i++)",
+      "for (int i = 0; i <= anzahl - 1; i++) {",
+      "for (int i = 0; i <= anzahl - 1; i++)",
+      "for (int i = 0; anzahl > i; i++) {",
+      "for (int i = 0; anzahl > i; i++)"
+     ],
+     "g2": [
+      "NullPointerException"
+     ]
+    }
+   ],
+   "tipps": [
+    "Welche Plätze der Reihung sind belegt, welche enthalten `null`?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Die Schleife läuft bis `inventar.length − 1` = 4, belegt sind aber nur die Indizes 0 bis `anzahl − 1`. Bei i = 2 ist `inventar[2]` gleich `null`, der Aufruf `getWert()` darauf löst eine **NullPointerException** aus (P1). Richtig: `for (int i = 0; i < anzahl; i++)` – Schleifengrenzen immer am Füllstand ausrichten (P6)."
+    }
+   ]
+  },
+  {
+   "id": "W1-L3-04",
+   "titel": "Der wertvollste Schatz",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Das Inventar enthält (Index 0 bis 4): Fackel (5 Gold), Kompass (25 Gold), Seil (3 Gold), Kristall (25 Gold), Krone (20 Gold); `anzahl` = 5."
+    },
+    {
+     "t": "code",
+     "code": "public Gegenstand wertvollsterGegenstand() {\n    if (anzahl == 0) {\n        return null;\n    }\n    Gegenstand bester = inventar[0];\n    for (int i = 1; i < anzahl; i++) {\n        if (inventar[i].getWert() > bester.getWert()) {\n            bester = inventar[i];\n        }\n    }\n    return bester;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Vervollständige die Tracetabelle (eine Zeile pro Schleifendurchlauf, `bester` am Ende des Durchlaufs)."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "i",
+      "inventar[i].getWert()",
+      "inventar[i].getWert() > bester.getWert()",
+      "bester"
+     ],
+     "zeilen": [
+      [
+       "–",
+       "–",
+       "–",
+       "Fackel"
+      ],
+      [
+       "1",
+       "25",
+       "[[v1]]",
+       "[[b1]]"
+      ],
+      [
+       "2",
+       "3",
+       "[[v2]]",
+       "[[b2]]"
+      ],
+      [
+       "3",
+       "25",
+       "[[v3]]",
+       "[[b3]]"
+      ],
+      [
+       "4",
+       "20",
+       "[[v4]]",
+       "[[b4]]"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Rückgabe: [[r]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "v1": {
+      "typ": "auswahl",
+      "optionen": [
+       "wahr",
+       "falsch"
+      ]
+     },
+     "b1": {
+      "typ": "auswahl",
+      "optionen": [
+       "Fackel",
+       "Kompass",
+       "Seil",
+       "Kristall",
+       "Krone"
+      ]
+     },
+     "v2": {
+      "typ": "auswahl",
+      "optionen": [
+       "wahr",
+       "falsch"
+      ]
+     },
+     "b2": {
+      "typ": "auswahl",
+      "optionen": [
+       "Fackel",
+       "Kompass",
+       "Seil",
+       "Kristall",
+       "Krone"
+      ]
+     },
+     "v3": {
+      "typ": "auswahl",
+      "optionen": [
+       "wahr",
+       "falsch"
+      ]
+     },
+     "b3": {
+      "typ": "auswahl",
+      "optionen": [
+       "Fackel",
+       "Kompass",
+       "Seil",
+       "Kristall",
+       "Krone"
+      ]
+     },
+     "v4": {
+      "typ": "auswahl",
+      "optionen": [
+       "wahr",
+       "falsch"
+      ]
+     },
+     "b4": {
+      "typ": "auswahl",
+      "optionen": [
+       "Fackel",
+       "Kompass",
+       "Seil",
+       "Kristall",
+       "Krone"
+      ]
+     },
+     "r": {
+      "typ": "auswahl",
+      "optionen": [
+       "Fackel",
+       "Kompass",
+       "Seil",
+       "Kristall",
+       "Krone"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "v1": [
+     "wahr"
+    ],
+    "b1": [
+     "Kompass"
+    ],
+    "v2": [
+     "falsch"
+    ],
+    "b2": [
+     "Kompass"
+    ],
+    "v3": [
+     "falsch"
+    ],
+    "b3": [
+     "Kompass"
+    ],
+    "v4": [
+     "falsch"
+    ],
+    "b4": [
+     "Kompass"
+    ],
+    "r": [
+     "Kompass"
+    ]
+   },
+   "tipps": [
+    "Bei Gleichstand gilt `>` nicht – der bisherige Rekord bleibt."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Start: `bester` = Fackel (5). i = 1: 25 > 5 → Kompass. i = 2: 3 > 25 falsch. i = 3: 25 > 25 **falsch** – bei Gleichstand bleibt der erste (Kompass). i = 4: 20 > 25 falsch. Rückgabe: **Kompass**. Mit `>=` käme der Kristall heraus – die Aufgabe verlangt aber „bei Gleichstand der erste\"."
+    }
+   ]
+  },
+  {
+   "id": "W1-L3-05",
+   "titel": "Hab ich das dabei?",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Lückencode",
+   "fallen": [
+    "P5",
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`enthaelt(name: Zeichenkette): Wahrheitswert` liefert true, wenn ein Gegenstand mit genau diesem Namen im Inventar liegt. Ergänze die Lücken."
+    },
+    {
+     "t": "code",
+     "code": "public boolean enthaelt(String name) {\n    for (int i = 0; i < [[g1]]; i++) {\n        if (inventar[i].getName().[[g2]]) {\n            return [[g3]];\n        }\n    }\n    return [[g4]];\n}",
+     "nummern": true
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 10
+     },
+     "g2": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 14
+     },
+     "g3": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "g4": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "anzahl",
+     "this.anzahl"
+    ],
+    "g2": [
+     "equals(name)"
+    ],
+    "g3": [
+     "true"
+    ],
+    "g4": [
+     "false"
+    ]
+   },
+   "tipps": [
+    "Wie vergleicht man Zeichenketten im Abitur?",
+    "Wann steht fest, dass der Name **nicht** vorkommt?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Die Schleife läuft nur über belegte Plätze (`i < anzahl`). Zeichenketten vergleicht man mit `equals(name)` (P5). Beim ersten Treffer steht das Ergebnis fest: `return true;`. Erst **nach** der Schleife ist klar, dass kein Gegenstand passt: `return false;` – ein `return false` im else-Zweig würde schon nach dem ersten Gegenstand abbrechen."
+    }
+   ]
+  },
+  {
+   "id": "W1-L3-06",
+   "titel": "Puzzle: Ab in den Rucksack",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Methode implementieren",
+   "fallen": [
+    "P1"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Setze `aufnehmen(g: Gegenstand): Wahrheitswert` zusammen: false, wenn `g` null ist oder das Inventar voll ist; sonst kommt `g` an das Ende der belegten Plätze, `anzahl` wird erhöht und true geliefert. Nicht alle Teile werden gebraucht."
+    }
+   ],
+   "interaktion": {
+    "kind": "order",
+    "teile": [
+     {
+      "id": "a",
+      "code": "public boolean aufnehmen(Gegenstand g) {"
+     },
+     {
+      "id": "b",
+      "code": "    if (g == null || anzahl == inventar.length) {"
+     },
+     {
+      "id": "c",
+      "code": "        return false;"
+     },
+     {
+      "id": "d",
+      "code": "    }"
+     },
+     {
+      "id": "e",
+      "code": "    inventar[anzahl] = g;"
+     },
+     {
+      "id": "f",
+      "code": "    anzahl++;"
+     },
+     {
+      "id": "g",
+      "code": "    return true;"
+     },
+     {
+      "id": "h",
+      "code": "}"
+     },
+     {
+      "id": "x",
+      "code": "    inventar[anzahl + 1] = g;"
+     },
+     {
+      "id": "y",
+      "code": "    if (g == null && anzahl == inventar.length) {"
+     },
+     {
+      "id": "z",
+      "code": "    anzahl = anzahl + g.getWert();"
+     }
+    ]
+   },
+   "loesung": {
+    "reihenfolgen": [
+     [
+      "a",
+      "b",
+      "c",
+      "d",
+      "e",
+      "f",
+      "g",
+      "h"
+     ]
+    ]
+   },
+   "tipps": [
+    "Der nächste freie Platz hat den Index `anzahl`."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Zuerst die Abfrage, die Laufzeitfehler ausschließt (P1): `g == null || anzahl == inventar.length` – mit **oder**, denn jede der beiden Bedingungen allein verbietet das Einfügen. Dann `inventar[anzahl] = g;` **vor** `anzahl++;` – der freie Platz hat den Index `anzahl`. `inventar[anzahl + 1]` würde eine Lücke lassen."
+    }
+   ]
+  },
+  {
+   "id": "W1-L3-07",
+   "titel": "Zwei Namen, ein Rucksack",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Objektkarten und Referenzen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "code",
+     "code": "Gegenstand f = new Gegenstand(\"Fackel\", 5);\nHeld a = new Held(\"Aria\");\nHeld b = a;\na.aufnehmen(f);\nb.aufnehmen(f);\nb.aufnehmen(new Gegenstand(\"Krone\", 80));\nHeld c = new Held(\"Aria\");\nc.aufnehmen(new Gegenstand(\"Krone\", 80));\nprintln(a.getAnzahl());\nprintln(a.gesamtWert());\nprintln(c.gesamtWert());\nprintln(a.wertvollsterGegenstand() == c.wertvollsterGegenstand());\nprintln(a.enthaelt(\"Krone\") && c.enthaelt(\"Krone\"));",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Gib die fünf Ausgaben an: [[g1]] · [[g2]] · [[g3]] · [[g4]] · [[g5]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "zahl"
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "zahl"
+     },
+     "g4": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "g5": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "3"
+    ],
+    "g2": [
+     "90"
+    ],
+    "g3": [
+     "80"
+    ],
+    "g4": [
+     "false"
+    ],
+    "g5": [
+     "true"
+    ]
+   },
+   "tipps": [
+    "Wie viele Held-Objekte gibt es? Auf welches Objekt verweisen a und b?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "a und b verweisen auf **dasselbe** Held-Objekt – alle drei `aufnehmen`-Aufrufe landen in einem Inventar: Fackel, Fackel (dieselbe Referenz zweimal!) und Krone → `getAnzahl()` = 3, `gesamtWert()` = 5 + 5 + 80 = 90. c ist ein eigenes Objekt mit einer **anderen** Krone (80). Die beiden Kronen haben gleiche Werte, sind aber verschiedene Objekte → `==` liefert false. `enthaelt` vergleicht Namen mit equals → true."
+    }
+   ]
+  },
+  {
+   "id": "W1-L3-08",
+   "titel": "Abi-Notation im Klassendiagramm",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Klassendiagramm",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Welche Einträge sind nach EH § 6 **korrekt** notiert, welche nicht?"
+    }
+   ],
+   "interaktion": {
+    "kind": "match",
+    "elemente": [
+     {
+      "id": "e1",
+      "md": "`- inventar: Reihung von Gegenstand`"
+     },
+     {
+      "id": "e2",
+      "md": "`+ c Held(name: Zeichenkette)`"
+     },
+     {
+      "id": "e3",
+      "md": "`+ getAnzahl(): int`"
+     },
+     {
+      "id": "e4",
+      "md": "`- inventar: Gegenstand[]`"
+     },
+     {
+      "id": "e5",
+      "md": "`+ aufnehmen(g: Gegenstand): Wahrheitswert`"
+     },
+     {
+      "id": "e6",
+      "md": "Linie Held – Gegenstand mit der Beschriftung `0..5`"
+     },
+     {
+      "id": "e7",
+      "md": "`anzahl: Ganzzahl` (ohne Zeichen davor)"
+     }
+    ],
+    "kategorien": [
+     {
+      "id": "ok",
+      "md": "korrekt nach EH § 6"
+     },
+     {
+      "id": "no",
+      "md": "nicht korrekt"
+     }
+    ]
+   },
+   "loesung": {
+    "e1": "ok",
+    "e2": "ok",
+    "e3": "no",
+    "e4": "no",
+    "e5": "ok",
+    "e6": "no",
+    "e7": "no"
+   },
+   "tipps": [
+    "Deutsche Typnamen, Sichtbarkeit ist Pflicht, Assoziationen ohne Kardinalitäten."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Korrekt sind die Einträge mit **deutschen Typnamen** und **Sichtbarkeit**: „Reihung von Gegenstand\", `+ c Held(…)`, `: Wahrheitswert`. Falsch sind Java-Typen (`int`, `Gegenstand[]`), fehlende Sichtbarkeit und Kardinalitäten an Linien – Assoziationen sind nach EH § 6 einfache, unbeschriftete Linien."
+    }
+   ]
+  },
+  {
+   "id": "W1-L4-01",
+   "titel": "Was hat die Waffe?",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Klassendiagramm",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "klassenkarte",
+     "name": "Gegenstand",
+     "attribute": [
+      "- name: Zeichenkette",
+      "- wert: Ganzzahl"
+     ],
+     "methoden": [
+      "+ c Gegenstand(name: Zeichenkette, wert: Ganzzahl)",
+      "+ getName(): Zeichenkette",
+      "+ getWert(): Ganzzahl",
+      "+ beschreibung(): Zeichenkette"
+     ]
+    },
+    {
+     "t": "klassenkarte",
+     "name": "Waffe",
+     "attribute": [
+      "- schaden: Ganzzahl"
+     ],
+     "methoden": [
+      "+ c Waffe(name: Zeichenkette, wert: Ganzzahl, schaden: Ganzzahl)",
+      "+ getSchaden(): Ganzzahl",
+      "+ beschreibung(): Zeichenkette"
+     ]
+    },
+    {
+     "t": "text",
+     "md": "`Waffe` erbt von `Gegenstand` (Pfeil mit hohler Spitze zu `Gegenstand`). Ordne zu, wie die Elemente zu einem **Waffe**-Objekt gehören."
+    }
+   ],
+   "interaktion": {
+    "kind": "match",
+    "elemente": [
+     {
+      "id": "e1",
+      "md": "`getName()`"
+     },
+     {
+      "id": "e2",
+      "md": "`getWert()`"
+     },
+     {
+      "id": "e3",
+      "md": "`getSchaden()`"
+     },
+     {
+      "id": "e4",
+      "md": "`beschreibung()`"
+     },
+     {
+      "id": "e5",
+      "md": "Attribut `schaden`"
+     }
+    ],
+    "kategorien": [
+     {
+      "id": "erb",
+      "md": "nur geerbt (unverändert aus Gegenstand)"
+     },
+     {
+      "id": "neu",
+      "md": "neu in Waffe"
+     },
+     {
+      "id": "ue",
+      "md": "in Waffe überschrieben"
+     }
+    ]
+   },
+   "loesung": {
+    "e1": "erb",
+    "e2": "erb",
+    "e3": "neu",
+    "e4": "ue",
+    "e5": "neu"
+   },
+   "tipps": [
+    "In der Unterklasse stehen nur neue und überschriebene Elemente."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Nach EH § 6 stehen in der Unterklasse **nur neue und überschriebene** Elemente. `schaden` und `getSchaden()` sind neu. `beschreibung()` steht in beiden Karten mit gleicher Signatur → **überschrieben**. `getName()` und `getWert()` werden nur geerbt – jedes Waffe-Objekt besitzt sie trotzdem (ebenso die privaten Attribute name und wert, die aber nur über die Getter erreichbar sind)."
+    }
+   ]
+  },
+  {
+   "id": "W1-L4-02",
+   "titel": "Wird das übersetzt?",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Entscheide für jeden Ausschnitt, ob er **übersetzt** wird (Klassen `Gegenstand`, `Waffe`, `Trank`, `Schluessel`, `Held` wie in Level 1.4)."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Anweisung(en)",
+      "übersetzt?"
+     ],
+     "zeilen": [
+      [
+       "`Gegenstand g = new Trank(\"Met\", 8, 15);`",
+       "[[g1]]"
+      ],
+      [
+       "`Waffe w = new Gegenstand(\"Stock\", 1);`",
+       "[[g2]]"
+      ],
+      [
+       "`Gegenstand g = new Waffe(\"Speer\", 40, 11); println(g.getSchaden());`",
+       "[[g3]]"
+      ],
+      [
+       "`Gegenstand g = new Schluessel(\"Silberschluessel\", 12, 4); println(g.beschreibung());`",
+       "[[g4]]"
+      ],
+      [
+       "`Held h = new Held(\"Aria\"); h.ausruesten(new Waffe(\"Speer\", 40, 11));`",
+       "[[g5]]"
+      ],
+      [
+       "`Held h = new Held(\"Aria\"); h.trinken(new Gegenstand(\"Met\", 8));`",
+       "[[g6]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "auswahl",
+      "optionen": [
+       "ja",
+       "nein"
+      ]
+     },
+     "g2": {
+      "typ": "auswahl",
+      "optionen": [
+       "ja",
+       "nein"
+      ]
+     },
+     "g3": {
+      "typ": "auswahl",
+      "optionen": [
+       "ja",
+       "nein"
+      ]
+     },
+     "g4": {
+      "typ": "auswahl",
+      "optionen": [
+       "ja",
+       "nein"
+      ]
+     },
+     "g5": {
+      "typ": "auswahl",
+      "optionen": [
+       "ja",
+       "nein"
+      ]
+     },
+     "g6": {
+      "typ": "auswahl",
+      "optionen": [
+       "ja",
+       "nein"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "ja"
+    ],
+    "g2": [
+     "nein"
+    ],
+    "g3": [
+     "nein"
+    ],
+    "g4": [
+     "ja"
+    ],
+    "g5": [
+     "ja"
+    ],
+    "g6": [
+     "nein"
+    ]
+   },
+   "tipps": [
+    "Der Typ der **Variable** entscheidet, welche Methoden aufgerufen werden dürfen."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Ein Objekt der Unterklasse darf einer Variable der Oberklasse zugewiesen werden („jeder Trank ist ein Gegenstand\") – umgekehrt nicht (`Waffe w = new Gegenstand(…)` ✗). Der Typ der Variable bestimmt, welche Methoden der Compiler erlaubt: `getSchaden()` gibt es in `Gegenstand` nicht ✗; `beschreibung()` schon ✓. `ausruesten` erwartet eine Waffe ✓, `trinken` einen Trank – ein beliebiger Gegenstand passt nicht ✗."
+    }
+   ]
+  },
+  {
+   "id": "W1-L4-03",
+   "titel": "Die Schatzkiste spricht",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Funktionsweise erläutern",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "code",
+     "code": "Gegenstand[] kiste = new Gegenstand[3];\nkiste[0] = new Waffe(\"Speer\", 40, 11);\nkiste[1] = new Schluessel(\"Gitterschluessel\", 6, 2);\nkiste[2] = new Trank(\"Met\", 8, 15);\nfor (Gegenstand g : kiste) {\n    println(g.beschreibung());\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Gib die drei Ausgabezeilen an."
+    },
+    {
+     "t": "text",
+     "md": "Zeile 1: [[g1]]"
+    },
+    {
+     "t": "text",
+     "md": "Zeile 2: [[g2]]"
+    },
+    {
+     "t": "text",
+     "md": "Zeile 3: [[g3]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "auswahl",
+      "optionen": [
+       "Waffe: Speer (40 Gold), Schaden 11",
+       "Speer (40 Gold)",
+       "Speer (40 Gold), Schaden 11",
+       "Gegenstand: Speer (40 Gold)"
+      ]
+     },
+     "g2": {
+      "typ": "auswahl",
+      "optionen": [
+       "Gitterschluessel (6 Gold)",
+       "Schluessel: Gitterschluessel (6 Gold), Tuer 2",
+       "Gitterschluessel (6 Gold), Tuer 2",
+       "Übersetzungsfehler"
+      ]
+     },
+     "g3": {
+      "typ": "auswahl",
+      "optionen": [
+       "Trank: Met (8 Gold), heilt 15",
+       "Met (8 Gold)",
+       "Trank: Met (8 Gold)",
+       "Met (8 Gold), heilt 15"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "Waffe: Speer (40 Gold), Schaden 11"
+    ],
+    "g2": [
+     "Gitterschluessel (6 Gold)"
+    ],
+    "g3": [
+     "Trank: Met (8 Gold), heilt 15"
+    ]
+   },
+   "tipps": [
+    "Welche Klassen überschreiben `beschreibung()`, welche nicht?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Die Reihung hat den Typ „Reihung von Gegenstand\", aber welche Version von `beschreibung()` läuft, entscheidet das **Objekt** (dynamisches Binden): Waffe und Trank haben die Methode überschrieben und rufen `super.beschreibung()` auf. `Schluessel` überschreibt **nicht** → die geerbte Version liefert nur „Gitterschluessel (6 Gold)\"."
+    }
+   ]
+  },
+  {
+   "id": "W1-L4-04",
+   "titel": "Die Steinhaut",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Funktionsweise erläutern",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Ein Golem ist ein Monster mit Steinhaut:"
+    },
+    {
+     "t": "code",
+     "code": "public class Golem extends Monster {\n    public Golem(String name, int leben, int staerke) {\n        super(name, leben, staerke);\n    }\n\n    // ueberschreibt nimmSchaden aus Monster: Steinhaut haelt 5 Schaden ab\n    public void nimmSchaden(int schaden) {\n        if (schaden > 5) {\n            super.nimmSchaden(schaden - 5);\n        }\n    }\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Was gibt das folgende Hauptprogramm aus? (Aria: Stärke 10, keine Waffe)"
+    },
+    {
+     "t": "code",
+     "code": "Monster m = new Golem(\"Steingolem\", 60, 9);\nHeld h = new Held(\"Aria\");\nh.angreifen(m);\nprintln(m.getLeben());",
+     "nummern": true
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "mehrfach": false,
+    "optionen": [
+     {
+      "id": "a",
+      "md": "`50` – `m` hat den Typ `Monster`, also läuft `nimmSchaden` aus `Monster`."
+     },
+     {
+      "id": "b",
+      "md": "`55` – das Objekt ist ein Golem, also läuft die überschriebene Methode aus `Golem`."
+     },
+     {
+      "id": "c",
+      "md": "Übersetzungsfehler – `angreifen` erwartet ein `Monster`, kein `Golem`-Objekt."
+     },
+     {
+      "id": "d",
+      "md": "`60` – ein Golem nimmt keinen Schaden."
+     }
+    ]
+   },
+   "loesung": {
+    "richtig": [
+     "b"
+    ]
+   },
+   "tipps": [
+    "Typ der Variable: Was darf aufgerufen werden? Typ des Objekts: Welche Version läuft?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`h.angreifen(m)` ruft `m.nimmSchaden(10)` auf. Das Objekt ist ein **Golem** – durch dynamisches Binden läuft dessen Version: 10 > 5, also `super.nimmSchaden(5)` → 60 − 5 = **55**. Der Typ der Variable (`Monster`) entscheidet nur, dass `nimmSchaden` überhaupt aufgerufen werden darf. Ein Golem *ist ein* Monster, darum passt er als Argument."
+    }
+   ]
+  },
+  {
+   "id": "W1-L4-05",
+   "titel": "Das störrische Amulett",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P3"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Diese Klasse wird **nicht übersetzt**. Der Fehler lässt sich beheben, indem man zwei Zeilen vertauscht."
+    },
+    {
+     "t": "code",
+     "code": "public class Amulett extends Gegenstand {\n    private int magie;\n\n    public Amulett(String name, int wert, int magie) {\n        this.magie = magie;\n        super(name, wert);\n    }\n\n    public int getMagie() {\n        return magie;\n    }\n\n    public String beschreibung() {\n        return \"Amulett: \" + super.beschreibung() + \", Magie \" + magie;\n    }\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**a)** Markiere die beiden Zeilen, die vertauscht werden müssen. **b)** Wähle die Begründung."
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 1,
+     "anzahl": 2
+    },
+    {
+     "kind": "choice",
+     "mehrfach": false,
+     "optionen": [
+      {
+       "id": "a",
+       "md": "`super(…)` muss die erste Anweisung im Konstruktor einer Unterklasse sein."
+      },
+      {
+       "id": "b",
+       "md": "`magie` ist privat und darf im Konstruktor nicht gesetzt werden."
+      },
+      {
+       "id": "c",
+       "md": "Eine Unterklasse darf keine eigenen Attribute haben."
+      },
+      {
+       "id": "d",
+       "md": "`beschreibung()` darf nicht überschrieben werden."
+      }
+     ]
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      5,
+      6
+     ]
+    },
+    {
+     "richtig": [
+      "a"
+     ]
+    }
+   ],
+   "tipps": [
+    "Was muss zuerst existieren: der Gegenstand-Teil oder das Amulett-Extra?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Der Konstruktor einer Unterklasse ruft als **erste** Anweisung den Konstruktor der Oberklasse auf: `super(name, wert);` setzt die privaten geerbten Attribute. Erst danach folgt `this.magie = magie;`. Mit vertauschten Zeilen liefert `beschreibung()` z. B. „Amulett: Mondstein (70 Gold), Magie 4\"."
+    }
+   ]
+  },
+  {
+   "id": "W1-L4-06",
+   "titel": "Kai rüstet auf",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Objektkarten und Referenzen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Alle Methoden sind wie in Level 1.4 implementiert (`trinken` heilt um den Heilwert, nie über `maxLeben`; `angriffswert` = Stärke + Schaden der ausgerüsteten Waffe)."
+    },
+    {
+     "t": "code",
+     "code": "Held kai = new Held(\"Kai\", 80, 12);\nWaffe dolch = new Waffe(\"Dolch\", 15, 4);\nWaffe hammer = new Waffe(\"Kriegshammer\", 60, 14);\nkai.aufnehmen(dolch);\nkai.aufnehmen(new Trank(\"Heiltrank\", 20, 25));\nkai.aufnehmen(hammer);\nkai.aufnehmen(new Schluessel(\"Turmschluessel\", 9, 3));\nkai.ausruesten(dolch);\nkai.nimmSchaden(50);\nkai.trinken(new Trank(\"Elixier\", 50, 40));\nkai.ausruesten(hammer);\nprintln(kai.getLeben());\nprintln(kai.angriffswert());\nprintln(kai.gesamtWert());\nprintln(kai.wertvollsterGegenstand().beschreibung());",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Ausgaben: Zeile 12: [[g1]] · Zeile 13: [[g2]] · Zeile 14: [[g3]]"
+    },
+    {
+     "t": "text",
+     "md": "Zeile 15: [[g4]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "zahl"
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "zahl"
+     },
+     "g4": {
+      "typ": "auswahl",
+      "optionen": [
+       "Waffe: Kriegshammer (60 Gold), Schaden 14",
+       "Kriegshammer (60 Gold)",
+       "Trank: Elixier (50 Gold), heilt 40",
+       "Waffe: Dolch (15 Gold), Schaden 4"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "70"
+    ],
+    "g2": [
+     "26"
+    ],
+    "g3": [
+     "104"
+    ],
+    "g4": [
+     "Waffe: Kriegshammer (60 Gold), Schaden 14"
+    ]
+   },
+   "tipps": [
+    "Das Elixier wird getrunken, aber nicht aufgenommen.",
+    "Welche Waffe ist am Ende ausgerüstet?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "leben: 80 − 50 = 30, das Elixier heilt 40 → **70** (≤ maxLeben 80). Am Ende ist der Hammer ausgerüstet: Stärke 12 + Schaden 14 = **26**. Im Inventar liegen Dolch, Heiltrank, Hammer und Schlüssel (das Elixier nicht!): 15 + 20 + 60 + 9 = **104**. Der wertvollste ist der Hammer; weil er eine Waffe ist, läuft die überschriebene `beschreibung()`."
+    }
+   ]
+  },
+  {
+   "id": "W1-L4-07",
+   "titel": "Puzzle: Der Trank",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Methode implementieren",
+   "fallen": [
+    "P3"
+   ],
+   "inhalt": [
+    {
+     "t": "klassenkarte",
+     "name": "Trank",
+     "attribute": [
+      "- heilwert: Ganzzahl"
+     ],
+     "methoden": [
+      "+ c Trank(name: Zeichenkette, wert: Ganzzahl, heilwert: Ganzzahl)",
+      "+ beschreibung(): Zeichenkette",
+      "…"
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Setze die Klasse `Trank` (Unterklasse von `Gegenstand`) zusammen – in der üblichen Reihenfolge: Attribut, Konstruktor, Methode. `beschreibung()` soll z. B. „Trank: Heiltrank (20 Gold), heilt 30\" liefern. Nicht alle Teile werden gebraucht."
+    }
+   ],
+   "interaktion": {
+    "kind": "order",
+    "teile": [
+     {
+      "id": "a",
+      "code": "public class Trank extends Gegenstand {"
+     },
+     {
+      "id": "b",
+      "code": "    private int heilwert;"
+     },
+     {
+      "id": "c",
+      "code": "    public Trank(String name, int wert, int heilwert) {"
+     },
+     {
+      "id": "d",
+      "code": "        super(name, wert);"
+     },
+     {
+      "id": "e",
+      "code": "        this.heilwert = heilwert;"
+     },
+     {
+      "id": "f",
+      "code": "    } // Ende Konstruktor"
+     },
+     {
+      "id": "g",
+      "code": "    public String beschreibung() {"
+     },
+     {
+      "id": "h",
+      "code": "        return \"Trank: \" + super.beschreibung() + \", heilt \" + heilwert;"
+     },
+     {
+      "id": "i",
+      "code": "    } // Ende beschreibung"
+     },
+     {
+      "id": "j",
+      "code": "}"
+     },
+     {
+      "id": "x",
+      "code": "        return \"Trank: \" + name + \" (\" + wert + \" Gold), heilt \" + heilwert;"
+     },
+     {
+      "id": "y",
+      "code": "        this.name = name;"
+     },
+     {
+      "id": "z",
+      "code": "public class Trank implements Gegenstand {"
+     }
+    ]
+   },
+   "loesung": {
+    "reihenfolgen": [
+     [
+      "a",
+      "b",
+      "c",
+      "d",
+      "e",
+      "f",
+      "g",
+      "h",
+      "i",
+      "j"
+     ]
+    ]
+   },
+   "tipps": [
+    "`name` und `wert` sind in `Gegenstand` privat."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Vererbung in Java: `extends` (nicht `implements`). Der Konstruktor ruft zuerst `super(name, wert)` auf und setzt dann das eigene Attribut. In `beschreibung()` liefert `super.beschreibung()` den Text „Heiltrank (20 Gold)\" – ein direkter Zugriff auf `name` oder `wert` ist ein Übersetzungsfehler, weil sie in `Gegenstand` privat sind."
+    }
+   ]
+  },
+  {
+   "id": "W1-L4-08",
+   "titel": "Der Stammbaum-Pfeil",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Klassendiagramm",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Wie wird „`Waffe` erbt von `Gegenstand`\" im Klassendiagramm nach EH § 6 dargestellt?"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "mehrfach": false,
+    "optionen": [
+     {
+      "id": "a",
+      "md": "Pfeil mit hohler Dreiecksspitze von `Waffe` zu `Gegenstand`."
+     },
+     {
+      "id": "b",
+      "md": "Pfeil mit hohler Dreiecksspitze von `Gegenstand` zu `Waffe`."
+     },
+     {
+      "id": "c",
+      "md": "Einfache Linie zwischen `Waffe` und `Gegenstand`."
+     },
+     {
+      "id": "d",
+      "md": "Linie mit der Beschriftung „erbt\" und der Kardinalität 1."
+     }
+    ]
+   },
+   "loesung": {
+    "richtig": [
+     "a"
+    ]
+   },
+   "tipps": [
+    "Die Spitze zeigt auf die allgemeinere Klasse."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Vererbung: Pfeil mit **hohler Dreiecksspitze** von der Unterklasse **zur Oberklasse** („Waffe ist ein Gegenstand\"). Eine einfache Linie bedeutet nach EH § 6 eine Assoziation (ein Attribut vom Typ der anderen Klasse). Beschriftungen und Kardinalitäten werden nicht verwendet."
+    }
+   ]
+  },
+  {
+   "id": "W1-B-01",
+   "titel": "Anatomie des Reittiers",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Bestandteile einer Klasse",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "**Der Reitstall der Heldenschmiede.** Die Heldenschmiede verwaltet ihre Reittiere. Ein neues Reittier ist nicht gesattelt; `Reittier(name)` setzt tempo = 10 und ausdauer = 100. `reiten(strecke)` verringert die Ausdauer nur, wenn das Tier gesattelt ist, und nie unter 0. `istBereit()` ist wahr, wenn das Tier gesattelt ist und Ausdauer > 0 hat. Ein `Greif` ist ein Reittier, das doppelt so schnell ist (`getTempo()` überschrieben). Im `Stall` stehen die Tiere lückenlos in `boxen[0]` bis `boxen[anzahl − 1]`."
+    },
+    {
+     "t": "klassenkarte",
+     "name": "Reittier",
+     "attribute": [
+      "- name: Zeichenkette",
+      "- tempo: Ganzzahl",
+      "- ausdauer: Ganzzahl",
+      "- gesattelt: Wahrheitswert"
+     ],
+     "methoden": [
+      "+ c Reittier(name: Zeichenkette)",
+      "+ c Reittier(name: Zeichenkette, tempo: Ganzzahl, ausdauer: Ganzzahl)",
+      "+ getName(): Zeichenkette",
+      "+ getTempo(): Ganzzahl",
+      "+ getAusdauer(): Ganzzahl",
+      "+ istGesattelt(): Wahrheitswert",
+      "+ satteln(): nichts",
+      "+ reiten(strecke: Ganzzahl): nichts",
+      "+ istBereit(): Wahrheitswert"
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Ordne jedes Element der Klassenkarte dem passenden Bestandteil zu."
+    }
+   ],
+   "interaktion": {
+    "kind": "match",
+    "elemente": [
+     {
+      "id": "e1",
+      "md": "`- ausdauer: Ganzzahl`"
+     },
+     {
+      "id": "e2",
+      "md": "`+ c Reittier(name: Zeichenkette)`"
+     },
+     {
+      "id": "e3",
+      "md": "`+ getTempo(): Ganzzahl`"
+     },
+     {
+      "id": "e4",
+      "md": "`+ istBereit(): Wahrheitswert`"
+     },
+     {
+      "id": "e5",
+      "md": "`+ satteln(): nichts`"
+     },
+     {
+      "id": "e6",
+      "md": "`+ reiten(strecke: Ganzzahl): nichts`"
+     }
+    ],
+    "kategorien": [
+     {
+      "id": "att",
+      "md": "Attribut"
+     },
+     {
+      "id": "kon",
+      "md": "Konstruktor"
+     },
+     {
+      "id": "son",
+      "md": "sondierende Methode"
+     },
+     {
+      "id": "ver",
+      "md": "verändernde Methode"
+     }
+    ]
+   },
+   "loesung": {
+    "e1": "att",
+    "e2": "kon",
+    "e3": "son",
+    "e4": "son",
+    "e5": "ver",
+    "e6": "ver"
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`ausdauer` ist ein privates Attribut. `c` kennzeichnet den Konstruktor. `getTempo()` und `istBereit()` liefern nur Informationen (sondierend), `satteln()` und `reiten(…)` verändern den Zustand (`gesattelt` bzw. `ausdauer`)."
+    }
+   ]
+  },
+  {
+   "id": "W1-B-02",
+   "titel": "Vom Code zur Karte",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Klassendiagramm",
+   "fallen": [
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Ergänze die Klassenkarte zum Java-Code nach EH § 6."
+    },
+    {
+     "t": "code",
+     "code": "public class Reittier {\n    private String name;\n    private int tempo;\n    private int ausdauer;\n    private boolean gesattelt;\n\n    public Reittier(String name, int tempo, int ausdauer) { ... }\n    public boolean istBereit() { ... }\n    public void reiten(int strecke) { ... }\n    ...\n}",
+     "nummern": true
+    },
+    {
+     "t": "klassenkarte",
+     "name": "Reittier",
+     "attribute": [
+      "- name: Zeichenkette",
+      "- tempo: Ganzzahl",
+      "- ausdauer: Ganzzahl",
+      "[[g1]] gesattelt: [[g2]]"
+     ],
+     "methoden": [
+      "+ c Reittier(name: Zeichenkette, tempo: [[g3]], ausdauer: Ganzzahl)",
+      "+ istBereit(): [[g4]]",
+      "+ reiten(strecke: Ganzzahl): [[g5]]",
+      "…"
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "auswahl",
+      "optionen": [
+       "+",
+       "-"
+      ]
+     },
+     "g2": {
+      "typ": "auswahl",
+      "optionen": [
+       "Ganzzahl",
+       "Kommazahl",
+       "Wahrheitswert",
+       "Zeichen",
+       "Zeichenkette",
+       "nichts"
+      ]
+     },
+     "g3": {
+      "typ": "auswahl",
+      "optionen": [
+       "Ganzzahl",
+       "Kommazahl",
+       "Wahrheitswert",
+       "Zeichen",
+       "Zeichenkette",
+       "nichts"
+      ]
+     },
+     "g4": {
+      "typ": "auswahl",
+      "optionen": [
+       "Ganzzahl",
+       "Kommazahl",
+       "Wahrheitswert",
+       "Zeichen",
+       "Zeichenkette",
+       "nichts"
+      ]
+     },
+     "g5": {
+      "typ": "auswahl",
+      "optionen": [
+       "Ganzzahl",
+       "Kommazahl",
+       "Wahrheitswert",
+       "Zeichen",
+       "Zeichenkette",
+       "nichts"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "-"
+    ],
+    "g2": [
+     "Wahrheitswert"
+    ],
+    "g3": [
+     "Ganzzahl"
+    ],
+    "g4": [
+     "Wahrheitswert"
+    ],
+    "g5": [
+     "nichts"
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`private` → −; `boolean` → Wahrheitswert; `int` → Ganzzahl; `void` → nichts. Konstruktoren tragen ein `c` und keinen Rückgabetyp; nicht gezeigte Elemente werden durch „…\" ersetzt."
+    }
+   ]
+  },
+  {
+   "id": "W1-B-03",
+   "titel": "Der falsche Stallschlüssel",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Bestandteile einer Klasse",
+   "fallen": [
+    "P3"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "**Der Reitstall der Heldenschmiede.** Die Heldenschmiede verwaltet ihre Reittiere. Ein neues Reittier ist nicht gesattelt; `Reittier(name)` setzt tempo = 10 und ausdauer = 100. `reiten(strecke)` verringert die Ausdauer nur, wenn das Tier gesattelt ist, und nie unter 0. `istBereit()` ist wahr, wenn das Tier gesattelt ist und Ausdauer > 0 hat. Ein `Greif` ist ein Reittier, das doppelt so schnell ist (`getTempo()` überschrieben). Im `Stall` stehen die Tiere lückenlos in `boxen[0]` bis `boxen[anzahl − 1]`."
+    },
+    {
+     "t": "klassenkarte",
+     "name": "Reittier",
+     "attribute": [
+      "- name: Zeichenkette",
+      "- tempo: Ganzzahl",
+      "- ausdauer: Ganzzahl",
+      "- gesattelt: Wahrheitswert"
+     ],
+     "methoden": [
+      "+ c Reittier(name: Zeichenkette)",
+      "+ c Reittier(name: Zeichenkette, tempo: Ganzzahl, ausdauer: Ganzzahl)",
+      "+ getName(): Zeichenkette",
+      "+ getTempo(): Ganzzahl",
+      "+ getAusdauer(): Ganzzahl",
+      "+ istGesattelt(): Wahrheitswert",
+      "+ satteln(): nichts",
+      "+ reiten(strecke: Ganzzahl): nichts",
+      "+ istBereit(): Wahrheitswert"
+     ]
+    },
+    {
+     "t": "klassenkarte",
+     "name": "Greif",
+     "attribute": [
+      "- spannweite: Ganzzahl"
+     ],
+     "methoden": [
+      "+ c Greif(name: Zeichenkette, tempo: Ganzzahl, ausdauer: Ganzzahl, spannweite: Ganzzahl)",
+      "+ getSpannweite(): Ganzzahl",
+      "+ getTempo(): Ganzzahl"
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Welcher Ausdruck führt zu einem **Übersetzungsfehler**?"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "mehrfach": false,
+    "optionen": [
+     {
+      "id": "a",
+      "md": "`new Reittier(\"Blitz\")`"
+     },
+     {
+      "id": "b",
+      "md": "`new Reittier(\"Blitz\", 14, 80)`"
+     },
+     {
+      "id": "c",
+      "md": "`new Reittier(\"Blitz\", 14)`"
+     },
+     {
+      "id": "d",
+      "md": "`new Greif(\"Sturm\", 12, 90, 6)`"
+     }
+    ]
+   },
+   "loesung": {
+    "richtig": [
+     "c"
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`Reittier` ist überladen: ein Konstruktor mit einem Parameter, einer mit drei. Für (Zeichenkette, Ganzzahl) gibt es **keinen** passenden Konstruktor. `new Greif(…)` mit vier Argumenten passt zum Greif-Konstruktor."
+    }
+   ]
+  },
+  {
+   "id": "W1-B-04",
+   "titel": "Linien und Pfeile im Stall",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Klassendiagramm",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "**Der Reitstall der Heldenschmiede.** Die Heldenschmiede verwaltet ihre Reittiere. Ein neues Reittier ist nicht gesattelt; `Reittier(name)` setzt tempo = 10 und ausdauer = 100. `reiten(strecke)` verringert die Ausdauer nur, wenn das Tier gesattelt ist, und nie unter 0. `istBereit()` ist wahr, wenn das Tier gesattelt ist und Ausdauer > 0 hat. Ein `Greif` ist ein Reittier, das doppelt so schnell ist (`getTempo()` überschrieben). Im `Stall` stehen die Tiere lückenlos in `boxen[0]` bis `boxen[anzahl − 1]`."
+    },
+    {
+     "t": "klassenkarte",
+     "name": "Stall",
+     "attribute": [
+      "- boxen: Reihung von Reittier",
+      "- anzahl: Ganzzahl"
+     ],
+     "methoden": [
+      "+ c Stall(groesse: Ganzzahl)",
+      "+ einstellen(r: Reittier): Wahrheitswert",
+      "+ getAnzahl(): Ganzzahl",
+      "+ getReittier(i: Ganzzahl): Reittier",
+      "+ schnellstes(): Reittier",
+      "+ anzahlBereit(): Ganzzahl",
+      "+ finde(name: Zeichenkette): Reittier"
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Welche Beschreibung des Klassendiagramms mit `Stall`, `Reittier` und `Greif` entspricht EH § 6?"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "mehrfach": false,
+    "optionen": [
+     {
+      "id": "a",
+      "md": "`Stall` – `Reittier`: einfache Linie ohne Beschriftung; `Greif` → `Reittier`: Pfeil mit hohler Dreiecksspitze zu `Reittier`."
+     },
+     {
+      "id": "b",
+      "md": "`Stall` – `Reittier`: Linie mit Kardinalität `0..*`; `Reittier` → `Greif`: Pfeil mit hohler Spitze zu `Greif`."
+     },
+     {
+      "id": "c",
+      "md": "`Stall` – `Greif`: einfache Linie, weil Greife auch im Stall stehen; `Greif` → `Reittier`: einfache Linie."
+     },
+     {
+      "id": "d",
+      "md": "Keine Linie zwischen `Stall` und `Reittier`, weil `boxen` eine Reihung ist; `Greif` → `Reittier`: Pfeil mit hohler Spitze."
+     }
+    ]
+   },
+   "loesung": {
+    "richtig": [
+     "a"
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`Stall` hat das Attribut `boxen: Reihung von Reittier` → Assoziation als einfache, unbeschriftete Linie zu `Reittier` (auch bei Reihungen, ohne Kardinalitäten). Vererbung: hohle Dreiecksspitze von der Unterklasse `Greif` zur Oberklasse `Reittier`. Eine zusätzliche Linie Stall – Greif ist nicht nötig: Ein Greif *ist ein* Reittier."
+    }
+   ]
+  },
+  {
+   "id": "W1-B-05",
+   "titel": "Köpfe für den Stall",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Methodenkopf und Signatur",
+   "fallen": [
+    "P3"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Schreibe zu den Signaturen aus den Klassenkarten die Java-Köpfe mit Sichtbarkeit (ohne `{`)."
+    },
+    {
+     "t": "text",
+     "md": "`+ satteln(): nichts` (in Reittier) → [[g1]]"
+    },
+    {
+     "t": "text",
+     "md": "`+ getReittier(i: Ganzzahl): Reittier` (in Stall) → [[g2]]"
+    },
+    {
+     "t": "text",
+     "md": "`+ c Stall(groesse: Ganzzahl)` → [[g3]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 26
+     },
+     "g2": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 36
+     },
+     "g3": {
+      "typ": "text",
+      "norm": "code",
+      "breite": 26
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "public void satteln()",
+     "public void satteln() {"
+    ],
+    "g2": [
+     "public Reittier getReittier(int i)",
+     "public Reittier getReittier(int i) {"
+    ],
+    "g3": [
+     "public Stall(int groesse)",
+     "public Stall(int groesse) {"
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`: nichts` → `void`; der Rückgabetyp `Reittier` ist ein Klassenname und bleibt stehen; `Ganzzahl` → `int`. Der Konstruktor hat keinen Rückgabetyp und heißt wie die Klasse: `public Stall(int groesse)`."
+    }
+   ]
+  },
+  {
+   "id": "W1-B-06",
+   "titel": "Zwei Blitze",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Objektkarten und Referenzen",
+   "fallen": [
+    "P5"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "**Der Reitstall der Heldenschmiede.** Die Heldenschmiede verwaltet ihre Reittiere. Ein neues Reittier ist nicht gesattelt; `Reittier(name)` setzt tempo = 10 und ausdauer = 100. `reiten(strecke)` verringert die Ausdauer nur, wenn das Tier gesattelt ist, und nie unter 0. `istBereit()` ist wahr, wenn das Tier gesattelt ist und Ausdauer > 0 hat. Ein `Greif` ist ein Reittier, das doppelt so schnell ist (`getTempo()` überschrieben). Im `Stall` stehen die Tiere lückenlos in `boxen[0]` bis `boxen[anzahl − 1]`."
+    },
+    {
+     "t": "code",
+     "code": "Reittier r1 = new Reittier(\"Blitz\", 14, 60);\nReittier r2 = r1;\nReittier r3 = new Reittier(\"Blitz\", 14, 60);\nr2.satteln();\nr1.reiten(25);\nr3.reiten(25);\nprintln(r1.getAusdauer());\nprintln(r3.getAusdauer());\nprintln(r1 == r3);\nprintln(r1.getName().equals(r3.getName()));",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Es gibt [[g0]] Reittier-Objekte. Ausgaben: [[g1]] · [[g2]] · [[g3]] · [[g4]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g0": {
+      "typ": "zahl"
+     },
+     "g1": {
+      "typ": "zahl"
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "g4": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "g0": [
+     "2"
+    ],
+    "g1": [
+     "35"
+    ],
+    "g2": [
+     "60"
+    ],
+    "g3": [
+     "false"
+    ],
+    "g4": [
+     "true"
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Zwei `new` → **2** Objekte; r1 und r2 verweisen auf dasselbe. `r2.satteln()` sattelt also auch „r1\" → `reiten(25)` wirkt: 60 − 25 = **35**. r3 ist ein eigenes, **nicht gesatteltes** Objekt → Ausdauer bleibt **60**. `r1 == r3` vergleicht Referenzen → false; `equals` vergleicht die Namen inhaltlich → true."
+    }
+   ]
+  },
+  {
+   "id": "W1-B-07",
+   "titel": "Wer ist am schnellsten?",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Tracetabelle",
+   "fallen": [
+    "P8"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "**Der Reitstall der Heldenschmiede.** Die Heldenschmiede verwaltet ihre Reittiere. Ein neues Reittier ist nicht gesattelt; `Reittier(name)` setzt tempo = 10 und ausdauer = 100. `reiten(strecke)` verringert die Ausdauer nur, wenn das Tier gesattelt ist, und nie unter 0. `istBereit()` ist wahr, wenn das Tier gesattelt ist und Ausdauer > 0 hat. Ein `Greif` ist ein Reittier, das doppelt so schnell ist (`getTempo()` überschrieben). Im `Stall` stehen die Tiere lückenlos in `boxen[0]` bis `boxen[anzahl − 1]`."
+    },
+    {
+     "t": "code",
+     "code": "public Reittier schnellstes() {\n    if (anzahl == 0) {\n        return null;\n    }\n    Reittier bester = boxen[0];\n    for (int i = 1; i < anzahl; i++) {\n        if (boxen[i].getTempo() > bester.getTempo()) {\n            bester = boxen[i];\n        }\n    }\n    return bester;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Im Stall stehen (Index 0 bis 4): Blitz (Reittier, tempo = 14), Moos (Reittier, tempo = 9), Sturm (Greif, tempo = 8), Nebel (Reittier, tempo = 16), Funke (Greif, tempo = 7)."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "i",
+      "boxen[i].getTempo()",
+      "bester (Name)"
+     ],
+     "zeilen": [
+      [
+       "–",
+       "–",
+       "Blitz"
+      ],
+      [
+       "1",
+       "[[t1]]",
+       "[[b1]]"
+      ],
+      [
+       "2",
+       "[[t2]]",
+       "[[b2]]"
+      ],
+      [
+       "3",
+       "[[t3]]",
+       "[[b3]]"
+      ],
+      [
+       "4",
+       "[[t4]]",
+       "[[b4]]"
+      ]
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Rückgabe: [[r]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "t1": {
+      "typ": "zahl"
+     },
+     "b1": {
+      "typ": "auswahl",
+      "optionen": [
+       "Blitz",
+       "Moos",
+       "Sturm",
+       "Nebel",
+       "Funke"
+      ]
+     },
+     "t2": {
+      "typ": "zahl"
+     },
+     "b2": {
+      "typ": "auswahl",
+      "optionen": [
+       "Blitz",
+       "Moos",
+       "Sturm",
+       "Nebel",
+       "Funke"
+      ]
+     },
+     "t3": {
+      "typ": "zahl"
+     },
+     "b3": {
+      "typ": "auswahl",
+      "optionen": [
+       "Blitz",
+       "Moos",
+       "Sturm",
+       "Nebel",
+       "Funke"
+      ]
+     },
+     "t4": {
+      "typ": "zahl"
+     },
+     "b4": {
+      "typ": "auswahl",
+      "optionen": [
+       "Blitz",
+       "Moos",
+       "Sturm",
+       "Nebel",
+       "Funke"
+      ]
+     },
+     "r": {
+      "typ": "auswahl",
+      "optionen": [
+       "Blitz",
+       "Moos",
+       "Sturm",
+       "Nebel",
+       "Funke"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "t1": [
+     "9"
+    ],
+    "b1": [
+     "Blitz"
+    ],
+    "t2": [
+     "16"
+    ],
+    "b2": [
+     "Sturm"
+    ],
+    "t3": [
+     "16"
+    ],
+    "b3": [
+     "Sturm"
+    ],
+    "t4": [
+     "14"
+    ],
+    "b4": [
+     "Sturm"
+    ],
+    "r": [
+     "Sturm"
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Für Greife läuft die **überschriebene** `getTempo()`: Sturm 8 · 2 = 16, Funke 7 · 2 = 14. i = 1: 9 > 14? nein. i = 2: 16 > 14 → Sturm. i = 3: Nebel 16 > 16? **nein** (Gleichstand → der erste bleibt). i = 4: 14 > 16? nein. Rückgabe: **Sturm**."
+    }
+   ]
+  },
+  {
+   "id": "W1-B-08",
+   "titel": "Doppelt so schnell",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Funktionsweise erläutern",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "**Der Reitstall der Heldenschmiede.** Die Heldenschmiede verwaltet ihre Reittiere. Ein neues Reittier ist nicht gesattelt; `Reittier(name)` setzt tempo = 10 und ausdauer = 100. `reiten(strecke)` verringert die Ausdauer nur, wenn das Tier gesattelt ist, und nie unter 0. `istBereit()` ist wahr, wenn das Tier gesattelt ist und Ausdauer > 0 hat. Ein `Greif` ist ein Reittier, das doppelt so schnell ist (`getTempo()` überschrieben). Im `Stall` stehen die Tiere lückenlos in `boxen[0]` bis `boxen[anzahl − 1]`."
+    },
+    {
+     "t": "klassenkarte",
+     "name": "Greif",
+     "attribute": [
+      "- spannweite: Ganzzahl"
+     ],
+     "methoden": [
+      "+ c Greif(name: Zeichenkette, tempo: Ganzzahl, ausdauer: Ganzzahl, spannweite: Ganzzahl)",
+      "+ getSpannweite(): Ganzzahl",
+      "+ getTempo(): Ganzzahl"
+     ]
+    },
+    {
+     "t": "code",
+     "code": "Reittier a = new Greif(\"Sturm\", 8, 90, 6);\nGreif g = new Greif(\"Wolke\", 5, 70, 4);\nprintln(a.getTempo() + g.getTempo());",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Was wird ausgegeben?"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "mehrfach": false,
+    "optionen": [
+     {
+      "id": "a",
+      "md": "`13`"
+     },
+     {
+      "id": "b",
+      "md": "`26`"
+     },
+     {
+      "id": "c",
+      "md": "`21`"
+     },
+     {
+      "id": "d",
+      "md": "Übersetzungsfehler, weil `a` den Typ `Reittier` hat"
+     }
+    ]
+   },
+   "loesung": {
+    "richtig": [
+     "b"
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Beide Objekte sind Greife. Auch über die Variable `a` vom Typ `Reittier` läuft die **überschriebene** Methode des Objekts (dynamisches Binden): 8 · 2 = 16 und 5 · 2 = 10, zusammen **26**. `getTempo()` gibt es in `Reittier`, der Aufruf ist also erlaubt."
+    }
+   ]
+  },
+  {
+   "id": "W1-B-09",
+   "titel": "Die verlorene Box",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P1",
+    "P5",
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "**Der Reitstall der Heldenschmiede.** Die Heldenschmiede verwaltet ihre Reittiere. Ein neues Reittier ist nicht gesattelt; `Reittier(name)` setzt tempo = 10 und ausdauer = 100. `reiten(strecke)` verringert die Ausdauer nur, wenn das Tier gesattelt ist, und nie unter 0. `istBereit()` ist wahr, wenn das Tier gesattelt ist und Ausdauer > 0 hat. Ein `Greif` ist ein Reittier, das doppelt so schnell ist (`getTempo()` überschrieben). Im `Stall` stehen die Tiere lückenlos in `boxen[0]` bis `boxen[anzahl − 1]`."
+    },
+    {
+     "t": "text",
+     "md": "`finde(name)` soll das erste Reittier mit dem Namen liefern, sonst null. Die Implementierung enthält **drei** Fehler."
+    },
+    {
+     "t": "code",
+     "code": "public Reittier finde(String name) {\n    for (int i = 0; i <= anzahl; i++) {\n        if (boxen[i].getName() == name) {\n            return boxen[i];\n        }\n        return null;\n    }\n    return null;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**a)** Markiere die drei fehlerhaften Zeilen. **b)** Korrigiere: Zeile mit der Schleife: [[g1]]"
+    },
+    {
+     "t": "text",
+     "md": "Zeile mit der Bedingung: [[g2]]"
+    },
+    {
+     "t": "text",
+     "md": "Die dritte fehlerhafte Zeile muss [[g3]]"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 2,
+     "anzahl": 3
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 36
+      },
+      "g2": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 40
+      },
+      "g3": {
+       "typ": "auswahl",
+       "optionen": [
+        "gelöscht werden (nur das return nach der Schleife bleibt)",
+        "durch `return boxen[i];` ersetzt werden",
+        "in den if-Block verschoben werden",
+        "bleiben, sie ist korrekt"
+       ]
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      2,
+      3,
+      6
+     ]
+    },
+    {
+     "g1": [
+      "for (int i = 0; i < anzahl; i++) {",
+      "for (int i = 0; i < anzahl; i++)",
+      "for (int i = 0; i <= anzahl - 1; i++) {",
+      "for (int i = 0; i <= anzahl - 1; i++)"
+     ],
+     "g2": [
+      "if (boxen[i].getName().equals(name)) {",
+      "if (boxen[i].getName().equals(name))",
+      "if (name.equals(boxen[i].getName())) {",
+      "if (name.equals(boxen[i].getName()))"
+     ],
+     "g3": [
+      "gelöscht werden (nur das return nach der Schleife bleibt)"
+     ]
+    }
+   ],
+   "tipps": [
+    "Was passiert bei einem leeren Stall? Was, wenn das gesuchte Tier an Index 1 steht?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Zeile 2: `i <= anzahl` greift auf `boxen[anzahl]` zu – dort steht `null` (bzw. Index außerhalb) → Laufzeitfehler (P1/P6); richtig `i < anzahl`. Zeile 3: Zeichenketten mit `equals` vergleichen, nicht mit `==` (P5). Zeile 6: `return null` **in** der Schleife beendet die Suche schon nach dem ersten Tier – es muss weg, das `return null` nach der Schleife genügt."
+    }
+   ]
+  },
+  {
+   "id": "W1-B-10",
+   "titel": "Doppelt eingestellt",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Objektkarten und Referenzen",
+   "fallen": [
+    "P1"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "**Der Reitstall der Heldenschmiede.** Die Heldenschmiede verwaltet ihre Reittiere. Ein neues Reittier ist nicht gesattelt; `Reittier(name)` setzt tempo = 10 und ausdauer = 100. `reiten(strecke)` verringert die Ausdauer nur, wenn das Tier gesattelt ist, und nie unter 0. `istBereit()` ist wahr, wenn das Tier gesattelt ist und Ausdauer > 0 hat. Ein `Greif` ist ein Reittier, das doppelt so schnell ist (`getTempo()` überschrieben). Im `Stall` stehen die Tiere lückenlos in `boxen[0]` bis `boxen[anzahl − 1]`."
+    },
+    {
+     "t": "code",
+     "code": "Stall s = new Stall(4);\nReittier a = new Reittier(\"Blitz\");\nReittier b = new Greif(\"Sturm\", 8, 90, 6);\ns.einstellen(a);\ns.einstellen(b);\ns.einstellen(a);",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Ordne jeden Ausdruck seinem Wert nach Zeile 6 zu."
+    }
+   ],
+   "interaktion": {
+    "kind": "match",
+    "elemente": [
+     {
+      "id": "e1",
+      "md": "`s.getAnzahl() == 3`"
+     },
+     {
+      "id": "e2",
+      "md": "`s.getReittier(0) == s.getReittier(2)`"
+     },
+     {
+      "id": "e3",
+      "md": "`s.getReittier(1) == b`"
+     },
+     {
+      "id": "e4",
+      "md": "`s.getReittier(1).getTempo() == 8`"
+     },
+     {
+      "id": "e5",
+      "md": "`s.getReittier(2) == b`"
+     },
+     {
+      "id": "e6",
+      "md": "`s.getReittier(5) == null`"
+     }
+    ],
+    "kategorien": [
+     {
+      "id": "w",
+      "md": "true"
+     },
+     {
+      "id": "f",
+      "md": "false"
+     }
+    ]
+   },
+   "loesung": {
+    "e1": "w",
+    "e2": "w",
+    "e3": "w",
+    "e4": "f",
+    "e5": "f",
+    "e6": "w"
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Die Reihung speichert **Referenzen**: Box 0 und Box 2 verweisen auf dasselbe Objekt a (anzahl = 3). Box 1 verweist auf den Greif b; sein `getTempo()` liefert 16, nicht 8. `getReittier(5)` ist ein ungültiger Index → null (laut Klassenbeschreibung, kein Laufzeitfehler)."
+    }
+   ]
+  },
+  {
+   "id": "W1-B-11",
+   "titel": "Puzzle: Bereit zum Ausritt",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Methode implementieren",
+   "fallen": [
+    "P1",
+    "P6"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "**Der Reitstall der Heldenschmiede.** Die Heldenschmiede verwaltet ihre Reittiere. Ein neues Reittier ist nicht gesattelt; `Reittier(name)` setzt tempo = 10 und ausdauer = 100. `reiten(strecke)` verringert die Ausdauer nur, wenn das Tier gesattelt ist, und nie unter 0. `istBereit()` ist wahr, wenn das Tier gesattelt ist und Ausdauer > 0 hat. Ein `Greif` ist ein Reittier, das doppelt so schnell ist (`getTempo()` überschrieben). Im `Stall` stehen die Tiere lückenlos in `boxen[0]` bis `boxen[anzahl − 1]`."
+    },
+    {
+     "t": "text",
+     "md": "Setze `anzahlBereit(): Ganzzahl` der Klasse `Stall` zusammen: Sie liefert die Anzahl der Reittiere, die bereit sind. Nicht alle Teile werden gebraucht."
+    }
+   ],
+   "interaktion": {
+    "kind": "order",
+    "teile": [
+     {
+      "id": "a",
+      "code": "public int anzahlBereit() {"
+     },
+     {
+      "id": "b",
+      "code": "    int zaehler = 0;"
+     },
+     {
+      "id": "c",
+      "code": "    for (int i = 0; i < anzahl; i++) {"
+     },
+     {
+      "id": "d",
+      "code": "        if (boxen[i].istBereit()) {"
+     },
+     {
+      "id": "e",
+      "code": "            zaehler++;"
+     },
+     {
+      "id": "f",
+      "code": "        }"
+     },
+     {
+      "id": "g",
+      "code": "    }"
+     },
+     {
+      "id": "h",
+      "code": "    return zaehler;"
+     },
+     {
+      "id": "i",
+      "code": "}"
+     },
+     {
+      "id": "x",
+      "code": "    for (int i = 0; i < boxen.length; i++) {"
+     },
+     {
+      "id": "y",
+      "code": "            return zaehler;"
+     },
+     {
+      "id": "z",
+      "code": "        if (boxen[i].istBereit() == \"true\") {"
+     }
+    ]
+   },
+   "loesung": {
+    "reihenfolgen": [
+     [
+      "a",
+      "b",
+      "c",
+      "d",
+      "e",
+      "f",
+      "g",
+      "h",
+      "i"
+     ]
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Zähl-Baustein: Zähler mit 0 starten, über die **belegten** Boxen laufen (`i < anzahl` – `boxen.length` würde auf `null` zugreifen, P1/P6), bei jedem bereiten Tier erhöhen und **nach** der Schleife zurückgeben. `istBereit()` liefert einen Wahrheitswert, der direkt als Bedingung dient – der Vergleich mit dem Text \"true\" ist falsch."
+    }
+   ]
+  },
+  {
+   "id": "W1-B-12",
+   "titel": "Ein voller Stall",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Objektkarten und Referenzen",
+   "fallen": [
+    "P1"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "**Der Reitstall der Heldenschmiede.** Die Heldenschmiede verwaltet ihre Reittiere. Ein neues Reittier ist nicht gesattelt; `Reittier(name)` setzt tempo = 10 und ausdauer = 100. `reiten(strecke)` verringert die Ausdauer nur, wenn das Tier gesattelt ist, und nie unter 0. `istBereit()` ist wahr, wenn das Tier gesattelt ist und Ausdauer > 0 hat. Ein `Greif` ist ein Reittier, das doppelt so schnell ist (`getTempo()` überschrieben). Im `Stall` stehen die Tiere lückenlos in `boxen[0]` bis `boxen[anzahl − 1]`."
+    },
+    {
+     "t": "klassenkarte",
+     "name": "Stall",
+     "attribute": [
+      "- boxen: Reihung von Reittier",
+      "- anzahl: Ganzzahl"
+     ],
+     "methoden": [
+      "+ c Stall(groesse: Ganzzahl)",
+      "+ einstellen(r: Reittier): Wahrheitswert",
+      "+ getAnzahl(): Ganzzahl",
+      "+ getReittier(i: Ganzzahl): Reittier",
+      "+ schnellstes(): Reittier",
+      "+ anzahlBereit(): Ganzzahl",
+      "+ finde(name: Zeichenkette): Reittier"
+     ]
+    },
+    {
+     "t": "code",
+     "code": "Stall s = new Stall(3);\nReittier blitz = new Reittier(\"Blitz\", 14, 40);\nGreif sturm = new Greif(\"Sturm\", 8, 90, 6);\ns.einstellen(blitz);\ns.einstellen(sturm);\ns.einstellen(new Reittier(\"Moos\"));\nboolean ok = s.einstellen(new Reittier(\"Nebel\"));\nblitz.satteln();\nsturm.satteln();\nblitz.reiten(50);\nsturm.reiten(30);\nprintln(ok);\nprintln(s.anzahlBereit());\nprintln(s.schnellstes().getName());\nprintln(blitz.getAusdauer() + sturm.getAusdauer());",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Ausgaben: Zeile 12: [[g1]] · Zeile 13: [[g2]] · Zeile 14: [[g3]] · Zeile 15: [[g4]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "auswahl",
+      "optionen": [
+       "true",
+       "false"
+      ]
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "auswahl",
+      "optionen": [
+       "Blitz",
+       "Sturm",
+       "Moos",
+       "Nebel"
+      ]
+     },
+     "g4": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "false"
+    ],
+    "g2": [
+     "1"
+    ],
+    "g3": [
+     "Sturm"
+    ],
+    "g4": [
+     "60"
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Der Stall hat 3 Boxen – Nebel passt nicht mehr: `ok` = **false**. Blitz: 40 − 50 → 0 (nie unter 0), also nicht bereit; Sturm: 90 − 30 = 60, gesattelt → bereit; Moos ist nicht gesattelt → **1** bereites Tier. Tempo: Blitz 14, Sturm 8 · 2 = 16, Moos 10 → **Sturm**. Ausdauer zusammen: 0 + 60 = **60**."
+    }
+   ]
+  },
+  {
+   "id": "W1-B-13",
+   "titel": "Der flügellahme Greif",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P3"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "**Der Reitstall der Heldenschmiede.** Die Heldenschmiede verwaltet ihre Reittiere. Ein neues Reittier ist nicht gesattelt; `Reittier(name)` setzt tempo = 10 und ausdauer = 100. `reiten(strecke)` verringert die Ausdauer nur, wenn das Tier gesattelt ist, und nie unter 0. `istBereit()` ist wahr, wenn das Tier gesattelt ist und Ausdauer > 0 hat. Ein `Greif` ist ein Reittier, das doppelt so schnell ist (`getTempo()` überschrieben). Im `Stall` stehen die Tiere lückenlos in `boxen[0]` bis `boxen[anzahl − 1]`."
+    },
+    {
+     "t": "text",
+     "md": "Die Klasse `Greif` enthält **zwei** Fehler."
+    },
+    {
+     "t": "code",
+     "code": "public class Greif extends Reittier {\n    private int spannweite;\n\n    public Greif(String name, int tempo, int ausdauer, int spannweite) {\n        super(name, tempo, ausdauer);\n        spannweite = spannweite;\n    }\n\n    public int getSpannweite() {\n        return spannweite;\n    }\n\n    public int getTempo() {\n        return tempo * 2;\n    }\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "**a)** Markiere die beiden fehlerhaften Zeilen. **b)** Korrektur der Zeile im Konstruktor: [[g1]]"
+    },
+    {
+     "t": "text",
+     "md": "Korrektur der Zeile in `getTempo()`: [[g2]]"
+    }
+   ],
+   "interaktion": [
+    {
+     "kind": "lines",
+     "block": 2,
+     "anzahl": 2
+    },
+    {
+     "kind": "gaps",
+     "felder": {
+      "g1": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 32
+      },
+      "g2": {
+       "typ": "text",
+       "norm": "code",
+       "breite": 32
+      }
+     }
+    }
+   ],
+   "loesung": [
+    {
+     "zeilen": [
+      6,
+      14
+     ]
+    },
+    {
+     "g1": [
+      "this.spannweite = spannweite;",
+      "this.spannweite = spannweite"
+     ],
+     "g2": [
+      "return super.getTempo() * 2;",
+      "return super.getTempo() * 2",
+      "return 2 * super.getTempo();",
+      "return 2 * super.getTempo()",
+      "return super.getTempo() + super.getTempo();",
+      "return super.getTempo() + super.getTempo()"
+     ]
+    }
+   ],
+   "tipps": [
+    "Kann die Unterklasse auf das private Attribut `tempo` zugreifen?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Zeile 6: Ohne `this` wird der Parameter sich selbst zugewiesen, das Attribut bleibt 0 → `this.spannweite = spannweite;`. Zeile 14: `tempo` ist in `Reittier` privat → Übersetzungsfehler. Richtig: `return super.getTempo() * 2;`. Achtung: `return getTempo() * 2;` ohne `super` ruft die eigene Methode immer wieder auf (Endlosrekursion)."
+    }
+   ]
+  },
+  {
+   "id": "W1-B-14",
+   "titel": "Typen im Stall",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Fehler im Java-Code",
+   "fallen": [
+    "P4"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "**Der Reitstall der Heldenschmiede.** Die Heldenschmiede verwaltet ihre Reittiere. Ein neues Reittier ist nicht gesattelt; `Reittier(name)` setzt tempo = 10 und ausdauer = 100. `reiten(strecke)` verringert die Ausdauer nur, wenn das Tier gesattelt ist, und nie unter 0. `istBereit()` ist wahr, wenn das Tier gesattelt ist und Ausdauer > 0 hat. Ein `Greif` ist ein Reittier, das doppelt so schnell ist (`getTempo()` überschrieben). Im `Stall` stehen die Tiere lückenlos in `boxen[0]` bis `boxen[anzahl − 1]`."
+    },
+    {
+     "t": "klassenkarte",
+     "name": "Greif",
+     "attribute": [
+      "- spannweite: Ganzzahl"
+     ],
+     "methoden": [
+      "+ c Greif(name: Zeichenkette, tempo: Ganzzahl, ausdauer: Ganzzahl, spannweite: Ganzzahl)",
+      "+ getSpannweite(): Ganzzahl",
+      "+ getTempo(): Ganzzahl"
+     ]
+    },
+    {
+     "t": "text",
+     "md": "Entscheide, ob die Anweisungen übersetzt werden."
+    },
+    {
+     "t": "tabelle",
+     "kopf": [
+      "Anweisung(en)",
+      "übersetzt?"
+     ],
+     "zeilen": [
+      [
+       "`Reittier r = new Greif(\"Sturm\", 8, 90, 6);`",
+       "[[g1]]"
+      ],
+      [
+       "`Greif g = new Reittier(\"Blitz\");`",
+       "[[g2]]"
+      ],
+      [
+       "`Reittier r = new Greif(\"Sturm\", 8, 90, 6); println(r.getSpannweite());`",
+       "[[g3]]"
+      ],
+      [
+       "`Stall s = new Stall(2); s.einstellen(new Greif(\"Wolke\", 5, 70, 4));`",
+       "[[g4]]"
+      ],
+      [
+       "`Greif g = new Greif(\"Wolke\", 5, 70, 4); Reittier r = g; println(r.getTempo());`",
+       "[[g5]]"
+      ]
+     ]
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "auswahl",
+      "optionen": [
+       "ja",
+       "nein"
+      ]
+     },
+     "g2": {
+      "typ": "auswahl",
+      "optionen": [
+       "ja",
+       "nein"
+      ]
+     },
+     "g3": {
+      "typ": "auswahl",
+      "optionen": [
+       "ja",
+       "nein"
+      ]
+     },
+     "g4": {
+      "typ": "auswahl",
+      "optionen": [
+       "ja",
+       "nein"
+      ]
+     },
+     "g5": {
+      "typ": "auswahl",
+      "optionen": [
+       "ja",
+       "nein"
+      ]
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "ja"
+    ],
+    "g2": [
+     "nein"
+    ],
+    "g3": [
+     "nein"
+    ],
+    "g4": [
+     "ja"
+    ],
+    "g5": [
+     "ja"
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Ein Greif darf überall stehen, wo ein Reittier erwartet wird (Variable, Parameter von `einstellen`) – umgekehrt nicht. Über eine Variable vom Typ `Reittier` sind nur Methoden aus `Reittier` aufrufbar: `getSpannweite()` ✗, `getTempo()` ✓ (es läuft dann die Greif-Version)."
+    }
+   ]
+  },
+  {
+   "id": "W1-B-15",
+   "titel": "Welcher Code war es?",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Objektkarten und Referenzen",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "**Der Reitstall der Heldenschmiede.** Die Heldenschmiede verwaltet ihre Reittiere. Ein neues Reittier ist nicht gesattelt; `Reittier(name)` setzt tempo = 10 und ausdauer = 100. `reiten(strecke)` verringert die Ausdauer nur, wenn das Tier gesattelt ist, und nie unter 0. `istBereit()` ist wahr, wenn das Tier gesattelt ist und Ausdauer > 0 hat. Ein `Greif` ist ein Reittier, das doppelt so schnell ist (`getTempo()` überschrieben). Im `Stall` stehen die Tiere lückenlos in `boxen[0]` bis `boxen[anzahl − 1]`."
+    },
+    {
+     "t": "text",
+     "md": "Nach Ausführung eines Programmausschnitts gilt: Es gibt genau **zwei** Reittier-Objekte. `a` und `c` verweisen auf **dasselbe** Objekt mit ausdauer = 70; `b` verweist auf das **andere** Objekt mit ausdauer = 100. Welcher Ausschnitt erzeugt genau diesen Zustand?"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "mehrfach": false,
+    "optionen": [
+     {
+      "id": "a",
+      "md": "`Reittier a = new Reittier(\"Blitz\"); Reittier b = new Reittier(\"Moos\"); Reittier c = a; c.satteln(); a.reiten(30);`"
+     },
+     {
+      "id": "b",
+      "md": "`Reittier a = new Reittier(\"Blitz\"); Reittier c = new Reittier(\"Blitz\"); Reittier b = c; a.satteln(); a.reiten(30);`"
+     },
+     {
+      "id": "c",
+      "md": "`Reittier a = new Reittier(\"Blitz\"); Reittier b = new Reittier(\"Moos\"); Reittier c = a; a.reiten(30); c.satteln();`"
+     },
+     {
+      "id": "d",
+      "md": "`Reittier a = new Reittier(\"Blitz\"); Reittier b = a; Reittier c = a; b.satteln(); c.reiten(30);`"
+     }
+    ]
+   },
+   "loesung": {
+    "richtig": [
+     "a"
+    ]
+   },
+   "tipps": [
+    "Zeichne für jede Variante die Objektkarten mit Referenzpfeilen."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Nur a passt: zwei `new`, `c = a` (gleiches Objekt), erst satteln, dann reiten → 100 − 30 = 70. In b sind a und c verschiedene Objekte; in c wird geritten, **bevor** gesattelt ist – die Ausdauer bleibt 100; in d gibt es nur ein Objekt, auf das alle drei Variablen zeigen."
+    }
+   ]
+  }
+ ]
+}

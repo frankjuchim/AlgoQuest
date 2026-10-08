@@ -1,0 +1,159 @@
+{
+  "version": 1,
+  "karten": [
+    {
+      "id": "W2-01",
+      "welt": 2,
+      "kategorie": "Fehler im Java-Code",
+      "titel": "Wie oft hat Aria gespielt?",
+      "aufgabe": "Die Methode anzahlSpiele(name: Zeichenkette): Ganzzahl der Klasse Rangliste soll zählen, wie viele Einträge den übergebenen Namen tragen. Sie enthält drei Fehler.\na) Finde die Fehler und erläutere jeweils ihre Auswirkung.\nb) Gib eine korrigierte Fassung an.",
+      "code": "public int anzahlSpiele(String name) {\n    int zaehler = 0;\n    for (int i = 1; i <= anzahl; i++) {\n        if (eintraege[i].getName() == name) {\n            zaehler++;\n        }\n    }\n    return zaehler;\n}",
+      "loesung": "Fehler 1: Start bei i = 1 – der Eintrag mit Index 0 (Platz 1!) wird nie geprüft. Korrektur: i = 0.\nFehler 2: Bedingung i <= anzahl – im letzten Durchlauf wird eintraege[anzahl] gelesen. Dieses Feld ist null → NullPointerException; bei voller Liste liegt der Index sogar außerhalb der Reihung. Korrektur: i < anzahl.\nFehler 3: == vergleicht bei Zeichenketten die Referenzen, nicht den Inhalt. Inhaltsgleiche Namen aus verschiedenen Zeichenketten-Objekten (z. B. aus einer Eingabe) werden nicht gezählt. Korrektur: equals. (Die Online-IDE vergleicht mit == inhaltlich – im Abitur und in Java gilt: equals!)",
+      "loesungCode": "public int anzahlSpiele(String name) {\n    int zaehler = 0;\n    for (int i = 0; i < anzahl; i++) {\n        if (eintraege[i].getName().equals(name)) {\n            zaehler++;\n        }\n    }\n    return zaehler;\n}",
+      "minuten": 6
+    },
+    {
+      "id": "W2-02",
+      "welt": 2,
+      "kategorie": "Fehler im Java-Code",
+      "titel": "Die Minusrunde",
+      "aufgabe": "Im Hardcore-Modus gibt es Strafpunkte – punkte kann deshalb auch negativ sein.\nDie Methode besterEintrag(): Eintrag soll den Eintrag mit den meisten Punkten liefern, bei Gleichstand den ersten, bei leerer Liste null. Sie enthält drei Fehler.\na) Finde die Fehler und gib jeweils eine Rangliste an, bei der sich der Fehler auswirkt.\nb) Gib eine korrigierte Fassung an. Denk an die Leer-Abfrage!",
+      "code": "public Eintrag besterEintrag() {\n    int max = 0;\n    Eintrag bester = null;\n    for (int i = 0; i <= anzahl; i++) {\n        if (eintraege[i].getPunkte() >= max) {\n            max = eintraege[i].getPunkte();\n            bester = eintraege[i];\n        }\n    }\n    return bester;\n}",
+      "loesung": "Fehler 1: max = 0 – haben alle Einträge negative Punkte, z. B. Aria −30, Bruno −10, ist keine Bedingung wahr, es wird null statt Bruno geliefert. Korrektur: mit dem ersten Eintrag beginnen (bester = eintraege[0]) – das erfordert vorher die Leer-Abfrage.\nFehler 2: i <= anzahl – eintraege[anzahl] ist null (NullPointerException), bei voller Liste Index außerhalb der Reihung. Wirkt bei jeder Liste. Korrektur: i < anzahl.\nFehler 3: >= statt > – bei Gleichstand wird der letzte statt der erste geliefert, z. B. Aria 500, Bruno 500 → Bruno. Korrektur: >.\nLeer-Abfrage: Wer mit dem ersten Eintrag startet (z. B. max = eintraege[0].getPunkte()), löst bei leerer Liste eine NullPointerException aus, weil eintraege[0] null ist. Deshalb zuerst: if (anzahl == 0) return null;",
+      "loesungCode": "public Eintrag besterEintrag() {\n    if (anzahl == 0) {\n        return null;\n    }\n    Eintrag bester = eintraege[0];\n    for (int i = 1; i < anzahl; i++) {\n        if (eintraege[i].getPunkte() > bester.getPunkte()) {\n            bester = eintraege[i];\n        }\n    }\n    return bester;\n}",
+      "minuten": 7
+    },
+    {
+      "id": "W2-03",
+      "welt": 2,
+      "kategorie": "Methode implementieren",
+      "titel": "Die Späher der Rangliste",
+      "aufgabe": "Implementiere in der Klasse Rangliste (Attribute eintraege: Reihung von Eintrag, anzahl: Ganzzahl):\na) anzahlUeber(grenze: Ganzzahl): Ganzzahl – liefert die Anzahl der Einträge mit mehr als grenze Punkten.\nb) indexVon(name: Zeichenkette): Ganzzahl – liefert den Index des ersten Eintrags mit diesem Namen, sonst −1.\nBeispiel: Aria 1200, Bruno 900, Cem 1500, Aria 700 → anzahlUeber(900) liefert 2, indexVon(\"Aria\") liefert 0, indexVon(\"Dana\") liefert −1.",
+      "code": "",
+      "loesung": "Kernpunkte: a) Zähler mit 0 initialisieren · Schleife von 0 bis anzahl − 1 (nicht eintraege.length – sonst null-Zugriff) · echter Vergleich > (nicht >=) · Rückgabe nach der Schleife.\nb) Vergleich mit equals · return i sofort beim ersten Treffer (erstes Vorkommen) · return -1 erst NACH der Schleife (nicht im else-Zweig!).",
+      "loesungCode": "public int anzahlUeber(int grenze) {\n    int zaehler = 0;\n    for (int i = 0; i < anzahl; i++) {\n        if (eintraege[i].getPunkte() > grenze) {\n            zaehler++;\n        }\n    }\n    return zaehler;\n}\n\npublic int indexVon(String name) {\n    for (int i = 0; i < anzahl; i++) {\n        if (eintraege[i].getName().equals(name)) {\n            return i;\n        }\n    }\n    return -1;\n}",
+      "minuten": 7
+    },
+    {
+      "id": "W2-04",
+      "welt": 2,
+      "kategorie": "Struktogramm lesen",
+      "titel": "Das Doppelgänger-Rätsel",
+      "aufgabe": "Die Operation geheim der Klasse Rangliste ist als Struktogramm gegeben.\na) Die Liste enthält Aria, Bruno, Cem, Bruno (Indizes 0 bis 3). Gib den Rückgabewert an und notiere alle Paare (i, j), für die ein Namensvergleich ausgeführt wird.\nb) Beschreibe in einem Satz, was die Operation allgemein prüft.\nc) Gib an, wie viele Namensvergleiche bei 10 Einträgen ohne doppelte Namen ausgeführt werden, und begründe.",
+      "code": "geheim(): Wahrheitswert\n  für i von 0 bis anzahl − 2\n    für j von i + 1 bis anzahl − 1\n      falls eintraege[i].getName() = eintraege[j].getName()\n        dann: gib wahr zurück\n        sonst: –\n  gib falsch zurück",
+      "loesung": "a) Vergleiche: (0,1) Aria/Bruno · (0,2) Aria/Cem · (0,3) Aria/Bruno · (1,2) Bruno/Cem · (1,3) Bruno/Bruno → gleich. Rückgabewert: wahr (nach 5 Vergleichen).\nb) Die Operation prüft, ob ein Name mindestens zweimal in der Liste vorkommt (hatDoppelteNamen). Jedes Paar von Einträgen wird genau einmal verglichen, weil j immer rechts von i beginnt.\nc) 45 Vergleiche: Für i = 0 gibt es 9 Partner, für i = 1 noch 8, …, für i = 8 noch 1. 9 + 8 + … + 1 = 10 · 9 / 2 = 45. Allgemein n(n − 1)/2 – bei doppelt so vielen Einträgen also etwa viermal so viele Vergleiche.",
+      "loesungCode": "",
+      "minuten": 6
+    },
+    {
+      "id": "W2-05",
+      "welt": 2,
+      "kategorie": "Tracetabelle",
+      "titel": "Selectionsort: Die Auswahl der Besten",
+      "aufgabe": "Die Methode sortiert eine Reihung von Punkteständen absteigend.\na) Erstelle eine Tracetabelle für r = [40, 70, 20, 90, 50] mit den Spalten i | maxIndex | Reihung nach dem Durchlauf (eine Zeile pro Durchlauf der äußeren Schleife).\nb) Gib die Anzahl der Vergleiche r[j] > r[maxIndex] und die Anzahl der Vertauschungen an.\nc) Gib an, wie viele Vergleiche ausgeführt werden, wenn r schon absteigend sortiert ist. Begründe.",
+      "code": "public static void sortiere(int[] r) {\n    for (int i = 0; i < r.length - 1; i++) {\n        int maxIndex = i;\n        for (int j = i + 1; j < r.length; j++) {\n            if (r[j] > r[maxIndex]) {\n                maxIndex = j;\n            }\n        }\n        if (maxIndex != i) {\n            int hilf = r[i];\n            r[i] = r[maxIndex];\n            r[maxIndex] = hilf;\n        }\n    }\n}",
+      "loesung": "b) 4 + 3 + 2 + 1 = 10 Vergleiche, 2 Vertauschungen (bei i = 0 und i = 2).\nc) Ebenfalls 10. Die innere Schleife läuft immer vollständig bis zum Ende, um das Maximum sicher zu finden – unabhängig von der Belegung. Selectionsort braucht stets n(n − 1)/2 Vergleiche; nur die Zahl der Vertauschungen sinkt (hier auf 0).",
+      "loesungCode": "i | maxIndex | Reihung nach dem Durchlauf\n--+----------+----------------------\n- |    -     | [40, 70, 20, 90, 50]\n0 |    3     | [90, 70, 20, 40, 50]\n1 |    1     | [90, 70, 20, 40, 50]\n2 |    4     | [90, 70, 50, 40, 20]\n3 |    3     | [90, 70, 50, 40, 20]",
+      "minuten": 6
+    },
+    {
+      "id": "W2-06",
+      "welt": 2,
+      "kategorie": "Tracetabelle",
+      "titel": "Insertionsort: Einsortieren wie beim Kartenspiel",
+      "aufgabe": "Die Methode sortiert eine Reihung von Punkteständen absteigend.\na) Erstelle eine Tracetabelle für r = [30, 80, 50, 90, 60] mit den Spalten i | Vergleiche | Vertauschungen | Reihung nach dem Durchlauf (eine Zeile pro Durchlauf der äußeren Schleife). Als Vergleich zählt jede Auswertung von r[j − 1] < r[j].\nb) Gib die Gesamtzahl der Vergleiche an und vergleiche sie mit Selectionsort (10 Vergleiche bei 5 Elementen).\nc) Gib eine Belegung mit 5 Elementen an, bei der Insertionsort nur 4 Vergleiche braucht.",
+      "code": "public static void sortiere(int[] r) {\n    for (int i = 1; i < r.length; i++) {\n        int j = i;\n        while (j > 0 && r[j - 1] < r[j]) {\n            int hilf = r[j];\n            r[j] = r[j - 1];\n            r[j - 1] = hilf;\n            j--;\n        }\n    }\n}",
+      "loesung": "Hinweis: Bei j = 0 bricht && sofort ab – dann wird r[j − 1] < r[j] nicht mehr ausgewertet und nicht gezählt (Durchlauf i = 3).\nb) 1 + 2 + 3 + 3 = 9 Vergleiche (7 Vertauschungen). Insertionsort spart hier einen Vergleich, weil die innere Schleife abbricht, sobald das Element an seinem Platz ist.\nc) Jede bereits absteigend sortierte Belegung, z. B. [90, 80, 60, 50, 30]: pro Durchlauf genau 1 Vergleich (falsch), also n − 1 = 4 Vergleiche und 0 Vertauschungen.",
+      "loesungCode": "i | Vergleiche | Vertauschungen | Reihung nach dem Durchlauf\n--+------------+----------------+----------------------\n- |     -      |       -        | [30, 80, 50, 90, 60]\n1 |     1      |       1        | [80, 30, 50, 90, 60]\n2 |     2      |       1        | [80, 50, 30, 90, 60]\n3 |     3      |       3        | [90, 80, 50, 30, 60]\n4 |     3      |       2        | [90, 80, 60, 50, 30]",
+      "minuten": 7
+    },
+    {
+      "id": "W2-07",
+      "welt": 2,
+      "kategorie": "Lückencode",
+      "titel": "Die Innenschleife",
+      "aufgabe": "Die Methode insertionSort der Klasse Rangliste sortiert die Einträge absteigend nach Punkten. Vorgegeben sind besser(a, b) (liefert a.getPunkte() > b.getPunkte() und zählt den Vergleich) und vertausche(i, j).\na) Ergänze die Lücken (1) bis (4).\nb) Begründe, warum die Reihenfolge der beiden Teilbedingungen in der while-Bedingung wichtig ist.\nc) Erläutere, warum zwei Einträge mit gleicher Punktzahl ihre Reihenfolge behalten (Stabilität).",
+      "code": "public void insertionSort() {\n    for (int i = 1; i < anzahl; i++) {\n        int j = ___(1)___;\n        while (___(2)___ && besser(eintraege[j], eintraege[___(3)___])) {\n            vertausche(j, j - 1);\n            ___(4)___;\n        }\n    }\n}",
+      "loesung": "a) (1) i · (2) j > 0 · (3) j - 1 · (4) j-- bzw. j = j - 1\nb) && wertet von links aus und bricht ab, sobald ein Teil falsch ist (Kurzschlussauswertung). Ist j = 0, wird besser(...) nicht mehr aufgerufen – sonst würde auf eintraege[-1] zugegriffen (Index außerhalb der Reihung).\nc) besser vergleicht mit > (echt größer). Bei gleicher Punktzahl liefert besser falsch, die innere Schleife bricht ab – der hintere Eintrag wird nie an einem gleich guten vorbeigeschoben.",
+      "loesungCode": "public void insertionSort() {\n    for (int i = 1; i < anzahl; i++) {\n        int j = i;\n        while (j > 0 && besser(eintraege[j], eintraege[j - 1])) {\n            vertausche(j, j - 1);\n            j--;\n        }\n    }\n}",
+      "minuten": 5
+    },
+    {
+      "id": "W2-08",
+      "welt": 2,
+      "kategorie": "Tracetabelle",
+      "titel": "Bubblesort mit Notbremse",
+      "aufgabe": "Die Methode sortiert eine Reihung von Punkteständen absteigend und bricht ab, sobald ein Durchlauf ohne Vertauschung bleibt.\na) Erstelle eine Tracetabelle für r = [90, 50, 70, 80, 20] mit den Spalten Durchlauf | Vertauschungen | Reihung nach dem Durchlauf.\nb) Gib die Gesamtzahl der Vergleiche r[j] < r[j + 1] an.\nc) Gib für 5 Elemente die Vergleichszahl im besten und im schlechtesten Fall an und nenne jeweils eine passende Belegung.",
+      "code": "public static void sortiere(int[] r) {\n    boolean getauscht = true;\n    int durchlauf = 0;\n    while (getauscht) {\n        getauscht = false;\n        for (int j = 0; j < r.length - 1 - durchlauf; j++) {\n            if (r[j] < r[j + 1]) {\n                int hilf = r[j];\n                r[j] = r[j + 1];\n                r[j + 1] = hilf;\n                getauscht = true;\n            }\n        }\n        durchlauf++;\n    }\n}",
+      "loesung": "b) 4 + 3 + 2 = 9 Vergleiche. Im 3. Durchlauf wird nicht mehr getauscht → getauscht bleibt falsch → Abbruch.\nc) Bester Fall: schon absteigend sortiert, z. B. [90, 70, 50, 40, 20] → ein Durchlauf ohne Tausch: n − 1 = 4 Vergleiche. Schlechtester Fall: aufsteigend sortiert, z. B. [20, 40, 50, 70, 90] → 4 + 3 + 2 + 1 = 10 = n(n − 1)/2 Vergleiche (und 10 Vertauschungen).",
+      "loesungCode": "Durchlauf | Vertauschungen | Reihung nach dem Durchlauf\n----------+----------------+----------------------\n    -     |       -        | [90, 50, 70, 80, 20]\n    1     |       2        | [90, 70, 80, 50, 20]\n    2     |       1        | [90, 80, 70, 50, 20]\n    3     |       0        | [90, 80, 70, 50, 20]  → Abbruch",
+      "minuten": 6
+    },
+    {
+      "id": "W2-09",
+      "welt": 2,
+      "kategorie": "Methode implementieren",
+      "titel": "Neuer Highscore!",
+      "aufgabe": "Implementiere in der Klasse Rangliste die Methode einfuegenSortiert(e: Eintrag): Wahrheitswert.\n• Die Liste ist absteigend nach Punkten sortiert und soll es bleiben.\n• Liefert false, wenn e null ist oder die Liste voll ist (anzahl = Länge von eintraege); sonst true.\n• Schlechtere Einträge rücken von hinten her eine Position nach rechts (ohne vertausche). e kommt HINTER alle gleich guten Einträge.\n• Vergleiche nur über besser(a, b) (liefert a.getPunkte() > b.getPunkte()).\nBeispiel: 1500, 1200, 900, 700 → einfuegenSortiert(Dana 1000) → 1500, 1200, Dana 1000, 900, 700",
+      "code": "",
+      "loesung": "Kernpunkte: Abfrage e == null oder voll ganz am Anfang · Schleife von hinten (i = anzahl) mit i > 0 als ERSTER Teilbedingung · verschieben mit eintraege[i] = eintraege[i - 1] · besser(e, …) mit echtem > sorgt dafür, dass e hinter gleich gute Einträge kommt · danach einsetzen, anzahl erhöhen, true zurückgeben.\nTypische Fehler: Schleife von vorne → Einträge werden überschrieben; Einfügen ganz vorne/hinten vergessen zu testen (leere Liste!); anzahl++ vergessen.",
+      "loesungCode": "public boolean einfuegenSortiert(Eintrag e) {\n    if (e == null || anzahl == eintraege.length) {\n        return false;\n    }\n    int i = anzahl;\n    while (i > 0 && besser(e, eintraege[i - 1])) {\n        eintraege[i] = eintraege[i - 1];\n        i--;\n    }\n    eintraege[i] = e;\n    anzahl++;\n    return true;\n}",
+      "minuten": 8
+    },
+    {
+      "id": "W2-10",
+      "welt": 2,
+      "kategorie": "Verändern und Erweitern",
+      "titel": "Andersherum und mitgezählt",
+      "aufgabe": "Die Methode sortiert eine Reihung absteigend (Bubblesort ohne Abbruch).\na) Verändere die Methode so, dass sie aufsteigend sortiert.\nb) Erweitere die Methode so, dass sie die Anzahl der Vertauschungen zurückgibt (Rückgabetyp Ganzzahl).\nc) Gib den Rückgabewert der veränderten Methode für r = [4, 3, 2, 1] an und begründe, warum es keine Belegung mit 4 Elementen gibt, die mehr Vertauschungen erzeugt.",
+      "code": "public static void sortiere(int[] r) {\n    for (int d = 0; d < r.length - 1; d++) {\n        for (int j = 0; j < r.length - 1 - d; j++) {\n            if (r[j] < r[j + 1]) {\n                int hilf = r[j];\n                r[j] = r[j + 1];\n                r[j + 1] = hilf;\n            }\n        }\n    }\n}",
+      "loesung": "a) Nur der Vergleich ändert sich: r[j] > r[j + 1] (größeres Element wandert nach hinten).\nb) Zähler vor den Schleifen mit 0 initialisieren, bei jedem Tausch erhöhen, nach den Schleifen zurückgeben; Rückgabetyp int statt void.\nc) 6. Jedes der 3 + 2 + 1 = 6 Vergleichspaare führt zum Tausch. Mehr geht nicht: Es gibt bei 4 Elementen nur 4 · 3 / 2 = 6 Vergleiche, und jeder Vergleich kann höchstens einen Tausch auslösen.",
+      "loesungCode": "public static int sortiere(int[] r) {\n    int tausch = 0;\n    for (int d = 0; d < r.length - 1; d++) {\n        for (int j = 0; j < r.length - 1 - d; j++) {\n            if (r[j] > r[j + 1]) {\n                int hilf = r[j];\n                r[j] = r[j + 1];\n                r[j + 1] = hilf;\n                tausch++;\n            }\n        }\n    }\n    return tausch;\n}",
+      "minuten": 6
+    },
+    {
+      "id": "W2-11",
+      "welt": 2,
+      "kategorie": "Code ↔ Struktogramm",
+      "titel": "Halbieren statt Durchsuchen",
+      "aufgabe": "Übersetze die Java-Methode in ein Struktogramm nach Abi-Notation:\nKopf mit Signatur (deutsche Typnamen), Zuweisung mit ←, solange-Schleife, geschachtelte Verzweigung, „gib … zurück“.\nGib außerdem an, welche Voraussetzung r erfüllen muss, damit die Methode korrekt arbeitet.",
+      "code": "public static int binaer(int[] r, int x) {\n    int lo = 0;\n    int hi = r.length - 1;\n    while (lo <= hi) {\n        int mid = (lo + hi) / 2;\n        if (r[mid] == x) {\n            return mid;\n        } else if (r[mid] < x) {\n            lo = mid + 1;\n        } else {\n            hi = mid - 1;\n        }\n    }\n    return -1;\n}",
+      "loesung": "Prüfe dein Struktogramm: Signatur binaer(r: Reihung von Ganzzahl, x: Ganzzahl): Ganzzahl · Zuweisungen mit ← · Bedingung lo ≤ hi · ganzzahlige Division (als Kommentar vermerken) · Vergleich mit = (nicht ==) · „gib −1 zurück“ als letzter Block NACH der Schleife.\nVoraussetzung: r ist aufsteigend sortiert – sonst kann die Hälfte, in der x liegt, verworfen werden.",
+      "loesungCode": "binaer(r: Reihung von Ganzzahl, x: Ganzzahl): Ganzzahl\n  lo ← 0\n  hi ← länge(r) − 1\n  solange lo ≤ hi\n    mid ← (lo + hi) / 2     // ganzzahlige Division\n    falls r[mid] = x\n      dann: gib mid zurück\n      sonst: falls r[mid] < x\n               dann: lo ← mid + 1\n               sonst: hi ← mid − 1\n  gib −1 zurück",
+      "minuten": 6
+    },
+    {
+      "id": "W2-12",
+      "welt": 2,
+      "kategorie": "Fehler im Struktogramm",
+      "titel": "Die wackelige Blase",
+      "aufgabe": "Das Struktogramm soll die Reihung r absteigend sortieren (Bubblesort). Es enthält drei Fehler.\na) Finde die drei Fehler und erläutere jeweils ihre Auswirkung.\nb) Gib ein korrigiertes Struktogramm an.",
+      "code": "blasen(r: Reihung von Ganzzahl): nichts\n  für d von 0 bis länge(r) − 2\n    für j von 0 bis länge(r) − 1 − d\n      falls r[j] > r[j + 1]\n        dann: r[j] ← r[j + 1]\n              r[j + 1] ← r[j]\n        sonst: –",
+      "loesung": "Fehler 1: Innere Grenze länge(r) − 1 − d – für d = 0 ist j = länge(r) − 1, dann liegt r[j + 1] außerhalb der Reihung. Korrektur: bis länge(r) − 2 − d.\nFehler 2: r[j] > r[j + 1] schiebt das größere Element nach hinten – das sortiert aufsteigend. Korrektur: r[j] < r[j + 1].\nFehler 3: Tausch ohne Hilfsvariable – nach r[j] ← r[j + 1] ist der alte Wert von r[j] verloren, beide Felder enthalten danach denselben Wert. Korrektur: hilf ← r[j]; r[j] ← r[j + 1]; r[j + 1] ← hilf.",
+      "loesungCode": "blasen(r: Reihung von Ganzzahl): nichts\n  für d von 0 bis länge(r) − 2\n    für j von 0 bis länge(r) − 2 − d\n      falls r[j] < r[j + 1]\n        dann: hilf ← r[j]\n              r[j] ← r[j + 1]\n              r[j + 1] ← hilf\n        sonst: –",
+      "minuten": 6
+    },
+    {
+      "id": "W2-13",
+      "welt": 2,
+      "kategorie": "Funktionsweise erläutern",
+      "titel": "Wie lange dauert das Ranking?",
+      "aufgabe": "Der Spiele-Server sortiert die Punktestände mit der Methode sortiere.\na) Gib an, um welches Sortierverfahren es sich handelt, und erläutere die Funktionsweise. In welcher Reihenfolge wird sortiert?\nb) Bestimme die Anzahl der Vergleiche r[j] < r[m] für 5 Elemente und für n Elemente. Hängt die Zahl von der Belegung ab?\nc) Für 10 000 Einträge braucht der Server 0,3 s. Schätze die Zeit für 20 000 und 40 000 Einträge ab und begründe.",
+      "code": "public static void sortiere(int[] r) {\n    for (int ende = r.length - 1; ende > 0; ende--) {\n        int m = 0;\n        for (int j = 1; j <= ende; j++) {\n            if (r[j] < r[m]) {\n                m = j;\n            }\n        }\n        int hilf = r[m];\n        r[m] = r[ende];\n        r[ende] = hilf;\n    }\n}",
+      "loesung": "a) Sortieren durch Auswahl (Selectionsort), hier mit dem Minimum: Im unsortierten Bereich r[0] bis r[ende] wird der Index m des kleinsten Elements gesucht und dieses mit r[ende] vertauscht. Danach ist r[ende] endgültig richtig, der unsortierte Bereich wird um eins kleiner. Weil die kleinsten Werte nach hinten wandern, entsteht eine absteigende Sortierung.\nb) 4 + 3 + 2 + 1 = 10 Vergleiche; allgemein (n − 1) + … + 1 = n(n − 1)/2. Unabhängig von der Belegung – die innere Schleife läuft immer vollständig.\nc) Die Vergleichszahl wächst etwa mit n²: doppelt so viele Einträge → etwa viermal so viele Vergleiche. 20 000 → ca. 4 · 0,3 s = 1,2 s; 40 000 → ca. 16 · 0,3 s = 4,8 s.",
+      "loesungCode": "",
+      "minuten": 7
+    },
+    {
+      "id": "W2-14",
+      "welt": 2,
+      "kategorie": "Tracetabelle",
+      "titel": "Die Halbierungs-Jagd",
+      "aufgabe": "Gegeben ist die aufsteigend sortierte Reihung r = [3, 8, 12, 17, 21, 25, 30, 34, 41, 47, 52] (Indizes 0 bis 10).\na) Erstelle je eine Tracetabelle mit den Spalten lo | hi | mid | r[mid] (eine Zeile pro Schleifendurchlauf) für binaer(r, 47) und binaer(r, 50). Gib jeweils den Rückgabewert an.\nb) Gib an, wie viele Schleifendurchläufe bei n = 11 höchstens nötig sind.\nc) Begründe, dass bei n = 100 höchstens 7 Durchläufe nötig sind, und gib an, wie viele es bei n = 200 höchstens sind.",
+      "code": "binaer(r: Reihung von Ganzzahl, x: Ganzzahl): Ganzzahl\n  lo ← 0\n  hi ← länge(r) − 1\n  solange lo ≤ hi\n    mid ← (lo + hi) / 2     // ganzzahlige Division\n    falls r[mid] = x\n      dann: gib mid zurück\n      sonst: falls r[mid] < x\n               dann: lo ← mid + 1\n               sonst: hi ← mid − 1\n  gib −1 zurück",
+      "loesung": "a) binaer(r, 47) liefert 9 (3 Durchläufe). binaer(r, 50) liefert −1 (4 Durchläufe; danach lo = 10 > hi = 9).\nb) 4 Durchläufe (11 → 5 → 2 → 1 Elemente bleiben übrig).\nc) Jeder Durchlauf halbiert den Suchbereich mindestens: 100 → höchstens 50 → 25 → 12 → 6 → 3 → 1. Spätestens im 7. Durchlauf ist nur noch ein Element übrig, danach ist der Bereich leer. Allgemein: höchstens ⌊log₂ n⌋ + 1 Durchläufe (2⁶ = 64 ≤ 100 < 128 = 2⁷). Bei n = 200 höchstens 8 – eine Verdopplung kostet nur einen Durchlauf mehr.",
+      "loesungCode": "binaer(r, 47)                    binaer(r, 50)\nlo | hi | mid | r[mid]           lo | hi | mid | r[mid]\n---+----+-----+-------           ---+----+-----+-------\n 0 | 10 |  5  |  25               0 | 10 |  5  |  25\n 6 | 10 |  8  |  41               6 | 10 |  8  |  41\n 9 | 10 |  9  |  47 → gib 9       9 | 10 |  9  |  47\n                                 10 | 10 | 10  |  52\nRückgabe: 9                      Rückgabe: −1",
+      "minuten": 7
+    }
+  ]
+}

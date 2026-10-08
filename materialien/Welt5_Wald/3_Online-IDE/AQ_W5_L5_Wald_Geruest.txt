@@ -1,0 +1,1487 @@
+// =====================================================================
+//  WELT 5 – DER WALD – GERÜST
+//  Informatik LK · Online-IDE · Algo Quest · Level 5.1 bis 5.4
+//
+//  Hinter dem Hafen beginnt der Wald. Hier wachsen keine Listen mehr,
+//  sondern Baeume: Jeder Knoten hat zwei Teilbaeume, und jeder
+//  Teilbaum ist wieder ein Baum. Genau deshalb laesst sich fast alles
+//  im Wald REKURSIV erledigen. Fuer das Dungeon-Spiel baust du zwei
+//  Spielmodule: den Akinator, ein Monsterquiz, das aus seinen Fehlern
+//  lernt, und die Item-Datenbank, in der jedes Item ueber seine Nummer
+//  in einem binaeren Suchbaum blitzschnell gefunden wird.
+//
+//  ANLEITUNG:
+//  0. BIBLIOTHEK EINSCHALTEN (einmal pro Workspace, sonst kennt die IDE
+//     BinTree nicht):
+//     Workspace in der Liste links mit der RECHTEN Maustaste anklicken
+//     -> "Einstellungen" -> Haekchen bei "Niedersachsen" setzen -> OK.
+//     Danach sind die Abitur-Klassen Stack, Queue, DynArray und BinTree
+//     da.
+//
+//  1. Du arbeitest NUR im Abschnitt "DEIN TEIL". Ueber jeder Methode
+//     stehen ihre Signatur in Abi-Notation und eine kurze Beschreibung.
+//     Ersetze die Zeilen "// TODO Level 5.x" und die vorlaeufigen
+//     return-Anweisungen durch deine Loesung. Methoden mit dem Hinweis
+//     "rekursive Hilfsmethode" gehoeren zur Aufgabe dazu: Die Methode
+//     darueber ruft sie nur auf. In Akinator sind das Attribut baum,
+//     der Konstruktor Akinator(b: BinTree) und getBaum() vorgegeben.
+//
+//  2. Tests starten: Oeffne den Reiter "Testrunner" und klicke auf den
+//     gruenen Dreieckspfeil neben einer Testklasse (alle Tests dieses
+//     Levels) oder neben einem einzelnen Test. Gruen = bestanden,
+//     rot = noch nicht bestanden. Lies bei roten Tests die Meldung!
+//     Baeume stehen dort in Klammerform, z. B. "8(3(1,6),10(-,14))":
+//     Wurzel 8, links der Teilbaum 3(1,6), rechts 10 mit leerem linken
+//     Teilbaum "-" und dem Blatt 14. Beginnt die Meldung mit
+//     "LAUFZEITFEHLER", ist dein Programm abgestuerzt - meistens fehlt
+//     der Basisfall if (b.isEmpty()). Haengt der Testrunner, hast du
+//     eine Endlosschleife oder eine Rekursion ohne Ende.
+//
+//  3. Die Level und ihre Testklassen:
+//
+//      Level  DS         Klasse      Testklasse
+//      -------------------------------------------------------------------
+//      5.1    31         Baum        L51BaumTest
+//                        Knoten zaehlen, pre-/in-/postorder, Hoehe,
+//                        Blaetter, Summe, Termbaum, spiegeln
+//      5.2    32         Rekursiv    L52RekursivTest
+//                        suchen, Maximum, sammeln in DynArray, Ebenen,
+//                        Pfad, Gleichheit
+//      5.3    33 (Kuer)  Akinator    L53AkinatorTest
+//                        Entscheidungsbaum: raten, lernen, zaehlen;
+//                        Level-Order mit Schlange
+//      5.4    34 – 35    Suchbaum    L54SuchbaumTest
+//                        BST: suchen, einfuegen, Minimum, Vergleiche,
+//                        isBST, ausgeglichen bauen, Nachfolger
+//
+//     In jedem Level gibt es drei Stufen. Du erkennst sie am Anfang des
+//     Testnamens:
+//          basis_...         Basis
+//          erweiterung_...   Erweiterung
+//          experte_...       Experte
+//     Eine Stufe ist geschafft, wenn ALLE Tests mit diesem Anfang gruen
+//     sind. Am Anfang ist noch kein Test gruen.
+//
+//  4. INFOKASTEN: CASTEN BEI BINTREE
+//     BinTree speichert seinen Inhalt als Object. Was du mit getItem()
+//     herausholst, musst du in den richtigen Typ umwandeln (casten):
+//         int x = (Integer) b.getItem();      // BinTree vom Inhaltstyp Ganzzahl
+//         String s = (String) t.getItem();    // BinTree vom Inhaltstyp Zeichenkette
+//         BinTree k = (BinTree) q.dequeue();  // Schlange vom Inhaltstyp BinTree
+//     Hineinlegen geht ohne Cast: new BinTree(5); b.setItem("Troll");
+//     Den Variablentyp schreibst du OHNE spitze Klammern:
+//         BinTree b = new BinTree();    Queue q = new Queue();
+//     Zum Ausgeben brauchst du keinen Cast: b.getItem() + " " ergibt
+//     eine Zeichenkette ("8 ").
+//     Ohne Cast meldet die IDE einen Fehler ("Object kann nicht in int
+//     umgewandelt werden"). Ein FALSCHER Cast (z. B. (Integer) im
+//     Termbaum) fuehrt erst beim Ausfuehren zum Laufzeitfehler.
+//
+//  5. ABI-CHECK FUER JEDE BAUM-METHODE: "Leer? Blatt?"
+//     - Leer?  getItem, getLeft, getRight, isLeaf, setLeft und setRight
+//       auf einem LEEREN Baum sind ein Laufzeitfehler. Deshalb beginnt
+//       JEDE rekursive Baum-Methode mit dem Basisfall:
+//           if (b.isEmpty()) { return ...; }
+//       Die Tests rufen jede Methode auch mit dem leeren Baum auf!
+//     - Blatt?  isLeaf() erst NACH isEmpty() fragen (isLeaf auf einem
+//       leeren Baum ist ebenfalls ein Laufzeitfehler).
+//     - Nie null!  Ein leerer Teilbaum ist new BinTree(), nicht null.
+//       Methoden, die einen Baum oder eine DynArray liefern, geben nie
+//       null zurueck.
+//     - Rekursion: Der Aufruf geht immer an einen TEILBAUM
+//       (b.getLeft(), b.getRight()) - so wird der Baum kleiner und der
+//       Basisfall wird sicher erreicht.
+//
+//  6. VORGEGEBEN (nicht veraendern): die Klassen Baumschule (die
+//     Testbaeume) und Testhilfe sowie in Akinator das Attribut baum, der
+//     Konstruktor Akinator(b: BinTree) und getBaum(). Die Testklassen
+//     darfst du NICHT veraendern - sonst zaehlt der Test nicht. Du glaubst,
+//     ein Test ist falsch? Melde ihn deiner Lehrkraft (Bug-Meldung).
+//
+//  7. Mit dem gruenen Startknopf oben laeuft das Hauptprogramm ganz unten
+//     (ein Streifzug durch den Wald mit Konsolenausgabe, darin eine
+//     Runde Akinator mit festen Antworten).
+//
+//  SPIELREGELN (Begriffe wie im Abitur):
+//  - Wurzel: der oberste Knoten. Blatt: Knoten ohne Kinder (beide
+//    Teilbaeume leer). Innerer Knoten: Knoten mit mindestens einem Kind.
+//  - Ebene: Die Wurzel liegt auf Ebene 0, ihre Kinder auf Ebene 1 usw.
+//  - Hoehe: leerer Baum 0, Blatt 1, sonst 1 + die groessere Hoehe der
+//    beiden Teilbaeume (= Anzahl der Ebenen).
+//  - Preorder: Wurzel, links, rechts. Inorder: links, Wurzel, rechts.
+//    Postorder: links, rechts, Wurzel. Levelorder: Ebene fuer Ebene.
+//  - Binaerer Suchbaum (BST): Fuer JEDEN Knoten sind alle Werte im
+//    linken Teilbaum kleiner und alle Werte im rechten Teilbaum groesser.
+//  - Zeichenketten IMMER mit equals vergleichen, nie mit ==. Erlaubt
+//    sind nur length(), charAt(i), substring(a, b), +, equals,
+//    contains, compareTo und (int) c bzw. (char) n - KEIN
+//    Integer.parseInt (die Umwandlung "12" -> 12 schreibst du selbst).
+// =====================================================================
+
+
+// ---------------------------------------------------------------------
+//  GERÜST – hier nichts veraendern
+// ---------------------------------------------------------------------
+//  Baumschule: die Testbaeume der Welt 5 (in allen Leveln, auf den
+//              Arbeitsblaettern und im Boss benutzt). Jeder Aufruf
+//              liefert einen NEUEN Baum - du darfst ihn veraendern.
+//  Testhilfe:  zeigt Baeume und dynamische Reihungen als Text (fuer die
+//              Meldungen der Tests) und meldet Laufzeitfehler mit einem
+//              Hinweis.
+//  Du darfst beide Klassen auch im Hauptprogramm benutzen.
+// ---------------------------------------------------------------------
+
+//  Die Testbaeume (ja = links, nein = rechts beim Monsterquiz):
+//
+//  beispielBST()            zahlenbaum()            termbaum()
+//  (BST: 8, 3, 10, 1, 6,    (KEIN BST,              "(3+4)*(5-2)"
+//   14, 4, 7, 13 eingefuegt) Duplikat 9)
+//          8                       5                     *
+//        /   \                   /   \                 /   \
+//       3     10                9     4               +     -
+//      / \      \              / \     \             / \   / \
+//     1   6      14           2   7     9           3   4 5   2
+//        / \    /                      /
+//       4   7  13                     1
+//
+//  entartet(): 1 -> 2 -> 3 -> 4 -> 5 (jeder Knoten hat nur ein rechtes Kind)
+//
+//  monsterquiz():                 Kann es fliegen?
+//                              ja /              \ nein
+//                    Speit es Feuer?          Lebt es im Wasser?
+//                    ja /     \ nein          ja /         \ nein
+//                   Drache    Greif         Kraken         Troll
+//
+//  leer(): leerer Baum      blatt(x): ein einzelnes Blatt mit dem Wert x
+
+class Baumschule {
+
+    // knoten(inhalt: Object, links: BinTree, rechts: BinTree): BinTree
+    // Neuer Knoten mit dem Inhalt und den beiden Teilbaeumen.
+    public static BinTree knoten(Object inhalt, BinTree links, BinTree rechts) {
+        BinTree b = new BinTree(inhalt);
+        b.setLeft(links);
+        b.setRight(rechts);
+        return b;
+    }
+
+    // blatt(x: Ganzzahl): BinTree  - ein Knoten mit zwei leeren Teilbaeumen
+    public static BinTree blatt(int x) {
+        return new BinTree(x);
+    }
+
+    // leer(): BinTree  - der leere Baum
+    public static BinTree leer() {
+        return new BinTree();
+    }
+
+    // Der Beispiel-Suchbaum: entsteht durch Einfuegen von
+    // 8, 3, 10, 1, 6, 14, 4, 7, 13 (in dieser Reihenfolge).
+    public static BinTree beispielBST() {
+        BinTree links = knoten(3, blatt(1), knoten(6, blatt(4), blatt(7)));
+        BinTree rechts = knoten(10, leer(), knoten(14, blatt(13), leer()));
+        return knoten(8, links, rechts);
+    }
+
+    // Ein Zahlenbaum, der KEIN Suchbaum ist (9 kommt zweimal vor).
+    public static BinTree zahlenbaum() {
+        BinTree links = knoten(9, blatt(2), blatt(7));
+        BinTree rechts = knoten(4, leer(), knoten(9, blatt(1), leer()));
+        return knoten(5, links, rechts);
+    }
+
+    // Entarteter Suchbaum: 1, 2, 3, 4, 5 eingefuegt -> rechte Kette.
+    public static BinTree entartet() {
+        BinTree b = blatt(5);
+        for (int i = 4; i >= 1; i--) {
+            b = knoten(i, leer(), b);
+        }
+        return b;
+    }
+
+    // Termbaum zu (3+4)*(5-2): Inhaltstyp Zeichenkette.
+    // Innere Knoten: Rechenzeichen "+", "-", "*", "/"; Blaetter: Zahlen.
+    public static BinTree termbaum() {
+        BinTree plus = knoten("+", new BinTree("3"), new BinTree("4"));
+        BinTree minus = knoten("-", new BinTree("5"), new BinTree("2"));
+        return knoten("*", plus, minus);
+    }
+
+    // Startbaum des Akinator-Monsterquiz: innere Knoten = Fragen,
+    // Blaetter = Monster; ja -> links, nein -> rechts.
+    public static BinTree monsterquiz() {
+        BinTree fliegt = knoten("Speit es Feuer?", new BinTree("Drache"), new BinTree("Greif"));
+        BinTree laeuft = knoten("Lebt es im Wasser?", new BinTree("Kraken"), new BinTree("Troll"));
+        return knoten("Kann es fliegen?", fliegt, laeuft);
+    }
+}
+
+
+class Testhilfe {
+
+    // Klammerdarstellung eines Baums (fuer die Meldungen der Tests):
+    //   leerer Baum "-", Blatt "7", sonst inhalt(links,rechts)
+    //   beispielBST -> "8(3(1,6(4,7)),10(-,14(13,-)))"
+    public static String klammer(BinTree b) {
+        if (b == null) {
+            return "null";
+        }
+        if (b.isEmpty()) {
+            return "-";
+        }
+        if (b.isLeaf()) {
+            return "" + b.getItem();
+        }
+        return b.getItem() + "(" + klammer(b.getLeft()) + "," + klammer(b.getRight()) + ")";
+    }
+
+    // Inhalt einer dynamischen Reihung als Text, z. B. "[1, 3, 4]".
+    public static String text(DynArray d) {
+        if (d == null) {
+            return "null";
+        }
+        String t = "[";
+        for (int i = 0; i < d.getLength(); i++) {
+            if (i > 0) {
+                t = t + ", ";
+            }
+            t = t + d.getItem(i);
+        }
+        return t + "]";
+    }
+
+    // Neue Zeichenkette mit demselben Inhalt wie s (Zeichen fuer Zeichen
+    // zusammengesetzt). Damit pruefen die Tests, dass du Zeichenketten mit
+    // equals vergleichst und nicht mit ==.
+    public static String kopie(String s) {
+        String t = "";
+        for (int i = 0; i < s.length(); i++) {
+            t = t + s.charAt(i);
+        }
+        return t;
+    }
+
+    // Die Tests fangen Laufzeitfehler (Exceptions) ab und melden sie mit
+    // einem Hinweis. In einer richtigen Loesung tritt NIE ein Laufzeitfehler
+    // auf - auch nicht beim leeren Baum!
+    public static void laufzeitfehler(RuntimeException e) {
+        String meldung = " (Meldung der IDE: " + e.getMessage() + ")";
+        try {
+            throw e;
+        } catch (IllegalStateException x) {
+            fail("LAUFZEITFEHLER: getItem, getLeft, getRight, isLeaf, setLeft oder setRight auf einem LEEREN Baum - Basisfall if (b.isEmpty()) vergessen oder an die falsche Stelle gesetzt?" + meldung);
+        } catch (IllegalArgumentException x) {
+            fail("LAUFZEITFEHLER: null an setItem, setLeft oder setRight bzw. an append uebergeben - nimm new BinTree() fuer einen leeren Teilbaum." + meldung);
+        } catch (IndexOutOfBoundsException x) {
+            fail("LAUFZEITFEHLER: Index ausserhalb - bei charAt/substring gilt 0 <= i < length(), bei Reihungen 0 <= i < length. Schleifengrenze bzw. lo/hi pruefen!" + meldung);
+        } catch (ClassCastException x) {
+            fail("LAUFZEITFEHLER: falscher Cast - (Integer) fuer Zahlenbaeume, (String) fuer Termbaum und Monsterquiz, (BinTree) fuer die Schlange in levelorder." + meldung);
+        } catch (NullPointerException x) {
+            fail("LAUFZEITFEHLER: Zugriff auf null - Attribut im Konstruktor nicht erzeugt? Liefert eine Methode noch null statt new BinTree() bzw. new DynArray()?" + meldung);
+        } catch (RuntimeException x) {
+            fail("LAUFZEITFEHLER" + meldung);
+        }
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  DEIN TEIL – hier arbeitest du!
+// ---------------------------------------------------------------------
+//  Ueber jeder Methode steht ihre Signatur in Abi-Notation:
+//      name(p: Typ, q: Typ): Rueckgabetyp
+//  Neu in Welt 5 (Klasse BinTree der Bibliothek "Niedersachsen"):
+//      BinTree vom Inhaltstyp Ganzzahl       Zahlenbaum, Suchbaum
+//      BinTree vom Inhaltstyp Zeichenkette   Termbaum, Monsterquiz
+//
+//  Die Schnittstelle (wie in den Ergaenzenden Hinweisen zum Abitur):
+//      c BinTree()                  leerer Baum
+//      c BinTree(o: Inhaltstyp)     Blatt mit dem Inhalt o
+//      isEmpty(): Wahrheitswert     isLeaf(): Wahrheitswert
+//      getItem(): Inhaltstyp        setItem(o: Inhaltstyp): nichts
+//      getLeft(): BinTree           setLeft(b: BinTree): nichts
+//      getRight(): BinTree          setRight(b: BinTree): nichts
+//      setEmpty(): nichts
+//  Ein NICHT leerer Baum hat IMMER zwei Teilbaeume (evtl. leere Baeume,
+//  nie null). getItem, getLeft, getRight, isLeaf, setLeft und setRight
+//  auf einem LEEREN Baum -> Laufzeitfehler. setItem auf einem leeren
+//  Baum macht ihn zum Blatt (mit zwei leeren Teilbaeumen).
+//
+//  Muster "REKURSION AUF BAEUMEN" (Beispiel: alle Werte zaehlen, die
+//  gerade sind):
+//
+//      public static int anzahlGerade(BinTree b) {
+//          if (b.isEmpty()) {                  // 1. Basisfall: leerer Baum
+//              return 0;
+//          }
+//          int wert = (Integer) b.getItem();   // 2. Wurzel auswerten (Cast!)
+//          int anzahl = 0;
+//          if (wert % 2 == 0) {
+//              anzahl = 1;
+//          }
+//          return anzahl + anzahlGerade(b.getLeft())     // 3. Teilbaeume
+//                        + anzahlGerade(b.getRight());   //    rekursiv
+//      }
+//
+//  Traversierungen als Zeichenkette: jedes Element gefolgt von EINEM
+//  Leerzeichen, z. B. "8 3 1 6 4 7 10 14 13 "; leerer Baum -> "".
+//  Zeichenkette + Object geht direkt: b.getItem() + " "
+// ---------------------------------------------------------------------
+
+// ============ Level 5.1 – Baeume ablaufen (DS 31) ===================
+//  Alle Methoden sind static: Aufruf mit Klassenname, z. B.
+//  Baum.anzahlKnoten(b). ALLE Methoden (ausser zahl) sind rekursiv und
+//  beginnen mit dem Basisfall if (b.isEmpty()).
+
+class Baum {
+
+    // ===================== Stufe BASIS =====================
+
+    // anzahlKnoten(b: BinTree): Ganzzahl
+    // Anzahl aller Knoten. Leerer Baum -> 0.
+    public static int anzahlKnoten(BinTree b) {
+        // TODO Level 5.1 · Basis
+        return -1;
+    }
+
+    // preorder(b: BinTree): Zeichenkette
+    // Wurzel - links - rechts. beispielBST -> "8 3 1 6 4 7 10 14 13 "
+    public static String preorder(BinTree b) {
+        // TODO Level 5.1 · Basis
+        return "?";
+    }
+
+    // inorder(b: BinTree): Zeichenkette
+    // links - Wurzel - rechts. beispielBST -> "1 3 4 6 7 8 10 13 14 "
+    public static String inorder(BinTree b) {
+        // TODO Level 5.1 · Basis
+        return "?";
+    }
+
+    // postorder(b: BinTree): Zeichenkette
+    // links - rechts - Wurzel. beispielBST -> "1 4 7 6 3 13 14 10 8 "
+    public static String postorder(BinTree b) {
+        // TODO Level 5.1 · Basis
+        return "?";
+    }
+
+
+    // ================== Stufe ERWEITERUNG ==================
+
+    // hoehe(b: BinTree): Ganzzahl
+    // Anzahl der Ebenen: leerer Baum -> 0, Blatt -> 1,
+    // sonst 1 + groessere Hoehe der beiden Teilbaeume.
+    public static int hoehe(BinTree b) {
+        // TODO Level 5.1 · Erweiterung
+        return -1;
+    }
+
+    // anzahlBlaetter(b: BinTree): Ganzzahl
+    // Anzahl der Knoten ohne Kinder. Leerer Baum -> 0.
+    public static int anzahlBlaetter(BinTree b) {
+        // TODO Level 5.1 · Erweiterung
+        return -1;
+    }
+
+    // summe(b: BinTree vom Inhaltstyp Ganzzahl): Ganzzahl
+    // Summe aller Werte. Leerer Baum -> 0.
+    public static int summe(BinTree b) {
+        // TODO Level 5.1 · Erweiterung
+        return -1;
+    }
+
+
+    // =================== Stufe EXPERTE =====================
+
+    // zahl(s: Zeichenkette): Ganzzahl
+    // Wandelt eine Ziffernfolge in eine Ganzzahl um: "12" -> 12.
+    // NUR mit length() und charAt() - KEIN Integer.parseInt (im Abitur
+    // nicht erlaubt). Tipp: (int) c - (int) '0' ist der Wert der Ziffer c.
+    // Diese Hilfsmethode ist NICHT rekursiv (Schleife).
+    public static int zahl(String s) {
+        // TODO Level 5.1 · Experte
+        return -1;
+    }
+
+    // berechne(t: BinTree vom Inhaltstyp Zeichenkette): Ganzzahl
+    // Wert eines Termbaums: Blaetter sind Zahlen ("3", "12"), innere
+    // Knoten die Rechenzeichen "+", "-", "*", "/" (ganzzahlig).
+    // termbaum() -> (3+4)*(5-2) = 21. Leerer Baum -> 0.
+    public static int berechne(BinTree t) {
+        // TODO Level 5.1 · Experte
+        return -1;
+    }
+
+    // spiegeln(b: BinTree): nichts
+    // Vertauscht in JEDEM Knoten den linken und den rechten Teilbaum
+    // (mit setLeft/setRight). Der Baum wird dabei veraendert.
+    public static void spiegeln(BinTree b) {
+        // TODO Level 5.1 · Experte
+    }
+}
+
+
+// ========== Level 5.2 – Rekursive Baumalgorithmen (DS 32) ===========
+//  Zahlenbaeume (BinTree vom Inhaltstyp Ganzzahl, Werte >= 0), KEIN
+//  Suchbaum: Ein Wert kann ueberall stehen, auch mehrfach. Alle
+//  Methoden sind rekursiv (die Methoden mit dem Parameter d sind
+//  rekursive Hilfsmethoden).
+
+class Rekursiv {
+
+    // ===================== Stufe BASIS =====================
+
+    // enthaelt(b: BinTree vom Inhaltstyp Ganzzahl, x: Ganzzahl): Wahrheitswert
+    // true, wenn x irgendwo im Baum vorkommt.
+    public static boolean enthaelt(BinTree b, int x) {
+        // TODO Level 5.2 · Basis
+        return false;
+    }
+
+    // maximum(b: BinTree vom Inhaltstyp Ganzzahl): Ganzzahl
+    // Groesster Wert im Baum. Leerer Baum -> -1.
+    public static int maximum(BinTree b) {
+        // TODO Level 5.2 · Basis
+        return -2;
+    }
+
+    // anzahlGroesser(b: BinTree vom Inhaltstyp Ganzzahl, grenze: Ganzzahl): Ganzzahl
+    // Anzahl der Werte, die GROESSER als grenze sind.
+    public static int anzahlGroesser(BinTree b, int grenze) {
+        // TODO Level 5.2 · Basis
+        return -1;
+    }
+
+
+    // ================== Stufe ERWEITERUNG ==================
+
+    // sammleInorder(b: BinTree): dynamische Reihung vom Inhaltstyp Ganzzahl
+    // Liefert eine NEUE DynArray mit allen Werten in Inorder-Reihenfolge.
+    // beispielBST -> [1, 3, 4, 6, 7, 8, 10, 13, 14]. Leerer Baum -> leere
+    // DynArray (nicht null). Erzeuge die DynArray hier und lass die
+    // rekursive Hilfsmethode darunter die Werte anhaengen.
+    public static DynArray sammleInorder(BinTree b) {
+        // TODO Level 5.2 · Erweiterung
+        return null;
+    }
+
+    // sammleInorder(b: BinTree, d: dynamische Reihung): nichts
+    // Rekursive Hilfsmethode: haengt die Werte von b in Inorder an d an.
+    public static void sammleInorder(BinTree b, DynArray d) {
+        // TODO Level 5.2 · Erweiterung
+    }
+
+    // blaetter(b: BinTree): dynamische Reihung vom Inhaltstyp Ganzzahl
+    // NEUE DynArray mit den Werten aller Blaetter von links nach rechts.
+    // beispielBST -> [1, 4, 7, 13]. Leerer Baum -> leere DynArray.
+    public static DynArray blaetter(BinTree b) {
+        // TODO Level 5.2 · Erweiterung
+        return null;
+    }
+
+    // blaetter(b: BinTree, d: dynamische Reihung): nichts
+    // Rekursive Hilfsmethode: haengt die Blattwerte von b an d an.
+    public static void blaetter(BinTree b, DynArray d) {
+        // TODO Level 5.2 · Erweiterung
+    }
+
+    // anzahlAufEbene(b: BinTree, ebene: Ganzzahl): Ganzzahl
+    // Anzahl der Knoten auf der Ebene (Wurzel = Ebene 0).
+    // Idee: Ebene e im Baum = Ebene e - 1 in den beiden Teilbaeumen.
+    public static int anzahlAufEbene(BinTree b, int ebene) {
+        // TODO Level 5.2 · Erweiterung
+        return -1;
+    }
+
+
+    // =================== Stufe EXPERTE =====================
+
+    // pfadZu(b: BinTree vom Inhaltstyp Ganzzahl, x: Ganzzahl): Zeichenkette
+    // Weg von der Wurzel zum ERSTEN Vorkommen von x in Preorder als Folge
+    // von 'L' (links) und 'R' (rechts). zahlenbaum: 7 -> "LR", 1 -> "RRL".
+    // x in der Wurzel -> "", x kommt nicht vor -> "-".
+    public static String pfadZu(BinTree b, int x) {
+        // TODO Level 5.2 · Experte
+        return "?";
+    }
+
+    // istGleich(a: BinTree, b: BinTree): Wahrheitswert   (Inhaltstyp Ganzzahl)
+    // true, wenn beide Baeume dieselbe Struktur UND an jeder Stelle
+    // denselben Wert haben. Zwei leere Baeume sind gleich.
+    public static boolean istGleich(BinTree a, BinTree b) {
+        // TODO Level 5.2 · Experte
+        return false;
+    }
+}
+
+
+// ========== Level 5.3 – Akinator: der Baum, der lernt (DS 33, Kuer) ==
+//  Objekt-Klasse: Entscheidungsbaum vom Inhaltstyp Zeichenkette.
+//  Innere Knoten = Ja/Nein-Fragen, Blaetter = Monsternamen.
+//  Antwort 'j' -> linker Teilbaum, sonst (z. B. 'n') -> rechter Teilbaum.
+//
+//  Klassenkarte:
+//      Akinator
+//      ------------------------------------------------------------
+//      - baum: BinTree                          // Inhaltstyp Zeichenkette
+//      ------------------------------------------------------------
+//      + c Akinator(start: Zeichenkette)        // ein Blatt
+//      + c Akinator(b: BinTree)                 // VORGEGEBEN
+//      + getBaum(): BinTree                     // VORGEGEBEN
+//      + raten(antworten: Zeichenkette): Zeichenkette
+//      + lernen(antworten: Zeichenkette, neu: Zeichenkette,
+//               frage: Zeichenkette, jaFuerNeu: Wahrheitswert): nichts
+//      + anzahlMonster(): Ganzzahl
+//      + anzahlFragen(): Ganzzahl
+//      + levelorder(b: BinTree): Zeichenkette   // static
+//  Die Hilfsmethoden (private static, rekursiv) bekommen den Baum als
+//  Parameter - so geht Rekursion auch in einer Objekt-Klasse.
+
+class Akinator {
+
+    private BinTree baum;
+
+    // ===================== Stufe BASIS =====================
+
+    // c Akinator(start: Zeichenkette)
+    // Der Akinator kennt am Anfang nur ein Monster: baum ist ein Blatt
+    // mit dem Namen start.
+    public Akinator(String start) {
+        // TODO Level 5.3 · Basis
+    }
+
+    // c Akinator(b: BinTree)  - VORGEGEBEN: startet mit einem fertigen Baum,
+    // z. B. new Akinator(Baumschule.monsterquiz())
+    public Akinator(BinTree b) {
+        baum = b;
+    }
+
+    // getBaum(): BinTree  - VORGEGEBEN
+    public BinTree getBaum() {
+        return baum;
+    }
+
+    // raten(antworten: Zeichenkette): Zeichenkette
+    // Geht von der Wurzel aus je Zeichen von antworten einen Schritt
+    // ('j' links, sonst rechts), bis ein Blatt erreicht ist, und liefert
+    // dessen Namen. Ueberzaehlige Antworten werden ignoriert, reichen die
+    // Antworten nicht bis zu einem Blatt -> "?".
+    // monsterquiz: "nj" -> "Kraken", "nnj" -> "Troll", "j" -> "?"
+    public String raten(String antworten) {
+        // TODO Level 5.3 · Basis
+        return "?";
+    }
+
+    // raten(b: BinTree, antworten: Zeichenkette): Zeichenkette
+    // Rekursive Hilfsmethode: antworten.charAt(0) ist die Antwort auf die
+    // Frage in b, der Rest antworten.substring(1, antworten.length())
+    // gehoert zum Teilbaum.
+    private static String raten(BinTree b, String antworten) {
+        // TODO Level 5.3 · Basis
+        return "?";
+    }
+
+
+    // ================== Stufe ERWEITERUNG ==================
+
+    // lernen(antworten: Zeichenkette, neu: Zeichenkette, frage: Zeichenkette,
+    //        jaFuerNeu: Wahrheitswert): nichts
+    // Der Akinator hat falsch geraten: Das ueber antworten erreichte Blatt
+    // (Name alt) wird zum Frageknoten frage mit den Kindern neu und alt.
+    // jaFuerNeu = true: neu links (ja), alt rechts; sonst umgekehrt.
+    // Ueberzaehlige Antworten werden ignoriert; reichen die Antworten
+    // nicht bis zu einem Blatt, passiert nichts.
+    public void lernen(String antworten, String neu, String frage, boolean jaFuerNeu) {
+        // TODO Level 5.3 · Erweiterung
+    }
+
+    // lernen(b: BinTree, antworten: Zeichenkette, neu: Zeichenkette,
+    //        frage: Zeichenkette, jaFuerNeu: Wahrheitswert): nichts
+    // Rekursive Hilfsmethode (wie raten, aber am Blatt wird umgebaut).
+    private static void lernen(BinTree b, String antworten, String neu, String frage, boolean jaFuerNeu) {
+        // TODO Level 5.3 · Erweiterung
+    }
+
+    // anzahlMonster(): Ganzzahl  - Anzahl der Blaetter von baum
+    public int anzahlMonster() {
+        // TODO Level 5.3 · Erweiterung
+        return -1;
+    }
+
+    // monster(b: BinTree): Ganzzahl  - rekursive Hilfsmethode (Blaetter zaehlen)
+    private static int monster(BinTree b) {
+        // TODO Level 5.3 · Erweiterung
+        return -1;
+    }
+
+    // anzahlFragen(): Ganzzahl  - Anzahl der inneren Knoten von baum
+    public int anzahlFragen() {
+        // TODO Level 5.3 · Erweiterung
+        return -1;
+    }
+
+    // fragen(b: BinTree): Ganzzahl  - rekursive Hilfsmethode (innere Knoten)
+    private static int fragen(BinTree b) {
+        // TODO Level 5.3 · Erweiterung
+        return -1;
+    }
+
+
+    // =================== Stufe EXPERTE =====================
+
+    // levelorder(b: BinTree): Zeichenkette   (static, NICHT rekursiv)
+    // Ebene fuer Ebene, jede Ebene von links nach rechts, Format wie die
+    // anderen Traversierungen. beispielBST -> "8 3 10 1 6 14 4 7 13 ".
+    // Benutze eine Schlange vom Inhaltstyp BinTree:
+    //     BinTree k = (BinTree) q.dequeue();
+    public static String levelorder(BinTree b) {
+        // TODO Level 5.3 · Experte
+        return "?";
+    }
+}
+
+
+// =========== Level 5.4 – Binaere Suchbaeume (DS 34 – 35) ============
+//  BST vom Inhaltstyp Ganzzahl: Fuer JEDEN Knoten gilt: alle Werte im
+//  linken Teilbaum < Wert < alle Werte im rechten Teilbaum. Duplikate
+//  werden nicht eingefuegt. Die Methoden duerfen das ausnutzen: Suchen
+//  geht in jedem Schritt nur in EINEN Teilbaum.
+
+class Suchbaum {
+
+    // ===================== Stufe BASIS =====================
+
+    // suche(b: BinTree vom Inhaltstyp Ganzzahl, x: Ganzzahl): Wahrheitswert
+    // Rekursiv: in jedem Schritt NUR in den passenden Teilbaum absteigen.
+    public static boolean suche(BinTree b, int x) {
+        // TODO Level 5.4 · Basis
+        return false;
+    }
+
+    // minimum(b: BinTree vom Inhaltstyp Ganzzahl): Ganzzahl
+    // Kleinster Wert: immer links, bis es links nicht weitergeht.
+    // Leerer Baum -> -1.
+    public static int minimum(BinTree b) {
+        // TODO Level 5.4 · Basis
+        return -2;
+    }
+
+    // einfuegen(b: BinTree vom Inhaltstyp Ganzzahl, x: Ganzzahl): nichts
+    // Rekursiv: Ist b leer, wird x hier eingefuegt (setItem macht den
+    // leeren Baum zum Blatt). Sonst links bzw. rechts weiter. Ist x schon
+    // vorhanden, passiert nichts.
+    public static void einfuegen(BinTree b, int x) {
+        // TODO Level 5.4 · Basis
+    }
+
+
+    // ================== Stufe ERWEITERUNG ==================
+
+    // sucheIterativ(b: BinTree vom Inhaltstyp Ganzzahl, x: Ganzzahl): Wahrheitswert
+    // Wie suche, aber mit einer Schleife statt Rekursion.
+    public static boolean sucheIterativ(BinTree b, int x) {
+        // TODO Level 5.4 · Erweiterung
+        return false;
+    }
+
+    // vergleiche(b: BinTree vom Inhaltstyp Ganzzahl, x: Ganzzahl): Ganzzahl
+    // Anzahl der Knoten, die die Suche nach x untersucht (bis x gefunden
+    // ist bzw. bis die Suche auf einen leeren Baum trifft).
+    // beispielBST: 7 -> 4 (8, 3, 6, 7); 5 -> 4 (8, 3, 6, 4, dann leer).
+    public static int vergleiche(BinTree b, int x) {
+        // TODO Level 5.4 · Erweiterung
+        return -1;
+    }
+
+    // baueAus(r: Reihung von Ganzzahl): BinTree
+    // NEUER Suchbaum, die Werte werden in der Reihenfolge von r eingefuegt.
+    // {8, 3, 10, 1, 6, 14, 4, 7, 13} -> beispielBST.
+    public static BinTree baueAus(int[] r) {
+        // TODO Level 5.4 · Erweiterung
+        return null;
+    }
+
+
+    // =================== Stufe EXPERTE =====================
+
+    // istBST(b: BinTree vom Inhaltstyp Ganzzahl): Wahrheitswert
+    // true, wenn b ein binaerer Suchbaum ist. ACHTUNG: Es reicht NICHT,
+    // jeden Knoten nur mit seinen Kindern zu vergleichen! Jeder Wert muss
+    // zwischen den Grenzen liegen, die alle Vorfahren vorgeben.
+    public static boolean istBST(BinTree b) {
+        // TODO Level 5.4 · Experte
+        return false;
+    }
+
+    // istBST(b: BinTree, min: Ganzzahl, max: Ganzzahl): Wahrheitswert
+    // Rekursive Hilfsmethode: Alle Werte in b muessen GROESSER als min und
+    // KLEINER als max sein. max = -1 bedeutet: keine obere Grenze.
+    // (Werte sind >= 0, also ist min = -1 "keine untere Grenze".)
+    public static boolean istBST(BinTree b, int min, int max) {
+        // TODO Level 5.4 · Experte
+        return false;
+    }
+
+    // ausgeglichenAus(sortiert: Reihung von Ganzzahl): BinTree
+    // Baut aus einer aufsteigend sortierten Reihung einen moeglichst
+    // niedrigen Suchbaum: Das mittlere Element wird die Wurzel, die
+    // linke Haelfte der linke, die rechte Haelfte der rechte Teilbaum.
+    // Leere Reihung -> leerer Baum (nicht null).
+    public static BinTree ausgeglichenAus(int[] sortiert) {
+        // TODO Level 5.4 · Experte
+        return null;
+    }
+
+    // ausgeglichenAus(r: Reihung von Ganzzahl, lo: Ganzzahl, hi: Ganzzahl): BinTree
+    // Rekursive Hilfsmethode fuer den Bereich r[lo] .. r[hi]:
+    // mitte = (lo + hi) / 2. Basisfall: lo > hi -> leerer Baum.
+    public static BinTree ausgeglichenAus(int[] r, int lo, int hi) {
+        // TODO Level 5.4 · Experte
+        return null;
+    }
+
+    // nachfolger(b: BinTree vom Inhaltstyp Ganzzahl, x: Ganzzahl): Ganzzahl
+    // Kleinster Wert im BST, der GROESSER als x ist; -1, wenn es keinen
+    // gibt. (x muss nicht im Baum stehen.) Vorbereitung auf das Loeschen:
+    // nachfolger(beispielBST, 8) = 10 ersetzt beim Loeschen die 8.
+    public static int nachfolger(BinTree b, int x) {
+        // TODO Level 5.4 · Experte
+        return -2;
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  TESTS – hier nichts veraendern!
+// ---------------------------------------------------------------------
+//  Eine Testklasse pro Level. Die Stufe erkennst du am Anfang des
+//  Testnamens:
+//      basis_...        Basis       
+//      erweiterung_...  Erweiterung 
+//      experte_...      Experte     
+//  Eine Stufe ist geschafft, wenn ALLE Tests mit diesem Anfang gruen sind.
+//  Jeder Test faengt Laufzeitfehler ab und meldet sie mit "LAUFZEITFEHLER:
+//  ..." und einem Hinweis (Testhilfe.laufzeitfehler). Baeume erscheinen in
+//  den Meldungen in Klammerform: "8(3(1,6(4,7)),10(-,14(13,-)))" heisst
+//  Wurzel 8, links 3 (mit 1 und 6), rechts 10 (links leer "-", rechts 14).
+// ---------------------------------------------------------------------
+
+class L51BaumTest {
+
+    @Test
+    public void basis_anzahlKnoten() {
+        try {
+            assertEquals(9, Baum.anzahlKnoten(Baumschule.beispielBST()), "anzahlKnoten(beispielBST): 9 Knoten");
+            assertEquals(7, Baum.anzahlKnoten(Baumschule.zahlenbaum()), "anzahlKnoten(zahlenbaum): 7 Knoten");
+            assertEquals(5, Baum.anzahlKnoten(Baumschule.entartet()), "anzahlKnoten(entartet): 5 Knoten");
+            assertEquals(7, Baum.anzahlKnoten(Baumschule.termbaum()), "anzahlKnoten(termbaum): 7 Knoten (auch Rechenzeichen sind Knoten)");
+            assertEquals(1, Baum.anzahlKnoten(Baumschule.blatt(42)), "anzahlKnoten eines Blatts: 1");
+            assertEquals(0, Baum.anzahlKnoten(Baumschule.leer()), "anzahlKnoten des leeren Baums: 0 (Basisfall if (b.isEmpty()))");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void basis_preorder() {
+        try {
+            BinTree b = Baumschule.beispielBST();
+            assertEquals("8 3 1 6 4 7 10 14 13 ", Baum.preorder(b), "preorder(beispielBST): Wurzel - links - rechts, nach JEDEM Element ein Leerzeichen");
+            assertEquals("8(3(1,6(4,7)),10(-,14(13,-)))", Testhilfe.klammer(b), "preorder darf den Baum NICHT veraendern");
+            assertEquals("5 9 2 7 4 9 1 ", Baum.preorder(Baumschule.zahlenbaum()), "preorder(zahlenbaum)");
+            assertEquals("* + 3 4 - 5 2 ", Baum.preorder(Baumschule.termbaum()), "preorder(termbaum): Praefix-Schreibweise des Terms");
+            assertEquals("42 ", Baum.preorder(Baumschule.blatt(42)), "preorder eines Blatts: '42 ' (mit Leerzeichen)");
+            assertEquals("", Baum.preorder(Baumschule.leer()), "preorder des leeren Baums: die leere Zeichenkette");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void basis_inorder() {
+        try {
+            assertEquals("1 3 4 6 7 8 10 13 14 ", Baum.inorder(Baumschule.beispielBST()), "inorder(beispielBST): links - Wurzel - rechts (beim BST aufsteigend sortiert!)");
+            assertEquals("2 9 7 5 4 1 9 ", Baum.inorder(Baumschule.zahlenbaum()), "inorder(zahlenbaum)");
+            assertEquals("3 + 4 * 5 - 2 ", Baum.inorder(Baumschule.termbaum()), "inorder(termbaum): der Term ohne Klammern");
+            assertEquals("1 2 3 4 5 ", Baum.inorder(Baumschule.entartet()), "inorder(entartet)");
+            assertEquals("", Baum.inorder(Baumschule.leer()), "inorder des leeren Baums: die leere Zeichenkette");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void basis_postorder() {
+        try {
+            assertEquals("1 4 7 6 3 13 14 10 8 ", Baum.postorder(Baumschule.beispielBST()), "postorder(beispielBST): links - rechts - Wurzel");
+            assertEquals("2 7 9 1 9 4 5 ", Baum.postorder(Baumschule.zahlenbaum()), "postorder(zahlenbaum)");
+            assertEquals("3 4 + 5 2 - * ", Baum.postorder(Baumschule.termbaum()), "postorder(termbaum): Postfix-Schreibweise (wie im Postfix-Rechner aus Welt 4)");
+            assertEquals("5 4 3 2 1 ", Baum.postorder(Baumschule.entartet()), "postorder(entartet)");
+            assertEquals("", Baum.postorder(Baumschule.leer()), "postorder des leeren Baums: die leere Zeichenkette");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_hoehe() {
+        try {
+            assertEquals(4, Baum.hoehe(Baumschule.beispielBST()), "hoehe(beispielBST): 4 Ebenen");
+            assertEquals(4, Baum.hoehe(Baumschule.zahlenbaum()), "hoehe(zahlenbaum): 4 (der laengste Weg geht nach rechts: 5, 4, 9, 1)");
+            assertEquals(5, Baum.hoehe(Baumschule.entartet()), "hoehe(entartet): 5");
+            assertEquals(3, Baum.hoehe(Baumschule.termbaum()), "hoehe(termbaum): 3");
+            BinTree linksLang = Baumschule.knoten(1, Baumschule.knoten(2, Baumschule.blatt(3), Baumschule.leer()), Baumschule.leer());
+            assertEquals(3, Baum.hoehe(linksLang), "hoehe von 1(2(3,-),-): 3 - der LINKE Teilbaum ist hier der hoehere");
+            assertEquals(1, Baum.hoehe(Baumschule.blatt(42)), "hoehe eines Blatts: 1");
+            assertEquals(0, Baum.hoehe(Baumschule.leer()), "hoehe des leeren Baums: 0");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_anzahlBlaetter() {
+        try {
+            assertEquals(4, Baum.anzahlBlaetter(Baumschule.beispielBST()), "anzahlBlaetter(beispielBST): 4 (1, 4, 7, 13)");
+            assertEquals(3, Baum.anzahlBlaetter(Baumschule.zahlenbaum()), "anzahlBlaetter(zahlenbaum): 3 (2, 7, 1)");
+            assertEquals(1, Baum.anzahlBlaetter(Baumschule.entartet()), "anzahlBlaetter(entartet): 1 (nur die 5)");
+            assertEquals(4, Baum.anzahlBlaetter(Baumschule.termbaum()), "anzahlBlaetter(termbaum): 4 Zahlen");
+            BinTree halb = Baumschule.knoten(1, Baumschule.leer(), Baumschule.knoten(2, Baumschule.blatt(3), Baumschule.blatt(4)));
+            assertEquals(2, Baum.anzahlBlaetter(halb), "anzahlBlaetter von 1(-,2(3,4)): 2 - die 1 hat nur EIN leeres Kind und ist deshalb KEIN Blatt");
+            assertEquals(1, Baum.anzahlBlaetter(Baumschule.blatt(42)), "anzahlBlaetter eines Blatts: 1");
+            assertEquals(0, Baum.anzahlBlaetter(Baumschule.leer()), "anzahlBlaetter des leeren Baums: 0 (isLeaf erst NACH isEmpty pruefen!)");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_summe() {
+        try {
+            assertEquals(66, Baum.summe(Baumschule.beispielBST()), "summe(beispielBST): 66");
+            assertEquals(37, Baum.summe(Baumschule.zahlenbaum()), "summe(zahlenbaum): 37 (die 9 zaehlt zweimal)");
+            assertEquals(15, Baum.summe(Baumschule.entartet()), "summe(entartet): 15");
+            assertEquals(42, Baum.summe(Baumschule.blatt(42)), "summe eines Blatts: sein Wert");
+            assertEquals(0, Baum.summe(Baumschule.leer()), "summe des leeren Baums: 0");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void experte_zahl() {
+        try {
+            assertEquals(3, Baum.zahl("3"), "zahl('3') = 3");
+            assertEquals(12, Baum.zahl("12"), "zahl('12') = 12 - die erste Ziffer ist die Zehnerziffer");
+            assertEquals(907, Baum.zahl("907"), "zahl('907') = 907 (mit 0 in der Mitte)");
+            assertEquals(2026, Baum.zahl("2026"), "zahl('2026') = 2026");
+            assertEquals(0, Baum.zahl("0"), "zahl('0') = 0");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void experte_berechne() {
+        try {
+            BinTree t = Baumschule.termbaum();
+            assertEquals(21, Baum.berechne(t), "berechne(termbaum): (3+4)*(5-2) = 21");
+            assertEquals("*(+(3,4),-(5,2))", Testhilfe.klammer(t), "berechne darf den Termbaum NICHT veraendern");
+            assertEquals(42, Baum.berechne(new BinTree("42")), "berechne eines Blatts '42': 42");
+            BinTree geteilt = Baumschule.knoten("/", new BinTree("12"), Baumschule.knoten("-", new BinTree("7"), new BinTree("3")));
+            assertEquals(3, Baum.berechne(geteilt), "berechne: 12/(7-3) = 3 (zweistellige Zahl '12')");
+            BinTree halb = Baumschule.knoten("/", new BinTree("7"), new BinTree("2"));
+            assertEquals(3, Baum.berechne(halb), "berechne: 7/2 = 3 (ganzzahlige Division)");
+            BinTree mal = Baumschule.knoten("-", new BinTree("100"), Baumschule.knoten("*", new BinTree("25"), new BinTree("3")));
+            assertEquals(25, Baum.berechne(mal), "berechne: 100-25*3 = 25");
+            BinTree links = Baumschule.knoten("-", Baumschule.knoten("-", new BinTree("8"), new BinTree("5")), new BinTree("1"));
+            assertEquals(2, Baum.berechne(links), "berechne: (8-5)-1 = 2 - erst links, dann rechts rechnen: links - rechts");
+            assertEquals(0, Baum.berechne(Baumschule.leer()), "berechne des leeren Baums: 0");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void experte_berechne_equals() {
+        try {
+            String minus = Testhilfe.kopie("-");
+            String plus = Testhilfe.kopie("+");
+            BinTree t = Baumschule.knoten(minus, Baumschule.knoten(plus, new BinTree(Testhilfe.kopie("9")), new BinTree(Testhilfe.kopie("6"))), new BinTree(Testhilfe.kopie("4")));
+            assertEquals(11, Baum.berechne(t), "berechne: (9+6)-4 = 11 - Rechenzeichen mit equals vergleichen, nicht mit ==");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void experte_spiegeln() {
+        try {
+            BinTree b = Baumschule.beispielBST();
+            Baum.spiegeln(b);
+            assertEquals("8(10(14(-,13),-),3(6(7,4),1))", Testhilfe.klammer(b), "spiegeln(beispielBST): in JEDEM Knoten links und rechts tauschen");
+            Baum.spiegeln(b);
+            assertEquals("8(3(1,6(4,7)),10(-,14(13,-)))", Testhilfe.klammer(b), "zweimal spiegeln ergibt wieder den Ausgangsbaum");
+            BinTree z = Baumschule.zahlenbaum();
+            Baum.spiegeln(z);
+            assertEquals("5(4(9(-,1),-),9(7,2))", Testhilfe.klammer(z), "spiegeln(zahlenbaum)");
+            BinTree blatt = Baumschule.blatt(42);
+            Baum.spiegeln(blatt);
+            assertEquals("42", Testhilfe.klammer(blatt), "spiegeln eines Blatts: bleibt gleich");
+            BinTree leer = Baumschule.leer();
+            Baum.spiegeln(leer);
+            assertTrue(leer.isEmpty(), "spiegeln des leeren Baums: bleibt leer (kein Laufzeitfehler)");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+}
+
+
+class L52RekursivTest {
+
+    @Test
+    public void basis_enthaelt() {
+        try {
+            BinTree z = Baumschule.zahlenbaum();
+            assertTrue(Rekursiv.enthaelt(z, 7), "enthaelt(zahlenbaum, 7): true");
+            assertTrue(Rekursiv.enthaelt(z, 5), "enthaelt(zahlenbaum, 5): true (die Wurzel)");
+            assertTrue(Rekursiv.enthaelt(z, 1), "enthaelt(zahlenbaum, 1): true (ganz unten im RECHTEN Teilbaum)");
+            assertTrue(Rekursiv.enthaelt(Baumschule.beispielBST(), 13), "enthaelt(beispielBST, 13): true");
+            assertFalse(Rekursiv.enthaelt(z, 8), "enthaelt(zahlenbaum, 8): false");
+            assertFalse(Rekursiv.enthaelt(z, 3), "enthaelt(zahlenbaum, 3): false");
+            assertTrue(Rekursiv.enthaelt(Baumschule.blatt(0), 0), "enthaelt(Blatt 0, 0): true");
+            assertFalse(Rekursiv.enthaelt(Baumschule.leer(), 0), "enthaelt im leeren Baum: false");
+            assertEquals("5(9(2,7),4(-,9(1,-)))", Testhilfe.klammer(z), "enthaelt darf den Baum NICHT veraendern");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void basis_maximum() {
+        try {
+            assertEquals(9, Rekursiv.maximum(Baumschule.zahlenbaum()), "maximum(zahlenbaum): 9");
+            assertEquals(14, Rekursiv.maximum(Baumschule.beispielBST()), "maximum(beispielBST): 14");
+            assertEquals(5, Rekursiv.maximum(Baumschule.entartet()), "maximum(entartet): 5");
+            BinTree linksGross = Baumschule.knoten(5, Baumschule.knoten(20, Baumschule.blatt(3), Baumschule.leer()), Baumschule.blatt(7));
+            assertEquals(20, Rekursiv.maximum(linksGross), "maximum von 5(20(3,-),7): 20 - KEIN Suchbaum, das Maximum kann ueberall stehen");
+            BinTree wurzelGross = Baumschule.knoten(30, Baumschule.blatt(2), Baumschule.blatt(1));
+            assertEquals(30, Rekursiv.maximum(wurzelGross), "maximum von 30(2,1): 30 (die Wurzel)");
+            assertEquals(0, Rekursiv.maximum(Baumschule.blatt(0)), "maximum eines Blatts mit Wert 0: 0");
+            assertEquals(-1, Rekursiv.maximum(Baumschule.leer()), "maximum des leeren Baums: -1");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void basis_anzahlGroesser() {
+        try {
+            BinTree z = Baumschule.zahlenbaum();
+            assertEquals(4, Rekursiv.anzahlGroesser(z, 4), "anzahlGroesser(zahlenbaum, 4): 4 (5, 9, 7, 9)");
+            assertEquals(2, Rekursiv.anzahlGroesser(z, 8), "anzahlGroesser(zahlenbaum, 8): 2 (beide 9)");
+            assertEquals(0, Rekursiv.anzahlGroesser(z, 9), "anzahlGroesser(zahlenbaum, 9): 0 - GROESSER, nicht groesser oder gleich");
+            assertEquals(4, Rekursiv.anzahlGroesser(Baumschule.beispielBST(), 7), "anzahlGroesser(beispielBST, 7): 4 (8, 10, 14, 13)");
+            assertEquals(9, Rekursiv.anzahlGroesser(Baumschule.beispielBST(), 0), "anzahlGroesser(beispielBST, 0): 9");
+            assertEquals(0, Rekursiv.anzahlGroesser(Baumschule.leer(), 0), "anzahlGroesser im leeren Baum: 0");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_sammleInorder() {
+        try {
+            DynArray d = Rekursiv.sammleInorder(Baumschule.beispielBST());
+            assertTrue(d != null, "sammleInorder liefert null - erzeuge mit new DynArray() eine NEUE dynamische Reihung");
+            assertEquals("[1, 3, 4, 6, 7, 8, 10, 13, 14]", Testhilfe.text(d), "sammleInorder(beispielBST): Inorder = aufsteigend sortiert");
+            DynArray z = Rekursiv.sammleInorder(Baumschule.zahlenbaum());
+            assertEquals("[2, 9, 7, 5, 4, 1, 9]", Testhilfe.text(z), "sammleInorder(zahlenbaum) - bei einem zweiten Aufruf duerfen die Werte des ersten Baums NICHT mehr drin sein");
+            assertTrue(d != z, "Jeder Aufruf muss eine NEUE DynArray erzeugen");
+            DynArray leer = Rekursiv.sammleInorder(Baumschule.leer());
+            assertTrue(leer != null, "sammleInorder des leeren Baums: leere DynArray, nicht null");
+            assertEquals("[]", Testhilfe.text(leer), "sammleInorder des leeren Baums: leere DynArray");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_blaetter() {
+        try {
+            assertEquals("[1, 4, 7, 13]", Testhilfe.text(Rekursiv.blaetter(Baumschule.beispielBST())), "blaetter(beispielBST): Blaetter von links nach rechts");
+            assertEquals("[2, 7, 1]", Testhilfe.text(Rekursiv.blaetter(Baumschule.zahlenbaum())), "blaetter(zahlenbaum)");
+            assertEquals("[5]", Testhilfe.text(Rekursiv.blaetter(Baumschule.entartet())), "blaetter(entartet): nur die 5");
+            assertEquals("[42]", Testhilfe.text(Rekursiv.blaetter(Baumschule.blatt(42))), "blaetter eines Blatts");
+            DynArray leer = Rekursiv.blaetter(Baumschule.leer());
+            assertTrue(leer != null, "blaetter des leeren Baums: leere DynArray, nicht null");
+            assertEquals("[]", Testhilfe.text(leer), "blaetter des leeren Baums: leere DynArray");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_anzahlAufEbene() {
+        try {
+            BinTree z = Baumschule.zahlenbaum();
+            assertEquals(1, Rekursiv.anzahlAufEbene(z, 0), "anzahlAufEbene(zahlenbaum, 0): 1 (die Wurzel ist Ebene 0)");
+            assertEquals(2, Rekursiv.anzahlAufEbene(z, 1), "anzahlAufEbene(zahlenbaum, 1): 2 (9 und 4)");
+            assertEquals(3, Rekursiv.anzahlAufEbene(z, 2), "anzahlAufEbene(zahlenbaum, 2): 3 (2, 7, 9)");
+            assertEquals(1, Rekursiv.anzahlAufEbene(z, 3), "anzahlAufEbene(zahlenbaum, 3): 1 (die 1)");
+            assertEquals(0, Rekursiv.anzahlAufEbene(z, 4), "anzahlAufEbene(zahlenbaum, 4): 0");
+            assertEquals(3, Rekursiv.anzahlAufEbene(Baumschule.beispielBST(), 3), "anzahlAufEbene(beispielBST, 3): 3 (4, 7, 13)");
+            assertEquals(1, Rekursiv.anzahlAufEbene(Baumschule.entartet(), 4), "anzahlAufEbene(entartet, 4): 1 (die 5)");
+            assertEquals(0, Rekursiv.anzahlAufEbene(Baumschule.leer(), 0), "anzahlAufEbene im leeren Baum: 0");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void experte_pfadZu() {
+        try {
+            BinTree z = Baumschule.zahlenbaum();
+            assertEquals("LR", Rekursiv.pfadZu(z, 7), "pfadZu(zahlenbaum, 7): links, dann rechts");
+            assertEquals("RRL", Rekursiv.pfadZu(z, 1), "pfadZu(zahlenbaum, 1): rechts, rechts, links");
+            assertEquals("LL", Rekursiv.pfadZu(z, 2), "pfadZu(zahlenbaum, 2)");
+            assertEquals("L", Rekursiv.pfadZu(z, 9), "pfadZu(zahlenbaum, 9): das ERSTE Vorkommen in Preorder (links), nicht 'RR'");
+            assertEquals("", Rekursiv.pfadZu(z, 5), "pfadZu(zahlenbaum, 5): die Wurzel -> leere Zeichenkette");
+            assertEquals("-", Rekursiv.pfadZu(z, 8), "pfadZu(zahlenbaum, 8): kommt nicht vor -> '-'");
+            assertEquals("LRL", Rekursiv.pfadZu(Baumschule.beispielBST(), 4), "pfadZu(beispielBST, 4)");
+            assertEquals("RRL", Rekursiv.pfadZu(Baumschule.beispielBST(), 13), "pfadZu(beispielBST, 13)");
+            assertEquals("-", Rekursiv.pfadZu(Baumschule.leer(), 0), "pfadZu im leeren Baum: '-'");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void experte_istGleich() {
+        try {
+            assertTrue(Rekursiv.istGleich(Baumschule.beispielBST(), Baumschule.beispielBST()), "istGleich: zwei beispielBST (verschiedene Objekte) sind gleich");
+            assertTrue(Rekursiv.istGleich(Baumschule.leer(), Baumschule.leer()), "istGleich: zwei leere Baeume sind gleich");
+            assertFalse(Rekursiv.istGleich(Baumschule.beispielBST(), Baumschule.zahlenbaum()), "istGleich(beispielBST, zahlenbaum): false");
+            BinTree a = Baumschule.knoten(1, Baumschule.blatt(2), Baumschule.leer());
+            BinTree b = Baumschule.knoten(1, Baumschule.leer(), Baumschule.blatt(2));
+            assertFalse(Rekursiv.istGleich(a, b), "istGleich(1(2,-), 1(-,2)): false - gleiche Werte, gleiche Preorder, aber andere STRUKTUR");
+            assertFalse(Rekursiv.istGleich(Baumschule.blatt(1), Baumschule.blatt(2)), "istGleich(1, 2): false - verschiedene Werte");
+            BinTree c = Baumschule.beispielBST();
+            c.getRight().getRight().getLeft().setItem(12);
+            assertFalse(Rekursiv.istGleich(Baumschule.beispielBST(), c), "istGleich: beispielBST mit 12 statt 13 ganz unten -> false");
+            BinTree ausgeglichen = Baumschule.knoten(7, Baumschule.knoten(3, Baumschule.blatt(1), Baumschule.knoten(4, Baumschule.leer(), Baumschule.blatt(6))), Baumschule.knoten(10, Baumschule.blatt(8), Baumschule.knoten(13, Baumschule.leer(), Baumschule.blatt(14))));
+            assertFalse(Rekursiv.istGleich(Baumschule.beispielBST(), ausgeglichen), "istGleich: gleiche Werte in gleicher Inorder-Reihenfolge, aber andere Struktur -> false");
+            assertFalse(Rekursiv.istGleich(Baumschule.leer(), Baumschule.blatt(0)), "istGleich(leer, Blatt): false");
+            assertFalse(Rekursiv.istGleich(Baumschule.blatt(0), Baumschule.leer()), "istGleich(Blatt, leer): false");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+}
+
+
+class L53AkinatorTest {
+
+    @Test
+    public void basis_konstruktor() {
+        try {
+            Akinator a = new Akinator("Drache");
+            assertTrue(a.getBaum() != null, "Der Konstruktor muss baum erzeugen (new BinTree(start))");
+            assertFalse(a.getBaum().isEmpty(), "Akinator('Drache'): baum darf nicht leer sein");
+            assertTrue(a.getBaum().isLeaf(), "Akinator('Drache'): baum ist ein Blatt");
+            assertEquals("Drache", (String) a.getBaum().getItem(), "Akinator('Drache'): Inhalt des Blatts");
+            assertEquals("Drache", a.raten(""), "raten('') bei nur einem Monster: 'Drache' (ohne eine Frage)");
+            assertEquals("Drache", a.raten("jn"), "raten('jn') bei nur einem Monster: 'Drache' (ueberzaehlige Antworten ignorieren)");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void basis_raten() {
+        try {
+            Akinator a = new Akinator(Baumschule.monsterquiz());
+            assertEquals("Drache", a.raten("jj"), "raten('jj'): fliegt, speit Feuer -> Drache");
+            assertEquals("Greif", a.raten("jn"), "raten('jn'): fliegt, kein Feuer -> Greif");
+            assertEquals("Kraken", a.raten("nj"), "raten('nj'): fliegt nicht, lebt im Wasser -> Kraken");
+            assertEquals("Troll", a.raten("nn"), "raten('nn'): fliegt nicht, nicht im Wasser -> Troll");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void basis_raten_randfaelle() {
+        try {
+            Akinator a = new Akinator(Baumschule.monsterquiz());
+            assertEquals("Troll", a.raten("nnj"), "raten('nnj'): Troll - ueberzaehlige Antworten werden ignoriert");
+            assertEquals("Drache", a.raten("jjnn"), "raten('jjnn'): Drache");
+            assertEquals("?", a.raten("j"), "raten('j'): zu wenige Antworten -> '?' (kein Laufzeitfehler bei charAt!)");
+            assertEquals("?", a.raten(""), "raten(''): keine Antwort -> '?'");
+            assertEquals(Testhilfe.klammer(Baumschule.monsterquiz()), Testhilfe.klammer(a.getBaum()), "raten darf den Baum NICHT veraendern");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_lernen() {
+        try {
+            Akinator a = new Akinator("Drache");
+            a.lernen("", "Greif", "Speit es Feuer?", false);
+            assertEquals("Speit es Feuer?(Drache,Greif)", Testhilfe.klammer(a.getBaum()), "lernen('', 'Greif', 'Speit es Feuer?', false): Die Wurzel wird zur Frage, neu (Greif) kommt nach RECHTS (nein)");
+            assertEquals("Drache", a.raten("j"), "nach dem Lernen: raten('j') -> Drache");
+            assertEquals("Greif", a.raten("n"), "nach dem Lernen: raten('n') -> Greif");
+            Akinator b = new Akinator("Troll");
+            b.lernen("", "Drache", "Kann es fliegen?", true);
+            assertEquals("Kann es fliegen?(Drache,Troll)", Testhilfe.klammer(b.getBaum()), "lernen(..., true): neu (Drache) kommt nach LINKS (ja), alt (Troll) nach rechts");
+            b.lernen("j", "Greif", "Speit es Feuer?", false);
+            b.lernen("n", "Kraken", "Lebt es im Wasser?", true);
+            assertEquals(Testhilfe.klammer(Baumschule.monsterquiz()), Testhilfe.klammer(b.getBaum()), "Durch dreimal lernen entsteht genau das Monsterquiz der Baumschule");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_lernen_tief() {
+        try {
+            Akinator a = new Akinator(Baumschule.monsterquiz());
+            a.lernen("nn", "Golem", "Ist es aus Stein?", true);
+            assertEquals("Golem", a.raten("nnj"), "Nach lernen('nn', 'Golem', 'Ist es aus Stein?', true): raten('nnj') -> Golem");
+            assertEquals("Troll", a.raten("nnn"), "... raten('nnn') -> Troll");
+            assertEquals("?", a.raten("nn"), "... raten('nn') -> '?' (jetzt fehlt eine Antwort)");
+            assertEquals("Kraken", a.raten("nj"), "... raten('nj') -> Kraken (der Rest des Baums bleibt gleich)");
+            a.lernen("jjn", "Phoenix", "Ist es ein Vogel?", true);
+            assertEquals("Phoenix", a.raten("jjj"), "lernen('jjn', ...): Das Blatt Drache wird schon nach 'jj' erreicht, das 'n' ist ueberzaehlig -> raten('jjj') = Phoenix");
+            assertEquals("Drache", a.raten("jjn"), "... raten('jjn') -> Drache");
+            String vorher = Testhilfe.klammer(a.getBaum());
+            a.lernen("j", "Harpyie", "Hat es Federn?", true);
+            assertEquals(vorher, Testhilfe.klammer(a.getBaum()), "lernen('j', ...) reicht nicht bis zu einem Blatt -> nichts passiert");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_anzahlMonsterFragen() {
+        try {
+            Akinator a = new Akinator(Baumschule.monsterquiz());
+            assertEquals(4, a.anzahlMonster(), "anzahlMonster(monsterquiz): 4 Blaetter");
+            assertEquals(3, a.anzahlFragen(), "anzahlFragen(monsterquiz): 3 innere Knoten");
+            a.lernen("nn", "Golem", "Ist es aus Stein?", true);
+            assertEquals(5, a.anzahlMonster(), "Nach einmal lernen: 5 Monster");
+            assertEquals(4, a.anzahlFragen(), "Nach einmal lernen: 4 Fragen");
+            Akinator b = new Akinator(new BinTree("Ork"));
+            assertEquals(1, b.anzahlMonster(), "Ein Blatt: 1 Monster");
+            assertEquals(0, b.anzahlFragen(), "Ein Blatt: 0 Fragen");
+            Akinator c = new Akinator(Baumschule.leer());
+            assertEquals(0, c.anzahlMonster(), "Leerer Baum: 0 Monster");
+            assertEquals(0, c.anzahlFragen(), "Leerer Baum: 0 Fragen");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void experte_levelorder() {
+        try {
+            BinTree b = Baumschule.beispielBST();
+            assertEquals("8 3 10 1 6 14 4 7 13 ", Akinator.levelorder(b), "levelorder(beispielBST): Ebene fuer Ebene, jeweils von links nach rechts");
+            assertEquals("8(3(1,6(4,7)),10(-,14(13,-)))", Testhilfe.klammer(b), "levelorder darf den Baum NICHT veraendern");
+            assertEquals("5 9 4 2 7 9 1 ", Akinator.levelorder(Baumschule.zahlenbaum()), "levelorder(zahlenbaum)");
+            assertEquals("* + - 3 4 5 2 ", Akinator.levelorder(Baumschule.termbaum()), "levelorder(termbaum)");
+            assertEquals("1 2 3 4 5 ", Akinator.levelorder(Baumschule.entartet()), "levelorder(entartet)");
+            assertEquals("42 ", Akinator.levelorder(Baumschule.blatt(42)), "levelorder eines Blatts");
+            assertEquals("", Akinator.levelorder(Baumschule.leer()), "levelorder des leeren Baums: die leere Zeichenkette");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void experte_levelorder_monsterquiz() {
+        try {
+            assertEquals("Kann es fliegen? Speit es Feuer? Lebt es im Wasser? Drache Greif Kraken Troll ", Akinator.levelorder(Baumschule.monsterquiz()), "levelorder(monsterquiz): erst alle Fragen der Ebenen 0 und 1, dann die Monster");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+}
+
+
+class L54SuchbaumTest {
+
+    @Test
+    public void basis_suche() {
+        try {
+            BinTree b = Baumschule.beispielBST();
+            assertTrue(Suchbaum.suche(b, 8), "suche(beispielBST, 8): true (Wurzel)");
+            assertTrue(Suchbaum.suche(b, 13), "suche(beispielBST, 13): true");
+            assertTrue(Suchbaum.suche(b, 4), "suche(beispielBST, 4): true");
+            assertTrue(Suchbaum.suche(b, 7), "suche(beispielBST, 7): true");
+            assertFalse(Suchbaum.suche(b, 5), "suche(beispielBST, 5): false");
+            assertFalse(Suchbaum.suche(b, 15), "suche(beispielBST, 15): false");
+            assertFalse(Suchbaum.suche(b, 0), "suche(beispielBST, 0): false");
+            assertTrue(Suchbaum.suche(Baumschule.entartet(), 5), "suche(entartet, 5): true");
+            assertFalse(Suchbaum.suche(Baumschule.leer(), 8), "suche im leeren Baum: false");
+            assertEquals("8(3(1,6(4,7)),10(-,14(13,-)))", Testhilfe.klammer(b), "suche darf den Baum NICHT veraendern");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void basis_suche_nurEinWeg() {
+        try {
+            // KEIN gueltiger Suchbaum: Die 5 steht rechts von der 8.
+            // Eine richtige BST-Suche nach 5 geht links (5 < 8) und findet
+            // sie NICHT. Wer beide Teilbaeume durchsucht, findet sie.
+            BinTree falle = Baumschule.knoten(8, Baumschule.blatt(3), Baumschule.knoten(10, Baumschule.blatt(5), Baumschule.leer()));
+            assertTrue(Suchbaum.suche(falle, 10), "suche(8(3,10(5,-)), 10): true");
+            assertFalse(Suchbaum.suche(falle, 5), "suche darf in jedem Schritt nur EINEN Teilbaum betreten (5 < 8 -> nur links suchen) - sonst ist sie nicht schneller als enthaelt aus Level 5.2");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void basis_minimum() {
+        try {
+            assertEquals(1, Suchbaum.minimum(Baumschule.beispielBST()), "minimum(beispielBST): 1");
+            assertEquals(1, Suchbaum.minimum(Baumschule.entartet()), "minimum(entartet): 1 (die Wurzel - links ist nichts)");
+            BinTree b = Baumschule.knoten(5, Baumschule.knoten(2, Baumschule.leer(), Baumschule.blatt(3)), Baumschule.blatt(9));
+            assertEquals(2, Suchbaum.minimum(b), "minimum von 5(2(-,3),9): 2 - das Minimum muss KEIN Blatt sein");
+            assertEquals(42, Suchbaum.minimum(Baumschule.blatt(42)), "minimum eines Blatts: sein Wert");
+            assertEquals(-1, Suchbaum.minimum(Baumschule.leer()), "minimum des leeren Baums: -1");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void basis_einfuegen() {
+        try {
+            BinTree b = new BinTree();
+            int[] werte = {8, 3, 10, 1, 6, 14, 4, 7, 13};
+            for (int i = 0; i < werte.length; i++) {
+                Suchbaum.einfuegen(b, werte[i]);
+            }
+            assertEquals("8(3(1,6(4,7)),10(-,14(13,-)))", Testhilfe.klammer(b), "einfuegen von 8, 3, 10, 1, 6, 14, 4, 7, 13 in einen leeren Baum ergibt beispielBST");
+            Suchbaum.einfuegen(b, 6);
+            assertEquals("8(3(1,6(4,7)),10(-,14(13,-)))", Testhilfe.klammer(b), "einfuegen(b, 6): 6 ist schon da -> Duplikat, nichts aendern");
+            Suchbaum.einfuegen(b, 5);
+            assertEquals("8(3(1,6(4(-,5),7)),10(-,14(13,-)))", Testhilfe.klammer(b), "einfuegen(b, 5): Weg 8, 3, 6, 4 -> rechts von 4");
+            Suchbaum.einfuegen(b, 11);
+            assertEquals("8(3(1,6(4(-,5),7)),10(-,14(13(11,-),-)))", Testhilfe.klammer(b), "einfuegen(b, 11): Weg 8, 10, 14, 13 -> links von 13");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void basis_einfuegen_leer() {
+        try {
+            BinTree b = Baumschule.leer();
+            Suchbaum.einfuegen(b, 42);
+            assertFalse(b.isEmpty(), "einfuegen in den leeren Baum: Danach ist er nicht mehr leer (setItem)");
+            assertEquals("42", Testhilfe.klammer(b), "einfuegen(leer, 42): ein Blatt mit 42");
+            Suchbaum.einfuegen(b, 17);
+            Suchbaum.einfuegen(b, 50);
+            assertEquals("42(17,50)", Testhilfe.klammer(b), "einfuegen von 17 und 50: 17 links, 50 rechts");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_sucheIterativ() {
+        try {
+            BinTree b = Baumschule.beispielBST();
+            assertTrue(Suchbaum.sucheIterativ(b, 8), "sucheIterativ(beispielBST, 8): true (Wurzel)");
+            assertTrue(Suchbaum.sucheIterativ(b, 13), "sucheIterativ(beispielBST, 13): true");
+            assertTrue(Suchbaum.sucheIterativ(b, 4), "sucheIterativ(beispielBST, 4): true");
+            assertFalse(Suchbaum.sucheIterativ(b, 5), "sucheIterativ(beispielBST, 5): false");
+            assertFalse(Suchbaum.sucheIterativ(b, 15), "sucheIterativ(beispielBST, 15): false");
+            assertTrue(Suchbaum.sucheIterativ(Baumschule.entartet(), 5), "sucheIterativ(entartet, 5): true");
+            assertFalse(Suchbaum.sucheIterativ(Baumschule.leer(), 8), "sucheIterativ im leeren Baum: false");
+            assertEquals("8(3(1,6(4,7)),10(-,14(13,-)))", Testhilfe.klammer(b), "sucheIterativ darf den Baum NICHT veraendern - nimm eine Hilfsvariable k, die durch den Baum wandert");
+            BinTree falle = Baumschule.knoten(8, Baumschule.blatt(3), Baumschule.knoten(10, Baumschule.blatt(5), Baumschule.leer()));
+            assertFalse(Suchbaum.sucheIterativ(falle, 5), "sucheIterativ geht nur EINEN Weg (im Nicht-Suchbaum 8(3,10(5,-)) wird 5 nicht gefunden)");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_vergleiche() {
+        try {
+            BinTree b = Baumschule.beispielBST();
+            assertEquals(4, Suchbaum.vergleiche(b, 7), "vergleiche(beispielBST, 7): 4 (8, 3, 6, 7)");
+            assertEquals(4, Suchbaum.vergleiche(b, 5), "vergleiche(beispielBST, 5): 4 (8, 3, 6, 4 - dann leer)");
+            assertEquals(1, Suchbaum.vergleiche(b, 8), "vergleiche(beispielBST, 8): 1 (die Wurzel)");
+            assertEquals(4, Suchbaum.vergleiche(b, 13), "vergleiche(beispielBST, 13): 4 (8, 10, 14, 13)");
+            assertEquals(3, Suchbaum.vergleiche(b, 15), "vergleiche(beispielBST, 15): 3 (8, 10, 14 - dann leer)");
+            assertEquals(2, Suchbaum.vergleiche(b, 10), "vergleiche(beispielBST, 10): 2 (8, 10)");
+            assertEquals(5, Suchbaum.vergleiche(Baumschule.entartet(), 5), "vergleiche(entartet, 5): 5");
+            assertEquals(5, Suchbaum.vergleiche(Baumschule.entartet(), 6), "vergleiche(entartet, 6): 5");
+            assertEquals(0, Suchbaum.vergleiche(Baumschule.leer(), 8), "vergleiche im leeren Baum: 0");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void erweiterung_baueAus() {
+        try {
+            int[] werte = {8, 3, 10, 1, 6, 14, 4, 7, 13};
+            BinTree b = Suchbaum.baueAus(werte);
+            assertTrue(b != null, "baueAus liefert null - erzeuge mit new BinTree() einen NEUEN (leeren) Baum und fuege ein");
+            assertEquals("8(3(1,6(4,7)),10(-,14(13,-)))", Testhilfe.klammer(b), "baueAus({8, 3, 10, 1, 6, 14, 4, 7, 13}): beispielBST");
+            int[] kette = {1, 2, 3, 4, 5};
+            assertEquals(Testhilfe.klammer(Baumschule.entartet()), Testhilfe.klammer(Suchbaum.baueAus(kette)), "baueAus({1, 2, 3, 4, 5}): sortierte Werte -> entarteter Baum");
+            int[] doppelt = {5, 3, 5, 8, 3};
+            assertEquals("5(3,8)", Testhilfe.klammer(Suchbaum.baueAus(doppelt)), "baueAus({5, 3, 5, 8, 3}): Duplikate werden ignoriert");
+            BinTree leer = Suchbaum.baueAus(new int[0]);
+            assertTrue(leer != null, "baueAus mit leerer Reihung: leerer Baum, nicht null");
+            assertTrue(leer.isEmpty(), "baueAus mit leerer Reihung: leerer Baum");
+            assertTrue(Suchbaum.baueAus(werte) != b, "Jeder Aufruf von baueAus muss einen NEUEN Baum erzeugen");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void experte_istBST() {
+        try {
+            assertTrue(Suchbaum.istBST(Baumschule.beispielBST()), "istBST(beispielBST): true");
+            assertTrue(Suchbaum.istBST(Baumschule.entartet()), "istBST(entartet): true");
+            assertTrue(Suchbaum.istBST(Baumschule.blatt(0)), "istBST eines Blatts: true");
+            assertTrue(Suchbaum.istBST(Baumschule.leer()), "istBST des leeren Baums: true");
+            assertFalse(Suchbaum.istBST(Baumschule.zahlenbaum()), "istBST(zahlenbaum): false (9 links von 5)");
+            BinTree falle1 = Baumschule.knoten(8, Baumschule.knoten(3, Baumschule.blatt(1), Baumschule.blatt(9)), Baumschule.blatt(10));
+            assertFalse(Suchbaum.istBST(falle1), "istBST(8(3(1,9),10)): false - 9 > 3 passt zum Elternknoten, steht aber im LINKEN Teilbaum der 8 (nur Kinder pruefen reicht nicht!)");
+            BinTree falle2 = Baumschule.knoten(8, Baumschule.blatt(3), Baumschule.knoten(10, Baumschule.blatt(5), Baumschule.blatt(14)));
+            assertFalse(Suchbaum.istBST(falle2), "istBST(8(3,10(5,14))): false - 5 steht im RECHTEN Teilbaum der 8");
+            assertFalse(Suchbaum.istBST(Baumschule.knoten(5, Baumschule.blatt(5), Baumschule.leer())), "istBST(5(5,-)): false - keine Duplikate");
+            assertFalse(Suchbaum.istBST(Baumschule.knoten(5, Baumschule.leer(), Baumschule.blatt(5))), "istBST(5(-,5)): false - keine Duplikate");
+            assertTrue(Suchbaum.istBST(Baumschule.knoten(0, Baumschule.leer(), Baumschule.blatt(1))), "istBST(0(-,1)): true (die 0 ist erlaubt)");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void experte_ausgeglichenAus() {
+        try {
+            int[] neun = {1, 3, 4, 6, 7, 8, 10, 13, 14};
+            BinTree b = Suchbaum.ausgeglichenAus(neun);
+            assertTrue(b != null, "ausgeglichenAus liefert null");
+            assertEquals("7(3(1,4(-,6)),10(8,13(-,14)))", Testhilfe.klammer(b), "ausgeglichenAus({1, 3, 4, 6, 7, 8, 10, 13, 14}): mitte = (lo + hi) / 2 als Wurzel, Haelften rekursiv");
+            int[] sieben = {1, 2, 3, 4, 5, 6, 7};
+            assertEquals("4(2(1,3),6(5,7))", Testhilfe.klammer(Suchbaum.ausgeglichenAus(sieben)), "ausgeglichenAus({1, ..., 7}): vollstaendiger Baum mit 3 Ebenen");
+            int[] fuenf = {1, 2, 3, 4, 5};
+            assertEquals("3(1(-,2),4(-,5))", Testhilfe.klammer(Suchbaum.ausgeglichenAus(fuenf)), "ausgeglichenAus({1, ..., 5}): Hoehe 3 statt 5 wie beim entarteten Baum");
+            int[] eins = {42};
+            assertEquals("42", Testhilfe.klammer(Suchbaum.ausgeglichenAus(eins)), "ausgeglichenAus({42}): ein Blatt");
+            BinTree leer = Suchbaum.ausgeglichenAus(new int[0]);
+            assertTrue(leer != null, "ausgeglichenAus der leeren Reihung: leerer Baum, nicht null");
+            assertTrue(leer.isEmpty(), "ausgeglichenAus der leeren Reihung: leerer Baum");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+
+    @Test
+    public void experte_nachfolger() {
+        try {
+            BinTree b = Baumschule.beispielBST();
+            assertEquals(10, Suchbaum.nachfolger(b, 8), "nachfolger(beispielBST, 8): 10 (kleinster Wert im rechten Teilbaum)");
+            assertEquals(8, Suchbaum.nachfolger(b, 7), "nachfolger(beispielBST, 7): 8 - die 7 hat keinen rechten Teilbaum, der Nachfolger steht WEITER OBEN");
+            assertEquals(-1, Suchbaum.nachfolger(b, 14), "nachfolger(beispielBST, 14): -1 (14 ist das Maximum)");
+            assertEquals(6, Suchbaum.nachfolger(b, 4), "nachfolger(beispielBST, 4): 6");
+            assertEquals(4, Suchbaum.nachfolger(b, 3), "nachfolger(beispielBST, 3): 4");
+            assertEquals(13, Suchbaum.nachfolger(b, 10), "nachfolger(beispielBST, 10): 13");
+            assertEquals(6, Suchbaum.nachfolger(b, 5), "nachfolger(beispielBST, 5): 6 (5 steht nicht im Baum)");
+            assertEquals(1, Suchbaum.nachfolger(b, 0), "nachfolger(beispielBST, 0): 1");
+            assertEquals(13, Suchbaum.nachfolger(b, 12), "nachfolger(beispielBST, 12): 13");
+            assertEquals(4, Suchbaum.nachfolger(Baumschule.entartet(), 3), "nachfolger(entartet, 3): 4");
+            assertEquals(-1, Suchbaum.nachfolger(Baumschule.leer(), 8), "nachfolger im leeren Baum: -1");
+            assertEquals("8(3(1,6(4,7)),10(-,14(13,-)))", Testhilfe.klammer(b), "nachfolger darf den Baum NICHT veraendern");
+        } catch (RuntimeException e) {
+            Testhilfe.laufzeitfehler(e);
+        }
+    }
+}
+
+// ---------------------------------------------------------------------
+//  Programmstart – das Hauptprogramm: ein Streifzug durch den Wald
+// ---------------------------------------------------------------------
+
+// ----- Level 5.1: Baeume ablaufen -----
+println("=== Level 5.1: Baeume ablaufen ===");
+BinTree bst = Baumschule.beispielBST();
+println("beispielBST:    " + Testhilfe.klammer(bst));
+println("Knoten:         " + Baum.anzahlKnoten(bst));
+println("Preorder:       " + Baum.preorder(bst));
+println("Inorder:        " + Baum.inorder(bst));
+println("Postorder:      " + Baum.postorder(bst));
+println("Hoehe: " + Baum.hoehe(bst) + "   Blaetter: " + Baum.anzahlBlaetter(bst) + "   Summe: " + Baum.summe(bst));
+BinTree term = Baumschule.termbaum();
+println("Termbaum:       " + Baum.inorder(term) + "= " + Baum.berechne(term));
+println("Postfix:        " + Baum.postorder(term));
+Baum.spiegeln(bst);
+println("Gespiegelt:     " + Testhilfe.klammer(bst));
+
+// ----- Level 5.2: Rekursiv sammeln und suchen -----
+println("");
+println("=== Level 5.2: Der Zahlenbaum ===");
+BinTree zahlen = Baumschule.zahlenbaum();
+println("zahlenbaum:     " + Testhilfe.klammer(zahlen));
+println("Enthaelt 7?     " + Rekursiv.enthaelt(zahlen, 7));
+println("Maximum:        " + Rekursiv.maximum(zahlen));
+println("Groesser als 4: " + Rekursiv.anzahlGroesser(zahlen, 4));
+println("Inorder:        " + Testhilfe.text(Rekursiv.sammleInorder(zahlen)));
+println("Blaetter:       " + Testhilfe.text(Rekursiv.blaetter(zahlen)));
+String ebenen = "";
+for (int e = 0; e <= 4; e++) {
+    ebenen = ebenen + Rekursiv.anzahlAufEbene(zahlen, e) + " ";
+}
+println("Knoten auf den Ebenen 0 bis 4: " + ebenen);
+println("Weg zur 1:      " + Rekursiv.pfadZu(zahlen, 1));
+
+// ----- Level 5.3: Eine Runde Akinator mit festen Antworten -----
+println("");
+println("=== Level 5.3: Akinator - das Monsterquiz ===");
+Akinator quiz = new Akinator(Baumschule.monsterquiz());
+println("Monster: " + quiz.anzahlMonster() + ", Fragen: " + quiz.anzahlFragen());
+println("Kann es fliegen? nein. Lebt es im Wasser? ja.  -> Ich rate: " + quiz.raten("nj"));
+println("Kann es fliegen? nein. Lebt es im Wasser? nein. -> Ich rate: " + quiz.raten("nn"));
+println("Falsch! Es war ein Golem. Neue Frage: Ist es aus Stein? (Golem: ja)");
+quiz.lernen("nn", "Golem", "Ist es aus Stein?", true);
+println("Neue Runde mit n, n, j        -> Ich rate: " + quiz.raten("nnj"));
+println("Monster: " + quiz.anzahlMonster() + ", Fragen: " + quiz.anzahlFragen());
+println("Ebenenweise: " + Akinator.levelorder(quiz.getBaum()));
+
+// ----- Level 5.4: Suchbaeume -----
+println("");
+println("=== Level 5.4: Suchbaeume ===");
+int[] nummern = {8, 3, 10, 1, 6, 14, 4, 7, 13};
+BinTree such = Suchbaum.baueAus(nummern);
+if (such != null) {
+    println("Gebaut:         " + Testhilfe.klammer(such));
+    println("7 gefunden?     " + Suchbaum.suche(such, 7) + " nach " + Suchbaum.vergleiche(such, 7) + " Vergleichen");
+    println("5 gefunden?     " + Suchbaum.sucheIterativ(such, 5) + " nach " + Suchbaum.vergleiche(such, 5) + " Vergleichen");
+    println("Minimum:        " + Suchbaum.minimum(such) + "   Nachfolger von 8: " + Suchbaum.nachfolger(such, 8));
+    Suchbaum.einfuegen(such, 5);
+    println("5 eingefuegt:   " + Testhilfe.klammer(such));
+    println("Suchbaum?       " + Suchbaum.istBST(such) + "   (zahlenbaum: " + Suchbaum.istBST(zahlen) + ")");
+}
+int[] sortiert = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+BinTree kette = Suchbaum.baueAus(sortiert);
+BinTree ausgeglichen = Suchbaum.ausgeglichenAus(sortiert);
+if (kette != null && ausgeglichen != null) {
+    println("15 Werte sortiert eingefuegt: Hoehe " + Baum.hoehe(kette) + ", Suche nach 15: " + Suchbaum.vergleiche(kette, 15) + " Vergleiche");
+    println("15 Werte ausgeglichen:        Hoehe " + Baum.hoehe(ausgeglichen) + ", Suche nach 15: " + Suchbaum.vergleiche(ausgeglichen, 15) + " Vergleiche");
+}

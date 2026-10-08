@@ -1,0 +1,542 @@
+// =====================================================================
+//  WELT 2 – DIE RANGLISTE – SORTIER-DUELL – GERÜST
+//  Informatik LK · Online-IDE · Algo Quest · DS 15 (Effizienz)
+//
+//  Die Highscore-Liste wird riesig - welches Sortierverfahren ist am
+//  sparsamsten? Im Sortier-Duell treten die Teams mit ihrem eigenen
+//  Verfahren gegeneinander an. Gezaehlt wird nicht die Zeit, sondern
+//  die ARBEIT: jeder Vergleich und jede Vertauschung.
+//
+//  ANLEITUNG:
+//  Du programmierst ganz unten in der Klasse "MeinSortierer". Statt
+//  direkt auf einer Reihung zu arbeiten, benutzt du diese Befehle:
+//
+//      Vis.laenge()          Anzahl der Balken
+//      Vis.kleiner(i, j)     true, wenn Balken i kleiner ist als Balken j
+//                            (zaehlt automatisch einen Vergleich mit)
+//      Vis.vertausche(i, j)  vertauscht die Balken i und j
+//                            (zaehlt automatisch eine Vertauschung mit)
+//      Vis.wert(i)           liefert den Zahlenwert von Balken i
+//                            - NUR im Training, im Duell verboten!
+//      Vis.getVergleiche(), Vis.getVertauschungen()   die Zaehlerstaende
+//
+//  Sortiert wird AUFSTEIGEND: der kleinste Balken links.
+//
+//  TRAINING (Hauptprogramm ganz unten):
+//      Vis.starten(40);                  40 Balken, jedes Mal neu gemischt
+//      Vis.starten(40, "zufall");        genau die Daten der Duell-Runden
+//      Vis.starten(40, "fast sortiert");   (siehe Duell-Regeln) - so kannst
+//      Vis.starten(40, "umgekehrt");       du jede Runde einzeln ueben
+//      Vis.starten(40, "viele gleiche");
+//      Vis.starten(40, "sortiert");      bereits sortiert (bester Fall)
+//  danach ein Sortierverfahren aufrufen und zum Schluss Vis.fertig():
+//  Gruen = sortiert, rot = nicht sortiert, dazu die Zaehlerstaende.
+//
+//  AUFGABEN:
+//  Training 1: selectionSort  (Vorlage: bubbleSort ist schon fertig)
+//  Training 2: insertionSort
+//  Training 3: Miss fuer alle drei Verfahren die Vergleiche auf allen
+//              vier Duell-Ausgangslagen und trage sie in die Tabelle auf
+//              dem Arbeitsblatt ein. Welches Verfahren ist wo am besten?
+//  DUELL:      Mach duellSort so sparsam wie moeglich!
+//
+//  TIPP: Mit dem Schieberegler oben in der Online-IDE stellst du das
+//  Tempo ein - auch waehrend das Programm laeuft. Stelle ihn langsam,
+//  um dem Verfahren zuzusehen, und dreh ihn hoch, wenn es dir zu lange
+//  dauert. Fuer Messungen und das Duell auf Maximum.
+//
+//  ---------------------------------------------------------------------
+//  DUELL-REGELN
+//  ---------------------------------------------------------------------
+//  1. Es tritt MeinSortierer.duellSort() an. Gestartet wird mit
+//     Duell.starten() im Hauptprogramm.
+//  2. Vier Runden mit je 40 Balken - fuer alle Teams exakt gleich
+//     (fester Pseudozufall, kein Math.random):
+//        Runde 1  "zufall"         Werte 0 bis 1000, Startwert 2027
+//        Runde 2  "fast sortiert"  aufsteigend, dann 4 feste Vertauschungen
+//        Runde 3  "umgekehrt"      absteigend
+//        Runde 4  "viele gleiche"  nur die Werte 100, 200, 300, 400, 500
+//     Danach folgt eine KONTROLLRUNDE mit 37 unbekannten Werten. Sie
+//     zaehlt nicht, muss aber ebenfalls richtig sortiert werden.
+//  3. Wertung: Summe der Vergleiche aus den vier Runden - WENIGER ist
+//     besser. Bei Gleichstand entscheidet die Summe der Vertauschungen.
+//  4. Gueltig ist das Ergebnis nur, wenn ALLE fuenf Runden (auch die
+//     Kontrollrunde) aufsteigend sortiert sind und keine Regel
+//     verletzt wurde.
+//  5. In duellSort erlaubt: Vis.laenge(), Vis.kleiner(i, j),
+//     Vis.vertausche(i, j), eigene Variablen, Schleifen und eigene
+//     Hilfsmethoden in MeinSortierer.
+//     VERBOTEN (macht das Ergebnis ungueltig):
+//     - Vis.wert(i) - liefert im Duell nur -1. Sonst koennte man die
+//       Werte ablesen, ohne einen Vergleich zu bezahlen.
+//     - Vis.starten(...), Vis.fertig() oder Duell.starten() aufrufen.
+//     - Feste Tauschfolgen fuer die bekannten Daten einbauen - dafuer
+//       gibt es die Kontrollrunde. Benutze immer Vis.laenge(), nie 40.
+//     - Die Klasse Vis veraendern.
+//  6. Am Ende erscheint in der Konsole die Zeile
+//        DUELL-ERGEBNIS: Vergleiche = ..., Vertauschungen = ..., gueltig = ja
+//     Jedes Team meldet EIN Ergebnis; die Lehrkraft haelt es in der
+//     Ergebnistabelle an der Tafel fest. Das beste gueltige Ergebnis
+//     gewinnt das Duell (Team-Wettbewerb, ohne Punkte im Lab).
+//
+//  Die Klasse Vis darfst du NICHT veraendern. Du glaubst, im Geruest
+//  steckt ein Fehler? Melde ihn deiner Lehrkraft (Bug-Meldung).
+// =====================================================================
+
+
+// ---------------------------------------------------------------------
+//  GERÜST – hier nichts veraendern
+// ---------------------------------------------------------------------
+
+class Vis {
+
+    // ----- Daten und Zaehler (private: nur ueber die Befehle erreichbar) -----
+    private static int[] werte;
+    private static Rectangle[] balken;
+    private static int vergleiche = 0;
+    private static int vertauschungen = 0;
+
+    // ----- Grafik -----
+    private static Text info;
+    private static Text titel;
+    private static boolean grafikBereit = false;
+
+    private static int BREITE_GESAMT = 900;    // Breite des Grafikbereichs
+    private static int HOEHE_GESAMT = 1500;    // Hoehe des Grafikbereichs
+    private static int MAXWERT = 1000;         // groesster moeglicher Wert
+    private static int RAND = 20;
+    private static int BODEN = 1400;           // untere Kante der Balken
+    private static double SKALA = 1.3;         // Umrechnung Wert -> Pixel
+                                               // 1000 * 1.3 = 1300 Pixel hoch
+    private static int abstand = 21;           // wird an die Anzahl angepasst
+    private static int breite = 17;
+
+    // ----- Duell -----
+    private static boolean duellModus = false;
+    private static boolean regelverstoss = false;
+    private static String verstossGrund = "";
+
+    // ----- Pseudozufallsgenerator (LCG) -----
+    // saat <- (saat * 8121 + 28411) mod 134456
+    // Gleicher Startwert -> gleiche Zahlenfolge: Alle Teams bekommen im
+    // Duell exakt dieselben Daten. Alle Zwischenergebnisse bleiben unter
+    // 2^31, es gibt also keinen Ueberlauf.
+    private static int saat = 2027;
+    private static int LCG_M = 134456;
+    private static int LCG_A = 8121;
+    private static int LCG_C = 28411;
+
+    // Ganzzahlige Pseudozufallszahl von 0 bis grenze - 1 (grenze <= 15000)
+    private static int zufall(int grenze) {
+        saat = (saat * LCG_A + LCG_C) % LCG_M;
+        return (saat * grenze) / LCG_M;
+    }
+
+
+    // =============== Befehle fuer MeinSortierer ===============
+
+    // Anzahl der Balken
+    static int laenge() {
+        return werte.length;
+    }
+
+    // true, wenn Balken i KLEINER ist als Balken j. Zaehlt einen Vergleich.
+    // Die Anzeige wird hier absichtlich NICHT aktualisiert: Bei 40 Balken
+    // gibt es mehrere hundert Vergleiche, und jedes setText kostet einen
+    // Ausfuehrungsschritt. Der Zaehler wird bei jedem Tausch und am Ende
+    // aktualisiert - das reicht voellig.
+    static boolean kleiner(int i, int j) {
+        vergleiche++;
+        return werte[i] < werte[j];
+    }
+
+    // Vertauscht die Balken i und j. Zaehlt eine Vertauschung
+    // (vertausche(i, i) aendert nichts und zaehlt nicht).
+    static void vertausche(int i, int j) {
+        if (i == j) {
+            return;
+        }
+
+        vertauschungen++;
+
+        int h = werte[i];
+        werte[i] = werte[j];
+        werte[j] = h;
+
+        // Beide betroffenen Balken neu zeichnen. So kann die Anzeige
+        // gar nicht von den Werten abweichen.
+        zeichneBalken(i);
+        zeichneBalken(j);
+
+        zeigeStand();
+    }
+
+    // Zahlenwert von Balken i - NUR im Trainingsmodus.
+    // Im Duell liefert wert(i) immer -1 und das Duell wird ungueltig.
+    static int wert(int i) {
+        if (duellModus) {
+            verstoss("Vis.wert(...) im Duell benutzt");
+            return -1;
+        }
+        return werte[i];
+    }
+
+    static int getVergleiche() {
+        return vergleiche;
+    }
+
+    static int getVertauschungen() {
+        return vertauschungen;
+    }
+
+
+    // =============== Trainingsmodus ===============
+
+    // anzahl Balken mit zufaelligen Werten von 0 bis 1000 (jedes Mal anders).
+    static void starten(int anzahl) {
+        laden(anzahl, "zufaellig (neu)", (int) (Math.random() * LCG_M));
+    }
+
+    // anzahl Balken in einer festen Ausgangslage - genau wie im Duell:
+    //   "zufall"         Pseudozufall mit Startwert 2027 (immer gleich)
+    //   "fast sortiert"  aufsteigend, dann 4 feste Vertauschungen
+    //   "umgekehrt"      absteigend (der schlechteste Fall)
+    //   "viele gleiche"  nur die Werte 100, 200, 300, 400, 500 (Startwert 2028)
+    //   "sortiert"       aufsteigend (der beste Fall)
+    static void starten(int anzahl, String art) {
+        laden(anzahl, art, 0);
+    }
+
+    // Prueft, ob wirklich sortiert wurde, und faerbt das Ergebnis ein.
+    static void fertig() {
+        if (duellModus) {
+            verstoss("Vis.fertig() im Duell aufgerufen");
+            return;
+        }
+        boolean ok = istAufsteigend();
+        faerben(ok);
+        if (ok) {
+            info.setText("Sortiert!   Vergleiche: " + vergleiche
+                         + "   Vertauschungen: " + vertauschungen);
+        } else {
+            info.setText("NICHT sortiert!   Vergleiche: " + vergleiche
+                         + "   Vertauschungen: " + vertauschungen);
+        }
+        println("Vergleiche: " + vergleiche);
+        println("Vertauschungen: " + vertauschungen);
+    }
+
+
+    // =============== Duell (aufgerufen von Duell.starten()) ===============
+
+    static void duell() {
+        if (duellModus) {
+            verstoss("Duell.starten() im Duell aufgerufen");
+            return;
+        }
+        regelverstoss = false;
+        verstossGrund = "";
+        String[] runden = {"zufall", "fast sortiert", "umgekehrt", "viele gleiche"};
+        int summeVergleiche = 0;
+        int summeVertauschungen = 0;
+        boolean gueltig = true;
+
+        println("================ SORTIER-DUELL ================");
+        for (int r = 0; r < runden.length; r++) {
+            laden(40, runden[r], 0);
+            titel.setText("Duell-Runde " + (r + 1) + " von 4: " + runden[r]);
+            duellModus = true;
+            MeinSortierer.duellSort();
+            duellModus = false;
+            boolean ok = istAufsteigend();
+            faerben(ok);
+            if (!ok) {
+                gueltig = false;
+            }
+            println("Runde " + (r + 1) + " (" + runden[r] + "): Vergleiche = " + vergleiche
+                    + ", Vertauschungen = " + vertauschungen + ", sortiert = " + jaNein(ok));
+            summeVergleiche = summeVergleiche + vergleiche;
+            summeVertauschungen = summeVertauschungen + vertauschungen;
+        }
+
+        // Kontrollrunde: 37 Werte mit unbekanntem Startwert. Zaehlt nicht,
+        // muss aber sortiert werden - fest eingebaute Tauschfolgen fliegen auf.
+        laden(37, "kontrolle", 1 + (int) (Math.random() * (LCG_M - 1)));
+        titel.setText("Kontrollrunde: 37 unbekannte Werte");
+        duellModus = true;
+        MeinSortierer.duellSort();
+        duellModus = false;
+        boolean kontrolleOk = istAufsteigend();
+        faerben(kontrolleOk);
+        if (!kontrolleOk) {
+            gueltig = false;
+        }
+        println("Kontrollrunde (37 unbekannte Werte, zaehlt nicht): sortiert = " + jaNein(kontrolleOk));
+
+        if (regelverstoss) {
+            gueltig = false;
+            println("REGELVERSTOSS: " + verstossGrund);
+        }
+        println("DUELL-ERGEBNIS: Vergleiche = " + summeVergleiche + ", Vertauschungen = "
+                + summeVertauschungen + ", gueltig = " + jaNein(gueltig));
+        titel.setText("DUELL-ERGEBNIS (gueltig: " + jaNein(gueltig) + ")");
+        info.setText("Vergleiche: " + summeVergleiche + "   Vertauschungen: " + summeVertauschungen);
+    }
+
+
+    // =============== intern ===============
+
+    private static void laden(int anzahl, String art, int startwert) {
+        if (duellModus) {
+            verstoss("Vis.starten(...) im Duell aufgerufen");
+            return;
+        }
+        grafikVorbereiten();
+
+        // alte Balken entfernen
+        if (balken != null) {
+            for (int i = 0; i < balken.length; i++) {
+                if (balken[i] != null) {
+                    balken[i].destroy();
+                }
+            }
+        }
+
+        werte = new int[anzahl];
+        balken = new Rectangle[anzahl];
+        erzeugeWerte(art, startwert);
+
+        abstand = (BREITE_GESAMT - 2 * RAND) / anzahl;
+        if (abstand > 21) {
+            abstand = 21;
+        }
+        breite = abstand - 4;
+        if (breite < 1) {
+            breite = 1;
+        }
+        for (int i = 0; i < anzahl; i++) {
+            zeichneBalken(i);
+        }
+
+        vergleiche = 0;
+        vertauschungen = 0;
+        titel.setText("Ausgangslage: " + art + " (" + anzahl + " Balken)");
+        zeigeStand();
+    }
+
+    private static void erzeugeWerte(String art, int startwert) {
+        int n = werte.length;
+        int schritt = MAXWERT / n;
+        if (schritt < 1) {
+            schritt = 1;
+        }
+        if (art.equals("fast sortiert") || art.equals("sortiert")) {
+            for (int i = 0; i < n; i++) {
+                werte[i] = (i + 1) * schritt;
+            }
+            if (art.equals("fast sortiert")) {
+                tauscheIntern(2, 3);
+                tauscheIntern(10, 25);
+                tauscheIntern(18, 19);
+                tauscheIntern(33, 38);
+            }
+        } else if (art.equals("umgekehrt")) {
+            for (int i = 0; i < n; i++) {
+                werte[i] = (n - i) * schritt;
+            }
+        } else if (art.equals("viele gleiche")) {
+            saat = 2028;
+            for (int i = 0; i < n; i++) {
+                werte[i] = (zufall(5) + 1) * 100;
+            }
+        } else {
+            // "zufall" (Startwert 2027), sonst der uebergebene Startwert
+            saat = 2027;
+            if (startwert > 0) {
+                saat = startwert;
+            }
+            for (int i = 0; i < n; i++) {
+                werte[i] = zufall(MAXWERT + 1);
+            }
+        }
+    }
+
+    // Tausch beim Erzeugen der Daten (zaehlt nicht, zeichnet nicht)
+    private static void tauscheIntern(int i, int j) {
+        if (i < werte.length && j < werte.length) {
+            int h = werte[i];
+            werte[i] = werte[j];
+            werte[j] = h;
+        }
+    }
+
+    private static void grafikVorbereiten() {
+        if (!grafikBereit) {
+            new World(BREITE_GESAMT, HOEHE_GESAMT);
+            titel = new Text(20, 40, 36, "");
+            titel.setFillColor("#1F4E79");
+            info = new Text(20, 1430, 36, "");
+            info.setFillColor("#333333");
+            grafikBereit = true;
+        }
+    }
+
+    // Zeichnet den Balken an Position i passend zu werte[i] neu.
+    // Ein eventuell vorhandener alter Balken wird vorher geloescht.
+    private static void zeichneBalken(int i) {
+        if (balken[i] != null) {
+            balken[i].destroy();
+        }
+
+        int hoehe = (int) (werte[i] * SKALA);
+        if (hoehe < 2) {
+            hoehe = 2;                 // damit auch der Wert 0 sichtbar ist
+        }
+
+        Rectangle r = new Rectangle(RAND + i * abstand, BODEN - hoehe, breite, hoehe);
+        r.setFillColor("#1F4E79");
+        balken[i] = r;
+    }
+
+    private static void zeigeStand() {
+        info.setText("Vergleiche: " + vergleiche
+                     + "   Vertauschungen: " + vertauschungen);
+    }
+
+    private static boolean istAufsteigend() {
+        for (int i = 0; i < werte.length - 1; i++) {
+            if (werte[i] > werte[i + 1]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static void faerben(boolean ok) {
+        for (int i = 0; i < balken.length; i++) {
+            if (ok) {
+                balken[i].setFillColor("#548235");
+            } else {
+                balken[i].setFillColor("#C00000");
+            }
+        }
+    }
+
+    private static void verstoss(String grund) {
+        regelverstoss = true;
+        if (verstossGrund.equals("")) {
+            verstossGrund = grund;
+        }
+    }
+
+    private static String jaNein(boolean b) {
+        if (b) {
+            return "ja";
+        }
+        return "nein";
+    }
+}
+
+
+// Startet das Sortier-Duell: MeinSortierer.duellSort() auf vier Runden
+// (je 40 Balken) plus Kontrollrunde, danach die Ergebniszeile.
+class Duell {
+
+    static void starten() {
+        Vis.duell();
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  DEIN TEIL – hier arbeitest du!
+// ---------------------------------------------------------------------
+
+class MeinSortierer {
+
+    // Beispiel: So sieht BubbleSort mit den Vis-Befehlen aus.
+    // Dieses Verfahren ist bereits fertig - benutze es als Vorlage.
+    static void bubbleSort() {
+        for (int i = 0; i < Vis.laenge() - 1; i++) {
+            for (int j = 0; j < Vis.laenge() - 1 - i; j++) {
+                if (Vis.kleiner(j + 1, j)) {
+                    Vis.vertausche(j, j + 1);
+                }
+            }
+        }
+    }
+
+    // SelectionSort (aufsteigend): Suche im unsortierten Rest das KLEINSTE
+    // Element und tausche es an den Anfang dieses Restes.
+    static void selectionSort() {
+        // TODO Training 1
+    }
+
+    // InsertionSort (aufsteigend): Das aktuelle Element wandert so lange
+    // nach links, wie es kleiner ist als sein linker Nachbar.
+    static void insertionSort() {
+        // TODO Training 2
+        // Hinweis: InsertionSort "schiebt" ein Element nach links.
+        // Das laesst sich durch wiederholtes Tauschen mit dem linken
+        // Nachbarn umsetzen.
+    }
+
+
+    // ================= DEIN DUELL-VERFAHREN =================
+    // Dieses Verfahren tritt im Sortier-Duell an (Regeln siehe oben).
+    // Zu Beginn ruft es einfach insertionSort auf. Deine Aufgabe:
+    // Sortiere mit moeglichst WENIGEN Vergleichen - auf allen vier
+    // Ausgangslagen zusammen. Du darfst Hilfsmethoden in dieser Klasse
+    // anlegen.
+    static void duellSort() {
+        // TODO Duell: Verbessere mich!
+        insertionSort();
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  Programmstart – hier stellst du ein, was ausgefuehrt werden soll
+// ---------------------------------------------------------------------
+
+// GESCHWINDIGKEIT
+//
+// Ein Sortiervorgang besteht aus mehreren tausend Einzelschritten.
+// Ist das Tempo zu niedrig, scheint sich minutenlang nichts zu tun -
+// das Programm rechnet dann nur noch.
+//
+// Es gibt zwei Moeglichkeiten, das Tempo einzustellen:
+//
+//   1. Der Schieberegler oben in der Online-IDE. Damit kannst du das
+//      Tempo auch WAEHREND das Programm laeuft veraendern - ideal, um
+//      erst langsam zuzusehen und dann durchlaufen zu lassen.
+//
+//   2. Die folgende Zeile im Programm. Sie setzt den Startwert, den
+//      der Regler danach jederzeit ueberschreiben kann.
+//
+//   Zum Zusehen:   200 bis 1000
+//   Zum Messen:    10000
+SystemTools.setSpeed(500);
+
+// ----- TRAINING -----
+// Genau eine starten-Zeile und genau ein Verfahren aktivieren.
+Vis.starten(40);
+
+// Vis.starten(40, "zufall");          // wie Duell-Runde 1
+// Vis.starten(40, "fast sortiert");   // wie Duell-Runde 2
+// Vis.starten(40, "umgekehrt");       // wie Duell-Runde 3 (schlechtester Fall)
+// Vis.starten(40, "viele gleiche");   // wie Duell-Runde 4
+// Vis.starten(40, "sortiert");        // bereits sortiert (bester Fall)
+
+MeinSortierer.bubbleSort();
+// MeinSortierer.selectionSort();
+// MeinSortierer.insertionSort();
+// MeinSortierer.duellSort();
+
+Vis.fertig();
+
+// ----- SORTIER-DUELL -----
+// Wenn dein duellSort im Training auf allen Ausgangslagen gruen ist:
+// die beiden folgenden Zeilen aktivieren (Training darf davor laufen).
+// SystemTools.setSpeed(10000);
+// Duell.starten();

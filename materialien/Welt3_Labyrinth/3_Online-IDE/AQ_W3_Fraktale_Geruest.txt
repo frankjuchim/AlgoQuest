@@ -1,0 +1,391 @@
+// =====================================================================
+//  WELT 3 – DAS LABYRINTH – DEKO-WERKSTATT: FRAKTALE – GERÜST
+//  Informatik LK · Online-IDE · Algo Quest · DS 18 (Rekursion)
+//
+//  Das Labyrinth braucht Deko: Baeume im Innenhof, Eiszapfen an der
+//  Hoehlendecke, Schneeflocken im Eiskeller, eine Rune ueber dem Portal
+//  und der Grundriss der Dungeon-Gaenge. Gezeichnet wird alles von einer
+//  Schildkroete (Turtle) - und alles ist REKURSIV: Jede Figur besteht
+//  aus kleineren Kopien ihrer selbst.
+//
+//  ANLEITUNG:
+//  Du programmierst ganz unten in der Klasse "Fraktal". Die Turtle kann:
+//
+//      t.forward(laenge)        geht vorwaerts und zeichnet dabei
+//      t.turn(winkel)           dreht die Blickrichtung um winkel Grad:
+//                               POSITIV = nach LINKS (gegen den
+//                               Uhrzeigersinn), NEGATIV = nach RECHTS
+//      t.penUp() / t.penDown()  Stift anheben / absenken
+//
+//  Zu Beginn blickt eine Turtle nach RECHTS. Die fertige Hilfsmethode
+//  zurueck(t, laenge) laeuft eine Strecke rueckwaerts, ohne zu zeichnen.
+//
+//  Im Programmstart (ganz unten) waehlst du, was gezeichnet wird:
+//      Werkstatt.zeichne("baum", 6);       zeichnet und zaehlt
+//      Werkstatt.tabelle("baum", 6);       zaehlt fuer Tiefe 0 bis 6
+//                                          (zeichnet unsichtbar)
+//  Die Werkstatt stellt die Turtle passend auf, setzt die Zaehler auf 0,
+//  ruft deine Methode auf und gibt danach in der Konsole aus:
+//      Aufrufe: ...   wie oft wurde die Fraktal-Methode aufgerufen?
+//      Striche: ...   wie viele Striche wurden gezeichnet?
+//
+//  REGELN FUER DIE ZAEHLER:
+//  - Die ERSTE Anweisung jeder rekursiven Fraktal-Methode ist
+//    "aufrufe++;" - sie steht schon da, bitte nicht loeschen.
+//  - Nach jedem t.forward(...), das einen Strich ZEICHNET, folgt
+//    "striche++;" (nicht beim Laufen mit angehobenem Stift).
+//
+//  AUFGABEN:
+//  Deko 1 (Basis)        Der Baum ist fertig. Zeichne ihn mit den Tiefen
+//                        0 bis 6 und notiere Aufrufe und Striche in einer
+//                        Tabelle (Tiefe | Aufrufe | Striche). Stelle eine
+//                        Formel fuer die Aufrufe bei Tiefe n auf.
+//  Deko 2 (Basis)        baum3: ein Baum mit DREI Aesten.
+//  Deko 3 (Erweiterung)  koch: die Koch-Kurve (Eiszapfen) und
+//                        schneeflocke: drei Koch-Kurven als Schneeflocke.
+//  Deko 4 (Erweiterung)  sierpinski: das Sierpinski-Dreieck (Portal-Rune).
+//  Deko 5 (Experte)      hBaum: der H-Baum (Grundriss der Gaenge).
+//  Analyse               Sage fuer jede Deko die Aufrufe fuer Tiefe 0 bis 4
+//                        VORHER voraus und pruefe dann mit
+//                        Werkstatt.tabelle(...). Wie waechst die Zahl der
+//                        Aufrufe, wenn die Tiefe um 1 steigt? Begruende
+//                        mit der Anzahl der rekursiven Aufrufe pro Methode.
+//
+//  TIPP: Mit dem Schieberegler oben in der Online-IDE stellst du das
+//  Tempo ein - auch waehrend das Programm laeuft. Langsam sieht man, wie
+//  sich die Rekursion in die Tiefe frisst und danach zurueckkehrt.
+//  Bei grossen Tiefen den Regler auf Maximum stellen.
+//
+//  Die Klasse Werkstatt darfst du NICHT veraendern. Du glaubst, im
+//  Geruest steckt ein Fehler? Melde ihn deiner Lehrkraft (Bug-Meldung).
+// =====================================================================
+
+
+// ---------------------------------------------------------------------
+//  GERÜST – hier nichts veraendern
+// ---------------------------------------------------------------------
+
+// Die Werkstatt stellt fuer jede Deko die Turtle auf (Startpunkt,
+// Startrichtung, Farbe), setzt die Zaehler auf 0, ruft deine Methode
+// auf und gibt danach die Zaehlerstaende aus.
+//
+// Startrichtungen (die Turtle blickt anfangs nach RECHTS):
+//   baum, baum3    Start unten in der Mitte, Drehung +90 -> Blick nach oben
+//   koch           Start links oben, keine Drehung -> Blick nach rechts,
+//                  die Zacken zeigen nach UNTEN (Eiszapfen)
+//   schneeflocke   Start links, keine Drehung -> Blick nach rechts
+//   sierpinski     Start links unten, KEINE Drehung -> Blick nach rechts,
+//                  die Spitze des Dreiecks zeigt nach oben
+//   hbaum          Start in der Mitte, keine Drehung -> Blick nach rechts
+class Werkstatt {
+
+    private static boolean weltBereit = false;
+
+    // Zeichnet eine Deko und gibt Aufrufe und Striche aus.
+    // deko: "baum", "baum3", "koch", "schneeflocke", "sierpinski", "hbaum"
+    static void zeichne(String deko, int tiefe) {
+        if (!pruefe(deko, tiefe)) {
+            return;
+        }
+        welt();
+        Fraktal.aufrufe = 0;
+        Fraktal.striche = 0;
+        Turtle t = aufstellen(deko, 0);
+        starte(deko, t, tiefe);
+        println("Deko '" + deko + "', Tiefe " + tiefe);
+        println("Aufrufe: " + Fraktal.aufrufe);
+        println("Striche: " + Fraktal.striche);
+    }
+
+    // Zaehlt fuer die Tiefen 0 bis bisTiefe die Aufrufe und Striche und
+    // gibt eine Tabelle aus. Gezeichnet wird dabei AUSSERHALB des
+    // sichtbaren Bereichs - du siehst also nichts, bekommst aber schnell
+    // alle Zahlen. Erst selbst vorhersagen, dann nachpruefen!
+    static void tabelle(String deko, int bisTiefe) {
+        if (!pruefe(deko, bisTiefe)) {
+            return;
+        }
+        welt();
+        println("Deko '" + deko + "'");
+        println("Tiefe | Aufrufe | Striche");
+        for (int tiefe = 0; tiefe <= bisTiefe; tiefe++) {
+            Fraktal.aufrufe = 0;
+            Fraktal.striche = 0;
+            Turtle t = aufstellen(deko, 5000);
+            starte(deko, t, tiefe);
+            println("  " + tiefe + "   | " + Fraktal.aufrufe + " | " + Fraktal.striche);
+        }
+    }
+
+
+    // =============== intern ===============
+
+    private static void welt() {
+        if (!weltBereit) {
+            new World(800, 700);
+            weltBereit = true;
+        }
+    }
+
+    // Prueft den Namen und begrenzt die Tiefe (sonst rechnet die
+    // Online-IDE minutenlang).
+    private static boolean pruefe(String deko, int tiefe) {
+        int max = maxTiefe(deko);
+        if (max < 0) {
+            println("Unbekannte Deko '" + deko + "'. Erlaubt: baum, baum3, koch, schneeflocke, sierpinski, hbaum");
+            return false;
+        }
+        if (tiefe < 0 || tiefe > max) {
+            println("Tiefe " + tiefe + " geht nicht: fuer '" + deko + "' sind 0 bis " + max + " erlaubt.");
+            return false;
+        }
+        return true;
+    }
+
+    private static int maxTiefe(String deko) {
+        if (deko.equals("baum")) {
+            return 12;
+        }
+        if (deko.equals("baum3")) {
+            return 8;
+        }
+        if (deko.equals("koch")) {
+            return 6;
+        }
+        if (deko.equals("schneeflocke")) {
+            return 5;
+        }
+        if (deko.equals("sierpinski")) {
+            return 7;
+        }
+        if (deko.equals("hbaum")) {
+            return 10;
+        }
+        return -1;
+    }
+
+    // Stellt die Turtle auf. verschiebung > 0 schiebt alles nach rechts
+    // aus dem sichtbaren Bereich (fuer die Tabelle).
+    private static Turtle aufstellen(String deko, int verschiebung) {
+        Turtle t;
+        if (deko.equals("baum") || deko.equals("baum3")) {
+            t = new Turtle(400 + verschiebung, 680);
+            t.turn(90);                          // Blick nach oben
+            t.setBorderColor("#C8A165");
+        } else if (deko.equals("koch")) {
+            t = new Turtle(100 + verschiebung, 150);
+            t.setBorderColor("#6FB7E9");
+        } else if (deko.equals("schneeflocke")) {
+            t = new Turtle(150 + verschiebung, 470);
+            t.setBorderColor("#6FB7E9");
+        } else if (deko.equals("sierpinski")) {
+            t = new Turtle(150 + verschiebung, 630);
+            t.setBorderColor("#E8743B");     // KEINE Startdrehung
+        } else {
+            t = new Turtle(400 + verschiebung, 350);
+            t.setBorderColor("#7FBF5F");
+        }
+        return t;
+    }
+
+    private static void starte(String deko, Turtle t, int tiefe) {
+        if (deko.equals("baum")) {
+            Fraktal.baum(t, 150, tiefe);
+        } else if (deko.equals("baum3")) {
+            Fraktal.baum3(t, 130, tiefe);
+        } else if (deko.equals("koch")) {
+            Fraktal.koch(t, 600, tiefe);
+        } else if (deko.equals("schneeflocke")) {
+            Fraktal.schneeflocke(t, 500, tiefe);
+        } else if (deko.equals("sierpinski")) {
+            Fraktal.sierpinski(t, 500, tiefe);
+        } else {
+            Fraktal.hBaum(t, 300, tiefe);
+        }
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  DEIN TEIL – hier arbeitest du!
+// ---------------------------------------------------------------------
+
+class Fraktal {
+
+    // Zaehler - werden von der Werkstatt vor jedem Bild auf 0 gesetzt.
+    static int aufrufe = 0;
+    static int striche = 0;
+
+    // Laeuft die angegebene Strecke rueckwaerts zurueck, ohne zu zeichnen.
+    // Die zweite Drehung ist -180, damit sich beide exakt aufheben und
+    // der Blickwinkel unveraendert bleibt.
+    static void zurueck(Turtle t, double laenge) {
+        t.penUp();
+        t.turn(180);
+        t.forward(laenge);
+        t.turn(-180);
+        t.penDown();
+    }
+
+
+    // ---------------- Deko 1: Baum (fertiges Beispiel) ----------------
+    //
+    // Basisfall:         tiefe 0 -> es wird nichts mehr gezeichnet
+    // Rekursionsschritt: Stamm zeichnen, links und rechts je einen
+    //                    kleineren Baum ansetzen, dann zurueckgehen
+    //
+    // Wichtig: Am Ende steht die Turtle wieder am Astansatz und blickt in
+    // dieselbe Richtung wie vorher (+30 - 60 + 30 = 0). Nur deshalb kann
+    // der Aufrufer danach einfach weiterzeichnen.
+
+    static void baum(Turtle t, double laenge, int tiefe) {
+        aufrufe++;
+        if (tiefe == 0) {
+            return;                            // Basisfall
+        }
+
+        t.forward(laenge);                     // Stamm zeichnen
+        striche++;
+
+        t.turn(30);                            // nach links drehen
+        baum(t, laenge * 0.7, tiefe - 1);      // linker Teilbaum
+        t.turn(-60);                           // nach rechts drehen
+        baum(t, laenge * 0.7, tiefe - 1);      // rechter Teilbaum
+        t.turn(30);                            // Blickrichtung zurueck
+
+        zurueck(t, laenge);                    // zum Astansatz zurueck
+    }
+
+
+    // ---------------- Deko 2: Baum mit drei Aesten (Basis) ----------------
+    //
+    // Wie baum, aber mit einem zusaetzlichen Ast GERADEAUS in der Mitte:
+    // links (+30), geradeaus, rechts (-30). Die Teilbaeume sind wieder
+    // laenge * 0.7 lang. Am Ende muss die Blickrichtung wieder stimmen!
+
+    static void baum3(Turtle t, double laenge, int tiefe) {
+        aufrufe++;
+        if (tiefe == 0) {
+            return;
+        }
+
+        // TODO Deko 2
+    }
+
+
+    // ---------------- Deko 3: Koch-Kurve (Erweiterung) ----------------
+    //
+    // Idee: Eine Strecke wird ersetzt durch vier Strecken von je einem
+    // Drittel der Laenge, mit den Drehungen -60, +120, -60 dazwischen.
+    // (-60 heisst: nach RECHTS - bei Blick nach rechts zeigt die Zacke
+    // also nach unten wie ein Eiszapfen.)
+    //
+    //        ____        wird zu        _  _
+    //                                    \/
+    //
+    // Am Ende steht die Turtle genau "laenge" weiter und blickt in die
+    // urspruengliche Richtung.
+
+    static void koch(Turtle t, double laenge, int tiefe) {
+        aufrufe++;
+        if (tiefe == 0) {
+            t.forward(laenge);
+            striche++;
+            return;                            // Basisfall
+        }
+
+        // TODO Deko 3: vier rekursive Aufrufe mit laenge / 3 und
+        //      tiefe - 1, dazwischen die Drehungen -60, +120, -60
+    }
+
+
+    // ---------------- Deko 3: Schneeflocke (Erweiterung) ----------------
+    //
+    // Drei Koch-Kurven der Laenge laenge, nach jeder eine Drehung um 120
+    // Grad nach LINKS. Diese Methode ist selbst NICHT rekursiv (sie ruft
+    // nur koch auf) und zaehlt deshalb keinen Aufruf.
+
+    static void schneeflocke(Turtle t, double laenge, int tiefe) {
+        // TODO Deko 3
+    }
+
+
+    // ---------------- Deko 4: Sierpinski-Dreieck (Erweiterung) ----------------
+    //
+    // Idee: Ein Sierpinski-Dreieck besteht aus drei halb so grossen
+    // Sierpinski-Dreiecken - eins an jeder Ecke.
+    //
+    // Der Basisfall zeichnet ein einfaches Dreieck: dreimal vorwaerts und
+    // um 120 Grad nach LINKS drehen. Weil die Turtle anfangs nach rechts
+    // blickt, zeigt die Spitze nach oben.
+    //
+    // Rekursionsschritt - dreimal wiederholen:
+    //   1. sierpinski(t, laenge / 2, tiefe - 1);   (Teildreieck an dieser Ecke)
+    //   2. Stift anheben, die GANZE Seite laenge vorwaerts zur naechsten
+    //      Ecke laufen, Stift absenken
+    //   3. um 120 Grad nach links drehen (wie im Basisfall!)
+    // Danach steht die Turtle wieder am Start und blickt nach rechts.
+
+    static void sierpinski(Turtle t, double laenge, int tiefe) {
+        aufrufe++;
+        if (tiefe == 0) {
+            for (int i = 0; i < 3; i++) {      // einfaches Dreieck
+                t.forward(laenge);
+                striche++;
+                t.turn(120);
+            }
+            return;                            // Basisfall
+        }
+
+        // TODO Deko 4
+    }
+
+
+    // ---------------- Deko 5: H-Baum (Experte) ----------------
+    //
+    // Die Turtle steht in der MITTE einer Strecke der Laenge laenge.
+    // Ein H-Baum der Tiefe n besteht aus dieser Strecke und an BEIDEN
+    // Enden je einem H-Baum der Tiefe n - 1 mit laenge * 0.71, der quer
+    // (um 90 Grad gedreht) zur Strecke liegt.
+    //
+    //        |     |                 Tiefe 2: ein "H" mit zwei
+    //        |-----|                 Querstrichen an jedem Ende
+    //        |     |                 (Tiefe 1 = nur der Mittelstrich)
+    //
+    // Hinweis: Zeichne erst die vordere Haelfte (laenge / 2), dann die
+    // hintere. Am Ende muss die Turtle wieder in der Mitte stehen und in
+    // die Ausgangsrichtung blicken. Zaehle jeden gezeichneten Strich.
+
+    static void hBaum(Turtle t, double laenge, int tiefe) {
+        aufrufe++;
+        if (tiefe == 0) {
+            return;
+        }
+
+        // TODO Deko 5
+    }
+}
+
+
+// ---------------------------------------------------------------------
+//  Programmstart – hier stellst du ein, was gezeichnet werden soll
+// ---------------------------------------------------------------------
+
+// GESCHWINDIGKEIT: Zum Zusehen 200 bis 2000, fuer grosse Tiefen 10000.
+// Der Schieberegler oben in der Online-IDE ueberschreibt diesen Wert.
+SystemTools.setSpeed(2000);
+
+// Genau EINE Deko pro Programmlauf zeichnen (sonst liegen die Bilder
+// uebereinander). Die Tiefe ist der zweite Parameter.
+Werkstatt.zeichne("baum", 6);
+
+// Werkstatt.zeichne("baum3", 5);          // Deko 2
+// Werkstatt.zeichne("koch", 4);           // Deko 3
+// Werkstatt.zeichne("schneeflocke", 4);   // Deko 3
+// Werkstatt.zeichne("sierpinski", 5);     // Deko 4
+// Werkstatt.zeichne("hbaum", 7);          // Deko 5
+
+// ----- ANALYSE -----
+// Zaehlt Aufrufe und Striche fuer Tiefe 0 bis 4 (zeichnet unsichtbar).
+// Erst vorhersagen, dann nachpruefen!
+// Werkstatt.tabelle("baum", 4);

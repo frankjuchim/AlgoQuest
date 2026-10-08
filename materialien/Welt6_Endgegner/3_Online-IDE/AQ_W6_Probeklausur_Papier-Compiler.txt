@@ -1,0 +1,515 @@
+// =====================================================================
+//  WELT 6 – DER ENDGEGNER – PAPIER-COMPILER ZUR PROBEKLAUSUR – GERÜST
+//  Informatik LK · Online-IDE · Algo Quest · Probeklausur "Paketstation"
+//  (Ausgabe erst in DS 38 - NACH der Probeklausur!)
+//
+//  In der Probeklausur hast du von Hand programmiert - wie im Abitur.
+//  Jetzt pruefst du, ob deine Handschrift auch wirklich laeuft: Du
+//  tippst sie UNVERAENDERT ab und laesst die Tests entscheiden.
+//
+//  ANLEITUNG:
+//  0. BIBLIOTHEK EINSCHALTEN (einmal pro Workspace, sonst kennt die IDE
+//     Stack, Queue und DynArray nicht):
+//     Workspace in der Liste links mit der RECHTEN Maustaste anklicken
+//     -> "Einstellungen" -> Haekchen bei "Niedersachsen" setzen -> OK.
+//
+//  1. Du arbeitest NUR im Abschnitt "DEIN TEIL" (ganz unten in der
+//     Klasse Paketstation). Dort stehen drei Methoden mit vorlaeufigem
+//     return:
+//        Aufgabe b)  sucheFach         Pflicht: Handschrift abtippen
+//        Aufgabe c)  anzahlAuftraege   Kuer: dein Struktogramm Block fuer
+//                                      Block in Java uebersetzen
+//        Aufgabe h)  freieFaecher      Kuer: deine korrigierte Methode
+//                                      abtippen
+//     Tippe Zeichen fuer Zeichen ab, was auf deinem Papier steht - auch
+//     wenn du beim Abtippen einen Fehler bemerkst! Notiere ihn stattdessen
+//     im Fehlerlogbuch auf deinem AB "Korrektur und Fehlerjagd".
+//
+//  2. Tests starten: Reiter "Testrunner" -> gruener Dreieckspfeil neben
+//     ProbeklausurTest. Die Testnamen beginnen mit der Teilaufgabe
+//     (aufgabeB_, aufgabeC_, aufgabeH_). Gruen = bestanden, rot = Meldung
+//     lesen! "LAUFZEITFEHLER" bzw. eine Exception heisst: abgestuerzt
+//     (z. B. getInhalt() auf einem freien Fach, Index zu gross). Haengt
+//     der Testrunner, hast du eine Endlosschleife oder eine Rekursion
+//     ohne Ende.
+//     Zeigt die IDE schon vorher rote Unterstreichungen, kompiliert dein
+//     Code nicht (z. B. fehlender Cast, fehlendes return) - auch das ist
+//     ein Ergebnis: ab ins Fehlerlogbuch, dann korrigieren.
+//
+//  3. ERST NACH DEM ERSTEN TESTLAUF darfst du korrigieren - so lange,
+//     bis alles gruen ist.
+//
+//  4. Ziel (ohne Punkte, fuer dein Fehlerlogbuch):
+//        alle aufgabeB_-Tests gruen - am besten beim ERSTEN Testlauf
+//        aufgabeC_ bzw. aufgabeH_ beim ersten Lauf gruen
+//     Was beim ersten Lauf rot war, traegst du als Falle P1-P10 ein.
+//
+//  5. INFOKASTEN: CASTEN BEI DEN ABITUR-KLASSEN
+//     DynArray, Queue und Stack speichern alles als Object:
+//         Fach f = (Fach) faecher.getItem(i);
+//         Paket p = (Paket) auftraege.dequeue();
+//     Hineinlegen ohne Cast: hilf.enqueue(p);
+//
+//  6. ACHTUNG, DAS FINDEN DIE TESTS NICHT: Die Online-IDE vergleicht
+//     Zeichenketten auch mit == inhaltlich (anders als echtes Java).
+//     sucheFach mit == statt equals wird hier also gruen - im Abitur
+//     kostet es trotzdem Punkte (P5). Pruefe das selbst!
+//     Ebenso: Ob freieFaecher wirklich rekursiv ist, sehen die Tests
+//     nicht - eine Schleife waere in h) falsch.
+//
+//  Die Klassen Paket und Fach sowie der obere Teil von Paketstation
+//  sind vorgegeben (GERÜST). Die Testklasse darfst du NICHT veraendern.
+//  Du glaubst, ein Test ist falsch? Melde ihn deiner Lehrkraft (Bug-Meldung).
+// =====================================================================
+
+// ---------------------------------------------------------------------
+//  GERÜST – hier nichts veraendern
+// ---------------------------------------------------------------------
+//  Paket, Fach und der vorgegebene Teil von Paketstation entsprechen
+//  den Klassenkarten aus Abbildung 1 der Probeklausur. Die Methoden
+//  zustellen (Abbildung 3) und sammle (Abbildung 5) sind fertig - so
+//  kannst du deine Tracetabelle und deine Rekursionstabelle im
+//  Hauptprogramm nachpruefen.
+//  auftraegeAlsText und ruecksendungenAlsText sind Testhilfen (nicht
+//  Teil der Klausur): Sie lesen die Schlange bzw. den Stapel aus, ohne
+//  sie zu veraendern.
+// ---------------------------------------------------------------------
+
+class Paket {
+
+    private String nummer;        // Sendungsnummer, z. B. "P-4127"
+    private String empfaenger;
+    private char groesse;         // 'S', 'M' oder 'L'
+
+    public Paket(String nummer, String empfaenger, char groesse) {
+        this.nummer = nummer;
+        this.empfaenger = empfaenger;
+        this.groesse = groesse;
+    }
+
+    public String getNummer() {
+        return nummer;
+    }
+
+    public String getEmpfaenger() {
+        return empfaenger;
+    }
+
+    public char getGroesse() {
+        return groesse;
+    }
+
+    // S: 1, M: 2, L: 3
+    public int getVolumen() {
+        if (groesse == 'S') {
+            return 1;
+        }
+        if (groesse == 'M') {
+            return 2;
+        }
+        return 3;
+    }
+}
+
+class Fach {
+
+    private int nummer;           // Fachnummer, z. B. 104
+    private char groesse;         // 'S', 'M' oder 'L'
+    private Paket inhalt;         // null, wenn das Fach frei ist
+
+    public Fach(int nummer, char groesse) {
+        this.nummer = nummer;
+        this.groesse = groesse;
+        this.inhalt = null;
+    }
+
+    public int getNummer() {
+        return nummer;
+    }
+
+    public char getGroesse() {
+        return groesse;
+    }
+
+    public boolean istFrei() {
+        return inhalt == null;
+    }
+
+    // null, wenn das Fach frei ist
+    public Paket getInhalt() {
+        return inhalt;
+    }
+
+    // nur fuer ein freies Fach aufrufen
+    public void einlegen(Paket p) {
+        inhalt = p;
+    }
+
+    public Paket entnehmen() {
+        Paket p = inhalt;
+        inhalt = null;
+        return p;
+    }
+}
+
+class Paketstation {
+
+    private String standort;
+    private DynArray faecher;          // dynamische Reihung vom Inhaltstyp Fach
+    private Queue auftraege;           // Schlange vom Inhaltstyp Paket
+    private Stack ruecksendungen;      // Stapel vom Inhaltstyp Paket
+
+    public Paketstation(String standort) {
+        this.standort = standort;
+        faecher = new DynArray();
+        auftraege = new Queue();
+        ruecksendungen = new Stack();
+    }
+
+    // erzeugt anzahlS Faecher der Groesse S, dann anzahlM der Groesse M,
+    // dann anzahlL der Groesse L; Fachnummern fortlaufend ab 101
+    public Paketstation(String standort, int anzahlS, int anzahlM, int anzahlL) {
+        this(standort);
+        int nr = 101;
+        for (int i = 0; i < anzahlS; i++) {
+            faecher.append(new Fach(nr, 'S'));
+            nr++;
+        }
+        for (int i = 0; i < anzahlM; i++) {
+            faecher.append(new Fach(nr, 'M'));
+            nr++;
+        }
+        for (int i = 0; i < anzahlL; i++) {
+            faecher.append(new Fach(nr, 'L'));
+            nr++;
+        }
+    }
+
+    public void fachHinzufuegen(Fach f) {
+        faecher.append(f);
+    }
+
+    public void auftragAnnehmen(Paket p) {
+        auftraege.enqueue(p);
+    }
+
+    public void ruecksendungAnnehmen(Paket p) {
+        ruecksendungen.push(p);
+    }
+
+    public Stack getRuecksendungen() {
+        return ruecksendungen;
+    }
+
+    // Abbildung 3 der Probeklausur (vorgegeben)
+    public int zustellen() {
+        int anzahl = 0;
+        while (!auftraege.isEmpty()) {
+            Paket p = (Paket) auftraege.dequeue();
+            int i = 0;
+            boolean gefunden = false;
+            while (!gefunden && i < faecher.getLength()) {
+                Fach f = (Fach) faecher.getItem(i);
+                if (f.istFrei() && f.getGroesse() == p.getGroesse()) {
+                    f.einlegen(p);
+                    gefunden = true;
+                    anzahl = anzahl + 1;
+                } else {
+                    i = i + 1;
+                }
+            }
+            if (!gefunden) {
+                ruecksendungen.push(p);
+            }
+        }
+        return anzahl;
+    }
+
+    // Abbildung 5 der Probeklausur (vorgegeben, rekursiv)
+    public int sammle(Stack s, int platz) {
+        if (s.isEmpty()) {
+            return 0;
+        }
+        Paket p = (Paket) s.top();
+        if (p.getVolumen() > platz) {
+            return 0;
+        }
+        s.pop();
+        return 1 + sammle(s, platz - p.getVolumen());
+    }
+
+    // Testhilfe: Sendungsnummern der Auftraege von vorn nach hinten,
+    // durch Leerzeichen getrennt, z. B. "P-4127 P-9054"; Schlange bleibt
+    // unveraendert
+    public String auftraegeAlsText() {
+        String text = "";
+        Queue hilf = new Queue();
+        while (!auftraege.isEmpty()) {
+            Paket p = (Paket) auftraege.dequeue();
+            if (text.length() > 0) {
+                text = text + " ";
+            }
+            text = text + p.getNummer();
+            hilf.enqueue(p);
+        }
+        while (!hilf.isEmpty()) {
+            auftraege.enqueue(hilf.dequeue());
+        }
+        return text;
+    }
+
+    // Testhilfe: Sendungsnummern der Ruecksendungen von oben nach unten;
+    // Stapel bleibt unveraendert
+    public String ruecksendungenAlsText() {
+        String text = "";
+        Stack hilf = new Stack();
+        while (!ruecksendungen.isEmpty()) {
+            Paket p = (Paket) ruecksendungen.pop();
+            if (text.length() > 0) {
+                text = text + " ";
+            }
+            text = text + p.getNummer();
+            hilf.push(p);
+        }
+        while (!hilf.isEmpty()) {
+            ruecksendungen.push(hilf.pop());
+        }
+        return text;
+    }
+
+    // =================================================================
+    //  DEIN TEIL – hier arbeitest du!
+    // =================================================================
+    //  Tippe deine Handschrift UNVERAENDERT ab - auch mit Fehlern.
+    //  Ersetze dabei jeweils die Zeile "// TODO ..." UND die vorlaeufige
+    //  return-Anweisung. Erst nach dem ersten Testlauf korrigieren!
+
+    // AUFGABE B
+    // sucheFach(sendungsnr: Zeichenkette): Ganzzahl
+    // Fachnummer des Fachs, in dem das Paket mit der Sendungsnummer
+    // liegt; -1, wenn es in keinem Fach liegt.
+    public int sucheFach(String sendungsnr) {
+        // TODO Aufgabe b) - deine Implementierung unveraendert abtippen
+        return -2;
+    }
+
+    // AUFGABE C (Struktogramm -> Java)
+    // anzahlAuftraege(groesse: Zeichen): Ganzzahl
+    // Anzahl der Auftraege, deren Paket die Groesse groesse hat;
+    // die Schlange auftraege ist danach UNVERAENDERT.
+    // Uebersetze dein Struktogramm Block fuer Block:
+    //   x <- wert             ->  x = wert;
+    //   solange bedingung     ->  while (bedingung) { ... }
+    //   wenn ... wahr/falsch  ->  if (...) { ... } else { ... }
+    //   gib x zurueck         ->  return x;
+    //   erzeuge Schlange      ->  new Queue()
+    public int anzahlAuftraege(char groesse) {
+        // TODO Aufgabe c) - dein Struktogramm in Java uebersetzen
+        return -1;
+    }
+
+    // AUFGABE H (deine korrigierte Fassung von Abbildung 8, rekursiv!)
+    // freieFaecher(groesse: Zeichen, i: Ganzzahl): Ganzzahl
+    // Anzahl der freien Faecher der Groesse groesse ab Index i;
+    // Erstaufruf mit i = 0.
+    public int freieFaecher(char groesse, int i) {
+        // TODO Aufgabe h) - deine Korrektur unveraendert abtippen
+        return -1;
+    }
+}
+
+// ---------------------------------------------------------------------
+//  GERÜST – hier nichts veraendern: Testklasse
+// ---------------------------------------------------------------------
+//  Reiter "Testrunner" -> gruener Dreieckspfeil neben ProbeklausurTest.
+//  Die Testnamen beginnen mit der Teilaufgabe:
+//      aufgabeB_...   sucheFach          (Pflicht)
+//      aufgabeC_...   anzahlAuftraege    (Kuer: Struktogramm -> Java)
+//      aufgabeH_...   freieFaecher       (Kuer: deine Korrektur)
+//  Alle Tests verwenden die Station aus Abbildung 2 der Probeklausur.
+// ---------------------------------------------------------------------
+
+class ProbeklausurTest {
+
+    private Fach[] f;
+
+    public ProbeklausurTest() {
+    }
+
+    // Station Wiesenau aus Abbildung 2: Faecher 101 bis 107,
+    // belegt sind 101, 103 und 106; sechs Zustellauftraege
+    private Paketstation wiesenau() {
+        f = new Fach[7];
+        f[0] = new Fach(101, 'S');
+        f[1] = new Fach(102, 'S');
+        f[2] = new Fach(103, 'M');
+        f[3] = new Fach(104, 'M');
+        f[4] = new Fach(105, 'M');
+        f[5] = new Fach(106, 'L');
+        f[6] = new Fach(107, 'L');
+        Paketstation st = new Paketstation("Wiesenau");
+        for (int i = 0; i < 7; i++) {
+            st.fachHinzufuegen(f[i]);
+        }
+        f[0].einlegen(new Paket("P-7310", "Yilmaz", 'S'));
+        f[2].einlegen(new Paket("P-2208", "Brandt", 'M'));
+        f[5].einlegen(new Paket("P-5512", "Okafor", 'L'));
+        st.auftragAnnehmen(new Paket("P-4127", "Kaya", 'M'));
+        st.auftragAnnehmen(new Paket("P-9054", "Nowak", 'L'));
+        st.auftragAnnehmen(new Paket("P-1863", "Schulz", 'S'));
+        st.auftragAnnehmen(new Paket("P-6620", "Ahrens", 'M'));
+        st.auftragAnnehmen(new Paket("P-3089", "Lange", 'M'));
+        st.auftragAnnehmen(new Paket("P-8845", "Petrov", 'L'));
+        return st;
+    }
+
+    // ------------------------- Aufgabe b) ----------------------------
+
+    @Test
+    public void aufgabeB_beispiel() {
+        Paketstation st = wiesenau();
+        assertEquals(103, st.sucheFach("P-2208"), "P-2208 liegt in Fach 103 (Fachnummer, nicht Index!)");
+    }
+
+    @Test
+    public void aufgabeB_erstesFach() {
+        Paketstation st = wiesenau();
+        assertEquals(101, st.sucheFach("P-7310"), "P-7310 liegt im ersten Fach 101 (Index 0)");
+    }
+
+    @Test
+    public void aufgabeB_hinterFreienFaechern() {
+        Paketstation st = wiesenau();
+        assertEquals(106, st.sucheFach("P-5512"), "P-5512 liegt in Fach 106 - davor liegen freie Faecher (istFrei?)");
+    }
+
+    @Test
+    public void aufgabeB_nichtVorhanden() {
+        Paketstation st = wiesenau();
+        assertEquals(-1, st.sucheFach("P-9999"), "P-9999 liegt in keinem Fach: -1 (alle Faecher pruefen, Index bis getLength()-1)");
+    }
+
+    @Test
+    public void aufgabeB_leereStation() {
+        Paketstation st = new Paketstation("Leer");
+        assertEquals(-1, st.sucheFach("P-2208"), "Station ohne Faecher: -1 ohne Laufzeitfehler");
+    }
+
+    @Test
+    public void aufgabeB_letztesFach() {
+        Paketstation st = wiesenau();
+        st.zustellen();
+        assertEquals(107, st.sucheFach("P-9054"), "nach zustellen() liegt P-9054 im letzten Fach 107");
+        assertEquals(-1, st.sucheFach("P-8845"), "P-8845 ist eine Ruecksendung und liegt in keinem Fach");
+    }
+
+    // ------------------------- Aufgabe c) ----------------------------
+
+    @Test
+    public void aufgabeC_beispielM() {
+        Paketstation st = wiesenau();
+        assertEquals(3, st.anzahlAuftraege('M'), "drei Auftraege der Groesse M");
+    }
+
+    @Test
+    public void aufgabeC_groessenSundL() {
+        Paketstation st = wiesenau();
+        assertEquals(1, st.anzahlAuftraege('S'), "ein Auftrag der Groesse S");
+        assertEquals(2, st.anzahlAuftraege('L'), "zwei Auftraege der Groesse L");
+    }
+
+    @Test
+    public void aufgabeC_leereSchlange() {
+        Paketstation st = new Paketstation("Leer");
+        assertEquals(0, st.anzahlAuftraege('M'), "keine Auftraege: 0 ohne Laufzeitfehler (isEmpty?)");
+    }
+
+    @Test
+    public void aufgabeC_unveraendert() {
+        Paketstation st = wiesenau();
+        int n = st.anzahlAuftraege('M');
+        assertEquals(3, n, "drei Auftraege der Groesse M");
+        assertEquals("P-4127 P-9054 P-1863 P-6620 P-3089 P-8845", st.auftraegeAlsText(),
+            "Schlange auftraege danach unveraendert (gleiche Pakete, gleiche Reihenfolge)");
+    }
+
+    @Test
+    public void aufgabeC_zweimalAufrufen() {
+        Paketstation st = wiesenau();
+        st.anzahlAuftraege('L');
+        assertEquals(2, st.anzahlAuftraege('L'), "zweiter Aufruf liefert dasselbe Ergebnis");
+    }
+
+    // ------------------------- Aufgabe h) ----------------------------
+
+    @Test
+    public void aufgabeH_beispielM() {
+        Paketstation st = wiesenau();
+        assertEquals(2, st.freieFaecher('M', 0), "freie M-Faecher: 104 und 105");
+    }
+
+    @Test
+    public void aufgabeH_letztesFachZaehlt() {
+        Paketstation st = wiesenau();
+        assertEquals(1, st.freieFaecher('L', 0), "freies L-Fach 107 ist das letzte Fach (Basisfall!)");
+    }
+
+    @Test
+    public void aufgabeH_groesseS() {
+        Paketstation st = wiesenau();
+        assertEquals(1, st.freieFaecher('S', 0), "freies S-Fach: 102");
+    }
+
+    @Test
+    public void aufgabeH_abIndex() {
+        Paketstation st = wiesenau();
+        assertEquals(1, st.freieFaecher('M', 4), "ab Index 4 ist nur noch Fach 105 ein freies M-Fach");
+        assertEquals(0, st.freieFaecher('L', 7), "ab Index 7 gibt es keine Faecher mehr");
+    }
+
+    @Test
+    public void aufgabeH_leereStation() {
+        Paketstation st = new Paketstation("Leer");
+        assertEquals(0, st.freieFaecher('M', 0), "Station ohne Faecher: 0 ohne Laufzeitfehler");
+    }
+
+    @Test
+    public void aufgabeH_nachZustellen() {
+        Paketstation st = wiesenau();
+        st.zustellen();
+        assertEquals(0, st.freieFaecher('M', 0), "nach zustellen() ist kein M-Fach mehr frei");
+        assertEquals(0, st.freieFaecher('L', 0), "nach zustellen() ist kein L-Fach mehr frei");
+    }
+}
+
+// ---------------------------------------------------------------------
+//  HAUPTPROGRAMM (gruener Startknopf): die Station aus Abbildung 2 -
+//  vergleiche die Ausgabe mit deiner Tracetabelle (d) und deiner
+//  Rekursionstabelle (f).
+// ---------------------------------------------------------------------
+Paketstation w = new Paketstation("Wiesenau", 2, 3, 2);   // Faecher 101 bis 107
+w.auftragAnnehmen(new Paket("P-7310", "Yilmaz", 'S'));        // landen in 101, 103 und 106
+w.auftragAnnehmen(new Paket("P-2208", "Brandt", 'M'));
+w.auftragAnnehmen(new Paket("P-5512", "Okafor", 'L'));
+w.zustellen();
+w.auftragAnnehmen(new Paket("P-4127", "Kaya", 'M'));
+w.auftragAnnehmen(new Paket("P-9054", "Nowak", 'L'));
+w.auftragAnnehmen(new Paket("P-1863", "Schulz", 'S'));
+w.auftragAnnehmen(new Paket("P-6620", "Ahrens", 'M'));
+w.auftragAnnehmen(new Paket("P-3089", "Lange", 'M'));
+w.auftragAnnehmen(new Paket("P-8845", "Petrov", 'L'));
+println("Station wie in Abbildung 2");
+println("P-2208 liegt in Fach " + w.sucheFach("P-2208"));
+println("Auftraege der Groesse M: " + w.anzahlAuftraege('M'));
+println("freie M-Faecher: " + w.freieFaecher('M', 0));
+println("Auftraege vorn -> hinten: " + w.auftraegeAlsText());
+println("zustellen() liefert " + w.zustellen());
+println("Ruecksendungen oben -> unten: " + w.ruecksendungenAlsText());
+println("P-6620 liegt jetzt in Fach " + w.sucheFach("P-6620"));
+Stack s = new Stack();                                        // Abbildung 6: unten P-1190 ... oben P-2741
+s.push(new Paket("P-1190", "Vogt", 'M'));
+s.push(new Paket("P-5236", "Roth", 'S'));
+s.push(new Paket("P-7781", "Haas", 'L'));
+s.push(new Paket("P-0412", "Kahn", 'S'));
+s.push(new Paket("P-2741", "Weber", 'M'));
+println("sammle(s, 8) liefert " + w.sammle(s, 8));
