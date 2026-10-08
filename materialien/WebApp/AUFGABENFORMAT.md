@@ -154,7 +154,8 @@ Ergänzend akzeptiert: `fuer` als Synonym für `zaehle`.
 
 - Je Feld eine Liste akzeptierter Antworten (ein einzelner Wert wird als Liste akzeptiert, Hinweis im Validator).
 - `zahl`: numerisch (Komma = Punkt, Toleranz ±1e-9; `1e2` = 100). Nicht-numerische Lösung → Textvergleich.
-- `auswahl`: exakter Vergleich, Lösung muss in `optionen` stehen. Wird als Klappliste gerendert.
+- `auswahl`: exakter Vergleich, Lösung muss in `optionen` stehen. Wird als Klappliste gerendert; ab drei Optionen
+  mischt der Client die Reihenfolge bei jedem Anzeigen (Zweierlisten wie wahr/falsch bleiben, wie sie sind).
 - `text`, `norm`:
   - `"code"` (Standard): alle Leerzeichen entfernen, Groß/Klein **beachten**.
   - `"text"`: Leerraum zusammenfassen, Groß/Klein egal.
@@ -199,6 +200,7 @@ Richtig, wenn die Folge einer der Reihenfolgen entspricht; nicht genannte Teile 
 "interaktion": { "kind":"match", "elemente":[{"id":"e1","md":"Knoten **8**"}], "kategorien":[{"id":"w","md":"Wurzel"},{"id":"b","md":"Blatt"}] },
 "loesung": { "e1":"w" }
 ```
+Der Client mischt die Reihenfolge der Elemente bei jedem Anzeigen; die Kategorien bleiben in Dateireihenfolge.
 Feedback je Element (`elemente`).
 
 ### 6.6 `tree` – Binärbaum

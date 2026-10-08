@@ -1,0 +1,14 @@
+{
+  "_hinweis": "Ergänzungen je Aufgabe für seed_code_pruefen.py: 'vorspann' = Anweisungen vor dem Block (Variablen aus dem Aufgabentext), 'methoden' = Hilfsmethoden, die der Aufgabentext beschreibt.",
+  "W0-L3-06": {"methoden": "static void tausche(int[] r, int i, int j) { int h = r[i]; r[i] = r[j]; r[j] = h; }"},
+  "W0-L5-03": {"methoden": "static void tausche(int[] r, int i, int j) { int h = r[i]; r[i] = r[j]; r[j] = h; }"},
+  "W0-B-09": {"methoden": "static int[] verdoppelt(int[] r) { int[] e = new int[r.length]; for (int i = 0; i < r.length; i++) { e[i] = 2 * r[i]; } return e; }"},
+  "W3-L6-03": {"methoden": "static int zerlege(int[] r, int lo, int hi) { return lo; }"},
+  "W4-L2-02": {"vorspann": "Zugbuch b = new Zugbuch();"},
+  "W4-L2-03": {"vorspann": "Zugbuch b = new Zugbuch();"},
+  "W4-L2-04": {"vorspann": "Initiative ini = new Initiative();"},
+  "W4-L2-05": {"vorspann": "Initiative ini = new Initiative();"},
+  "W4-B-14": {"vorspann": "Zugbuch b = new Zugbuch();"},
+  "W4-L5-03": {"vorspann": "DynArray d = new DynArray();"},
+  "W6-L4-03": {"vorspann": "Queue q = new Queue(); Stack s = new Stack();"}
+}

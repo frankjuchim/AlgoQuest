@@ -1,6 +1,6 @@
 {
   "name": "algoquest-lab",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Algo Quest Lab – interaktive Übungsplattform (Weltkarte, automatisch geprüfte Aufgaben, Bosse, Kurs-Scoreboard) für den Informatik-LK",
   "private": true,
   "main": "src/server.js",

@@ -1,0 +1,141 @@
+// =====================================================================
+//  Klassen, die nur in Lab-Aufgaben vorkommen (Klassenkarten bzw.
+//  Beschreibung im Aufgabentext, nicht in den Online-IDE-Dateien).
+//  Nur fuer seed_code_pruefen.py: Damit lassen sich die Code-Bloecke
+//  dieser Aufgaben kompilieren. Verhalten nach dem Aufgabentext.
+// =====================================================================
+
+// W1-Boss „Der Reitstall der Heldenschmiede“ (W1-B-02 … W1-B-13)
+class Reittier {
+    private String name;
+    private int tempo;
+    private int ausdauer;
+    private boolean gesattelt;
+
+    public Reittier(String name) {
+        this(name, 10, 100);
+    }
+
+    public Reittier(String name, int tempo, int ausdauer) {
+        this.name = name;
+        this.tempo = tempo;
+        this.ausdauer = ausdauer;
+        gesattelt = false;
+    }
+
+    public String getName() { return name; }
+    public int getTempo() { return tempo; }
+    public int getAusdauer() { return ausdauer; }
+    public boolean istGesattelt() { return gesattelt; }
+    public void satteln() { gesattelt = true; }
+
+    public boolean istBereit() {
+        return gesattelt && ausdauer > 0;
+    }
+
+    public void reiten(int strecke) {
+        if (gesattelt) {
+            ausdauer = ausdauer - strecke;
+            if (ausdauer < 0) {
+                ausdauer = 0;
+            }
+        }
+    }
+}
+
+class Greif extends Reittier {
+    private int spannweite;
+
+    public Greif(String name, int tempo, int ausdauer, int spannweite) {
+        super(name, tempo, ausdauer);
+        this.spannweite = spannweite;
+    }
+
+    public int getSpannweite() { return spannweite; }
+
+    public int getTempo() {
+        return 2 * super.getTempo();
+    }
+}
+
+class Stall {
+    private Reittier[] boxen;
+    private int anzahl;
+
+    public Stall(int groesse) {
+        boxen = new Reittier[groesse];
+        anzahl = 0;
+    }
+
+    public boolean einstellen(Reittier r) {
+        if (r == null || anzahl == boxen.length) {
+            return false;
+        }
+        boxen[anzahl] = r;
+        anzahl++;
+        return true;
+    }
+
+    public int getAnzahl() { return anzahl; }
+    public Reittier getReittier(int i) { return boxen[i]; }
+
+    public Reittier schnellstes() {
+        if (anzahl == 0) {
+            return null;
+        }
+        Reittier bester = boxen[0];
+        for (int i = 1; i < anzahl; i++) {
+            if (boxen[i].getTempo() > bester.getTempo()) {
+                bester = boxen[i];
+            }
+        }
+        return bester;
+    }
+
+    public int anzahlBereit() {
+        int n = 0;
+        for (int i = 0; i < anzahl; i++) {
+            if (boxen[i].istBereit()) {
+                n++;
+            }
+        }
+        return n;
+    }
+
+    public Reittier finde(String name) {
+        for (int i = 0; i < anzahl; i++) {
+            if (boxen[i].getName().equals(name)) {
+                return boxen[i];
+            }
+        }
+        return null;
+    }
+}
+
+// W6 Fallenjagd/Boss: Truhen in einer dynamischen Reihung (Name:Gold)
+class Truhe {
+    private String name;
+    private int gold;
+
+    public Truhe(String name, int gold) {
+        this.name = name;
+        this.gold = gold;
+    }
+
+    public String getName() { return name; }
+    public int getGold() { return gold; }
+}
+
+// W4-Boss: Reisende in einer Schlange
+class Reisender {
+    private String name;
+    private String ziel;
+
+    public Reisender(String name, String ziel) {
+        this.name = name;
+        this.ziel = ziel;
+    }
+
+    public String getName() { return name; }
+    public String getZiel() { return ziel; }
+}

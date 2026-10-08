@@ -30,7 +30,10 @@ const AQI = (() => {
         let el;
         const label = `Lücke ${id}`;
         if (f.typ === 'auswahl') {
-          el = h('select', { class: 'luecke', 'aria-label': label }, h('option', { value: '' }, '–'), (f.optionen || []).map((o) => h('option', { value: String(o) }, String(o))));
+          // ab drei Optionen bei jedem Anzeigen neu mischen (die Lösung soll nicht an fester Stelle stehen);
+          // Zweierlisten wie wahr/falsch bleiben in der gewohnten Reihenfolge
+          const optionen = (f.optionen || []).length >= 3 ? mische(f.optionen) : f.optionen || [];
+          el = h('select', { class: 'luecke', 'aria-label': label }, h('option', { value: '' }, '–'), optionen.map((o) => h('option', { value: String(o) }, String(o))));
         } else {
           el = h('input', {
             class: 'luecke',
@@ -315,7 +318,8 @@ const AQI = (() => {
     const zeilen = new Map();
     let gesperrt = false;
     const box = h('div');
-    for (const e of ia.elemente || []) {
+    // Elemente bei jedem Anzeigen neu mischen (in der Datei stehen sie oft nach Lösungskategorie geordnet)
+    for (const e of mische(ia.elemente || [])) {
       const knoepfe = (ia.kategorien || []).map((k) =>
         h('button', { type: 'button', 'aria-pressed': 'false', onclick: () => {
           if (gesperrt) return;
