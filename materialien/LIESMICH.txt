@@ -12,6 +12,10 @@ Arbeitsblaetter_PDF         Alle Arbeitsblaetter (Schuelerfassung), Werkzeugkart
                             Warm-up-Karten (ohne Loesungsteil) als PDF, je Welt ein Ordner, Dateinamen
                             AQ_W<Welt>-AB<Nr>_<Thema>.pdf / -Boss_ / -Warm-up-Karten - zum direkten Hochladen; online auch unter
                             https://algoquest.frankjuchim.de/themen (Themenuebersicht mit Links zu Lab-Leveln und PDFs)
+Loesungen_Portal            NUR LEHRKRAFT: zu jeder Schueler-PDF aus Arbeitsblaetter_PDF die Loesung bzw. der
+                            Erwartungshorizont, gleich sortiert und benannt (+ _Loesung / _Erwartungshorizont)
+Loesungen_Arbeitsblaetter   NUR LEHRKRAFT: dieselben Loesungen nach Art sortiert (01 Arbeitsblaetter, 02 Bosse und
+                            Probeklausur, 03 Klausuren inkl. Klausur/Nachschreibklausur, 04 Warm-up-Karten)
 Online-IDE                  Fertige Workspaces zum Importieren (JSON, je Welt eine Datei, ein Workspace je Geruest,
                             Bibliothek "Niedersachsen" ab Welt 4 schon aktiviert); Lehrkraft/ = Musterloesungen
 WeltN_.../4_Boss            Papier-Boss (handschriftlich, Abi-Training, ohne Punkte); Welt 6: Probeklausur + Klausuren

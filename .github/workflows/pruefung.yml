@@ -42,5 +42,7 @@ jobs:
         run: python3 werkzeuge/workspaces_erzeugen.py --pruefen
       - name: Arbeitsblatt-PDFs vollständig
         run: python3 werkzeuge/arbeitsblaetter_pdf.py --pruefen
+      - name: Lösungs-PDFs vollständig
+        run: python3 werkzeuge/loesungen_pdf.py --pruefen
       - name: Materialien (Begriffe, NI-Klassen, Zeichenketten-Operationen)
         run: python3 werkzeuge/materialien_pruefen.py

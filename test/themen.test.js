@@ -84,3 +84,22 @@ test('Öffentlicher PDF-Ordner enthält nie Klausuren, Erwartungshorizonte oder 
   // Warm-up-Karten nur ohne Lösungsteil
   for (const w of v.welten) for (const x of w.weitere || []) if (x.art === 'warmup') assert.equal(x.ohneLoesungsteil, true, x.datei);
 });
+
+test('Lösungsordner (Loesungen_Portal, Loesungen_Arbeitsblaetter) sind weder ausgeliefert noch im Docker-Image', async () => {
+  const app = H.makeApp({ seedDir: SEED, weltDateien: [], arbeitsblaetterDir: PDF_DIR });
+  const lsg = path.join(__dirname, '..', 'materialien', 'Loesungen_Portal', 'Welt_0_Akademie');
+  const datei = fs.existsSync(lsg) ? fs.readdirSync(lsg)[0] : 'x.pdf';
+  for (const url of [
+    `/arbeitsblaetter/..%2fLoesungen_Portal/Welt_0_Akademie/${datei}`,
+    `/arbeitsblaetter/%2e%2e/Loesungen_Portal/Welt_0_Akademie/${datei}`,
+    `/Loesungen_Portal/Welt_0_Akademie/${datei}`,
+    `/materialien/Loesungen_Arbeitsblaetter/03_Klausuren/AQ_W6-Klausur_Ladepark_Erwartungshorizont.pdf`
+  ]) {
+    await request(app).get(url).expect(404);
+  }
+  const ignore = fs.readFileSync(path.join(__dirname, '..', '.dockerignore'), 'utf8').split('\n').map((z) => z.trim());
+  assert.ok(ignore.includes('materialien/*'), '.dockerignore muss materialien/* ausschließen');
+  assert.deepEqual(ignore.filter((z) => z.startsWith('!')), ['!materialien/Arbeitsblaetter_PDF'], 'nur der Schülerordner darf ins Image');
+  const docker = fs.readFileSync(path.join(__dirname, '..', 'Dockerfile'), 'utf8');
+  assert.ok(!/Loesungen/i.test(docker), 'Dockerfile kopiert keine Lösungen');
+});

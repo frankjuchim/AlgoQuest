@@ -42,6 +42,10 @@ quellen/specs/       SPEC_AlgoLab.md (App), SPEC_AlgoQuest_W0_W1.md (Grundkonven
 quellen/lab-inhalte-generatoren/  historische Python-Generatoren der Lab-Aufgaben (nur Referenz, JSON ist maßgeblich)
 materialien/Arbeitsblaetter_PDF/  Arbeitsblätter, Werkzeugkarten, Papier-Bosse, Probeklausur, Warm-up-Karten als PDF je Welt – ERZEUGT (werkzeuge/arbeitsblaetter_pdf.py)
                      aus seed/arbeitsblaetter.json; im Image /app/arbeitsblaetter, ausgeliefert unter /arbeitsblaetter/…
+materialien/Loesungen_Portal/      Lösungen als PDF, gespiegelt zu Arbeitsblaetter_PDF (je Welt, gleicher Name + _Loesung/
+                     _Erwartungshorizont) – ERZEUGT (werkzeuge/loesungen_pdf.py); NUR Lehrkraft, nicht im Image
+materialien/Loesungen_Arbeitsblaetter/  dieselben Lösungen nach Art: 01_Arbeitsblaetter, 02_Bosse_und_Probeklausur,
+                     03_Klausuren (inkl. Klausur/Nachschreibklausur-EH), 04_Warm-up-Karten – ERZEUGT, NUR Lehrkraft
 materialien/Online-IDE/  Import-Dateien (JSON) für online-ide.de: je Welt ein Workspace je Gerüst; Lehrkraft/ = LSG
                      – ERZEUGT aus den .txt-Dateien (npm run workspaces), nicht von Hand ändern
 werkzeuge/           Prüf- und Erzeugungsskripte (Python 3 + javac, nicht im Docker-Image)
@@ -51,6 +55,7 @@ werkzeuge/           Prüf- und Erzeugungsskripte (Python 3 + javac, nicht im Do
                                     und Variablen, die nur im Aufgabentext stehen)
   workspaces_erzeugen.py            materialien/Online-IDE neu erzeugen (--pruefen: nur prüfen)
   arbeitsblaetter_pdf.py            materialien/Arbeitsblaetter_PDF neu erzeugen (soffice; --pruefen: Vollständigkeit)
+  loesungen_pdf.py                  materialien/Loesungen_Portal + Loesungen_Arbeitsblaetter neu erzeugen (--pruefen)
   materialien_pruefen.py            docx/pptx/txt: Altbegriffe, Generics, verbotene String-Operationen (--rendern: soffice → PDF)
 .github/workflows/pruefung.yml      GitHub-Prüfung: alles oben bei jedem Push/PR
 docs/ONLINE-IDE_TESTPROTOKOLL.md    Checkliste mit Sollwerten für den Probelauf in der echten Online-IDE
@@ -68,6 +73,7 @@ WELT_DATEIEN=test/fixtures/welt_beispiel.json npm run dev   # mit Beispielwelt
 npm run pruefen     # ALLES: test, validate, IDE-Prüfstand, Lab-Code, Workspaces aktuell, Materialien
 npm run workspaces  # materialien/Online-IDE nach Änderungen an Gerüsten/LSG neu erzeugen
 npm run arbeitsblaetter  # materialien/Arbeitsblaetter_PDF nach Änderungen an Arbeitsblättern neu erzeugen
+npm run loesungen   # Lösungs-PDFs (Loesungen_Portal, Loesungen_Arbeitsblaetter) nach Änderungen an Lösungen neu erzeugen
 python3 werkzeuge/materialien_pruefen.py --rendern --pdf-ordner <scratch>   # alle docx/pptx nach PDF
 ```
 Python-Abhängigkeiten der Werkzeuge: `pip install python-docx python-pptx pypdf`; Java 21 (javac) für die IDE-Prüfung.
@@ -125,6 +131,9 @@ P9 Struktogramm nicht nach EH §5 · P10 Operator verfehlt.
   Der PDF-Ordner ist öffentlich abrufbar: Arbeitsblätter, Werkzeugkarten, Papier-Bosse W0–W5 und die Probeklausur
   (Entscheidung der Lehrkraft) sowie Warm-up-Karten nur ohne Lösungsteil (`ohneLoesungsteil`) – nie Lösungen,
   Erwartungshorizonte, Klausur oder Nachschreibklausur (Test in `test/themen.test.js` wacht darüber).
+- Nach jeder Änderung an einer Lösung (`5_Loesungen/*.docx`) oder einem Warm-up-Lösungsteil: `npm run loesungen`.
+  Lösungs-PDFs liegen nur in `Loesungen_Portal`/`Loesungen_Arbeitsblaetter` – nie in `Arbeitsblaetter_PDF`
+  (öffentlich) und nie im Docker-Image (`.dockerignore`: nur `!materialien/Arbeitsblaetter_PDF`).
 - Gerüst und LSG müssen (nach dem Freischalten der `/* LEVEL-x-START … -ENDE */`-Blöcke) identische Testklassen haben.
 - Der Prüfstand nutzt echtes Java: `==` bei Zeichenketten fällt dort auf, in der Online-IDE NICHT (Tests bleiben grün).
 - Neue Aufgaben im Format von `docs/AUFGABENFORMAT.md`; jede Aufgabe mit Erklärung (bei Fallen P-Nummer nennen).
