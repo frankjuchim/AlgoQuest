@@ -347,11 +347,11 @@
    "inhalt": [
     {
      "t": "text",
-     "md": "Die Rangliste enthält (Index 0 bis 4): Nox 640, Pia 910, Rex 1210, Sun 880, Taj 1210 Punkte."
+     "md": "Die Rangliste enthält (Index 0 bis 4): Nox 640, Pia 910, Rex 1210, Sun 880, Taj 1210 Punkte. Trage an jeder mit `// → Tabellenzeile` markierten Stelle eine Zeile ein."
     },
     {
      "t": "code",
-     "code": "public Eintrag besterEintrag() {\n    if (anzahl == 0) {\n        return null;\n    }\n    Eintrag bester = eintraege[0];\n    for (int i = 1; i < anzahl; i++) {\n        if (eintraege[i].getPunkte() > bester.getPunkte()) {\n            bester = eintraege[i];\n        }\n    }\n    return bester;\n}",
+     "code": "public Eintrag besterEintrag() {\n    if (anzahl == 0) {\n        return null;\n    }\n    Eintrag bester = eintraege[0];   // → Tabellenzeile (Startwerte)\n    for (int i = 1; i < anzahl; i++) {\n        if (eintraege[i].getPunkte() > bester.getPunkte()) {\n            bester = eintraege[i];\n        }   // → Tabellenzeile\n    }\n    return bester;\n}",
      "nummern": true
     },
     {
@@ -359,12 +359,10 @@
      "kopf": [
       "i",
       "eintraege[i].getPunkte()",
-      "getPunkte() > bester.getPunkte()",
       "bester"
      ],
      "zeilen": [
       [
-       "–",
        "–",
        "–",
        "Nox"
@@ -372,25 +370,21 @@
       [
        "1",
        "910",
-       "[[v1]]",
        "[[b1]]"
       ],
       [
        "2",
        "1210",
-       "[[v2]]",
        "[[b2]]"
       ],
       [
        "3",
        "880",
-       "[[v3]]",
        "[[b3]]"
       ],
       [
        "4",
        "1210",
-       "[[v4]]",
        "[[b4]]"
       ]
      ]
@@ -403,13 +397,6 @@
    "interaktion": {
     "kind": "gaps",
     "felder": {
-     "v1": {
-      "typ": "auswahl",
-      "optionen": [
-       "wahr",
-       "falsch"
-      ]
-     },
      "b1": {
       "typ": "auswahl",
       "optionen": [
@@ -418,13 +405,6 @@
        "Rex",
        "Sun",
        "Taj"
-      ]
-     },
-     "v2": {
-      "typ": "auswahl",
-      "optionen": [
-       "wahr",
-       "falsch"
       ]
      },
      "b2": {
@@ -437,13 +417,6 @@
        "Taj"
       ]
      },
-     "v3": {
-      "typ": "auswahl",
-      "optionen": [
-       "wahr",
-       "falsch"
-      ]
-     },
      "b3": {
       "typ": "auswahl",
       "optionen": [
@@ -452,13 +425,6 @@
        "Rex",
        "Sun",
        "Taj"
-      ]
-     },
-     "v4": {
-      "typ": "auswahl",
-      "optionen": [
-       "wahr",
-       "falsch"
       ]
      },
      "b4": {
@@ -484,26 +450,14 @@
     }
    },
    "loesung": {
-    "v1": [
-     "wahr"
-    ],
     "b1": [
      "Pia"
-    ],
-    "v2": [
-     "wahr"
     ],
     "b2": [
      "Rex"
     ],
-    "v3": [
-     "falsch"
-    ],
     "b3": [
      "Rex"
-    ],
-    "v4": [
-     "falsch"
     ],
     "b4": [
      "Rex"
@@ -733,57 +687,50 @@
     },
     {
      "t": "code",
-     "code": "public boolean hatGleichePunkte() {\n    for (int i = 0; i < anzahl - 1; i++) {\n        for (int j = i + 1; j < anzahl; j++) {\n            if (eintraege[i].getPunkte() == eintraege[j].getPunkte()) {\n                return true;\n            }\n        }\n    }\n    return false;\n}",
+     "code": "public boolean hatGleichePunkte() {\n    for (int i = 0; i < anzahl - 1; i++) {\n        for (int j = i + 1; j < anzahl; j++) {\n            if (eintraege[i].getPunkte() == eintraege[j].getPunkte()) {   // → Tabellenzeile\n                return true;\n            }\n        }\n    }\n    return false;\n}",
      "nummern": true
     },
     {
      "t": "text",
-     "md": "Trage jeden Vergleich in einer eigenen Zeile ein."
+     "md": "Trage jeden Vergleich in einer eigenen Zeile ein – an der mit `// → Tabellenzeile` markierten Stelle."
     },
     {
      "t": "tabelle",
      "kopf": [
       "Vergleich Nr.",
       "i",
-      "j",
-      "gleich?"
+      "j"
      ],
      "zeilen": [
       [
        "1",
        "[[i1]]",
-       "[[j1]]",
-       "[[q1]]"
+       "[[j1]]"
       ],
       [
        "2",
        "[[i2]]",
-       "[[j2]]",
-       "[[q2]]"
+       "[[j2]]"
       ],
       [
        "3",
        "[[i3]]",
-       "[[j3]]",
-       "[[q3]]"
+       "[[j3]]"
       ],
       [
        "4",
        "[[i4]]",
-       "[[j4]]",
-       "[[q4]]"
+       "[[j4]]"
       ],
       [
        "5",
        "[[i5]]",
-       "[[j5]]",
-       "[[q5]]"
+       "[[j5]]"
       ],
       [
        "6",
        "[[i6]]",
-       "[[j6]]",
-       "[[q6]]"
+       "[[j6]]"
       ]
      ]
     },
@@ -801,25 +748,11 @@
      "j1": {
       "typ": "zahl"
      },
-     "q1": {
-      "typ": "auswahl",
-      "optionen": [
-       "wahr",
-       "falsch"
-      ]
-     },
      "i2": {
       "typ": "zahl"
      },
      "j2": {
       "typ": "zahl"
-     },
-     "q2": {
-      "typ": "auswahl",
-      "optionen": [
-       "wahr",
-       "falsch"
-      ]
      },
      "i3": {
       "typ": "zahl"
@@ -827,25 +760,11 @@
      "j3": {
       "typ": "zahl"
      },
-     "q3": {
-      "typ": "auswahl",
-      "optionen": [
-       "wahr",
-       "falsch"
-      ]
-     },
      "i4": {
       "typ": "zahl"
      },
      "j4": {
       "typ": "zahl"
-     },
-     "q4": {
-      "typ": "auswahl",
-      "optionen": [
-       "wahr",
-       "falsch"
-      ]
      },
      "i5": {
       "typ": "zahl"
@@ -853,25 +772,11 @@
      "j5": {
       "typ": "zahl"
      },
-     "q5": {
-      "typ": "auswahl",
-      "optionen": [
-       "wahr",
-       "falsch"
-      ]
-     },
      "i6": {
       "typ": "zahl"
      },
      "j6": {
       "typ": "zahl"
-     },
-     "q6": {
-      "typ": "auswahl",
-      "optionen": [
-       "wahr",
-       "falsch"
-      ]
      },
      "r": {
       "typ": "auswahl",
@@ -892,17 +797,11 @@
     "j1": [
      "1"
     ],
-    "q1": [
-     "falsch"
-    ],
     "i2": [
      "0"
     ],
     "j2": [
      "2"
-    ],
-    "q2": [
-     "falsch"
     ],
     "i3": [
      "0"
@@ -910,17 +809,11 @@
     "j3": [
      "3"
     ],
-    "q3": [
-     "falsch"
-    ],
     "i4": [
      "0"
     ],
     "j4": [
      "4"
-    ],
-    "q4": [
-     "falsch"
     ],
     "i5": [
      "1"
@@ -928,17 +821,11 @@
     "j5": [
      "2"
     ],
-    "q5": [
-     "falsch"
-    ],
     "i6": [
      "1"
     ],
     "j6": [
      "3"
-    ],
-    "q6": [
-     "wahr"
     ],
     "r": [
      "true"
@@ -1519,11 +1406,11 @@
    "inhalt": [
     {
      "t": "text",
-     "md": "`insertionSort()` (siehe unten) sortiert die Punkte 35, 75, 55, 95 absteigend. Gib den Zustand nach jedem Durchlauf der äußeren Schleife und die **fortlaufenden Summen** der Aufrufe von `besser` und `vertausche` an."
+     "md": "`insertionSort()` (siehe unten) sortiert die Punkte 35, 75, 55, 95 absteigend. Gib den Zustand nach jedem Durchlauf der äußeren Schleife und die **fortlaufenden Summen** der Aufrufe von `besser` und `vertausche` an. Eine Zeile entsteht an der mit `// → Tabellenzeile` markierten Stelle."
     },
     {
      "t": "code",
-     "code": "public void insertionSort() {\n    for (int i = 1; i < anzahl; i++) {\n        int j = i;\n        while (j > 0 && besser(eintraege[j], eintraege[j - 1])) {\n            vertausche(j, j - 1);\n            j--;\n        }\n    }\n}",
+     "code": "public void insertionSort() {\n    for (int i = 1; i < anzahl; i++) {\n        int j = i;\n        while (j > 0 && besser(eintraege[j], eintraege[j - 1])) {\n            vertausche(j, j - 1);\n            j--;\n        }   // → Tabellenzeile\n    }\n}",
      "nummern": true
     },
     {
