@@ -28,10 +28,10 @@
       "welt": 0,
       "kategorie": "Tracetabelle",
       "titel": "Spurensuche im Portal",
-      "aufgabe": "a) Erstelle eine Tracetabelle für den Aufruf mystery(r) mit r = [5, 8, 3, 6, 1, 4].\nSpalten: i | r[i] | r[i] < a | a | b (erste Zeile: Werte vor der Schleife).\nb) Gib den Rückgabewert an und beschreibe, was die Methode allgemein berechnet.",
-      "code": "public static int mystery(int[] r) {\n    int a = r[0];\n    int b = 0;\n    for (int i = 1; i < r.length; i++) {\n        if (r[i] < a) {\n            a = r[i];\n            b = i;\n        }\n    }\n    return b;\n}",
+      "aufgabe": "a) Erstelle eine Tracetabelle für den Aufruf mystery(r) mit r = [5, 8, 3, 6, 1, 4].\nSpalten: i | r[i] | a | b – eine Zeile an jeder mit „// → Tabellenzeile“ markierten Stelle (erste Zeile: Werte vor der Schleife).\nb) Gib den Rückgabewert an und beschreibe, was die Methode allgemein berechnet.",
+      "code": "public static int mystery(int[] r) {\n    int a = r[0];\n    int b = 0;   // → Tabellenzeile (Startwerte)\n    for (int i = 1; i < r.length; i++) {\n        if (r[i] < a) {\n            a = r[i];\n            b = i;\n        }   // → Tabellenzeile\n    }\n    return b;\n}",
       "loesung": "b) Rückgabewert: 4. Die Methode liefert den Index des kleinsten Elements (bei mehrfachem Minimum den Index des ersten Vorkommens, weil mit < verglichen wird).",
-      "loesungCode": "i | r[i] | r[i] < a | a | b\n--+------+----------+---+---\n- |  -   |    -     | 5 | 0\n1 |  8   |  falsch  | 5 | 0\n2 |  3   |  wahr    | 3 | 2\n3 |  6   |  falsch  | 3 | 2\n4 |  1   |  wahr    | 1 | 4\n5 |  4   |  falsch  | 1 | 4",
+      "loesungCode": "i | r[i] | a | b\n--+------+---+---\n- |  -   | 5 | 0\n1 |  8   | 5 | 0\n2 |  3   | 3 | 2\n3 |  6   | 3 | 2\n4 |  1   | 1 | 4\n5 |  4   | 1 | 4",
       "minuten": 6
     },
     {

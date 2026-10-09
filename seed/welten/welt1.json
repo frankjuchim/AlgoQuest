@@ -1045,12 +1045,12 @@
     },
     {
      "t": "code",
-     "code": "Held h = new Held(\"Aria\");\nMonster m = new Monster(\"Ork\", 45, 7);\nint runde = 0;\nwhile (!m.istBesiegt()) {\n    runde++;\n    h.angreifen(m);\n    if (!m.istBesiegt()) {\n        m.angreifen(h);\n    }\n}\nprintln(runde + \" / \" + h.getLeben());",
+     "code": "Held h = new Held(\"Aria\");\nMonster m = new Monster(\"Ork\", 45, 7);\nint runde = 0;   // → Tabellenzeile (Startwerte)\nwhile (!m.istBesiegt()) {\n    runde++;\n    h.angreifen(m);\n    if (!m.istBesiegt()) {\n        m.angreifen(h);\n    }   // → Tabellenzeile\n}\nprintln(runde + \" / \" + h.getLeben());",
      "nummern": true
     },
     {
      "t": "text",
-     "md": "Vervollständige die Tracetabelle: Werte **am Ende** jedes Schleifendurchlaufs."
+     "md": "Vervollständige die Tracetabelle: eine Zeile an jeder mit „// → Tabellenzeile“ markierten Stelle (Startwerte vor der Schleife, dann Werte **am Ende** jedes Schleifendurchlaufs)."
     },
     {
      "t": "tabelle",
@@ -1844,24 +1844,22 @@
     },
     {
      "t": "code",
-     "code": "public Gegenstand wertvollsterGegenstand() {\n    if (anzahl == 0) {\n        return null;\n    }\n    Gegenstand bester = inventar[0];\n    for (int i = 1; i < anzahl; i++) {\n        if (inventar[i].getWert() > bester.getWert()) {\n            bester = inventar[i];\n        }\n    }\n    return bester;\n}",
+     "code": "public Gegenstand wertvollsterGegenstand() {\n    if (anzahl == 0) {\n        return null;\n    }\n    Gegenstand bester = inventar[0];   // → Tabellenzeile (Startwerte)\n    for (int i = 1; i < anzahl; i++) {\n        if (inventar[i].getWert() > bester.getWert()) {\n            bester = inventar[i];\n        }   // → Tabellenzeile\n    }\n    return bester;\n}",
      "nummern": true
     },
     {
      "t": "text",
-     "md": "Vervollständige die Tracetabelle (eine Zeile pro Schleifendurchlauf, `bester` am Ende des Durchlaufs)."
+     "md": "Vervollständige die Tracetabelle: eine Zeile an jeder mit „// → Tabellenzeile“ markierten Stelle (Startwerte vor der Schleife, dann `bester` am Ende jedes Schleifendurchlaufs)."
     },
     {
      "t": "tabelle",
      "kopf": [
       "i",
       "inventar[i].getWert()",
-      "inventar[i].getWert() > bester.getWert()",
       "bester"
      ],
      "zeilen": [
       [
-       "–",
        "–",
        "–",
        "Fackel"
@@ -1869,25 +1867,21 @@
       [
        "1",
        "25",
-       "[[v1]]",
        "[[b1]]"
       ],
       [
        "2",
        "3",
-       "[[v2]]",
        "[[b2]]"
       ],
       [
        "3",
        "25",
-       "[[v3]]",
        "[[b3]]"
       ],
       [
        "4",
        "20",
-       "[[v4]]",
        "[[b4]]"
       ]
      ]
@@ -1900,13 +1894,6 @@
    "interaktion": {
     "kind": "gaps",
     "felder": {
-     "v1": {
-      "typ": "auswahl",
-      "optionen": [
-       "wahr",
-       "falsch"
-      ]
-     },
      "b1": {
       "typ": "auswahl",
       "optionen": [
@@ -1915,13 +1902,6 @@
        "Seil",
        "Kristall",
        "Krone"
-      ]
-     },
-     "v2": {
-      "typ": "auswahl",
-      "optionen": [
-       "wahr",
-       "falsch"
       ]
      },
      "b2": {
@@ -1934,13 +1914,6 @@
        "Krone"
       ]
      },
-     "v3": {
-      "typ": "auswahl",
-      "optionen": [
-       "wahr",
-       "falsch"
-      ]
-     },
      "b3": {
       "typ": "auswahl",
       "optionen": [
@@ -1949,13 +1922,6 @@
        "Seil",
        "Kristall",
        "Krone"
-      ]
-     },
-     "v4": {
-      "typ": "auswahl",
-      "optionen": [
-       "wahr",
-       "falsch"
       ]
      },
      "b4": {
@@ -1981,26 +1947,14 @@
     }
    },
    "loesung": {
-    "v1": [
-     "wahr"
-    ],
     "b1": [
      "Kompass"
-    ],
-    "v2": [
-     "falsch"
     ],
     "b2": [
      "Kompass"
     ],
-    "v3": [
-     "falsch"
-    ],
     "b3": [
      "Kompass"
-    ],
-    "v4": [
-     "falsch"
     ],
     "b4": [
      "Kompass"
@@ -3544,12 +3498,12 @@
     },
     {
      "t": "code",
-     "code": "public Reittier schnellstes() {\n    if (anzahl == 0) {\n        return null;\n    }\n    Reittier bester = boxen[0];\n    for (int i = 1; i < anzahl; i++) {\n        if (boxen[i].getTempo() > bester.getTempo()) {\n            bester = boxen[i];\n        }\n    }\n    return bester;\n}",
+     "code": "public Reittier schnellstes() {\n    if (anzahl == 0) {\n        return null;\n    }\n    Reittier bester = boxen[0];   // → Tabellenzeile (Startwerte)\n    for (int i = 1; i < anzahl; i++) {\n        if (boxen[i].getTempo() > bester.getTempo()) {\n            bester = boxen[i];\n        }   // → Tabellenzeile\n    }\n    return bester;\n}",
      "nummern": true
     },
     {
      "t": "text",
-     "md": "Im Stall stehen (Index 0 bis 4): Blitz (Reittier, tempo = 14), Moos (Reittier, tempo = 9), Sturm (Greif, tempo = 8), Nebel (Reittier, tempo = 16), Funke (Greif, tempo = 7)."
+     "md": "Im Stall stehen (Index 0 bis 4): Blitz (Reittier, tempo = 14), Moos (Reittier, tempo = 9), Sturm (Greif, tempo = 8), Nebel (Reittier, tempo = 16), Funke (Greif, tempo = 7). Vervollständige die Tracetabelle: eine Zeile an jeder mit „// → Tabellenzeile“ markierten Stelle."
     },
     {
      "t": "tabelle",
