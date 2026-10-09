@@ -109,6 +109,11 @@ docx/pptx rendern: `soffice --headless --convert-to pdf --outdir <scratch> <date
   Verzweigung als Dreieck (wahr/falsch), Kopf `name(p: Typ): Typ`, keine Java-Syntax im Struktogramm.
 - Klassenkarten/-diagramme nach **EH §6**: `+`/`-` Pflicht, Konstruktor mit `c`, Assoziation ohne Kardinalitäten.
 - **Rekursionstiefe:** Erstaufruf = Tiefe 0. **Baumhöhe:** leerer Baum 0, Blatt 1.
+- **Tracetabellen:** nur Variablen bzw. Zustände (dazu Durchlauf/Schritt, Rückgabe/Ausgabe) – **keine Bedingungsspalten**
+  („i < n“, „(w/f)“, „Bedingung“ …). Im Code markiert ein Kommentar am Zeilenende jede Stelle, an der eine Zeile
+  eingetragen wird: `// → Tabellenzeile (Startwerte)` (letzte Anweisung vor der Schleife) und `// → Tabellenzeile`
+  (letzte Anweisung im Schleifenrumpf bzw. Stelle laut Aufgabe). Zeilennummern bleiben gleich. Gilt in allen
+  Materialien (auch Bosse, Klausuren, Warm-up, Folien) und im Lab. Rekursionstabellen sind davon ausgenommen.
 
 ### Fallen P1–P10
 Verbindlich nach `quellen/specs/SPEC_AlgoQuest_W6.md` §2 (gleiche Nummern/Kurztitel überall – Lab-Feld `fallen`,
