@@ -71,7 +71,7 @@
       'form',
       { class: 'card', autocomplete: 'on' },
       h('h2', null, 'Anmelden'),
-      feld('l-mail', 'E-Mail (Superadmin: Benutzername)', { type: 'text', autocomplete: 'username', required: true, spellcheck: 'false', autocapitalize: 'off' }),
+      feld('l-mail', 'E-Mail', { type: 'text', autocomplete: 'username', required: true, spellcheck: 'false', autocapitalize: 'off' }),
       feld('l-pw', 'Passwort', { type: 'password', autocomplete: 'current-password', required: true }),
       fehlerL,
       h('button', { class: 'btn big', type: 'submit' }, 'Anmelden')
