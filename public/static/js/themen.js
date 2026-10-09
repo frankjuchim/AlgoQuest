@@ -23,8 +23,8 @@
         h('li', null, h('b', null, '1. Thema wählen'), 'Unten nach Welt, nach Aufgabentyp (z. B. Tracetabelle) oder nach deinen Fallen P1–P10 suchen.'),
         h('li', null, h('b', null, '2. Arbeitsblatt lesen'), 'Infoteile und Beispiele im PDF durcharbeiten, Aufgaben auf Papier lösen – wie im Abitur.'),
         h('li', null, h('b', null, '3. Im Lab üben'), '„Üben →“ öffnet das passende Level (Anmeldung mit Kurscode, Name und Code). Ohne Tipp und Fehlversuch gibt es die meisten Punkte.'),
-        h('li', null, h('b', null, '4. Boss als Abi-Probe'), 'Je Welt ein Kampf auf Zeit ohne Feedback – danach Auswertung mit Erklärungen.'),
-        h('li', null, h('b', null, '5. Dranbleiben'), 'Trainingsplatz (Zufallsaufgaben) und Warm-up-Karten (Leitner) für tägliche 10 Minuten.')
+        h('li', null, h('b', null, '4. Boss als Abi-Probe'), 'Je Welt ein Online-Boss im Lab (auf Zeit, Auswertung mit Erklärungen) und ein Papier-Boss als PDF – handschriftlich in 60 Minuten wie im Abitur.'),
+        h('li', null, h('b', null, '5. Dranbleiben'), 'Trainingsplatz (Zufallsaufgaben) und Warm-up-Karten – im Lab mit Lösungen (Leitner) oder als PDF für 10 Minuten auf Papier.')
       ),
       d.werkzeugkarten
         ? h('p', { class: 'callout gold' }, h('strong', null, 'Immer dabei: '), pdf(d.werkzeugkarten.url, d.werkzeugkarten.titel), ' – Abi-Check vor der Abgabe, Zeitbudget, Struktogramm- und Klassendiagramm-Notation.')
@@ -66,14 +66,18 @@
     const abs = w.arbeitsblaetter.length
       ? h('div', null, h('h3', null, 'Arbeitsblätter (PDF)'), h('ul', { class: 'ab-liste' }, w.arbeitsblaetter.map((a) => h('li', null, pdf(a.url, `AB ${a.nr}: ${a.titel}`), a.ds.length ? h('span', { class: 'muted klein' }, ` · ${dsText(a.ds)}`) : null))))
       : null;
+    const symbol = { boss: '⚔️', probeklausur: '📝', warmup: '🔥' };
+    const weitere = w.weitere && w.weitere.length
+      ? h('div', null, h('h3', null, 'Training auf Papier (PDF)'), h('ul', { class: 'ab-liste' }, w.weitere.map((x) => h('li', null, `${symbol[x.art] || '📄'} `, x.url ? h('a', { href: x.url, target: '_blank', rel: 'noopener' }, x.titel) : x.titel))))
+      : null;
     const extras = h(
       'div',
       { class: 'extras' },
-      w.boss ? h('span', { class: 'pill gold' }, `⚔️ Boss: ${w.boss.titel} (${w.boss.anzahl} Aufgaben, ${w.boss.dauerMin} min)`) : null,
+      w.boss ? h('span', { class: 'pill gold' }, `⚔️ Online-Boss im Lab: ${w.boss.titel} (${w.boss.anzahl} Aufgaben, ${w.boss.dauerMin} min)`) : null,
       w.training.length ? h('span', { class: 'pill green', title: w.training.join(' · ') }, `🎯 Trainingsplatz: ${w.training.length} Aufgabenarten`) : null,
-      w.warmup ? h('span', { class: 'pill' }, `🔥 ${w.warmup} Warm-up-Karten`) : null
+      w.warmup ? h('span', { class: 'pill' }, `🔥 ${w.warmup} Warm-up-Karten im Lab`) : null
     );
-    return h('section', { class: 'welt-karte', id: `welt-${w.nr}`, style: { '--welt': w.farbe } }, kopf, h('div', { class: 'welt-inhalt' }, tabelle, abs, extras));
+    return h('section', { class: 'welt-karte', id: `welt-${w.nr}`, style: { '--welt': w.farbe } }, kopf, h('div', { class: 'welt-inhalt' }, tabelle, abs, weitere, extras));
   }
 
   /** „Kür: Zugbuch und Initiative – Spielmodule“ → „Zugbuch und Initiative“ */

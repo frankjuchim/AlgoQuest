@@ -24,6 +24,13 @@ function createThemen(ctx, { inhalte }, ab = { verzeichnis: null, pdfVorhanden: 
     return (w.arbeitsblaetter || []).map((a) => ({ nr: a.nr, titel: a.titel, ds: a.ds || [], url: pdfLink(`${w.ordner}/${a.datei}`) }));
   }
 
+  /** Papier-Boss, Probeklausur, Warm-up-Karten (PDF) einer Welt */
+  function weitereDerWelt(nr) {
+    const w = ab.verzeichnis && (ab.verzeichnis.welten || []).find((x) => x.welt === nr);
+    if (!w) return [];
+    return (w.weitere || []).map((x) => ({ art: x.art, titel: x.titel, url: pdfLink(`${w.ordner}/${x.datei}`) }));
+  }
+
   /** „AB 2 – Teil 1“, „AB W1·1 …“, „AB 1 „Das Portal“ …“ → 2 bzw. 1 */
   function abNummer(text) {
     const m = /AB\s*(?:W\d\s*·\s*)?(\d+)/.exec(String(text || ''));
@@ -69,6 +76,7 @@ function createThemen(ctx, { inhalte }, ab = { verzeichnis: null, pdfVorhanden: 
         aufgaben: w.aufgabenAnzahl,
         levels,
         arbeitsblaetter: abs,
+        weitere: weitereDerWelt(w.nr),
         boss: w.boss ? { titel: w.boss.titel, dauerMin: w.boss.dauerMin, anzahl: w.boss.anzahl } : null,
         training: G.generatorenFuerWelt(w.nr).map((g) => g.titel),
         warmup: warmup.get(w.nr) || 0

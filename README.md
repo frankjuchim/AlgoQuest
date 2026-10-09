@@ -39,7 +39,8 @@ Ränge und Abzeichen. Lehrkräfte verwalten ihre Kurse und sehen Lernstand, Aufg
 - Querschnitte „Nach Aufgabentyp“ (Tracetabelle, Rekursionstabelle, Struktogramm …) und „Nach Fallen P1–P10“ mit Links
   auf die passenden Level. Verlinkt von Startseite, Schüler- und Lehrkraft-Navigation.
 - PDFs unter `/arbeitsblaetter/…` aus `materialien/Arbeitsblaetter_PDF` (im Image `/app/arbeitsblaetter`, abweichend:
-  `ARBEITSBLAETTER_DIR`); Zuordnung in `seed/arbeitsblaetter.json`. Nur Schülerfassungen – keine Lösungen.
+  `ARBEITSBLAETTER_DIR`); Zuordnung in `seed/arbeitsblaetter.json`. Dazu je Welt „Training auf Papier“: Papier-Boss
+  (W6: Probeklausur) und Warm-up-Karten ohne Lösungsteil. Keine Lösungen, Erwartungshorizonte oder Klausuren.
 
 **Lehrkräfte**
 - Zugang auf Anfrage (Name, E-Mail, Schule, Passwort, Nachricht) → Freigabe durch den Superadmin.

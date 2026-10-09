@@ -25,6 +25,11 @@ test('Themenübersicht: öffentlich, alle Welten und Level, keine Lösungen/Erkl
   assert.equal(abs.length, 20);
   for (const a of abs) assert.match(a.url, /^\/arbeitsblaetter\/Welt_\d_[A-Za-z]+\/AQ_W\d-AB\d_[A-Za-z0-9_-]+\.pdf$/);
   assert.ok(d.werkzeugkarten.url.endsWith('.pdf'));
+  // Papier-Bosse W0–W5, Probeklausur W6 und Warm-up-Karten je Welt
+  const weitere = d.welten.flatMap((w) => w.weitere);
+  assert.equal(weitere.length, 14);
+  assert.deepEqual(d.welten.map((w) => w.weitere.map((x) => x.art).join('+')), ['boss+warmup', 'boss+warmup', 'boss+warmup', 'boss+warmup', 'boss+warmup', 'boss+warmup', 'probeklausur+warmup']);
+  for (const x of weitere) assert.match(x.url, /^\/arbeitsblaetter\/Welt_\d_[A-Za-z]+\/AQ_W\d-(Boss|Probeklausur|Warm-up-Karten)[A-Za-z0-9_-]*\.pdf$/);
   // Querschnitte: Kategorien und Fallen verweisen auf existierende Level
   const ids = new Set(levels.map((l) => l.id));
   for (const k of d.kategorien) for (const o of k.orte) assert.ok(ids.has(o.id));
@@ -57,10 +62,25 @@ test('Themenübersicht ohne Arbeitsblatt-Ordner: Level ja, PDF-Links leer', asyn
 test('Verzeichnis seed/arbeitsblaetter.json passt zu den Quellen und den erzeugten PDFs', () => {
   const v = JSON.parse(fs.readFileSync(path.join(SEED, 'arbeitsblaetter.json'), 'utf8'));
   const mat = path.join(__dirname, '..', 'materialien');
-  const alle = [v.werkzeugkarten, ...v.welten.flatMap((w) => w.arbeitsblaetter.map((a) => ({ ...a, datei: `${w.ordner}/${a.datei}` })))];
+  const alle = [
+    v.werkzeugkarten,
+    ...v.welten.flatMap((w) => [...w.arbeitsblaetter, ...(w.weitere || [])].map((a) => ({ ...a, datei: `${w.ordner}/${a.datei}` })))
+  ];
   for (const a of alle) {
     assert.ok(fs.existsSync(path.join(mat, a.quelle)), `Quelle fehlt: ${a.quelle}`);
     assert.ok(fs.existsSync(path.join(PDF_DIR, a.datei)), `PDF fehlt: ${a.datei} (python3 werkzeuge/arbeitsblaetter_pdf.py)`);
     assert.match(path.basename(a.datei), /^[A-Za-z0-9_.-]+$/, 'Dateiname ohne Umlaute und Leerzeichen');
   }
+});
+
+test('Öffentlicher PDF-Ordner enthält nie Klausuren, Erwartungshorizonte oder Lösungen', () => {
+  const v = JSON.parse(fs.readFileSync(path.join(SEED, 'arbeitsblaetter.json'), 'utf8'));
+  const quellen = [v.werkzeugkarten.quelle, ...v.welten.flatMap((w) => [...w.arbeitsblaetter, ...(w.weitere || [])].map((a) => a.quelle))];
+  for (const q of quellen) {
+    assert.ok(!/5_Loesungen|_LSG|Erwartungshorizont|(^|[/_])Klausur|Nachschreib/i.test(q), `nicht öffentlich: ${q}`);
+  }
+  const dateien = fs.readdirSync(PDF_DIR, { recursive: true }).map(String);
+  for (const f of dateien) assert.ok(!/LSG|Loesung|Erwartungshorizont|Nachschreib|(^|[/_-])Klausur/i.test(f), `nicht öffentlich: ${f}`);
+  // Warm-up-Karten nur ohne Lösungsteil
+  for (const w of v.welten) for (const x of w.weitere || []) if (x.art === 'warmup') assert.equal(x.ohneLoesungsteil, true, x.datei);
 });

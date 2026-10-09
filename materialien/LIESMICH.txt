@@ -8,8 +8,9 @@ ORDNER
 WeltN_.../1_Praesentation   PowerPoint mit Sprechernotizen
 WeltN_.../2_Arbeitsblaetter Schuelerblaetter (Word) - je Abschnitt ein Kasten "Im Lab ueben: Level x.y"
 WeltN_.../3_Online-IDE      Geruest-Dateien zum Austeilen (Inhalt in die Online-IDE kopieren, Tests im Reiter "Testrunner")
-Arbeitsblaetter_PDF         Alle Arbeitsblaetter (Schuelerfassung) + Werkzeugkarten als PDF, je Welt ein Ordner, Dateinamen
-                            AQ_W<Welt>-AB<Nr>_<Thema>.pdf - zum direkten Hochladen; online auch unter
+Arbeitsblaetter_PDF         Alle Arbeitsblaetter (Schuelerfassung), Werkzeugkarten, Papier-Bosse W0-W5, Probeklausur und
+                            Warm-up-Karten (ohne Loesungsteil) als PDF, je Welt ein Ordner, Dateinamen
+                            AQ_W<Welt>-AB<Nr>_<Thema>.pdf / -Boss_ / -Warm-up-Karten - zum direkten Hochladen; online auch unter
                             https://algoquest.frankjuchim.de/themen (Themenuebersicht mit Links zu Lab-Leveln und PDFs)
 Online-IDE                  Fertige Workspaces zum Importieren (JSON, je Welt eine Datei, ein Workspace je Geruest,
                             Bibliothek "Niedersachsen" ab Welt 4 schon aktiviert); Lehrkraft/ = Musterloesungen

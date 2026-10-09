@@ -40,7 +40,7 @@ materialien/         00_Lehrerhinweise (Einstieg: AQ_Gesamtuebersicht_DS1-40.doc
 quellen/specs/       SPEC_AlgoLab.md (App), SPEC_AlgoQuest_W0_W1.md (Grundkonventionen, Welt-1-API), W0_Akademie, W2–W6,
                      SPEC_Materialanpassung.md, LAB_LEVELS.md
 quellen/lab-inhalte-generatoren/  historische Python-Generatoren der Lab-Aufgaben (nur Referenz, JSON ist maßgeblich)
-materialien/Arbeitsblaetter_PDF/  Arbeitsblätter + Werkzeugkarten als PDF je Welt – ERZEUGT (werkzeuge/arbeitsblaetter_pdf.py)
+materialien/Arbeitsblaetter_PDF/  Arbeitsblätter, Werkzeugkarten, Papier-Bosse, Probeklausur, Warm-up-Karten als PDF je Welt – ERZEUGT (werkzeuge/arbeitsblaetter_pdf.py)
                      aus seed/arbeitsblaetter.json; im Image /app/arbeitsblaetter, ausgeliefert unter /arbeitsblaetter/…
 materialien/Online-IDE/  Import-Dateien (JSON) für online-ide.de: je Welt ein Workspace je Gerüst; Lehrkraft/ = LSG
                      – ERZEUGT aus den .txt-Dateien (npm run workspaces), nicht von Hand ändern
@@ -122,7 +122,9 @@ P9 Struktogramm nicht nach EH §5 · P10 Operator verfehlt.
 - Nach jeder Änderung an einem Arbeitsblatt (`2_Arbeitsblaetter/*.docx`, Werkzeugkarten): `npm run arbeitsblaetter`
   und die PDFs mitcommitten. Neue Arbeitsblätter in `seed/arbeitsblaetter.json` eintragen (Titel, DS, Dateiname
   `AQ_W<n>-AB<k>_<Thema>.pdf` ohne Umlaute); das Feld `ab` der Level muss mit „AB <k>“ bzw. „AB W<n>·<k>“ beginnen.
-  In den PDF-Ordner nur Schülerfassungen – nie Lösungen, Bosse oder Klausuren (der Ordner ist öffentlich abrufbar).
+  Der PDF-Ordner ist öffentlich abrufbar: Arbeitsblätter, Werkzeugkarten, Papier-Bosse W0–W5 und die Probeklausur
+  (Entscheidung der Lehrkraft) sowie Warm-up-Karten nur ohne Lösungsteil (`ohneLoesungsteil`) – nie Lösungen,
+  Erwartungshorizonte, Klausur oder Nachschreibklausur (Test in `test/themen.test.js` wacht darüber).
 - Gerüst und LSG müssen (nach dem Freischalten der `/* LEVEL-x-START … -ENDE */`-Blöcke) identische Testklassen haben.
 - Der Prüfstand nutzt echtes Java: `==` bei Zeichenketten fällt dort auf, in der Online-IDE NICHT (Tests bleiben grün).
 - Neue Aufgaben im Format von `docs/AUFGABENFORMAT.md`; jede Aufgabe mit Erklärung (bei Fallen P-Nummer nennen).
