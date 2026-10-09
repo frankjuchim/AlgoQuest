@@ -174,7 +174,21 @@ const LOESER = {
     assert.equal((await pruefen(page)).ok, true);
   },
   async 'W9-L2-02'(page) {
+    // Bug-Hunt gestuft: Teil b) (verrät die Zeile) ist erst nach richtigem Teil a) sichtbar
+    const g1 = page.locator('[aria-label="Lücke g1"]');
+    assert.equal(await g1.isVisible(), false, 'Teil b) darf vor Teil a) nicht sichtbar sein');
+    const teilA = async () => {
+      const antwort = page.waitForResponse((r) => r.url().includes('/pruefen') && r.request().method() === 'POST');
+      await page.locator('.stufe-box button').click();
+      return (await antwort).json();
+    };
+    await page.locator('.code .zeile.waehlbar').nth(0).click();
+    assert.equal((await teilA()).ok, false);
+    assert.equal(await g1.isVisible(), false);
+    await page.locator('.code .zeile.waehlbar').nth(0).click();
     await page.locator('.code .zeile.waehlbar').nth(2).click();
+    assert.equal((await teilA()).ok, true);
+    await g1.waitFor({ state: 'visible' });
     await luecke(page, 'g1', '<');
     await foto(page, 'aufgabe_lines_bughunt');
     assert.equal((await pruefen(page)).ok, true);

@@ -938,7 +938,72 @@ const AQI = (() => {
     if (opt.schritt && schrittArten.length) {
       box.appendChild(h('label', { class: 'check small' }, schrittSchalter, 'Jeden Schritt sofort prüfen (ein falscher Schritt zählt als Fehlversuch)'));
     }
+
+    /* Bug-Hunt gestuft: Beginnt eine mehrteilige Aufgabe mit der Zeilenwahl (lines), verraten die späteren Teile
+       („b) Korrigiere: …“) die fehlerhafte Zeile. Deshalb erscheinen sie erst, wenn Teil a) richtig ist
+       (Boss-Kampf ohne Feedback: wenn Teil a) festgelegt ist). Lehrkraft-Vorschau und Lösungsansicht zeigen alles. */
+    const gestuft = !kontext.vorschau && mehrteilig && ias.length > 1 && art(ias[0]) === 'lines' && !!teilEls[0];
+    let stufeOffen = false;
+    const spaeter = [];
+    let stufeBox = null;
+    function freischalten() {
+      if (!stufeOffen) return;
+      stufeOffen = false;
+      spaeter.forEach((el) => el.classList.remove('stufe-versteckt'));
+      if (stufeBox) stufeBox.remove();
+    }
+    async function stufePruefen() {
+      if (!stufeOffen) return null;
+      if (teile[0].leer()) {
+        toast('Wähle zuerst die fehlerhafte Zeile.', true);
+        return null;
+      }
+      if (!opt.teilPruefen) {
+        // Boss-Kampf: ohne Rückmeldung festlegen
+        teile[0].sperren(true);
+        freischalten();
+        kontext.geaendert();
+        return null;
+      }
+      const r = await opt.teilPruefen(0, teile[0].antwort());
+      if (!r) return null;
+      teile[0].feedback({ ok: !!r.ok });
+      teilEls[0].classList.toggle('ok', !!r.ok);
+      teilEls[0].classList.toggle('falsch', !r.ok);
+      if (r.ok) {
+        teile[0].sperren(true);
+        freischalten();
+      }
+      return r;
+    }
+    if (gestuft) {
+      const spaetereLuecken = new Set(ias.slice(1).filter((ia) => ia.kind === 'gaps').flatMap((ia) => Object.keys(ia.felder || {})));
+      let ab = -1;
+      (a.inhalt || []).forEach((b, i) => {
+        if (ab >= 0) return;
+        const luecken = [...JSON.stringify(b).matchAll(/\[\[([A-Za-z0-9_-]+)\]\]/g)].map((m) => m[1]);
+        const teilKopf = typeof b.md === 'string' && /^\s*\*\*\s*(?:[b-z]\)|Teil\s*[2-9])/.test(b.md);
+        if (teilKopf || luecken.some((g) => spaetereLuecken.has(g))) ab = i;
+      });
+      if (ab >= 0) inhaltEl.querySelectorAll('[data-block]').forEach((el) => Number(el.dataset.block) >= ab && spaeter.push(el));
+      teilEls.slice(1).forEach((el) => el && spaeter.push(el));
+      if (spaeter.length) {
+        stufeOffen = true;
+        spaeter.forEach((el) => el.classList.add('stufe-versteckt'));
+        stufeBox = h(
+          'div',
+          { class: 'stufe-box' },
+          h('p', { class: 'hint' }, opt.teilPruefen ? 'Finde zuerst die fehlerhafte Zeile. Teil b) erscheint, sobald Teil a) richtig ist.' : 'Lege zuerst die fehlerhafte Zeile fest. Danach erscheint Teil b) – die Zeile kannst du dann nicht mehr ändern.'),
+          h('button', { class: 'btn secondary small', type: 'button', onclick: () => stufePruefen() }, opt.teilPruefen ? '✔ Teil a) prüfen' : 'Teil a) festlegen →')
+        );
+        teilEls[0].appendChild(stufeBox);
+      }
+    }
+
     return {
+      /** true, solange bei einem Bug-Hunt nur Teil a) sichtbar ist */
+      stufeOffen: () => stufeOffen,
+      stufePruefen,
       el: box,
       teile,
       mehrteilig,
@@ -954,6 +1019,11 @@ const AQI = (() => {
         if (antwort === null || antwort === undefined) return;
         if (mehrteilig) teile.forEach((t, i) => t.setze(Array.isArray(antwort) ? antwort[i] : undefined));
         else teile[0].setze(antwort);
+        // gespeicherte Boss-Antwort mit festgelegter Zeile: Teil a) bleibt gesperrt, Teil b) sichtbar
+        if (stufeOffen && !opt.teilPruefen && !teile[0].leer()) {
+          teile[0].sperren(true);
+          freischalten();
+        }
       },
       feedback(r) {
         if (!r || !Array.isArray(r.teile)) return;
@@ -966,9 +1036,11 @@ const AQI = (() => {
         });
       },
       loesung(loesung, muster) {
+        freischalten();
         teile.forEach((t, i) => t.loesung(mehrteilig ? (loesung || [])[i] : loesung, mehrteilig ? (muster || [])[i] : muster));
       },
       sperren(an) {
+        if (an) freischalten();
         teile.forEach((t) => t.sperren(an));
         schrittSchalter.disabled = an;
       }

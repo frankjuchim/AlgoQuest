@@ -236,6 +236,11 @@ Zahlen dürfen als Zahl oder Text stehen. Feedback `ersteFalschePosition`. Optio
   angezeigt. Beginnt `frage` mit „a)“, entfällt die automatische Überschrift „Teil a)“.
 - Schrittprüfung: `POST …/pruefen` mit `{ "antwort": <Teilantwort>, "teilweise": true, "teil": k }` (nur `tree:klick`,
   `array:tausch`, `array:klick`, `order`) → `{ ok, ersteFalschePosition, vollstaendig }`.
+- **Bug-Hunt gestuft:** Beginnt eine mehrteilige Aufgabe mit `lines`, zeigt der Client die späteren Teile (und alle
+  Inhaltsblöcke ab dem ersten Block, der mit „**b)**“ bzw. „**Teil 2**“ beginnt oder eine Lücke eines späteren Teils enthält) erst, wenn Teil a) richtig ist –
+  sonst verriete „b) Korrigiere: …“ die Zeile. Dafür ist `teilweise: true, teil: 0` auch für diesen `lines`-Teil erlaubt
+  (`{ ok }`, falsch = Fehlversuch). Im Boss-Kampf wird Teil a) ohne Rückmeldung „festgelegt“ und dann gesperrt.
+  Konsequenz fürs Schreiben: Teil a) als eigenen Block vor die Teil-b)-Blöcke setzen und b) mit „**b)**“ beginnen.
 
 ## 7. Antwortformate (API)
 

@@ -145,6 +145,10 @@ P9 Struktogramm nicht nach EH §5 · P10 Operator verfehlt.
   (ab 3 Optionen) bei jedem Anzeigen. Tree-„bauen“-Chips bleiben in Reihenfolge (Einfügereihenfolge ist Aufgabeninhalt).
 - Nach Änderungen an `public/static/**` die `?v=`-Version in `public/*.html` und `package.json` erhöhen (Browser-Cache 1 h).
 - Boss-Aufgaben: Rahmentext/Organisatorisches geduzt, Aufgabenstellungen gesiezt (Abitur-Stil).
+- Bug-Hunts (mehrteilig, Teil a) = `lines`) werden gestuft angezeigt: spätere Teile erst nach richtigem Teil a)
+  (Boss: nach „Teil a) festlegen“). Neue Bug-Hunts: Teil b) als eigenen Block mit „**b)**“ beginnen (Details
+  docs/AUFGABENFORMAT.md §6.10).
+- Scoreboards (Beamer-Board, Lehrkraft- und Schüleransicht) aktualisieren sich alle 20 s selbst.
 
 ## Offene Punkte
 - Probelauf der Gerüste in der echten Online-IDE nach `docs/ONLINE-IDE_TESTPROTOKOLL.md` (bisher nur javac + Nachbau).

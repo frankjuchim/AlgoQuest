@@ -297,7 +297,10 @@ function pruefeAufgabe(aufgabe, antwort, opt = {}) {
     if (!Number.isInteger(t) || t < 0 || t >= ts.length) throw new AntwortFehler('Ungültiger Teil.');
     // Bei der Schrittprüfung ist „antwort“ immer die Antwort des einen Teils „teil“.
     const a = bereinige(ts[t].interaktion, antwort);
-    const r = pruefeTeil(ts[t].interaktion, ts[t].loesung, a, true);
+    // Bug-Hunt gestuft: Teil a) (Zeilenwahl) einer mehrteiligen Aufgabe darf einzeln geprüft werden, bevor die
+    // späteren Teile (die die Zeile verraten) angezeigt werden – Ergebnis nur richtig/falsch, nie „vollständig“.
+    const bugHuntTeilA = mehrteilig && t === 0 && ts.length > 1 && F.artVon(ts[0].interaktion) === 'lines';
+    const r = bugHuntTeilA ? { ok: pruefeLines(ts[0].interaktion, ts[0].loesung, a).ok } : pruefeTeil(ts[t].interaktion, ts[t].loesung, a, true);
     return { ok: r.ok, teilweise: true, teil: t, vollstaendig: !!r.vollstaendig, ersteFalschePosition: r.ersteFalschePosition ?? null, leer: false, antworten: [a] };
   }
   let roh;

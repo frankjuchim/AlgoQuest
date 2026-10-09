@@ -110,7 +110,8 @@ test('Schrittprüfung (teilweise): falscher Schritt = Fehlversuch, letzter richt
   r = await s.post(`/api/aufgaben/${id}/pruefen`).send({ antwort: [4, 7, 5], teilweise: true });
   assert.deepEqual([r.body.ok, r.body.vollstaendig, r.body.geloest, r.body.punkteErhalten], [true, true, true, 8]);
   // Mehrteilig: Schrittprüfung nur für erlaubte Teile
-  assert.equal((await s.post('/api/aufgaben/W9-L2-02/pruefen').send({ antwort: [3], teilweise: true, teil: 0 })).status, 400);
+  // Bug-Hunt: nur Teil a) (Zeilenwahl) ist einzeln prüfbar, Teil b) (Lücken) nicht
+  assert.equal((await s.post('/api/aufgaben/W9-L2-02/pruefen').send({ antwort: { g1: '<' }, teilweise: true, teil: 1 })).status, 400);
 });
 
 test('Fallen-Zähler: Fehlversuche je P-Kategorie im Profil', async () => {
@@ -149,4 +150,21 @@ test('Rang: Anteil der Level-Punkte aller freigeschalteten Welten', async () => 
   assert.equal(p.rang.name, 'Lehrling');
   assert.equal(p.rang.maxPunkte, 260);
   assert.equal(p.rang.naechster.name, 'Geselle');
+});
+
+test('Bug-Hunt gestuft: Teil a) (Zeilenwahl) einzeln prüfbar – falsch = Fehlversuch, richtig löst noch nicht; andere Teile nicht', async () => {
+  const { s } = await H.szenario();
+  let r = await s.post('/api/aufgaben/W9-L2-02/pruefen').send({ antwort: [1], teilweise: true, teil: 0 }).expect(200);
+  assert.equal(r.body.ok, false);
+  assert.equal(r.body.zustand.fehlversuche, 1);
+  assert.equal(r.body.loesung, undefined);
+  r = await s.post('/api/aufgaben/W9-L2-02/pruefen').send({ antwort: [3], teilweise: true, teil: 0 }).expect(200);
+  assert.equal(r.body.ok, true);
+  assert.equal(r.body.geloest, false);
+  assert.equal(r.body.zustand.status, 'offen');
+  assert.equal(r.body.loesung, undefined, 'keine Lösung vor dem vollständigen Lösen');
+  // Teil b) (Lücken) bleibt von der Teilprüfung ausgeschlossen
+  await s.post('/api/aufgaben/W9-L2-02/pruefen').send({ antwort: { g1: '<' }, teilweise: true, teil: 1 }).expect(400);
+  r = await s.post('/api/aufgaben/W9-L2-02/pruefen').send({ antwort: [[3], { g1: '<' }] }).expect(200);
+  assert.equal(r.body.geloest, true);
 });

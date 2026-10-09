@@ -8,6 +8,7 @@
   let sitzung = null;
   let einstellungen = { scoreboard: true };
   let bossTimer = null;
+  let scoreboardTimer = null;
 
   const WELTNAMEN_ICON = { 0: '🏛️', 1: '⚒️', 2: '🏅', 3: '🌀', 4: '⚓', 5: '🌲', 6: '🐉' };
   const ART_NAMEN = {
@@ -264,6 +265,22 @@
 
     function baue(mitLoesung) {
       ctrl = AQI.aufgabe(a, {
+        // Bug-Hunt gestuft: Teil a) (Zeilenwahl) einzeln prüfen, danach erscheint Teil b)
+        teilPruefen: mitLoesung ? null : async (teil, antwort) => {
+          try {
+            const r = await cfg.pruefen({ antwort, teilweise: true, teil });
+            zustand = r.zustand || zustand;
+            if (r.ok) mount(feedbackBox, h('div', { class: 'feedback ok' }, '✔ Richtig, das ist die fehlerhafte Zeile. Weiter mit Teil b).'));
+            else {
+              const rest = zustand && zustand.status === 'offen' ? ` Noch bis zu ${zustand.moeglich} Punkte möglich.` : '';
+              mount(feedbackBox, h('div', { class: 'feedback falsch' }, '✘ Das ist nicht die fehlerhafte Zeile.' + rest));
+            }
+            return r;
+          } catch (e) {
+            toast(e.message, true);
+            return null;
+          }
+        },
         schritt: mitLoesung ? null : async (teil, antwort) => {
           try {
             const r = await cfg.pruefen({ antwort, teilweise: true, teil });
@@ -309,6 +326,7 @@
     }
 
     async function pruefen() {
+      if (ctrl.stufeOffen && ctrl.stufeOffen()) return ctrl.stufePruefen();
       if (ctrl.leer()) return toast('Bitte gib zuerst eine Antwort ein.', true);
       try {
         const r = await cfg.pruefen({ antwort: ctrl.antwort() });
@@ -790,24 +808,42 @@
 
   /* ---------- Scoreboard ---------- */
 
+  function scoreboardKarte(d) {
+    return h(
+      'section',
+      { class: 'card' },
+      d.liste.length
+        ? h('div', { class: 'scroll-x' }, h('table', { class: 'liste' }, h('thead', null, h('tr', null, h('th', null, 'Platz'), h('th', null, 'Name'), h('th', { class: 'num' }, 'Punkte'), h('th', { class: 'num' }, 'Abzeichen'))), h('tbody', null, d.liste.map((r) => h('tr', { class: r.ich ? 'ich' : null, 'aria-current': r.ich ? 'true' : null }, h('td', null, r.platz <= 3 ? ['🥇', '🥈', '🥉'][r.platz - 1] + ' ' + r.platz : String(r.platz)), h('td', null, r.name + (r.ich ? ' (du)' : '')), h('td', { class: 'num' }, String(r.punkte)), h('td', { class: 'num' }, String(r.abzeichen)))))))
+        : h('p', { class: 'muted' }, 'Noch keine Einträge.'),
+      h('p', { class: 'hint' }, `Aktualisiert sich alle 20 s (zuletzt ${new Date().toLocaleTimeString('de-DE')}).`)
+    );
+  }
+
   async function scoreboard(welt) {
     lade('scoreboard');
+    const url = '/api/scoreboard' + (welt !== null && welt !== undefined && welt !== '' ? `?welt=${welt}` : '');
     try {
-      const d = await api('GET', '/api/scoreboard' + (welt !== null && welt !== undefined && welt !== '' ? `?welt=${welt}` : ''));
+      const d = await api('GET', url);
       const seg = h('div', { class: 'seg', role: 'group', 'aria-label': 'Filter' }, h('button', { type: 'button', 'aria-pressed': d.welt === null ? 'true' : 'false', onclick: () => (location.hash = '#/scoreboard') }, 'Gesamt'), d.welten.map((w) => h('button', { type: 'button', 'aria-pressed': d.welt === w.nr ? 'true' : 'false', onclick: () => (location.hash = `#/scoreboard/${w.nr}`) }, `Welt ${w.nr}`)));
       seite(
         'scoreboard',
         h('h1', null, '🏆 Scoreboard'),
         h('div', { class: 'scroll-x' }, seg),
         h('div', { class: 'spacer' }),
-        h(
-          'section',
-          { class: 'card' },
-          d.liste.length
-            ? h('div', { class: 'scroll-x' }, h('table', { class: 'liste' }, h('thead', null, h('tr', null, h('th', null, 'Platz'), h('th', null, 'Name'), h('th', { class: 'num' }, 'Punkte'), h('th', { class: 'num' }, 'Abzeichen'))), h('tbody', null, d.liste.map((r) => h('tr', { class: r.ich ? 'ich' : null, 'aria-current': r.ich ? 'true' : null }, h('td', null, r.platz <= 3 ? ['🥇', '🥈', '🥉'][r.platz - 1] + ' ' + r.platz : String(r.platz)), h('td', null, r.name + (r.ich ? ' (du)' : '')), h('td', { class: 'num' }, String(r.punkte)), h('td', { class: 'num' }, String(r.abzeichen)))))))
-            : h('p', { class: 'muted' }, 'Noch keine Einträge.')
-        )
+        scoreboardKarte(d)
       );
+      // alle 20 s nur die Tabelle austauschen (kein Springen nach oben); route() beendet den Timer
+      clearInterval(scoreboardTimer);
+      scoreboardTimer = setInterval(async () => {
+        if (document.hidden) return;
+        try {
+          const neu = await api('GET', url);
+          const alt = document.querySelector('#haupt > section.card');
+          if (alt && location.hash.startsWith('#/scoreboard')) alt.replaceWith(scoreboardKarte(neu));
+        } catch {
+          /* nächster Versuch in 20 s */
+        }
+      }, 20000);
     } catch (e) {
       fehlerSeite(e, 'scoreboard');
     }
@@ -934,6 +970,7 @@
 
   function route() {
     clearInterval(bossTimer);
+    clearInterval(scoreboardTimer);
     const t = document.getElementById('toast');
     if (t && !t.classList.contains('gold')) t.hidden = true;
     const teile = location.hash.replace(/^#\/?/, '').split('/').map(decodeURIComponent);

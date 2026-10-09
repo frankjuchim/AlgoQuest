@@ -466,6 +466,7 @@ body.board h1, body.board h2 { color: #fff; }
 .board-welt .progress { height: 16px; background: rgba(255, 255, 255, 0.15); }
 .board-erfolg { padding: 0.4rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
 .board-erfolg .zeit { color: #9fb6cf; font-size: 0.8em; }
+.board-status { color: #f2c75c; font-size: 0.85em; margin-left: 0.75rem; }
 
 /* ---------- Responsiv ---------- */
 @media (max-width: 760px) {
@@ -534,3 +535,8 @@ main.themen { max-width: 1100px; margin: 0 auto; padding: 1rem; }
   main.themen { max-width: none; padding: 0; }
   .themen .welt-karte, .themen .card { box-shadow: none; break-inside: avoid; }
 }
+
+/* Bug-Hunt gestuft: spätere Teile erst nach Teil a) */
+.stufe-versteckt { display: none !important; }
+.stufe-box { margin-top: 0.6rem; display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.9rem; }
+.stufe-box .hint { margin: 0; }

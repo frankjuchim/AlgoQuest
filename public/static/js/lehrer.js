@@ -474,6 +474,15 @@
   }
 
   async function tabScoreboard(k, box) {
+    // solange der Reiter offen ist alle 20 s neu laden (z. B. am Beamer) – nicht beim Bedienen der Auswahl, nicht im Hintergrund
+    if (!box.dataset.live) {
+      box.dataset.live = '1';
+      const t = setInterval(() => {
+        if (!box.isConnected) return clearInterval(t);
+        if (document.hidden || box.contains(document.activeElement)) return;
+        tabScoreboard(k, box).catch(() => {});
+      }, 20000);
+    }
     const welt = AQ.lade('aql_sb_welt', '');
     const d = await api('GET', `/api/lehrer/kurse/${k.id}/scoreboard${welt !== '' ? '?welt=' + welt : ''}`);
     const sel = h('select', { 'aria-label': 'Filter' }, h('option', { value: '' }, 'Gesamt'), inhalte.welten.map((w) => h('option', { value: String(w.nr), selected: String(w.nr) === String(welt) }, `Welt ${w.nr}: ${w.titel}`)));
@@ -481,7 +490,7 @@
       AQ.speichere('aql_sb_welt', sel.value);
       tabScoreboard(k, box);
     });
-    mount(box, h('section', { class: 'card' }, h('div', { class: 'row' }, h('h2', null, 'Scoreboard'), h('div', { class: 'right' }, sel)), h('div', { class: 'scroll-x' }, h('table', { class: 'liste' }, h('thead', null, h('tr', null, h('th', null, 'Platz'), h('th', null, 'Name'), h('th', { class: 'num' }, 'Punkte'), h('th', { class: 'num' }, 'Abzeichen'), h('th', { class: 'num' }, 'gelöst'))), h('tbody', null, d.liste.map((r) => h('tr', null, h('td', null, String(r.platz)), h('td', null, r.name), h('td', { class: 'num' }, String(r.punkte)), h('td', { class: 'num' }, String(r.abzeichen)), h('td', { class: 'num' }, String(r.geloest))))))), h('p', { class: 'hint' }, k.einstellungen.scoreboard ? 'Das Scoreboard ist für Schüler sichtbar.' : 'Das Scoreboard ist für Schüler ausgeblendet.')));
+    mount(box, h('section', { class: 'card' }, h('div', { class: 'row' }, h('h2', null, 'Scoreboard'), h('div', { class: 'right' }, sel)), h('div', { class: 'scroll-x' }, h('table', { class: 'liste' }, h('thead', null, h('tr', null, h('th', null, 'Platz'), h('th', null, 'Name'), h('th', { class: 'num' }, 'Punkte'), h('th', { class: 'num' }, 'Abzeichen'), h('th', { class: 'num' }, 'gelöst'))), h('tbody', null, d.liste.map((r) => h('tr', null, h('td', null, String(r.platz)), h('td', null, r.name), h('td', { class: 'num' }, String(r.punkte)), h('td', { class: 'num' }, String(r.abzeichen)), h('td', { class: 'num' }, String(r.geloest))))))), h('p', { class: 'hint' }, (k.einstellungen.scoreboard ? 'Das Scoreboard ist für Schüler sichtbar.' : 'Das Scoreboard ist für Schüler ausgeblendet.') + ` Aktualisiert sich alle 20 s (zuletzt ${new Date().toLocaleTimeString('de-DE')}).`)));
   }
 
   /* ---------- Aufgaben-Vorschau (mit Lösungen) ---------- */

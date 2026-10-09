@@ -145,7 +145,11 @@ test('adtsim: Folge exakt, Leerzeichen egal, erste falsche Position', () => {
 
 test('Schrittprüfung nur für erlaubte Arten', () => {
   assert.throws(() => C.pruefeAufgabe(A['W9-L1-01'], { g1: '9' }, { teilweise: true }), /Schrittprüfung/);
-  assert.throws(() => C.pruefeAufgabe(A['W9-L2-02'], [3], { teilweise: true, teil: 0 }), /Schrittprüfung/);
+  // Bug-Hunt gestuft: Teil a) (lines) einer mehrteiligen Aufgabe ist einzeln prüfbar, die übrigen Teile nicht
+  assert.equal(C.pruefeAufgabe(A['W9-L2-02'], [3], { teilweise: true, teil: 0 }).ok, true);
+  assert.equal(C.pruefeAufgabe(A['W9-L2-02'], [1], { teilweise: true, teil: 0 }).ok, false);
+  assert.equal(C.pruefeAufgabe(A['W9-L2-02'], [3], { teilweise: true, teil: 0 }).vollstaendig, false);
+  assert.throws(() => C.pruefeAufgabe(A['W9-L2-02'], { g1: '<' }, { teilweise: true, teil: 1 }), /Schrittprüfung/);
 });
 
 test('Ungültige Antwortformen werden abgewiesen', () => {

@@ -477,7 +477,10 @@ const AQR = (() => {
     const box = h('div', { class: 'inhalt' });
     (Array.isArray(liste) ? liste : []).forEach((b, i) => {
       const el = block(b, i, ctx);
-      if (el) box.appendChild(el);
+      if (el) {
+        el.dataset.block = String(i);
+        box.appendChild(el);
+      }
     });
     return box;
   }

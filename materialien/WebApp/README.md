@@ -22,6 +22,7 @@ Ränge und Abzeichen. Lehrkräfte verwalten ihre Kurse und sehen Lernstand, Aufg
   Baum als SVG, Reihung, Raster, Klassenkarte nach EH §6, ADT, Hinweis) und Interaktionen (Lücken, Auswahl, Puzzle,
   Bug-Hunt, Zuordnen, Baum klicken/bauen, Reihung tauschen/klicken, Raster, ADT-Simulation, mehrteilig, Schrittprüfung).
   „Prüfen“, „Tipp“, „Lösung zeigen“ (danach 0 Punkte), Feedback je Feld/Schritt, Erklärung nach dem Lösen.
+  Bug-Hunts gestuft: erst die fehlerhafte Zeile finden (Teil a), dann erscheint die Korrektur (Teil b).
 - Punkte beim ersten Lösen: `round(punkte × max(0.25, 1 − 0.25·Fehlversuche − 0.2·Tipps))`.
 - Trainingsplatz (Welten 0, 2, 4, 5, 6): Zufallsaufgaben aus Generatoren (Ausdruck → Typ/Wert, Bubble-/Selection-/Insertionsort
   ein Durchlauf, binäre Suche, Stapel/Schlange/dynamische Reihung, Suchbaum einfügen, Traversierungen); 1 Punkt je Aufgabe,
@@ -56,7 +57,9 @@ Ränge und Abzeichen. Lehrkräfte verwalten ihre Kurse und sehen Lernstand, Aufg
   Unterschriftslinie; Auswahl alle oder einzelne Schüler; optionale Leerzeile für den vollständigen Namen; Druckknopf (`@page` A4).
 - Aufgaben-Vorschau („📖 Aufgaben“): Welt → Level (mit AB- und IDE-Verweis, Merkkasten) → Aufgabe mit eingesetzter Lösung,
   Tipps und Erklärung, inkl. Boss-Pool – zum Nachschlagen passend zu den Arbeitsblättern.
-- Beamer-Board `/board/<KURSCODE>`: Top 15, Weltfortschritt des Kurses, letzte 8 Erfolge, Auto-Aktualisierung 60 s, noindex.
+- Beamer-Board `/board/<KURSCODE>`: Top 15, Weltfortschritt des Kurses, letzte 8 Erfolge, Auto-Aktualisierung alle 20 s
+  (bei Verbindungsfehler bleibt der letzte Stand stehen), noindex. Auch das Kurs-Scoreboard der Lehrkraft und das
+  Schüler-Scoreboard aktualisieren sich alle 20 s.
 
 **Superadmin** (aus Umgebungsvariablen): Anfragen bestätigen/ablehnen, Lehrkräfte deaktivieren/aktivieren/löschen,
 Einmal-Passwort setzen (Passwort-Reset ohne E-Mail), alle Kurse sehen, Seed-Bericht/Inhalte neu einlesen, Warm-up-Import,
