@@ -1837,11 +1837,11 @@
    "inhalt": [
     {
      "t": "text",
-     "md": "`summe(q)` wird für q = 8, 3, 6, 2 (vorne zuerst) aufgerufen. Vervollständige die Tabelle: eine Zeile pro Schleifendurchlauf."
+     "md": "`summe(q)` wird für q = 8, 3, 6, 2 (vorne zuerst) aufgerufen. Vervollständige die Tabelle: eine Zeile an jeder mit `// → Tabellenzeile` markierten Stelle (Start und je Schleifendurchlauf)."
     },
     {
      "t": "code",
-     "code": "public static int summe(Queue q) {\n    Queue hilf = new Queue();\n    int summe = 0;\n    while (!q.isEmpty()) {\n        int x = (Integer) q.dequeue();\n        summe = summe + x;\n        hilf.enqueue(x);\n    }\n    while (!hilf.isEmpty()) {\n        q.enqueue(hilf.dequeue());\n    }\n    return summe;\n}",
+     "code": "public static int summe(Queue q) {\n    Queue hilf = new Queue();\n    int summe = 0;   // → Tabellenzeile (Startwerte)\n    while (!q.isEmpty()) {\n        int x = (Integer) q.dequeue();\n        summe = summe + x;\n        hilf.enqueue(x);   // → Tabellenzeile\n    }\n    while (!hilf.isEmpty()) {\n        q.enqueue(hilf.dequeue());   // → Tabellenzeile\n    }\n    return summe;\n}",
      "nummern": true
     },
     {
@@ -2677,11 +2677,11 @@
    "inhalt": [
     {
      "t": "text",
-     "md": "`entferneName(d, \"Tee\")` soll alle Tee-Kisten entfernen. d = Zimt, Tee, Tee, Reis, Tee, Tee (Index 0 zuerst)."
+     "md": "`entferneName(d, \"Tee\")` soll alle Tee-Kisten entfernen. d = Zimt, Tee, Tee, Reis, Tee, Tee (Index 0 zuerst). Die Tabelle enthält eine Zeile an jeder mit `// → Tabellenzeile` markierten Stelle (am Ende jedes Durchlaufs)."
     },
     {
      "t": "code",
-     "code": "public static void entferneName(DynArray d, String name) {\n    for (int i = 0; i < d.getLength(); i++) {\n        Kiste k = (Kiste) d.getItem(i);\n        if (k.getName().equals(name)) {\n            d.delete(i);\n        }\n    }\n}",
+     "code": "public static void entferneName(DynArray d, String name) {\n    for (int i = 0; i < d.getLength(); i++) {\n        Kiste k = (Kiste) d.getItem(i);\n        if (k.getName().equals(name)) {\n            d.delete(i);\n        }   // → Tabellenzeile\n    }\n}",
      "nummern": true
     },
     {
@@ -2935,40 +2935,35 @@
    "inhalt": [
     {
      "t": "text",
-     "md": "Die Ladeliste ist aufsteigend nach Gewicht sortiert: d = Zimt 2, Seide 3, Tee 4, Zinn 6, Reis 7. Es wird `einfuegenSortiert(d, new Kiste(\"Kaffee\", 4))` aufgerufen."
+     "md": "Die Ladeliste ist aufsteigend nach Gewicht sortiert: d = Zimt 2, Seide 3, Tee 4, Zinn 6, Reis 7. Es wird `einfuegenSortiert(d, new Kiste(\"Kaffee\", 4))` aufgerufen. Vervollständige die Tabelle: eine Zeile an jeder mit `// → Tabellenzeile` markierten Stelle."
     },
     {
      "t": "code",
-     "code": "public static void einfuegenSortiert(DynArray d, Kiste k) {\n    int pos = 0;\n    while (pos < d.getLength() && ((Kiste) d.getItem(pos)).getGewicht() <= k.getGewicht()) {\n        pos++;\n    }\n    d.insertAt(pos, k);\n}",
+     "code": "public static void einfuegenSortiert(DynArray d, Kiste k) {\n    int pos = 0;   // → Tabellenzeile (Startwerte)\n    while (pos < d.getLength() && ((Kiste) d.getItem(pos)).getGewicht() <= k.getGewicht()) {\n        pos++;   // → Tabellenzeile\n    }\n    d.insertAt(pos, k);\n}",
      "nummern": true
     },
     {
      "t": "tabelle",
      "kopf": [
       "pos",
-      "d.getItem(pos)",
-      "schwerer als 4 kg?"
+      "d.getItem(pos)"
      ],
      "zeilen": [
       [
        "0",
-       "[[k0]]",
-       "[[a0]]"
+       "[[k0]]"
       ],
       [
        "1",
-       "[[k1]]",
-       "[[a1]]"
+       "[[k1]]"
       ],
       [
        "2",
-       "[[k2]]",
-       "[[a2]]"
+       "[[k2]]"
       ],
       [
        "3",
-       "[[k3]]",
-       "[[a3]]"
+       "[[k3]]"
       ]
      ]
     },
@@ -2990,13 +2985,6 @@
        "Reis 7"
       ]
      },
-     "a0": {
-      "typ": "auswahl",
-      "optionen": [
-       "ja",
-       "nein"
-      ]
-     },
      "k1": {
       "typ": "auswahl",
       "optionen": [
@@ -3005,13 +2993,6 @@
        "Tee 4",
        "Zinn 6",
        "Reis 7"
-      ]
-     },
-     "a1": {
-      "typ": "auswahl",
-      "optionen": [
-       "ja",
-       "nein"
       ]
      },
      "k2": {
@@ -3024,13 +3005,6 @@
        "Reis 7"
       ]
      },
-     "a2": {
-      "typ": "auswahl",
-      "optionen": [
-       "ja",
-       "nein"
-      ]
-     },
      "k3": {
       "typ": "auswahl",
       "optionen": [
@@ -3039,13 +3013,6 @@
        "Tee 4",
        "Zinn 6",
        "Reis 7"
-      ]
-     },
-     "a3": {
-      "typ": "auswahl",
-      "optionen": [
-       "ja",
-       "nein"
       ]
      },
      "ix": {
@@ -3065,26 +3032,14 @@
     "k0": [
      "Zimt 2"
     ],
-    "a0": [
-     "nein"
-    ],
     "k1": [
      "Seide 3"
-    ],
-    "a1": [
-     "nein"
     ],
     "k2": [
      "Tee 4"
     ],
-    "a2": [
-     "nein"
-    ],
     "k3": [
      "Zinn 6"
-    ],
-    "a3": [
-     "ja"
     ],
     "ix": [
      "3"
@@ -3669,11 +3624,11 @@
    "inhalt": [
     {
      "t": "text",
-     "md": "Verfolge `klammernOk(\"({x}[y](z))\")` mit dem Klammer-Stapel. Gib nach jedem Klammerzeichen den Stapel an (oben zuerst, Zeichen ohne Anführungszeichen, z. B. `{, (`; leer: `–`)."
+     "md": "Verfolge `klammernOk(\"({x}[y](z))\")` mit dem Klammer-Stapel. Gib nach jedem Klammerzeichen den Stapel an (oben zuerst, Zeichen ohne Anführungszeichen, z. B. `{, (`; leer: `–`) – eine Zeile an jeder mit `// → Tabellenzeile` markierten Stelle."
     },
     {
      "t": "code",
-     "code": "public static boolean passt(char auf, char zu) {\n    return (auf == '(' && zu == ')') || (auf == '[' && zu == ']') || (auf == '{' && zu == '}');\n}\n\npublic static boolean klammernOk(String s) {\n    Stack offen = new Stack();\n    for (int i = 0; i < s.length(); i++) {\n        char c = s.charAt(i);\n        if (c == '(' || c == '[' || c == '{') {\n            offen.push(c);\n        } else if (c == ')' || c == ']' || c == '}') {\n            if (offen.isEmpty()) {\n                return false;\n            }\n            char auf = (Character) offen.pop();\n            if (!passt(auf, c)) {\n                return false;\n            }\n        }\n    }\n    return offen.isEmpty();\n}",
+     "code": "public static boolean passt(char auf, char zu) {\n    return (auf == '(' && zu == ')') || (auf == '[' && zu == ']') || (auf == '{' && zu == '}');\n}\n\npublic static boolean klammernOk(String s) {\n    Stack offen = new Stack();\n    for (int i = 0; i < s.length(); i++) {\n        char c = s.charAt(i);\n        if (c == '(' || c == '[' || c == '{') {\n            offen.push(c);   // → Tabellenzeile\n        } else if (c == ')' || c == ']' || c == '}') {\n            if (offen.isEmpty()) {\n                return false;\n            }\n            char auf = (Character) offen.pop();   // → Tabellenzeile\n            if (!passt(auf, c)) {\n                return false;\n            }\n        }\n    }\n    return offen.isEmpty();\n}",
      "nummern": true
     },
     {
@@ -3696,7 +3651,7 @@
       ],
       [
        "}",
-       "pop → passt",
+       "pop",
        "[[s2]]"
       ],
       [
@@ -3706,7 +3661,7 @@
       ],
       [
        "]",
-       "pop → passt",
+       "pop",
        "[[s4]]"
       ],
       [
@@ -3716,12 +3671,12 @@
       ],
       [
        ")",
-       "pop → passt",
+       "pop",
        "[[s6]]"
       ],
       [
        ")",
-       "pop → passt",
+       "pop",
        "[[s7]]"
       ]
      ]
@@ -3840,11 +3795,11 @@
    "inhalt": [
     {
      "t": "text",
-     "md": "Werte den Postfix-Ausdruck `83-52*+` aus (einstellige Zahlen, Rechenzeichen + − *). Gib nach jedem Zeichen den Stapel an (oben zuerst)."
+     "md": "Werte den Postfix-Ausdruck `83-52*+` aus (einstellige Zahlen, Rechenzeichen + − *). Gib nach jedem Zeichen den Stapel an (oben zuerst) – eine Zeile an jeder mit `// → Tabellenzeile` markierten Stelle."
     },
     {
      "t": "code",
-     "code": "public static int postfix(String ausdruck) {\n    Stack werte = new Stack();\n    for (int i = 0; i < ausdruck.length(); i++) {\n        char c = ausdruck.charAt(i);\n        if (c >= '0' && c <= '9') {\n            werte.push((int) c - (int) '0');\n        } else {\n            int b = (Integer) werte.pop();\n            int a = (Integer) werte.pop();\n            if (c == '+') {\n                werte.push(a + b);\n            } else if (c == '-') {\n                werte.push(a - b);\n            } else {\n                werte.push(a * b);\n            }\n        }\n    }\n    return (Integer) werte.pop();\n}",
+     "code": "public static int postfix(String ausdruck) {\n    Stack werte = new Stack();\n    for (int i = 0; i < ausdruck.length(); i++) {\n        char c = ausdruck.charAt(i);\n        if (c >= '0' && c <= '9') {\n            werte.push((int) c - (int) '0');   // → Tabellenzeile\n        } else {\n            int b = (Integer) werte.pop();\n            int a = (Integer) werte.pop();\n            if (c == '+') {\n                werte.push(a + b);   // → Tabellenzeile\n            } else if (c == '-') {\n                werte.push(a - b);   // → Tabellenzeile\n            } else {\n                werte.push(a * b);   // → Tabellenzeile\n            }\n        }\n    }\n    return (Integer) werte.pop();\n}",
      "nummern": true
     },
     {
@@ -5428,11 +5383,11 @@
    "inhalt": [
     {
      "t": "text",
-     "md": "Die Schlange q enthält die Fahrkartennummern 4, 7, 2, 9, 5, 8 (vorne zuerst). Es wird `umordnen(q, 6)` aufgerufen."
+     "md": "Die Schlange q enthält die Fahrkartennummern 4, 7, 2, 9, 5, 8 (vorne zuerst). Es wird `umordnen(q, 6)` aufgerufen. Die Tabelle enthält eine Zeile an jeder mit `// → Tabellenzeile` markierten Stelle (am Ende jedes Durchlaufs)."
     },
     {
      "t": "code",
-     "code": "public static void umordnen(Queue q, int n) {\n    Queue hilf = new Queue();\n    for (int i = 0; i < n; i++) {\n        int t = (Integer) q.dequeue();\n        if (t % 2 == 0) {\n            hilf.enqueue(t);\n        } else {\n            q.enqueue(t);\n        }\n    }\n    while (!hilf.isEmpty()) {\n        q.enqueue(hilf.dequeue());\n    }\n}",
+     "code": "public static void umordnen(Queue q, int n) {\n    Queue hilf = new Queue();\n    for (int i = 0; i < n; i++) {\n        int t = (Integer) q.dequeue();\n        if (t % 2 == 0) {\n            hilf.enqueue(t);\n        } else {\n            q.enqueue(t);\n        }   // → Tabellenzeile\n    }\n    while (!hilf.isEmpty()) {\n        q.enqueue(hilf.dequeue());\n    }\n}",
      "nummern": true
     },
     {
