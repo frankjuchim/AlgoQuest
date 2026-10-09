@@ -5,6 +5,9 @@ Fehler (Exit-Code 1):
   - Altbegriffe „Kata“, „Gilde(n)“, „XP“ (gültig: Warm-up, Team, Punkte im Lab)
   - generische Abiturklassen (Stack<…>, Queue<…>, DynArray<…>, BinTree<…>) im Code der Online-IDE-Dateien
   - nicht erlaubte Zeichenketten-Operationen (toLowerCase, split, indexOf, trim, replace …) im Code der Online-IDE-Dateien
+  - Bedingungsspalten in Tabellen (Kopfzelle mit <, >, ==, ≤, „Bedingung“, „w/f“ …): Tracetabellen enthalten nur
+    Variablen, die Eintragsstellen stehen im Code als „// → Tabellenzeile“ (Ausnahme: Tabellen zum Auswerten von
+    Ausdrücken, Kopf beginnt mit „Ausdruck“, und die Abzeichen-Übersicht)
 Hinweise (kein Fehler):
   - „Array“ im Fließtext (Konvention: „Reihung“), sofern nicht als „statt/nie Array“ erklärt
   - System.out im Code der Online-IDE-Dateien (dort println ohne System.out)
@@ -35,6 +38,8 @@ ALTBEGRIFFE = re.compile(r"\b(Kata|Katas|Gilde|Gilden|XP)\b")
 GENERISCH = re.compile(r"\b(Stack|Queue|DynArray|BinTree)\s*<")
 VERBOTEN = re.compile(r"\.(toLowerCase|toUpperCase|split|indexOf|lastIndexOf|trim|replace|replaceAll|startsWith|endsWith|"
                       r"equalsIgnoreCase|isBlank|strip|chars|toCharArray)\s*\(")
+BEDINGUNG = re.compile(r"(<=|>=|==|!=|(?<![-<])<(?![-=])|(?<![-=])>(?!=)|≤|≥|≠|Bedingung|w/f|wahr/falsch)")
+KEINE_TRACETABELLE = re.compile(r"^(Ausdruck|Abzeichen)")
 ARRAY = re.compile(r"\bArrays?\b")
 ARRAY_OK = re.compile(r"Array-Literal|ArrayIndex|ArrayList|DynArray|statt\s+[„\"]?Array|nie\s+[„\"]?Array|"
                       r"Array\s+heißt|java\.util", re.I)
@@ -74,6 +79,26 @@ def zeilen_pptx(p):
                     yield f"Folie {i} (Notiz): {t}"
 
 
+def tabellenkoepfe(p):
+    """(Ort, [Kopfzellen]) aller Tabellen einer docx/pptx."""
+    if p.suffix == ".docx":
+        for i, tbl in enumerate(Document(p).element.body.iter(qn("w:tbl")), 1):
+            tr = tbl.find(qn("w:tr"))
+            if tr is not None:
+                yield f"Tabelle {i}", ["".join(x.text or "" for x in tc.iter(qn("w:t"))).strip() for tc in tr.findall(qn("w:tc"))]
+    elif p.suffix == ".pptx":
+        for i, folie in enumerate(Presentation(p).slides, 1):
+            for form in folie.shapes:
+                if form.has_table:
+                    yield f"Folie {i}", [c.text.strip() for c in form.table.rows[0].cells]
+
+
+def bedingungsspalten(kopf):
+    if len(kopf) < 2 or KEINE_TRACETABELLE.match(kopf[0]):  # einzellige Tabellen = Code-Kästen
+        return []
+    return [k for k in kopf if len(k) < 40 and ";" not in k and BEDINGUNG.search(k)]
+
+
 def code_zeilen(text):
     """Zeilen einer Online-IDE-Datei ohne Kommentare und ohne Zeichenkettenliterale (Meldungstexte)."""
     text = re.sub(r"/\*.*?\*/", lambda m: "\n" * m.group(0).count("\n"), text, flags=re.S)
@@ -100,6 +125,10 @@ def pruefe(pfad):
         texte = [(f"Absatz {i}", t) for i, t in enumerate(zeilen_docx(pfad), 1)]
     else:
         texte = [("", t) for t in zeilen_pptx(pfad)]
+    if pfad.suffix in (".docx", ".pptx"):
+        for ort, kopf in tabellenkoepfe(pfad):
+            for k in bedingungsspalten(kopf):
+                fehler.append(f"{ort}: Bedingungsspalte „{k}“ – Tracetabellen nur mit Variablen (Kopf: {' | '.join(kopf)})")
     for ort, t in texte:
         m = ALTBEGRIFFE.search(t)
         if m and not ausnahme(pfad, "altbegriff"):

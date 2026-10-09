@@ -12,6 +12,7 @@ const { LAB_KATEGORIEN, FALLEN_IDS, STUFEN_PUNKTE } = require('../domain');
 const AUFGABE_ID = /^W(\d)-(L\d{1,2}[a-z]?|B)-\d{2,3}$/;
 const LEVEL_ID = /^W(\d)-L\d{1,2}[a-z]?$/;
 const FARBE = /^#[0-9A-Fa-f]{6}$/;
+const BEDINGUNGSSPALTE = /(<=|>=|==|!=|(?<![-<])<(?![-=])|(?<![-=])>(?!=)|≤|≥|≠|Bedingung|w\/f|wahr\/falsch)/;
 const MARKIER_FARBEN = ['gold', 'gruen', 'grün', 'rot', 'blau', 'grau', 'orange', 'lila'];
 const SG_SCHLUESSEL = ['anw', 'wenn', 'solange', 'zaehle', 'fuer', 'wiederhole', 'gib', 'aufruf', 'kommentar'];
 
@@ -435,6 +436,9 @@ function validiereBloecke(bloecke, ort, f, w, aufgabe, stats, opt = {}) {
         if (!Array.isArray(b.kopf) || !b.kopf.every(istSkalar)) fe('kopf (Liste der Spaltenköpfe) fehlt.');
         if (!Array.isArray(b.zeilen) || !b.zeilen.every((z) => Array.isArray(z) && z.every((c) => istSkalar(c) || c === null))) fe('zeilen muss eine Liste von Zeilen (Listen von Texten) sein.');
         else if (Array.isArray(b.kopf) && b.zeilen.some((z) => z.length !== b.kopf.length)) w(ebene, o, 'Nicht alle Zeilen haben so viele Zellen wie der Kopf.', aufgabe);
+        // Tracetabellen nur mit Variablen; Eintragsstellen stehen im Code als „// → Tabellenzeile“
+        if (Array.isArray(b.kopf) && b.kopf.length > 1 && !/^(Ausdruck|Abzeichen)/.test(String(b.kopf[0])))
+          for (const k of b.kopf) if (BEDINGUNGSSPALTE.test(String(k))) w(ebene, o, `Bedingungsspalte „${k}“ – Tracetabellen enthalten nur Variablen (Stellen im Code mit „// → Tabellenzeile“ markieren).`, aufgabe);
         break;
       case 'baum':
         try {

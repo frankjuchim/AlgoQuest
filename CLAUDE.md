@@ -56,7 +56,7 @@ werkzeuge/           Prüf- und Erzeugungsskripte (Python 3 + javac, nicht im Do
   workspaces_erzeugen.py            materialien/Online-IDE neu erzeugen (--pruefen: nur prüfen)
   arbeitsblaetter_pdf.py            materialien/Arbeitsblaetter_PDF neu erzeugen (soffice; --pruefen: Vollständigkeit)
   loesungen_pdf.py                  materialien/Loesungen_Portal + Loesungen_Arbeitsblaetter neu erzeugen (--pruefen)
-  materialien_pruefen.py            docx/pptx/txt: Altbegriffe, Generics, verbotene String-Operationen (--rendern: soffice → PDF)
+  materialien_pruefen.py            docx/pptx/txt: Altbegriffe, Generics, verbotene String-Operationen, Bedingungsspalten in Tracetabellen (--rendern: soffice → PDF)
 .github/workflows/pruefung.yml      GitHub-Prüfung: alles oben bei jedem Push/PR
 docs/ONLINE-IDE_TESTPROTOKOLL.md    Checkliste mit Sollwerten für den Probelauf in der echten Online-IDE
 ```
