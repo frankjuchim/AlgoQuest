@@ -1,0 +1,795 @@
+{
+ "_hinweis": "ERZEUGT von werkzeuge/lehrkraft_pdf.py – nicht von Hand ändern. Pfade relativ zu materialien/. Arbeitsblaetter_PDF/… ist öffentlich (/arbeitsblaetter/…), alles andere liefert das Lab nur an angemeldete Lehrkräfte aus.",
+ "allgemein": [
+  {
+   "art": "hinweise",
+   "titel": "Gesamtübersicht DS 1–40 (Einstieg in die Einheit)",
+   "dateien": [
+    {
+     "label": "Lehrerhinweise",
+     "pfad": "Lehrkraft_PDF/00_Allgemein/AQ_Gesamtuebersicht_DS1-40.pdf"
+    }
+   ]
+  },
+  {
+   "art": "werkzeug",
+   "titel": "Werkzeugkarten: Abi-Check, Zeitbudget, Notation (Struktogramm, Klassendiagramm, Signaturen)",
+   "dateien": [
+    {
+     "label": "Werkzeugkarten",
+     "pfad": "Arbeitsblaetter_PDF/00_Werkzeugkarten/AQ_Werkzeugkarten_Abi-Check_und_Notation.pdf"
+    }
+   ]
+  }
+ ],
+ "welten": [
+  {
+   "welt": 0,
+   "ordner": "Welt_0_Akademie",
+   "eintraege": [
+    {
+     "art": "praesentation",
+     "titel": "Kickoff-Präsentation (Start der Einheit)",
+     "dateien": [
+      {
+       "label": "Folien",
+       "pfad": "Lehrkraft_PDF/Welt_0_Akademie/AQ_W0-Praesentation_Kickoff.pdf"
+      }
+     ]
+    },
+    {
+     "art": "praesentation",
+     "titel": "Präsentation „Akademie“",
+     "dateien": [
+      {
+       "label": "Folien",
+       "pfad": "Lehrkraft_PDF/Welt_0_Akademie/AQ_W0-Praesentation_Akademie.pdf"
+      }
+     ]
+    },
+    {
+     "art": "hinweise",
+     "titel": "Lehrerhinweise Welt 0",
+     "dateien": [
+      {
+       "label": "Lehrerhinweise",
+       "pfad": "Lehrkraft_PDF/Welt_0_Akademie/AQ_W0-Lehrerhinweise.pdf"
+      }
+     ]
+    },
+    {
+     "art": "ab",
+     "titel": "AB 1: Das Portal: Start ins Dungeon und Notation fürs Abitur",
+     "ds": [
+      1
+     ],
+     "dateien": [
+      {
+       "label": "Arbeitsblatt",
+       "pfad": "Arbeitsblaetter_PDF/Welt_0_Akademie/AQ_W0-AB1_Das_Portal_Notation_fuers_Abitur.pdf"
+      },
+      {
+       "label": "Lösung",
+       "pfad": "Loesungen_Portal/Welt_0_Akademie/AQ_W0-AB1_Das_Portal_Notation_fuers_Abitur_Loesung.pdf"
+      }
+     ]
+    },
+    {
+     "art": "ab",
+     "titel": "AB 2: Die Werkstatt: Datentypen, Operatoren, Verzweigungen, Schleifen",
+     "ds": [
+      2
+     ],
+     "dateien": [
+      {
+       "label": "Arbeitsblatt",
+       "pfad": "Arbeitsblaetter_PDF/Welt_0_Akademie/AQ_W0-AB2_Die_Werkstatt_Datentypen_und_Kontrollstrukturen.pdf"
+      },
+      {
+       "label": "Lösung",
+       "pfad": "Loesungen_Portal/Welt_0_Akademie/AQ_W0-AB2_Die_Werkstatt_Datentypen_und_Kontrollstrukturen_Loesung.pdf"
+      }
+     ]
+    },
+    {
+     "art": "ab",
+     "titel": "AB 3: Die Vorratskammer: Reihungen und Zeichenketten",
+     "ds": [
+      3
+     ],
+     "dateien": [
+      {
+       "label": "Arbeitsblatt",
+       "pfad": "Arbeitsblaetter_PDF/Welt_0_Akademie/AQ_W0-AB3_Die_Vorratskammer_Reihungen_und_Zeichenketten.pdf"
+      },
+      {
+       "label": "Lösung",
+       "pfad": "Loesungen_Portal/Welt_0_Akademie/AQ_W0-AB3_Die_Vorratskammer_Reihungen_und_Zeichenketten_Loesung.pdf"
+      }
+     ]
+    },
+    {
+     "art": "ab",
+     "titel": "AB 4: Die Zauberschule: Eigene Methoden",
+     "ds": [
+      4,
+      5
+     ],
+     "dateien": [
+      {
+       "label": "Arbeitsblatt",
+       "pfad": "Arbeitsblaetter_PDF/Welt_0_Akademie/AQ_W0-AB4_Die_Zauberschule_Eigene_Methoden.pdf"
+      },
+      {
+       "label": "Lösung",
+       "pfad": "Loesungen_Portal/Welt_0_Akademie/AQ_W0-AB4_Die_Zauberschule_Eigene_Methoden_Loesung.pdf"
+      }
+     ]
+    },
+    {
+     "art": "ab",
+     "titel": "AB 5: Die Methoden-Werkstatt: Von der Aufgabe zur Methode",
+     "ds": [
+      6
+     ],
+     "dateien": [
+      {
+       "label": "Arbeitsblatt",
+       "pfad": "Arbeitsblaetter_PDF/Welt_0_Akademie/AQ_W0-AB5_Die_Methoden-Werkstatt_Von_der_Aufgabe_zur_Methode.pdf"
+      },
+      {
+       "label": "Lösung",
+       "pfad": "Loesungen_Portal/Welt_0_Akademie/AQ_W0-AB5_Die_Methoden-Werkstatt_Von_der_Aufgabe_zur_Methode_Loesung.pdf"
+      }
+     ]
+    },
+    {
+     "art": "boss",
+     "titel": "Papier-Boss: Aufnahmeprüfung – Die Bibliothek der Akademie (60 min)",
+     "dateien": [
+      {
+       "label": "Papier-Boss",
+       "pfad": "Arbeitsblaetter_PDF/Welt_0_Akademie/AQ_W0-Boss_Aufnahmepruefung_Die_Bibliothek.pdf"
+      },
+      {
+       "label": "Erwartungshorizont",
+       "pfad": "Loesungen_Portal/Welt_0_Akademie/AQ_W0-Boss_Aufnahmepruefung_Die_Bibliothek_Erwartungshorizont.pdf"
+      }
+     ]
+    },
+    {
+     "art": "warmup",
+     "titel": "Warm-up-Karten W0-09 bis W0-22 (Akademie)",
+     "dateien": [
+      {
+       "label": "Karten (ohne Lösungen)",
+       "pfad": "Arbeitsblaetter_PDF/Welt_0_Akademie/AQ_W0-Warm-up-Karten_W0-09_bis_W0-22.pdf"
+      },
+      {
+       "label": "Lösungen",
+       "pfad": "Loesungen_Portal/Welt_0_Akademie/AQ_W0-Warm-up-Karten_W0-09_bis_W0-22_Loesungen.pdf"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "welt": 1,
+   "ordner": "Welt_1_Heldenschmiede",
+   "eintraege": [
+    {
+     "art": "praesentation",
+     "titel": "Präsentation „Heldenschmiede“",
+     "dateien": [
+      {
+       "label": "Folien",
+       "pfad": "Lehrkraft_PDF/Welt_1_Heldenschmiede/AQ_W1-Praesentation_Heldenschmiede.pdf"
+      }
+     ]
+    },
+    {
+     "art": "hinweise",
+     "titel": "Lehrerhinweise Welt 1",
+     "dateien": [
+      {
+       "label": "Lehrerhinweise",
+       "pfad": "Lehrkraft_PDF/Welt_1_Heldenschmiede/AQ_W1-Lehrerhinweise.pdf"
+      }
+     ]
+    },
+    {
+     "art": "ab",
+     "titel": "AB 1: Klassen und Objekte",
+     "ds": [
+      8,
+      9,
+      10
+     ],
+     "dateien": [
+      {
+       "label": "Arbeitsblatt",
+       "pfad": "Arbeitsblaetter_PDF/Welt_1_Heldenschmiede/AQ_W1-AB1_Klassen_und_Objekte.pdf"
+      },
+      {
+       "label": "Lösung",
+       "pfad": "Loesungen_Portal/Welt_1_Heldenschmiede/AQ_W1-AB1_Klassen_und_Objekte_Loesung.pdf"
+      }
+     ]
+    },
+    {
+     "art": "ab",
+     "titel": "AB 2: Vererbung",
+     "ds": [
+      11
+     ],
+     "dateien": [
+      {
+       "label": "Arbeitsblatt",
+       "pfad": "Arbeitsblaetter_PDF/Welt_1_Heldenschmiede/AQ_W1-AB2_Vererbung.pdf"
+      },
+      {
+       "label": "Lösung",
+       "pfad": "Loesungen_Portal/Welt_1_Heldenschmiede/AQ_W1-AB2_Vererbung_Loesung.pdf"
+      }
+     ]
+    },
+    {
+     "art": "boss",
+     "titel": "Papier-Boss: Die Gildenhalle – das Auftragsbrett (60 min)",
+     "dateien": [
+      {
+       "label": "Papier-Boss",
+       "pfad": "Arbeitsblaetter_PDF/Welt_1_Heldenschmiede/AQ_W1-Boss_Die_Gildenhalle.pdf"
+      },
+      {
+       "label": "Erwartungshorizont",
+       "pfad": "Loesungen_Portal/Welt_1_Heldenschmiede/AQ_W1-Boss_Die_Gildenhalle_Erwartungshorizont.pdf"
+      }
+     ]
+    },
+    {
+     "art": "warmup",
+     "titel": "Warm-up-Karten W0-01 bis W0-08 und W1-01 bis W1-15",
+     "dateien": [
+      {
+       "label": "Karten (ohne Lösungen)",
+       "pfad": "Arbeitsblaetter_PDF/Welt_1_Heldenschmiede/AQ_W1-Warm-up-Karten_W0-01_bis_W0-08_und_W1.pdf"
+      },
+      {
+       "label": "Lösungen",
+       "pfad": "Loesungen_Portal/Welt_1_Heldenschmiede/AQ_W1-Warm-up-Karten_W0-01_bis_W0-08_und_W1_Loesungen.pdf"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "welt": 2,
+   "ordner": "Welt_2_Rangliste",
+   "eintraege": [
+    {
+     "art": "praesentation",
+     "titel": "Präsentation „Rangliste“",
+     "dateien": [
+      {
+       "label": "Folien",
+       "pfad": "Lehrkraft_PDF/Welt_2_Rangliste/AQ_W2-Praesentation_Rangliste.pdf"
+      }
+     ]
+    },
+    {
+     "art": "hinweise",
+     "titel": "Lehrerhinweise Welt 2",
+     "dateien": [
+      {
+       "label": "Lehrerhinweise",
+       "pfad": "Lehrkraft_PDF/Welt_2_Rangliste/AQ_W2-Lehrerhinweise.pdf"
+      }
+     ]
+    },
+    {
+     "art": "ab",
+     "titel": "AB 1: Standardbausteine und Suchen",
+     "ds": [
+      13
+     ],
+     "dateien": [
+      {
+       "label": "Arbeitsblatt",
+       "pfad": "Arbeitsblaetter_PDF/Welt_2_Rangliste/AQ_W2-AB1_Standardbausteine_und_Suchen.pdf"
+      },
+      {
+       "label": "Lösung",
+       "pfad": "Loesungen_Portal/Welt_2_Rangliste/AQ_W2-AB1_Standardbausteine_und_Suchen_Loesung.pdf"
+      }
+     ]
+    },
+    {
+     "art": "ab",
+     "titel": "AB 2: Sortieren",
+     "ds": [
+      14
+     ],
+     "dateien": [
+      {
+       "label": "Arbeitsblatt",
+       "pfad": "Arbeitsblaetter_PDF/Welt_2_Rangliste/AQ_W2-AB2_Sortieren.pdf"
+      },
+      {
+       "label": "Lösung",
+       "pfad": "Loesungen_Portal/Welt_2_Rangliste/AQ_W2-AB2_Sortieren_Loesung.pdf"
+      }
+     ]
+    },
+    {
+     "art": "ab",
+     "titel": "AB 3: Effizienz und binäre Suche",
+     "ds": [
+      15,
+      16
+     ],
+     "dateien": [
+      {
+       "label": "Arbeitsblatt",
+       "pfad": "Arbeitsblaetter_PDF/Welt_2_Rangliste/AQ_W2-AB3_Effizienz_und_binaere_Suche.pdf"
+      },
+      {
+       "label": "Lösung",
+       "pfad": "Loesungen_Portal/Welt_2_Rangliste/AQ_W2-AB3_Effizienz_und_binaere_Suche_Loesung.pdf"
+      }
+     ]
+    },
+    {
+     "art": "boss",
+     "titel": "Papier-Boss: Das Turnier der Bogenschützen (60 min)",
+     "dateien": [
+      {
+       "label": "Papier-Boss",
+       "pfad": "Arbeitsblaetter_PDF/Welt_2_Rangliste/AQ_W2-Boss_Das_Turnier_der_Bogenschuetzen.pdf"
+      },
+      {
+       "label": "Erwartungshorizont",
+       "pfad": "Loesungen_Portal/Welt_2_Rangliste/AQ_W2-Boss_Das_Turnier_der_Bogenschuetzen_Erwartungshorizont.pdf"
+      }
+     ]
+    },
+    {
+     "art": "warmup",
+     "titel": "Warm-up-Karten W2-01 bis W2-14",
+     "dateien": [
+      {
+       "label": "Karten (ohne Lösungen)",
+       "pfad": "Arbeitsblaetter_PDF/Welt_2_Rangliste/AQ_W2-Warm-up-Karten.pdf"
+      },
+      {
+       "label": "Lösungen",
+       "pfad": "Loesungen_Portal/Welt_2_Rangliste/AQ_W2-Warm-up-Karten_Loesungen.pdf"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "welt": 3,
+   "ordner": "Welt_3_Labyrinth",
+   "eintraege": [
+    {
+     "art": "praesentation",
+     "titel": "Präsentation „Labyrinth“",
+     "dateien": [
+      {
+       "label": "Folien",
+       "pfad": "Lehrkraft_PDF/Welt_3_Labyrinth/AQ_W3-Praesentation_Labyrinth.pdf"
+      }
+     ]
+    },
+    {
+     "art": "hinweise",
+     "titel": "Lehrerhinweise Welt 3",
+     "dateien": [
+      {
+       "label": "Lehrerhinweise",
+       "pfad": "Lehrkraft_PDF/Welt_3_Labyrinth/AQ_W3-Lehrerhinweise.pdf"
+      }
+     ]
+    },
+    {
+     "art": "ab",
+     "titel": "AB 1: Rekursion",
+     "ds": [
+      18
+     ],
+     "dateien": [
+      {
+       "label": "Arbeitsblatt",
+       "pfad": "Arbeitsblaetter_PDF/Welt_3_Labyrinth/AQ_W3-AB1_Rekursion.pdf"
+      },
+      {
+       "label": "Lösung",
+       "pfad": "Loesungen_Portal/Welt_3_Labyrinth/AQ_W3-AB1_Rekursion_Loesung.pdf"
+      }
+     ]
+    },
+    {
+     "art": "ab",
+     "titel": "AB 2: Die Dungeon-Karte: 2D-Reihungen, Flood-Fill und Backtracking",
+     "ds": [
+      19,
+      20
+     ],
+     "dateien": [
+      {
+       "label": "Arbeitsblatt",
+       "pfad": "Arbeitsblaetter_PDF/Welt_3_Labyrinth/AQ_W3-AB2_2D-Reihungen_Flood-Fill_und_Backtracking.pdf"
+      },
+      {
+       "label": "Lösung",
+       "pfad": "Loesungen_Portal/Welt_3_Labyrinth/AQ_W3-AB2_2D-Reihungen_Flood-Fill_und_Backtracking_Loesung.pdf"
+      }
+     ]
+    },
+    {
+     "art": "ab",
+     "titel": "AB 3: Teile und herrsche: Maximum, Mergesort, Quicksort",
+     "ds": [
+      21,
+      22
+     ],
+     "dateien": [
+      {
+       "label": "Arbeitsblatt",
+       "pfad": "Arbeitsblaetter_PDF/Welt_3_Labyrinth/AQ_W3-AB3_Teile_und_herrsche.pdf"
+      },
+      {
+       "label": "Lösung",
+       "pfad": "Loesungen_Portal/Welt_3_Labyrinth/AQ_W3-AB3_Teile_und_herrsche_Loesung.pdf"
+      }
+     ]
+    },
+    {
+     "art": "boss",
+     "titel": "Papier-Boss: Die Kristallhöhle (60 min)",
+     "dateien": [
+      {
+       "label": "Papier-Boss",
+       "pfad": "Arbeitsblaetter_PDF/Welt_3_Labyrinth/AQ_W3-Boss_Die_Kristallhoehle.pdf"
+      },
+      {
+       "label": "Erwartungshorizont",
+       "pfad": "Loesungen_Portal/Welt_3_Labyrinth/AQ_W3-Boss_Die_Kristallhoehle_Erwartungshorizont.pdf"
+      }
+     ]
+    },
+    {
+     "art": "warmup",
+     "titel": "Warm-up-Karten W3-01 bis W3-14",
+     "dateien": [
+      {
+       "label": "Karten (ohne Lösungen)",
+       "pfad": "Arbeitsblaetter_PDF/Welt_3_Labyrinth/AQ_W3-Warm-up-Karten.pdf"
+      },
+      {
+       "label": "Lösungen",
+       "pfad": "Loesungen_Portal/Welt_3_Labyrinth/AQ_W3-Warm-up-Karten_Loesungen.pdf"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "welt": 4,
+   "ordner": "Welt_4_Hafen",
+   "eintraege": [
+    {
+     "art": "praesentation",
+     "titel": "Präsentation „Hafen“",
+     "dateien": [
+      {
+       "label": "Folien",
+       "pfad": "Lehrkraft_PDF/Welt_4_Hafen/AQ_W4-Praesentation_Hafen.pdf"
+      }
+     ]
+    },
+    {
+     "art": "hinweise",
+     "titel": "Lehrerhinweise Welt 4",
+     "dateien": [
+      {
+       "label": "Lehrerhinweise",
+       "pfad": "Lehrkraft_PDF/Welt_4_Hafen/AQ_W4-Lehrerhinweise.pdf"
+      }
+     ]
+    },
+    {
+     "art": "ab",
+     "titel": "AB 1: Stapel und Schlange",
+     "ds": [
+      24,
+      25
+     ],
+     "dateien": [
+      {
+       "label": "Arbeitsblatt",
+       "pfad": "Arbeitsblaetter_PDF/Welt_4_Hafen/AQ_W4-AB1_Stapel_und_Schlange.pdf"
+      },
+      {
+       "label": "Lösung",
+       "pfad": "Loesungen_Portal/Welt_4_Hafen/AQ_W4-AB1_Stapel_und_Schlange_Loesung.pdf"
+      }
+     ]
+    },
+    {
+     "art": "ab",
+     "titel": "AB 2: Struktur unverändert lassen und dynamische Reihung",
+     "ds": [
+      26,
+      27
+     ],
+     "dateien": [
+      {
+       "label": "Arbeitsblatt",
+       "pfad": "Arbeitsblaetter_PDF/Welt_4_Hafen/AQ_W4-AB2_Unveraendert_lassen_und_dynamische_Reihung.pdf"
+      },
+      {
+       "label": "Lösung",
+       "pfad": "Loesungen_Portal/Welt_4_Hafen/AQ_W4-AB2_Unveraendert_lassen_und_dynamische_Reihung_Loesung.pdf"
+      }
+     ]
+    },
+    {
+     "art": "ab",
+     "titel": "AB 3: Umformen und Anwendungen: Klammern, Postfix, Flood-Fill mit Schlange",
+     "ds": [
+      28,
+      29
+     ],
+     "dateien": [
+      {
+       "label": "Arbeitsblatt",
+       "pfad": "Arbeitsblaetter_PDF/Welt_4_Hafen/AQ_W4-AB3_Umformen_und_Anwendungen.pdf"
+      },
+      {
+       "label": "Lösung",
+       "pfad": "Loesungen_Portal/Welt_4_Hafen/AQ_W4-AB3_Umformen_und_Anwendungen_Loesung.pdf"
+      }
+     ]
+    },
+    {
+     "art": "boss",
+     "titel": "Papier-Boss: Die Fähre von Nebelhafen (60 min)",
+     "dateien": [
+      {
+       "label": "Papier-Boss",
+       "pfad": "Arbeitsblaetter_PDF/Welt_4_Hafen/AQ_W4-Boss_Die_Faehre_von_Nebelhafen.pdf"
+      },
+      {
+       "label": "Erwartungshorizont",
+       "pfad": "Loesungen_Portal/Welt_4_Hafen/AQ_W4-Boss_Die_Faehre_von_Nebelhafen_Erwartungshorizont.pdf"
+      }
+     ]
+    },
+    {
+     "art": "warmup",
+     "titel": "Warm-up-Karten W4-01 bis W4-14",
+     "dateien": [
+      {
+       "label": "Karten (ohne Lösungen)",
+       "pfad": "Arbeitsblaetter_PDF/Welt_4_Hafen/AQ_W4-Warm-up-Karten.pdf"
+      },
+      {
+       "label": "Lösungen",
+       "pfad": "Loesungen_Portal/Welt_4_Hafen/AQ_W4-Warm-up-Karten_Loesungen.pdf"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "welt": 5,
+   "ordner": "Welt_5_Wald",
+   "eintraege": [
+    {
+     "art": "praesentation",
+     "titel": "Präsentation „Wald“",
+     "dateien": [
+      {
+       "label": "Folien",
+       "pfad": "Lehrkraft_PDF/Welt_5_Wald/AQ_W5-Praesentation_Wald.pdf"
+      }
+     ]
+    },
+    {
+     "art": "hinweise",
+     "titel": "Lehrerhinweise Welt 5",
+     "dateien": [
+      {
+       "label": "Lehrerhinweise",
+       "pfad": "Lehrkraft_PDF/Welt_5_Wald/AQ_W5-Lehrerhinweise.pdf"
+      }
+     ]
+    },
+    {
+     "art": "ab",
+     "titel": "AB 1: Binärbäume: Begriffe, Traversierungen, rekursive Baumalgorithmen",
+     "ds": [
+      31,
+      32,
+      33
+     ],
+     "dateien": [
+      {
+       "label": "Arbeitsblatt",
+       "pfad": "Arbeitsblaetter_PDF/Welt_5_Wald/AQ_W5-AB1_Binaerbaeume.pdf"
+      },
+      {
+       "label": "Lösung",
+       "pfad": "Loesungen_Portal/Welt_5_Wald/AQ_W5-AB1_Binaerbaeume_Loesung.pdf"
+      }
+     ]
+    },
+    {
+     "art": "ab",
+     "titel": "AB 2: Binäre Suchbäume",
+     "ds": [
+      34,
+      35
+     ],
+     "dateien": [
+      {
+       "label": "Arbeitsblatt",
+       "pfad": "Arbeitsblaetter_PDF/Welt_5_Wald/AQ_W5-AB2_Binaere_Suchbaeume.pdf"
+      },
+      {
+       "label": "Lösung",
+       "pfad": "Loesungen_Portal/Welt_5_Wald/AQ_W5-AB2_Binaere_Suchbaeume_Loesung.pdf"
+      }
+     ]
+    },
+    {
+     "art": "ab",
+     "titel": "AB 3: Transfer: Unbekannte Bäume erschließen (mit Mini-Abi)",
+     "ds": [
+      35
+     ],
+     "dateien": [
+      {
+       "label": "Arbeitsblatt",
+       "pfad": "Arbeitsblaetter_PDF/Welt_5_Wald/AQ_W5-AB3_Transfer_unbekannte_Baeume.pdf"
+      },
+      {
+       "label": "Lösung",
+       "pfad": "Loesungen_Portal/Welt_5_Wald/AQ_W5-AB3_Transfer_unbekannte_Baeume_Loesung.pdf"
+      }
+     ]
+    },
+    {
+     "art": "boss",
+     "titel": "Papier-Boss: Die drei Baumhüter (60 min)",
+     "dateien": [
+      {
+       "label": "Papier-Boss",
+       "pfad": "Arbeitsblaetter_PDF/Welt_5_Wald/AQ_W5-Boss_Die_drei_Baumhueter.pdf"
+      },
+      {
+       "label": "Erwartungshorizont",
+       "pfad": "Loesungen_Portal/Welt_5_Wald/AQ_W5-Boss_Die_drei_Baumhueter_Erwartungshorizont.pdf"
+      }
+     ]
+    },
+    {
+     "art": "warmup",
+     "titel": "Warm-up-Karten W5-01 bis W5-14",
+     "dateien": [
+      {
+       "label": "Karten (ohne Lösungen)",
+       "pfad": "Arbeitsblaetter_PDF/Welt_5_Wald/AQ_W5-Warm-up-Karten.pdf"
+      },
+      {
+       "label": "Lösungen",
+       "pfad": "Loesungen_Portal/Welt_5_Wald/AQ_W5-Warm-up-Karten_Loesungen.pdf"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "welt": 6,
+   "ordner": "Welt_6_Endgegner",
+   "eintraege": [
+    {
+     "art": "praesentation",
+     "titel": "Präsentation „Endgegner“",
+     "dateien": [
+      {
+       "label": "Folien",
+       "pfad": "Lehrkraft_PDF/Welt_6_Endgegner/AQ_W6-Praesentation_Endgegner.pdf"
+      }
+     ]
+    },
+    {
+     "art": "hinweise",
+     "titel": "Lehrerhinweise Welt 6",
+     "dateien": [
+      {
+       "label": "Lehrerhinweise",
+       "pfad": "Lehrkraft_PDF/Welt_6_Endgegner/AQ_W6-Lehrerhinweise.pdf"
+      }
+     ]
+    },
+    {
+     "art": "ab",
+     "titel": "AB 1: Korrektur und Fehlerjagd: Top 10 Punktverluste (P1–P10) und Abi-Fahrplan",
+     "ds": [
+      38
+     ],
+     "dateien": [
+      {
+       "label": "Arbeitsblatt",
+       "pfad": "Arbeitsblaetter_PDF/Welt_6_Endgegner/AQ_W6-AB1_Korrektur_und_Fehlerjagd.pdf"
+      },
+      {
+       "label": "Lösung",
+       "pfad": "Loesungen_Portal/Welt_6_Endgegner/AQ_W6-AB1_Korrektur_und_Fehlerjagd_Loesung.pdf"
+      }
+     ]
+    },
+    {
+     "art": "probeklausur",
+     "titel": "Probeklausur „Die Paketstation“ (35 BE, 90 min, Abiturbedingungen)",
+     "dateien": [
+      {
+       "label": "Probeklausur",
+       "pfad": "Arbeitsblaetter_PDF/Welt_6_Endgegner/AQ_W6-Probeklausur_Die_Paketstation.pdf"
+      },
+      {
+       "label": "Erwartungshorizont",
+       "pfad": "Loesungen_Portal/Welt_6_Endgegner/AQ_W6-Probeklausur_Die_Paketstation_Erwartungshorizont.pdf"
+      }
+     ]
+    },
+    {
+     "art": "klausur",
+     "titel": "Klausur „Ladepark“",
+     "dateien": [
+      {
+       "label": "Klausur",
+       "pfad": "Lehrkraft_PDF/Welt_6_Endgegner/AQ_W6-Klausur_Ladepark.pdf"
+      },
+      {
+       "label": "Erwartungshorizont",
+       "pfad": "Loesungen_Portal/Welt_6_Endgegner/AQ_W6-Klausur_Ladepark_Erwartungshorizont.pdf"
+      }
+     ]
+    },
+    {
+     "art": "klausur",
+     "titel": "Nachschreibklausur „Kletterhalle“",
+     "dateien": [
+      {
+       "label": "Klausur",
+       "pfad": "Lehrkraft_PDF/Welt_6_Endgegner/AQ_W6-Nachschreibklausur_Kletterhalle.pdf"
+      },
+      {
+       "label": "Erwartungshorizont",
+       "pfad": "Loesungen_Portal/Welt_6_Endgegner/AQ_W6-Nachschreibklausur_Kletterhalle_Erwartungshorizont.pdf"
+      }
+     ]
+    },
+    {
+     "art": "warmup",
+     "titel": "Warm-up-Karten W6-01 bis W6-14",
+     "dateien": [
+      {
+       "label": "Karten (ohne Lösungen)",
+       "pfad": "Arbeitsblaetter_PDF/Welt_6_Endgegner/AQ_W6-Warm-up-Karten.pdf"
+      },
+      {
+       "label": "Lösungen",
+       "pfad": "Loesungen_Portal/Welt_6_Endgegner/AQ_W6-Warm-up-Karten_Loesungen.pdf"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -13,7 +13,11 @@ Arbeitsblaetter_PDF         Alle Arbeitsblaetter (Schuelerfassung), Werkzeugkart
                             AQ_W<Welt>-AB<Nr>_<Thema>.pdf / -Boss_ / -Warm-up-Karten - zum direkten Hochladen; online auch unter
                             https://algoquest.frankjuchim.de/themen (Themenuebersicht mit Links zu Lab-Leveln und PDFs)
 Loesungen_Portal            NUR LEHRKRAFT: zu jeder Schueler-PDF aus Arbeitsblaetter_PDF die Loesung bzw. der
-                            Erwartungshorizont, gleich sortiert und benannt (+ _Loesung / _Erwartungshorizont)
+                            Erwartungshorizont, gleich sortiert und benannt (+ _Loesung / _Erwartungshorizont),
+                            in Welt_6 auch die Erwartungshorizonte der Klausuren
+Lehrkraft_PDF               NUR LEHRKRAFT: Praesentationen, Lehrerhinweise und Klausuren als PDF, je Welt ein Ordner.
+                            Online: im Lab unter /lehrer -> "Materialien" (nur nach Anmeldung als Lehrkraft) - dort
+                            alles zusammen: Schuelerfassung, Loesung/Erwartungshorizont, Folien, Lehrerhinweise
 Loesungen_Arbeitsblaetter   NUR LEHRKRAFT: dieselben Loesungen nach Art sortiert (01 Arbeitsblaetter, 02 Bosse und
                             Probeklausur, 03 Klausuren inkl. Klausur/Nachschreibklausur, 04 Warm-up-Karten)
 Online-IDE                  Fertige Workspaces zum Importieren (JSON, je Welt eine Datei, ein Workspace je Geruest,

@@ -43,7 +43,10 @@ quellen/lab-inhalte-generatoren/  historische Python-Generatoren der Lab-Aufgabe
 materialien/Arbeitsblaetter_PDF/  Arbeitsblätter, Werkzeugkarten, Papier-Bosse, Probeklausur, Warm-up-Karten als PDF je Welt – ERZEUGT (werkzeuge/arbeitsblaetter_pdf.py)
                      aus seed/arbeitsblaetter.json; im Image /app/arbeitsblaetter, ausgeliefert unter /arbeitsblaetter/…
 materialien/Loesungen_Portal/      Lösungen als PDF, gespiegelt zu Arbeitsblaetter_PDF (je Welt, gleicher Name + _Loesung/
-                     _Erwartungshorizont) – ERZEUGT (werkzeuge/loesungen_pdf.py); NUR Lehrkraft, nicht im Image
+                     _Erwartungshorizont, W6 auch Klausur-EH) – ERZEUGT (werkzeuge/loesungen_pdf.py); NUR Lehrkraft:
+                     im Image, ausgeliefert nur an angemeldete Lehrkräfte (/lehrer#/materialien → /lehrkraft/dateien/…)
+materialien/Lehrkraft_PDF/  Präsentationen, Lehrerhinweise, Klausuren (Aufgaben) als PDF je Welt + verzeichnis.json
+                     (Grundlage der Materialien-Seite, Whitelist der Downloads) – ERZEUGT (werkzeuge/lehrkraft_pdf.py); NUR Lehrkraft
 materialien/Loesungen_Arbeitsblaetter/  dieselben Lösungen nach Art: 01_Arbeitsblaetter, 02_Bosse_und_Probeklausur,
                      03_Klausuren (inkl. Klausur/Nachschreibklausur-EH), 04_Warm-up-Karten – ERZEUGT, NUR Lehrkraft
 materialien/Online-IDE/  Import-Dateien (JSON) für online-ide.de: je Welt ein Workspace je Gerüst; Lehrkraft/ = LSG
@@ -56,6 +59,7 @@ werkzeuge/           Prüf- und Erzeugungsskripte (Python 3 + javac, nicht im Do
   workspaces_erzeugen.py            materialien/Online-IDE neu erzeugen (--pruefen: nur prüfen)
   arbeitsblaetter_pdf.py            materialien/Arbeitsblaetter_PDF neu erzeugen (soffice; --pruefen: Vollständigkeit)
   loesungen_pdf.py                  materialien/Loesungen_Portal + Loesungen_Arbeitsblaetter neu erzeugen (--pruefen)
+  lehrkraft_pdf.py                  materialien/Lehrkraft_PDF + verzeichnis.json neu erzeugen (--pruefen: aktuell/vollständig)
   materialien_pruefen.py            docx/pptx/txt: Altbegriffe, Generics, verbotene String-Operationen, Bedingungsspalten in Tracetabellen (--rendern: soffice → PDF)
 .github/workflows/pruefung.yml      GitHub-Prüfung: alles oben bei jedem Push/PR
 docs/ONLINE-IDE_TESTPROTOKOLL.md    Checkliste mit Sollwerten für den Probelauf in der echten Online-IDE
@@ -74,6 +78,7 @@ npm run pruefen     # ALLES: test, validate, IDE-Prüfstand, Lab-Code, Workspace
 npm run workspaces  # materialien/Online-IDE nach Änderungen an Gerüsten/LSG neu erzeugen
 npm run arbeitsblaetter  # materialien/Arbeitsblaetter_PDF nach Änderungen an Arbeitsblättern neu erzeugen
 npm run loesungen   # Lösungs-PDFs (Loesungen_Portal, Loesungen_Arbeitsblaetter) nach Änderungen an Lösungen neu erzeugen
+npm run lehrkraft   # Lehrkraft-Downloads (Präsentationen, Lehrerhinweise, Klausuren, verzeichnis.json) neu erzeugen
 python3 werkzeuge/materialien_pruefen.py --rendern --pdf-ordner <scratch>   # alle docx/pptx nach PDF
 ```
 Python-Abhängigkeiten der Werkzeuge: `pip install python-docx python-pptx pypdf`; Java 21 (javac) für die IDE-Prüfung.
@@ -139,7 +144,11 @@ P9 Struktogramm nicht nach EH §5 · P10 Operator verfehlt.
   Erwartungshorizonte, Klausur oder Nachschreibklausur (Test in `test/themen.test.js` wacht darüber).
 - Nach jeder Änderung an einer Lösung (`5_Loesungen/*.docx`) oder einem Warm-up-Lösungsteil: `npm run loesungen`.
   Lösungs-PDFs liegen nur in `Loesungen_Portal`/`Loesungen_Arbeitsblaetter` – nie in `Arbeitsblaetter_PDF`
-  (öffentlich) und nie im Docker-Image (`.dockerignore`: nur `!materialien/Arbeitsblaetter_PDF`).
+  (öffentlich). Ins Image kommen nur `Loesungen_Portal` und `Lehrkraft_PDF` (nach `./materialien/`), ausgeliefert
+  ausschließlich an angemeldete Lehrkräfte und nur Dateien aus `Lehrkraft_PDF/verzeichnis.json` (sonst 404;
+  Tests: `test/lehrkraft_material.test.js`, `test/themen.test.js`).
+- Nach Änderungen an Präsentationen (`1_Praesentation/*.pptx`), Lehrerhinweisen, Klausuren oder an
+  `seed/arbeitsblaetter.json`: `npm run lehrkraft` (nach `arbeitsblaetter`/`loesungen`) und mitcommitten.
 - Gerüst und LSG müssen (nach dem Freischalten der `/* LEVEL-x-START … -ENDE */`-Blöcke) identische Testklassen haben.
 - Der Prüfstand nutzt echtes Java: `==` bei Zeichenketten fällt dort auf, in der Online-IDE NICHT (Tests bleiben grün).
 - Neue Aufgaben im Format von `docs/AUFGABENFORMAT.md`; jede Aufgabe mit Erklärung (bei Fallen P-Nummer nennen).

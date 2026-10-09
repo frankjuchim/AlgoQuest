@@ -92,6 +92,8 @@ function lehrerRoutes(api, h) {
   });
 
   /** Aufgaben-Vorschau mit Lösungen (nur Lehrkräfte/Superadmin). */
+  // Materialien zum Download (Lösungen, Präsentationen, Lehrerhinweise, Klausuren) – nur für Lehrkräfte
+  r.get('/materialien', (req, res) => res.json(h.material.uebersicht() || { allgemein: [], welten: [] }));
   r.get('/vorschau', (req, res) => res.json({ welten: svc.inhalte.vorschauWelten() }));
   r.get('/vorschau/:id', (req, res) => res.json(svc.inhalte.vorschauAufgabe(req.params.id)));
 

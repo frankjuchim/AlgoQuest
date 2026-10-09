@@ -85,7 +85,7 @@ test('Öffentlicher PDF-Ordner enthält nie Klausuren, Erwartungshorizonte oder 
   for (const w of v.welten) for (const x of w.weitere || []) if (x.art === 'warmup') assert.equal(x.ohneLoesungsteil, true, x.datei);
 });
 
-test('Lösungsordner (Loesungen_Portal, Loesungen_Arbeitsblaetter) sind weder ausgeliefert noch im Docker-Image', async () => {
+test('Lösungen: nie über /arbeitsblaetter oder statisch erreichbar; im Image nur Loesungen_Portal/Lehrkraft_PDF unter materialien/', async () => {
   const app = H.makeApp({ seedDir: SEED, weltDateien: [], arbeitsblaetterDir: PDF_DIR });
   const lsg = path.join(__dirname, '..', 'materialien', 'Loesungen_Portal', 'Welt_0_Akademie');
   const datei = fs.existsSync(lsg) ? fs.readdirSync(lsg)[0] : 'x.pdf';
@@ -93,13 +93,20 @@ test('Lösungsordner (Loesungen_Portal, Loesungen_Arbeitsblaetter) sind weder au
     `/arbeitsblaetter/..%2fLoesungen_Portal/Welt_0_Akademie/${datei}`,
     `/arbeitsblaetter/%2e%2e/Loesungen_Portal/Welt_0_Akademie/${datei}`,
     `/Loesungen_Portal/Welt_0_Akademie/${datei}`,
+    `/materialien/Loesungen_Portal/Welt_0_Akademie/${datei}`,
+    `/lehrkraft/dateien/Loesungen_Portal/Welt_0_Akademie/${datei}`,
     `/materialien/Loesungen_Arbeitsblaetter/03_Klausuren/AQ_W6-Klausur_Ladepark_Erwartungshorizont.pdf`
   ]) {
     await request(app).get(url).expect(404);
   }
   const ignore = fs.readFileSync(path.join(__dirname, '..', '.dockerignore'), 'utf8').split('\n').map((z) => z.trim());
   assert.ok(ignore.includes('materialien/*'), '.dockerignore muss materialien/* ausschließen');
-  assert.deepEqual(ignore.filter((z) => z.startsWith('!')), ['!materialien/Arbeitsblaetter_PDF'], 'nur der Schülerordner darf ins Image');
+  assert.deepEqual(ignore.filter((z) => z.startsWith('!')), ['!materialien/Arbeitsblaetter_PDF', '!materialien/Loesungen_Portal', '!materialien/Lehrkraft_PDF'], 'nur Schülerordner + Lehrkraft-Downloads ins Image');
   const docker = fs.readFileSync(path.join(__dirname, '..', 'Dockerfile'), 'utf8');
-  assert.ok(!/Loesungen/i.test(docker), 'Dockerfile kopiert keine Lösungen');
+  const kopien = docker.split('\n').filter((z) => /^COPY\s+materialien/.test(z)).map((z) => z.split(/\s+/).slice(1).join(' '));
+  assert.deepEqual(kopien, [
+    'materialien/Arbeitsblaetter_PDF ./arbeitsblaetter',
+    'materialien/Loesungen_Portal ./materialien/Loesungen_Portal',
+    'materialien/Lehrkraft_PDF ./materialien/Lehrkraft_PDF'
+  ], 'Lösungen nie in den öffentlichen Ordner ./arbeitsblaetter');
 });

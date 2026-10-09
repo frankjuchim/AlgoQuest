@@ -25,6 +25,10 @@ COPY scripts ./scripts
 COPY docs/AUFGABENFORMAT.md ./docs/AUFGABENFORMAT.md
 # Arbeitsblätter (Schülerfassung, PDF) für die Themenseite /themen
 COPY materialien/Arbeitsblaetter_PDF ./arbeitsblaetter
+# Nur für angemeldete Lehrkräfte (Lehrkraft-Bereich → Materialien): Lösungen, Präsentationen, Lehrerhinweise, Klausuren.
+# Der Server liefert daraus nur Dateien aus materialien/Lehrkraft_PDF/verzeichnis.json und nur an Lehrkräfte.
+COPY materialien/Loesungen_Portal ./materialien/Loesungen_Portal
+COPY materialien/Lehrkraft_PDF ./materialien/Lehrkraft_PDF
 # Datenverzeichnis (in CapRover als Persistent Directory /app/data einbinden)
 RUN mkdir -p /app/data && chown -R node:node /app/data
 # Port 80 ohne root-Rechte binden dürfen

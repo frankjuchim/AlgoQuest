@@ -10,6 +10,7 @@ const { schuelerRoutes } = require('./routes/schueler');
 const { lehrerRoutes } = require('./routes/lehrer');
 const { adminRoutes } = require('./routes/admin');
 const { createThemen } = require('./services/themen');
+const { createLehrkraftMaterial, URL_LEHRKRAFT } = require('./services/lehrkraftMaterial');
 
 const PUBLIC_DIR = path.join(__dirname, '..', 'public');
 const ROOT_DIR = path.join(__dirname, '..');
@@ -33,6 +34,8 @@ const VERSION = require('../package.json').version;
  * @param {Function} [opts.trainingSeed]  Seed-Quelle für Generatoren – für Tests
  * @param {string|null} [opts.arbeitsblaetterDir] Ordner mit den Arbeitsblatt-PDFs (Standard: ARBEITSBLAETTER_DIR,
  *                                         sonst ./arbeitsblaetter im Image bzw. materialien/Arbeitsblaetter_PDF im Repo)
+ * @param {string|null} [opts.materialienDir] Ordner mit Lehrkraft_PDF/ und Loesungen_Portal/ (nur Lehrkräfte;
+ *                                         Standard: MATERIALIEN_DIR, sonst ./materialien)
  */
 function createApp(opts) {
   const log = opts.log || (() => {});
@@ -49,6 +52,7 @@ function createApp(opts) {
     verzeichnis: ladeVerzeichnis(opts, log),
     pdfVorhanden: (datei) => !!abDir && fs.existsSync(path.join(abDir, datei))
   });
+  const material = createLehrkraftMaterial({ materialienDir: materialienOrdner(opts), abDir, log });
 
   const app = express();
   app.disable('x-powered-by');
@@ -142,6 +146,7 @@ function createApp(opts) {
     clearLehrkraft: (req, res) => S.clearCookie(req, res, S.COOKIE_LEHRKRAFT),
     schueler: (req) => (req.sS && Number.isInteger(req.sS.s) ? svc.kurse.ausSession(req.sS.s, req.sS.g) : null),
     lehrkraft: (req) => (req.sL && Number.isInteger(req.sL.l) ? svc.konten.ausSession(req.sL.l, req.sL.g, { superadminAktiv }) : null),
+    material,
     reload: () => ladeInhalte(svc, opts, log),
     sichereAdmin: () => svc.konten.sichereSuperadmin(opts.adminEmail || 'admin', opts.adminPassword || '')
   };
@@ -165,6 +170,16 @@ function createApp(opts) {
     const b = svc.auswertung.board(req.params.code);
     if (!b) return res.status(404).json({ error: 'Kein Board für diesen Kurscode (oder im Kurs nicht aktiviert).' });
     res.json(b);
+  });
+
+  /* Lehrkraft-Downloads (Lösungen u. a.): nur angemeldete Lehrkräfte, nur verzeichnete Dateien – sonst 404 */
+  app.get(URL_LEHRKRAFT.replace(/\/$/, '') + '/*datei', (req, res) => {
+    const l = helpers.lehrkraft(req);
+    const rel = [].concat(req.params.datei).join('/');
+    const abs = l && !l.muss_pw_aendern ? material.datei(rel) : null;
+    res.set('Cache-Control', 'private, no-store');
+    if (!abs) return res.status(404).type('text').send('Nicht gefunden.');
+    res.sendFile(abs);
   });
 
   schuelerRoutes(api, helpers);
@@ -198,6 +213,12 @@ function createApp(opts) {
 function arbeitsblaetterOrdner(opts) {
   if (opts.arbeitsblaetterDir !== undefined) return opts.arbeitsblaetterDir;
   const kandidaten = [process.env.ARBEITSBLAETTER_DIR, path.join(ROOT_DIR, 'arbeitsblaetter'), path.join(ROOT_DIR, 'materialien', 'Arbeitsblaetter_PDF')];
+  return kandidaten.find((d) => d && fs.existsSync(d)) || null;
+}
+
+function materialienOrdner(opts) {
+  if (opts.materialienDir !== undefined) return opts.materialienDir;
+  const kandidaten = [process.env.MATERIALIEN_DIR, path.join(ROOT_DIR, 'materialien')];
   return kandidaten.find((d) => d && fs.existsSync(d)) || null;
 }
 

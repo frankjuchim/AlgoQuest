@@ -1,5 +1,6 @@
 /* Algo Quest Lab – Bereich für Lehrkräfte und Superadmin:
- * Login/Registrierung, Passwortwechsel, Kurse, Schüler, Beitritt (QR), Einstellungen, Auswertung, Superadmin-Verwaltung. */
+ * Login/Registrierung, Passwortwechsel, Kurse, Schüler, Beitritt (QR), Einstellungen, Auswertung, Materialien (PDF),
+ * Superadmin-Verwaltung. */
 'use strict';
 
 (async () => {
@@ -25,6 +26,7 @@
               { class: 'topnav', 'aria-label': 'Hauptnavigation' },
               link('#/', '📚 Kurse', 'kurse'),
               link('#/vorschau', '📖 Aufgaben', 'vorschau'),
+              link('#/materialien', '📂 Materialien', 'materialien'),
               h('a', { href: '/themen' }, '📚 Themen'),
               konto.rolle === 'superadmin' ? link('#/admin', '🛡️ Verwaltung', 'admin') : null,
               link('#/konto', '🔑 Konto', 'konto'),
@@ -567,6 +569,51 @@
     }
   }
 
+  /* ---------- Materialien (Lösungen, Präsentationen, Lehrerhinweise, Klausuren als PDF) ---------- */
+
+  const MATERIAL_ARTEN = { praesentation: '🖥️', hinweise: '🧭', ab: '📄', boss: '⚔️', probeklausur: '📝', klausur: '🎓', warmup: '🔥', werkzeug: '🧰' };
+
+  function materialTabelle(eintraege) {
+    const knopf = (d) =>
+      d.url
+        ? h('a', { class: 'btn small ' + (d.lehrkraft ? '' : 'secondary'), href: d.url, target: '_blank', rel: 'noopener', title: d.lehrkraft ? 'nur für Lehrkräfte' : 'Schülerfassung (öffentlich auf /themen)' }, (d.lehrkraft ? '🔒 ' : '') + d.label)
+        : h('span', { class: 'small muted' }, `${d.label}: fehlt`);
+    return h(
+      'div',
+      { class: 'scroll-x' },
+      h(
+        'table',
+        { class: 'liste material' },
+        h('thead', null, h('tr', null, h('th', null, 'Material'), h('th', { class: 'hide-sm' }, 'DS'), h('th', null, 'PDF'))),
+        h('tbody', null, eintraege.map((e) => h('tr', null, h('td', null, `${MATERIAL_ARTEN[e.art] || '📄'} `, e.titel), h('td', { class: 'hide-sm small' }, e.ds && e.ds.length ? e.ds.join(', ') : ''), h('td', null, h('div', { class: 'btn-row' }, e.dateien.map(knopf))))))
+      )
+    );
+  }
+
+  async function materialien() {
+    try {
+      const [m, welten] = await Promise.all([api('GET', '/api/lehrer/materialien'), vorschauDaten()]);
+      const titel = new Map(welten.map((w) => [w.nr, w]));
+      seite(
+        'materialien',
+        h('h1', null, '📂 Materialien für Lehrkräfte'),
+        h('p', { class: 'muted' }, 'Lösungen, Erwartungshorizonte, Präsentationen, Lehrerhinweise und Klausuren als PDF – sortiert nach Welten. 🔒 = nur für angemeldete Lehrkräfte; die Schülerfassungen sind zusätzlich öffentlich auf der Themenseite.'),
+        h('p', { class: 'callout warn' }, h('strong', null, 'Bitte nicht an Schülerinnen und Schüler weitergeben: '), 'Die 🔒-Dateien enthalten Lösungen bzw. Klausuren.'),
+        !m.welten.length ? h('p', { class: 'callout' }, 'Auf diesem Server sind keine Materialien hinterlegt.') : null,
+        m.allgemein.length ? h('section', { class: 'card' }, h('h2', null, 'Allgemein'), materialTabelle(m.allgemein)) : null,
+        h('nav', { class: 'card chips', 'aria-label': 'Sprung zur Welt' }, h('strong', null, 'Welten: '), m.welten.map((w) => h('a', { class: 'pill', href: '#/materialien', onclick: (ev) => { ev.preventDefault(); const z = document.getElementById(`material-welt-${w.nr}`); if (z) z.scrollIntoView(); } }, `${w.nr} ${titel.has(w.nr) ? titel.get(w.nr).titel : ''}`))),
+        m.welten.map((w) => {
+          const t = titel.get(w.nr);
+          const el = h('section', { class: 'card level-kopf', id: `material-welt-${w.nr}` }, h('h2', null, `Welt ${w.nr}${t ? ': ' + t.titel : ''}`), materialTabelle(w.eintraege));
+          if (t) el.style.setProperty('--welt', t.farbe);
+          return el;
+        })
+      );
+    } catch (e) {
+      fehler(e);
+    }
+  }
+
   async function vorschauAufgabe(id) {
     const d = await api('GET', `/api/lehrer/vorschau/${encodeURIComponent(id)}`);
     const a = d.aufgabe;
@@ -805,6 +852,7 @@
     if (name === 'konto') return passwortSeite(false);
     if (name === 'admin') return admin(a);
     if (name === 'vorschau') return vorschau(a, b && decodeURIComponent(b));
+    if (name === 'materialien') return materialien();
     return kursListe();
   }
 

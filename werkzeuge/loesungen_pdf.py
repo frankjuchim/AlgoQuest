@@ -3,13 +3,15 @@
 
   materialien/Loesungen_Portal/         spiegelt materialien/Arbeitsblaetter_PDF (die Schüler-PDFs auf /themen):
                                         je Welt zu jeder Schüler-PDF die passende Lösung, gleicher Name + Zusatz
-                                        (_Loesung bzw. _Erwartungshorizont, Warm-up: _Loesungen)
+                                        (_Loesung bzw. _Erwartungshorizont, Warm-up: _Loesungen); dazu in Welt_6_Endgegner die Erwartungshorizonte
+                                        von Klausur und Nachschreibklausur (Lehrkraft-Bereich des Lab, siehe lehrkraft_pdf.py)
   materialien/Loesungen_Arbeitsblaetter/ nach Materialart: 01_Arbeitsblaetter, 02_Bosse_und_Probeklausur,
                                         03_Klausuren (Klausur + Nachschreibklausur), 04_Warm-up-Karten
 
 Zuordnung aus seed/arbeitsblaetter.json nach dem Namensschema in 5_Loesungen (AQ_W<n>_AB<k>_LSG.docx,
 AQ_W<n>_Boss<n>_Erwartungshorizont.docx …). Warm-up-Lösungen = Seiten ab „Lösungen der Warm-up-Karten“.
-Beide Ordner liegen außerhalb von Arbeitsblaetter_PDF und kommen nicht ins Docker-Image (.dockerignore).
+Beide Ordner liegen außerhalb von Arbeitsblaetter_PDF (öffentlich). Loesungen_Portal kommt ins Docker-Image und wird
+nur an angemeldete Lehrkräfte ausgeliefert (Lehrkraft-Bereich → Materialien); Loesungen_Arbeitsblaetter nicht.
 
 Aufruf: python3 werkzeuge/loesungen_pdf.py [--pruefen]   (--pruefen: nur Vollständigkeit, ohne LibreOffice)
 """
@@ -75,7 +77,7 @@ def eintraege():
                 erg.append((loesung_von(x["quelle"], x["art"]), False,
                             [f"Loesungen_Portal/{o}/{name}", f"Loesungen_Arbeitsblaetter/02_Bosse_und_Probeklausur/{name}"]))
     for quelle, name in KLAUSUREN:
-        erg.append((quelle, False, [f"Loesungen_Arbeitsblaetter/03_Klausuren/{name}"]))
+        erg.append((quelle, False, [f"Loesungen_Portal/Welt_6_Endgegner/{name}", f"Loesungen_Arbeitsblaetter/03_Klausuren/{name}"]))
     return erg
 
 

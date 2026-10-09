@@ -1,6 +1,6 @@
 {
   "name": "algoquest-lab",
-  "version": "2.1.3",
+  "version": "2.2.0",
   "description": "Algo Quest Lab – interaktive Übungsplattform (Weltkarte, automatisch geprüfte Aufgaben, Bosse, Kurs-Scoreboard) für den Informatik-LK",
   "private": true,
   "main": "src/server.js",
@@ -10,10 +10,11 @@
     "test": "node --test test/*.test.js",
     "validate": "node scripts/validate.js",
     "e2e": "node test/e2e/e2e.js",
-    "pruefen": "npm test && npm run validate && python3 werkzeuge/ide-pruefung/ide_pruefen.py && python3 werkzeuge/ide-pruefung/seed_code_pruefen.py && python3 werkzeuge/workspaces_erzeugen.py --pruefen && python3 werkzeuge/materialien_pruefen.py && python3 werkzeuge/arbeitsblaetter_pdf.py --pruefen && python3 werkzeuge/loesungen_pdf.py --pruefen",
+    "pruefen": "npm test && npm run validate && python3 werkzeuge/ide-pruefung/ide_pruefen.py && python3 werkzeuge/ide-pruefung/seed_code_pruefen.py && python3 werkzeuge/workspaces_erzeugen.py --pruefen && python3 werkzeuge/materialien_pruefen.py && python3 werkzeuge/arbeitsblaetter_pdf.py --pruefen && python3 werkzeuge/loesungen_pdf.py --pruefen && python3 werkzeuge/lehrkraft_pdf.py --pruefen",
     "workspaces": "python3 werkzeuge/workspaces_erzeugen.py",
     "arbeitsblaetter": "python3 werkzeuge/arbeitsblaetter_pdf.py",
-    "loesungen": "python3 werkzeuge/loesungen_pdf.py"
+    "loesungen": "python3 werkzeuge/loesungen_pdf.py",
+    "lehrkraft": "python3 werkzeuge/lehrkraft_pdf.py"
   },
   "engines": {
     "node": ">=20"
