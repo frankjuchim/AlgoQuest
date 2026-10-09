@@ -112,7 +112,8 @@ Texten erlaubt außer in `erklaerung`; jede Lücke genau einmal pro Aufgabe.
 
 **Tracetabellen** (`tabelle` zu einem `code`-Block): nur Variablenspalten (dazu Durchlauf/Schritt, Rückgabe) –
 keine Bedingungsspalten; im Code an jeder Stelle, an der eine Zeile entsteht, `// → Tabellenzeile` bzw.
-`// → Tabellenzeile (Startwerte)` am Zeilenende (Zeilennummern bleiben gleich).
+`// → Tabellenzeile (Startwerte)` am Zeilenende (Zeilennummern bleiben gleich); verlangt die Aufgabe eine Zeile mit den
+Endwerten nach der Schleife, steht an der schließenden Klammer der Schleife `// → Tabellenzeile (Endwerte)`.
 
 **Klammerformat Bäume:** `wert(links,rechts)`, leer `-`, Blatt `x` ≙ `x(-,-)`; Werte ohne `(`, `)`, `,`; Leerzeichen um
 Werte werden ignoriert; `-5` ist ein Wert, `-` allein der leere Baum.

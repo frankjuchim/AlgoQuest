@@ -112,7 +112,8 @@ docx/pptx rendern: `soffice --headless --convert-to pdf --outdir <scratch> <date
 - **Tracetabellen:** nur Variablen bzw. Zustände (dazu Durchlauf/Schritt, Rückgabe/Ausgabe) – **keine Bedingungsspalten**
   („i < n“, „(w/f)“, „Bedingung“ …). Im Code markiert ein Kommentar am Zeilenende jede Stelle, an der eine Zeile
   eingetragen wird: `// → Tabellenzeile (Startwerte)` (letzte Anweisung vor der Schleife) und `// → Tabellenzeile`
-  (letzte Anweisung im Schleifenrumpf bzw. Stelle laut Aufgabe). Zeilennummern bleiben gleich. Gilt in allen
+  (letzte Anweisung im Schleifenrumpf bzw. Stelle laut Aufgabe), bei verlangter Endzeile `// → Tabellenzeile (Endwerte)`
+  an der schließenden Klammer der Schleife. Struktogramm-Bilder: Stellen im Aufgabentext benennen. Zeilennummern bleiben gleich. Gilt in allen
   Materialien (auch Bosse, Klausuren, Warm-up, Folien) und im Lab. Rekursionstabellen sind davon ausgenommen.
 
 ### Fallen P1–P10
