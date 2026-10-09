@@ -2247,7 +2247,7 @@
    "inhalt": [
     {
      "t": "text",
-     "md": "`levelorder` benutzt eine Schlange vom Inhaltstyp BinTree. Notiere nach jedem Durchlauf den entnommenen Knoten und den Inhalt der Schlange (vorne zuerst, jeden Teilbaum durch seinen Wurzelwert, mit Komma getrennt; leere Schlange: –)."
+     "md": "`levelorder` benutzt eine Schlange vom Inhaltstyp BinTree. Notiere an jeder mit „// → Tabellenzeile“ markierten Stelle (vor der Schleife und am Ende jedes Durchlaufs) den entnommenen Knoten und den Inhalt der Schlange (vorne zuerst, jeden Teilbaum durch seinen Wurzelwert, mit Komma getrennt; leere Schlange: –)."
     },
     {
      "t": "baum",
@@ -2255,7 +2255,7 @@
     },
     {
      "t": "code",
-     "code": "public static String levelorder(BinTree b) {\n    String text = \"\";\n    Queue q = new Queue();\n    if (!b.isEmpty()) {\n        q.enqueue(b);\n    }\n    while (!q.isEmpty()) {\n        BinTree k = (BinTree) q.dequeue();\n        text = text + k.getItem() + \" \";\n        if (!k.getLeft().isEmpty()) {\n            q.enqueue(k.getLeft());\n        }\n        if (!k.getRight().isEmpty()) {\n            q.enqueue(k.getRight());\n        }\n    }\n    return text;\n}",
+     "code": "public static String levelorder(BinTree b) {\n    String text = \"\";\n    Queue q = new Queue();\n    if (!b.isEmpty()) {\n        q.enqueue(b);\n    }   // → Tabellenzeile (Startwerte)\n    while (!q.isEmpty()) {\n        BinTree k = (BinTree) q.dequeue();\n        text = text + k.getItem() + \" \";\n        if (!k.getLeft().isEmpty()) {\n            q.enqueue(k.getLeft());\n        }\n        if (!k.getRight().isEmpty()) {\n            q.enqueue(k.getRight());\n        }   // → Tabellenzeile\n    }\n    return text;\n}",
      "nummern": true
     },
     {
