@@ -33,7 +33,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install python-docx python-pptx
+      - run: pip install python-docx python-pptx pypdf
       - name: Online-IDE-Dateien (javac + Nachbau der Bibliothek Niedersachsen)
         run: python3 werkzeuge/ide-pruefung/ide_pruefen.py
       - name: Java-Code der Lab-Aufgaben

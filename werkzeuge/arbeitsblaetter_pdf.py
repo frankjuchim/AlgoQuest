@@ -11,7 +11,6 @@ Aufruf: python3 werkzeuge/arbeitsblaetter_pdf.py [--pruefen]
              GitHub-Prüfung ohne LibreOffice). Nach Änderungen an einem Arbeitsblatt das Skript ohne --pruefen laufen lassen.
 """
 import json
-from pypdf import PdfReader, PdfWriter
 import shutil
 import subprocess
 import sys
@@ -39,6 +38,7 @@ LOESUNGSTEIL = "Lösungen der Warm-up-Karten"
 
 def ohne_loesungsteil(pdf):
     """Schneidet die PDF vor der ersten Seite mit der Überschrift des Lösungsteils ab (beginnt stets auf neuer Seite)."""
+    from pypdf import PdfReader, PdfWriter  # nur zum Erzeugen nötig, nicht für --pruefen
     r = PdfReader(str(pdf))
     ab = next((i for i, seite in enumerate(r.pages) if LOESUNGSTEIL in (seite.extract_text() or "")), None)
     if not ab:

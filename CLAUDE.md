@@ -70,7 +70,7 @@ npm run workspaces  # materialien/Online-IDE nach Änderungen an Gerüsten/LSG n
 npm run arbeitsblaetter  # materialien/Arbeitsblaetter_PDF nach Änderungen an Arbeitsblättern neu erzeugen
 python3 werkzeuge/materialien_pruefen.py --rendern --pdf-ordner <scratch>   # alle docx/pptx nach PDF
 ```
-Python-Abhängigkeiten der Werkzeuge: `pip install python-docx python-pptx`; Java 21 (javac) für die IDE-Prüfung.
+Python-Abhängigkeiten der Werkzeuge: `pip install python-docx python-pptx pypdf`; Java 21 (javac) für die IDE-Prüfung.
 
 In der Cloud-Umgebung: Chromium liegt unter `/opt/pw-browsers` (kein `playwright install`).
 docx/pptx rendern: `soffice --headless --convert-to pdf --outdir <scratch> <datei>`.
