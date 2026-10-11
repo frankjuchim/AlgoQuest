@@ -14,7 +14,8 @@ Ränge und Abzeichen. Lehrkräfte verwalten ihre Kurse und sehen Lernstand, Aufg
 
 **Schüler** (Tablet/iPad-tauglich, Touch-Ziele ≥ 44 px, Tastatur und Screenreader)
 - Selbstanmeldung: Kurscode + Name → persönlicher Code `ABC-123` („Notiere deinen Code“). Weiterspielen auf jedem Gerät mit
-  Kurscode + Name + Code. Namen sind je Kurs eindeutig (Groß/Klein egal), 2–30 Zeichen.
+  Name + Code (ohne Kurscode; Codes werden kursübergreifend eindeutig vergeben, nur bei alten doppelten Codes fragt die
+  Startseite zusätzlich den Kurscode ab). Namen sind je Kurs eindeutig (Groß/Klein egal), 2–30 Zeichen.
 - Weltkarte mit Fortschrittsringen je Level, Trainingsplatz- und Boss-Knoten, gesperrte Welten ausgegraut.
 - Level-Seite: Merkkasten, Aufgabenliste (offen / gelöst / Lösung angesehen, Punkte), Karte „Programmieren in der Online-IDE“
   (nur Info + Häkchen, 0 Punkte).
@@ -69,7 +70,7 @@ Backup/Restore (JSON).
 
 | Rolle | Anmeldung | sieht |
 |---|---|---|
-| Schüler | Kurscode + Name + Code | eigener Lernstand, Scoreboard des eigenen Kurses (falls aktiv) |
+| Schüler | Name + Code (Beitritt: Kurscode + Name) | eigener Lernstand, Scoreboard des eigenen Kurses (falls aktiv) |
 | Lehrkraft | E-Mail + Passwort (nach Freigabe) | nur eigene Kurse (fremde Kurse → 404) |
 | Superadmin | `ADMIN_EMAIL` + `ADMIN_PASSWORD` | alles |
 

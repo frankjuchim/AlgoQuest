@@ -38,14 +38,15 @@ function schuelerRoutes(api, h) {
   api.post('/schueler/anmelden', (req, res) => {
     const b = req.body || {};
     const ipKey = 'ip:' + req.ip;
-    const kontoKey = `k:${String(b.kurscode || '').trim().toUpperCase()}:${String(b.name || '').trim().toLowerCase()}`;
+    const kontoKey = `n:${String(b.name || '').trim().toLowerCase()}`;
     if (loginIpFehler.isBlocked(ipKey)) return zuViele(res, loginIpFehler, ipKey);
     if (loginKontoFehler.isBlocked(kontoKey)) return zuViele(res, loginKontoFehler, kontoKey, 'Zu viele Fehlversuche für diesen Namen. Warte 15 Minuten oder frag deine Lehrkraft nach deinem Code.');
-    const row = svc.kurse.anmelden(b.kurscode, b.name, b.code);
+    // Weiterspielen: Name + persönlicher Code; Kurscode nur nötig, wenn beides zu mehreren Kursen passt (alte Codes)
+    const row = svc.kurse.anmelden(b.name, b.code, b.kurscode);
     if (!row) {
       loginIpFehler.hit(ipKey);
       loginKontoFehler.hit(kontoKey);
-      return res.status(401).json({ error: 'Kurscode, Name oder Code stimmen nicht.' });
+      return res.status(401).json({ error: b.kurscode ? 'Kurscode, Name oder Code stimmen nicht.' : 'Name oder Code stimmen nicht.' });
     }
     loginKontoFehler.reset(kontoKey);
     h.setSchuelerCookie(req, res, row);

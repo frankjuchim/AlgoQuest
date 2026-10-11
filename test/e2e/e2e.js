@@ -534,7 +534,7 @@ async function bossAntwort(page, id) {
     beobachte(hp, 'handy');
     await hp.goto(BASE + '/');
     await hp.getByRole('tab', { name: 'Weiterspielen' }).click();
-    await hp.fill('#w-kurs', kurscode);
+    assert.ok(await hp.locator('#w-kurs').isHidden(), 'Weiterspielen ohne Kurscode');
     await hp.fill('#w-name', 'lena s.');
     await hp.fill('#w-code', code.replace('-', '').toLowerCase());
     await hp.getByRole('button', { name: 'Weiterspielen' }).click();

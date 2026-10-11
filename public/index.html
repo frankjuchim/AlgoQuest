@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#1F4E79">
 <title>Algo Quest Lab – Start</title>
 <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/static/css/style.css?v=2.2.0">
+<link rel="stylesheet" href="/static/css/style.css?v=2.3.0">
 </head>
 <body>
 <a class="skip" href="#haupt">Zum Inhalt springen</a>
@@ -23,7 +23,7 @@
   </section>
   <section class="card" id="code-box" hidden aria-live="assertive">
     <h2>🎉 Willkommen, <span id="code-name"></span>!</h2>
-    <p><strong>Notiere dir jetzt deinen persönlichen Code.</strong> Du brauchst ihn zusammen mit Kurscode und Namen, um auf einem anderen Gerät weiterzuspielen.</p>
+    <p><strong>Notiere dir jetzt deinen persönlichen Code.</strong> Mit deinem Namen und diesem Code spielst du auf jedem Gerät weiter.</p>
     <div class="center"><span class="code-gross" id="code-wert"></span></div>
     <p class="small muted">Kurs: <span id="code-kurs"></span> · Name: <span id="code-name2"></span></p>
     <label class="check"><input type="checkbox" id="code-ok"> Ich habe meinen Code notiert (Heft, Foto …).</label>
@@ -51,10 +51,7 @@
     </form>
     <form class="card" id="form-weiter" role="tabpanel" aria-labelledby="tab-weiter" autocomplete="off" hidden>
       <h2>Weiterspielen</h2>
-      <div class="field">
-        <label for="w-kurs">Kurscode</label>
-        <input type="text" id="w-kurs" required maxlength="12" autocapitalize="characters" spellcheck="false">
-      </div>
+      <p class="hint">Du brauchst nur deinen Namen und deinen persönlichen Code – keinen Kurscode.</p>
       <div class="field">
         <label for="w-name">Dein Name</label>
         <input type="text" id="w-name" required maxlength="30" spellcheck="false" autocomplete="off">
@@ -62,6 +59,11 @@
       <div class="field">
         <label for="w-code">Dein persönlicher Code</label>
         <input type="text" id="w-code" required maxlength="8" autocapitalize="characters" spellcheck="false" placeholder="ABC-123">
+      </div>
+      <div class="field" id="w-kurs-feld" hidden>
+        <label for="w-kurs">Kurscode</label>
+        <input type="text" id="w-kurs" maxlength="12" autocapitalize="characters" spellcheck="false">
+        <p class="hint">Nur nötig, wenn dein Name mit diesem Code in mehreren Kursen vorkommt.</p>
       </div>
       <p class="callout warn" id="w-fehler" hidden role="alert"></p>
       <button class="btn big" type="submit">Weiterspielen</button>
@@ -71,7 +73,7 @@
   <p class="center"><a class="btn secondary" href="/themen">📚 Themen und Arbeitsblätter</a></p>
   <p class="center small"><a href="/lehrer">Bereich für Lehrkräfte</a> · <a href="/datenschutz">Datenschutz</a></p>
 </main>
-<script src="/static/js/common.js?v=2.2.0"></script>
-<script src="/static/js/start.js?v=2.2.0"></script>
+<script src="/static/js/common.js?v=2.3.0"></script>
+<script src="/static/js/start.js?v=2.3.0"></script>
 </body>
 </html>

@@ -63,7 +63,7 @@
   }
 
   async function abmelden() {
-    const ok = await bestaetigen('Abmelden?', 'Zum Weiterspielen brauchst du Kurscode, Name und deinen persönlichen Code. Hast du ihn notiert?', { ok: 'Abmelden' });
+    const ok = await bestaetigen('Abmelden?', 'Zum Weiterspielen brauchst du deinen Namen und deinen persönlichen Code. Hast du ihn notiert?', { ok: 'Abmelden' });
     if (!ok) return;
     try {
       await api('POST', '/api/schueler/abmelden', {});
@@ -798,7 +798,7 @@
             codeEl.textContent = codeEl.textContent.includes('•') ? p.code : '••• – •••';
             e.currentTarget.textContent = codeEl.textContent.includes('•') ? 'Code anzeigen' : 'Code verbergen';
           } }, 'Code anzeigen')),
-          h('p', { class: 'hint' }, 'Mit Kurscode, Name und Code kannst du auf jedem Gerät weiterspielen. Code vergessen? Deine Lehrkraft kann ihn dir anzeigen.')
+          h('p', { class: 'hint' }, 'Mit Name und Code kannst du auf jedem Gerät weiterspielen. Code vergessen? Deine Lehrkraft kann ihn dir anzeigen.')
         )
       );
     } catch (e) {

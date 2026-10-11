@@ -54,6 +54,8 @@ CREATE TABLE IF NOT EXISTS schueler (
   last_active_at TEXT,
   UNIQUE (kurs_id, name_key)
 );
+-- Weiterspielen mit Name + Code (ohne Kurscode): Codes werden seit 2.3 kursübergreifend eindeutig vergeben
+CREATE INDEX IF NOT EXISTS idx_schueler_code ON schueler(code);
 
 -- Inhalte (aus seed/welten/*.json, Upsert nach id)
 CREATE TABLE IF NOT EXISTS welten (

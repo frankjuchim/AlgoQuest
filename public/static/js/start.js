@@ -1,4 +1,4 @@
-/* Algo Quest Lab – Startseite: Kurs beitreten (Kurscode + Name → persönlicher Code) oder weiterspielen. */
+/* Algo Quest Lab – Startseite: Kurs beitreten (Kurscode + Name → persönlicher Code) oder weiterspielen (Name + Code). */
 'use strict';
 (async () => {
   const { api } = AQ;
@@ -20,7 +20,6 @@
   if (m) {
     const code = m[1].toUpperCase();
     $('neu-kurs').value = code;
-    $('w-kurs').value = code;
     try {
       const k = await api('GET', `/api/kurs/${code}`);
       const info = $('kurs-info');
@@ -81,10 +80,17 @@
     e.preventDefault();
     fehler('w-fehler', '');
     try {
-      await api('POST', '/api/schueler/anmelden', { kurscode: $('w-kurs').value.trim(), name: $('w-name').value, code: $('w-code').value });
+      const kurscode = $('w-kurs-feld').hidden ? '' : $('w-kurs').value.trim();
+      await api('POST', '/api/schueler/anmelden', { name: $('w-name').value, code: $('w-code').value, ...(kurscode ? { kurscode } : {}) });
       location.href = '/spiel';
     } catch (err) {
       fehler('w-fehler', err.message);
+      // nur bei alten, doppelt vergebenen Codes: Kurscode zusätzlich abfragen
+      if (err.data && err.data.kurscodeNoetig) {
+        $('w-kurs-feld').hidden = false;
+        $('w-kurs').required = true;
+        $('w-kurs').focus();
+      }
     }
   });
 })();

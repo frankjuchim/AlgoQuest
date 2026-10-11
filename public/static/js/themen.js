@@ -22,7 +22,7 @@
         { class: 'schritte' },
         h('li', null, h('b', null, '1. Thema wählen'), 'Unten nach Welt, nach Aufgabentyp (z. B. Tracetabelle) oder nach deinen Fallen P1–P10 suchen.'),
         h('li', null, h('b', null, '2. Arbeitsblatt lesen'), 'Infoteile und Beispiele im PDF durcharbeiten, Aufgaben auf Papier lösen – wie im Abitur.'),
-        h('li', null, h('b', null, '3. Im Lab üben'), '„Üben →“ öffnet das passende Level (Anmeldung mit Kurscode, Name und Code). Ohne Tipp und Fehlversuch gibt es die meisten Punkte.'),
+        h('li', null, h('b', null, '3. Im Lab üben'), '„Üben →“ öffnet das passende Level (Anmeldung mit Name und persönlichem Code). Ohne Tipp und Fehlversuch gibt es die meisten Punkte.'),
         h('li', null, h('b', null, '4. Boss als Abi-Probe'), 'Je Welt ein Online-Boss im Lab (auf Zeit, Auswertung mit Erklärungen) und ein Papier-Boss als PDF – handschriftlich in 60 Minuten wie im Abitur.'),
         h('li', null, h('b', null, '5. Dranbleiben'), 'Trainingsplatz (Zufallsaufgaben) und Warm-up-Karten – im Lab mit Lösungen (Leitner) oder als PDF für 10 Minuten auf Papier.')
       ),

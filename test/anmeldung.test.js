@@ -64,6 +64,59 @@ test('Wiederanmeldung auf anderem Gerät mit Kurscode + Name + Code (Code-Eingab
   assert.equal(f.status, 401);
 });
 
+test('Weiterspielen nur mit Name + Code (ohne Kurscode)', async () => {
+  const { app, s } = await H.szenario();
+  const c = H.client(app);
+  const r = await c.post('/api/schueler/anmelden').send({ name: 'LENA S.', code: s.code.replace('-', ' ') });
+  assert.equal(r.status, 200, JSON.stringify(r.body));
+  assert.equal(r.body.name, 'Lena S.');
+  assert.equal((await c.get('/api/profil')).body.name, 'Lena S.');
+  // falscher Code, falscher Name
+  assert.equal((await H.client(app).post('/api/schueler/anmelden').send({ name: 'Lena S.', code: 'ABC-234' })).status, 401);
+  assert.equal((await H.client(app).post('/api/schueler/anmelden').send({ name: 'Tom K.', code: s.code })).status, 401);
+  assert.equal((await H.client(app).post('/api/schueler/anmelden').send({ name: 'Lena S.' })).status, 401);
+});
+
+test('Gleicher Name in zwei Kursen: Code unterscheidet; Codes werden kursübergreifend eindeutig vergeben', async () => {
+  const { app, lk, s } = await H.szenario();
+  const kurs2 = await H.kursAnlegen(lk, 'LK Informatik 12');
+  const s2 = await H.schuelerClient(app, kurs2.code, 'Lena S.');
+  assert.notEqual(s2.code, s.code);
+  const r1 = await H.client(app).post('/api/schueler/anmelden').send({ name: 'Lena S.', code: s.code });
+  const r2 = await H.client(app).post('/api/schueler/anmelden').send({ name: 'Lena S.', code: s2.code });
+  assert.equal(r1.body.kurs, 'LK Informatik 13');
+  assert.equal(r2.body.kurs, 'LK Informatik 12');
+  // Vergabe weicht belegten Codes aus (Zufall erzwingt zuerst einen schon vergebenen Code)
+  const db = app.locals.db;
+  const S = require('../src/security');
+  const orig = S.schuelerCode;
+  const folge = [s.code, s2.code, 'XYZ-789'];
+  S.schuelerCode = () => folge.shift() || orig();
+  try {
+    const s3 = await H.schuelerClient(app, kurs2.code, 'Tom K.');
+    assert.equal(s3.code, 'XYZ-789');
+  } finally {
+    S.schuelerCode = orig;
+  }
+  assert.equal(db.prepare('SELECT COUNT(*) AS n FROM schueler WHERE code = ?').get(s.code).n, 1);
+});
+
+test('Alte doppelte Codes (vor 2.3): Name + Code mehrdeutig → 409 kurscodeNoetig, mit Kurscode eindeutig', async () => {
+  const { app, lk, kurs, s } = await H.szenario();
+  const kurs2 = await H.kursAnlegen(lk, 'LK Informatik 12');
+  const s2 = await H.schuelerClient(app, kurs2.code, 'Lena S.');
+  app.locals.db.prepare('UPDATE schueler SET code = ? WHERE code = ?').run(s.code, s2.code); // Altbestand nachstellen
+  const c = H.client(app);
+  const r = await c.post('/api/schueler/anmelden').send({ name: 'Lena S.', code: s.code });
+  assert.equal(r.status, 409);
+  assert.equal(r.body.kurscodeNoetig, true);
+  const ok = await c.post('/api/schueler/anmelden').send({ name: 'Lena S.', code: s.code, kurscode: kurs2.code });
+  assert.equal(ok.status, 200);
+  assert.equal(ok.body.kurs, 'LK Informatik 12');
+  const falsch = await H.client(app).post('/api/schueler/anmelden').send({ name: 'Lena S.', code: 'ABC-234', kurscode: kurs.code });
+  assert.equal(falsch.status, 401);
+});
+
 test('Rate-Limit: 8 Fehlversuche je Konto → 429 (auch mit richtigem Code)', async () => {
   const { app, kurs, s } = await H.szenario();
   const c = H.client(app);

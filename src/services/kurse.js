@@ -1,5 +1,5 @@
 'use strict';
-// Kurse (Lehrkraft) und Schüler (Selbstanmeldung mit Kurscode + Name → persönlicher Code).
+// Kurse (Lehrkraft) und Schüler (Selbstanmeldung mit Kurscode + Name → persönlicher Code; Weiterspielen mit Name + Code).
 
 const V = require('../validate');
 const S = require('../security');
@@ -121,6 +121,16 @@ function createKurse(ctx) {
     return { id: r.id, kursId: r.kurs_id, name: r.name, code: r.code, erstellt: r.created_at, zuletztAktiv: r.last_active_at };
   }
 
+  /** Persönlicher Code, der noch an keinen Schüler vergeben ist (kursübergreifend) – damit sind Name + Code eindeutig. */
+  function freierSchuelerCode() {
+    const belegt = db.prepare('SELECT 1 FROM schueler WHERE code = ?');
+    for (let i = 0; i < 100; i++) {
+      const c = S.schuelerCode();
+      if (!belegt.get(c)) return c;
+    }
+    throw new Error('Kein freier Schülercode gefunden.');
+  }
+
   /** Beitritt: Kurscode + Name → neuer Schüler mit persönlichem Code. */
   function beitreten(kurscode, nameRoh) {
     const k = kursPerCode(kurscode);
@@ -131,17 +141,19 @@ function createKurse(ctx) {
       throw new ConflictError('Diesen Namen gibt es im Kurs schon. Wenn du das bist: nutze „Weiterspielen“ mit deinem Code. Sonst wähle einen anderen Namen (z. B. mit Initial).');
     }
     if (db.prepare('SELECT COUNT(*) AS n FROM schueler WHERE kurs_id = ?').get(k.id).n >= 300) throw new ForbiddenError('Der Kurs ist voll.');
-    const code = S.schuelerCode();
+    const code = freierSchuelerCode();
     const info = db
       .prepare('INSERT INTO schueler (kurs_id, name, name_key, code, created_at, last_active_at) VALUES (?, ?, ?, ?, ?, ?)')
       .run(k.id, name, key, code, iso(), iso());
     return { schueler: schuelerAnsicht(db.prepare('SELECT * FROM schueler WHERE id = ?').get(info.lastInsertRowid)), kurs: k, row: db.prepare('SELECT * FROM schueler WHERE id = ?').get(info.lastInsertRowid) };
   }
 
-  /** Wiederanmeldung: Kurscode + Name + Code. Liefert Zeile oder null. */
-  function anmelden(kurscode, nameRoh, codeRoh) {
-    const k = kursPerCode(kurscode);
-    if (!k) return null;
+  /**
+   * Wiederanmeldung: Name + persönlicher Code (Kurscode optional). Liefert die Zeile oder null.
+   * Ohne Kurscode wird kursübergreifend gesucht; passen mehrere Schüler (nur bei Codes von vor 2.3 möglich),
+   * ist der Kurscode nötig (ConflictError mit kurscodeNoetig).
+   */
+  function anmelden(nameRoh, codeRoh, kurscode) {
     let key;
     try {
       key = V.schuelerName(nameRoh).key;
@@ -150,8 +162,20 @@ function createKurse(ctx) {
     }
     const code = S.normSchuelerCode(codeRoh);
     if (!code) return null;
-    const r = db.prepare('SELECT * FROM schueler WHERE kurs_id = ? AND name_key = ?').get(k.id, key);
-    if (!r || !S.safeEqual(r.code, code)) return null;
+    let treffer;
+    if (typeof kurscode === 'string' && kurscode.trim()) {
+      const k = kursPerCode(kurscode);
+      if (!k) return null;
+      treffer = db.prepare('SELECT * FROM schueler WHERE kurs_id = ? AND name_key = ?').all(k.id, key);
+    } else {
+      treffer = db.prepare('SELECT * FROM schueler WHERE name_key = ? AND code = ?').all(key, code);
+    }
+    treffer = treffer.filter((r) => S.safeEqual(r.code, code));
+    if (treffer.length > 1) {
+      throw Object.assign(new ConflictError('Name und Code passen zu mehreren Kursen. Gib bitte zusätzlich deinen Kurscode an.'), { extra: { kurscodeNoetig: true } });
+    }
+    const r = treffer[0];
+    if (!r) return null;
     db.prepare('UPDATE schueler SET last_active_at = ? WHERE id = ?').run(iso(), r.id);
     return r;
   }
@@ -191,7 +215,7 @@ function createKurse(ctx) {
   /** Neuen Code erzeugen – alte Sitzungen werden ungültig. */
   function neuerCode(lk, kursId, schuelerId) {
     const { r } = schuelerFuer(lk, kursId, schuelerId);
-    const code = S.schuelerCode();
+    const code = freierSchuelerCode();
     db.prepare('UPDATE schueler SET code = ?, session_gen = session_gen + 1 WHERE id = ?').run(code, r.id);
     return schuelerAnsicht(db.prepare('SELECT * FROM schueler WHERE id = ?').get(r.id));
   }
