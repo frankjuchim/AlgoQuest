@@ -1,0 +1,492 @@
+{
+ "nr": 1,
+ "kurz": "Struktogramm_und_Tracetabelle",
+ "titel": "Struktogramm und Tracetabelle",
+ "untertitel": "So schreibst du Algorithmen auf, wie es das Abitur verlangt",
+ "welt": 0,
+ "weltname": "Welt 0 · Die Akademie",
+ "farbe": "#7F6000",
+ "laenge": "8–10 min",
+ "zielgruppe": "Informatik eA (LK), Beginn der Einheit; auch zur Wiederholung vor dem Abitur",
+ "einsatz": "Welt 0, DS 1–2 (Portal, Werkstatt) · Lab-Level 0.1 und 0.2 · AB W0·1 „Das Portal“, Werkzeugkarten",
+ "lernziele": [
+  "Bausteine eines Struktogramms nach EH §5 kennen: Kopf mit Signatur, Zuweisung mit ←, „gib … zurück“, Verzweigung, Schleifen",
+  "Eine Java-Methode in ein Struktogramm übersetzen – ohne Java-Syntax",
+  "Eine Tracetabelle nach unserer Konvention führen: nur Variablen, eine Zeile an jeder mit „// → Tabellenzeile“ markierten Stelle",
+  "Typische Punktverluste (P4, P6, P8, P9) vermeiden"
+ ],
+ "hinweise": [
+  "Alle Beispiele (jahreBisZiel, anzahlInBereich) sind eigens für das Video gewählt und kommen in Lab, Arbeitsblättern und Bossen nicht vor – so verrät das Video keine Lösungen.",
+  "Werte geprüft mit javac/java: jahreBisZiel(100, 150) = 5, jahreBisZiel(50, 70) = 4, anzahlInBereich({12, 4, 18, 9, 15}, 5, 15) = 3.",
+  "Folie „Kurz pausieren“: im Schnitt einen Hinweis „Video anhalten“ einblenden; die Lösung kommt erst auf der nächsten Folie.",
+  "Folie „Trace: jahreBisZiel(100, 150)“: die Tabellenzeilen nacheinander mit Laserpointer bzw. Maus zeigen."
+ ],
+ "youtube": {
+  "titel": "Struktogramm und Tracetabelle fürs Informatik-Abitur (Niedersachsen) | Algo Quest #1",
+  "beschreibung": "Wie schreibt man Algorithmen so auf, wie es das Informatik-Abitur in Niedersachsen verlangt? In diesem Video lernst du die Struktogramm-Notation nach den Ergänzenden Hinweisen (§5) und wie du eine Tracetabelle sauber führst – nur Variablen, eine Zeile an jeder markierten Stelle.\n\nTeil der Unterrichtsreihe „Algo Quest – Das Dungeon der Datenstrukturen“ (Informatik eA).\nÜben mit sofortiger Rückmeldung: https://algoquest.frankjuchim.de/themen",
+  "tags": [
+   "Informatik Abitur",
+   "Niedersachsen",
+   "Struktogramm",
+   "Tracetabelle",
+   "Java",
+   "Informatik LK",
+   "Algo Quest"
+  ]
+ },
+ "bilder": {
+  "sg_jahre": {
+   "t": "struktogramm",
+   "kopf": "jahreBisZiel(gold: Ganzzahl, ziel: Ganzzahl): Ganzzahl",
+   "rumpf": [
+    {
+     "anw": "jahre ← 0"
+    },
+    {
+     "solange": "gold < ziel",
+     "rumpf": [
+      {
+       "anw": "gold ← gold + gold / 10"
+      },
+      {
+       "anw": "jahre ← jahre + 1"
+      }
+     ]
+    },
+    {
+     "gib": "jahre"
+    }
+   ],
+   "_breite": 360
+  },
+  "sg_bereich": {
+   "t": "struktogramm",
+   "kopf": "anzahlInBereich(r: Reihung von Ganzzahl, lo: Ganzzahl, hi: Ganzzahl): Ganzzahl",
+   "rumpf": [
+    {
+     "anw": "anzahl ← 0"
+    },
+    {
+     "zaehle": "i von 0 bis länge(r) − 1",
+     "rumpf": [
+      {
+       "wenn": "r[i] ≥ lo und r[i] ≤ hi",
+       "dann": [
+        {
+         "anw": "anzahl ← anzahl + 1"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "gib": "anzahl"
+    }
+   ],
+   "_breite": 430
+  },
+  "sg_bausteine": {
+   "t": "struktogramm",
+   "kopf": "name(p: Typ): Typ",
+   "rumpf": [
+    {
+     "anw": "x ← 0"
+    },
+    {
+     "wenn": "Bedingung",
+     "dann": [
+      {
+       "anw": "Anweisung"
+      }
+     ],
+     "sonst": [
+      {
+       "anw": "Anweisung"
+      }
+     ]
+    },
+    {
+     "zaehle": "i von 0 bis n − 1",
+     "rumpf": [
+      {
+       "anw": "…"
+      }
+     ]
+    },
+    {
+     "solange": "Bedingung",
+     "rumpf": [
+      {
+       "anw": "…"
+      }
+     ]
+    },
+    {
+     "gib": "x"
+    }
+   ],
+   "_breite": 470
+  }
+ },
+ "folien": [
+  {
+   "typ": "titel",
+   "kapitel": "Einstieg",
+   "regie": "Kamera unten rechts, freundlicher Einstieg, Titelfolie im Hintergrund.",
+   "sprechertext": "Hallo und willkommen zur Algo Quest! In diesem Video geht es um zwei Werkzeuge, die du im Informatik-Abitur ständig brauchst: das Struktogramm und die Tracetabelle. Mit dem Struktogramm schreibst du einen Algorithmus so auf, dass jeder ihn versteht – ganz ohne Programmiersprache. Und mit der Tracetabelle zeigst du Schritt für Schritt, was ein Programm tatsächlich tut. Am Ende des Videos weißt du, wie beides aussehen muss, damit du keine Punkte verschenkst."
+  },
+  {
+   "typ": "punkte",
+   "titel": "Worum geht es im Abitur?",
+   "punkte": [
+    "„**Stellen Sie** den Algorithmus als Struktogramm **dar**.“",
+    "„**Dokumentieren Sie** den Ablauf in einer Tracetabelle.“",
+    "Die Regeln stehen in den Ergänzenden Hinweisen: **EH §5**",
+    "Sprachunabhängig – **keine Java-Syntax** im Struktogramm"
+   ],
+   "kasten": {
+    "farbe": "gold",
+    "titel": "Heute",
+    "text": [
+     "Bausteine des Struktogramms",
+     "Von Java zum Struktogramm",
+     "Tracetabelle führen",
+     "Typische Fehler"
+    ]
+   },
+   "sprechertext": "Im Abitur begegnen dir dazu vor allem zwei Arbeitsaufträge. Erstens: Stellen Sie den Algorithmus als Struktogramm dar. Zweitens: Dokumentieren Sie den Ablauf in einer Tracetabelle. Wie ein Struktogramm genau aussehen soll, ist in den Ergänzenden Hinweisen zum Abitur festgelegt, im Paragrafen fünf. Das Wichtigste vorweg: Ein Struktogramm ist sprachunabhängig. Es enthält also keine Java-Syntax – kein Gleichheitszeichen als Zuweisung, kein i plus plus, keine geschweiften Klammern. Schauen wir uns an, welche Bausteine es gibt."
+  },
+  {
+   "typ": "bild",
+   "titel": "Die Bausteine nach EH §5",
+   "bild": "sg_bausteine",
+   "kasten": {
+    "titel": "Merke",
+    "text": [
+     "Kopf: `name(p: Typ): Typ`",
+     "Zuweisung mit `←`",
+     "„gib … zurück“ beendet",
+     "Verzweigung: Dreieck, wahr | falsch",
+     "„für i von 0 bis n − 1“",
+     "„solange …“"
+    ]
+   },
+   "kapitel": "Bausteine",
+   "sprechertext": "Ganz oben steht der Kopf mit der Signatur: der Name, in Klammern die Parameter mit ihrem Typ und hinter dem Doppelpunkt der Rückgabetyp. Als Typnamen verwendest du die deutschen Namen: Ganzzahl, Kommazahl, Wahrheitswert, Zeichen, Zeichenkette – und nichts, wenn nichts zurückgegeben wird. Darunter folgen die Anweisungen von oben nach unten. Eine Zuweisung schreibst du mit dem Pfeil nach links: x bekommt den Wert null. Die Verzweigung erkennst du am Dreieck: Oben steht die Bedingung, links geht es weiter, wenn sie wahr ist, rechts, wenn sie falsch ist. Für Schleifen gibt es die Zählschleife – für i von null bis n minus eins – und die Solange-Schleife, die vor jedem Durchlauf ihre Bedingung prüft. Der Rumpf einer Schleife ist eingerückt. Und mit gib x zurück endet die Methode.",
+   "teilung": 7.4
+  },
+  {
+   "typ": "code",
+   "titel": "Von Java zum Struktogramm",
+   "code": "public static int jahreBisZiel(int gold, int ziel) {\n    int jahre = 0;\n    while (gold < ziel) {\n        gold = gold + gold / 10;\n        jahre++;\n    }\n    return jahre;\n}",
+   "groesse": 20,
+   "kasten": {
+    "farbe": "gold",
+    "titel": "Die Idee",
+    "text": [
+     "Ein Held legt Gold an: **10 % Zinsen** pro Jahr.",
+     "Wie viele Jahre, bis das **Ziel** erreicht ist?",
+     "Achtung: `gold / 10` ist **ganzzahlig**."
+    ]
+   },
+   "kapitel": "Von Java zum Struktogramm",
+   "sprechertext": "Jetzt ein Beispiel aus dem Dungeon: Ein Held legt sein Gold an und bekommt jedes Jahr zehn Prozent Zinsen. Die Methode jahreBisZiel berechnet, wie viele Jahre es dauert, bis er sein Ziel erreicht. Achte schon jetzt auf die Zeile gold gleich gold plus gold durch zehn: Das ist eine ganzzahlige Division, der Rest fällt weg. Übersetzen wir das Ganze jetzt Zeile für Zeile in ein Struktogramm."
+  },
+  {
+   "typ": "bild",
+   "titel": "… als Struktogramm",
+   "bild": "sg_jahre",
+   "kasten": {
+    "titel": "Übersetzt",
+    "text": [
+     "Methodenkopf → Kopf mit Typen",
+     "`int jahre = 0;` → `jahre ← 0`",
+     "`while` → „solange …“",
+     "`jahre++;` → `jahre ← jahre + 1`",
+     "`return` → „gib … zurück“"
+    ]
+   },
+   "sprechertext": "Der Methodenkopf wird zur Signatur: jahreBisZiel, gold vom Typ Ganzzahl, ziel vom Typ Ganzzahl, Rückgabetyp Ganzzahl. Aus int jahre gleich null wird jahre bekommt null – mit dem Pfeil. Die while-Schleife wird zur Solange-Schleife: solange gold kleiner als ziel. Ihr Rumpf ist eingerückt. Darin steht gold bekommt gold plus gold durch zehn, und aus jahre plus plus wird jahre bekommt jahre plus eins. Am Ende steht: gib jahre zurück. Fertig ist das Struktogramm – ohne eine einzige Zeile Java-Syntax.",
+   "teilung": 8.6
+  },
+  {
+   "typ": "tabelle",
+   "titel": "Spickzettel: Java → Struktogramm",
+   "tabelle": {
+    "kopf": [
+     "Java",
+     "Struktogramm"
+    ],
+    "zeilen": [
+     [
+      "x = 5;",
+      "x ← 5"
+     ],
+     [
+      "x++;",
+      "x ← x + 1"
+     ],
+     [
+      "a == b",
+      "a = b"
+     ],
+     [
+      "a != b",
+      "a ≠ b"
+     ],
+     [
+      "a <= b",
+      "a ≤ b"
+     ],
+     [
+      "&&   ||   !",
+      "und   oder   nicht"
+     ],
+     [
+      "a % b",
+      "a mod b"
+     ],
+     [
+      "return x;",
+      "gib x zurück"
+     ],
+     [
+      "for (int i = 0; i < n; i++)",
+      "für i von 0 bis n − 1"
+     ]
+    ],
+    "groesse": 17,
+    "breiten": [
+     3,
+     2
+    ]
+   },
+   "tabellenbreite": 8.2,
+   "sprechertext": "Diese Übersetzungen brauchst du immer wieder, deshalb hier als Spickzettel. Die Zuweisung wird zum Pfeil. Ein Vergleich auf Gleichheit, in Java das doppelte Gleichheitszeichen, wird im Struktogramm zu einem einfachen Gleichheitszeichen. Ungleich, kleiner gleich und größer gleich schreibst du mit den mathematischen Zeichen. Die logischen Operatoren schreibst du aus: und, oder, nicht. Der Rest einer Division heißt mod. Und besonders wichtig: Die for-Schleife von null bis kleiner n wird zu für i von null bis n minus eins. Das minus eins vergisst man leicht – dazu gleich mehr bei den Fehlern."
+  },
+  {
+   "typ": "code",
+   "titel": "Zweites Beispiel: mit Verzweigung",
+   "code": "public static int anzahlInBereich(int[] r, int lo, int hi) {\n    int anzahl = 0;\n    for (int i = 0; i < r.length; i++) {\n        if (r[i] >= lo && r[i] <= hi) {\n            anzahl++;\n        }\n    }\n    return anzahl;\n}",
+   "groesse": 20,
+   "unten": [
+    "`anzahlInBereich({12, 4, 18, 9, 15}, 5, 15)` liefert **3**"
+   ],
+   "sprechertext": "Ein zweites Beispiel, diesmal mit Verzweigung. Die Methode zählt, wie viele Werte einer Reihung zwischen lo und hi liegen. Für die Reihung zwölf, vier, achtzehn, neun, fünfzehn und den Bereich fünf bis fünfzehn sind das drei Werte: zwölf, neun und fünfzehn."
+  },
+  {
+   "typ": "bild",
+   "titel": "… als Struktogramm",
+   "bild": "sg_bereich",
+   "kasten": {
+    "titel": "Übersetzt",
+    "text": [
+     "`for` → „für i von 0 bis länge(r) − 1“",
+     "`if` → Dreieck: wahr | falsch",
+     "`&&` → **und**",
+     "leerer Zweig → ∅"
+    ]
+   },
+   "sprechertext": "Die for-Schleife wird zur Zählschleife: für i von null bis Länge von r minus eins. Das if wird zum Dreieck mit der Bedingung oben. In der Bedingung schreibst du nicht das doppelte kaufmännische Und, sondern das Wort und. Der Wahr-Zweig erhöht anzahl um eins. Der Falsch-Zweig ist leer – im Struktogramm steht dort das Zeichen für die leere Menge. Ganz unten wieder: gib anzahl zurück.",
+   "teilung": 8.6
+  },
+  {
+   "typ": "punkte",
+   "titel": "Die Tracetabelle: unsere Regeln",
+   "punkte": [
+    "Eine Spalte **je Variable** – dazu ggf. Durchlauf und Rückgabe",
+    "**Keine Spalten für Bedingungen** wie `gold < ziel`",
+    "Eine neue Zeile an jeder Stelle mit `// → Tabellenzeile`",
+    "  - `(Startwerte)`: vor der Schleife",
+    "  - sonst: am Ende jedes Durchlaufs",
+    "Am Ende: **Rückgabewert** angeben"
+   ],
+   "kasten": {
+    "farbe": "gruen",
+    "titel": "Warum so?",
+    "text": [
+     "Die Tabelle bleibt klein und übersichtlich.",
+     "Jede Zeile zeigt einen klar definierten Zeitpunkt."
+    ]
+   },
+   "kapitel": "Tracetabelle",
+   "sprechertext": "Kommen wir zur Tracetabelle. Wir halten uns in der Algo Quest an feste Regeln. Erstens: Es gibt eine Spalte für jede Variable, dazu bei Bedarf eine Spalte für den Durchlauf und am Ende die Rückgabe. Zweitens: Bedingungen bekommen keine eigene Spalte. Ob gold kleiner als ziel ist, siehst du ja an den Werten. Drittens: Wann eine neue Zeile entsteht, steht im Code. An jeder Stelle mit dem Kommentar Pfeil Tabellenzeile trägst du eine Zeile ein. Die Markierung mit Startwerte steht vor der Schleife, die andere am Ende des Schleifenrumpfs. So bleibt die Tabelle klein, und jede Zeile zeigt einen klar festgelegten Zeitpunkt."
+  },
+  {
+   "typ": "code",
+   "titel": "Trace: jahreBisZiel(100, 150)",
+   "code": "int jahre = 0;  // → Tabellenzeile (Startwerte)\nwhile (gold < ziel) {\n    gold = gold + gold / 10;\n    jahre++;  // → Tabellenzeile\n}\nreturn jahre;",
+   "nummern": false,
+   "groesse": 18,
+   "tabelle": {
+    "kopf": [
+     "",
+     "gold",
+     "jahre"
+    ],
+    "zeilen": [
+     [
+      "Start",
+      "100",
+      "0"
+     ],
+     [
+      "1",
+      "110",
+      "1"
+     ],
+     [
+      "2",
+      "121",
+      "2"
+     ],
+     [
+      "3",
+      "133",
+      "3"
+     ],
+     [
+      "4",
+      "146",
+      "4"
+     ],
+     [
+      "5",
+      "160",
+      "5"
+     ]
+    ],
+    "groesse": 15,
+    "breiten": [
+     1.2,
+     1,
+     1
+    ]
+   },
+   "unten": [
+    "160 < 150 ist falsch → Schleife endet",
+    "Rückgabe: **5**"
+   ],
+   "regie": "Zeilen der Tabelle nacheinander zeigen; bei Zeile 3 auf 121 / 10 = 12 hinweisen.",
+   "sprechertext": "Probieren wir es aus: jahreBisZiel mit hundert Gold und dem Ziel hundertfünfzig. Die erste Markierung steht vor der Schleife. Hier tragen wir die Startwerte ein: gold hundert, jahre null. Jetzt läuft die Schleife. Hundert ist kleiner als hundertfünfzig, also rechnen wir: hundert plus zehn gleich hundertzehn, jahre wird eins. Am Ende des Rumpfs steht die Markierung – neue Zeile. Nächster Durchlauf: hundertzehn plus elf gleich hunderteinundzwanzig. Dann hunderteinundzwanzig durch zehn – ganzzahlig! – ist zwölf, also hundertdreiunddreißig. Dann plus dreizehn: hundertsechsundvierzig. Und schließlich plus vierzehn: hundertsechzig, jahre ist fünf. Jetzt ist hundertsechzig nicht mehr kleiner als hundertfünfzig, die Schleife endet. Rückgabe: fünf."
+  },
+  {
+   "typ": "pause",
+   "titel": "Kurz pausieren: Jetzt du!",
+   "aufgabe": "Führe die Tracetabelle für `jahreBisZiel(50, 70)`: Spalten **gold** und **jahre**, eine Zeile an jeder markierten Stelle. Was wird zurückgegeben?",
+   "code": "int jahre = 0;  // → Tabellenzeile (Startwerte)\nwhile (gold < ziel) {\n    gold = gold + gold / 10;\n    jahre++;  // → Tabellenzeile\n}\nreturn jahre;",
+   "kasten": {
+    "farbe": "gold",
+    "titel": "Tipp",
+    "text": [
+     "Achte auf die ganzzahlige Division: 55 / 10 = 5."
+    ]
+   },
+   "kapitel": "Selbst ausprobieren",
+   "pause_s": 5,
+   "sprechertext": "Jetzt bist du dran. Halte das Video an und führe die Tracetabelle für jahreBisZiel mit fünfzig Gold und dem Ziel siebzig. Denk an die Startzeile und an die ganzzahlige Division. Wenn du fertig bist, geht es weiter mit der Auflösung."
+  },
+  {
+   "typ": "tabelle",
+   "titel": "Auflösung: jahreBisZiel(50, 70)",
+   "tabelle": {
+    "kopf": [
+     "",
+     "gold",
+     "jahre"
+    ],
+    "zeilen": [
+     [
+      "Start",
+      "50",
+      "0"
+     ],
+     [
+      "1",
+      "55",
+      "1"
+     ],
+     [
+      "2",
+      "60",
+      "2"
+     ],
+     [
+      "3",
+      "66",
+      "3"
+     ],
+     [
+      "4",
+      "72",
+      "4"
+     ]
+    ],
+    "groesse": 18,
+    "breiten": [
+     1.2,
+     1,
+     1
+    ]
+   },
+   "tabellenbreite": 5.0,
+   "kasten": {
+    "farbe": "gruen",
+    "titel": "Rückgabe: 4",
+    "text": [
+     "55 / 10 = 5 → 60",
+     "60 / 10 = 6 → 66",
+     "66 / 10 = 6 → 72",
+     "72 < 70 ist falsch → Ende"
+    ]
+   },
+   "sprechertext": "Hier die Auflösung. Start: gold fünfzig, jahre null. Fünfzig durch zehn ist fünf, also fünfundfünfzig. Fünfundfünfzig durch zehn ist ebenfalls fünf – der Rest fällt weg – also sechzig. Dann sechzig plus sechs: sechsundsechzig. Und sechsundsechzig plus sechs: zweiundsiebzig. Zweiundsiebzig ist nicht kleiner als siebzig, die Schleife endet. Die Methode gibt vier zurück. Hattest du fünf Zeilen, also auch die Startzeile? Dann ist deine Tabelle vollständig."
+  },
+  {
+   "typ": "punkte",
+   "titel": "Typische Fehler – und wie du sie vermeidest",
+   "punkte": [
+    "**P9** Java im Struktogramm: `=` statt `←`, `i++`, `&&`",
+    "**P6** „für i von 0 bis n“ – richtig: **bis n − 1**",
+    "**P8** Startzeile vergessen oder Bedingungsspalte geführt",
+    "**P4** ganzzahlige Division übersehen: `121 / 10` ist **12**",
+    "Rückgabewert nicht angegeben"
+   ],
+   "kasten": {
+    "farbe": "rot",
+    "titel": "Abi-Check",
+    "text": [
+     "Kopf mit Typen?",
+     "Nur ←, =, ≠, ≤, und/oder?",
+     "Grenzen der Zählschleife?",
+     "Startzeile + Rückgabe?"
+    ]
+   },
+   "kapitel": "Typische Fehler",
+   "sprechertext": "Zum Schluss die häufigsten Fehler – mit den Nummern aus unserer Fallen-Liste. Falle P9: Java-Syntax im Struktogramm, etwa ein Gleichheitszeichen statt des Pfeils, i plus plus oder das doppelte kaufmännische Und. Falle P6, der Klassiker: für i von null bis n. Richtig ist bis n minus eins, sonst greifst du hinter das Ende der Reihung. Falle P8: In der Tracetabelle fehlt die Startzeile, oder es gibt doch eine Spalte für die Bedingung. Falle P4: die ganzzahlige Division übersehen. Und ganz banal: den Rückgabewert nicht angeben. Rechts siehst du einen kleinen Abi-Check, mit dem du deine Lösung vor der Abgabe prüfen kannst."
+  },
+  {
+   "typ": "merke",
+   "titel": "Das nimmst du mit",
+   "punkte": [
+    "Struktogramm nach EH §5: Kopf `name(p: Typ): Typ`, Zuweisung `←`, „gib … zurück“",
+    "Verzweigung als Dreieck, Zählschleife „für i von 0 bis n − 1“, „solange …“",
+    "Keine Java-Syntax – Operatoren ausschreiben: und, oder, nicht, mod",
+    "Tracetabelle: nur Variablen, eine Zeile an jeder markierten Stelle, Rückgabe angeben"
+   ],
+   "kapitel": "Zusammenfassung",
+   "sprechertext": "Fassen wir zusammen. Ein Struktogramm nach EH Paragraf fünf hat einen Kopf mit Signatur und deutschen Typnamen, Zuweisungen mit dem Pfeil und endet mit gib zurück. Verzweigungen sind Dreiecke, Schleifen werden eingerückt. Java-Syntax hat im Struktogramm nichts zu suchen. Und in der Tracetabelle stehen nur Variablen – eine neue Zeile gibt es genau an den markierten Stellen."
+  },
+  {
+   "typ": "ende",
+   "links": {
+    "Lab": "Level 0.1 „Das Portal: Notation fürs Abitur“ und Level 0.2 „Die Werkstatt“",
+    "Arbeitsblatt": "AB W0·1 „Das Portal“ – Infoteil 3 und Aufgabe 5",
+    "Spickzettel": "Werkzeugkarten (Struktogramm-Notation, Tracetabelle)",
+    "Online": "algoquest.frankjuchim.de/themen"
+   },
+   "naechstes": "Die Online-IDE: Gerüst, Testrunner und Bibliothek „Niedersachsen“",
+   "sprechertext": "Und jetzt du! Im Algo Quest Lab findest du dazu Level null Punkt eins, das Portal, und Level null Punkt zwei, die Werkstatt. Dort bekommst du zu jeder Aufgabe sofort eine Rückmeldung. Auf dem Arbeitsblatt Das Portal findest du die Regeln noch einmal zum Nachlesen, und auf den Werkzeugkarten hast du den Spickzettel immer dabei. Im nächsten Video zeige ich dir die Online-IDE, mit der wir programmieren und testen. Bis dahin – viel Erfolg in der Akademie!"
+  }
+ ]
+}
