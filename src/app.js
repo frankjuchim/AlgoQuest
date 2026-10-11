@@ -14,6 +14,8 @@ const { createThemen } = require('./services/themen');
 const { createLehrkraftMaterial, URL_LEHRKRAFT } = require('./services/lehrkraftMaterial');
 const { createGast } = require('./services/gast');
 const { createManifest } = require('./services/manifest');
+const { verbundKonfig } = require('./verbundKonfig');
+const { ssoRoutes } = require('./routes/sso');
 
 const PUBLIC_DIR = path.join(__dirname, '..', 'public');
 const ROOT_DIR = path.join(__dirname, '..');
@@ -57,7 +59,8 @@ function createApp(opts) {
   });
   const material = createLehrkraftMaterial({ materialienDir: materialienOrdner(opts), abDir, log });
   const gast = createGast(ctx, { datei: gastDatei(opts), inhalte: svc.inhalte, material, log });
-  const manifest = createManifest({ inhalte: svc.inhalte, version: VERSION, umgebung: opts.umgebung || process.env });
+  const konfig = verbundKonfig(opts.umgebung || process.env, log);
+  const manifest = createManifest({ inhalte: svc.inhalte, version: VERSION, konfig });
 
   const app = express();
   app.disable('x-powered-by');
@@ -117,6 +120,29 @@ function createApp(opts) {
 
   app.get('/robots.txt', (req, res) => res.type('text').send('User-agent: *\nDisallow: /\n'));
 
+  /* ---------- Plattform-Verbund: SSO und Verbund-API (eigene Router, vor der übrigen API) ---------- */
+  const helpers = {
+    svc,
+    secret,
+    superadminAktiv,
+    now: ctx.now,
+    konfig,
+    setSchuelerCookie: (req, res, row, o = {}) => S.setCookie(req, res, S.COOKIE_SCHUELER, { s: row.id, g: row.session_gen, ...(o.portal ? { p: 1 } : {}) }, secret, SCHUELER_SESSION_MS),
+    setLehrkraftCookie: (req, res, row, o = {}) => S.setCookie(req, res, S.COOKIE_LEHRKRAFT, { l: row.id, g: row.session_gen, ...(o.portal ? { p: 1 } : {}) }, secret, LEHRKRAFT_SESSION_MS),
+    clearSchueler: (req, res) => S.clearCookie(req, res, S.COOKIE_SCHUELER),
+    clearLehrkraft: (req, res) => S.clearCookie(req, res, S.COOKIE_LEHRKRAFT),
+    schueler: (req) => {
+      const r = req.sS && Number.isInteger(req.sS.s) ? svc.kurse.ausSession(req.sS.s, req.sS.g) : null;
+      return r && r.sub && !konfig.sso ? null : r;
+    },
+    lehrkraft: (req) => (req.sL && Number.isInteger(req.sL.l) ? svc.konten.ausSession(req.sL.l, req.sL.g, { superadminAktiv, portalAktiv: konfig.sso }) : null),
+    material,
+    gast,
+    reload: () => ladeInhalte(svc, opts, log),
+    sichereAdmin: () => svc.konten.sichereSuperadmin(opts.adminEmail || 'admin', opts.adminPassword || '')
+  };
+  const sso = ssoRoutes(app, helpers, konfig);
+
   /* ---------- Seiten ---------- */
   const page = (file) => (req, res) => {
     res.set('Cache-Control', 'no-store');
@@ -124,9 +150,9 @@ function createApp(opts) {
   };
   app.get('/', page('index.html'));
   app.get('/k/:code', page('index.html'));
-  app.get('/spiel', page('spiel.html'));
-  app.get('/lehrer', page('lehrer.html'));
-  app.get('/lehrer/urkunden', page('urkunden.html'));
+  app.get('/spiel', sso.stillAnmelden('s'), page('spiel.html'));
+  app.get('/lehrer', sso.stillAnmelden('l'), page('lehrer.html'));
+  app.get('/lehrer/urkunden', sso.stillAnmelden('l'), page('urkunden.html'));
   app.get('/admin', (req, res) => res.redirect('/lehrer#/admin'));
   app.get('/board/:code', page('board.html'));
   app.get('/datenschutz', page('datenschutz.html'));
@@ -148,32 +174,21 @@ function createApp(opts) {
     next();
   });
 
-  const helpers = {
-    svc,
-    secret,
-    superadminAktiv,
-    now: ctx.now,
-    setSchuelerCookie: (req, res, row) => S.setCookie(req, res, S.COOKIE_SCHUELER, { s: row.id, g: row.session_gen }, secret, SCHUELER_SESSION_MS),
-    setLehrkraftCookie: (req, res, row) => S.setCookie(req, res, S.COOKIE_LEHRKRAFT, { l: row.id, g: row.session_gen }, secret, LEHRKRAFT_SESSION_MS),
-    clearSchueler: (req, res) => S.clearCookie(req, res, S.COOKIE_SCHUELER),
-    clearLehrkraft: (req, res) => S.clearCookie(req, res, S.COOKIE_LEHRKRAFT),
-    schueler: (req) => (req.sS && Number.isInteger(req.sS.s) ? svc.kurse.ausSession(req.sS.s, req.sS.g) : null),
-    lehrkraft: (req) => (req.sL && Number.isInteger(req.sL.l) ? svc.konten.ausSession(req.sL.l, req.sL.g, { superadminAktiv }) : null),
-    material,
-    gast,
-    reload: () => ladeInhalte(svc, opts, log),
-    sichereAdmin: () => svc.konten.sichereSuperadmin(opts.adminEmail || 'admin', opts.adminPassword || '')
-  };
-
   api.get('/sitzung', (req, res) => {
     const s = helpers.schueler(req);
     const l = helpers.lehrkraft(req);
     let schueler = null;
     if (s) {
       const k = svc.kurse.kursRow(s.kurs_id);
-      schueler = { name: s.name, kurs: k ? k.name : '' };
+      schueler = { name: s.name, kurs: k ? k.name : '', portal: !!s.sub, kurse: svc.verbund.kurseVon(s) };
     }
-    res.json({ schueler, lehrkraft: l ? svc.konten.ansicht(l) : null, version: VERSION });
+    res.json({
+      schueler,
+      lehrkraft: l ? svc.konten.ansicht(l) : null,
+      version: VERSION,
+      // Verbund: Link „⌂ Portal“, Knopf „Über InfoLabs anmelden“, lokale Anmeldung erlaubt?
+      verbund: { portal: konfig.portal, sso: konfig.sso, lokal: konfig.lokal }
+    });
   });
 
   /* Öffentliche Themenübersicht (ohne Lösungen) */

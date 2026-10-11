@@ -1,8 +1,9 @@
 'use strict';
-// Plattform-Manifest nach dem Verbundvertrag (README Teil H, Vertrag v1): öffentlich unter GET /api/plattform.
+// Plattform-Manifest nach dem Verbundvertrag (VERTRAG.md v1.1 im Repo frankjuchim/labs, §7): öffentlich unter
+// GET /api/plattform.
 // Das Portal liest es, um Plattformen zu verlinken, ihren Stand anzuzeigen und die Vertragsversion zu prüfen.
 
-const VERTRAG = '1.0';
+const VERTRAG = '1.1';
 const PLATTFORM = {
   id: 'algoquest',
   name: 'Algo Quest',
@@ -15,22 +16,29 @@ const PLATTFORM = {
 const FAEHIGKEITEN = ['gast', 'themen', 'lehrkraft-materialien', 'boss', 'training', 'warmup', 'scoreboard', 'beamer', 'urkunden', 'fallen-profil'];
 
 /**
- * @param {{inhalte: object, version: string, umgebung?: object}} opt
+ * @param {{inhalte: object, version: string, konfig: object}} opt  konfig aus verbundKonfig()
  */
-function createManifest({ inhalte, version, umgebung = process.env }) {
+function createManifest({ inhalte, version, konfig }) {
   return function manifest(basis) {
     const welten = [...inhalte.katalog.welten.values()].sort((a, b) => a.nr - b.nr);
-    const portal = umgebung.PORTAL_URL || null;
-    const modus = ['lokal', 'portal', 'beides'].includes(umgebung.AUTH_MODUS) ? umgebung.AUTH_MODUS : 'lokal';
     return {
       vertrag: VERTRAG,
       ...PLATTFORM,
-      id: umgebung.PLATTFORM_ID || PLATTFORM.id,
+      id: konfig.id,
       version,
-      basis: umgebung.PLATTFORM_URL || basis,
+      basis: konfig.url || basis,
       icon: '/static/favicon.svg',
-      urls: { start: '/', gast: '/gast', themen: '/themen', lehrkraft: '/lehrer', datenschutz: '/datenschutz', healthz: '/healthz', ssoStart: null },
-      auth: { modus, portal, sso: false },
+      urls: {
+        start: '/',
+        gast: '/gast',
+        themen: '/themen',
+        lehrkraft: '/lehrer',
+        datenschutz: '/datenschutz',
+        healthz: '/healthz',
+        ssoStart: konfig.sso ? '/sso/start' : null,
+        ssoEnde: konfig.sso ? '/sso/ende' : null
+      },
+      auth: { modus: konfig.modus, portal: konfig.portal, sso: konfig.sso },
       umfang: {
         welten: welten.length,
         level: welten.reduce((s, w) => s + w.levels.length, 0),

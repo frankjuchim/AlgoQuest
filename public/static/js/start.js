@@ -33,6 +33,9 @@
 
   try {
     const s = await api('GET', '/api/sitzung');
+    // Plattform-Verbund: Anmeldung über das Portal anbieten; im Modus „portal“ keine lokalen Formulare
+    if (s.verbund && s.verbund.sso) $('portal-box').hidden = false;
+    if (s.verbund && !s.verbund.lokal) $('formulare').hidden = true;
     if (s.schueler) {
       $('weiter-box').hidden = false;
       $('weiter-name').textContent = `${s.schueler.name} (Kurs „${s.schueler.kurs}“)`;

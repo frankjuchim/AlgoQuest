@@ -27,7 +27,8 @@ function createKonten(ctx) {
       mussPasswortAendern: r.muss_pw_aendern === 1,
       erstellt: r.created_at,
       entschieden: r.entschieden_at,
-      letzterLogin: r.last_login_at
+      letzterLogin: r.last_login_at,
+      portal: !!r.sub
     };
   }
 
@@ -37,9 +38,9 @@ function createKonten(ctx) {
    */
   function sichereSuperadmin(email, passwort) {
     const mail = String(email || 'admin').trim().toLowerCase() || 'admin';
-    const vorhanden = db.prepare("SELECT * FROM lehrkraefte WHERE rolle = 'superadmin' ORDER BY id LIMIT 1").get();
+    const vorhanden = db.prepare("SELECT * FROM lehrkraefte WHERE rolle = 'superadmin' AND sub IS NULL ORDER BY id LIMIT 1").get();
     if (!passwort) return vorhanden ? vorhanden.id : null;
-    const konflikt = db.prepare("SELECT * FROM lehrkraefte WHERE email = ? AND rolle != 'superadmin'").get(mail);
+    const konflikt = db.prepare("SELECT * FROM lehrkraefte WHERE email = ? AND rolle != 'superadmin' AND sub IS NULL").get(mail);
     if (konflikt) {
       // Eine normale Lehrkraft mit derselben Adresse wird zum Superadmin hochgestuft.
       db.prepare("UPDATE lehrkraefte SET rolle = 'superadmin', status = 'aktiv' WHERE id = ?").run(konflikt.id);
@@ -109,13 +110,16 @@ function createKonten(ctx) {
   function ausSession(id, gen, opt) {
     const r = row(id);
     if (!r || r.session_gen !== gen || r.status !== 'aktiv') return null;
-    if (r.rolle === 'superadmin' && !opt.superadminAktiv) return null;
+    // Superadmin aus dem Portal (sub a:<n>) braucht kein ADMIN_PASSWORD
+    if (r.rolle === 'superadmin' && !r.sub && !opt.superadminAktiv) return null;
+    if (r.sub && opt.portalAktiv === false) return null;
     return r;
   }
 
   async function passwortAendern(id, alt, neu) {
     const r = row(id);
     if (!r) throw new NotFoundError('Konto nicht gefunden.');
+    if (r.sub) throw new ForbiddenError('Ihr Passwort ändern Sie im Portal.');
     if (!(await S.pruefePasswort(typeof alt === 'string' ? alt : '', r.pw_hash))) throw new ValidationError('Das bisherige Passwort ist falsch.');
     const pw = V.passwort(neu, 'Neues Passwort');
     if (pw === alt) throw new ValidationError('Das neue Passwort muss sich vom bisherigen unterscheiden.');
@@ -130,9 +134,12 @@ function createKonten(ctx) {
   function liste() {
     return db
       .prepare(
-        `SELECT l.*, (SELECT COUNT(*) FROM kurse k WHERE k.lehrkraft_id = l.id) AS kurse,
-           (SELECT COUNT(*) FROM schueler s JOIN kurse k ON k.id = s.kurs_id WHERE k.lehrkraft_id = l.id) AS schueler
-         FROM lehrkraefte l
+        `SELECT l.*,
+           (SELECT COUNT(*) FROM kurse k WHERE (k.portal_id IS NULL AND k.lehrkraft_id = l.id)
+              OR k.id IN (SELECT kurs_id FROM kurs_lehrkraefte x WHERE x.lehrkraft_id = l.id)) AS kurse,
+           (SELECT COUNT(*) FROM schueler s JOIN kurse k ON k.id = s.kurs_id WHERE (k.portal_id IS NULL AND k.lehrkraft_id = l.id)
+              OR k.id IN (SELECT kurs_id FROM kurs_lehrkraefte x WHERE x.lehrkraft_id = l.id)) AS schueler
+         FROM lehrkraefte l WHERE l.sub IS NULL OR l.sub != 'portal'
          ORDER BY CASE l.status WHEN 'wartet' THEN 0 WHEN 'aktiv' THEN 1 WHEN 'deaktiviert' THEN 2 ELSE 3 END, l.created_at DESC`
       )
       .all()
@@ -143,6 +150,7 @@ function createKonten(ctx) {
     const r = row(id);
     if (!r) throw new NotFoundError('Lehrkraft nicht gefunden.');
     if (r.rolle === 'superadmin') throw new ForbiddenError('Der Superadmin kann hier nicht geändert werden.');
+    if (r.sub) throw new ForbiddenError('Konten aus dem Portal werden im Portal verwaltet.');
     return r;
   }
 

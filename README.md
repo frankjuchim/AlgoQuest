@@ -8,8 +8,9 @@ Dieses Dokument hat drei Aufgaben:
 1. Es beschreibt **vollständig**, was Algo Quest ist, wie es aufgebaut ist und wie es betrieben wird (Teil A–F).
 2. Es ist die **Blaupause** für vergleichbare Plattformen zu den übrigen Themen der Informatik-Oberstufe mit anderen
    Sachkontexten. Teil G richtet sich ausdrücklich an neue Claude-Chats, die eine solche Plattform aufbauen sollen.
-3. Es enthält den **Vertrag des Plattform-Verbunds** (Teil H): gemeinsames Login über ein Portal, Rollen,
-   Single Sign-on, Verbund-API, Plattform-Manifest und gemeinsame Regeln – verbindlich für alle Plattformen und das Portal.
+3. Es beschreibt die **Anbindung an den Plattform-Verbund InfoLabs** (Teil H): gemeinsames Login über das Portal
+   https://labs.frankjuchim.de (SSO), Verbund-API, Plattform-Manifest. Der Vertrag selbst (v1.1) liegt im Repo
+   `frankjuchim/labs` (`VERTRAG.md`) und ist für alle Plattformen verbindlich.
 
 Live: **https://algoquest.frankjuchim.de** · Themenübersicht ohne Anmeldung: `/themen` · Gastmodus zum Reinschnuppern: `/gast`
 
@@ -26,7 +27,7 @@ Live: **https://algoquest.frankjuchim.de** · Themenübersicht ohne Anmeldung: `
 - [E. Qualitätssicherung](#e-qualitätssicherung)
 - [F. Betrieb, Datenschutz, Sicherheit, API](#f-betrieb-datenschutz-sicherheit-api)
 - [G. Blaupause: eine neue Plattform für ein anderes Thema](#g-blaupause-eine-neue-plattform-für-ein-anderes-thema)
-- [H. Der Plattform-Verbund – Vertrag v1](#h-der-plattform-verbund--vertrag-v1)
+- [H. Der Plattform-Verbund InfoLabs](#h-der-plattform-verbund-infolabs)
 - [Anhang: API im Detail](#anhang-api-im-detail)
 
 ---
@@ -285,7 +286,7 @@ Zusätzlich gilt: Traces, Rekursionstabellen, Sortierschritte und Bäume per ins
    | `PORT` / `DATA_DIR` | Standard 80 / `/app/data` |
    | `TRUST_PROXY` | Standard `1` (hinter CapRover/nginx) |
    | `ARBEITSBLAETTER_DIR`, `MATERIALIEN_DIR` | optional: abweichende Ordner für öffentliche PDFs bzw. Lehrkraft-PDFs |
-   | `PLATTFORM_ID`, `PLATTFORM_URL`, `PORTAL_URL`, `PORTAL_PUBLIC_KEY`, `AUTH_MODUS` | Verbund (Teil H.8); ohne Angabe läuft Algo Quest allein (`AUTH_MODUS=lokal`) |
+   | `PLATTFORM_ID`, `PLATTFORM_URL`, `PORTAL_URL`, `PORTAL_PUBLIC_KEY`, `AUTH_MODUS` | Verbund InfoLabs (Teil H.4); ohne Angabe läuft Algo Quest allein (`AUTH_MODUS=lokal`) |
 
 3. HTTPS aktivieren (Cookies dann `secure`). Healthcheck: `GET /healthz` (liefert die Version).
 4. Ins Image kommen nur `src/`, `public/`, `seed/`, `scripts/`, `docs/AUFGABENFORMAT.md`,
@@ -323,7 +324,7 @@ Alle Antworten JSON; schreibende Anfragen mit `Content-Type: application/json` u
 | Bereich | Wichtige Endpunkte |
 |---|---|
 | Gastmodus | `GET /api/gast/schueler` · `GET /api/gast/aufgaben/:id` · `POST /api/gast/aufgaben/:id/pruefen\|tipp\|aufdecken` (Zähler kommen vom Browser, nichts wird gespeichert) · `GET /api/gast/lehrkraft` (Demo-Kurs) · `GET /api/gast/vorschau/:id` (nur Demo-Aufgaben) |
-| Verbund (Teil H) | `GET /api/plattform` (Manifest, öffentlich, CORS) · ab Phase 1: `/sso/start`, `/sso/ende`, `/api/verbund/…` |
+| Verbund (Teil H) | `GET /api/plattform` (Manifest, öffentlich, CORS) · `GET /sso/start?ziel=` · `GET /sso/ende` · `GET /sso/abmelden` · `POST /api/verbund/loeschen` · `GET /api/verbund/kurse/:kursId/uebersicht` · `POST /api/verbund/kurse/:kursId` (Bearer-Token des Portals) · `POST /api/kurs-wechseln {kursId}` (Portal-Schüler) |
 | Öffentlich | `GET /healthz` · `GET /api/sitzung` · `GET /api/kurs/:code` · `POST /api/schueler/beitreten {kurscode, name}` · `POST /api/schueler/anmelden {name, code, kurscode?}` (409 `kurscodeNoetig` nur bei Altbeständen) · `GET /api/board/:code` · `GET /api/themen` · `POST /api/lehrer/registrieren` · `POST /api/lehrer/anmelden` |
 | Schüler | `GET /api/welten` · `GET /api/levels/:id` · `GET /api/aufgaben/:id` · `POST /api/aufgaben/:id/pruefen\|tipp\|aufdecken` · `/api/training/…` · `/api/boss/…` (start, kampf, antwort, beenden) · `GET /api/profil` · `GET /api/scoreboard` · `/api/kata/…` (Warm-up) |
 | Lehrkraft (`/api/lehrer`) | `/ich` · `/passwort` · `/kurse` (CRUD, Schüler, Einstellungen, Auswertung, `export.csv`, `qr.svg`, `urkunden`) · `/vorschau` · `/materialien`; Dateien: `GET /lehrkraft/dateien/<pfad>` |
@@ -334,7 +335,7 @@ Alle Antworten JSON; schreibende Anfragen mit `Content-Type: application/json` u
 ## G. Blaupause: eine neue Plattform für ein anderes Thema
 
 > **An Claude:** Dieser Teil ist deine Arbeitsgrundlage, wenn du für ein weiteres Thema der Informatik-Oberstufe eine
-> Plattform „wie Algo Quest“ aufbauen sollst. Die Plattform gehört zum **Verbund**: Teil H (Vertrag) ist verbindlich.
+> Plattform „wie Algo Quest“ aufbauen sollst. Die Plattform gehört zum **Verbund InfoLabs**: der Vertrag (`frankjuchim/labs`, `VERTRAG.md`) ist verbindlich, Teil H zeigt die Umsetzung.
 > Lies zusätzlich `CLAUDE.md`, `docs/AUFGABENFORMAT.md` und eine Welt-Spezifikation
 > (z. B. `quellen/specs/SPEC_AlgoQuest_W4.md`), bevor du planst.
 
@@ -377,10 +378,9 @@ Fachbegriffe), Bosse und Klausuren immer im nüchternen Abitur-Stil.
    Notation, Fallen, Qualitätssicherung, Datenschutz, Lab-Oberfläche) und die fachlichen Notationen des Themas ergänzen.
    Fallen-Liste (P1–P10) des Themas definieren – sie zieht sich durch alles.
 3. **App übernehmen:** Repo als Vorlage kopieren, `seed/welten` leeren, `src/domain.js` anpassen (WELTEN mit Titel/Farbe,
-   LAB_KATEGORIEN, FALLEN, RAENGE behalten – H.9), Texte der Oberfläche (Story, Titel), `package.json`-Name, Domain.
-   **Verbund:** Plattform-ID festlegen, Manifest in `src/services/manifest.js` anpassen, `scripts/vertrag_pruefen.js`
-   und `test/verbund.test.js` übernehmen (H.7, H.12); Anmeldung zunächst `AUTH_MODUS=lokal`, SSO nach H.5, sobald
-   das Portal es anbietet.
+   LAB_KATEGORIEN, FALLEN, RAENGE behalten – Vertrag §9), Texte der Oberfläche (Story, Titel), `package.json`-Name, Domain.
+   **Verbund:** Plattform-ID festlegen, Manifest in `src/services/manifest.js` anpassen, SSO und Verbund-API samt
+   Tests übernehmen (Teil H.8, Vertrag §5–§7, §12); Anmeldung über das Portal InfoLabs (`AUTH_MODUS=portal` bzw. `beides`).
    Fehlende Blocktypen/Interaktionen in `public/static/js/render.js`/`interact.js` + `src/content/checker.js` +
    `validator.js` + `docs/AUFGABENFORMAT.md` + `test/fixtures/welt_beispiel.json` ergänzen – immer mit Tests.
 4. **Inhalte je Welt:** Arbeitsblätter + Lösungen, Lab-Level mit Aufgaben (Format D.1), Boss-Pool + Papier-Boss mit
@@ -425,7 +425,8 @@ README Teil G ist die Blaupause, CLAUDE.md die Konventionen). Thema: <Themenfeld
 Niedersachsen, Abitur ab <Jahr>, <Anzahl> Doppelstunden. Sachkontext: <Idee oder „bitte drei Vorschläge“>.
 Programmierumgebung/Werkzeuge: <z. B. SQLite im Browser / Online-IDE / Automaten-Simulator>.
 
-Schritt 1: Lies README (Teil A–H; Teil H = Verbundvertrag, verbindlich), CLAUDE.md, docs/AUFGABENFORMAT.md und
+Schritt 1: Lies README (Teil A–H), CLAUDE.md, docs/AUFGABENFORMAT.md, den Verbundvertrag
+https://github.com/frankjuchim/labs/blob/main/VERTRAG.md (v1.1, verbindlich) mit docs/INTEGRATION.md und
 quellen/specs/SPEC_AlgoQuest_W4.md.
 Schritt 2: Schlage Welten (mit Kompetenzen nach KC/EH und DS-Verteilung), Fallen-Liste P1–P10 und den Sachkontext vor
 und frage nach, bevor du etwas baust.
@@ -433,275 +434,110 @@ Schritt 3: Übernimm die App, passe domain.js/Oberfläche an, ergänze fehlende 
 Schritt 4: Welt für Welt: Spezifikation → Arbeitsblätter + Lösungen → Lab-Level → Boss → Warm-up → Präsentation,
 alles programmatisch geprüft. Zum Schluss Demo-Aufgaben für den Gastmodus (/gast) erstellen.
 Regeln: alles auf Deutsch, Schüler duzen, Prüfungsaufgaben siezen, keine Klarnamen, Lösungen nie öffentlich,
-nie ohne Freigabe auf main pushen (main = live). Plattform-ID: <id>; Manifest und Vertragsprüfung nach Teil H
-von Anfang an, Anmeldung bis zum Portal lokal (AUTH_MODUS=lokal).
+nie ohne Freigabe auf main pushen (main = live). Plattform-ID: <id>; Manifest, SSO und Verbund-API nach dem
+Vertrag von Anfang an (wie Algo Quest Teil H), Anmeldung über das Portal InfoLabs (AUTH_MODUS=portal).
 ```
 
 ---
 
-## H. Der Plattform-Verbund – Vertrag v1
+## H. Der Plattform-Verbund InfoLabs
 
-> **Status:** Vertrag **v1.0 (Entwurf, verbindlich für neue Plattformen)**. Maßgeblich ist dieser Abschnitt der
-> AlgoQuest-README. Sobald das Portal existiert, zieht der Vertrag dorthin um; bis dahin werden Änderungen **nur hier**
-> gemacht – mit Erhöhung der Versionsnummer und einem Eintrag in H.14.
->
-> **An Claude:** Wenn du eine Plattform des Verbunds oder das Portal baust, ist dieser Teil verbindlich. **MUSS** =
-> Pflicht, **SOLL** = Regelfall (Abweichung nur mit Begründung im README der Plattform), **KANN** = freiwillig.
-> Weicht dein Projekt ab oder brauchst du eine Erweiterung, schlage eine Vertragsänderung vor, statt still abzuweichen.
+> **Verbindlich ist der Vertrag des Plattform-Verbunds:**
+> https://github.com/frankjuchim/labs/blob/main/VERTRAG.md (**Version 1.1**). Er hat diesen Teil H (Fassung v1.0)
+> abgelöst; die Abschnittsnummern sind gleich geblieben (**Vertrag §n = früher H.n**). Anschlussanleitung:
+> `docs/INTEGRATION.md` im Repo `frankjuchim/labs`. Änderungen am Zusammenspiel werden **nur dort** gemacht
+> (neue Vertragsversion, Eintrag in §14) – nie still in einer Plattform.
 
-### H.1 Zielbild
+Das Portal **InfoLabs** (https://labs.frankjuchim.de) verwaltet Konten (Superadmin, Lehrkräfte, Schüler), Kurse,
+Kurscodes und Freischaltungen; jede Plattform (Algo Quest, AutomatenLab, …) behält Inhalte, Lernstand, Auswertung und
+Gastmodus. Angemeldet wird einmal am Portal (SSO mit Ed25519-JWT), das Portal holt Kennzahlen über die Verbund-API.
 
-Für jedes Themenfeld der Informatik-Oberstufe gibt es eine eigene **Plattform** nach dem Muster von Algo Quest
-(Teil G). Alle Plattformen sind über **ein gemeinsames Login** erreichbar. Ein **Portal** verwaltet Konten, Kurse und
-Freischaltungen und verlinkt die Plattformen.
+### H.1 Stand in Algo Quest
 
-```
-                         ┌──────────────────────────────────────────────┐
-                         │ PORTAL  (https://<PORTAL>.frankjuchim.de)     │
-                         │ Konten: Superadmin, Lehrkräfte, Schüler       │
-                         │ Kurse + Kurscodes + Mitgliedschaften          │
-                         │ Freischaltungen Lehrkraft×Plattform,          │
-                         │ Kurs×Plattform · Übersicht · Datenschutz      │
-                         └──────┬─────────────────────────────▲─────────┘
-           ① Anmeldung (SSO):   │ Weiterleitung + signiertes  │ ③ Manifest /api/plattform
-              Token (Ed25519)   │ Token                       │   (öffentlich)
-                                ▼                             │
-   ┌───────────────────────┐  ┌───────────────────────┐  ┌───────────────────────┐
-   │ algoquest.…           │  │ <plattform-b>.…       │  │ <plattform-c>.…       │
-   │ Inhalte, Lernstand,   │  │                       │  │                       │
-   │ Kurs-Einstellungen,   │◄─┤ ② Verbund-API (Portal → Plattform, signiert):     │
-   │ Auswertung, Gastmodus │  │   Übersicht, Löschung, Kursänderungen             │
-   └───────────────────────┘  └───────────────────────┘  └───────────────────────┘
-```
+| Phase (Vertrag §11) | Inhalt | Stand |
+|---|---|---|
+| 0 | Manifest `/api/plattform`, Vertragsprüfung, `AUTH_MODUS=lokal` | umgesetzt (2.5.0) |
+| 1 | SSO-Empfänger `/sso/start` + `/sso/ende`, Verbund-API, `AUTH_MODUS=beides`, Link „⌂ Portal“ | **umgesetzt (2.6.0)** |
+| 2 | Datenübernahme ins Portal (Backup → Import → Zuordnung), Lernstände auf `sub`/Kurs-ID umschreiben | offen |
+| 3 | `AUTH_MODUS=portal`: lokale Anmeldung und Registrierung aus (Sperre ist eingebaut, Superadmin vom Portal) | nach Phase 2 |
 
-Die Adresse des Portals ist noch offen und wird überall als **`<PORTAL>`** bzw. Umgebungsvariable `PORTAL_URL` geführt.
+### H.2 Umsetzung (Dateien)
 
-### H.2 Begriffe
-
-| Begriff | Bedeutung |
+| Datei | Aufgabe |
 |---|---|
-| **Portal** | übergeordnete Verwaltung: Identitäten, Kurse, Freischaltungen, Links; eigene App (eigene Claude-Code-Session) |
-| **Plattform** | Lern-App eines Themenfelds (z. B. Algo Quest); eigene App, eigene Datenbank, eigene Subdomain |
-| **Plattform-ID** | kurzer, fester Name = Subdomain, `^[a-z][a-z0-9-]{1,30}$` (z. B. `algoquest`); ändert sich nie |
-| **sub** | stabile, pseudonyme Kennung eines Kontos, vom Portal vergeben: `l:<n>` Lehrkraft, `s:<n>` Schüler, `a:<n>` Superadmin; wird nie neu vergeben |
-| **Kurs-ID** | stabile Kennung eines Kurses, vom Portal vergeben: `k:<n>` |
-| **Kurscode** | 6 Zeichen, zum Beitritt am Portal (Format wie in Algo Quest) |
-| **persönlicher Code** | Schüler-Code `ABC-234`, kursübergreifend eindeutig, Anmeldung mit Name + Code am Portal |
+| `src/jwt.js` | Token prüfen (Ed25519, iss, aud, Zeit, `v`), `JtiSpeicher` – **unverändert aus `frankjuchim/labs`** |
+| `scripts/vertrag_pruefen.js` | Vertragsprüfung einer laufenden Plattform – **unverändert aus `frankjuchim/labs`** |
+| `src/verbundKonfig.js` | Umgebungsvariablen (H.4); SSO ist nur aktiv bei `AUTH_MODUS` `beides`/`portal` **und** gültigem `PORTAL_URL` + `PORTAL_PUBLIC_KEY` |
+| `src/services/manifest.js` | Manifest (Vertrag §7): `vertrag 1.1`, `urls.ssoStart`/`ssoEnde`, `auth {modus, portal, sso}` |
+| `src/routes/sso.js` | `/sso/start`, `/sso/ende`, `/sso/abmelden`, stille Neuanmeldung, Verbund-API `/api/verbund/…` |
+| `src/services/verbund.js` | Konten und Kurse aus dem Token abgleichen, Kurswechsel, Löschen, Kursübersicht, Kurs umbenennen/sperren |
+| `test/sso.test.js`, `test/verbund.test.js` | alle Testfälle aus `docs/INTEGRATION.md` §5, Manifest, Datenbank-Upgrade |
 
-### H.3 Zuständigkeiten
+### H.3 Abbildung der Portal-Identitäten (Schema 4)
 
-| Gegenstand | liegt beim | Bemerkung |
-|---|---|---|
-| Konten (Superadmin, Lehrkräfte, Schüler), Passwörter, persönliche Codes | **Portal** | Plattformen speichern **nie** Passwörter oder Codes |
-| Registrierung und Freigabe von Lehrkräften | **Portal** | Superadmin schaltet je Lehrkraft die Plattformen frei |
-| Kurse, Kurscodes, Mitgliedschaften | **Portal** | ein Kurs kann mehrere Plattformen nutzen (nur freigeschaltete der Lehrkraft) |
-| Kurs-Einstellungen je Plattform (freigeschaltete Welten, Bosse, Scoreboard, Beamer-Board) | **Plattform** | gespeichert unter der Kurs-ID |
-| Inhalte, Aufgaben, Prüfung, Lernstand, Punkte, Abzeichen, Auswertung | **Plattform** | gespeichert unter `sub` und Kurs-ID |
-| Gastmodus, Themenseite, Lehrkraft-Materialien | **Plattform** | wie in Algo Quest (C.3–C.5) |
-| Übersicht über alle Plattformen eines Kurses | **Portal** | holt Kennzahlen über die Verbund-API (H.6) |
-| Datenschutzerklärung | **Portal** (zentral) | Plattform ergänzt nur ihre Besonderheiten und verlinkt die zentrale |
-| Löschung | **Portal** stößt an | Plattform löscht auf Anforderung (H.6) |
+- **Lehrkraft/Superadmin** (`l:<n>`/`a:<n>`): Zeile in `lehrkraefte` mit `sub` (E-Mail-Platzhalter `l-5@portal.invalid`,
+  kein Passwort – Anmeldung nur über das Portal). `a:` erhält Superadmin-Rechte (auch ohne `ADMIN_PASSWORD`).
+  Passwort, Status und Einmal-Passwort werden im Portal verwaltet (hier gesperrt).
+- **Kurse** (`k:<n>`): Zeile in `kurse` mit `portal_id`, Besitzer ist das Systemkonto „InfoLabs“ (`sub = portal`,
+  nicht anmeldbar). Zugriff haben die Lehrkräfte, bei denen der Kurs im **letzten** Token als `lehrkraft` stand
+  (Tabelle `kurs_lehrkraefte`, Inhaberin und Mitlehrkräfte). Neue Kurse entstehen mit Standard-Einstellungen
+  (Beitritt im Lab geschlossen); Name kommt aus dem Portal. Anlegen und Löschen nur im Portal, Einstellungen
+  (Welten, Bosse, Scoreboard, Beamer) hier. `aktiv = 0` (Verbund-API) sperrt den Kurs für Schüler.
+- **Schüler** (`s:<n>`): je Kurs eine Zeile in `schueler` mit `sub` (kein persönlicher Code, keine lokale Anmeldung).
+  Fehlt ein Kurs im Token, wird `zugang = 0` (Lernstand bleibt bis zur Löschung). Bei mehreren Kursen startet die
+  Sitzung im zuletzt genutzten (oder `ziel=/spiel?kurs=k:17`); in der Kopfzeile lässt sich der Kurs wechseln.
+  Gleichnamige im selben Kurs erhalten eine Nummer („Lena S. 2“).
+- Lokale Konten, Kurse und Schüler bleiben unverändert (`AUTH_MODUS=beides`).
 
-### H.4 Rollen und Rechte
+### H.4 Konfiguration (Vertrag §8)
 
-- **Superadmin** (`a:`): alles im Portal; auf jeder Plattform Lehrkraft-Rechte für alle Kurse plus Plattform-Verwaltung
-  (Inhalte neu laden, Seed-Bericht, Backup).
-- **Lehrkraft** (`l:`): darf eine Plattform nur nutzen, wenn sie dort **freigeschaltet** ist; sieht auf der Plattform
-  nur Kurse, in denen sie im Token als `lehrkraft` steht.
-- **Schüler** (`s:`): darf eine Plattform nur nutzen, wenn mindestens einer seiner Kurse diese Plattform freigeschaltet
-  hat; sieht nur eigenen Lernstand und das Scoreboard seiner Kurse (falls aktiv).
-- Der **Gastmodus** (`/gast`) jeder Plattform bleibt ohne Anmeldung erreichbar und nutzt nie echte Daten.
-
-### H.5 Anmeldung: Single Sign-on (MUSS ab Auth-Modus `portal`/`beides`)
-
-**Ablauf** (Weiterleitung im Browser, kein gemeinsames Cookie nötig):
-
-1. Ohne Sitzung leitet die Plattform weiter auf
-   `<PORTAL_URL>/sso/autorisieren?plattform=<id>&ruecksprung=<https://<id>.…/sso/ende>&state=<zufall>&ziel=<pfad>`.
-   `state` (≥ 128 bit Zufall) merkt sich die Plattform in einem kurzlebigen Cookie (`httpOnly`, `SameSite=Lax`, 10 min).
-2. Das Portal meldet bei Bedarf an (Lehrkraft: E-Mail + Passwort; Schüler: Name + persönlicher Code; Beitritt neuer
-   Schüler mit Kurscode + Name) und prüft die Berechtigung (H.4). `ruecksprung` MUSS exakt der im Portal hinterlegten
-   Adresse der Plattform entsprechen (Whitelist), sonst Abbruch.
-3. Das Portal leitet zurück: `ruecksprung?token=<JWT>&state=<state>&ziel=<pfad>` – bei Ablehnung
-   `ruecksprung?fehler=keine_berechtigung|abgebrochen&state=<state>`.
-4. Die Plattform prüft das Token (siehe unten), legt das lokale Konto an bzw. aktualisiert es (Upsert nach `sub`),
-   gleicht die Kursmitgliedschaften ab, setzt **ihre eigene** Sitzung (signiertes Cookie wie in Algo Quest) und leitet
-   auf `ziel` (nur relative Pfade).
-
-**Token** (JWT, kompakt, `alg: EdDSA` mit Ed25519; mit Node-Bordmitteln `crypto.sign/verify` prüfbar):
-
-```json
-{
-  "iss": "<PORTAL_URL>",
-  "aud": "algoquest",
-  "sub": "s:1042",
-  "rolle": "schueler",
-  "name": "Lena S.",
-  "kurse": [{ "id": "k:17", "name": "LK Informatik 13", "rolle": "mitglied" }],
-  "iat": 1760000000,
-  "exp": 1760000090,
-  "jti": "9f2c…",
-  "v": 1
-}
-```
-
-- `rolle`: `schueler` | `lehrkraft` | `superadmin`. `kurse[].rolle`: `mitglied` | `lehrkraft`.
-  `kurse` enthält **nur** Kurse, die diese Plattform freigeschaltet haben.
-- Die Plattform MUSS prüfen: Signatur mit dem öffentlichen Portal-Schlüssel (`PORTAL_PUBLIC_KEY`, PEM), `iss` =
-  `PORTAL_URL`, `aud` = eigene Plattform-ID, `exp` noch nicht erreicht und `exp − iat ≤ 120 s`, `state` = Cookie,
-  `jti` noch nicht verwendet (bis `exp` merken), `v` = 1. Ein Token ist genau einmal verwendbar.
-  `/sso/ende` antwortet mit `Referrer-Policy: no-referrer` und leitet sofort weiter, damit das Token nicht in
-  Verläufen oder Referern landet; Tokens werden nie geloggt.
-- Kurse, die die Plattform noch nicht kennt, legt sie mit Standard-Einstellungen an; Name und Mitgliedschaft werden bei
-  jeder Anmeldung aktualisiert. Fehlt ein Kurs im Token, verliert das Konto auf dieser Plattform den Zugang dazu
-  (Lernstand bleibt bis zur Löschung erhalten).
-- Sitzungsdauer auf der Plattform: Schüler höchstens 30 Tage, Lehrkräfte höchstens 8 Stunden. Läuft sie ab, startet
-  die Plattform still den SSO-Ablauf neu.
-- **Abmelden:** Die Plattform beendet ihre Sitzung; der Knopf „Überall abmelden“ führt auf
-  `<PORTAL_URL>/sso/abmelden?ruecksprung=<https://<id>.…/>`.
-
-### H.6 Verbund-API (Portal → Plattform, serverseitig)
-
-Jede Anfrage trägt `Authorization: Bearer <JWT>` – vom Portal signiert (Ed25519), `iss` = `PORTAL_URL`,
-`aud` = Plattform-ID, `sub` = `portal`, `zweck` = Name des Endpunkts, `exp − iat ≤ 60 s`, `jti` einmalig.
-Ohne gültiges Token: `401`. Antworten sind JSON.
-
-| Methode und Pfad | Pflicht | Zweck |
-|---|---|---|
-| `GET /api/plattform` | **MUSS** (öffentlich, ohne Token) | Manifest (H.7) |
-| `GET /healthz` | **MUSS** (öffentlich) | `{"status":"ok","version":"…"}` – Version wie im Manifest |
-| `POST /api/verbund/loeschen` `{ "sub": "s:1042" }` oder `{ "kurs": "k:17" }` | **MUSS** (ab `portal`/`beides`) | alle Daten des Kontos bzw. des Kurses auf der Plattform löschen; idempotent; Antwort `{ "geloescht": n }` |
-| `GET /api/verbund/kurse/:kursId/uebersicht` | **SOLL** | Kennzahlen für das Portal: je `sub` Punkte, gelöste Aufgaben, Anteil der Level-Punkte, zuletzt aktiv; dazu Kursfortschritt je Welt. **Keine** Antworten, Lösungen oder Freitexte |
-| `POST /api/verbund/kurse/:kursId` `{ "name": "…", "aktiv": false }` | **SOLL** | Kurs umbenannt bzw. Plattform für den Kurs abgeschaltet → auf der Plattform übernehmen bzw. Kurs sperren |
-
-### H.7 Plattform-Manifest (MUSS, in Algo Quest umgesetzt)
-
-`GET /api/plattform` liefert öffentlich (mit `Access-Control-Allow-Origin: *`) die Selbstauskunft der Plattform.
-Das Portal baut daraus seine Übersicht und prüft die Vertragsversion. Algo Quest liefert (gekürzt):
-
-```json
-{
-  "vertrag": "1.0",
-  "id": "algoquest",
-  "name": "Algo Quest",
-  "titel": "Algo Quest – Das Dungeon der Datenstrukturen",
-  "themenfeld": "Algorithmik und Datenstrukturen",
-  "kurs": "Informatik eA (LK), Niedersachsen, Abitur ab 2027",
-  "beschreibung": "Übungsplattform mit automatisch geprüften Aufgaben im Abitur-Stil …",
-  "farbe": "#1F4E79",
-  "version": "2.5.0",
-  "basis": "https://algoquest.frankjuchim.de",
-  "icon": "/static/favicon.svg",
-  "urls": { "start": "/", "gast": "/gast", "themen": "/themen", "lehrkraft": "/lehrer",
-            "datenschutz": "/datenschutz", "healthz": "/healthz", "ssoStart": null },
-  "auth": { "modus": "lokal", "portal": null, "sso": false },
-  "umfang": { "welten": 7, "level": 36, "aufgaben": 388, "bosse": 7 },
-  "welten": [{ "nr": 0, "titel": "Die Akademie", "farbe": "#7F6000", "level": 6 }, "…"],
-  "faehigkeiten": ["gast", "themen", "lehrkraft-materialien", "boss", "training", "warmup",
-                   "scoreboard", "beamer", "urkunden", "fallen-profil"]
-}
-```
-
-Pflichtfelder prüft `scripts/vertrag_pruefen.js` (H.12): `vertrag`, `id`, `name`, `titel`, `themenfeld`, `kurs`,
-`beschreibung`, `version`, `basis`, `urls.{start,gast,themen,lehrkraft,datenschutz,healthz}`, `auth.{modus,sso}`
-(bei `sso: true` auch `urls.ssoStart`), `umfang`, `faehigkeiten` (mit `gast`). Das Manifest enthält **nie** Kurs-,
-Schüler- oder Lösungsdaten. Neue Felder sind erlaubt (Nebenversion), Umbenennen oder Entfernen nur mit neuer
-Hauptversion.
-
-### H.8 Konfiguration (MUSS, gleiche Namen auf allen Plattformen)
-
-| Variable | Bedeutung |
+| Variable | Wert für Algo Quest |
 |---|---|
-| `PLATTFORM_ID` | Plattform-ID (Standard im Code fest, z. B. `algoquest`) |
-| `PLATTFORM_URL` | öffentliche Basis-URL, z. B. `https://algoquest.frankjuchim.de` (sonst aus der Anfrage) |
-| `PORTAL_URL` | Basis-URL des Portals; leer = Plattform läuft allein |
-| `PORTAL_PUBLIC_KEY` | öffentlicher Ed25519-Schlüssel des Portals (PEM) zum Prüfen von SSO- und Verbund-Tokens |
-| `AUTH_MODUS` | `lokal` (eigene Anmeldung wie bisher) · `beides` (Übergang: lokal **und** Portal) · `portal` (nur Portal; lokale Registrierung und Anmeldung abgeschaltet) |
-| `SESSION_SECRET`, `DATA_DIR`, `PORT`, `TRUST_PROXY` | wie in F.1 |
-| `ADMIN_EMAIL`, `ADMIN_PASSWORD` | nur in `lokal`/`beides`; in `portal` kommt der Superadmin vom Portal |
+| `PLATTFORM_ID` | weglassen (Standard `algoquest`) |
+| `PLATTFORM_URL` | `https://algoquest.frankjuchim.de` – ergibt die Rücksprung-Adresse `…/sso/ende`, die im Portal **zeichengenau** hinterlegt ist |
+| `PORTAL_URL` | `https://labs.frankjuchim.de` (ohne `/` am Ende) |
+| `PORTAL_PUBLIC_KEY` | Inhalt von https://labs.frankjuchim.de/sso/schluessel.pem (PEM; in CapRover einzeilig mit `\n` erlaubt; mehrere Blöcke für einen Schlüsselwechsel) – **fest** eingetragen, nie zur Laufzeit geholt |
+| `AUTH_MODUS` | `beides` (Übergang); `lokal` = ohne Portal, `portal` = nur Portal (Phase 3) |
 
-### H.9 Gemeinsame Regeln für alle Plattformen (MUSS)
+### H.5 Ablauf und Oberfläche
 
-- **Technik:** Node ≥ 20, Express, SQLite (better-sqlite3), Vanilla-JS ohne Build, keine CDNs, strikte CSP ohne
-  Inline-Skripte, `X-Robots-Tag: noindex`, Healthcheck, Docker + CapRover, `main` = live (nur nach Freigabe),
-  GitHub-Prüfung bei jedem Push.
-- **Sicherheit:** Lösungen, Erklärungen und nicht abgerufene Tipps nur serverseitig und erst nach dem Lösen;
-  Boss-Aufgaben nur im laufenden Kampf; Lehrkraft-Dateien nur mit Anmeldung und Whitelist; Rate-Limits;
-  Eingaben validiert, SQL parametrisiert, Ausgaben als Textknoten.
-- **Datenschutz:** nur Anzeigename (Empfehlung „Vorname + Initial“), `sub`, Kurs-IDs und Lernstand auf der Plattform;
-  keine Klarnamen in Beispieldaten, Screenshots, Tests, Materialien, Videos; Löschung auf Anforderung des Portals.
-- **Didaktik und Begriffe:** Welt → Level (1 je DS) → Arbeitsblatt + Lab + Boss; Fallen-Liste P1–P10 des Themas
-  (gleiches Schema: Nummer, Kurztitel, Erläuterung); Gastmodus `/gast` mit eigenen Demo-Aufgaben; Themenseite
-  `/themen` ohne Lösungen; Abitur-Stil (Schüler duzen, Prüfungsaufgaben siezen); Begriffe „Kurs“, „Kurscode“,
-  „persönlicher Code“, „Lehrkraft“, „Warm-up“, „Team“; Punkte nur automatisch (keine Erfahrungspunkte-Währung).
-- **Vergleichbarkeit im Portal:** gleiche Punkteformel `round(punkte × max(0.25, 1 − 0.25·Fehlversuche − 0.2·Tipps))`,
-  Standardpunkte 10/20/30 je Stufe, gleiche Rangschwellen (0/10/30/55/80 % der Level-Punkte der freigeschalteten Welten).
-- **Inhaltsformat:** Aufgaben im Format von `docs/AUFGABENFORMAT.md`; neue Blocktypen/Interaktionen sind erlaubt, werden
-  im eigenen `AUFGABENFORMAT.md` beschrieben und mit Tests und Beispielwelt abgedeckt.
-- **Oberfläche (SOLL):** Hausfarben (#1F4E79, Gold #B8860B, Grün #548235, Rot #C00000), eigene Plattformfarbe, in der
-  Kopfzeile ein Link „⌂ Portal“, sobald `PORTAL_URL` gesetzt ist; Tablet-tauglich (Touch-Ziele ≥ 44 px).
+- **Schüler:** Im Portal „Weiter zu Algo Quest“ → `/sso/start` → Portal → `/sso/ende` → `/spiel`. Auf der Startseite
+  zusätzlich „⌂ Über InfoLabs anmelden“. Kopfzeile: „⌂ Portal“, ggf. Kurswahl, „Abmelden“ (nur hier),
+  „Überall abmelden“ (`/sso/abmelden` → `PORTAL_URL/sso/abmelden?ruecksprung=PLATTFORM_URL/`).
+- **Lehrkräfte:** auf `/lehrer` „⌂ Über InfoLabs anmelden“; Sitzung höchstens 8 h (Schüler 30 Tage).
+- **Stille Neuanmeldung:** Wer zuletzt über das Portal kam (Cookie `aq_sso`), wird auf `/spiel` bzw. `/lehrer` ohne
+  Sitzung still über das Portal angemeldet; „Abmelden“ löscht den Hinweis nicht, „Überall abmelden“ schon. Im Modus
+  `portal` gilt das immer.
+- **Fehler:** `keine_berechtigung` → Hinweisseite („deine Lehrkraft hat diese Plattform für deinen Kurs nicht
+  freigeschaltet“) mit Gastmodus; `abgebrochen` → Startseite; ungültiges Token, falscher/fehlender `state`,
+  Wiederverwendung → 401-Hinweisseite. `/sso/ende` antwortet immer mit `Referrer-Policy: no-referrer` und
+  `Cache-Control: no-store`; Tokens werden nie geloggt.
 
-### H.10 Datenschutz im Verbund
+### H.6 Verbund-API (Vertrag §6)
 
-- Das Portal ist die einzige Stelle mit Konten, Codes und Kurszugehörigkeiten; es führt die zentrale
-  Datenschutzerklärung und das Verzeichnis der Verarbeitungstätigkeiten für den Verbund.
-- Plattformen verarbeiten pseudonym (`sub` + Anzeigename) und geben Lernstände nur an das Portal weiter (H.6, nur
-  Kennzahlen). Zwischen Plattformen fließen keine Daten.
-- Löscht das Portal ein Konto oder einen Kurs, ruft es auf allen betroffenen Plattformen `POST /api/verbund/loeschen` auf.
-  Die Plattform MUSS das innerhalb der Anfrage erledigen.
+Bearer-Token des Portals (`sub = portal`, passender `zweck`, `exp − iat ≤ 60 s`, `jti` einmalig), sonst `401` ohne
+Details; kein Origin-Check, eigenes Rate-Limit.
 
-### H.11 Übergang für Algo Quest (Plan)
-
-| Phase | Algo Quest | Stand |
+| Methode und Pfad | `zweck` | Wirkung |
 |---|---|---|
-| 0 | Manifest `/api/plattform`, Vertragsprüfung, `AUTH_MODUS=lokal` | **umgesetzt** (2.5.0) |
-| 1 | SSO-Empfänger (`/sso/start`, `/sso/ende`), Verbund-API, `AUTH_MODUS=beides`, Link „⌂ Portal“ | sobald das Portal SSO anbietet |
-| 2 | Datenübernahme ins Portal: Export (Lehrkräfte mit scrypt-Hash, Kurse mit Kurscode, Schüler mit Name + persönlichem Code); das Portal vergibt `sub`/Kurs-IDs und liefert eine Zuordnung alt → neu, Algo Quest schreibt Lernstände um | gemeinsam mit dem Portal |
-| 3 | `AUTH_MODUS=portal`: lokale Anmeldung und Registrierung aus, Superadmin vom Portal | nach erfolgreicher Übernahme |
+| `POST /api/verbund/loeschen` `{sub}` / `{kurs}` | `loeschen` | Schülerzeilen bzw. Konto bzw. Kurs (mit allen Lernständen) löschen; idempotent, `{geloescht: n}` |
+| `GET /api/verbund/kurse/:kursId/uebersicht` | `kurs-uebersicht` | `{kurs, stand, schueler: [{sub, punkte, geloest, anteil, zuletzt}], welten: [{nr, titel, anteil}]}` – nur Kennzahlen; unbekannt → 404 |
+| `POST /api/verbund/kurse/:kursId` `{name?, aktiv?}` | `kurs-aendern` | umbenennen bzw. sperren/entsperren; unbekannter Kurs → `{ok: true}` (entsteht bei der nächsten Anmeldung) |
 
-Weil Kurscodes und persönliche Codes dabei **unverändert** übernommen werden, melden sich Schüler danach mit
-denselben Zugangsdaten am Portal an. Das Code-Format des Portals MUSS deshalb dem von Algo Quest entsprechen
-(`ABC-234`, Buchstaben ohne I/O, Ziffern 2–9, kursübergreifend eindeutig).
+### H.7 Eintragen im Portal
 
-### H.12 Vertragsprüfung
+1. In CapRover die Variablen aus H.4 setzen und speichern (Neustart).
+2. `node scripts/vertrag_pruefen.js https://algoquest.frankjuchim.de` → „erfüllt Vertrag v1.1 … Anmeldung: beides“.
+3. Im Portal als Superadmin: **Plattformen → Basis-URL `https://algoquest.frankjuchim.de` eintragen** (Manifest und
+   Healthcheck müssen grün sein), vorgeschlagene Rücksprung-Adresse `https://algoquest.frankjuchim.de/sso/ende`
+   bestätigen, Lehrkräfte für Algo Quest freischalten.
+4. Kurs im Portal anlegen und Algo Quest freischalten → als Schüler „Weiter zu Algo Quest“ ausprobieren.
 
-- `node scripts/vertrag_pruefen.js <Basis-URL>` prüft Manifest, Pflicht-URLs und `/healthz` einer laufenden Plattform.
-  Die Datei darf unverändert in jede Plattform kopiert werden; `pruefeManifest()` ist auch als Modul nutzbar
-  (Test: `test/verbund.test.js`).
-- Jede Plattform führt die Manifest-Prüfung in ihren Tests aus; das Portal prüft beim Eintragen einer Plattform und
-  regelmäßig.
-- Ab Phase 1 kommen SSO- und Verbund-API-Tests hinzu (Token mit falscher Signatur, falschem `aud`, abgelaufen,
-  wiederverwendet → abgelehnt; Löschung idempotent).
+### H.8 Neue Plattformen
 
-### H.13 Empfohlenes Vorgehen
-
-1. **Portal früh bauen** – zuerst Konten, Kurse, Freischaltungen und SSO (mit Algo Quest als erster Plattform).
-   So muss keine neue Plattform ein eigenes Login entwickeln und später umbauen.
-2. **Neue Plattformen** starten als Kopie von Algo Quest (Teil G), setzen sofort das Manifest um und laufen bis
-   zum Portal im Modus `lokal`.
-3. **Gemeinsamer Kern:** Sicherheit, Sitzungen, SSO-Client, Prüfer, Renderer, Interaktionen und Aufgabenansicht sind
-   auf allen Plattformen gleich. Spätestens mit der zweiten Plattform SOLL dieser Kern in ein eigenes Repository
-   (z. B. `lab-kern`, als Git-Abhängigkeit) ausgelagert werden – sonst laufen mehrere Kopien auseinander.
-4. **Vertrag zuerst ändern, dann bauen:** Braucht eine Plattform etwas Neues im Zusammenspiel, wird zuerst dieser
-   Abschnitt angepasst (Version, H.14), dann implementiert.
-
-**Startprompt für die Portal-Session (Vorlage):**
-
-```
-Wir bauen das Portal des Plattform-Verbunds für die Informatik-Oberstufe. Verbindlich ist README Teil H
-(„Der Plattform-Verbund – Vertrag v1“) im Repo frankjuchim/AlgoQuest; Algo Quest ist die erste Plattform.
-Aufgaben des Portals: Konten (Superadmin, Lehrkräfte mit Freischaltung je Plattform, Schüler mit Kurscode + Name →
-persönlicher Code, Anmeldung mit Name + Code), Kurse mit freigeschalteten Plattformen, SSO nach H.5 (Ed25519-JWT),
-Verbund-API-Aufrufe nach H.6, Übersicht aller Plattformen aus ihren Manifesten (H.7), zentrale Datenschutzerklärung,
-Datenübernahme aus Algo Quest nach H.11. Technik und Regeln wie H.9 (Node, Express, SQLite, Vanilla-JS, CSP,
-CapRover, main = live nur nach Freigabe). Lies zuerst README Teil H und F, dann schlage einen Plan vor.
-```
-
-### H.14 Änderungen am Vertrag
-
-| Version | Datum | Änderung |
-|---|---|---|
-| 1.0 | 2026-10 | erste Fassung: Portal + Plattformen, zentrale Konten (auch Schüler), SSO mit Ed25519-JWT, Verbund-API, Manifest, Konfiguration, gemeinsame Regeln, Übergang Algo Quest |
+Neue Plattformen starten nach Teil G als Kopie von Algo Quest und übernehmen `src/jwt.js`, `scripts/vertrag_pruefen.js`,
+`src/verbundKonfig.js`, `src/routes/sso.js`, `src/services/verbund.js` samt Tests. Sie entwickeln kein eigenes Login
+mehr (Vertrag §13: direkt `AUTH_MODUS=portal` bzw. `beides`). Startprompt: Vertrag §13.
 
 ---
 
@@ -758,6 +594,18 @@ Alle Antworten JSON; schreibende Anfragen mit `Content-Type: application/json` u
 | GET | `/vorschau` · `/vorschau/:aufgabeId` | Aufgaben-Vorschau: Welten/Level/Boss-Pool · Aufgabe mit Lösung, Tipps, Erklärung |
 | GET | `/materialien` | Lehrkraft-Downloads je Welt (Schülerfassung + Lösung, Folien, Lehrerhinweise, Klausuren) |
 | GET | `/lehrkraft/dateien/<pfad>` (ohne `/api`) | PDF-Download, nur angemeldet und nur Dateien aus `verzeichnis.json`, sonst 404 |
+
+**Plattform-Verbund** (Teil H; SSO-Routen ohne `/api`, Verbund-API mit Bearer-Token des Portals)
+| Methode | Pfad | Zweck |
+|---|---|---|
+| GET | `/api/plattform` | Manifest (öffentlich, CORS `*`) |
+| GET | `/sso/start?ziel=/pfad` | Weiterleitung zum Portal (state-Cookie `aq_sso_state`, 10 min) |
+| GET | `/sso/ende?token&state&ziel` bzw. `?fehler&state` | Token prüfen, Konto/Kurse abgleichen, Sitzung, Weiterleitung |
+| GET | `/sso/abmelden` | Sitzung beenden und am Portal abmelden („Überall abmelden“) |
+| POST | `/api/kurs-wechseln` | `{kursId}` – Portal-Schüler in mehreren Kursen |
+| POST | `/api/verbund/loeschen` | `{sub}` oder `{kurs}` → `{geloescht}` (zweck `loeschen`) |
+| GET | `/api/verbund/kurse/:kursId/uebersicht` | Kennzahlen (zweck `kurs-uebersicht`) |
+| POST | `/api/verbund/kurse/:kursId` | `{name?, aktiv?}` (zweck `kurs-aendern`) |
 
 **Superadmin** (Präfix `/api/admin`)
 | Methode | Pfad | Zweck |

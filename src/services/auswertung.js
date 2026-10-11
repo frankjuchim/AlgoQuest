@@ -15,6 +15,7 @@ function createAuswertung(ctx, { inhalte, kurse, stand, lernen }) {
       id: e.id,
       name: e.name,
       code: e.row.code,
+      portal: !!e.row.sub,
       punkte: e.gesamt,
       geloest: e.geloest,
       abzeichen: e.abzeichen,

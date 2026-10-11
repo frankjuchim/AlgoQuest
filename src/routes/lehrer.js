@@ -19,14 +19,17 @@ function lehrerRoutes(api, h) {
 
   /* ---------- Öffentlich ---------- */
 
-  api.post('/lehrer/registrieren', async (req, res) => {
+  // AUTH_MODUS=portal: Registrierung und Anmeldung nur über das Portal InfoLabs
+  const nurPortal = (req, res, next) => (h.konfig.lokal ? next() : res.status(403).json({ error: 'Die Anmeldung läuft über das Portal InfoLabs.', portal: true }));
+
+  api.post('/lehrer/registrieren', nurPortal, async (req, res) => {
     const key = 'ip:' + req.ip;
     if (!registrierIp.take(key)) return zuViele(res, registrierIp, key, 'Zu viele Registrierungen von diesem Netzwerk. Bitte später erneut versuchen.');
     const konto = await svc.konten.registrieren(req.body);
     res.status(201).json({ ok: true, status: konto.status, hinweis: 'Danke! Ihre Anfrage wird vom Administrator geprüft. Sie können sich nach der Freigabe anmelden.' });
   });
 
-  api.post('/lehrer/anmelden', async (req, res) => {
+  api.post('/lehrer/anmelden', nurPortal, async (req, res) => {
     const b = req.body || {};
     const ipKey = 'ip:' + req.ip;
     const kontoKey = 'm:' + String(b.email || '').trim().toLowerCase();

@@ -12,6 +12,7 @@ const { createBoss } = require('./boss');
 const { createTraining } = require('./training');
 const { createAuswertung } = require('./auswertung');
 const { createKata } = require('./kata');
+const { createVerbund } = require('./verbund');
 
 function createServices(ctx) {
   const inhalte = createInhalte(ctx);
@@ -24,7 +25,8 @@ function createServices(ctx) {
   const auswertung = createAuswertung(ctx, { inhalte, kurse, stand, lernen });
   const kata = createKata(ctx);
   const daten = createDaten(ctx, { inhalte });
-  return { inhalte, konten, kurse, stand, lernen, boss, training, auswertung, kata, daten };
+  const verbund = createVerbund(ctx, { kurse, stand, inhalte });
+  return { inhalte, konten, kurse, stand, lernen, boss, training, auswertung, kata, daten, verbund };
 }
 
 /* ---------- Backup / Restore (JSON, nur Superadmin) ---------- */

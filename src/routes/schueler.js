@@ -26,7 +26,10 @@ function schuelerRoutes(api, h) {
     res.json({ name: k.name, anmeldung: !!k.einstellungen.anmeldung });
   });
 
-  api.post('/schueler/beitreten', (req, res) => {
+  // AUTH_MODUS=portal: Beitritt und Anmeldung nur über das Portal InfoLabs
+  const nurPortal = (req, res, next) => (h.konfig.lokal ? next() : res.status(403).json({ error: 'Die Anmeldung läuft über das Portal InfoLabs.', portal: true }));
+
+  api.post('/schueler/beitreten', nurPortal, (req, res) => {
     const key = 'ip:' + req.ip;
     if (!beitrittIp.take(key)) return zuViele(res, beitrittIp, key, 'Zu viele Anmeldungen von diesem Netzwerk. Bitte warte ein paar Minuten.');
     const b = req.body || {};
@@ -35,7 +38,7 @@ function schuelerRoutes(api, h) {
     res.status(201).json({ name: r.schueler.name, code: r.schueler.code, kurs: r.kurs.name, kurscode: r.kurs.code });
   });
 
-  api.post('/schueler/anmelden', (req, res) => {
+  api.post('/schueler/anmelden', nurPortal, (req, res) => {
     const b = req.body || {};
     const ipKey = 'ip:' + req.ip;
     const kontoKey = `n:${String(b.name || '').trim().toLowerCase()}`;
@@ -106,6 +109,14 @@ function schuelerRoutes(api, h) {
   st.post('/boss/:welt/start', (req, res) => res.status(201).json(svc.boss.starten(req.schueler, req.params.welt)));
 
   st.get('/profil', (req, res) => res.json(svc.lernen.profil(req.schueler)));
+  // Portal-Schüler in mehreren Kursen: Kurs wechseln (gleiche sub, eigene Zeile je Kurs)
+  st.post('/kurs-wechseln', (req, res) => {
+    const kursId = (req.body || {}).kursId;
+    if (!Number.isInteger(kursId)) return res.status(400).json({ error: 'kursId fehlt.' });
+    const row = svc.verbund.kursWechseln(req.schueler, kursId);
+    h.setSchuelerCookie(req, res, row, { portal: true });
+    res.json({ ok: true });
+  });
   st.get('/scoreboard', (req, res) => res.json(svc.lernen.scoreboardFuerSchueler(req.schueler, req.query.welt)));
 
   const kataFilter = (q) => ({

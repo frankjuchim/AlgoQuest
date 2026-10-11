@@ -16,7 +16,8 @@ test('Manifest: öffentlich, vertragsgemäß, Version wie /healthz, CORS für da
   const m = r.body;
   assert.deepEqual(pruefeManifest(m), []);
   assert.equal(m.id, 'algoquest');
-  assert.equal(m.vertrag, '1.0');
+  assert.equal(m.vertrag, '1.1');
+  assert.equal(m.urls.ssoStart, null);
   assert.equal(m.auth.modus, 'lokal');
   assert.equal(m.auth.sso, false);
   assert.equal(m.umfang.welten, 7);

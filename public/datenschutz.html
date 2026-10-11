@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Datenschutz – Algo Quest Lab</title>
 <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/static/css/style.css?v=2.5.0">
+<link rel="stylesheet" href="/static/css/style.css?v=2.6.0">
 </head>
 <body>
 <main class="mittel">
@@ -28,6 +28,7 @@
       <li><strong>Schülerinnen und Schüler:</strong> ein selbst gewählter Name (2–30 Zeichen; Empfehlung: Vorname + Initial, z. B. „Lena S.“ – ein Spitzname ist ebenso möglich), ein zufällig erzeugter persönlicher Code, die Zugehörigkeit zu einem Kurs sowie der Lernstand: gelöste und angesehene Aufgaben, Zahl der Fehlversuche und genutzten Tipps, Punkte, Abzeichen, Ergebnisse der Boss-Kämpfe und des Trainingsplatzes, die Warm-up-Kartei, das Häkchen „Online-IDE erledigt“ und der Zeitpunkt der letzten Aktivität. Es werden keine E-Mail-Adressen, keine Geburtsdaten und keine Pflichtangaben zum vollständigen Namen erhoben.</li>
       <li><strong>Aufgabenstatistik:</strong> Für die Auswertung im Kurs wird gezählt, welche falschen Antworten bei einer Aufgabe wie oft gegeben wurden – ohne Bezug zu einer Person.</li>
       <li><strong>Lehrkräfte:</strong> Name, dienstliche E-Mail-Adresse, Schule, eine optionale Nachricht zur Registrierung und ein Passwort (nur als scrypt-Hash gespeichert, nie im Klartext).</li>
+      <li><strong>Anmeldung über das Portal InfoLabs</strong> (wenn die Schule es nutzt): Konten, Passwörter, persönliche Codes und Kurszugehörigkeiten verwaltet das Portal <a href="https://labs.frankjuchim.de/datenschutz">labs.frankjuchim.de</a> (dort die zentrale Datenschutzerklärung). Algo Quest erhält bei der Anmeldung nur eine pseudonyme Kennung, den Anzeigenamen, die Rolle und die freigeschalteten Kurse und speichert dazu den Lernstand. An das Portal gehen nur Kennzahlen je Kurs (Punkte, Zahl gelöster Aufgaben, Anteil, letzte Aktivität) – keine Antworten. Löscht das Portal ein Konto oder einen Kurs, löscht Algo Quest die zugehörigen Daten sofort. Ein weiteres Cookie (<code>aq_sso</code>) merkt sich nur, dass die letzte Anmeldung über das Portal lief; während der Anmeldung schützt ein 10-Minuten-Cookie vor Fälschung.</li>
       <li><strong>Technisch:</strong> Ein Sitzungs-Cookie (signiert, httpOnly, SameSite=Lax, über HTTPS „secure“) hält die Anmeldung – bei Schülerinnen und Schülern 30 Tage, bei Lehrkräften 8 Stunden. Zum Schutz vor Missbrauch (Begrenzung von Anmeldeversuchen) wird die IP-Adresse kurzzeitig im Arbeitsspeicher gezählt (je nach Vorgang 1 bis 60 Minuten, danach automatisch gelöscht) und nicht in der Datenbank gespeichert. Es gibt keine Tracking- oder Werbe-Cookies und keine externen Schriftarten, Skripte oder CDNs; Suchmaschinen werden an der Indexierung gehindert. Das Server-Protokoll enthält nur technische Meldungen (Start, Fehler), keine Antworten oder Namen.</li>
     </ul>
 

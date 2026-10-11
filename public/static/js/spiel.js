@@ -55,15 +55,35 @@
           einstellungen.scoreboard ? link('#/scoreboard', '🏆 Scoreboard', 'scoreboard') : null,
           link('#/kata', '🔥 Warm-up', 'kata'),
           h('a', { href: '/themen' }, '📚 Themen'),
+          sitzung.verbund && sitzung.verbund.portal ? h('a', { href: sitzung.verbund.portal + '/' }, '⌂ Portal') : null,
+          kursWahl(),
           h('span', { class: 'who hide-sm' }, sitzung.schueler.name),
-          h('button', { type: 'button', onclick: abmelden }, 'Abmelden')
+          h('button', { type: 'button', onclick: abmelden }, 'Abmelden'),
+          sitzung.schueler.portal ? h('a', { href: '/sso/abmelden' }, 'Überall abmelden') : null
         )
       )
     );
   }
 
+  /** Portal-Schüler in mehreren Kursen: Kurs wechseln */
+  function kursWahl() {
+    const kurse = sitzung.schueler.kurse || [];
+    if (kurse.length < 2) return null;
+    const sel = h('select', { 'aria-label': 'Kurs wechseln', class: 'kurs-wahl' }, kurse.map((k) => h('option', { value: String(k.id), selected: k.aktuell }, k.name)));
+    sel.addEventListener('change', async () => {
+      try {
+        await api('POST', '/api/kurs-wechseln', { kursId: Number(sel.value) });
+        location.hash = '#/';
+        location.reload();
+      } catch (e) {
+        AQ.toast(e.message, true);
+      }
+    });
+    return sel;
+  }
+
   async function abmelden() {
-    const ok = await bestaetigen('Abmelden?', 'Zum Weiterspielen brauchst du deinen Namen und deinen persönlichen Code. Hast du ihn notiert?', { ok: 'Abmelden' });
+    const ok = await bestaetigen('Abmelden?', sitzung.schueler.portal ? 'Du meldest dich nur hier ab. Über das Portal kommst du jederzeit wieder herein.' : 'Zum Weiterspielen brauchst du deinen Namen und deinen persönlichen Code. Hast du ihn notiert?', { ok: 'Abmelden' });
     if (!ok) return;
     try {
       await api('POST', '/api/schueler/abmelden', {});
@@ -619,12 +639,14 @@
           'section',
           { class: 'card' },
           h('h2', null, '🔑 Dein Zugang'),
-          h('p', null, `Kurs „${p.kurs.name}“ (Kurscode `, h('strong', null, p.kurs.code), ') · Name ', h('strong', null, p.name)),
-          h('p', null, 'Persönlicher Code: ', codeEl, ' ', h('button', { class: 'btn secondary small', type: 'button', onclick: (e) => {
+          p.portal ? h('p', null, `Kurs „${p.kurs.name}“ · Name `, h('strong', null, p.name)) : null,
+          p.portal ? h('p', { class: 'hint' }, 'Du bist über das Portal InfoLabs angemeldet. Name und persönlichen Code verwaltest du dort.') : null,
+          p.portal ? null : h('p', null, `Kurs „${p.kurs.name}“ (Kurscode `, h('strong', null, p.kurs.code), ') · Name ', h('strong', null, p.name)),
+          p.portal ? null : h('p', null, 'Persönlicher Code: ', codeEl, ' ', h('button', { class: 'btn secondary small', type: 'button', onclick: (e) => {
             codeEl.textContent = codeEl.textContent.includes('•') ? p.code : '••• – •••';
             e.currentTarget.textContent = codeEl.textContent.includes('•') ? 'Code anzeigen' : 'Code verbergen';
           } }, 'Code anzeigen')),
-          h('p', { class: 'hint' }, 'Mit Name und Code kannst du auf jedem Gerät weiterspielen. Code vergessen? Deine Lehrkraft kann ihn dir anzeigen.')
+          p.portal ? null : h('p', { class: 'hint' }, 'Mit Name und Code kannst du auf jedem Gerät weiterspielen. Code vergessen? Deine Lehrkraft kann ihn dir anzeigen.')
         )
       );
     } catch (e) {

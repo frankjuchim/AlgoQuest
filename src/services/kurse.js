@@ -27,17 +27,36 @@ function createKurse(ctx) {
 
   function kursAnsicht(r) {
     if (!r) return null;
-    return { id: r.id, name: r.name, code: r.code, lehrkraftId: r.lehrkraft_id, einstellungen: einstellungen(r.einstellungen), erstellt: r.created_at };
+    return {
+      id: r.id,
+      name: r.name,
+      code: r.code,
+      lehrkraftId: r.lehrkraft_id,
+      einstellungen: einstellungen(r.einstellungen),
+      erstellt: r.created_at,
+      portal: !!r.portal_id,
+      aktiv: r.aktiv !== 0
+    };
   }
 
   function kursRow(id) {
     return db.prepare('SELECT * FROM kurse WHERE id = ?').get(id);
   }
 
-  /** Kurs mit Zugriffsprüfung: eigene Kurse oder Superadmin. Fremde Kurse → 404 (Existenz nicht verraten). */
+  /**
+   * Darf die Lehrkraft den Kurs sehen? Superadmin: alle. Portal-Kurse: Lehrkräfte laut letztem SSO-Token
+   * (Inhaberin und Mitlehrkräfte, Tabelle kurs_lehrkraefte). Lokale Kurse: eigene.
+   */
+  function darf(lk, r) {
+    if (lk.rolle === 'superadmin') return true;
+    if (r.portal_id) return !!db.prepare('SELECT 1 FROM kurs_lehrkraefte WHERE kurs_id = ? AND lehrkraft_id = ?').get(r.id, lk.id);
+    return r.lehrkraft_id === lk.id;
+  }
+
+  /** Kurs mit Zugriffsprüfung. Fremde Kurse → 404 (Existenz nicht verraten). */
   function kursFuer(lk, kursId) {
     const r = kursRow(kursId);
-    if (!r || (lk.rolle !== 'superadmin' && r.lehrkraft_id !== lk.id)) throw new NotFoundError('Kurs nicht gefunden.');
+    if (!r || !darf(lk, r)) throw new NotFoundError('Kurs nicht gefunden.');
     return kursAnsicht(r);
   }
 
@@ -49,11 +68,16 @@ function createKurse(ctx) {
   }
 
   function kursListe(lk) {
-    const where = lk.rolle === 'superadmin' ? '' : 'WHERE k.lehrkraft_id = ?';
-    const params = lk.rolle === 'superadmin' ? [] : [lk.id];
+    const where =
+      lk.rolle === 'superadmin'
+        ? ''
+        : 'WHERE (k.portal_id IS NULL AND k.lehrkraft_id = ?) OR k.id IN (SELECT kurs_id FROM kurs_lehrkraefte WHERE lehrkraft_id = ?)';
+    const params = lk.rolle === 'superadmin' ? [] : [lk.id, lk.id];
     return db
       .prepare(
-        `SELECT k.*, l.name AS lk_name, l.email AS lk_email,
+        `SELECT k.*,
+           CASE WHEN k.portal_id IS NULL THEN l.name ELSE COALESCE((SELECT GROUP_CONCAT(x.name, ', ') FROM kurs_lehrkraefte kl JOIN lehrkraefte x ON x.id = kl.lehrkraft_id WHERE kl.kurs_id = k.id), '–') END AS lk_name,
+           CASE WHEN k.portal_id IS NULL THEN l.email ELSE 'Portal' END AS lk_email,
            (SELECT COUNT(*) FROM schueler s WHERE s.kurs_id = k.id) AS anzahl,
            (SELECT MAX(last_active_at) FROM schueler s WHERE s.kurs_id = k.id) AS zuletzt
          FROM kurse k JOIN lehrkraefte l ON l.id = k.lehrkraft_id ${where}
@@ -72,6 +96,7 @@ function createKurse(ctx) {
   }
 
   function kursAnlegen(lk, input) {
+    if (lk.sub) throw new ForbiddenError('Kurse legen Sie im Portal an.');
     const name = V.str((input || {}).name, 'Kursname', { min: 2, max: 80 });
     const info = db
       .prepare('INSERT INTO kurse (lehrkraft_id, name, code, einstellungen, created_at) VALUES (?, ?, ?, ?, ?)')
@@ -97,7 +122,8 @@ function createKurse(ctx) {
   function kursAendern(lk, kursId, input) {
     const k = kursFuer(lk, kursId);
     const b = input || {};
-    const name = b.name === undefined ? k.name : V.str(b.name, 'Kursname', { min: 2, max: 80 });
+    // Name eines Portal-Kurses kommt aus dem Portal
+    const name = b.name === undefined || k.portal ? k.name : V.str(b.name, 'Kursname', { min: 2, max: 80 });
     const e = b.einstellungen === undefined ? k.einstellungen : pruefeEinstellungen(k.einstellungen, b.einstellungen);
     db.prepare('UPDATE kurse SET name = ?, einstellungen = ? WHERE id = ?').run(name, JSON.stringify(e), k.id);
     return kursAnsicht(kursRow(k.id));
@@ -111,6 +137,7 @@ function createKurse(ctx) {
 
   function kursLoeschen(lk, kursId, bestaetigung) {
     const k = kursFuer(lk, kursId);
+    if (k.portal) throw new ForbiddenError('Portal-Kurse werden im Portal gelöscht.');
     bestaetige(k, bestaetigung);
     db.prepare('DELETE FROM kurse WHERE id = ?').run(k.id);
   }
@@ -118,7 +145,7 @@ function createKurse(ctx) {
   /* ---------- Schüler ---------- */
 
   function schuelerAnsicht(r) {
-    return { id: r.id, kursId: r.kurs_id, name: r.name, code: r.code, erstellt: r.created_at, zuletztAktiv: r.last_active_at };
+    return { id: r.id, kursId: r.kurs_id, name: r.name, code: r.code, erstellt: r.created_at, zuletztAktiv: r.last_active_at, portal: !!r.sub };
   }
 
   /** Persönlicher Code, der noch an keinen Schüler vergeben ist (kursübergreifend) – damit sind Name + Code eindeutig. */
@@ -135,6 +162,8 @@ function createKurse(ctx) {
   function beitreten(kurscode, nameRoh) {
     const k = kursPerCode(kurscode);
     if (!k) throw new NotFoundError('Diesen Kurscode gibt es nicht. Bitte prüfe die Eingabe.');
+    if (k.portal) throw new ForbiddenError('Dieser Kurs nutzt die Anmeldung über das Portal InfoLabs. Melde dich dort an.');
+    if (!k.aktiv) throw new ForbiddenError('Dieser Kurs ist gesperrt.');
     if (!k.einstellungen.anmeldung) throw new ForbiddenError('Die Anmeldung neuer Schüler ist in diesem Kurs geschlossen. Frag deine Lehrkraft.');
     const { name, key } = V.schuelerName(nameRoh);
     if (db.prepare('SELECT 1 FROM schueler WHERE kurs_id = ? AND name_key = ?').get(k.id, key)) {
@@ -170,19 +199,21 @@ function createKurse(ctx) {
     } else {
       treffer = db.prepare('SELECT * FROM schueler WHERE name_key = ? AND code = ?').all(key, code);
     }
-    treffer = treffer.filter((r) => S.safeEqual(r.code, code));
+    treffer = treffer.filter((r) => !r.sub && S.safeEqual(r.code, code));
     if (treffer.length > 1) {
       throw Object.assign(new ConflictError('Name und Code passen zu mehreren Kursen. Gib bitte zusätzlich deinen Kurscode an.'), { extra: { kurscodeNoetig: true } });
     }
     const r = treffer[0];
     if (!r) return null;
+    if (kursRow(r.kurs_id).aktiv === 0) throw new ForbiddenError('Dieser Kurs ist gesperrt.');
     db.prepare('UPDATE schueler SET last_active_at = ? WHERE id = ?').run(iso(), r.id);
     return r;
   }
 
   function ausSession(id, gen) {
-    const r = db.prepare('SELECT * FROM schueler WHERE id = ?').get(id);
-    if (!r || r.session_gen !== gen) return null;
+    const r = db.prepare('SELECT s.*, k.aktiv AS kurs_aktiv FROM schueler s JOIN kurse k ON k.id = s.kurs_id WHERE s.id = ?').get(id);
+    if (!r || r.session_gen !== gen || r.zugang === 0 || r.kurs_aktiv === 0) return null;
+    delete r.kurs_aktiv;
     return r;
   }
 
@@ -203,8 +234,13 @@ function createKurse(ctx) {
     return { k, r };
   }
 
+  function nichtPortal(r) {
+    if (r.sub) throw new ForbiddenError('Name und Zugang dieses Schülers werden im Portal verwaltet.');
+  }
+
   function umbenennen(lk, kursId, schuelerId, nameRoh) {
     const { k, r } = schuelerFuer(lk, kursId, schuelerId);
+    nichtPortal(r);
     const { name, key } = V.schuelerName(nameRoh);
     const konflikt = db.prepare('SELECT id FROM schueler WHERE kurs_id = ? AND name_key = ? AND id != ?').get(k.id, key, r.id);
     if (konflikt) throw new ConflictError('Diesen Namen gibt es im Kurs schon.');
@@ -215,6 +251,7 @@ function createKurse(ctx) {
   /** Neuen Code erzeugen – alte Sitzungen werden ungültig. */
   function neuerCode(lk, kursId, schuelerId) {
     const { r } = schuelerFuer(lk, kursId, schuelerId);
+    nichtPortal(r);
     const code = freierSchuelerCode();
     db.prepare('UPDATE schueler SET code = ?, session_gen = session_gen + 1 WHERE id = ?').run(code, r.id);
     return schuelerAnsicht(db.prepare('SELECT * FROM schueler WHERE id = ?').get(r.id));
@@ -237,6 +274,7 @@ function createKurse(ctx) {
   }
 
   return {
+    neuerKursCode,
     einstellungen,
     kursAnsicht,
     kursRow,

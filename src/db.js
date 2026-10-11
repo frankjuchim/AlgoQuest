@@ -4,7 +4,7 @@ const path = require('node:path');
 const Database = require('better-sqlite3');
 
 /** Schema-Version von Algo Quest Lab (die Vorgängerversion v1.x hatte 1–2). */
-const SCHEMA_VERSION = 3;
+const SCHEMA_VERSION = 4;
 const APP_KENNUNG = 'algoquest-lab';
 
 const SCHEMA = `
@@ -27,7 +27,8 @@ CREATE TABLE IF NOT EXISTS lehrkraefte (
   session_gen     INTEGER NOT NULL DEFAULT 1,
   created_at      TEXT NOT NULL,
   entschieden_at  TEXT,
-  last_login_at   TEXT
+  last_login_at   TEXT,
+  sub             TEXT              -- Konto aus dem Portal (Verbund): l:<n> bzw. a:<n>; NULL = lokales Konto
 );
 
 CREATE TABLE IF NOT EXISTS kurse (
@@ -36,9 +37,18 @@ CREATE TABLE IF NOT EXISTS kurse (
   name          TEXT NOT NULL,
   code          TEXT NOT NULL UNIQUE,
   einstellungen TEXT NOT NULL,
-  created_at    TEXT NOT NULL
+  created_at    TEXT NOT NULL,
+  portal_id     TEXT,               -- Kurs-ID des Portals (k:<n>); NULL = lokaler Kurs
+  aktiv         INTEGER NOT NULL DEFAULT 1  -- 0 = vom Portal gesperrt (Plattform für den Kurs abgeschaltet)
 );
 CREATE INDEX IF NOT EXISTS idx_kurse_lk ON kurse(lehrkraft_id);
+
+-- Lehrkräfte eines Portal-Kurses (Inhaberin und Mitlehrkräfte laut SSO-Token)
+CREATE TABLE IF NOT EXISTS kurs_lehrkraefte (
+  kurs_id      INTEGER NOT NULL REFERENCES kurse(id) ON DELETE CASCADE,
+  lehrkraft_id INTEGER NOT NULL REFERENCES lehrkraefte(id) ON DELETE CASCADE,
+  PRIMARY KEY (kurs_id, lehrkraft_id)
+);
 
 -- Schüler: NUR selbst gewählter Name + persönlicher Code (Datenschutz)
 CREATE TABLE IF NOT EXISTS schueler (
@@ -52,6 +62,8 @@ CREATE TABLE IF NOT EXISTS schueler (
   serie_max      INTEGER NOT NULL DEFAULT 0,
   created_at     TEXT NOT NULL,
   last_active_at TEXT,
+  sub            TEXT,              -- Schülerkonto des Portals (s:<n>); je Kurs eine Zeile; NULL = lokal
+  zugang         INTEGER NOT NULL DEFAULT 1,  -- 0 = Kurs fehlt im letzten SSO-Token (Lernstand bleibt)
   UNIQUE (kurs_id, name_key)
 );
 -- Weiterspielen mit Name + Code (ohne Kurscode): Codes werden seit 2.3 kursübergreifend eindeutig vergeben
@@ -202,6 +214,7 @@ const TABLES = [
   'meta',
   'lehrkraefte',
   'kurse',
+  'kurs_lehrkraefte',
   'schueler',
   'welten',
   'aufgaben',
@@ -280,6 +293,28 @@ function sichereAlteDatenbank(file, log) {
   return ziel;
 }
 
+/** Spalten, die mit Schema 4 (Verbund, Phase 1) dazugekommen sind – in älteren Datenbanken ergänzen. */
+const NEUE_SPALTEN = [
+  ['lehrkraefte', 'sub', 'TEXT'],
+  ['kurse', 'portal_id', 'TEXT'],
+  ['kurse', 'aktiv', 'INTEGER NOT NULL DEFAULT 1'],
+  ['schueler', 'sub', 'TEXT'],
+  ['schueler', 'zugang', 'INTEGER NOT NULL DEFAULT 1']
+];
+
+function migriere(db) {
+  for (const [t, spalte, def] of NEUE_SPALTEN) {
+    const da = db.prepare(`PRAGMA table_info(${t})`).all().some((c) => c.name === spalte);
+    if (!da) db.exec(`ALTER TABLE ${t} ADD COLUMN ${spalte} ${def}`);
+  }
+  db.exec(`
+    CREATE UNIQUE INDEX IF NOT EXISTS idx_lehrkraefte_sub ON lehrkraefte(sub) WHERE sub IS NOT NULL;
+    CREATE UNIQUE INDEX IF NOT EXISTS idx_kurse_portal ON kurse(portal_id) WHERE portal_id IS NOT NULL;
+    CREATE UNIQUE INDEX IF NOT EXISTS idx_schueler_sub ON schueler(kurs_id, sub) WHERE sub IS NOT NULL;
+    CREATE INDEX IF NOT EXISTS idx_schueler_sub2 ON schueler(sub);
+  `);
+}
+
 /**
  * Datenbank öffnen (bzw. anlegen). Eine alte v1-Datenbank wird gesichert und durch eine neue ersetzt.
  * @returns {{db: Database.Database, backup: string|null}}
@@ -295,10 +330,13 @@ function openDatabase(dbFile, { log } = {}) {
   db.pragma('foreign_keys = ON');
   db.pragma('busy_timeout = 5000');
   db.exec(SCHEMA);
+  migriere(db);
   const v = getMeta(db, 'schema_version');
   if (v === null) {
     setMeta(db, 'schema_version', SCHEMA_VERSION);
     setMeta(db, 'app', APP_KENNUNG);
+  } else if (Number(v) < SCHEMA_VERSION) {
+    setMeta(db, 'schema_version', SCHEMA_VERSION);
   } else if (Number(v) > SCHEMA_VERSION && log) {
     log(`WARNUNG: Datenbank hat Schema-Version ${v}, diese App kennt nur ${SCHEMA_VERSION}.`);
   }

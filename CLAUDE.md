@@ -182,12 +182,19 @@ P9 Struktogramm nicht nach EH §5 · P10 Operator verfehlt.
   Lehrkraft = erfundener Demo-Kurs, nur lesend, Materialien nur als Titel. Nie echte Aufgaben, Lösungen oder Dateien
   über die Gast-API (`test/gast.test.js`).
 
-### Plattform-Verbund (README Teil H)
-- Algo Quest ist die erste Plattform eines Verbunds (gemeinsames Login über ein Portal). **README Teil H ist der Vertrag**
-  für alle Plattformen und das Portal: Rollen, SSO (Ed25519-JWT), Verbund-API, Manifest `/api/plattform`, Konfiguration,
-  gemeinsame Regeln. Änderungen am Zusammenspiel nur dort, mit neuer Vertragsversion und Eintrag in H.14.
-- Manifest: `src/services/manifest.js` (Test `test/verbund.test.js`), Prüfung laufender Plattformen:
-  `node scripts/vertrag_pruefen.js <URL>`. Aktuell `AUTH_MODUS=lokal` (Phase 0 laut H.11).
+### Plattform-Verbund InfoLabs (README Teil H)
+- Algo Quest ist an das Portal **InfoLabs** (https://labs.frankjuchim.de, Repo `frankjuchim/labs`) angeschlossen.
+  **Verbindlich ist dort `VERTRAG.md` (v1.1)**, Anleitung `docs/INTEGRATION.md`. Dieses Repo ändert den Vertrag nie;
+  Änderungen am Zusammenspiel als Vorschlag für den Vertrag formulieren. README Teil H beschreibt die Umsetzung hier.
+- Phase 1 umgesetzt (2.6.0): `src/routes/sso.js` (`/sso/start`, `/sso/ende`, `/sso/abmelden`, Verbund-API
+  `/api/verbund/…`), `src/services/verbund.js` (Upsert nach `sub`, Kurse/Mitgliedschaften, Löschen, Übersicht),
+  `src/verbundKonfig.js`, Manifest `src/services/manifest.js`. `src/jwt.js` und `scripts/vertrag_pruefen.js` sind
+  **unveränderte Kopien aus `frankjuchim/labs`** – nur durch neuere Fassungen von dort ersetzen.
+- Schema 4: `lehrkraefte.sub`, `kurse.portal_id`/`aktiv`, `schueler.sub`/`zugang`, Tabelle `kurs_lehrkraefte`
+  (Zugriff auf Portal-Kurse nur laut letztem Token). Portal-Konten haben kein Passwort/keinen Code; Namen, Kurse,
+  Codes werden im Portal verwaltet. Tokens nie loggen; `PORTAL_PUBLIC_KEY` nie zur Laufzeit holen.
+- Tests: `test/sso.test.js` (Testliste INTEGRATION.md §5), `test/verbund.test.js`; Prüfung einer laufenden Plattform:
+  `node scripts/vertrag_pruefen.js <URL>`. Live: `AUTH_MODUS=beides` (lokale Anmeldung bleibt bis Phase 2/3).
 
 ## Offene Punkte
 - Probelauf der Gerüste in der echten Online-IDE nach `docs/ONLINE-IDE_TESTPROTOKOLL.md` (bisher nur javac + Nachbau).

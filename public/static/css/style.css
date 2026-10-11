@@ -561,3 +561,6 @@ main.themen { max-width: 1100px; margin: 0 auto; padding: 1rem; }
 .gast-liste .nr { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%; background: var(--blue-soft); color: var(--blue-dark); font-weight: 700; flex: none; }
 .gast-einstellungen { list-style: none; padding: 0; line-height: 1.9; }
 .center-row { justify-content: center; }
+
+/* Plattform-Verbund: Kurswahl in der Kopfzeile (Portal-Schüler in mehreren Kursen) */
+.topnav .kurs-wahl { max-width: 12rem; min-height: 36px; }

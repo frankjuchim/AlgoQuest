@@ -8,6 +8,7 @@
   const app = document.getElementById('app');
   let konto = null;
   let inhalte = { welten: [] };
+  let verbund = { portal: null, sso: false, lokal: true }; // Plattform-Verbund InfoLabs (aus /api/sitzung)
 
   /* ---------- Rahmen ---------- */
 
@@ -29,11 +30,13 @@
               link('#/materialien', '📂 Materialien', 'materialien'),
               h('a', { href: '/themen' }, '📚 Themen'),
               konto.rolle === 'superadmin' ? link('#/admin', '🛡️ Verwaltung', 'admin') : null,
-              link('#/konto', '🔑 Konto', 'konto'),
+              konto.portal ? null : link('#/konto', '🔑 Konto', 'konto'),
+              verbund.portal ? h('a', { href: verbund.portal + '/' }, '⌂ Portal') : null,
               h('span', { class: 'who hide-sm' }, konto.name),
-              h('button', { type: 'button', onclick: abmelden }, 'Abmelden')
+              h('button', { type: 'button', onclick: abmelden }, 'Abmelden'),
+              konto.portal ? h('a', { href: '/sso/abmelden' }, 'Überall abmelden') : null
             )
-          : h('nav', { class: 'topnav' }, h('a', { href: '/' }, 'Zur Schülerseite'))
+          : h('nav', { class: 'topnav' }, verbund.portal ? h('a', { href: verbund.portal + '/' }, '⌂ Portal') : null, h('a', { href: '/' }, 'Zur Schülerseite'))
       )
     );
   }
@@ -118,7 +121,10 @@
         fehlerR.hidden = false;
       }
     });
-    seite('', h('h1', null, 'Bereich für Lehrkräfte'), h('div', { class: 'grid grid-2' }, login, reg));
+    const portalKarte = verbund.sso
+      ? h('section', { class: 'card' }, h('h2', null, 'Anmeldung über InfoLabs'), h('p', null, 'Mit Ihrem Konto im Portal InfoLabs (gemeinsame Anmeldung für alle Plattformen).'), h('a', { class: 'btn big gold', href: '/sso/start?ziel=%2Flehrer' }, '⌂ Über InfoLabs anmelden'))
+      : null;
+    seite('', h('h1', null, 'Bereich für Lehrkräfte'), portalKarte, verbund.lokal ? h('div', { class: 'grid grid-2' }, login, reg) : null);
   }
 
   function passwortSeite(zwang) {
@@ -179,6 +185,9 @@
       }
     });
     const su = konto.rolle === 'superadmin';
+    const anlegen = konto.portal
+      ? h('p', { class: 'callout' }, 'Kurse legen Sie im Portal InfoLabs an und schalten dort Algo Quest frei. Nach der nächsten Anmeldung erscheinen sie hier.')
+      : form;
     seite(
       'kurse',
       h('h1', null, su ? 'Alle Kurse' : 'Meine Kurse'),
@@ -193,12 +202,12 @@
                 'table',
                 { class: 'liste' },
                 h('thead', null, h('tr', null, h('th', null, 'Kurs'), h('th', null, 'Kurscode'), su ? h('th', null, 'Lehrkraft') : null, h('th', { class: 'num' }, 'Schüler'), h('th', null, 'zuletzt aktiv'), h('th', null, ''))),
-                h('tbody', null, liste.map((k) => h('tr', null, h('td', null, h('a', { href: `#/kurs/${k.id}/schueler` }, h('strong', null, k.name))), h('td', { class: 'code-anzeige' }, k.code), su ? h('td', null, `${k.lehrkraft} (${k.lehrkraftEmail})`) : null, h('td', { class: 'num' }, String(k.schueler)), h('td', null, fmtDatum(k.zuletztAktiv)), h('td', null, h('a', { class: 'btn small secondary', href: `#/kurs/${k.id}/schueler` }, 'Öffnen')))))
+                h('tbody', null, liste.map((k) => h('tr', null, h('td', null, h('a', { href: `#/kurs/${k.id}/schueler` }, h('strong', null, k.name))), h('td', { class: 'code-anzeige' }, k.portal ? 'Portal' : k.code), su ? h('td', null, `${k.lehrkraft} (${k.lehrkraftEmail})`) : null, h('td', { class: 'num' }, String(k.schueler)), h('td', null, fmtDatum(k.zuletztAktiv)), h('td', null, h('a', { class: 'btn small secondary', href: `#/kurs/${k.id}/schueler` }, 'Öffnen')))))
               )
             )
           )
-        : h('p', { class: 'callout' }, 'Noch keine Kurse. Lege unten deinen ersten Kurs an.'),
-      form
+        : h('p', { class: 'callout' }, konto.portal ? 'Noch keine Kurse.' : 'Noch keine Kurse. Lege unten deinen ersten Kurs an.'),
+      anlegen
     );
   }
 
@@ -249,7 +258,7 @@
             'tr',
             null,
             h('td', null, h('strong', null, s.name)),
-            h('td', { class: 'code-anzeige' }, zeigeCodes ? s.code : '•••-•••'),
+            h('td', { class: 'code-anzeige' }, s.portal ? 'Portal' : zeigeCodes ? s.code : '•••-•••'),
             h('td', { class: 'num' }, String(s.punkte)),
             h('td', { class: 'num' }, String(s.geloest)),
             h('td', null, s.rang),
@@ -260,7 +269,7 @@
               h(
                 'div',
                 { class: 'btn-row' },
-                h('button', { class: 'btn small secondary', type: 'button', onclick: async () => {
+                s.portal ? null : h('button', { class: 'btn small secondary', type: 'button', onclick: async () => {
                   const neu = await bestaetigen('Namen ändern', `Neuer Name für „${s.name}“:`, { ok: 'Speichern', eingabe: { label: 'Name' } });
                   if (!neu) return;
                   try {
@@ -271,7 +280,7 @@
                     fehler(e);
                   }
                 } }, 'Umbenennen'),
-                h('button', { class: 'btn small secondary', type: 'button', onclick: async () => {
+                s.portal ? null : h('button', { class: 'btn small secondary', type: 'button', onclick: async () => {
                   if (!(await bestaetigen('Neuen Code erzeugen?', `„${s.name}“ erhält einen neuen persönlichen Code. Der alte Code gilt nicht mehr und offene Sitzungen werden abgemeldet.`, { ok: 'Neuen Code erzeugen' }))) return;
                   try {
                     const r = await api('POST', `/api/lehrer/kurse/${k.id}/schueler/${s.id}/neuer-code`, {});
@@ -317,6 +326,14 @@
 
   async function tabBeitritt(k, box) {
     const url = `${location.origin}/k/${k.code}`;
+    const board = h('section', { class: 'card' }, h('h2', null, 'Beamer-Board'), k.einstellungen.beamer ? h('p', null, 'Aktiv: ', h('a', { href: `/board/${k.code}`, target: '_blank', rel: 'noopener' }, `${location.origin}/board/${k.code}`)) : h('p', { class: 'muted' }, 'Das Beamer-Board ist ausgeschaltet (Einstellungen).'));
+    if (k.portal) {
+      return mount(
+        box,
+        h('section', { class: 'card' }, h('h2', null, 'Beitritt über das Portal'), h('p', null, 'Dieser Kurs wird im Portal InfoLabs verwaltet: Schüler treten dort mit dem Kurscode des Portals bei und kommen über „Weiter zu Algo Quest“ hierher. Namen und persönliche Codes ändern Sie im Portal.'), verbund.portal ? h('p', null, h('a', { class: 'btn secondary', href: verbund.portal + '/' }, '⌂ Zum Portal')) : null),
+        board
+      );
+    }
     mount(
       box,
       h(
@@ -406,6 +423,7 @@
         } }, 'Kurs löschen')
       )
     );
+    if (k.portal) gefahr.querySelectorAll('button')[1].remove();
     mount(box, form, gefahr);
   }
 
@@ -860,6 +878,7 @@
     try {
       const s = await api('GET', '/api/sitzung');
       konto = s.lehrkraft;
+      if (s.verbund) verbund = s.verbund;
     } catch {
       konto = null;
     }
