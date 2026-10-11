@@ -9,7 +9,7 @@ Dieses Dokument hat zwei Aufgaben:
 2. Es ist die **Blaupause** für vergleichbare Plattformen zu den übrigen Themen der Informatik-Oberstufe mit anderen
    Sachkontexten. Teil G richtet sich ausdrücklich an neue Claude-Chats, die eine solche Plattform aufbauen sollen.
 
-Live: **https://algoquest.frankjuchim.de** · Themenübersicht ohne Anmeldung: `/themen`
+Live: **https://algoquest.frankjuchim.de** · Themenübersicht ohne Anmeldung: `/themen` · Gastmodus zum Reinschnuppern: `/gast`
 
 ![Algo Quest Lab – Beitritt mit persönlichem Code](Screenshots/schueler_code.jpg)
 
@@ -95,15 +95,17 @@ src/                 Server (Node 20, Express 5, better-sqlite3, helmet, qrcode)
   db.js, domain.js   Schema/Upgrade, fachliche Konstanten (Welten, Ränge, Fallen, Aufgabenkategorien)
   routes/            API: schueler.js, lehrer.js, admin.js
   services/          Fachlogik: inhalte (Seed), konten, kurse, lernen, stand (Abzeichen), boss, training, auswertung,
-                     kata (= Warm-up-Trainer), themen (/themen), lehrkraftMaterial (PDF-Downloads), backup
+                     kata (= Warm-up-Trainer), themen (/themen), lehrkraftMaterial (PDF-Downloads), gast (Gastmodus), backup
   content/           format.js (Mini-Markdown), checker.js (Prüfer, serverseitig), validator.js, generators.js (Trainingsplatz)
 public/              Oberfläche ohne Build-Schritt (Vanilla JS, keine CDNs, keine Inline-Skripte):
                      index.html (Start), spiel.html (Schüler), lehrer.html (Lehrkraft + Superadmin), board.html (Beamer),
-                     themen.html, urkunden.html, datenschutz.html; static/js/render.js (Blöcke), interact.js (Interaktionen),
+                     themen.html, gast.html (Gastmodus), urkunden.html, datenschutz.html; static/js/render.js (Blöcke),
+                     interact.js (Interaktionen), aufgabe.js (Aufgabenansicht für Lab und Gastmodus),
                      static/js/shared/baum.js (Klammerbäume, Server + Browser)
-seed/welten/         welt0–6.json = Lab-Aufgaben (maßgeblich) · seed/warmup/ = Warm-up-Karten · seed/arbeitsblaetter.json
+seed/welten/         welt0–6.json = Lab-Aufgaben (maßgeblich) · seed/warmup/ = Warm-up-Karten · seed/arbeitsblaetter.json ·
+                     seed/gast/demo.json = Demo-Aufgaben des Gastmodus
 scripts/validate.js  Inhalts-Validator
-test/                node:test + supertest (13 Testdateien); fixtures/welt_beispiel.json (jede Interaktion/jeder Block); e2e/e2e.js (Playwright)
+test/                node:test + supertest (14 Testdateien); fixtures/welt_beispiel.json (jede Interaktion/jeder Block); e2e/e2e.js (Playwright)
 docs/                AUFGABENFORMAT.md (verbindlich), ONLINE-IDE_TESTPROTOKOLL.md, Screenshots
 materialien/         Unterrichtsmaterial (docx/pptx = maßgebliche Fassung), siehe D.3
 quellen/specs/       Spezifikationen je Welt (SPEC_AlgoQuest_W*.md), App-Spezifikation (SPEC_AlgoLab.md), Level-Plan
@@ -164,6 +166,22 @@ PDFs unter `/arbeitsblaetter/…` aus `materialien/Arbeitsblaetter_PDF`; Zuordnu
   der Schülerfassung – nur für angemeldete Lehrkräfte (`/lehrkraft/dateien/…`, Whitelist aus
   `materialien/Lehrkraft_PDF/verzeichnis.json`, sonst 404).
 - **Beamer-Board** `/board/<KURSCODE>` (Top 15, Kursfortschritt, letzte Erfolge); alle Scoreboards aktualisieren sich alle 20 s.
+
+### C.5 Gastmodus (`/gast`, ohne Anmeldung)
+
+Ein kleiner Einblick für Interessierte (Schüler, Eltern, Kolleginnen und Kollegen), ohne zu viel preiszugeben:
+
+- **Als Schüler:** sechs eigens erstellte **Demo-Aufgaben** (`seed/gast/demo.json`, Welt 8 „Probe-Level“: Tracetabelle,
+  Struktogramm, gestufter Bug-Hunt, Baum anklicken, Stapel simulieren, Bubblesort) mit der echten Aufgabenansicht
+  (Prüfen, Tipp, Lösung zeigen, Erklärung, „Im echten Lab gäbe es dafür … Punkte“). Die Demo-Aufgaben kommen in den
+  Welten 0–6 nicht vor und werden **nicht** in die Datenbank geladen; Prüfung serverseitig, **nichts wird gespeichert**
+  (Fehlversuche/Tipps zählt der Browser nur für die Punkte-Anzeige). Dazu die Weltenliste des echten Labs (gesperrt).
+- **Als Lehrkraft:** ein **erfundener Demo-Kurs** (8 Beispielnamen, Lernstände per festem Zufall) mit Schülerliste,
+  Fortschrittsmatrix, Boss-Ergebnissen, Fallen-Profil, Aufgabenstatistik, Einstellungen (nur Anzeige), Materialien
+  **nur als Titel** (Welt 0, keine Downloads) und Aufgaben-Vorschau der Demo-Aufgaben – alle Knöpfe zum Ändern sind
+  deaktiviert.
+- Erreichbar über die Startseite („👀 Ohne Anmeldung reinschnuppern“) und die Themenseite. Echte Aufgaben, Lösungen
+  und Dateien sind über die Gast-API nicht erreichbar (Tests in `test/gast.test.js`).
 
 **Superadmin:** Anfragen freigeben, Lehrkräfte verwalten, Einmal-Passwort, alle Kurse, Seed-Bericht/Inhalte neu einlesen,
 Warm-up-Import, Backup/Restore (JSON).
@@ -300,6 +318,7 @@ Alle Antworten JSON; schreibende Anfragen mit `Content-Type: application/json` u
 
 | Bereich | Wichtige Endpunkte |
 |---|---|
+| Gastmodus | `GET /api/gast/schueler` · `GET /api/gast/aufgaben/:id` · `POST /api/gast/aufgaben/:id/pruefen\|tipp\|aufdecken` (Zähler kommen vom Browser, nichts wird gespeichert) · `GET /api/gast/lehrkraft` (Demo-Kurs) · `GET /api/gast/vorschau/:id` (nur Demo-Aufgaben) |
 | Öffentlich | `GET /healthz` · `GET /api/sitzung` · `GET /api/kurs/:code` · `POST /api/schueler/beitreten {kurscode, name}` · `POST /api/schueler/anmelden {name, code, kurscode?}` (409 `kurscodeNoetig` nur bei Altbeständen) · `GET /api/board/:code` · `GET /api/themen` · `POST /api/lehrer/registrieren` · `POST /api/lehrer/anmelden` |
 | Schüler | `GET /api/welten` · `GET /api/levels/:id` · `GET /api/aufgaben/:id` · `POST /api/aufgaben/:id/pruefen\|tipp\|aufdecken` · `/api/training/…` · `/api/boss/…` (start, kampf, antwort, beenden) · `GET /api/profil` · `GET /api/scoreboard` · `/api/kata/…` (Warm-up) |
 | Lehrkraft (`/api/lehrer`) | `/ich` · `/passwort` · `/kurse` (CRUD, Schüler, Einstellungen, Auswertung, `export.csv`, `qr.svg`, `urkunden`) · `/vorschau` · `/materialien`; Dateien: `GET /lehrkraft/dateien/<pfad>` |
@@ -317,11 +336,12 @@ Alle Antworten JSON; schreibende Anfragen mit `Content-Type: application/json` u
 
 | übernehmen (themenunabhängig) | neu je Thema |
 |---|---|
-| gesamte App (`src/`, `public/`, Tests, Dockerfile) – Rollen, Kurse, Punkte, Ränge, Abzeichen, Boss, Warm-up, Scoreboards, Themenseite, Lehrkraft-Materialien, Datenschutz/Sicherheit | **Sachkontext** (Story, Weltnamen, Figuren, Farben) |
+| gesamte App (`src/`, `public/`, Tests, Dockerfile) – Rollen, Kurse, Punkte, Ränge, Abzeichen, Boss, Warm-up, Scoreboards, Themenseite, Lehrkraft-Materialien, **Gastmodus** (`/gast`), Datenschutz/Sicherheit | **Sachkontext** (Story, Weltnamen, Figuren, Farben) |
 | Aufgabenformat (Blöcke, Interaktionen, serverseitige Prüfung) | **Welten/Level** (Kompetenzen laut KC/EH), Lab-Aufgaben (`seed/welten`) |
 | Didaktisches Gerüst: Welt → Level (1 je DS) → Arbeitsblatt + Lab + Boss; Papier und Lab doppelt; Fallen-Liste; Warm-up; Werkzeugkarten; Videos | **Fallen-Liste** des Themas (z. B. P1–P10 neu definieren), Aufgabenkategorien (`LAB_KATEGORIEN`) |
 | Werkzeuge: PDF-Erzeugung, Lösungs-Portal, Lehrkraft-Downloads, Materialprüfung, Video-Generator, CI | ggf. **neue Blocktypen/Interaktionen** (z. B. Automat, ER-Diagramm, SQL-Tabelle) + passende Prüfer und Trainingsplatz-Generatoren |
-| Konventionen: Abitur-Stil, duzen/siezen, keine Klarnamen, Lösungen nie öffentlich, `main` = live | **fachliche Notationen** des Themas (z. B. EH-Vorgaben zu Automaten, Datenbankschema, SQL) und deren Prüfwerkzeuge |
+| Konventionen: Abitur-Stil, duzen/siezen, keine Klarnamen, Lösungen nie öffentlich, `main` = live | **Demo-Aufgaben für den Gastmodus** (`seed/gast/demo.json`, 5–6 Aufgaben, je eine typische Interaktion des Themas, eigens erstellt) |
+| | **fachliche Notationen** des Themas (z. B. EH-Vorgaben zu Automaten, Datenbankschema, SQL) und deren Prüfwerkzeuge |
 
 ### G.2 Themen der Informatik-Oberstufe und mögliche Sachkontexte
 
@@ -360,8 +380,10 @@ Fachbegriffe), Bosse und Klausuren immer im nüchternen Abitur-Stil.
 5. **Werkzeuge anpassen:** `seed/arbeitsblaetter.json` füllen, PDF-Skripte laufen lassen, Materialprüfung um
    Themenregeln erweitern (z. B. verbotene Begriffe, Notationsfehler), Prüfstand für die Programmierumgebung des Themas
    (z. B. SQLite für SQL-Aufgaben, ein Automaten-Simulator in Python).
-6. **Abschluss:** Probeklausur + Klausur mit Erwartungshorizont, Fallen-Welt, Erklärvideos (`materialien/Videos`),
-   e2e-Test, Datenschutzseite, Deployment (eigene CapRover-App, eigene Domain, eigenes `main`).
+6. **Abschluss:** Probeklausur + Klausur mit Erwartungshorizont, Fallen-Welt, **Gastmodus** (eigene Demo-Aufgaben in
+   `seed/gast/demo.json`, Texte der Gast-Seite an den Sachkontext anpassen; Demo-Kurs entsteht automatisch aus den
+   Leveln der ersten drei Welten), Erklärvideos (`materialien/Videos`), e2e-Test, Datenschutzseite, Deployment
+   (eigene CapRover-App, eigene Domain, eigenes `main`).
 
 ### G.4 Bewährte Regeln aus Algo Quest (Lessons learned)
 
@@ -377,6 +399,9 @@ Fachbegriffe), Bosse und Klausuren immer im nüchternen Abitur-Stil.
   Nachbau schreiben (hier: Bibliothek „Niedersachsen“), echte Unterschiede dokumentieren (z. B. `==` bei Zeichenketten).
 - **Für Schüler einfach:** Beitritt mit Kurscode + Name, danach nur Name + persönlicher Code; Antwortreihenfolgen mischen;
   gestufte Bug-Hunts; Tipps kosten Punkte, „Lösung zeigen“ ist erlaubt (0 Punkte).
+- **Gastmodus statt offener Inhalte:** Wer reinschnuppern will, bekommt eigens erstellte Demo-Aufgaben und einen
+  erfundenen Demo-Kurs – nie echte Aufgaben, Lösungen oder Dateien, nichts wird gespeichert. So kann man die Plattform
+  herzeigen (Elternabend, Fachkonferenz, Fortbildung), ohne Kurscode und ohne Datenschutzfragen.
 - **Motivation ohne Druck:** Punkte nur automatisch, Warm-up ohne Punkte, Boss mit Wiederholung (bester Versuch zählt).
 - **Viel parallel, aber getrennt:** große Materialänderungen auf mehrere Agenten mit **exklusiven Dateien** verteilen,
   danach zentral prüfen, rendern und committen.
@@ -396,7 +421,7 @@ Schritt 2: Schlage Welten (mit Kompetenzen nach KC/EH und DS-Verteilung), Fallen
 und frage nach, bevor du etwas baust.
 Schritt 3: Übernimm die App, passe domain.js/Oberfläche an, ergänze fehlende Blocktypen mit Tests.
 Schritt 4: Welt für Welt: Spezifikation → Arbeitsblätter + Lösungen → Lab-Level → Boss → Warm-up → Präsentation,
-alles programmatisch geprüft.
+alles programmatisch geprüft. Zum Schluss Demo-Aufgaben für den Gastmodus (/gast) erstellen.
 Regeln: alles auf Deutsch, Schüler duzen, Prüfungsaufgaben siezen, keine Klarnamen, Lösungen nie öffentlich,
 nie ohne Freigabe auf main pushen (main = live).
 ```

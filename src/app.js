@@ -9,8 +9,10 @@ const S = require('./security');
 const { schuelerRoutes } = require('./routes/schueler');
 const { lehrerRoutes } = require('./routes/lehrer');
 const { adminRoutes } = require('./routes/admin');
+const { gastRoutes } = require('./routes/gast');
 const { createThemen } = require('./services/themen');
 const { createLehrkraftMaterial, URL_LEHRKRAFT } = require('./services/lehrkraftMaterial');
+const { createGast } = require('./services/gast');
 
 const PUBLIC_DIR = path.join(__dirname, '..', 'public');
 const ROOT_DIR = path.join(__dirname, '..');
@@ -53,6 +55,7 @@ function createApp(opts) {
     pdfVorhanden: (datei) => !!abDir && fs.existsSync(path.join(abDir, datei))
   });
   const material = createLehrkraftMaterial({ materialienDir: materialienOrdner(opts), abDir, log });
+  const gast = createGast(ctx, { datei: gastDatei(opts), inhalte: svc.inhalte, material, log });
 
   const app = express();
   app.disable('x-powered-by');
@@ -119,6 +122,7 @@ function createApp(opts) {
   app.get('/board/:code', page('board.html'));
   app.get('/datenschutz', page('datenschutz.html'));
   app.get('/themen', page('themen.html'));
+  app.get('/gast', page('gast.html'));
   app.use('/static', express.static(path.join(PUBLIC_DIR, 'static'), { maxAge: '1h', index: false }));
   // Arbeitsblätter (Schülerfassung, PDF) – nur .pdf, ohne Verzeichnislisten
   if (abDir) {
@@ -147,6 +151,7 @@ function createApp(opts) {
     schueler: (req) => (req.sS && Number.isInteger(req.sS.s) ? svc.kurse.ausSession(req.sS.s, req.sS.g) : null),
     lehrkraft: (req) => (req.sL && Number.isInteger(req.sL.l) ? svc.konten.ausSession(req.sL.l, req.sL.g, { superadminAktiv }) : null),
     material,
+    gast,
     reload: () => ladeInhalte(svc, opts, log),
     sichereAdmin: () => svc.konten.sichereSuperadmin(opts.adminEmail || 'admin', opts.adminPassword || '')
   };
@@ -185,6 +190,7 @@ function createApp(opts) {
   schuelerRoutes(api, helpers);
   lehrerRoutes(api, helpers);
   adminRoutes(api, helpers);
+  gastRoutes(api, helpers);
 
   api.use((req, res) => res.status(404).json({ error: 'Unbekannte API-Route.' }));
   app.use('/api', api);
@@ -214,6 +220,14 @@ function arbeitsblaetterOrdner(opts) {
   if (opts.arbeitsblaetterDir !== undefined) return opts.arbeitsblaetterDir;
   const kandidaten = [process.env.ARBEITSBLAETTER_DIR, path.join(ROOT_DIR, 'arbeitsblaetter'), path.join(ROOT_DIR, 'materialien', 'Arbeitsblaetter_PDF')];
   return kandidaten.find((d) => d && fs.existsSync(d)) || null;
+}
+
+/** Demo-Aufgaben des Gastmodus: seedDir/gast/demo.json (opts.gastDatei überschreibt; null = kein Schüler-Gastmodus). */
+function gastDatei(opts) {
+  if (opts.gastDatei !== undefined) return opts.gastDatei;
+  const seedDir = opts.seedDir === undefined ? path.join(ROOT_DIR, 'seed') : opts.seedDir;
+  const repo = path.join(ROOT_DIR, 'seed', 'gast', 'demo.json');
+  return (seedDir && fs.existsSync(path.join(seedDir, 'gast', 'demo.json')) && path.join(seedDir, 'gast', 'demo.json')) || (fs.existsSync(repo) ? repo : null);
 }
 
 function materialienOrdner(opts) {

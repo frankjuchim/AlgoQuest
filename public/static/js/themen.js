@@ -17,6 +17,7 @@
       { class: 'card' },
       h('h1', null, 'Themen und Arbeitsblätter'),
       h('p', null, 'Alles, was in der Einheit „Algorithmik und Datenstrukturen“ fürs Abitur wichtig ist – sortiert nach den sieben Welten. Zu jedem Thema gibt es ein Arbeitsblatt (PDF) und ein Level im Lab mit automatisch geprüften Aufgaben im Abitur-Stil.'),
+      h('p', null, 'Neugierig? ', h('a', { href: '/gast' }, '👀 Im Gastmodus reinschnuppern'), ' – Probeaufgaben lösen oder einen Demo-Kurs aus Sicht der Lehrkraft ansehen, ganz ohne Anmeldung.'),
       h(
         'ol',
         { class: 'schritte' },

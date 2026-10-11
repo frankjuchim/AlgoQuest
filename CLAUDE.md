@@ -27,10 +27,11 @@ src/                 Server
   services/          Fachlogik: inhalte (Seed), konten, kurse, lernen, stand/Abzeichen, boss, training,
                      auswertung, kata (= Warm-up-Trainer), backup
   content/           format.js, checker.js (Prüfer, serverseitig), validator.js, generators.js (Trainingsplatz)
-public/              Oberfläche: spiel.html (Schüler), lehrer.html (Lehrkraft + Superadmin), board.html, themen.html,
+public/              Oberfläche: spiel.html (Schüler), lehrer.html (Lehrkraft + Superadmin), board.html, themen.html, gast.html (Gastmodus),
                      index.html, datenschutz.html (Entwurf, Angaben der Schule fehlen), static/js/shared/baum.js (Klammerbäume, Server + Browser)
 seed/welten/         welt0–6.json = Lab-Aufgaben (Format: docs/AUFGABENFORMAT.md) – maßgeblich, nicht neu generieren
 seed/warmup/         Warm-up-Karten (Leitner-Trainer), {"version":1,"karten":[…]}
+seed/gast/demo.json  Demo-Aufgaben des Gastmodus /gast (Welt 8, eigene Aufgaben – nie echte; nicht in der Datenbank)
 scripts/validate.js  Inhalts-Validator
 test/                node:test + supertest; fixtures/welt_beispiel.json (jede Interaktion/jeder Block); e2e/e2e.js (Playwright)
 docs/                AUFGABENFORMAT.md (verbindlich), Screenshots
@@ -177,6 +178,9 @@ P9 Struktogramm nicht nach EH §5 · P10 Operator verfehlt.
   (Boss: nach „Teil a) festlegen“). Neue Bug-Hunts: Teil b) als eigenen Block mit „**b)**“ beginnen (Details
   docs/AUFGABENFORMAT.md §6.10).
 - Scoreboards (Beamer-Board, Lehrkraft- und Schüleransicht) aktualisieren sich alle 20 s selbst.
+- Gastmodus `/gast` (ohne Anmeldung): Schüler = nur Demo-Aufgaben aus `seed/gast/demo.json`, nichts wird gespeichert;
+  Lehrkraft = erfundener Demo-Kurs, nur lesend, Materialien nur als Titel. Nie echte Aufgaben, Lösungen oder Dateien
+  über die Gast-API (`test/gast.test.js`).
 
 ## Offene Punkte
 - Probelauf der Gerüste in der echten Online-IDE nach `docs/ONLINE-IDE_TESTPROTOKOLL.md` (bisher nur javac + Nachbau).
