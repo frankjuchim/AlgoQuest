@@ -1,0 +1,512 @@
+{
+ "nr": 6,
+ "kurz": "Stapel_und_Schlange",
+ "titel": "Stapel und Schlange",
+ "untertitel": "Schnittstellen nach EH §4, Casts und Laufzeitfehler vermeiden",
+ "welt": 4,
+ "weltname": "Welt 4 · Der Hafen",
+ "farbe": "#2E75B6",
+ "laenge": "9–11 min",
+ "zielgruppe": "Informatik eA (LK), Welt 4; auch zur Wiederholung vor Boss, Klausur und Abitur",
+ "einsatz": "Welt 4, DS 24 und 26 · Lab-Level 4.1 „Kistenturm und Schiffsschlange“ und 4.3 „Inventur“ · AB W4·1 „Stapel und Schlange“, AB W4·2 Teil 1",
+ "lernziele": [
+  "Den Begriff abstrakter Datentyp erklären: Schnittstelle statt Implementierung",
+  "Die Schnittstellen von Stapel (Stack) und Schlange (Queue) nach EH §4 bzw. der Bibliothek „Niedersachsen“ sicher verwenden",
+  "LIFO und FIFO unterscheiden und Befehlsfolgen (auch gemischt) Schritt für Schritt ausführen",
+  "Inhalte richtig casten, weil die Klassen nicht generisch sind (P4)",
+  "Laufzeitfehler durch isEmpty-Abfragen ausschließen (P1) und eine Struktur mit Hilfsstapel unverändert zurücklassen (P2)"
+ ],
+ "hinweise": [
+  "Alle Beispiele (Heiltränke im Rucksack als Stapel vom Inhaltstyp Ganzzahl, Gäste am Tresen als Schlange vom Inhaltstyp Zeichenkette, die Methoden bediene und gesamtHeilung, beide Mischaufgaben) sind eigens für das Video gewählt und kommen in Lab, Arbeitsblättern, Bossen und Warm-up nicht vor.",
+  "Code kompiliert und ausgeführt mit javac/java gegen den Nachbau der Bibliothek „Niedersachsen“ (werkzeuge/ide-pruefung/java, Paket aq.ni); geprüft auch, dass `int x = s.pop();` ohne Cast nicht übersetzt (incompatible types: Object cannot be converted to int).",
+  "Geprüfte Werte: rucksack nach push(20), push(50), push(10) = 10 50 20 (oben zuerst), pop() liefert 10, danach top() = 50; tresen Ork, Elfe, Zwerg: dequeue() liefert \"Ork\", danach head() = \"Elfe\".",
+  "Mischaufgabe 1 (q = 5 1 8, s leer): 1: q 1 8 | s 5 · 2: q 8 | s 1 5 · 3: q 8 1 | s 5 · 4: q 8 1 5 | s 5 · 5: q 1 5 | s leer, x = 3.",
+  "Mischaufgabe 2 (Pause; s = 2 9 4 oben zuerst, q leer): 1: q 2 | s 9 4 · 2: q 2 9 | s 4 · 3: q 9 | s 2 4 · 4: q 9 2 | s 2 4 · 5: q 9 2 | s 4, y = 11.",
+  "bediene(Ork, Elfe; 3) = 2, Schlange danach leer; bediene(Ork, Elfe, Zwerg; 2) = 2, übrig Zwerg; bediene(leer, 2) = 0; dequeue auf leerer Schlange → IllegalStateException.",
+  "gesamtHeilung(10 50 20) = 80, Stapel danach wieder 10 50 20 (dieselben Objekte); Zwischenstände der Tabelle per instrumentiertem Programm geprüft; Fassung ohne Zurückschichten liefert ebenfalls 80, der Stapel ist danach aber leer. Schlange 1 2 3 über einen Hilfsstapel zurückgeschichtet: 3 2 1.",
+  "Pause-Folie: im Schnitt einen Hinweis „Video anhalten“ einblenden; die Auflösung kommt erst auf der nächsten Folie."
+ ],
+ "youtube": {
+  "titel": "Stapel und Schlange (Stack und Queue) fürs Informatik-Abitur Niedersachsen | Algo Quest #6",
+  "beschreibung": "Stapel und Schlange sind die Klassiker unter den abstrakten Datentypen im Informatik-Abitur in Niedersachsen. In diesem Video lernst du die Schnittstellen nach den Ergänzenden Hinweisen (§4) bzw. der Bibliothek „Niedersachsen“ der Online-IDE kennen: push, pop, top, enqueue, dequeue, head und isEmpty. Du siehst, warum du casten musst (die Klassen sind nicht generisch), wie du Laufzeitfehler mit isEmpty vermeidest und wie du eine Struktur mit einem Hilfsstapel unverändert zurücklässt. Dazu eine Mischaufgabe zum Mitmachen.\n\nTeil der Unterrichtsreihe „Algo Quest – Das Dungeon der Datenstrukturen“ (Informatik eA).\nÜben mit sofortiger Rückmeldung: https://algoquest.frankjuchim.de/themen",
+  "tags": [
+   "Informatik Abitur",
+   "Niedersachsen",
+   "Stapel",
+   "Schlange",
+   "Stack",
+   "Queue",
+   "abstrakter Datentyp",
+   "Java",
+   "Informatik LK",
+   "Algo Quest"
+  ]
+ },
+ "bilder": {
+  "stapel_rucksack": {
+   "t": "adt",
+   "art": "stapel",
+   "inhalt": [
+    "20",
+    "50",
+    "10"
+   ]
+  },
+  "schlange_tresen": {
+   "t": "adt",
+   "art": "schlange",
+   "inhalt": [
+    "Ork",
+    "Elfe",
+    "Zwerg"
+   ]
+  }
+ },
+ "folien": [
+  {
+   "typ": "titel",
+   "kapitel": "Einstieg",
+   "regie": "Kamera unten rechts, Titelfolie im Hintergrund.",
+   "sprechertext": "Willkommen im Hafen der Algo Quest! Heute geht es um zwei Datenstrukturen, die im Abitur fast immer vorkommen: den Stapel und die Schlange. Sie sehen harmlos aus – aber genau hier gehen viele Punkte verloren: durch fehlende Casts, durch Laufzeitfehler bei leeren Strukturen und durch Methoden, die eine Struktur heimlich zerstören. Nach diesem Video weißt du, wie du das alles vermeidest."
+  },
+  {
+   "typ": "punkte",
+   "titel": "Stapel und Schlange im Abitur",
+   "punkte": [
+    "„**Geben Sie** den Inhalt von Stapel und Schlange nach Ausführung der Anweisungen **an**.“",
+    "„**Implementieren Sie** die Methode … Nach dem Aufruf muss der Stapel **unverändert** sein.“",
+    "Die Schnittstellen stehen in den Ergänzenden Hinweisen: **EH §4**",
+    "Laufzeitfehler müssen **ausgeschlossen** werden"
+   ],
+   "kasten": {
+    "farbe": "gold",
+    "titel": "Heute",
+    "text": [
+     "Abstrakter Datentyp",
+     "Schnittstellen, LIFO und FIFO",
+     "Casten (P4)",
+     "Mischaufgabe",
+     "Leer? Erst fragen (P1)",
+     "Unverändert lassen (P2)"
+    ]
+   },
+   "sprechertext": "Im Abitur begegnen dir Stapel und Schlange vor allem in zwei Aufgabentypen. Erstens: Geben Sie den Inhalt der Strukturen nach Ausführung der Anweisungen an. Zweitens: Implementieren Sie eine Methode – und oft steht dabei: Nach dem Aufruf muss der Stapel unverändert sein. Welche Methoden du verwenden darfst, legen die Ergänzenden Hinweise im Paragrafen vier fest. Und es gilt: Laufzeitfehler müssen ausgeschlossen werden. Rechts siehst du unseren Plan für heute."
+  },
+  {
+   "typ": "punkte",
+   "titel": "Abstrakter Datentyp: Man sieht nur die Schnittstelle",
+   "punkte": [
+    "Ein **abstrakter Datentyp (ADT)** wird nur durch seine **Operationen** beschrieben",
+    "Wie er innen gebaut ist, bleibt **verborgen**",
+    "An die Daten kommst du **nur über die Schnittstelle**",
+    "Kein Zugriff „in die Mitte“ – kein Index, kein Durchzählen"
+   ],
+   "kasten": {
+    "farbe": "blau",
+    "titel": "Vergleich",
+    "text": [
+     "Ein Getränkeautomat: Du kennst die Knöpfe, nicht das Innenleben.",
+     "Genauso: `push`, `pop`, `top`, `isEmpty` – mehr gibt es nicht."
+    ]
+   },
+   "kapitel": "Abstrakter Datentyp",
+   "sprechertext": "Stapel und Schlange sind abstrakte Datentypen. Das bedeutet: Sie werden nur durch ihre Operationen beschrieben – also dadurch, was man mit ihnen machen kann. Wie sie innen gebaut sind, mit einer Reihung oder mit verketteten Knoten, bleibt verborgen und ist für dich egal. Du kommst an die Daten nur über die Schnittstelle heran. Das ist wie bei einem Getränkeautomaten: Du kennst die Knöpfe, aber nicht das Innenleben. Für dich heißt das vor allem: Es gibt keinen Index und keinen Zugriff in die Mitte. Was du nicht über die Schnittstelle erreichst, erreichst du gar nicht."
+  },
+  {
+   "typ": "bild",
+   "titel": "LIFO und FIFO",
+   "bild": "stapel_rucksack",
+   "bild2": "schlange_tresen",
+   "teilung": 3.8,
+   "kapitel": "LIFO und FIFO",
+   "regie": "Erst auf den Stapel zeigen (oben = zuletzt hineingelegt), dann auf die Schlange (vorn = zuerst angestellt).",
+   "sprechertext": "Unser Held hat Heiltränke im Rucksack, gestapelt. Jede Zahl ist die Heilkraft eines Tranks. Er hat erst den Zwanziger hineingelegt, dann den Fünfziger, dann den Zehner. Oben liegt also der Zehner – und den bekommt er auch als Erstes wieder heraus. Das ist das Prinzip des Stapels: LIFO, last in, first out. Rechts die Schlange am Tresen der Hafentaverne: Zuerst hat sich der Ork angestellt, dann die Elfe, dann der Zwerg. Bedient wird vorne, also zuerst der Ork. Wer sich neu anstellt, kommt nach hinten. Das ist FIFO, first in, first out."
+  },
+  {
+   "typ": "tabelle",
+   "titel": "Die Schnittstellen nach EH §4",
+   "tabelle": {
+    "kopf": [
+     "",
+     "Stapel – Stack",
+     "Schlange – Queue"
+    ],
+    "zeilen": [
+     [
+      "erzeugen",
+      "new Stack()",
+      "new Queue()"
+     ],
+     [
+      "leer?",
+      "isEmpty()",
+      "isEmpty()"
+     ],
+     [
+      "hinein",
+      "push(x)   oben",
+      "enqueue(x)   hinten"
+     ],
+     [
+      "ansehen",
+      "top()",
+      "head()"
+     ],
+     [
+      "herausnehmen",
+      "pop()",
+      "dequeue()"
+     ]
+    ],
+    "groesse": 18,
+    "breiten": [
+     1.5,
+     2,
+     2.2
+    ],
+    "hervorheben": [
+     3,
+     4
+    ]
+   },
+   "tabellenbreite": 7.6,
+   "kasten": {
+    "farbe": "rot",
+    "titel": "Achtung",
+    "text": [
+     "Rot: auf leerer Struktur → **Laufzeitfehler**",
+     "`top`/`head` sehen nur nach, `pop`/`dequeue` entnehmen"
+    ]
+   },
+   "teilung": 8.5,
+   "kapitel": "Schnittstellen",
+   "sprechertext": "Hier die Schnittstellen nach EH Paragraf vier, so wie sie auch die Bibliothek Niedersachsen der Online-IDE anbietet. Erzeugt wird mit new Stack beziehungsweise new Queue. Mit isEmpty fragst du, ob die Struktur leer ist. Hineinlegen heißt beim Stapel push – oben drauf –, bei der Schlange enqueue – hinten anstellen. Ansehen, ohne zu entnehmen: top beim Stapel, head bei der Schlange. Und herausnehmen: pop und dequeue. Die roten Zeilen sind gefährlich: Auf einer leeren Struktur führen sie zu einem Laufzeitfehler. Merk dir außerdem den Unterschied: top und head schauen nur nach, die Struktur bleibt gleich. pop und dequeue entnehmen das Element."
+  },
+  {
+   "typ": "code",
+   "titel": "Nicht generisch: Inhalte sind Object (P4)",
+   "code": "Stack rucksack = new Stack();  // Inhaltstyp Ganzzahl\nrucksack.push(20);\nrucksack.push(50);\nrucksack.push(10);\nint h = (Integer) rucksack.pop();  // h = 10\n\nQueue tresen = new Queue();  // Inhaltstyp Zeichenkette\ntresen.enqueue(\"Ork\");\ntresen.enqueue(\"Elfe\");\nString gast = (String) tresen.dequeue();  // \"Ork\"\nString vorn = (String) tresen.head();     // \"Elfe\"\nif (vorn.equals(\"Elfe\")) { ... }",
+   "nummern": false,
+   "groesse": 18,
+   "markiere": [
+    5,
+    10,
+    11
+   ],
+   "unten": [
+    "Kein `Stack<Integer>`! Ohne Cast: Fehler beim Übersetzen",
+    "Zeichenketten mit `equals` vergleichen (**P5**)"
+   ],
+   "kapitel": "Casten",
+   "sprechertext": "Jetzt kommt eine Besonderheit, die im Abitur ständig geprüft wird. Die Klassen Stack und Queue sind nicht generisch. Es gibt also keine spitzen Klammern wie Stack von Integer. Alles, was du hineinlegst, wird als Object gespeichert – und genauso kommt es auch wieder heraus. Deshalb musst du beim Herausnehmen casten, also sagen, welcher Typ es wirklich ist. Bei Ganzzahlen schreibst du Klammer Integer, bei Zeichenketten Klammer String. Ohne Cast übersetzt Java das Programm gar nicht – das ist Falle P4. Und wenn du Zeichenketten vergleichst, dann immer mit equals, nicht mit dem doppelten Gleichheitszeichen – das ist Falle P5. Im Kommentar notierst du den Inhaltstyp, so wie es auch in Abituraufgaben steht."
+  },
+  {
+   "typ": "code",
+   "titel": "Mischaufgabe: Stapel und Schlange zusammen",
+   "code": "// Start: q = 5 1 8 (vorne zuerst), s leer\ns.push(q.dequeue());\ns.push(q.dequeue());\nq.enqueue(s.pop());\nq.enqueue(s.top());\nint x = (Integer) q.dequeue()\n        - (Integer) s.pop();",
+   "nummern": false,
+   "groesse": 18,
+   "tabelle": {
+    "kopf": [
+     "Nr.",
+     "q (vorne → hinten)",
+     "s (oben → unten)"
+    ],
+    "zeilen": [
+     [
+      "Start",
+      "5, 1, 8",
+      "–"
+     ],
+     [
+      "1",
+      "1, 8",
+      "5"
+     ],
+     [
+      "2",
+      "8",
+      "1, 5"
+     ],
+     [
+      "3",
+      "8, 1",
+      "5"
+     ],
+     [
+      "4",
+      "8, 1, 5",
+      "5"
+     ],
+     [
+      "5",
+      "1, 5",
+      "–"
+     ]
+    ],
+    "groesse": 15,
+    "breiten": [
+     0.9,
+     1.7,
+     1.6
+    ]
+   },
+   "unten": [
+    "x = 8 − 5 = **3**"
+   ],
+   "kapitel": "Mischaufgabe",
+   "regie": "Zeile für Zeile zeigen; bei Zeile 4 betonen, dass top() nicht entnimmt.",
+   "sprechertext": "Jetzt eine typische Mischaufgabe. In der Schlange q stehen fünf, eins, acht – fünf vorne. Der Stapel s ist leer. Rechts notieren wir nach jeder Zeile beide Zustände: den Stapel von oben gelesen, die Schlange von vorne. Zeile eins: dequeue nimmt die Fünf vorne heraus, push legt sie auf den Stapel. Zeile zwei: Die Eins wandert genauso auf den Stapel, jetzt oben. Zeile drei: pop nimmt die Eins vom Stapel, enqueue stellt sie hinten an die Schlange: acht, eins. Zeile vier: top schaut die Fünf nur an – sie bleibt im Stapel – und eine Fünf wird hinten angestellt. Zeile fünf: dequeue liefert die Acht, pop die Fünf. x ist acht minus fünf, also drei. Am Ende: Schlange eins, fünf, Stapel leer."
+  },
+  {
+   "typ": "pause",
+   "titel": "Kurz pausieren: Jetzt du!",
+   "aufgabe": "Gib nach **jeder** Zeile den Inhalt von `q` (vorne zuerst) und `s` (oben zuerst) an. Welchen Wert hat `y`?",
+   "code": "// Start: s = 2 9 4 (oben zuerst), q leer\nq.enqueue(s.pop());\nq.enqueue(s.pop());\ns.push(q.dequeue());\nq.enqueue(s.top());\nint y = (Integer) s.pop()\n        + (Integer) q.head();",
+   "nummern": false,
+   "kasten": {
+    "farbe": "gold",
+    "titel": "Tipp",
+    "text": [
+     "`top` und `head` entnehmen **nicht**.",
+     "Stapel von oben, Schlange von vorne lesen."
+    ]
+   },
+   "kapitel": "Selbst ausprobieren",
+   "pause_s": 5,
+   "sprechertext": "Jetzt bist du dran. Diesmal liegen auf dem Stapel zwei, neun, vier – die Zwei oben –, und die Schlange ist leer. Halte das Video an und notiere nach jeder Zeile beide Zustände. Welchen Wert hat y am Ende? Danach geht es weiter mit der Auflösung."
+  },
+  {
+   "typ": "tabelle",
+   "titel": "Auflösung",
+   "tabelle": {
+    "kopf": [
+     "Nr.",
+     "Anweisung",
+     "q (vorne → hinten)",
+     "s (oben → unten)"
+    ],
+    "zeilen": [
+     [
+      "Start",
+      "",
+      "–",
+      "2, 9, 4"
+     ],
+     [
+      "1",
+      "q.enqueue(s.pop())",
+      "2",
+      "9, 4"
+     ],
+     [
+      "2",
+      "q.enqueue(s.pop())",
+      "2, 9",
+      "4"
+     ],
+     [
+      "3",
+      "s.push(q.dequeue())",
+      "9",
+      "2, 4"
+     ],
+     [
+      "4",
+      "q.enqueue(s.top())",
+      "9, 2",
+      "2, 4"
+     ],
+     [
+      "5",
+      "y = … pop() + … head()",
+      "9, 2",
+      "4"
+     ]
+    ],
+    "groesse": 16,
+    "breiten": [
+     0.8,
+     2.9,
+     1.5,
+     1.4
+    ]
+   },
+   "tabellenbreite": 8.4,
+   "kasten": {
+    "farbe": "gruen",
+    "titel": "y = 2 + 9 = 11",
+    "text": [
+     "Zeile 4: die 2 bleibt im Stapel",
+     "Zeile 5: die 9 bleibt in der Schlange"
+    ]
+   },
+   "teilung": 9.3,
+   "sprechertext": "Die Auflösung. Zeile eins: Die Zwei geht vom Stapel in die Schlange. Zeile zwei: die Neun hinterher, die Schlange ist jetzt zwei, neun. Zeile drei: Die Zwei vorne aus der Schlange kommt wieder oben auf den Stapel: zwei, vier. Zeile vier: top schaut die Zwei nur an, sie bleibt liegen, und eine Zwei wird hinten angestellt: neun, zwei. Zeile fünf: pop nimmt die Zwei vom Stapel, head schaut die Neun nur an. y ist zwei plus neun, also elf. Am Ende bleibt die Schlange neun, zwei, und im Stapel liegt nur noch die Vier. Hast du bei Zeile vier und fünf aufgepasst? Genau da liegen die Fallen."
+  },
+  {
+   "typ": "code",
+   "titel": "Laufzeitfehler vermeiden: erst fragen, dann nehmen (P1)",
+   "code": "// bedient hoechstens n Gaeste, liefert die Anzahl\npublic static int bediene(Queue q, int n) {\n    int anzahl = 0;\n    while (anzahl < n && !q.isEmpty()) {\n        String gast = (String) q.dequeue();\n        println(gast + \" wird bedient\");\n        anzahl++;\n    }\n    return anzahl;\n}",
+   "markiere": [
+    4
+   ],
+   "groesse": 18,
+   "kasten": {
+    "farbe": "rot",
+    "titel": "Leer? Erst fragen!",
+    "text": [
+     "`pop`, `top`, `dequeue`, `head` auf leerer Struktur → **IllegalStateException**",
+     "Nur 2 Gäste da, n = 3 → ohne `isEmpty`: Absturz",
+     "Mit Abfrage: liefert **2**"
+    ]
+   },
+   "kapitel": "Laufzeitfehler vermeiden",
+   "sprechertext": "Kommen wir zu Falle P1: Laufzeitfehler. Rufst du pop, top, dequeue oder head auf einer leeren Struktur auf, bricht das Programm ab – in der Online-IDE mit einer IllegalStateException. Im Abitur musst du solche Fehler durch eine Abfrage ausschließen. Ein Beispiel: Der Wirt bedient höchstens n Gäste. Stehen aber nur zwei Gäste am Tresen und n ist drei, dann würde der dritte dequeue-Aufruf abstürzen. Deshalb steht in der markierten Zeile zusätzlich: und nicht q punkt isEmpty. Dann endet die Schleife rechtzeitig, und die Methode liefert zwei. Die Regel lautet: Erst fragen, dann nehmen."
+  },
+  {
+   "typ": "code",
+   "titel": "Muster: Struktur unverändert lassen (P2)",
+   "code": "public static int gesamtHeilung(Stack rucksack) {\n    Stack hilf = new Stack();\n    int summe = 0;\n    while (!rucksack.isEmpty()) {  // abbauen\n        int h = (Integer) rucksack.pop();\n        summe = summe + h;\n        hilf.push(h);\n    }\n    while (!hilf.isEmpty()) {  // zurueck\n        rucksack.push(hilf.pop());\n    }\n    return summe;\n}",
+   "markiere": [
+    7,
+    10
+   ],
+   "groesse": 18,
+   "kasten": {
+    "farbe": "gold",
+    "titel": "Das Muster",
+    "text": [
+     "**Abbauen:** jedes Element auswerten und auf einen Hilfsstapel legen",
+     "**Zurückschichten:** alles wieder auf den Originalstapel",
+     "Zweimal umgedreht = alte Reihenfolge"
+    ]
+   },
+   "kapitel": "Unverändert lassen",
+   "sprechertext": "Jetzt zum wichtigsten Muster, Falle P2. Der Held will wissen, wie viel Heilkraft alle Tränke zusammen haben. An die unteren Tränke kommt er nur, wenn er die oberen herausnimmt. Danach soll der Rucksack aber wieder genauso aussehen wie vorher. Die Lösung ist ein Hilfsstapel. In der ersten Schleife nimmst du jeden Trank heraus, addierst seine Heilkraft und legst ihn auf den Hilfsstapel. In der zweiten Schleife schichtest du alles zurück. Weil die Reihenfolge dabei zweimal umgedreht wird, ist am Ende alles wie vorher. Fehlt die zweite Schleife, liefert die Methode zwar die richtige Summe – aber der Rucksack ist leer. Genau das kostet im Abitur Punkte."
+  },
+  {
+   "typ": "tabelle",
+   "titel": "gesamtHeilung: Schritt für Schritt",
+   "text": "Start: `rucksack` = 10, 50, 20 (oben zuerst)",
+   "tabelle": {
+    "kopf": [
+     "Phase",
+     "rucksack (oben → unten)",
+     "hilf (oben → unten)",
+     "summe"
+    ],
+    "zeilen": [
+     [
+      "Start",
+      "10, 50, 20",
+      "–",
+      "0"
+     ],
+     [
+      "abbauen",
+      "50, 20",
+      "10",
+      "10"
+     ],
+     [
+      "abbauen",
+      "20",
+      "50, 10",
+      "60"
+     ],
+     [
+      "abbauen",
+      "–",
+      "20, 50, 10",
+      "80"
+     ],
+     [
+      "zurück",
+      "20",
+      "50, 10",
+      "80"
+     ],
+     [
+      "zurück",
+      "50, 20",
+      "10",
+      "80"
+     ],
+     [
+      "zurück",
+      "10, 50, 20",
+      "–",
+      "80"
+     ]
+    ],
+    "groesse": 16,
+    "hervorheben": [
+     6
+    ],
+    "breiten": [
+     1.2,
+     2.0,
+     1.8,
+     0.9
+    ]
+   },
+   "tabellenbreite": 8.4,
+   "kasten": {
+    "farbe": "gruen",
+    "titel": "Rückgabe: 80",
+    "text": [
+     "Rucksack wie vorher – dieselben Tränke in derselben Reihenfolge"
+    ]
+   },
+   "teilung": 9.3,
+   "sprechertext": "So sieht das Schritt für Schritt aus. Am Anfang liegen zehn, fünfzig, zwanzig im Rucksack, der Hilfsstapel ist leer. Beim Abbauen wandert der Zehner auf den Hilfsstapel, die Summe ist zehn. Dann der Fünfziger: sechzig. Dann der Zwanziger: achtzig. Jetzt ist der Rucksack leer und auf dem Hilfsstapel liegt alles in umgekehrter Reihenfolge – der Zwanziger oben. Beim Zurückschichten kommt zuerst der Zwanziger zurück, dann der Fünfziger, dann der Zehner. Und siehe da: zehn, fünfzig, zwanzig – genau wie vorher. Bei einer Schlange geht es übrigens mit einer Hilfsschlange. Ein Hilfsstapel würde die Schlange umdrehen."
+  },
+  {
+   "typ": "punkte",
+   "titel": "Typische Fehler – und wie du sie vermeidest",
+   "punkte": [
+    "**P1** `pop`/`dequeue` ohne `isEmpty`-Abfrage → Laufzeitfehler",
+    "**P2** Struktur abgebaut, aber **nicht zurückgeschichtet**",
+    "**P4** Cast vergessen: `int x = s.pop();` übersetzt nicht",
+    "**P5** Zeichenketten mit `==` statt `equals` verglichen",
+    "Verwechselt: `top`/`head` sehen nur nach – `pop`/`dequeue` entnehmen"
+   ],
+   "kasten": {
+    "farbe": "rot",
+    "titel": "Abi-Check",
+    "text": [
+     "Leer? – vor jedem Entnehmen",
+     "Cast beim Herausnehmen?",
+     "Struktur wiederhergestellt?",
+     "Nur Methoden aus EH §4?"
+    ]
+   },
+   "kapitel": "Typische Fehler",
+   "sprechertext": "Zum Schluss die typischen Fehler mit ihren Fallen-Nummern. P1: entnehmen, ohne vorher mit isEmpty zu fragen. P2: die Struktur abbauen und nicht zurückschichten. P4: den Cast vergessen – int x gleich s punkt pop übersetzt nicht. P5: Zeichenketten mit dem doppelten Gleichheitszeichen vergleichen statt mit equals. Und bei Mischaufgaben besonders häufig: top und head verwechselt mit pop und dequeue. Rechts der Abi-Check – und denk daran: Verwende nur die Methoden aus der Schnittstelle, also nichts wie size oder get."
+  },
+  {
+   "typ": "merke",
+   "titel": "Das nimmst du mit",
+   "punkte": [
+    "ADT: Zugriff **nur über die Schnittstelle** – Stapel: `push`, `pop`, `top`, `isEmpty`; Schlange: `enqueue`, `dequeue`, `head`, `isEmpty`",
+    "Stapel = **LIFO** (oben), Schlange = **FIFO** (hinten rein, vorne raus)",
+    "Nicht generisch: beim Herausnehmen **casten**, z. B. `(Integer) s.pop()`",
+    "Erst `isEmpty` fragen, dann nehmen; unverändert lassen mit **Hilfsstapel** bzw. **Hilfsschlange**"
+   ],
+   "kapitel": "Zusammenfassung",
+   "sprechertext": "Fassen wir zusammen. Stapel und Schlange sind abstrakte Datentypen – du arbeitest nur mit ihren Schnittstellen. Der Stapel arbeitet nach LIFO, die Schlange nach FIFO. Weil die Klassen nicht generisch sind, castest du beim Herausnehmen. Bevor du etwas entnimmst, fragst du mit isEmpty. Und wenn eine Struktur unverändert bleiben soll, schichtest du über einen Hilfsstapel beziehungsweise eine Hilfsschlange zurück."
+  },
+  {
+   "typ": "ende",
+   "links": {
+    "Lab": "Level 4.1 „Kistenturm und Schiffsschlange“ und Level 4.3 „Inventur: Struktur unverändert lassen“",
+    "Arbeitsblatt": "AB W4·1 „Stapel und Schlange“ und AB W4·2 Teil 1",
+    "Online-IDE": "Bibliothek „Niedersachsen“ einschalten (Video 2)",
+    "Online": "algoquest.frankjuchim.de/themen"
+   },
+   "naechstes": "Binärbäume und Suchbäume",
+   "sprechertext": "Und jetzt ab ins Lab! In Level vier Punkt eins übst du Befehlsfolgen und Mischaufgaben mit Stapel und Schlange, in Level vier Punkt drei, der Inventur, das Muster unverändert lassen. Auf den Arbeitsblättern findest du alles zum Nachlesen. Und wenn du in der Online-IDE programmierst: Schalte die Bibliothek Niedersachsen ein – wie das geht, zeigt Video zwei. Im nächsten Video geht es in den Wald: zu Binärbäumen und Suchbäumen. Bis dahin – gute Fahrt im Hafen!"
+  }
+ ]
+}

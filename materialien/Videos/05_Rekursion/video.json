@@ -1,0 +1,470 @@
+{
+ "nr": 5,
+ "kurz": "Rekursion",
+ "titel": "Rekursion verstehen",
+ "untertitel": "Basisfall, Aufrufstapel, Rekursionstabelle und Aufrufbaum – so, wie es das Abitur verlangt",
+ "welt": 3,
+ "weltname": "Welt 3 · Das Labyrinth",
+ "farbe": "#7030A0",
+ "laenge": "9–11 min",
+ "zielgruppe": "Informatik eA (LK), Welt 3; auch zur Wiederholung vor Boss, Klausur und Abitur",
+ "einsatz": "Welt 3, DS 18 · Lab-Level 3.1 „Spiegelsaal“ und 3.2 „Hydra“ · AB W3·1 „Rekursion“",
+ "lernziele": [
+  "Basisfall und Rekursionsschritt einer rekursiven Methode benennen und erklären, warum das Teilproblem kleiner werden muss",
+  "Den Aufrufstapel beschreiben: Abstieg bis zum Basisfall, Aufstieg mit den Rückgaben",
+  "Eine Rekursionstabelle mit Rekursionstiefe führen (Erstaufruf = Tiefe 0, Rückgaben beim Aufstieg)",
+  "Eine rekursive Methode als Struktogramm nach EH §5 darstellen",
+  "Bei Baumrekursion den Aufrufbaum zeichnen, Aufrufe zählen und die größte Tiefe bestimmen",
+  "Fallen P7 (Basisfall, Ergebnis nicht verwendet, Tiefe) und den StackOverflowError erkennen"
+ ],
+ "hinweise": [
+  "Alle Beispiele (muenzen: Wechselgeld mit 5er- und 1er-Münzen, schleim: Schleim zerfällt in n / 2 und n / 3) sind eigens für das Video gewählt und kommen in Lab, Arbeitsblättern, Bossen und Warm-up nicht vor – das Video verrät keine Lösungen.",
+  "Werte geprüft mit javac/java (instrumentiertes Programm, Tiefe und Aufrufe mitgezählt): muenzen(12) = 4 mit 5 Aufrufen, größte Tiefe 4 (Aufrufe 12, 7, 2, 1, 0); muenzen(9) = 5 mit 6 Aufrufen, größte Tiefe 5 (Aufrufe 9, 4, 3, 2, 1, 0).",
+  "schleim geprüft: schleim(7) = 4, 7 Aufrufe, größte Tiefe 2, Baum s7(s3(s1,s1),s2(s1,s0)); schleim(10) = 5, 9 Aufrufe, größte Tiefe 3, Baum s10(s5(s2(s1,s0),s1),s3(s1,s1)), Beginn-Reihenfolge s10, s5, s2, s1, s0, s1, s3, s1, s1. Allgemein Aufrufe = 2 · Rückgabe − 1 (jeder innere Knoten hat zwei Kinder); gemessen: schleim(100) = 33 mit 65 Aufrufen, schleim(1000) = 200 mit 399 Aufrufen.",
+  "Fehlerfolie geprüft: ohne Basisfall und mit nur 5er-Schritten (muenzen(12): 12, 7, 2, −3, …) jeweils StackOverflowError; Fassung „Ergebnis nicht verwendet“ liefert für muenzen(12) und muenzen(9) jeweils 1.",
+  "Pause-Folien: im Schnitt einen Hinweis „Video anhalten“ einblenden; die Auflösung kommt erst auf der nächsten Folie.",
+  "Folien „Aufrufstapel“ und „Rekursionstabelle“: beim Abstieg die Zeilen von oben nach unten zeigen, beim Aufstieg die Rückgaben von unten nach oben."
+ ],
+ "youtube": {
+  "titel": "Rekursion verstehen: Rekursionstabelle, Aufrufstapel, Aufrufbaum (Informatik-Abitur Niedersachsen) | Algo Quest #5",
+  "beschreibung": "Wie funktioniert Rekursion – und wie dokumentierst du einen Rekursionsverlauf so, wie es das Informatik-Abitur in Niedersachsen verlangt? In diesem Video lernst du Basisfall und Rekursionsschritt, verfolgst den Aufrufstapel, führst eine Rekursionstabelle mit Rekursionstiefe (Erstaufruf = Tiefe 0), stellst eine rekursive Methode als Struktogramm nach EH §5 dar und zählst Aufrufe im Aufrufbaum. Dazu die typischen Fehler: fehlender Basisfall, nicht verwendetes Ergebnis, falsche Tiefe – und der StackOverflowError.\n\nTeil der Unterrichtsreihe „Algo Quest – Das Dungeon der Datenstrukturen“ (Informatik eA).\nÜben mit sofortiger Rückmeldung: https://algoquest.frankjuchim.de/themen",
+  "tags": [
+   "Informatik Abitur",
+   "Niedersachsen",
+   "Rekursion",
+   "Rekursionstabelle",
+   "Rekursionstiefe",
+   "Aufrufbaum",
+   "StackOverflowError",
+   "Java",
+   "Informatik LK",
+   "Algo Quest"
+  ]
+ },
+ "bilder": {
+  "stapel_tief": {
+   "t": "adt",
+   "art": "stapel",
+   "inhalt": [
+    "Tiefe 0: muenzen(12) wartet",
+    "Tiefe 1: muenzen(7) wartet",
+    "Tiefe 2: muenzen(2) wartet",
+    "Tiefe 3: muenzen(1) wartet",
+    "Tiefe 4: muenzen(0) → 0"
+   ]
+  },
+  "sg_muenzen": {
+   "t": "struktogramm",
+   "kopf": "muenzen(betrag: Ganzzahl): Ganzzahl",
+   "rumpf": [
+    {
+     "wenn": "betrag = 0",
+     "dann": [
+      {
+       "gib": "0"
+      }
+     ],
+     "sonst": [
+      {
+       "anw": "muenze ← 1"
+      },
+      {
+       "wenn": "betrag ≥ 5",
+       "dann": [
+        {
+         "anw": "muenze ← 5"
+        }
+       ]
+      },
+      {
+       "gib": "1 + muenzen(betrag − muenze)"
+      }
+     ]
+    }
+   ],
+   "_breite": 480
+  },
+  "baum_s7": {
+   "t": "baum",
+   "baum": "s7(s3(s1,s1),s2(s1,s0))"
+  },
+  "baum_s10": {
+   "t": "baum",
+   "baum": "s10(s5(s2(s1,s0),s1),s3(s1,s1))"
+  }
+ },
+ "folien": [
+  {
+   "typ": "titel",
+   "kapitel": "Einstieg",
+   "regie": "Kamera unten rechts, Titelfolie im Hintergrund.",
+   "sprechertext": "Willkommen im Labyrinth der Algo Quest! Heute geht es um Rekursion – also um Methoden, die sich selbst aufrufen. Das klingt erst einmal nach einem Zaubertrick. Im Abitur ist es aber ganz handfestes Handwerk: Du sollst einen Rekursionsverlauf dokumentieren, Aufrufe zählen und rekursive Struktogramme zeichnen. Nach diesem Video weißt du, wie das geht – und welche Fehler dich dabei Punkte kosten."
+  },
+  {
+   "typ": "punkte",
+   "titel": "Rekursion im Abitur",
+   "punkte": [
+    "„**Dokumentieren Sie** den Rekursionsverlauf in einer Rekursionstabelle mit Rekursionstiefe.“",
+    "„**Bestimmen Sie** die Anzahl der Aufrufe.“",
+    "„**Stellen Sie** die Methode als Struktogramm **dar**.“",
+    "Konvention: **Erstaufruf = Rekursionstiefe 0**"
+   ],
+   "kasten": {
+    "farbe": "gold",
+    "titel": "Heute",
+    "text": [
+     "Basisfall und Rekursionsschritt",
+     "Aufrufstapel",
+     "Rekursionstabelle",
+     "Struktogramm",
+     "Aufrufbaum",
+     "Typische Fehler (P7)"
+    ]
+   },
+   "sprechertext": "Typische Arbeitsaufträge im Abitur lauten zum Beispiel: Dokumentieren Sie den Rekursionsverlauf in einer Rekursionstabelle mit Rekursionstiefe. Bestimmen Sie die Anzahl der Aufrufe. Oder: Stellen Sie die Methode als Struktogramm dar. Eine Konvention solltest du dir sofort merken: Der Erstaufruf hat die Rekursionstiefe null, nicht eins. Rechts siehst du, was wir uns heute vornehmen."
+  },
+  {
+   "typ": "code",
+   "titel": "Basisfall und Rekursionsschritt",
+   "code": "public static int muenzen(int betrag) {\n    if (betrag == 0) {\n        return 0;  // Basisfall\n    }\n    int muenze = 1;\n    if (betrag >= 5) {\n        muenze = 5;\n    }\n    return 1 + muenzen(betrag - muenze);\n}",
+   "markiere": [
+    9
+   ],
+   "groesse": 20,
+   "kasten": {
+    "farbe": "gold",
+    "titel": "Wechselgeld im Dungeon",
+    "text": [
+     "Der Händler zahlt mit **5er**- und **1er**-Münzen – möglichst wenige.",
+     "**Basisfall:** betrag = 0 → 0 Münzen",
+     "**Rekursionsschritt:** eine Münze + der Rest",
+     "Der Rest wird **kleiner**: − 5 oder − 1"
+    ]
+   },
+   "kapitel": "Basisfall und Rekursionsschritt",
+   "sprechertext": "Unser Beispiel: Der Händler im Dungeon zahlt Wechselgeld mit Fünfer- und Einer-Münzen, und zwar mit möglichst wenigen. Die Methode muenzen berechnet, wie viele Münzen er braucht. Jede Rekursion hat zwei Zutaten. Erstens den Basisfall: Hier steht die Antwort sofort fest, ganz ohne Selbstaufruf. Ist der Betrag null, braucht der Händler null Münzen. Zweitens den Rekursionsschritt: Der Händler wählt eine Münze – eine Fünf, wenn das geht, sonst eine Eins – und lässt in der rot markierten Zeile den Rest von muenzen selbst ausrechnen. Wichtig: Der Rest ist echt kleiner, also kommt jeder Aufruf dem Basisfall näher. Und: Das Ergebnis des Selbstaufrufs wird verwendet – eins plus den Rest. Der Trick beim Entwerfen: Vertraue darauf, dass der Selbstaufruf richtig rechnet."
+  },
+  {
+   "typ": "bild",
+   "titel": "Der Aufrufstapel: muenzen(12)",
+   "bild": "stapel_tief",
+   "kasten": {
+    "titel": "Ablauf",
+    "text": [
+     "**Abstieg:** Jeder Aufruf legt einen neuen Rahmen **oben** auf – mit eigenem `betrag`.",
+     "**Basisfall:** muenzen(0) ruft niemanden mehr auf.",
+     "**Aufstieg:** Der oberste Rahmen liefert sein Ergebnis und verschwindet: 0 → 1 → 2 → 3 → **4**."
+    ]
+   },
+   "teilung": 7.0,
+   "kapitel": "Aufrufstapel",
+   "regie": "Stapel von unten nach oben zeigen (Abstieg), dann von oben nach unten die Rückgaben (Aufstieg).",
+   "sprechertext": "Was passiert beim Aufruf muenzen von zwölf? Zwölf ist mindestens fünf, also wartet dieser Aufruf auf muenzen von sieben. Der wiederum wartet auf muenzen von zwei, der auf muenzen von eins, und der auf muenzen von null. Jeder Aufruf legt dabei einen eigenen Rahmen auf den Aufrufstapel, mit einer eigenen Variable betrag. Das ist der Abstieg. Ganz oben liegt jetzt muenzen von null – der Basisfall. Er liefert sofort null. Jetzt beginnt der Aufstieg: Der oberste Rahmen verschwindet, und sein Ergebnis wird im Rahmen darunter eingesetzt. Eins plus null ist eins, dann eins plus eins ist zwei, dann drei, und schließlich liefert der Erstaufruf vier. Vier Münzen: fünf, fünf, eins, eins."
+  },
+  {
+   "typ": "tabelle",
+   "titel": "Die Rekursionstabelle: muenzen(12)",
+   "tabelle": {
+    "kopf": [
+     "Rekursionstiefe",
+     "Aufruf",
+     "betrag",
+     "Rückgabe"
+    ],
+    "zeilen": [
+     [
+      "0",
+      "muenzen(12)",
+      "12",
+      "1 + 3 = 4"
+     ],
+     [
+      "1",
+      "muenzen(7)",
+      "7",
+      "1 + 2 = 3"
+     ],
+     [
+      "2",
+      "muenzen(2)",
+      "2",
+      "1 + 1 = 2"
+     ],
+     [
+      "3",
+      "muenzen(1)",
+      "1",
+      "1 + 0 = 1"
+     ],
+     [
+      "4",
+      "muenzen(0)",
+      "0",
+      "0 (Basisfall)"
+     ]
+    ],
+    "groesse": 17,
+    "breiten": [
+     1.6,
+     1.7,
+     1.0,
+     1.8
+    ]
+   },
+   "tabellenbreite": 7.4,
+   "kasten": {
+    "farbe": "gruen",
+    "titel": "Regeln",
+    "text": [
+     "Erstaufruf: **Tiefe 0**",
+     "Abstieg: Zeilen von **oben nach unten**",
+     "Aufstieg: Rückgaben von **unten nach oben**",
+     "5 Aufrufe · größte Tiefe 4"
+    ]
+   },
+   "teilung": 8.4,
+   "kapitel": "Rekursionstabelle",
+   "regie": "Erst die Spalten Tiefe, Aufruf, betrag von oben nach unten zeigen, dann die Rückgaben von unten nach oben.",
+   "sprechertext": "Genau diesen Ablauf schreibst du im Abitur als Rekursionstabelle auf. Die Spalten sind: Rekursionstiefe, Aufruf, die Parameter – hier betrag – und die Rückgabe. Beim Abstieg füllst du die Zeilen von oben nach unten: Der Erstaufruf muenzen von zwölf hat die Tiefe null, jeder Selbstaufruf eine Tiefe mehr. Die Rückgaben kannst du beim Abstieg noch nicht eintragen – sie stehen erst fest, wenn der Aufruf darunter fertig ist. Deshalb füllst du die Spalte Rückgabe beim Aufstieg von unten nach oben: null im Basisfall, dann eins plus null, eins plus eins und so weiter. Schreib die Rechnung ruhig mit hin, das macht deine Lösung nachvollziehbar. Ergebnis: fünf Aufrufe, größte Rekursionstiefe vier."
+  },
+  {
+   "typ": "pause",
+   "titel": "Kurz pausieren: Jetzt du!",
+   "aufgabe": "Führe die Rekursionstabelle für `muenzen(9)` (Tiefe, Aufruf, betrag, Rückgabe). Wie viele Aufrufe gibt es, wie groß ist die größte Tiefe?",
+   "code": "public static int muenzen(int betrag) {\n    if (betrag == 0) {\n        return 0;  // Basisfall\n    }\n    int muenze = 1;\n    if (betrag >= 5) {\n        muenze = 5;\n    }\n    return 1 + muenzen(betrag - muenze);\n}",
+   "groesse": 16,
+   "kasten": {
+    "farbe": "gold",
+    "titel": "Tipp",
+    "text": [
+     "Nach dem ersten Schritt ist der Betrag kleiner als 5.",
+     "Erst alle Aufrufe, dann die Rückgaben."
+    ]
+   },
+   "kapitel": "Selbst ausprobieren: Rekursionstabelle",
+   "pause_s": 5,
+   "sprechertext": "Jetzt bist du dran. Halte das Video an und führe die Rekursionstabelle für muenzen von neun. Denk daran: Der Erstaufruf hat die Tiefe null, und die Rückgaben trägst du erst beim Aufstieg ein. Wenn du fertig bist, geht es weiter mit der Auflösung."
+  },
+  {
+   "typ": "tabelle",
+   "titel": "Auflösung: muenzen(9)",
+   "tabelle": {
+    "kopf": [
+     "Rekursionstiefe",
+     "Aufruf",
+     "betrag",
+     "Rückgabe"
+    ],
+    "zeilen": [
+     [
+      "0",
+      "muenzen(9)",
+      "9",
+      "1 + 4 = 5"
+     ],
+     [
+      "1",
+      "muenzen(4)",
+      "4",
+      "1 + 3 = 4"
+     ],
+     [
+      "2",
+      "muenzen(3)",
+      "3",
+      "1 + 2 = 3"
+     ],
+     [
+      "3",
+      "muenzen(2)",
+      "2",
+      "1 + 1 = 2"
+     ],
+     [
+      "4",
+      "muenzen(1)",
+      "1",
+      "1 + 0 = 1"
+     ],
+     [
+      "5",
+      "muenzen(0)",
+      "0",
+      "0 (Basisfall)"
+     ]
+    ],
+    "groesse": 17,
+    "breiten": [
+     1.6,
+     1.7,
+     1.0,
+     1.8
+    ]
+   },
+   "tabellenbreite": 7.4,
+   "kasten": {
+    "farbe": "gruen",
+    "titel": "Rückgabe: 5",
+    "text": [
+     "5 + 1 + 1 + 1 + 1",
+     "6 Aufrufe",
+     "größte Tiefe 5"
+    ]
+   },
+   "teilung": 8.4,
+   "sprechertext": "Hier die Auflösung. Neun ist mindestens fünf, also geht es mit vier weiter. Ab jetzt ist der Betrag kleiner als fünf, und es geht in Einerschritten abwärts: drei, zwei, eins, null. Das sind sechs Aufrufe mit den Tiefen null bis fünf. Beim Aufstieg: null, eins, zwei, drei, vier – und der Erstaufruf liefert fünf. Der Händler zahlt also eine Fünf und vier Einer. Hattest du auch die Zeile für den Basisfall? Sie gehört dazu."
+  },
+  {
+   "typ": "bild",
+   "titel": "Rekursive Struktogramme nach EH §5",
+   "bild": "sg_muenzen",
+   "kasten": {
+    "titel": "So geht’s",
+    "text": [
+     "Kopf mit Signatur und Typen",
+     "Basisfall **zuerst** als Verzweigung",
+     "Selbstaufruf = **ganz normale Anweisung** – kein Sondersymbol",
+     "Jeder Pfad endet mit „gib … zurück“"
+    ]
+   },
+   "teilung": 8.6,
+   "kapitel": "Struktogramm",
+   "sprechertext": "Und wie sieht das als Struktogramm aus? Ganz oben steht wie immer der Kopf: muenzen, betrag vom Typ Ganzzahl, Rückgabetyp Ganzzahl. Dann kommt zuerst der Basisfall als Verzweigung: Ist betrag gleich null, gib null zurück. Im Falsch-Zweig steht der Rekursionsschritt: muenze bekommt eins, und wenn betrag mindestens fünf ist, bekommt muenze fünf. Der Selbstaufruf braucht kein besonderes Symbol – er ist eine ganz normale Anweisung, hier innerhalb von gib eins plus muenzen von betrag minus muenze zurück. Achte darauf, dass jeder Pfad mit gib zurück endet, und schreib keine Java-Syntax: Pfeil statt Gleichheitszeichen, größer gleich als ein Zeichen."
+  },
+  {
+   "typ": "code",
+   "titel": "Baumrekursion: zwei Selbstaufrufe",
+   "code": "public static int schleim(int n) {\n    if (n < 2) {\n        return 1;  // Basisfall\n    }\n    return schleim(n / 2) + schleim(n / 3);\n}",
+   "markiere": [
+    5
+   ],
+   "groesse": 20,
+   "kasten": {
+    "farbe": "gold",
+    "titel": "Der Schleim",
+    "text": [
+     "Ein Schleim der Größe n zerfällt in zwei: **n / 2** und **n / 3** (ganzzahlig).",
+     "Kleiner als 2: zerfällt nicht mehr.",
+     "Wie viele Mini-Schleime entstehen?"
+    ]
+   },
+   "kapitel": "Aufrufbaum",
+   "sprechertext": "Bisher hatte jeder Aufruf höchstens einen Selbstaufruf – die Aufrufe bilden eine Kette. Jetzt ein Monster aus dem Labyrinth: ein Schleim. Trifft man einen Schleim der Größe n, zerfällt er in zwei Schleime, einen der Größe n durch zwei und einen der Größe n durch drei, jeweils ganzzahlig. Schleime kleiner als zwei zerfallen nicht mehr. Die Methode schleim zählt, wie viele Mini-Schleime am Ende übrig sind. In der markierten Zeile stehen zwei Selbstaufrufe. Das nennt man Baumrekursion, denn die Aufrufe verzweigen sich wie ein Baum."
+  },
+  {
+   "typ": "bild",
+   "titel": "Der Aufrufbaum von schleim(7)",
+   "bild": "baum_s7",
+   "kasten": {
+    "titel": "Lesen",
+    "text": [
+     "Knoten = ein Aufruf, `s3` = schleim(3)",
+     "Wurzel = Erstaufruf, **Tiefe 0**",
+     "links zuerst, ganz in die Tiefe",
+     "**7 Aufrufe** · größte Tiefe **2**",
+     "schleim(7) = **4** (Blätter)"
+    ]
+   },
+   "teilung": 8.4,
+   "regie": "Reihenfolge des Beginns mit dem Mauszeiger zeigen: s7, s3, s1, s1, s2, s1, s0.",
+   "sprechertext": "Hier der Aufrufbaum für schleim von sieben. Jeder Knoten ist ein Aufruf; s drei steht für schleim von drei. Die Wurzel ist der Erstaufruf mit Tiefe null. Sieben durch zwei ist drei, sieben durch drei ist zwei. Java wertet die Summe von links nach rechts aus: Erst wird der linke Teilbaum komplett abgearbeitet – s drei mit seinen beiden Kindern s eins und s eins –, erst danach beginnt s zwei mit s eins und s null. Zum Zählen der Aufrufe zählst du einfach alle Knoten: sieben Aufrufe. Die größte Tiefe ist zwei. Und jedes Blatt liefert eins, also ist schleim von sieben gleich vier."
+  },
+  {
+   "typ": "pause",
+   "titel": "Kurz pausieren: Zeichne den Aufrufbaum!",
+   "aufgabe": "Zeichne den Aufrufbaum für `schleim(10)`. Bestimme den **Rückgabewert**, die **Anzahl der Aufrufe** (Erstaufruf mitgezählt) und die **größte Rekursionstiefe**.",
+   "code": "public static int schleim(int n) {\n    if (n < 2) {\n        return 1;  // Basisfall\n    }\n    return schleim(n / 2) + schleim(n / 3);\n}",
+   "groesse": 18,
+   "kasten": {
+    "farbe": "gold",
+    "titel": "Tipp",
+    "text": [
+     "Ganzzahlig teilen: 10 / 3 = 3, 5 / 3 = 1.",
+     "Ein Knoten mit n < 2 ist ein Blatt."
+    ]
+   },
+   "kapitel": "Selbst ausprobieren: Aufrufbaum",
+   "pause_s": 5,
+   "sprechertext": "Jetzt du: Halte das Video an und zeichne den Aufrufbaum für schleim von zehn. Bestimme den Rückgabewert, die Anzahl aller Aufrufe und die größte Rekursionstiefe. Denk an die ganzzahlige Division."
+  },
+  {
+   "typ": "bild",
+   "titel": "Auflösung: schleim(10)",
+   "bild": "baum_s10",
+   "kasten": {
+    "farbe": "gruen",
+    "titel": "Ergebnis",
+    "text": [
+     "Rückgabe: **5** (Blätter)",
+     "**9 Aufrufe**",
+     "größte Tiefe **3** (s10 → s5 → s2 → s1)",
+     "Aufrufe = 2 · Blätter − 1"
+    ]
+   },
+   "teilung": 8.4,
+   "sprechertext": "Die Auflösung: Zehn zerfällt in fünf und drei. Fünf zerfällt in zwei und eins, zwei in eins und null, drei in eins und eins. Der Baum hat neun Knoten, also neun Aufrufe. Der längste Ast führt von s zehn über s fünf und s zwei bis s eins – das ist Tiefe drei, denn die Wurzel hat Tiefe null. Fünf Blätter, also liefert schleim von zehn den Wert fünf. Übrigens: Weil jeder innere Knoten genau zwei Kinder hat, gilt hier immer: Aufrufe gleich zwei mal Blätter minus eins. So kannst du dein Ergebnis kontrollieren."
+  },
+  {
+   "typ": "code",
+   "titel": "Typische Fehler (P7) – und der StackOverflowError",
+   "code": "// (1) Basisfall fehlt\nreturn 1 + muenzen(betrag - 1);\n\n// (2) Basisfall wird uebersprungen\nreturn 1 + muenzen(betrag - 5);  // 12, 7, 2, -3 ...\n\n// (3) Ergebnis nicht verwendet\nmuenzen(betrag - muenze);\nreturn 1;",
+   "nummern": false,
+   "groesse": 18,
+   "kasten": {
+    "farbe": "rot",
+    "titel": "StackOverflowError",
+    "text": [
+     "Jeder Aufruf belegt einen Rahmen auf dem Aufrufstapel.",
+     "(1) und (2): Basisfall nie erreicht → der Stapel läuft über.",
+     "(3) läuft durch, liefert aber immer **1** – muenzen(12) ergibt 1 statt 4."
+    ]
+   },
+   "kapitel": "Typische Fehler",
+   "sprechertext": "Jetzt zu den typischen Fehlern, in unserer Fallen-Liste unter P7. Fehler eins: Der Basisfall fehlt. Dann ruft sich die Methode immer weiter selbst auf. Jeder Aufruf belegt einen Rahmen auf dem Aufrufstapel, bis der Speicher voll ist – Java bricht mit einem StackOverflowError ab. Fehler zwei ist tückischer: Der Basisfall ist da, wird aber übersprungen. Gibt es nur Fünferschritte, geht es von zwölf über sieben und zwei direkt zu minus drei – null wird nie getroffen, wieder ein StackOverflowError. Fehler drei: Der Selbstaufruf steht zwar da, aber sein Ergebnis wird weggeworfen. Das Programm läuft, liefert aber immer eins. Merke: Das Ergebnis des Selbstaufrufs muss verwendet werden."
+  },
+  {
+   "typ": "punkte",
+   "titel": "Fehler in Tabelle, Baum und Struktogramm",
+   "punkte": [
+    "**P7** Tiefe falsch: Erstaufruf mit Tiefe 1 begonnen – richtig ist **0**",
+    "**P8** Rückgaben schon beim Abstieg eingetragen oder Basisfall-Zeile vergessen",
+    "Aufrufe zählen: **Erstaufruf und alle Basisfälle** mitzählen",
+    "**P9** Java im Struktogramm: `==`, `;`, `return`"
+   ],
+   "kasten": {
+    "farbe": "rot",
+    "titel": "Abi-Check",
+    "text": [
+     "Basisfall vorhanden und erreichbar?",
+     "Ergebnis des Aufrufs verwendet?",
+     "Tiefe ab 0?",
+     "Rückgaben beim Aufstieg?"
+    ]
+   },
+   "sprechertext": "Auch in Tabellen und Bäumen gehen schnell Punkte verloren. Falle P7: Die Tiefe beginnt bei eins statt bei null. Im Abitur gilt: Der Erstaufruf hat die Tiefe null. Falle P8: Die Rückgaben werden schon beim Abstieg eingetragen, oder die Zeile für den Basisfall fehlt. Beim Zählen der Aufrufe gilt: Der Erstaufruf und alle Basisfälle zählen mit – jeder Knoten im Aufrufbaum ist ein Aufruf. Und Falle P9: Java-Syntax im Struktogramm. Rechts der Abi-Check für deine Lösung."
+  },
+  {
+   "typ": "merke",
+   "titel": "Das nimmst du mit",
+   "punkte": [
+    "Jede Rekursion braucht einen **Basisfall** und einen Schritt, der dem Basisfall **näherkommt** – und das Ergebnis des Aufrufs **verwendet**",
+    "Aufrufstapel: **Abstieg** bis zum Basisfall, **Aufstieg** mit den Rückgaben",
+    "Rekursionstabelle: Tiefe (Erstaufruf = **0**), Aufruf, Parameter, Rückgabe – Rückgaben von unten nach oben",
+    "Baumrekursion: Aufrufbaum zeichnen, **Knoten zählen** = Aufrufe; links zuerst in die Tiefe"
+   ],
+   "kapitel": "Zusammenfassung",
+   "sprechertext": "Fassen wir zusammen. Jede Rekursion braucht einen Basisfall und einen Rekursionsschritt, der dem Basisfall näherkommt und das Ergebnis des Selbstaufrufs verwendet. Beim Ausführen geht es erst hinab bis zum Basisfall und dann mit den Rückgaben wieder hinauf. In der Rekursionstabelle steht der Erstaufruf mit Tiefe null, die Rückgaben füllst du von unten nach oben. Und bei Baumrekursion zeichnest du den Aufrufbaum: Jeder Knoten ist ein Aufruf."
+  },
+  {
+   "typ": "ende",
+   "links": {
+    "Lab": "Level 3.1 „Spiegelsaal: Basisfall und Rekursionstabelle“ und Level 3.2 „Hydra: Aufrufbaum und Aufrufe zählen“",
+    "Arbeitsblatt": "AB W3·1 „Rekursion“",
+    "Spickzettel": "Werkzeugkarten (Rekursionstabelle, Struktogramm-Notation)",
+    "Online": "algoquest.frankjuchim.de/themen"
+   },
+   "naechstes": "Stapel und Schlange: Schnittstellen, Casts und Laufzeitfehler vermeiden",
+   "sprechertext": "Und jetzt ab ins Lab! In Level drei Punkt eins, dem Spiegelsaal, übst du Basisfall und Rekursionstabelle, in Level drei Punkt zwei, der Hydra, Aufrufbäume und das Zählen von Aufrufen. Auf dem Arbeitsblatt Rekursion findest du alles noch einmal zum Nachlesen. Im nächsten Video geht es um Stapel und Schlange – und übrigens: Den Aufrufstapel hast du heute schon kennengelernt. Bis dahin – viel Erfolg im Labyrinth!"
+  }
+ ]
+}
