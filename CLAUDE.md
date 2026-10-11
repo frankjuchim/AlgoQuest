@@ -49,6 +49,8 @@ materialien/Lehrkraft_PDF/  Präsentationen, Lehrerhinweise, Klausuren (Aufgaben
                      (Grundlage der Materialien-Seite, Whitelist der Downloads) – ERZEUGT (werkzeuge/lehrkraft_pdf.py); NUR Lehrkraft
 materialien/Loesungen_Arbeitsblaetter/  dieselben Lösungen nach Art: 01_Arbeitsblaetter, 02_Bosse_und_Probeklausur,
                      03_Klausuren (inkl. Klausur/Nachschreibklausur-EH), 04_Warm-up-Karten – ERZEUGT, NUR Lehrkraft
+materialien/Videos/  Erklärvideos (YouTube, NICHT öffentlich bis zur Veröffentlichung): 00_Uebersicht.md, LIESMICH.md (Format),
+                     je Video NN_Kurz/video.json (Quelle) → Folien (pptx, Kamera-Zone unten rechts frei) + Skript (md) – ERZEUGT
 materialien/Online-IDE/  Import-Dateien (JSON) für online-ide.de: je Welt ein Workspace je Gerüst; Lehrkraft/ = LSG
                      – ERZEUGT aus den .txt-Dateien (npm run workspaces), nicht von Hand ändern
 werkzeuge/           Prüf- und Erzeugungsskripte (Python 3 + javac, nicht im Docker-Image)
@@ -60,6 +62,7 @@ werkzeuge/           Prüf- und Erzeugungsskripte (Python 3 + javac, nicht im Do
   arbeitsblaetter_pdf.py            materialien/Arbeitsblaetter_PDF neu erzeugen (soffice; --pruefen: Vollständigkeit)
   loesungen_pdf.py                  materialien/Loesungen_Portal + Loesungen_Arbeitsblaetter neu erzeugen (--pruefen)
   lehrkraft_pdf.py                  materialien/Lehrkraft_PDF + verzeichnis.json neu erzeugen (--pruefen: aktuell/vollständig)
+  video_folien.py, video_bilder.js  Erklärvideos: Folien + Drehbuch aus video.json, Bilder mit dem Lab-Renderer (--pruefen)
   materialien_pruefen.py            docx/pptx/txt: Altbegriffe, Generics, verbotene String-Operationen, Bedingungsspalten in Tracetabellen (--rendern: soffice → PDF)
 .github/workflows/pruefung.yml      GitHub-Prüfung: alles oben bei jedem Push/PR
 docs/ONLINE-IDE_TESTPROTOKOLL.md    Checkliste mit Sollwerten für den Probelauf in der echten Online-IDE
@@ -79,6 +82,7 @@ npm run workspaces  # materialien/Online-IDE nach Änderungen an Gerüsten/LSG n
 npm run arbeitsblaetter  # materialien/Arbeitsblaetter_PDF nach Änderungen an Arbeitsblättern neu erzeugen
 npm run loesungen   # Lösungs-PDFs (Loesungen_Portal, Loesungen_Arbeitsblaetter) nach Änderungen an Lösungen neu erzeugen
 npm run lehrkraft   # Lehrkraft-Downloads (Präsentationen, Lehrerhinweise, Klausuren, verzeichnis.json) neu erzeugen
+python3 werkzeuge/video_folien.py [NN_Kurz]   # Erklärvideo-Folien und Drehbuch aus video.json neu erzeugen
 python3 werkzeuge/materialien_pruefen.py --rendern --pdf-ordner <scratch>   # alle docx/pptx nach PDF
 ```
 Python-Abhängigkeiten der Werkzeuge: `pip install python-docx python-pptx pypdf`; Java 21 (javac) für die IDE-Prüfung.

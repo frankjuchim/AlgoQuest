@@ -20,6 +20,8 @@ Lehrkraft_PDF               NUR LEHRKRAFT: Praesentationen, Lehrerhinweise und K
                             alles zusammen: Schuelerfassung, Loesung/Erwartungshorizont, Folien, Lehrerhinweise
 Loesungen_Arbeitsblaetter   NUR LEHRKRAFT: dieselben Loesungen nach Art sortiert (01 Arbeitsblaetter, 02 Bosse und
                             Probeklausur, 03 Klausuren inkl. Klausur/Nachschreibklausur, 04 Warm-up-Karten)
+Videos                      NICHT OEFFENTLICH: Erklaervideos (YouTube) - Uebersicht, je Video Folien (pptx, Kamera unten
+                            rechts frei, Sprechertext in den Notizen) und Drehbuch (md); siehe Videos/00_Uebersicht.md
 Online-IDE                  Fertige Workspaces zum Importieren (JSON, je Welt eine Datei, ein Workspace je Geruest,
                             Bibliothek "Niedersachsen" ab Welt 4 schon aktiviert); Lehrkraft/ = Musterloesungen
 WeltN_.../4_Boss            Papier-Boss (handschriftlich, Abi-Training, ohne Punkte); Welt 6: Probeklausur + Klausuren

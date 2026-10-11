@@ -46,5 +46,7 @@ jobs:
         run: python3 werkzeuge/loesungen_pdf.py --pruefen
       - name: Lehrkraft-Downloads (Präsentationen, Lehrerhinweise, Klausuren, Verzeichnis) aktuell
         run: python3 werkzeuge/lehrkraft_pdf.py --pruefen
+      - name: Erklärvideos (Kamera-Zone frei, Drehbücher aktuell)
+        run: python3 werkzeuge/video_folien.py --pruefen
       - name: Materialien (Begriffe, NI-Klassen, Zeichenketten-Operationen)
         run: python3 werkzeuge/materialien_pruefen.py
