@@ -90,13 +90,13 @@
   {
    "typ": "code",
    "titel": "Der Aufbau eines Gerüsts",
-   "code": "// ===============================\n//  WELT 0 – DIE AKADEMIE – GERÜST\n//  ANLEITUNG und SPIELREGELN\n// ===============================\n\n// GERÜST – hier nichts veraendern\nclass Anzeige { … }\n\n// DEIN TEIL – hier arbeitest du!\nclass Werkstatt { … }\n\n// TESTS – hier nichts veraendern!\nclass …Test { … }\n\n// Programmstart\nprintln(…);",
+   "code": "// ==============================\n//  WELT 0 – DIE AKADEMIE – GERÜST\n//  ANLEITUNG und SPIELREGELN\n// ==============================\n// GERÜST – hier nichts veraendern\nclass Anzeige { … }\n// DEIN TEIL – hier arbeitest du!\nclass Werkstatt { … }\n// TESTS – hier nichts veraendern!\nclass …Test { … }\n// Programmstart\nprintln(…);",
    "markiere": [
-    9,
-    10
+    7,
+    8
    ],
    "nummern": false,
-   "groesse": 18,
+   "groesse": 19,
    "kasten": {
     "titel": "Fünf Bereiche",
     "text": [
@@ -108,7 +108,8 @@
     ]
    },
    "kapitel": "Aufbau eines Gerüsts",
-   "sprechertext": "Jedes Gerüst ist gleich aufgebaut. Oben der Kopfblock mit Anleitung und Spielregeln – lies ihn! Im Bereich GERÜST stehen Hilfsklassen, die du nicht veränderst. Dein Arbeitsplatz ist DEIN TEIL. Darunter die Tests, die du nie veränderst. Und ganz unten der Programmstart. Teile, die mit LEVEL-START auskommentiert sind, schaltest du erst frei, wenn dein Level dran ist."
+   "sprechertext": "Jedes Gerüst ist gleich aufgebaut. Oben der Kopfblock mit Anleitung und Spielregeln – lies ihn! Im Bereich GERÜST stehen Hilfsklassen, die du nicht veränderst. Dein Arbeitsplatz ist DEIN TEIL. Darunter die Tests, die du nie veränderst. Und ganz unten der Programmstart. Teile, die mit LEVEL-START auskommentiert sind, schaltest du erst frei, wenn dein Level dran ist.",
+   "teilung": 6.8
   },
   {
    "typ": "code",
@@ -118,40 +119,32 @@
     6,
     7
    ],
-   "groesse": 20,
-   "kasten": {
-    "farbe": "gold",
-    "titel": "So gehst du vor",
-    "text": [
-     "Signatur in Abi-Notation steht **darüber**",
-     "`// TODO` und vorläufiges `return` **ersetzen**",
-     "Methodenkopf **nicht** ändern (**P3**)"
-    ]
-   },
+   "groesse": 22,
    "kapitel": "Eigener Teil",
    "regie": "In der IDE die Klasse Fackellager im Test-Workspace zeigen.",
-   "sprechertext": "Ein eigenes Beispiel: Eine Fackel brennt drei Räume lang. Die Methode fackeln soll ausrechnen, wie viele Fackeln du brauchst. Über der Methode steht die Signatur in Abitur-Notation. Du ersetzt die TODO-Zeile und das vorläufige return null. Den Methodenkopf lässt du stehen – sonst findet ihn kein Test, und im Abitur wäre das Falle P3."
+   "sprechertext": "Ein eigenes Beispiel: Eine Fackel brennt drei Räume lang. Die Methode fackeln soll ausrechnen, wie viele Fackeln du brauchst. Über der Methode steht die Signatur in Abitur-Notation. Du ersetzt die TODO-Zeile und das vorläufige return null. Den Methodenkopf lässt du stehen – sonst findet ihn kein Test, und im Abitur wäre das Falle P3.",
+   "unten": [
+    "Signatur in Abi-Notation steht **darüber**",
+    "`// TODO` und vorläufiges `return` **ersetzen**",
+    "Methodenkopf **nicht** ändern (**P3**)"
+   ],
+   "groesse_unten": 22
   },
   {
    "typ": "code",
    "titel": "Ein Test von innen",
-   "code": "class FackellagerTest {\n\n    @Test\n    public void angebrochen() {\n        assertEquals(3,\n                     Fackellager.fackeln(7),\n                     \"7 Raeume: 3 Fackeln\");\n    }\n}",
+   "code": "@Test\npublic void angebrochen() {\n    assertEquals(3, Fackellager.fackeln(7),\n                 \"7 Raeume: 3 Fackeln\");\n}",
    "markiere": [
-    5,
-    6,
-    7
+    3,
+    4
    ],
-   "groesse": 20,
-   "kasten": {
-    "titel": "assertEquals(…)",
-    "text": [
-     "1. **erwartet**: `3`",
-     "2. **tatsächlich**: `Fackellager.fackeln(7)`",
-     "3. **Meldung** bei Rot",
-     "`@Test` macht die Methode zum Test"
-    ]
-   },
-   "sprechertext": "So sieht ein Test aus, markiert mit at Test. assertEquals hat drei Teile: zuerst den erwarteten Wert, hier drei. Dann den tatsächlichen Wert, also das, was deine Methode liefert. Und eine Meldung, die du siehst, wenn der Test rot wird."
+   "groesse": 22,
+   "sprechertext": "So sieht ein Test aus, markiert mit at Test. assertEquals hat drei Teile: zuerst den erwarteten Wert, hier drei. Dann den tatsächlichen Wert, also das, was deine Methode liefert. Und eine Meldung, die du siehst, wenn der Test rot wird.",
+   "unten": [
+    "`assertEquals(` **erwartet**, **tatsächlich**, **Meldung** `)`",
+    "`@Test` macht die Methode zum Test – Klasse `FackellagerTest`"
+   ],
+   "groesse_unten": 22
   },
   {
    "typ": "punkte",
@@ -166,8 +159,7 @@
     "farbe": "gold",
     "titel": "Schon grün?",
     "text": [
-     "Mit `return 0;` ist **keinRaum** grün –",
-     "reiner Zufall, das zählt noch nicht."
+     "Mit `return 0;` ist **keinRaum** schon grün – reiner Zufall, das zählt noch nicht."
     ]
    },
    "kapitel": "Testrunner",
@@ -237,20 +229,14 @@
    "markiere": [
     2
    ],
-   "groesse": 22,
+   "groesse": 24,
    "unten": [
+    "+ 2 vor dem Teilen rundet **auf**",
     "`(7 + 2) / 3` = 3 · `(3 + 2) / 3` = 1 · `(0 + 2) / 3` = 0",
-    "Testrunner: **3 von 3 grün**"
+    "Alle Tests neu starten: **3 von 3 grün**"
    ],
-   "kasten": {
-    "farbe": "gruen",
-    "titel": "Der Trick",
-    "text": [
-     "+ 2 vor dem Teilen rundet **auf**",
-     "Danach **alle** Tests noch einmal starten"
-    ]
-   },
-   "sprechertext": "Der Trick: Vor dem Teilen zwei addieren, dann wird aufgerundet. Tests noch einmal starten – jetzt sind alle grün."
+   "sprechertext": "Der Trick: Vor dem Teilen zwei addieren, dann wird aufgerundet. Tests noch einmal starten – jetzt sind alle grün.",
+   "groesse_unten": 22
   },
   {
    "typ": "pause",
@@ -271,39 +257,30 @@
    "typ": "code",
    "titel": "Auflösung: der Test zehnRaeume",
    "code": "@Test\npublic void zehnRaeume() {\n    assertEquals(4, Fackellager.fackeln(10),\n                 \"10 Raeume: 4 Fackeln\");\n}",
-   "groesse": 20,
+   "groesse": 22,
    "unten": [
     "Erster Versuch: `10 / 3` = **3** → Test rot",
-    "Korrigiert: `(10 + 2) / 3` = **4** → Test grün"
+    "Korrigiert: `(10 + 2) / 3` = **4** → Test grün",
+    "Gute Tests prüfen **Grenzfälle**: 0, genau voll, angebrochen"
    ],
-   "kasten": {
-    "farbe": "gruen",
-    "titel": "Gute Tests",
-    "text": [
-     "prüfen auch **Grenzfälle**: 0, genau voll, angebrochen"
-    ]
-   },
-   "sprechertext": "Zehn Räume brauchen vier Fackeln. Der erste Versuch hätte drei geliefert, der Test wäre rot gewesen. Gute Tests prüfen genau solche Grenzfälle."
+   "sprechertext": "Zehn Räume brauchen vier Fackeln. Der erste Versuch hätte drei geliefert, der Test wäre rot gewesen. Gute Tests prüfen genau solche Grenzfälle.",
+   "groesse_unten": 22
   },
   {
    "typ": "code",
    "titel": "Hauptprogramm und println",
    "code": "// ausserhalb aller Klassen: Hauptprogramm\nint r = 7;\nprintln(\"Fackeln fuer \" + r + \" Raeume: \"\n        + Fackellager.fackeln(r));",
-   "groesse": 20,
+   "groesse": 22,
    "unten": [
-    "Ausgabe: `Fackeln fuer 7 Raeume: 3`"
+    "Ausgabe: `Fackeln fuer 7 Raeume: 3`",
+    "`println(…)` **ohne** `System.out`",
+    "Anweisungen **außerhalb** von Klassen = Hauptprogramm",
+    "Start mit dem grünen **Startknopf**"
    ],
-   "kasten": {
-    "titel": "Online-IDE",
-    "text": [
-     "`println(…)` **ohne** `System.out`",
-     "Anweisungen **außerhalb** von Klassen = Hauptprogramm",
-     "Start mit dem grünen **Startknopf**"
-    ]
-   },
    "kapitel": "Hauptprogramm",
    "regie": "In der IDE das Programm mit dem Startknopf laufen lassen und die Ausgabe zeigen.",
-   "sprechertext": "In der Online-IDE sind alle Anweisungen außerhalb von Klassen das Hauptprogramm, eine main-Methode brauchst du nicht. Ausgeben kannst du mit println, ohne System punkt out. Mit dem grünen Startknopf läuft das Programm. So probierst du deine Methoden auch ohne Tests aus."
+   "sprechertext": "In der Online-IDE sind alle Anweisungen außerhalb von Klassen das Hauptprogramm, eine main-Methode brauchst du nicht. Ausgeben kannst du mit println, ohne System punkt out. Mit dem grünen Startknopf läuft das Programm. So probierst du deine Methoden auch ohne Tests aus.",
+   "groesse_unten": 22
   },
   {
    "typ": "code",
@@ -312,22 +289,16 @@
    "markiere": [
     4
    ],
-   "groesse": 20,
-   "kasten": {
-    "farbe": "gold",
-    "titel": "Einschalten",
-    "text": [
-     "Rechtsklick auf den Workspace → „Einstellungen“",
-     "Häkchen bei **„Niedersachsen“**",
-     "Dann gibt es `Stack`, `Queue`, `DynArray`, `BinTree`"
-    ]
-   },
+   "groesse": 22,
    "unten": [
+    "Einschalten: Rechtsklick auf den Workspace → „Einstellungen“ → Häkchen **„Niedersachsen“**",
+    "Dann gibt es `Stack`, `Queue`, `DynArray`, `BinTree`",
     "Nicht generisch: Inhalt ist `Object` → **Cast** nötig (**P4**)"
    ],
    "kapitel": "Bibliothek „Niedersachsen“",
    "regie": "Rechtsklick auf den Workspace → Einstellungen zeigen (Beschriftung des Häkchens vorher in der echten IDE prüfen).",
-   "sprechertext": "Ab Welt vier brauchst du die Abitur-Klassen Stack, Queue, DynArray und BinTree. Dafür schaltest du die Bibliothek Niedersachsen ein: Rechtsklick auf den Workspace, Einstellungen, Häkchen setzen. In den Workspaces ab Welt vier ist sie schon an. Diese Klassen sind nicht generisch, sie speichern Object. Was du herausholst, musst du casten."
+   "sprechertext": "Ab Welt vier brauchst du die Abitur-Klassen Stack, Queue, DynArray und BinTree. Dafür schaltest du die Bibliothek Niedersachsen ein: Rechtsklick auf den Workspace, Einstellungen, Häkchen setzen. In den Workspaces ab Welt vier ist sie schon an. Diese Klassen sind nicht generisch, sie speichern Object. Was du herausholst, musst du casten.",
+   "groesse_unten": 22
   },
   {
    "typ": "code",
@@ -336,22 +307,16 @@
    "markiere": [
     3
    ],
-   "groesse": 20,
+   "groesse": 22,
    "unten": [
     "Zeile 3: Online-IDE **true** – echtes Java **false**",
-    "Zeile 4: überall **true**"
+    "Zeile 4: überall **true**",
+    "**P5**: Die Tests bleiben grün – im Abitur gilt Java: **immer** `equals`!"
    ],
-   "kasten": {
-    "farbe": "rot",
-    "titel": "P5",
-    "text": [
-     "Die Online-IDE vergleicht mit `==` den **Inhalt** – die Tests bleiben grün.",
-     "Im Abitur gilt Java: **immer** `equals`!"
-    ]
-   },
    "kapitel": "Stolpersteine",
    "regie": "Live zeigen, dass die Online-IDE bei Zeile 3 true ausgibt (vor der Aufnahme prüfen).",
-   "sprechertext": "Und der gemeinste Stolperstein: In der Online-IDE vergleicht das doppelte Gleichheitszeichen Zeichenketten nach ihrem Inhalt. Zeile drei gibt true aus, deine Tests bleiben grün. In echtem Java prüft es aber, ob es dasselbe Objekt ist – und dann kommt false heraus. Im Abitur zählt echtes Java: Vergleiche Zeichenketten immer mit equals. Falle P5."
+   "sprechertext": "Und der gemeinste Stolperstein: In der Online-IDE vergleicht das doppelte Gleichheitszeichen Zeichenketten nach ihrem Inhalt. Zeile drei gibt true aus, deine Tests bleiben grün. In echtem Java prüft es aber, ob es dasselbe Objekt ist – und dann kommt false heraus. Im Abitur zählt echtes Java: Vergleiche Zeichenketten immer mit equals. Falle P5.",
+   "groesse_unten": 22
   },
   {
    "typ": "punkte",
