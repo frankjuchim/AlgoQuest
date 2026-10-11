@@ -1,145 +1,409 @@
-# Algo Quest Lab 2.0 – interaktive Übungsplattform für den Informatik-LK
+# Algo Quest – Das Dungeon der Datenstrukturen
 
-Algo Quest Lab ist die Übungsplattform zur Einheit „Algo Quest – Das Dungeon der Datenstrukturen“ (LK Informatik eA,
-Niedersachsen). Schülerinnen und Schüler bearbeiten auf einer Weltkarte (Welt 0 Akademie … Welt 6 Endgegner) automatisch
-geprüfte Aufgaben im Abitur-Stil – Tracetabellen, Struktogramme nach EH §5, Bug-Hunts, Code-Puzzles, ADT-Simulationen,
-Baum- und Sortier-Interaktionen –, kämpfen gegen Bosse, trainieren mit Zufallsaufgaben und Warm-up-Karten und sammeln Punkte,
-Ränge und Abzeichen. Lehrkräfte verwalten ihre Kurse und sehen Lernstand, Aufgabenstatistik und das „Fallen-Profil“ (P1–P10).
+Unterrichtsreihe **und** Übungsplattform für die Einheit **Algorithmik und Datenstrukturen** im Informatik-LK
+(eA, Niedersachsen, Abitur ab 2027; Grundlage: Kerncurriculum 2017 + Ergänzende Hinweise Neufassung 2025 = „EH“).
 
-**v2.0 ersetzt die bisherige WebApp v1.x vollständig.** Punkte entstehen ausschließlich automatisch durch gelöste Aufgaben, Bosse und den Trainingsplatz.
+Dieses Dokument hat zwei Aufgaben:
 
-![Weltkarte](docs/weltkarte_alle_welten.png)
+1. Es beschreibt **vollständig**, was Algo Quest ist, wie es aufgebaut ist und wie es betrieben wird (Teil A–F).
+2. Es ist die **Blaupause** für vergleichbare Plattformen zu den übrigen Themen der Informatik-Oberstufe mit anderen
+   Sachkontexten. Teil G richtet sich ausdrücklich an neue Claude-Chats, die eine solche Plattform aufbauen sollen.
 
-## Funktionen
+Live: **https://algoquest.frankjuchim.de** · Themenübersicht ohne Anmeldung: `/themen`
 
-**Schüler** (Tablet/iPad-tauglich, Touch-Ziele ≥ 44 px, Tastatur und Screenreader)
-- Selbstanmeldung: Kurscode + Name → persönlicher Code `ABC-123` („Notiere deinen Code“). Weiterspielen auf jedem Gerät mit
-  Name + Code (ohne Kurscode; Codes werden kursübergreifend eindeutig vergeben, nur bei alten doppelten Codes fragt die
-  Startseite zusätzlich den Kurscode ab). Namen sind je Kurs eindeutig (Groß/Klein egal), 2–30 Zeichen.
-- Weltkarte mit Fortschrittsringen je Level, Trainingsplatz- und Boss-Knoten, gesperrte Welten ausgegraut.
-- Level-Seite: Merkkasten, Aufgabenliste (offen / gelöst / Lösung angesehen, Punkte), Karte „Programmieren in der Online-IDE“
-  (nur Info + Häkchen, 0 Punkte).
-- Aufgaben mit allen Blocktypen (Text, Code mit Zeilennummern und Lücken, Struktogramm als HTML/CSS nach EH §5, Tabelle,
-  Baum als SVG, Reihung, Raster, Klassenkarte nach EH §6, ADT, Hinweis) und Interaktionen (Lücken, Auswahl, Puzzle,
-  Bug-Hunt, Zuordnen, Baum klicken/bauen, Reihung tauschen/klicken, Raster, ADT-Simulation, mehrteilig, Schrittprüfung).
-  „Prüfen“, „Tipp“, „Lösung zeigen“ (danach 0 Punkte), Feedback je Feld/Schritt, Erklärung nach dem Lösen.
-  Bug-Hunts gestuft: erst die fehlerhafte Zeile finden (Teil a), dann erscheint die Korrektur (Teil b).
-- Punkte beim ersten Lösen: `round(punkte × max(0.25, 1 − 0.25·Fehlversuche − 0.2·Tipps))`.
-- Trainingsplatz (Welten 0, 2, 4, 5, 6): Zufallsaufgaben aus Generatoren (Ausdruck → Typ/Wert, Bubble-/Selection-/Insertionsort
-  ein Durchlauf, binäre Suche, Stapel/Schlange/dynamische Reihung, Suchbaum einfügen, Traversierungen); 1 Punkt je Aufgabe,
-  höchstens 30 pro Tag.
-- Boss-Kampf je Welt: Ziehung nach Stufen-Mix, serverseitiger Timer, kein Feedback während des Kampfes, Auswertung mit
-  Erklärungen, bester Versuch zählt, neuer Versuch nach 12 h, „besiegt“ ab 50 %.
-- Warm-up-Trainer (Leitner, 5 Fächer, aus v1 übernommen, ohne Punkte).
-- Profil: Punkte, Rang (Novize/Lehrling/Geselle/Meister/Großmeister bei 0/10/30/55/80 % der Level-Punkte aller
-  freigeschalteten Welten), Abzeichen, Fortschritt je Welt, „Deine Fallen“ (Fehlversuche je P1–P10), eigener Code.
-- Scoreboard (falls aktiviert): gesamt oder je Welt, eigener Eintrag hervorgehoben.
+![Algo Quest Lab – Beitritt mit persönlichem Code](materialien/WebApp/Screenshots/schueler_code.jpg)
 
-**Themen und Arbeitsblätter** (`/themen`, öffentlich, ohne Anmeldung)
-- Übersicht für die Abi-Vorbereitung: je Welt alle Level mit Thema, Doppelstunde, Arbeitsblatt (PDF-Link), Online-IDE-Datei
-  und „Üben →“ (Schüler: Level im Lab, Lehrkraft: Aufgaben-Vorschau), dazu Boss, Trainingsplatz und Warm-up.
-- Querschnitte „Nach Aufgabentyp“ (Tracetabelle, Rekursionstabelle, Struktogramm …) und „Nach Fallen P1–P10“ mit Links
-  auf die passenden Level. Verlinkt von Startseite, Schüler- und Lehrkraft-Navigation.
-- PDFs unter `/arbeitsblaetter/…` aus `materialien/Arbeitsblaetter_PDF` (im Image `/app/arbeitsblaetter`, abweichend:
-  `ARBEITSBLAETTER_DIR`); Zuordnung in `seed/arbeitsblaetter.json`. Dazu je Welt „Training auf Papier“: Papier-Boss
-  (W6: Probeklausur) und Warm-up-Karten ohne Lösungsteil. Keine Lösungen, Erwartungshorizonte oder Klausuren.
+---
 
-**Lehrkräfte**
-- Zugang auf Anfrage (Name, E-Mail, Schule, Passwort, Nachricht) → Freigabe durch den Superadmin.
-- Kurse anlegen (Kurscode 6 Zeichen), Beitritts-Link `/k/<KURSCODE>` + QR-Code (SVG).
-- Schülerliste (Name, Code, Punkte, gelöst, Rang, zuletzt aktiv): umbenennen, neuen Code erzeugen, löschen; alle Schüler
-  löschen bzw. Kurs löschen (Bestätigung durch Eintippen des Kursnamens).
-- Einstellungen: freigeschaltete Welten, Bosse automatisch (ab 60 % der Level-Punkte) / offen / gesperrt, Scoreboard für
-  Schüler, Beamer-Board, Anmeldung neuer Schüler offen.
-- Auswertung: Fortschrittsmatrix Schüler × Level, Boss-Ergebnisse, Aufgabenstatistik (Lösungsquote, Ø Fehlversuche, häufige
-  falsche Antworten), Fallen-Profil des Kurses, CSV-Export (Übersicht, Matrix, Aufgaben).
-- Abschluss-Urkunden (Kurs → „🏅 Urkunden“, Seite `/lehrer/urkunden?kurs=<id>`): eine A4-Urkunde je Schüler mit Name, Kurs,
-  Rang, Punkten, gelösten Aufgaben, Abzeichen und Platzierung (überall / nur Platz 1–3 / ausblenden), Datum und
-  Unterschriftslinie; Auswahl alle oder einzelne Schüler; optionale Leerzeile für den vollständigen Namen; Druckknopf (`@page` A4).
-- Aufgaben-Vorschau („📖 Aufgaben“): Welt → Level (mit AB- und IDE-Verweis, Merkkasten) → Aufgabe mit eingesetzter Lösung,
-  Tipps und Erklärung, inkl. Boss-Pool – zum Nachschlagen passend zu den Arbeitsblättern.
-- Beamer-Board `/board/<KURSCODE>`: Top 15, Weltfortschritt des Kurses, letzte 8 Erfolge, Auto-Aktualisierung alle 20 s
-  (bei Verbindungsfehler bleibt der letzte Stand stehen), noindex. Auch das Kurs-Scoreboard der Lehrkraft und das
-  Schüler-Scoreboard aktualisieren sich alle 20 s.
+## Inhalt
 
-**Superadmin** (aus Umgebungsvariablen): Anfragen bestätigen/ablehnen, Lehrkräfte deaktivieren/aktivieren/löschen,
-Einmal-Passwort setzen (Passwort-Reset ohne E-Mail), alle Kurse sehen, Seed-Bericht/Inhalte neu einlesen, Warm-up-Import,
-Backup/Restore (JSON).
+- [A. Das Konzept](#a-das-konzept)
+- [B. Was im Repository steckt](#b-was-im-repository-steckt)
+- [C. Die Plattform (Algo Quest Lab)](#c-die-plattform-algo-quest-lab)
+- [D. Inhalte: Aufgabenformat und Materialien](#d-inhalte-aufgabenformat-und-materialien)
+- [E. Qualitätssicherung](#e-qualitätssicherung)
+- [F. Betrieb, Datenschutz, Sicherheit, API](#f-betrieb-datenschutz-sicherheit-api)
+- [G. Blaupause: eine neue Plattform für ein anderes Thema](#g-blaupause-eine-neue-plattform-für-ein-anderes-thema)
+- [Anhang: API im Detail](#anhang-api-im-detail)
 
-## Rollen
+---
+
+## A. Das Konzept
+
+### A.1 Grundidee
+
+Ein Thema des Abiturs wird als **Spielwelt mit durchgehendem Sachkontext** erzählt (hier: ein Dungeon-Spiel, das die
+Lernenden im Laufe der Einheit „bauen“). Jede Doppelstunde ist ein **Level**, jede Welt endet mit einem **Boss**
+(Abitur-Training auf Zeit). Gelernt wird doppelt:
+
+- **auf Papier** – Arbeitsblätter, Papier-Bosse, Klausuren im Abitur-Format (handschriftlich, wie im Abitur),
+- **im Lab** – automatisch geprüfte Aufgaben im Abitur-Stil mit sofortiger Rückmeldung, Tipps und Erklärungen.
+
+Programmiert wird in der **Online-IDE** (online-ide.de, Bibliothek „Niedersachsen“) mit vorbereiteten Gerüsten und
+JUnit-Tests – die IDE bleibt extern und vergibt keine Punkte.
+
+### A.2 Didaktische Bausteine
+
+| Baustein | Zweck | Wo |
+|---|---|---|
+| **Welten** (0–6) | Gliederung der Einheit nach Kompetenzen, je eine Farbe und ein Teil der Story | Lab-Weltkarte, Materialordner |
+| **Level** (1 je DS) | ein Lernziel, Merkkasten, 6–8 Aufgaben steigender Stufe ★–★★★ | Lab, Arbeitsblatt „Im Lab üben“ |
+| **Arbeitsblatt** je Level | Infoteile, Beispiele, Aufgaben auf Papier, Lösung (LSG) für die Lehrkraft | `materialien/Welt*/2_Arbeitsblaetter`, `5_Loesungen` |
+| **Boss** je Welt | Abi-Probe auf Zeit: online (Ziehung aus Pool, kein Feedback, Auswertung am Ende) und als Papier-Boss mit Erwartungshorizont | Lab, `4_Boss` |
+| **Trainingsplatz** | Zufallsaufgaben aus Generatoren, unbegrenzt üben (1 Punkt, max. 30/Tag) | Lab |
+| **Warm-up-Karten** | 10 Minuten zum Stundenbeginn; Leitner-Trainer im Lab ohne Punkte, als Karten zum Drucken | Lab, `Werkzeuge/Warm-up-Karten` |
+| **Fallen P1–P10** | die zehn häufigsten Punktverluste im Abitur, überall gleich nummeriert (Aufgaben, Profil „Deine Fallen“, Kurs-Auswertung, Materialien) | `src/domain.js`, SPEC W6 §2 |
+| **Werkzeugkarten** | Abi-Check, Zeitbudget, Notation (Struktogramm, Klassendiagramm, Signaturen) | `Werkzeuge/` |
+| **Punkte, Ränge, Abzeichen** | Motivation – entstehen **nur automatisch** im Lab, keine manuelle Vergabe, keine Erfahrungspunkte-Währung | Lab |
+| **Teams** | feste Tischgruppen | Unterricht |
+| **Erklärvideos** | je Welt ein Video auf YouTube (Kanal „frankjuchim“), Folien mit Kamera-Zone | `materialien/Videos` (nicht öffentlich) |
+
+### A.3 Verbindliche fachliche Konventionen (Algo Quest)
+
+Diese Konventionen stehen in `CLAUDE.md` und gelten in **allen** Materialien und im Lab:
+
+- **Struktogramme nach EH §5** (Zuweisung `←`, „gib … zurück“, „für i von 0 bis n − 1“, Verzweigung als Dreieck, Kopf
+  `name(p: Typ): Typ`, keine Java-Syntax), **Klassenkarten nach EH §6** (`+`/`-` Pflicht, Konstruktor mit `c`,
+  Assoziation ohne Kardinalitäten), deutsche Typnamen (Ganzzahl, Kommazahl, Wahrheitswert, Zeichen, Zeichenkette, nichts),
+  „Reihung“ statt „Array“.
+- **Tracetabellen** nur mit Variablen (keine Bedingungsspalten); im Code markiert `// → Tabellenzeile (Startwerte)` bzw.
+  `// → Tabellenzeile` jede Stelle, an der eine Zeile entsteht. **Rekursionstiefe:** Erstaufruf = 0. **Baumhöhe:** leer 0, Blatt 1.
+- **Online-IDE:** `Stack`, `Queue`, `DynArray`, `BinTree` nicht generisch (Casts), `println` ohne `System.out`,
+  `==` vergleicht dort Zeichenketten inhaltlich → im Unterricht immer `equals` verlangen; nur erlaubte
+  Zeichenketten-Operationen.
+- **Ansprache:** Schülerinnen und Schüler werden geduzt; Prüfungsaufgaben im Abitur-Stil gesiezt (Operatoren, [x BE]).
+
+### A.4 Ablauf der Einheit
+
+40 Doppelstunden in 7 Welten: **0 Akademie** (Java-Grundlagen, Notation) · **1 Heldenschmiede** (Klassen, Objekte,
+Vererbung) · **2 Rangliste** (Suchen, Sortieren, Effizienz) · **3 Labyrinth** (Rekursion, 2D-Reihungen, Teile und
+herrsche) · **4 Hafen** (Stapel, Schlange, dynamische Reihung) · **5 Wald** (Binärbäume, Suchbäume) · **6 Endgegner**
+(Abi-Training, Fallen P1–P10, Probeklausur, Klausur). Einstieg für die Lehrkraft:
+`materialien/00_Lehrerhinweise/AQ_Gesamtuebersicht_DS1-40.docx`.
+
+Umfang: 36 Level, 388 Lab-Aufgaben, 7 Bosse, 107 Warm-up-Karten, Trainingsplatz-Generatoren in den Welten 0, 2, 4, 5, 6,
+rund 80 Word-/PowerPoint-Dateien, 9 Erklärvideo-Drehbücher.
+
+---
+
+## B. Was im Repository steckt
+
+```
+src/                 Server (Node 20, Express 5, better-sqlite3, helmet, qrcode) – keine weiteren Abhängigkeiten
+  app.js             Express, Helmet/CSP, Sitzungen, statische Seiten, PDF-Auslieferung; security.js (Passwörter, Cookies, Rate-Limits)
+  server.js          Start (PORT, DATA_DIR)
+  db.js, domain.js   Schema/Upgrade, fachliche Konstanten (Welten, Ränge, Fallen, Aufgabenkategorien)
+  routes/            API: schueler.js, lehrer.js, admin.js
+  services/          Fachlogik: inhalte (Seed), konten, kurse, lernen, stand (Abzeichen), boss, training, auswertung,
+                     kata (= Warm-up-Trainer), themen (/themen), lehrkraftMaterial (PDF-Downloads), backup
+  content/           format.js (Mini-Markdown), checker.js (Prüfer, serverseitig), validator.js, generators.js (Trainingsplatz)
+public/              Oberfläche ohne Build-Schritt (Vanilla JS, keine CDNs, keine Inline-Skripte):
+                     index.html (Start), spiel.html (Schüler), lehrer.html (Lehrkraft + Superadmin), board.html (Beamer),
+                     themen.html, urkunden.html, datenschutz.html; static/js/render.js (Blöcke), interact.js (Interaktionen),
+                     static/js/shared/baum.js (Klammerbäume, Server + Browser)
+seed/welten/         welt0–6.json = Lab-Aufgaben (maßgeblich) · seed/warmup/ = Warm-up-Karten · seed/arbeitsblaetter.json
+scripts/validate.js  Inhalts-Validator
+test/                node:test + supertest (13 Testdateien); fixtures/welt_beispiel.json (jede Interaktion/jeder Block); e2e/e2e.js (Playwright)
+docs/                AUFGABENFORMAT.md (verbindlich), ONLINE-IDE_TESTPROTOKOLL.md, Screenshots
+materialien/         Unterrichtsmaterial (docx/pptx = maßgebliche Fassung), siehe D.3
+quellen/specs/       Spezifikationen je Welt (SPEC_AlgoQuest_W*.md), App-Spezifikation (SPEC_AlgoLab.md), Level-Plan
+werkzeuge/           Prüf- und Erzeugungsskripte (Python 3 + javac), siehe E
+.github/workflows/   GitHub-Prüfung bei jedem Push/PR
+CLAUDE.md            Arbeitsanweisungen und Konventionen für Claude (verbindlich)
+Dockerfile, captain-definition   Deployment über CapRover
+```
+
+---
+
+## C. Die Plattform (Algo Quest Lab)
+
+### C.1 Rollen
 
 | Rolle | Anmeldung | sieht |
 |---|---|---|
-| Schüler | Name + Code (Beitritt: Kurscode + Name) | eigener Lernstand, Scoreboard des eigenen Kurses (falls aktiv) |
-| Lehrkraft | E-Mail + Passwort (nach Freigabe) | nur eigene Kurse (fremde Kurse → 404) |
-| Superadmin | `ADMIN_EMAIL` + `ADMIN_PASSWORD` | alles |
+| Schüler | **Beitritt:** Kurscode + selbst gewählter Name → persönlicher Code `ABC-234`; **Weiterspielen:** Name + Code | eigener Lernstand, Scoreboard des eigenen Kurses (falls aktiv) |
+| Lehrkraft | E-Mail + Passwort (Konto auf Anfrage, Freigabe durch Superadmin) | nur eigene Kurse (fremde → 404) |
+| Superadmin | `ADMIN_EMAIL` + `ADMIN_PASSWORD` (Umgebungsvariablen) | alles |
 
-## Betrieb mit CapRover
+Persönliche Codes werden **kursübergreifend eindeutig** vergeben; Name + Code genügen deshalb zum Weiterspielen. Nur bei
+Altbeständen mit doppeltem Code fragt die Startseite zusätzlich den Kurscode ab.
 
-1. Neue App anlegen (z. B. `algoquest`), **HTTP-Port 80**, „Persistent Data“ aktivieren und das Verzeichnis
-   **`/app/data`** als Persistent Directory einbinden (hier liegt die SQLite-Datenbank `algoquest.db`).
-2. Umgebungsvariablen setzen:
+### C.2 Schüler (Tablet-tauglich, Touch-Ziele ≥ 44 px, Tastatur und Screenreader)
+
+- **Weltkarte** mit Fortschrittsringen je Level, Trainingsplatz- und Boss-Knoten; nicht freigeschaltete Welten ausgegraut.
+- **Level-Seite:** Merkkasten, Aufgabenliste (offen / gelöst / Lösung angesehen), Karte „Programmieren in der Online-IDE“
+  (Info + Häkchen, 0 Punkte).
+- **Aufgaben** aus Blöcken (Text, Code mit Zeilennummern und Lücken, Struktogramm nach EH §5, Tabelle, Baum als SVG,
+  Reihung, Raster, Klassenkarte nach EH §6, ADT, Hinweis) und Interaktionen (Lücken, Auswahl, Puzzle, Bug-Hunt, Zuordnen,
+  Baum klicken/bauen, Reihung tauschen/klicken, Raster, ADT-Simulation, mehrteilig, Schrittprüfung).
+  „Prüfen“, „Tipp“, „Lösung zeigen“ (danach 0 Punkte), Feedback je Feld/Schritt, Erklärung nach dem Lösen.
+  Antwortreihenfolgen werden bei jedem Anzeigen gemischt. Bug-Hunts gestuft: erst die Fehlerzeile (Teil a), dann die Korrektur.
+- **Punkte** beim ersten Lösen: `round(punkte × max(0.25, 1 − 0.25·Fehlversuche − 0.2·Tipps))`; Standard 10/20/30 je Stufe.
+- **Trainingsplatz:** Zufallsaufgaben (Ausdruck → Typ/Wert, Sortierdurchläufe, binäre Suche, Stapel/Schlange/DynArray,
+  Suchbaum einfügen, Traversierungen …), 1 Punkt je Aufgabe, höchstens 30 pro Tag.
+- **Boss:** Ziehung nach Stufen-Mix, serverseitiger Timer, kein Feedback während des Kampfes, Auswertung mit Erklärungen,
+  bester Versuch zählt, neuer Versuch nach 12 h, „besiegt“ ab 50 %; frei ab 60 % der Level-Punkte (einstellbar).
+- **Warm-up-Trainer** (Leitner, 5 Fächer, ohne Punkte), **Profil** (Punkte, Rang Novize → Großmeister bei 0/10/30/55/80 %
+  der Level-Punkte, Abzeichen, Fortschritt je Welt, „Deine Fallen“ P1–P10), **Scoreboard** (falls aktiviert).
+
+### C.3 Themen und Arbeitsblätter (`/themen`, öffentlich)
+
+Je Welt alle Level mit Thema, Doppelstunde, Arbeitsblatt-PDF, Online-IDE-Datei und „Üben →“; dazu Papier-Boss
+(W6: Probeklausur) und Warm-up-Karten **ohne** Lösungsteil. Querschnitte „Nach Aufgabentyp“ und „Nach Fallen P1–P10“.
+PDFs unter `/arbeitsblaetter/…` aus `materialien/Arbeitsblaetter_PDF`; Zuordnung in `seed/arbeitsblaetter.json`.
+**Nie** Lösungen, Erwartungshorizonte oder Klausuren (Test wacht darüber).
+
+### C.4 Lehrkräfte
+
+- Kurse anlegen (Kurscode, Beitritts-Link `/k/<KURSCODE>`, QR-Code als SVG), Schülerliste (umbenennen, neuer Code, löschen).
+- Einstellungen: freigeschaltete Welten, Bosse automatisch/offen/gesperrt, Scoreboard, Beamer-Board, Anmeldung offen.
+- Auswertung: Matrix Schüler × Level, Boss-Ergebnisse, Aufgabenstatistik (Lösungsquote, häufige falsche Antworten),
+  Fallen-Profil des Kurses, CSV-Export; Abschluss-Urkunden (A4).
+- **Aufgaben-Vorschau** mit Lösungen, Tipps und Erklärungen (inkl. Boss-Pool).
+- **Materialien:** alle Lösungen, Erwartungshorizonte, Präsentationen, Lehrerhinweise und Klausuren als PDF, je Welt neben
+  der Schülerfassung – nur für angemeldete Lehrkräfte (`/lehrkraft/dateien/…`, Whitelist aus
+  `materialien/Lehrkraft_PDF/verzeichnis.json`, sonst 404).
+- **Beamer-Board** `/board/<KURSCODE>` (Top 15, Kursfortschritt, letzte Erfolge); alle Scoreboards aktualisieren sich alle 20 s.
+
+**Superadmin:** Anfragen freigeben, Lehrkräfte verwalten, Einmal-Passwort, alle Kurse, Seed-Bericht/Inhalte neu einlesen,
+Warm-up-Import, Backup/Restore (JSON).
+
+---
+
+## D. Inhalte: Aufgabenformat und Materialien
+
+### D.1 Lab-Aufgaben (`seed/welten/welt<N>.json`)
+
+Verbindliches Format: **[docs/AUFGABENFORMAT.md](docs/AUFGABENFORMAT.md)** – Welt → Level → Aufgaben, jede Aufgabe mit
+`id`, `titel`, `stufe`, `punkte`, `kategorie`, `fallen`, `inhalt` (Blöcke), `interaktion`, `loesung`, `tipps`,
+`erklaerung`. Beim Start werden die Dateien per Upsert nach `id` geladen (Lernstände bleiben); fehlerhafte Aufgaben werden
+ausgelassen, die App startet immer (Bericht im Superadmin-Bereich). Prüfen: `npm run validate`.
+
+Die Prüfung der Antworten erfolgt **ausschließlich serverseitig** (`src/content/checker.js`); der Client bekommt Lösungen,
+Erklärungen und nicht abgerufene Tipps erst nach dem Lösen bzw. „Lösung zeigen“.
+
+### D.2 Warm-up-Karten und Trainingsplatz
+
+- `seed/warmup/warmup_*.json` (`{"version": 1, "karten": […]}`), dazu dieselben Karten als Word-Datei zum Drucken.
+- Trainingsplatz-Generatoren in `src/content/generators.js` (deterministisch per Seed, serverseitig geprüft).
+
+### D.3 Unterrichtsmaterial (`materialien/`)
+
+```
+00_Lehrerhinweise/    Gesamtübersicht DS 1–40, Lehrerhinweise je Welt
+Welt<N>_<Name>/
+  1_Praesentation     PowerPoint je Welt (+ Kickoff)
+  2_Arbeitsblaetter   Arbeitsblätter (docx) mit „Im Lab üben“-Kasten
+  3_Online-IDE        Gerüste (.txt): Kopfblock, „GERÜST – hier nichts verändern“ / „DEIN TEIL“, JUnit-Tests
+  4_Boss              Papier-Boss; Welt 6: Probeklausur, Klausur, Nachschreibklausur
+  5_Loesungen         LSG, Erwartungshorizonte, IDE-Musterlösungen – NUR Lehrkraft
+Werkzeuge/            Werkzeugkarten, Warm-up-Karten (docx)
+Online-IDE/           Import-Workspaces (JSON) je Welt – ERZEUGT aus den .txt
+Arbeitsblaetter_PDF/  Schülerfassungen als PDF (öffentlich über /themen) – ERZEUGT
+Loesungen_Portal/     Lösungen als PDF, gespiegelt zu Arbeitsblaetter_PDF – ERZEUGT, NUR Lehrkraft (im Lab nach Anmeldung)
+Loesungen_Arbeitsblaetter/  dieselben Lösungen nach Art sortiert – ERZEUGT, NUR Lehrkraft
+Lehrkraft_PDF/        Präsentationen, Lehrerhinweise, Klausuren als PDF + verzeichnis.json – ERZEUGT, NUR Lehrkraft
+Videos/               Erklärvideos: Übersicht, je Video Folien (Kamera-Zone unten rechts frei) + Drehbuch – NICHT öffentlich
+WebApp/               README, Aufgabenformat, Screenshots
+```
+
+Die **docx/pptx sind die maßgebliche Fassung** und werden direkt bearbeitet (python-docx/python-pptx, danach mit
+LibreOffice nach PDF rendern und Seiten ansehen). Gestaltung: #1F4E79 primär, Gold #B8860B, Grün #548235, Rot #C00000,
+Kasten #DBE7F5; Calibri 11 pt, Consolas 10 pt.
+
+### D.4 Erzeugte Dateien
+
+| Befehl | erzeugt | wann |
+|---|---|---|
+| `npm run workspaces` | `materialien/Online-IDE` | nach Änderungen an Gerüsten/LSG (.txt) |
+| `npm run arbeitsblaetter` | `materialien/Arbeitsblaetter_PDF` | nach Änderungen an Arbeitsblättern, Werkzeugkarten, Papier-Bossen, Warm-up |
+| `npm run loesungen` | `Loesungen_Portal`, `Loesungen_Arbeitsblaetter` | nach Änderungen an Lösungen/Erwartungshorizonten |
+| `npm run lehrkraft` | `Lehrkraft_PDF` + `verzeichnis.json` | nach Änderungen an Präsentationen, Lehrerhinweisen, Klausuren |
+| `python3 werkzeuge/video_folien.py` | Video-Folien + Drehbücher | nach Änderungen an einer `video.json` |
+
+Jede erzeugte Sammlung hat ein `--pruefen`, das in der GitHub-Prüfung läuft (Vollständigkeit/Aktualität).
+
+---
+
+## E. Qualitätssicherung
+
+Grundsatz: **Jede Lösung wird programmatisch geprüft, bevor sie committet wird.**
+
+| Werkzeug | prüft |
+|---|---|
+| `npm test` | API, Rechte, Prüfer, Generatoren, Boss, Abzeichen, Themen, Lehrkraft-Downloads, Datenschutz-Grenzen (z. B. keine Lösungen im öffentlichen Ordner) |
+| `npm run validate` | Lab-Inhalte: Schema, Lücken ↔ Lösungen, Klammerbäume, Struktogramm-Knoten, Punkte, Boss-Mix, Hinweis auf Bedingungsspalten in Tracetabellen |
+| `werkzeuge/ide-pruefung/ide_pruefen.py` | Online-IDE-Gerüste und LSG mit echtem `javac` gegen einen **Nachbau der Bibliothek „Niedersachsen“** (nicht generisch), Testrunner, Gerüst ↔ LSG identische Tests |
+| `werkzeuge/ide-pruefung/seed_code_pruefen.py` | Java-Codeblöcke der Lab-Aufgaben kompilieren (Bug-Hunts als absichtlich fehlerhaft markiert) |
+| `werkzeuge/materialien_pruefen.py` | docx/pptx/txt: Altbegriffe der Vorgängerversion (Liste in CLAUDE.md), Generics bei NI-Klassen, verbotene Zeichenketten-Operationen, Bedingungsspalten in Tracetabellen; `--rendern` wandelt alles nach PDF |
+| `npm run e2e` | Playwright-Durchlauf durch alle Rollen und Interaktionen, Screenshots nach `docs/` |
+| `npm run pruefen` | **alles** oben (außer e2e) |
+
+Zusätzlich gilt: Traces, Rekursionstabellen, Sortierschritte und Bäume per instrumentiertem Programm nachrechnen
+(Prüfskripte nur im Scratchpad, nicht im Repo); Folien und Arbeitsblätter nach jeder Änderung rendern und ansehen.
+
+---
+
+## F. Betrieb, Datenschutz, Sicherheit, API
+
+### F.1 Betrieb mit CapRover
+
+> ⚠️ **`main` ist direkt mit CapRover verbunden: Jeder Push auf `main` startet sofort den Live-Build.**
+> Immer auf Feature-Branches arbeiten; nach `main` nur nach ausdrücklicher Freigabe und mit grüner Prüfung
+> (Fast-Forward: `git fetch origin main && git merge-base --is-ancestor origin/main HEAD && git push origin HEAD:main`,
+> danach `/healthz` auf die neue Version prüfen).
+
+1. App anlegen, **HTTP-Port 80**, Persistent Directory **`/app/data`** (SQLite `algoquest.db`).
+2. Umgebungsvariablen:
 
    | Variable | Bedeutung |
    |---|---|
    | `ADMIN_EMAIL` | Login des Superadmins (Standard `admin`) |
-   | `ADMIN_PASSWORD` | Passwort des Superadmins (mind. 10 Zeichen empfohlen; ohne → Superadmin-Login gesperrt). Wird bei jedem Start gesetzt; eine Änderung beendet bestehende Superadmin-Sitzungen. |
-   | `SESSION_SECRET` | langer Zufallswert (≥ 16 Zeichen) zum Signieren der Sitzungs-Cookies – ohne ihn müssen sich nach jedem Neustart alle neu anmelden |
-   | `PORT` | Standard 80 |
-   | `DATA_DIR` | Standard `/app/data` |
-   | `TRUST_PROXY` | Standard `1` (ein Proxy, z. B. CapRover/nginx); `false` ohne Proxy |
-   | `ARBEITSBLAETTER_DIR` | optional: Ordner mit den Arbeitsblatt-PDFs (Standard im Image `/app/arbeitsblaetter`) |
+   | `ADMIN_PASSWORD` | Passwort des Superadmins (ohne → Superadmin-Login gesperrt); wird bei jedem Start gesetzt |
+   | `SESSION_SECRET` | langer Zufallswert (≥ 16 Zeichen) zum Signieren der Cookies |
+   | `PORT` / `DATA_DIR` | Standard 80 / `/app/data` |
+   | `TRUST_PROXY` | Standard `1` (hinter CapRover/nginx) |
+   | `ARBEITSBLAETTER_DIR`, `MATERIALIEN_DIR` | optional: abweichende Ordner für öffentliche PDFs bzw. Lehrkraft-PDFs |
 
-3. HTTPS in CapRover aktivieren (Cookies werden dann automatisch `secure`).
-4. Deploy: Die App ist per GitHub-Webhook mit dem Branch `main` verbunden – **jeder Push auf `main` baut und startet die
-   Live-Version** (`captain-definition` → `Dockerfile`). Deshalb auf Feature-Branches arbeiten; die GitHub Action
-   „Prüfung“ führt bei jedem Push und Pull Request `npm test`, `npm run validate` und die Inhaltsprüfungen aus.
-   Alternativ: Ordner als tar hochladen oder `caprover deploy`.
-   Healthcheck: `GET /healthz`.
+3. HTTPS aktivieren (Cookies dann `secure`). Healthcheck: `GET /healthz` (liefert die Version).
+4. Ins Image kommen nur `src/`, `public/`, `seed/`, `scripts/`, `docs/AUFGABENFORMAT.md`,
+   `materialien/Arbeitsblaetter_PDF` (öffentlich) sowie `materialien/Loesungen_Portal` und `materialien/Lehrkraft_PDF`
+   (nur für Lehrkräfte) – geregelt durch `.dockerignore` und `Dockerfile`, abgesichert durch Tests.
 
-Lokal: `npm install`, dann `npm run dev` (Port 3000, Superadmin `admin` / `admin1234`) bzw.
-`WELT_DATEIEN=test/fixtures/welt_beispiel.json npm run dev` mit der Beispielwelt.
+Lokal: `npm install`, `npm run dev` (Port 3000, Superadmin `admin` / `admin1234`), mit Beispielwelt:
+`WELT_DATEIEN=test/fixtures/welt_beispiel.json npm run dev`. Upgrade von v1.x: alte Datenbank wird beim Start als
+`algoquest.v1-backup-<datum>.db` gesichert, keine Datenübernahme.
 
-## Inhalte
+### F.2 Datenschutz
 
-- Welten: `seed/welten/welt<N>.json` – Format: **[docs/AUFGABENFORMAT.md](docs/AUFGABENFORMAT.md)**.
-  Bei jedem Start Upsert nach id (Lernstände bleiben); fehlerhafte Aufgaben werden ausgelassen, eine unbrauchbare Datei
-  übersprungen – die App startet immer (Bericht im Superadmin-Bereich unter „Inhalte“).
-- Prüfen vor dem Deploy: `npm run validate` bzw. `node scripts/validate.js <datei>`.
-- Warm-up-Karten: `seed/warmup/warmup_*.json` (`{"version": 1, "karten": [...]}`), zusätzlich Import im Superadmin-Bereich.
+- Gespeichert: selbst gewählter Schülername (Empfehlung „Vorname + Initial“), persönlicher Code, Kurs, Lernstand;
+  bei Lehrkräften Name, E-Mail, Schule, Nachricht, Passwort-Hash (scrypt). **Keine Klarnamen** in Beispieldaten,
+  Screenshots, Tests, Materialien und Videos.
+- Keine externen Ressourcen/CDNs, kein Tracking; strikte CSP ohne Inline-Skripte; `X-Robots-Tag: noindex`.
+- Cookies signiert (HMAC-SHA256), `httpOnly`, `SameSite=Lax`; Schüler 30 Tage, Lehrkräfte 8 h.
+- Löschfunktionen für Schüler, Kurse, Lehrkräfte. Datenschutzhinweise `/datenschutz` (Angaben der Schule in `[…]` ergänzen).
+- IP-Adressen nur im Arbeitsspeicher für Rate-Limits (≤ 60 min).
 
-## Upgrade von v1.x
+### F.3 Sicherheit
 
-Beim Start erkennt Algo Quest Lab eine Datenbank der Vorgängerversion v1.x (an deren Tabellen bzw. `meta.schema_version ≤ 2`)
-im selben `DATA_DIR`. Sie wird nach **`algoquest.v1-backup-<datum>.db`** umbenannt (inkl. WAL-Dateien; bei Namensgleichheit
-mit Zähler) und eine neue Datenbank angelegt – **keine Datenübernahme**. Das Log enthält einen Hinweis. Die Sicherung kann
-bei Bedarf mit jedem SQLite-Werkzeug geöffnet werden. Neue Schema-Version: 3.
-
-## Datenschutz
-
-- Gespeichert werden nur: selbst gewählter Schülername (Empfehlung „Vorname + Initial“), persönlicher Code, Kurszugehörigkeit,
-  Lernstand (Fortschritt, Fehlversuche, Tipps, Punkte, Abzeichen, Boss-/Trainingsergebnisse, Warm-up-Kartei, zuletzt aktiv);
-  bei Lehrkräften Name, E-Mail, Schule, Nachricht, Passwort-Hash (scrypt).
-- Keine externen Ressourcen/CDNs, keine Tracking-Cookies; strikte Content-Security-Policy ohne Inline-Skripte;
-  `X-Robots-Tag: noindex`.
-- Sitzungs-Cookies: signiert (HMAC-SHA256), `httpOnly`, `SameSite=Lax`, hinter HTTPS `secure`; Schüler 30 Tage, Lehrkräfte 8 h.
-- Löschfunktionen: einzelne Schüler, alle Schüler eines Kurses, Kurs, Lehrkraft (mit allen Kursen).
-- Datenschutzhinweise: `/datenschutz` (`public/datenschutz.html`) – beschreibt die tatsächliche Verarbeitung; Anschrift,
-  Schulleitung, Datenschutzbeauftragte:r, Rechtsgrundlage, Hoster und Löschfrist muss die Schule noch eintragen (`[…]`).
-- IP-Adressen werden nur im Arbeitsspeicher für die Rate-Limits gezählt und nach Ablauf des Zeitfensters (≤ 60 min) gelöscht.
-
-## Sicherheit
-
-- Lösungen, Erklärungen und noch nicht abgerufene Tipps verlassen den Server erst nach dem Lösen bzw. „Lösung zeigen“;
-  Boss-Aufgaben sind nur im laufenden Kampf abrufbar; Prüfung ausschließlich serverseitig.
-- Alle Eingaben werden validiert, SQL nur parametrisiert, Ausgaben XSS-sicher (DOM-Textknoten, eigenes Mini-Markdown).
+- Lösungen, Erklärungen und nicht abgerufene Tipps verlassen den Server erst nach dem Lösen/Aufdecken; Boss-Aufgaben nur
+  im laufenden Kampf; Prüfung nur serverseitig. Lehrkraft-PDFs nur nach Anmeldung und nur aus der Whitelist.
+- Eingaben validiert, SQL parametrisiert, Ausgaben als DOM-Textknoten (eigenes Mini-Markdown).
 - CSRF: schreibende API-Anfragen nur mit passender `Origin`/`Referer` und als JSON.
-- Rate-Limits: Beitritt (60 / 10 min je IP), Schüler-Login (8 Fehlversuche / 15 min je Konto, 100 je IP),
-  Lehrkraft-Login (8 je Konto, 20 je IP / 15 min), Registrierung (5 / h je IP), Prüfen/Tipp/Aufdecken (90 / min je Schüler).
-- Passwörter: `crypto.scrypt`, N = 32768, r = 8, p = 1, 64 Byte, 16 Byte Salt je Passwort; Format
-  `scrypt$N$r$p$salt$hash`. Mindestlänge 10 Zeichen.
+- Rate-Limits: Beitritt 60 / 10 min je IP; Schüler-Login 8 Fehlversuche / 15 min je Name, 100 je IP; Lehrkraft-Login
+  8 je Konto, 20 je IP; Registrierung 5 / h je IP; Prüfen/Tipp/Aufdecken 90 / min je Schüler.
+- Passwörter: `crypto.scrypt` (N = 32768, r = 8, p = 1), Mindestlänge 10.
 
-## API-Übersicht
+### F.4 API (Auszug)
+
+Alle Antworten JSON; schreibende Anfragen mit `Content-Type: application/json` und gleicher Herkunft.
+
+| Bereich | Wichtige Endpunkte |
+|---|---|
+| Öffentlich | `GET /healthz` · `GET /api/sitzung` · `GET /api/kurs/:code` · `POST /api/schueler/beitreten {kurscode, name}` · `POST /api/schueler/anmelden {name, code, kurscode?}` (409 `kurscodeNoetig` nur bei Altbeständen) · `GET /api/board/:code` · `GET /api/themen` · `POST /api/lehrer/registrieren` · `POST /api/lehrer/anmelden` |
+| Schüler | `GET /api/welten` · `GET /api/levels/:id` · `GET /api/aufgaben/:id` · `POST /api/aufgaben/:id/pruefen\|tipp\|aufdecken` · `/api/training/…` · `/api/boss/…` (start, kampf, antwort, beenden) · `GET /api/profil` · `GET /api/scoreboard` · `/api/kata/…` (Warm-up) |
+| Lehrkraft (`/api/lehrer`) | `/ich` · `/passwort` · `/kurse` (CRUD, Schüler, Einstellungen, Auswertung, `export.csv`, `qr.svg`, `urkunden`) · `/vorschau` · `/materialien`; Dateien: `GET /lehrkraft/dateien/<pfad>` |
+| Superadmin (`/api/admin`) | `/lehrkraefte` (Status, Einmal-Passwort, löschen) · `/backup` · `/restore` · `/katas` · `/inhalte` · `/inhalte/neu-laden` |
+
+---
+
+## G. Blaupause: eine neue Plattform für ein anderes Thema
+
+> **An Claude:** Dieser Teil ist deine Arbeitsgrundlage, wenn du für ein weiteres Thema der Informatik-Oberstufe eine
+> Plattform „wie Algo Quest“ aufbauen sollst. Lies zusätzlich `CLAUDE.md`, `docs/AUFGABENFORMAT.md` und eine
+> Welt-Spezifikation (z. B. `quellen/specs/SPEC_AlgoQuest_W4.md`), bevor du planst.
+
+### G.1 Was übernommen wird – und was neu entsteht
+
+| übernehmen (themenunabhängig) | neu je Thema |
+|---|---|
+| gesamte App (`src/`, `public/`, Tests, Dockerfile) – Rollen, Kurse, Punkte, Ränge, Abzeichen, Boss, Warm-up, Scoreboards, Themenseite, Lehrkraft-Materialien, Datenschutz/Sicherheit | **Sachkontext** (Story, Weltnamen, Figuren, Farben) |
+| Aufgabenformat (Blöcke, Interaktionen, serverseitige Prüfung) | **Welten/Level** (Kompetenzen laut KC/EH), Lab-Aufgaben (`seed/welten`) |
+| Didaktisches Gerüst: Welt → Level (1 je DS) → Arbeitsblatt + Lab + Boss; Papier und Lab doppelt; Fallen-Liste; Warm-up; Werkzeugkarten; Videos | **Fallen-Liste** des Themas (z. B. P1–P10 neu definieren), Aufgabenkategorien (`LAB_KATEGORIEN`) |
+| Werkzeuge: PDF-Erzeugung, Lösungs-Portal, Lehrkraft-Downloads, Materialprüfung, Video-Generator, CI | ggf. **neue Blocktypen/Interaktionen** (z. B. Automat, ER-Diagramm, SQL-Tabelle) + passende Prüfer und Trainingsplatz-Generatoren |
+| Konventionen: Abitur-Stil, duzen/siezen, keine Klarnamen, Lösungen nie öffentlich, `main` = live | **fachliche Notationen** des Themas (z. B. EH-Vorgaben zu Automaten, Datenbankschema, SQL) und deren Prüfwerkzeuge |
+
+### G.2 Themen der Informatik-Oberstufe und mögliche Sachkontexte
+
+Die Themenfelder bitte **mit dem Kerncurriculum (KC) und den aktuellen Ergänzenden Hinweisen abgleichen** – die
+folgende Liste ist eine Arbeitsgrundlage, keine verbindliche Gliederung.
+
+| Themenfeld (Vorschlag) | Kern fürs Abitur | möglicher Sachkontext | typische Lab-Interaktionen |
+|---|---|---|---|
+| Daten und Datenbanken | ER-Modell, relationales Modell, Normalisierung, SQL (Abfragen, Joins, Gruppierung) | Festival- oder Zoo-Verwaltung, Bibliothek einer Raumstation | SQL-Lücken, Ergebnis-Tabelle vorhersagen, ER → Relationen zuordnen, Fehler in Abfragen finden |
+| Formale Sprachen und Automaten | DEA/NEA, Grammatiken, reguläre Ausdrücke, ggf. Kellerautomat/Turingmaschine (eA) | Getränkeautomat, Zugangscodes einer Geheimbasis, Sprachen einer fremden Spezies | Automat simulieren (Zustandsfolge), Wörter akzeptieren/ablehnen, Ableitungen ordnen, Übergangstabelle ergänzen |
+| Kryptologie und Informationssicherheit | klassische Verfahren, symmetrisch/asymmetrisch, RSA, Hash, Signatur | Agentenschule, Nachrichten zwischen Raumschiffen | Ver-/Entschlüsseln in Schritten, Schlüssel berechnen, Angriff einordnen |
+| Netze und Kommunikation | Schichtenmodell, Protokolle, Adressierung, Routing | Post- und Funknetz einer Inselwelt | Paketweg tracen, Protokollablauf ordnen, Adressen zuordnen |
+| Objektorientierte Modellierung / Softwareentwicklung | Klassen-/Sequenzdiagramme, Entwurfsmuster, Testen | Spielestudio, Smart-Home-Firma | Diagramme ergänzen, Code ↔ Diagramm, Testfälle wählen |
+| Informatik und Gesellschaft | Datenschutz, KI, Urheberrecht – Argumentieren mit Operatoren | Zukunftsrat einer Stadt | Argumente zuordnen, Beurteilungen strukturieren (Erwartungshorizont) |
+
+**Tipps zum Sachkontext:** durchgehend und altersgerecht (Oberstufe), eine Welt = ein Ort der Story, Figuren ohne
+Klarnamen echter Personen, Begriffe des Kontexts dürfen die Fachbegriffe nie ersetzen (im Abitur zählen nur die
+Fachbegriffe), Bosse und Klausuren immer im nüchternen Abitur-Stil.
+
+### G.3 Vorgehen in Phasen
+
+1. **Rahmen klären (mit der Lehrkraft):** Thema, Kursart (eA/gA), Zahl der Doppelstunden, Abiturjahrgang,
+   verbindliche Vorgaben aus KC/EH, Programmiersprache/Werkzeuge (Online-IDE? SQL-Umgebung? Automaten-Simulator?),
+   Sachkontext. Ergebnis: eine **Spezifikation je Welt** nach dem Muster von `quellen/specs/SPEC_AlgoQuest_W*.md`
+   (Kompetenzen, DS-Verlauf, Level, Notationen, Fallen, Domäne/API des Kontexts).
+2. **Konventionen festschreiben:** `CLAUDE.md` des neuen Projekts aus diesem Repo ableiten (Abschnitte Sprache,
+   Notation, Fallen, Qualitätssicherung, Datenschutz, Lab-Oberfläche) und die fachlichen Notationen des Themas ergänzen.
+   Fallen-Liste (P1–P10) des Themas definieren – sie zieht sich durch alles.
+3. **App übernehmen:** Repo als Vorlage kopieren, `seed/welten` leeren, `src/domain.js` anpassen (WELTEN mit Titel/Farbe,
+   LAB_KATEGORIEN, FALLEN, RAENGE ggf. behalten), Texte der Oberfläche (Story, Titel), `package.json`-Name, Domain.
+   Fehlende Blocktypen/Interaktionen in `public/static/js/render.js`/`interact.js` + `src/content/checker.js` +
+   `validator.js` + `docs/AUFGABENFORMAT.md` + `test/fixtures/welt_beispiel.json` ergänzen – immer mit Tests.
+4. **Inhalte je Welt:** Arbeitsblätter + Lösungen, Lab-Level mit Aufgaben (Format D.1), Boss-Pool + Papier-Boss mit
+   Erwartungshorizont, Warm-up-Karten, Präsentation, Lehrerhinweise, ggf. Gerüste für die Programmierumgebung.
+   Jede Lösung programmatisch prüfen (E). Am besten Welt für Welt, jede Welt in sich fertig.
+5. **Werkzeuge anpassen:** `seed/arbeitsblaetter.json` füllen, PDF-Skripte laufen lassen, Materialprüfung um
+   Themenregeln erweitern (z. B. verbotene Begriffe, Notationsfehler), Prüfstand für die Programmierumgebung des Themas
+   (z. B. SQLite für SQL-Aufgaben, ein Automaten-Simulator in Python).
+6. **Abschluss:** Probeklausur + Klausur mit Erwartungshorizont, Fallen-Welt, Erklärvideos (`materialien/Videos`),
+   e2e-Test, Datenschutzseite, Deployment (eigene CapRover-App, eigene Domain, eigenes `main`).
+
+### G.4 Bewährte Regeln aus Algo Quest (Lessons learned)
+
+- **`main` = live.** Nie ungefragt auf `main` pushen; während des Unterrichts gar nicht deployen. Vorher immer
+  `npm run pruefen` und GitHub-Prüfung grün, danach `/healthz` prüfen.
+- **Lösungen nie öffentlich:** kein Lösungs-PDF im öffentlichen Ordner, Lösungen/Erklärungen nur serverseitig, Lehrkraft-
+  Downloads nur mit Anmeldung + Whitelist. Auch Erklärvideos und Beispiele dürfen keine Lab-/AB-/Klausur-Lösungen zeigen.
+- **Eine Quelle der Wahrheit:** docx/pptx und `seed/*.json` sind maßgeblich; alles andere (PDFs, Workspaces, Folien aus
+  `video.json`) wird erzeugt und per `--pruefen` auf Aktualität geprüft.
+- **Konventionen überall gleich** (Lab, Arbeitsblatt, Folie, Warm-up, Klausur) – Änderungen an einer Konvention immer
+  in *allen* Materialien nachziehen (vgl. die Umstellung der Tracetabellen) und eine automatische Prüfung ergänzen.
+- **Programmatisch prüfen statt schätzen:** jede Zahl, jeder Trace, jeder Baum; für Bibliotheken der Schulumgebung einen
+  Nachbau schreiben (hier: Bibliothek „Niedersachsen“), echte Unterschiede dokumentieren (z. B. `==` bei Zeichenketten).
+- **Für Schüler einfach:** Beitritt mit Kurscode + Name, danach nur Name + persönlicher Code; Antwortreihenfolgen mischen;
+  gestufte Bug-Hunts; Tipps kosten Punkte, „Lösung zeigen“ ist erlaubt (0 Punkte).
+- **Motivation ohne Druck:** Punkte nur automatisch, Warm-up ohne Punkte, Boss mit Wiederholung (bester Versuch zählt).
+- **Viel parallel, aber getrennt:** große Materialänderungen auf mehrere Agenten mit **exklusiven Dateien** verteilen,
+  danach zentral prüfen, rendern und committen.
+- **Rendern und ansehen:** Nach jeder docx/pptx-Änderung mit LibreOffice nach PDF und die betroffenen Seiten anschauen
+  (Seitenumbrüche, Sonderzeichen ← ≤ ≠, überlaufende Kästen).
+
+### G.5 Startprompt für einen neuen Claude-Chat (Vorlage)
+
+```
+Wir bauen eine Übungsplattform mit Unterrichtsreihe nach dem Vorbild „Algo Quest“ (Repo frankjuchim/AlgoQuest,
+README Teil G ist die Blaupause, CLAUDE.md die Konventionen). Thema: <Themenfeld laut KC>, Kurs: Informatik <eA/gA>,
+Niedersachsen, Abitur ab <Jahr>, <Anzahl> Doppelstunden. Sachkontext: <Idee oder „bitte drei Vorschläge“>.
+Programmierumgebung/Werkzeuge: <z. B. SQLite im Browser / Online-IDE / Automaten-Simulator>.
+
+Schritt 1: Lies README (Teil A–G), CLAUDE.md, docs/AUFGABENFORMAT.md und quellen/specs/SPEC_AlgoQuest_W4.md.
+Schritt 2: Schlage Welten (mit Kompetenzen nach KC/EH und DS-Verteilung), Fallen-Liste P1–P10 und den Sachkontext vor
+und frage nach, bevor du etwas baust.
+Schritt 3: Übernimm die App, passe domain.js/Oberfläche an, ergänze fehlende Blocktypen mit Tests.
+Schritt 4: Welt für Welt: Spezifikation → Arbeitsblätter + Lösungen → Lab-Level → Boss → Warm-up → Präsentation,
+alles programmatisch geprüft.
+Regeln: alles auf Deutsch, Schüler duzen, Prüfungsaufgaben siezen, keine Klarnamen, Lösungen nie öffentlich,
+nie ohne Freigabe auf main pushen (main = live).
+```
+
+---
+
+## Anhang: API im Detail
 
 Alle Antworten JSON; schreibende Anfragen mit `Content-Type: application/json` und gleicher Herkunft.
 
@@ -150,7 +414,7 @@ Alle Antworten JSON; schreibende Anfragen mit `Content-Type: application/json` u
 | GET | `/api/sitzung` | angemeldeter Schüler/Lehrkraft |
 | GET | `/api/kurs/:code` | Kursname, Anmeldung offen? |
 | POST | `/api/schueler/beitreten` | `{kurscode, name}` → `{name, code, kurs}` |
-| POST | `/api/schueler/anmelden` | `{kurscode, name, code}` |
+| POST | `/api/schueler/anmelden` | `{name, code, kurscode?}` – Kurscode nur, wenn Name + Code zu mehreren Kursen passen (409 `kurscodeNoetig`) |
 | POST | `/api/schueler/abmelden` | |
 | GET | `/api/board/:code` | Beamer-Board (nur wenn aktiviert) |
 | GET | `/api/themen` | Themenübersicht: Welten, Level, Arbeitsblätter, Aufgabentypen, Fallen (ohne Lösungen) |
@@ -190,6 +454,8 @@ Alle Antworten JSON; schreibende Anfragen mit `Content-Type: application/json` u
 | GET | `/kurse/:id/qr.svg` | QR-Code des Beitritts-Links |
 | GET | `/kurse/:id/urkunden` | Daten für die Abschluss-Urkunden |
 | GET | `/vorschau` · `/vorschau/:aufgabeId` | Aufgaben-Vorschau: Welten/Level/Boss-Pool · Aufgabe mit Lösung, Tipps, Erklärung |
+| GET | `/materialien` | Lehrkraft-Downloads je Welt (Schülerfassung + Lösung, Folien, Lehrerhinweise, Klausuren) |
+| GET | `/lehrkraft/dateien/<pfad>` (ohne `/api`) | PDF-Download, nur angemeldet und nur Dateien aus `verzeichnis.json`, sonst 404 |
 
 **Superadmin** (Präfix `/api/admin`)
 | Methode | Pfad | Zweck |
@@ -202,18 +468,7 @@ Alle Antworten JSON; schreibende Anfragen mit `Content-Type: application/json` u
 | GET · POST · DELETE | `/katas` · `/katas/import` · `/katas/:id` | Warm-up-Karten |
 | GET · POST | `/inhalte` · `/inhalte/neu-laden` | Seed-Bericht · Welt-Dateien neu einlesen |
 
-## Entwicklung und Tests
+---
 
-```
-npm test            # node:test + supertest (API, Rechte, Prüfer, Generatoren, Boss, Abzeichen, Upgrade, CSV, Validator …)
-npm run validate    # Inhalts-Validator für seed/welten/*.json
-npm run e2e         # Playwright-Durchlauf (Chromium), Screenshots nach docs/
-```
-
-Für `npm run e2e` wird `playwright-core` (devDependency) mit einem vorhandenen Chromium genutzt
-(`CHROMIUM_PATH` oder `PLAYWRIGHT_BROWSERS_PATH`, sonst `npx playwright install chromium`).
-
-Aufbau: `src/app.js` (Express, Helmet/CSP, Sitzungen), `src/routes/*` (API), `src/services/*` (Fachlogik: Inhalte/Seed,
-Konten, Kurse, Lernen, Stand/Abzeichen, Boss, Training, Auswertung, Warm-up, Backup), `src/content/*` (Format, Prüfer,
-Validator, Generatoren), `public/` (Vanilla-JS-Oberfläche ohne Build: `spiel.html` Schüler, `lehrer.html` Lehrkräfte und
-Superadmin, `board.html`, `index.html`), `public/static/js/shared/baum.js` (Klammerbäume, Server und Browser).
+*Algo Quest – Unterrichtsreihe und Plattform: Informatik LK, Niedersachsen. Weitere Arbeitsdokumente: `CLAUDE.md`,
+`docs/AUFGABENFORMAT.md`, `docs/ONLINE-IDE_TESTPROTOKOLL.md`, `materialien/LIESMICH.txt`, `materialien/Videos/00_Uebersicht.md`.*
