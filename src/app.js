@@ -13,6 +13,7 @@ const { gastRoutes } = require('./routes/gast');
 const { createThemen } = require('./services/themen');
 const { createLehrkraftMaterial, URL_LEHRKRAFT } = require('./services/lehrkraftMaterial');
 const { createGast } = require('./services/gast');
+const { createManifest } = require('./services/manifest');
 
 const PUBLIC_DIR = path.join(__dirname, '..', 'public');
 const ROOT_DIR = path.join(__dirname, '..');
@@ -56,6 +57,7 @@ function createApp(opts) {
   });
   const material = createLehrkraftMaterial({ materialienDir: materialienOrdner(opts), abDir, log });
   const gast = createGast(ctx, { datei: gastDatei(opts), inhalte: svc.inhalte, material, log });
+  const manifest = createManifest({ inhalte: svc.inhalte, version: VERSION, umgebung: opts.umgebung || process.env });
 
   const app = express();
   app.disable('x-powered-by');
@@ -104,6 +106,13 @@ function createApp(opts) {
     } catch {
       res.status(500).json({ status: 'error' });
     }
+  });
+
+  // Plattform-Manifest (Verbundvertrag, README Teil H) – öffentlich, auch für Browser des Portals lesbar
+  app.get('/api/plattform', (req, res) => {
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Cache-Control', 'public, max-age=300');
+    res.json(manifest(`${req.protocol}://${req.get('host')}`));
   });
 
   app.get('/robots.txt', (req, res) => res.type('text').send('User-agent: *\nDisallow: /\n'));
