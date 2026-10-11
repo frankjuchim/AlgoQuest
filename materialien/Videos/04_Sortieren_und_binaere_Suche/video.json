@@ -1,0 +1,792 @@
+{
+ "nr": 4,
+ "kurz": "Sortieren_und_binaere_Suche",
+ "titel": "Sortieren und binäre Suche",
+ "untertitel": "Drei Sortierverfahren, Vergleiche zählen und halbieren statt durchsuchen",
+ "welt": 2,
+ "weltname": "Welt 2 · Die Rangliste",
+ "farbe": "#1F7A7A",
+ "laenge": "10–12 min",
+ "zielgruppe": "Informatik eA (LK), Welt 2; auch zur Wiederholung vor Boss, Klausur und Abitur",
+ "einsatz": "Welt 2, DS 14–16 · Lab-Level 2.2–2.4 · AB W2·2 „Sortieren“, AB W2·3 „Effizienz und binäre Suche“",
+ "lernziele": [
+  "Selection-, Insertion- und Bubblesort (mit Abbruch) erklären und den Zustand der Reihung nach jedem Durchlauf angeben",
+  "Vergleiche zählen: n(n − 1)/2 im schlechtesten Fall, n − 1 im besten Fall (Insertion, Bubble mit Abbruch); Verdopplung von n → etwa vierfacher Aufwand",
+  "Die binäre Suche mit lo, hi und mid als Tracetabelle dokumentieren (nur Variablen, eine Zeile an jeder mit „// → Tabellenzeile“ markierten Stelle)",
+  "Lineare und binäre Suche vergleichen und die Voraussetzung „sortiert“ beachten"
+ ],
+ "hinweise": [
+  "Alle Zahlenbeispiele sind eigens für das Video gewählt (Sortieren: 64, 27, 85, 12, 49; Pause: 31, 17, 46, 58, 52; Suche: 3, 8, 14, 19, 25, 32, 40, 47, 53, 61, 68, 76, 82) und kommen in Lab, Arbeitsblättern, Folien und Bossen nicht vor.",
+  "Varianten wie in SPEC_AlgoQuest_W2 und der LSG: Selectionsort mit Auswahl (hier Minimum, aufsteigend; tauschen nur bei minIndex ≠ i), Insertionsort mit Tausch benachbarter Elemente, Bubblesort mit Abbruch und verkürztem Bereich (r.length − 1 − durchlauf), binäre Suche iterativ mit mid = (lo + hi) / 2. Gezählt werden Vergleiche zweier Reihungselemente. Im Lab sortiert die Rangliste absteigend – nur der Vergleich dreht sich um (im Video erwähnt).",
+  "Geprüft mit javac/java (genau der Code der Folien, instrumentiert): Selectionsort 64, 27, 85, 12, 49 → i = 0: 12, 27, 85, 64, 49 (V 4) · i = 1: unverändert (V 7) · i = 2: 12, 27, 49, 64, 85 (V 9) · i = 3: unverändert (V 10); 2 Vertauschungen.",
+  "Insertionsort 64, 27, 85, 12, 49 → i = 1: 27, 64, 85, 12, 49 (V 1) · i = 2: unverändert (V 2) · i = 3: 12, 27, 64, 85, 49 (V 5) · i = 4: 12, 27, 49, 64, 85 (V 8); 6 Vertauschungen.",
+  "Bubblesort 64, 27, 85, 12, 49 → Lauf 1: 27, 64, 12, 49, 85 (V 4) · Lauf 2: 27, 12, 49, 64, 85 (V 7) · Lauf 3: 12, 27, 49, 64, 85 (V 9) · Lauf 4 ohne Tausch (V 10) → Abbruch; 6 Vertauschungen.",
+  "Pause 1 (Bubblesort 31, 17, 46, 58, 52): Lauf 1: 17, 31, 46, 52, 58 (V 4, T 2) · Lauf 2 ohne Tausch (V 7) → Ende, 7 Vergleiche.",
+  "Vergleichszahlen per Programm: Selectionsort immer n(n − 1)/2; Insertion- und Bubblesort sortiert n − 1, umgekehrt n(n − 1)/2. n = 5 → 10, n = 30 → 435, n = 60 → 1770 (Faktor ≈ 4,07).",
+  "Binäre Suche in r (n = 13): Suche 47 → (lo, hi, mid) = (0, 12, 6), (7, 12, 9), (7, 8, 7) → Rückgabe 7. Pause 2: Suche 20 → (0, 12, 6), (0, 5, 2), (3, 5, 4), (3, 3, 3), danach lo = 4 > hi = 3 → Rückgabe −1. Höchstens 4 Durchläufe bei n = 13, 5 bei n = 30, 6 bei n = 60, 10 bei n = 1000, 20 bei n = 1 000 000 (alle Suchwerte durchprobiert).",
+  "Folien „Kurz pausieren“: im Schnitt einen Hinweis „Video anhalten“ einblenden; die Lösung kommt erst auf der nächsten Folie."
+ ],
+ "youtube": {
+  "titel": "Sortieren und binäre Suche fürs Informatik-Abitur (Niedersachsen) | Algo Quest #4",
+  "beschreibung": "Selectionsort, Insertionsort und Bubblesort im direkten Vergleich: Wie arbeiten sie, wie sieht die Reihung nach jedem Durchlauf aus, und wie viele Vergleiche brauchen sie? Dazu: warum doppelt so viele Daten viermal so viel Arbeit bedeuten und wie die binäre Suche mit lo, hi und mid funktioniert – mit Tracetabelle, so wie es das Informatik-Abitur in Niedersachsen verlangt.\n\nTeil der Unterrichtsreihe „Algo Quest – Das Dungeon der Datenstrukturen“ (Informatik eA).\nÜben mit sofortiger Rückmeldung: https://algoquest.frankjuchim.de/themen",
+  "tags": [
+   "Informatik Abitur",
+   "Niedersachsen",
+   "Sortieren",
+   "Selectionsort",
+   "Insertionsort",
+   "Bubblesort",
+   "binäre Suche",
+   "Effizienz",
+   "Java",
+   "Informatik LK",
+   "Algo Quest"
+  ]
+ },
+ "bilder": {
+  "r_start": {
+   "t": "reihung",
+   "werte": [
+    64,
+    27,
+    85,
+    12,
+    49
+   ],
+   "indizes": true
+  },
+  "r_pause1": {
+   "t": "reihung",
+   "werte": [
+    31,
+    17,
+    46,
+    58,
+    52
+   ],
+   "indizes": true
+  },
+  "r_suche": {
+   "t": "reihung",
+   "werte": [
+    3,
+    8,
+    14,
+    19,
+    25,
+    32,
+    40,
+    47,
+    53,
+    61,
+    68,
+    76,
+    82
+   ],
+   "indizes": true,
+   "markiert": {
+    "6": "gold",
+    "9": "gold",
+    "7": "gruen"
+   }
+  }
+ },
+ "folien": [
+  {
+   "typ": "titel",
+   "kapitel": "Einstieg",
+   "regie": "Kamera unten rechts, freundlicher Einstieg, Titelfolie im Hintergrund.",
+   "sprechertext": "Hallo und willkommen zur Algo Quest! Heute geht es in die Rangliste: ums Sortieren und ums Suchen. Du lernst drei Sortierverfahren kennen – Selectionsort, Insertionsort und Bubblesort – und wie du ihren Aufwand bestimmst, indem du Vergleiche zählst. Danach zeige ich dir die binäre Suche, die in einer sortierten Reihung unglaublich schnell findet, was sie sucht. Alles genau so, wie es im Abitur verlangt wird."
+  },
+  {
+   "typ": "punkte",
+   "titel": "Worum geht es im Abitur?",
+   "punkte": [
+    "„**Geben Sie** den Zustand der Reihung nach jedem Durchlauf **an**.“",
+    "„**Bestimmen Sie** die Anzahl der Vergleiche …“",
+    "„**Beurteilen Sie**, wie sich der Aufwand bei doppelt so vielen Elementen ändert.“",
+    "„**Dokumentieren Sie** die binäre Suche in einer Tracetabelle.“",
+    "Effizienz wird **gezählt** – keine O-Notation nötig"
+   ],
+   "kasten": {
+    "farbe": "gold",
+    "titel": "Heute",
+    "text": [
+     "Selectionsort",
+     "Insertionsort",
+     "Bubblesort",
+     "Vergleiche zählen",
+     "Binäre Suche"
+    ]
+   },
+   "sprechertext": "Im Abitur heißt es zum Beispiel: Geben Sie den Zustand der Reihung nach jedem Durchlauf an. Bestimmen Sie die Anzahl der Vergleiche. Beurteilen Sie, wie sich der Aufwand bei doppelt so vielen Elementen ändert. Oder: Dokumentieren Sie die binäre Suche in einer Tracetabelle. Effizienz wird dabei immer durch Zählen untersucht – du brauchst keine O-Notation. Wir sortieren heute immer dieselbe Reihung aufsteigend."
+  },
+  {
+   "typ": "code",
+   "titel": "Selectionsort: das Kleinste nach vorn",
+   "code": "public static void selectionSort(int[] r) {\n    for (int i = 0; i < r.length - 1; i++) {\n        int minIndex = i;\n        for (int j = i + 1; j < r.length; j++) {\n            if (r[j] < r[minIndex]) {\n                minIndex = j;\n            }\n        }\n        if (minIndex != i) {\n            tausche(r, i, minIndex);\n        }\n    }\n}",
+   "groesse": 18,
+   "kasten": {
+    "titel": "Idee",
+    "text": [
+     "Suche im unsortierten Rest das **Minimum**.",
+     "Tausche es an die **erste Stelle** des Rests.",
+     "Der sortierte Bereich wächst von links.",
+     "`tausche(r, i, j)` vertauscht `r[i]` und `r[j]`."
+    ]
+   },
+   "kapitel": "Selectionsort",
+   "sprechertext": "Beginnen wir mit Selectionsort, dem Sortieren durch Auswahl. Die Idee: Suche im unsortierten Rest das kleinste Element und tausche es an die erste Stelle dieses Rests. Die äußere Schleife läuft mit i von links nach rechts. Die innere Schleife sucht ab i plus eins den Index des Minimums. Getauscht wird nur, wenn das Minimum nicht schon an der Stelle i steht. tausche vertauscht zwei Elemente. Im Lab sortiert die Rangliste übrigens absteigend – dann suchst du das Maximum."
+  },
+  {
+   "typ": "tabelle",
+   "titel": "Selectionsort: Zustand nach jedem Durchlauf",
+   "tabelle": {
+    "kopf": [
+     "",
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "Vergl."
+    ],
+    "zeilen": [
+     [
+      "Start",
+      "64",
+      "27",
+      "85",
+      "12",
+      "49",
+      "–"
+     ],
+     [
+      "i = 0",
+      "12",
+      "27",
+      "85",
+      "64",
+      "49",
+      "4"
+     ],
+     [
+      "i = 1",
+      "12",
+      "27",
+      "85",
+      "64",
+      "49",
+      "7"
+     ],
+     [
+      "i = 2",
+      "12",
+      "27",
+      "49",
+      "64",
+      "85",
+      "9"
+     ],
+     [
+      "i = 3",
+      "12",
+      "27",
+      "49",
+      "64",
+      "85",
+      "10"
+     ]
+    ],
+    "groesse": 18,
+    "breiten": [
+     1.5,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1.1
+    ],
+    "hervorheben": []
+   },
+   "tabellenbreite": 7.4,
+   "kasten": {
+    "farbe": "gruen",
+    "titel": "Beobachtung",
+    "text": [
+     "Vergleiche: 4 + 3 + 2 + 1 = **10** – bei jeder Eingabe",
+     "Nur **2** Vertauschungen",
+     "Nach Durchlauf i steht Platz i fest."
+    ]
+   },
+   "regie": "Zeilen nacheinander zeigen; bei i = 1 betonen, dass 27 schon richtig steht.",
+   "sprechertext": "So entwickelt sich die Reihung. Im ersten Durchlauf ist zwölf das Minimum, es tauscht mit vierundsechzig. Dafür waren vier Vergleiche nötig. Im zweiten Durchlauf ist siebenundzwanzig schon das Minimum – kein Tausch, aber trotzdem drei Vergleiche. Dann wandert neunundvierzig nach vorn, und im letzten Durchlauf bleibt alles, wie es ist. Insgesamt vier plus drei plus zwei plus eins gleich zehn Vergleiche – und das bei jeder Eingabe, selbst wenn die Reihung schon sortiert ist. Dafür tauscht Selectionsort sehr selten."
+  },
+  {
+   "typ": "code",
+   "titel": "Insertionsort: einsortieren wie Spielkarten",
+   "code": "public static void insertionSort(int[] r) {\n    for (int i = 1; i < r.length; i++) {\n        int j = i;\n        while (j > 0 && r[j] < r[j - 1]) {\n            tausche(r, j, j - 1);\n            j--;\n        }\n    }\n}",
+   "groesse": 20,
+   "kasten": {
+    "titel": "Idee",
+    "text": [
+     "Nimm das nächste Element.",
+     "Lass es nach **links wandern**, solange es kleiner ist als sein linker Nachbar.",
+     "Links entsteht ein sortierter Bereich."
+    ]
+   },
+   "kapitel": "Insertionsort",
+   "sprechertext": "Insertionsort arbeitet wie beim Sortieren von Spielkarten auf der Hand. Du nimmst das nächste Element und lässt es so lange nach links wandern, wie es kleiner ist als sein linker Nachbar. Im Code startet i bei eins, denn ein einzelnes Element ist schon sortiert. Die while-Schleife tauscht das Element Schritt für Schritt nach links. j größer null steht zuerst, damit wir nie vor den Anfang der Reihung greifen. Auch der letzte Vergleich, der die Schleife beendet, zählt mit."
+  },
+  {
+   "typ": "tabelle",
+   "titel": "Insertionsort: Zustand nach jedem Durchlauf",
+   "tabelle": {
+    "kopf": [
+     "",
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "Vergl."
+    ],
+    "zeilen": [
+     [
+      "Start",
+      "64",
+      "27",
+      "85",
+      "12",
+      "49",
+      "–"
+     ],
+     [
+      "i = 1",
+      "27",
+      "64",
+      "85",
+      "12",
+      "49",
+      "1"
+     ],
+     [
+      "i = 2",
+      "27",
+      "64",
+      "85",
+      "12",
+      "49",
+      "2"
+     ],
+     [
+      "i = 3",
+      "12",
+      "27",
+      "64",
+      "85",
+      "49",
+      "5"
+     ],
+     [
+      "i = 4",
+      "12",
+      "27",
+      "49",
+      "64",
+      "85",
+      "8"
+     ]
+    ],
+    "groesse": 18,
+    "breiten": [
+     1.5,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1.1
+    ],
+    "hervorheben": []
+   },
+   "tabellenbreite": 7.4,
+   "kasten": {
+    "farbe": "gruen",
+    "titel": "Beobachtung",
+    "text": [
+     "**8** Vergleiche, 6 Vertauschungen",
+     "Hängt von den Daten ab:",
+     "sortiert: n − 1 = **4**",
+     "umgekehrt: **10**"
+    ]
+   },
+   "sprechertext": "Die siebenundzwanzig wandert an der vierundsechzig vorbei nach vorn: ein Vergleich. Die fünfundachtzig bleibt stehen, denn sie ist größer als ihr Nachbar – wieder nur ein Vergleich. Die zwölf dagegen wandert ganz nach vorn: drei Vergleiche, jetzt sind es fünf. Und die neunundvierzig wandert zwei Plätze nach links und stoppt an der siebenundzwanzig: drei Vergleiche, insgesamt acht. Insertionsort hängt also von den Daten ab: sortiert nur vier Vergleiche, umgekehrt zehn."
+  },
+  {
+   "typ": "code",
+   "titel": "Bubblesort: Nachbarn tauschen – mit Abbruch",
+   "code": "public static void bubbleSort(int[] r) {\n    boolean getauscht = true;\n    int durchlauf = 0;\n    while (getauscht) {\n        getauscht = false;\n        for (int j = 0; j < r.length - 1 - durchlauf; j++) {\n            if (r[j + 1] < r[j]) {\n                tausche(r, j, j + 1);\n                getauscht = true;\n            }\n        }\n        durchlauf++;\n    }\n}",
+   "groesse": 18,
+   "nummern": false,
+   "unten": [
+    "Nachbarn vergleichen, tauschen – **Abbruch**, wenn ein Lauf ohne Tausch bleibt"
+   ],
+   "kapitel": "Bubblesort",
+   "sprechertext": "Das dritte Verfahren ist Bubblesort. Hier vergleichst du immer zwei Nachbarn von links nach rechts und tauschst, wenn der rechte kleiner ist. So steigt das größte Element wie eine Blase nach hinten auf. Nach jedem Lauf steht also ein Element mehr am Ende fest, deshalb wird der Bereich um durchlauf kürzer. Und unsere Variante hat einen Abbruch: Die Variable getauscht merkt sich, ob in einem Lauf überhaupt getauscht wurde. Wenn nicht, ist die Reihung sortiert, und die Schleife endet."
+  },
+  {
+   "typ": "tabelle",
+   "titel": "Bubblesort: Zustand nach jedem Lauf",
+   "tabelle": {
+    "kopf": [
+     "",
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "Vergl."
+    ],
+    "zeilen": [
+     [
+      "Start",
+      "64",
+      "27",
+      "85",
+      "12",
+      "49",
+      "–"
+     ],
+     [
+      "Lauf 1",
+      "27",
+      "64",
+      "12",
+      "49",
+      "85",
+      "4"
+     ],
+     [
+      "Lauf 2",
+      "27",
+      "12",
+      "49",
+      "64",
+      "85",
+      "7"
+     ],
+     [
+      "Lauf 3",
+      "12",
+      "27",
+      "49",
+      "64",
+      "85",
+      "9"
+     ],
+     [
+      "Lauf 4",
+      "12",
+      "27",
+      "49",
+      "64",
+      "85",
+      "10"
+     ]
+    ],
+    "groesse": 18,
+    "breiten": [
+     1.5,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1.1
+    ],
+    "hervorheben": [
+     4
+    ]
+   },
+   "tabellenbreite": 7.4,
+   "kasten": {
+    "farbe": "gruen",
+    "titel": "Beobachtung",
+    "text": [
+     "Lauf 4: kein Tausch → **Abbruch**",
+     "**10** Vergleiche, 6 Vertauschungen",
+     "sortiert: nur ein Lauf, n − 1 = **4**"
+    ]
+   },
+   "sprechertext": "Im ersten Lauf steigt die fünfundachtzig bis ans Ende auf. Dabei werden vier Nachbarpaare verglichen. Im zweiten Lauf landet die vierundsechzig auf ihrem Platz, drei Vergleiche. Im dritten Lauf rutscht die zwölf nach vorn. Jetzt ist sie sortiert – aber das weiß der Algorithmus noch nicht. Erst Lauf vier ohne einen einzigen Tausch löst den Abbruch aus. Insgesamt zehn Vergleiche. Ist die Reihung von Anfang an sortiert, reicht ein einziger Lauf mit n minus eins Vergleichen."
+  },
+  {
+   "typ": "tabelle",
+   "titel": "Vergleiche zählen",
+   "tabelle": {
+    "kopf": [
+     "Verfahren",
+     "bester Fall",
+     "schlechtester Fall"
+    ],
+    "zeilen": [
+     [
+      "Selectionsort",
+      "n(n − 1)/2",
+      "n(n − 1)/2"
+     ],
+     [
+      "Insertionsort",
+      "n − 1",
+      "n(n − 1)/2"
+     ],
+     [
+      "Bubblesort",
+      "n − 1",
+      "n(n − 1)/2"
+     ]
+    ],
+    "groesse": 20,
+    "breiten": [
+     2.6,
+     2,
+     2.4
+    ]
+   },
+   "tabellenbreite": 8.5,
+   "kasten": {
+    "farbe": "gold",
+    "titel": "Woher die Formel?",
+    "text": [
+     "(n − 1) + (n − 2) + … + 1",
+     "n = 5: 4 + 3 + 2 + 1 = **10**",
+     "bester Fall: **sortiert**",
+     "schlechtester: **umgekehrt**"
+    ]
+   },
+   "teilung": 9.4,
+   "kapitel": "Vergleiche zählen",
+   "sprechertext": "Fassen wir das Zählen zusammen. Selectionsort braucht immer n mal n minus eins halbe Vergleiche, egal wie die Daten aussehen. Insertionsort und Bubblesort mit Abbruch sind im besten Fall viel schneller: Bei einer schon sortierten Reihung brauchen sie nur n minus eins Vergleiche. Im schlechtesten Fall, bei umgekehrt sortierten Daten, sind es auch dort n mal n minus eins halbe. Die Formel kommt daher, dass jeder Durchlauf einen Vergleich weniger braucht: vier plus drei plus zwei plus eins gleich zehn. Wichtig im Abitur: Gib zum schlechtesten Fall immer eine konkrete Eingabe an, zum Beispiel eine absteigend sortierte Reihung."
+  },
+  {
+   "typ": "punkte",
+   "titel": "Doppelt so viele Elemente – viermal so viel Arbeit",
+   "punkte": [
+    "n = 30: 30 · 29 / 2 = **435** Vergleiche",
+    "n = 60: 60 · 59 / 2 = **1770** Vergleiche",
+    "1770 / 435 ≈ **4**",
+    "Grund: n(n − 1)/2 ≈ n²/2 wächst **quadratisch**",
+    "Bester Fall n − 1: nur **doppelt** so viel"
+   ],
+   "kasten": {
+    "farbe": "gold",
+    "titel": "So formulierst du es",
+    "text": [
+     "„Verdoppelt man n, vervierfacht sich die Anzahl der Vergleiche ungefähr, da sie quadratisch von n abhängt.“"
+    ]
+   },
+   "sprechertext": "Und was passiert, wenn die Rangliste doppelt so lang wird? Rechnen wir: Dreißig Elemente brauchen im schlechtesten Fall dreißig mal neunundzwanzig halbe, also vierhundertfünfunddreißig Vergleiche. Sechzig Elemente brauchen sechzig mal neunundfünfzig halbe, also tausendsiebenhundertsiebzig. Das ist ungefähr das Vierfache. Der Grund: Die Formel enthält n mal n, sie wächst quadratisch. Doppelt so viele Elemente bedeuten also etwa viermal so viel Arbeit. Im besten Fall mit n minus eins Vergleichen verdoppelt sich der Aufwand dagegen nur. Rechts steht eine passende Formulierung fürs Abitur."
+  },
+  {
+   "typ": "pause",
+   "titel": "Kurz pausieren: Jetzt du!",
+   "aufgabe": "Sortiere die Reihung mit **Bubblesort mit Abbruch** aufsteigend. Gib den Zustand nach **jedem Lauf** an und **zähle die Vergleiche**.",
+   "bild": "r_pause1",
+   "teilung": 8.0,
+   "kapitel": "Selbst ausprobieren",
+   "pause_s": 5,
+   "sprechertext": "Jetzt bist du dran. Halte das Video an und sortiere die Reihung einunddreißig, siebzehn, sechsundvierzig, achtundfünfzig, zweiundfünfzig mit Bubblesort mit Abbruch. Gib den Zustand nach jedem Lauf an und zähle die Vergleiche. Denk daran: Der Bereich wird in jedem Lauf um eins kürzer."
+  },
+  {
+   "typ": "tabelle",
+   "titel": "Auflösung: Bubblesort mit Abbruch",
+   "tabelle": {
+    "kopf": [
+     "",
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "Vergl."
+    ],
+    "zeilen": [
+     [
+      "Start",
+      "31",
+      "17",
+      "46",
+      "58",
+      "52",
+      "–"
+     ],
+     [
+      "Lauf 1",
+      "17",
+      "31",
+      "46",
+      "52",
+      "58",
+      "4"
+     ],
+     [
+      "Lauf 2",
+      "17",
+      "31",
+      "46",
+      "52",
+      "58",
+      "7"
+     ]
+    ],
+    "groesse": 18,
+    "breiten": [
+     1.5,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1.1
+    ],
+    "hervorheben": [
+     2
+    ]
+   },
+   "tabellenbreite": 7.4,
+   "kasten": {
+    "farbe": "gruen",
+    "titel": "7 Vergleiche",
+    "text": [
+     "Lauf 1: 2 Vertauschungen",
+     "Lauf 2: kein Tausch → **Abbruch**",
+     "statt 10 im schlechtesten Fall"
+    ]
+   },
+   "sprechertext": "Hier die Auflösung. Im ersten Lauf werden einunddreißig und siebzehn getauscht, dann achtundfünfzig und zweiundfünfzig. Danach ist die Reihung schon sortiert, nach vier Vergleichen. Der zweite Lauf vergleicht noch drei Paare, findet nichts zum Tauschen – und bricht ab. Insgesamt sieben Vergleiche statt zehn. Hattest du einen dritten Lauf? Dann hast du den Abbruch übersehen."
+  },
+  {
+   "typ": "code",
+   "titel": "Binäre Suche: halbieren statt durchsuchen",
+   "code": "public static int binaer(int[] r, int x) {\n    int lo = 0;\n    int hi = r.length - 1;\n    while (lo <= hi) {\n        int mid = (lo + hi) / 2;  // → Tabellenzeile\n        if (r[mid] == x) {\n            return mid;\n        }\n        if (r[mid] < x) {\n            lo = mid + 1;\n        } else {\n            hi = mid - 1;\n        }\n    }\n    return -1;\n}",
+   "groesse": 18,
+   "kasten": {
+    "farbe": "rot",
+    "titel": "Voraussetzung",
+    "text": [
+     "Die Reihung ist **aufsteigend sortiert**!",
+     "`mid` ganzzahlig: (lo + hi) / 2",
+     "`r[mid] < x` → rechts weiter, sonst links",
+     "Treffer → `mid`; `lo > hi` → −1"
+    ]
+   },
+   "kapitel": "Binäre Suche",
+   "sprechertext": "Jetzt zum Suchen. Statt ein Element nach dem anderen zu prüfen, geht es in einer sortierten Reihung viel schneller – mit der binären Suche. lo und hi begrenzen den Bereich, in dem der gesuchte Wert noch liegen kann. In jedem Durchlauf schauen wir in die Mitte, mid, ganzzahlig berechnet. Treffer? Dann geben wir mid zurück. Ist der Wert in der Mitte zu klein, suchen wir rechts weiter, lo wird mid plus eins. Sonst links, hi wird mid minus eins. Wird lo größer als hi, ist der Bereich leer, und wir geben minus eins zurück. Das funktioniert nur auf sortierten Daten."
+  },
+  {
+   "typ": "bild",
+   "titel": "Trace: binaer(r, 47)",
+   "bild": "r_suche",
+   "tabelle": {
+    "kopf": [
+     "Durchlauf",
+     "lo",
+     "hi",
+     "mid"
+    ],
+    "zeilen": [
+     [
+      "1",
+      "0",
+      "12",
+      "6"
+     ],
+     [
+      "2",
+      "7",
+      "12",
+      "9"
+     ],
+     [
+      "3",
+      "7",
+      "8",
+      "7"
+     ]
+    ],
+    "groesse": 18,
+    "breiten": [
+     1.6,
+     1,
+     1,
+     1
+    ]
+   },
+   "teilung": 9.4,
+   "regie": "Mit dem Mauszeiger die besuchten Felder 6, 9 und 7 zeigen; danach die Tabellenzeilen.",
+   "sprechertext": "Probieren wir es aus: Wir suchen siebenundvierzig in dieser Reihung mit dreizehn Elementen. Eine Zeile entsteht an der Markierung hinter mid. Erster Durchlauf: lo null, hi zwölf, mid sechs. An der Stelle sechs steht vierzig, das ist kleiner als siebenundvierzig, also lo gleich sieben. Zweiter Durchlauf: lo sieben, hi zwölf, mid neun. Dort steht einundsechzig, zu groß, also hi gleich acht. Dritter Durchlauf: lo sieben, hi acht, mid sieben – und dort steht siebenundvierzig. Treffer, Rückgabe sieben. Beachte: In der Tabelle stehen nur Variablen, keine Spalte für Bedingungen."
+  },
+  {
+   "typ": "pause",
+   "titel": "Kurz pausieren: Jetzt du!",
+   "aufgabe": "Führe die Tracetabelle für `binaer(r, 20)`: Spalten **Durchlauf, lo, hi, mid** – eine Zeile je Durchlauf. Wann endet die Schleife, was wird zurückgegeben?",
+   "code": "r = {3, 8, 14, 19, 25, 32, 40, 47, 53, 61, 68, 76, 82}\n// Index 0 bis 12",
+   "nummern": false,
+   "groesse": 20,
+   "pause_s": 5,
+   "sprechertext": "Und noch einmal du. Halte das Video an und führe die Tracetabelle für die Suche nach zwanzig in derselben Reihung. Zwanzig kommt dort nicht vor – überlege genau, wann die Schleife endet und was zurückgegeben wird."
+  },
+  {
+   "typ": "tabelle",
+   "titel": "Auflösung: binaer(r, 20)",
+   "tabelle": {
+    "kopf": [
+     "Durchlauf",
+     "lo",
+     "hi",
+     "mid"
+    ],
+    "zeilen": [
+     [
+      "1",
+      "0",
+      "12",
+      "6"
+     ],
+     [
+      "2",
+      "0",
+      "5",
+      "2"
+     ],
+     [
+      "3",
+      "3",
+      "5",
+      "4"
+     ],
+     [
+      "4",
+      "3",
+      "3",
+      "3"
+     ]
+    ],
+    "groesse": 20,
+    "breiten": [
+     1.6,
+     1,
+     1,
+     1
+    ]
+   },
+   "tabellenbreite": 5.6,
+   "kasten": {
+    "farbe": "gruen",
+    "titel": "Rückgabe: −1",
+    "text": [
+     "r[3] = 19 < 20 → lo = 4",
+     "lo = 4 > hi = 3 → Schleife endet",
+     "4 Durchläufe = Maximum bei n = 13"
+    ]
+   },
+   "teilung": 7.0,
+   "sprechertext": "Hier die Auflösung. Erster Durchlauf: mid sechs, vierzig ist zu groß, hi wird fünf. Zweiter Durchlauf: lo null, hi fünf, mid zwei. Vierzehn ist zu klein, lo wird drei. Dritter Durchlauf: lo drei, hi fünf, mid vier. Fünfundzwanzig ist zu groß, hi wird drei. Vierter Durchlauf: lo und hi sind beide drei, mid drei. Neunzehn ist zu klein, lo wird vier. Jetzt ist lo größer als hi, die Schleife endet, und die Methode gibt minus eins zurück. Mehr als vier Durchläufe braucht es bei dreizehn Elementen nie."
+  },
+  {
+   "typ": "punkte",
+   "titel": "Linear oder binär?",
+   "punkte": [
+    "Linear: jedes Element prüfen – bis zu **n** Durchläufe",
+    "Binär: jeder Durchlauf **halbiert** den Bereich",
+    "n verdoppeln → nur **+ 1** Durchlauf (n = 30: 5, n = 60: 6)",
+    "Aber: binär **nur auf sortierten** Daten",
+    "Einmal suchen? Dafür lohnt sich Sortieren nicht."
+   ],
+   "tabelle": {
+    "kopf": [
+     "n",
+     "linear",
+     "binär"
+    ],
+    "zeilen": [
+     [
+      "13",
+      "13",
+      "4"
+     ],
+     [
+      "1 000",
+      "1 000",
+      "10"
+     ],
+     [
+      "1 000 000",
+      "1 000 000",
+      "20"
+     ]
+    ],
+    "groesse": 16,
+    "breiten": [
+     1.4,
+     1.4,
+     1
+    ]
+   },
+   "teilung": 8.3,
+   "kapitel": "Linear oder binär?",
+   "sprechertext": "Lineare und binäre Suche im Vergleich. Die lineare Suche braucht im schlechtesten Fall so viele Durchläufe, wie es Elemente gibt. Die binäre Suche halbiert den Bereich in jedem Durchlauf. Verdoppelst du n, kommt nur ein einziger Durchlauf dazu: bei dreißig Elementen höchstens fünf, bei sechzig höchstens sechs. Bei einer Million Elementen sind es höchstens zwanzig statt einer Million. Aber denk an die Voraussetzung: Die Daten müssen sortiert sein. Wer nur einmal sucht, sortiert dafür nicht extra."
+  },
+  {
+   "typ": "punkte",
+   "titel": "Typische Fehler – und wie du sie vermeidest",
+   "punkte": [
+    "**P6** Grenzen: `j < r.length - 1 - durchlauf`, `lo <= hi`, `j > 0`",
+    "**P8** Zustand zum falschen Zeitpunkt, Startzeile fehlt, Bedingungsspalte",
+    "**P4** `mid` ist ganzzahlig: (3 + 5) / 2 = 4, (0 + 5) / 2 = **2**",
+    "**P10** Schlechtester Fall ohne konkrete Eingabe, „beurteilen“ ohne Begründung",
+    "Vertauschungen als Vergleiche mitgezählt",
+    "Binäre Suche auf **unsortierter** Reihung"
+   ],
+   "groesse": 22,
+   "kasten": {
+    "farbe": "rot",
+    "titel": "Abi-Check",
+    "text": [
+     "Was zählt als Vergleich?",
+     "Zustand nach jedem Durchlauf?",
+     "Worst-Case-Eingabe genannt?",
+     "Tabelle: nur Variablen?"
+    ]
+   },
+   "kapitel": "Typische Fehler",
+   "sprechertext": "Zum Schluss die typischen Fehler. P6, Off-by-one: Die Grenzen der Schleifen sind entscheidend – bei Bubblesort r Punkt length minus eins minus durchlauf, bei der binären Suche lo kleiner gleich hi, bei Insertionsort j größer null. P8: Zustand zum falschen Zeitpunkt, Startzeile vergessen oder eine Bedingungsspalte. P4: mid wird ganzzahlig berechnet, null plus fünf durch zwei ist zwei. P10: Beim schlechtesten Fall fehlt die konkrete Eingabe, oder beim Beurteilen fehlt die Begründung. Und: Vertauschungen sind keine Vergleiche."
+  },
+  {
+   "typ": "merke",
+   "titel": "Das nimmst du mit",
+   "punkte": [
+    "Selection: Minimum nach vorn · Insertion: nach links wandern · Bubble: Nachbarn tauschen, Abbruch ohne Tausch",
+    "Schlechtester Fall n(n − 1)/2 Vergleiche; Insertion und Bubble mit Abbruch im besten Fall n − 1",
+    "n verdoppeln → etwa **vierfache** Vergleiche (quadratisch)",
+    "Binäre Suche: nur sortiert; lo, hi, mid; n verdoppeln → **+ 1** Durchlauf",
+    "Tracetabelle: nur Variablen, eine Zeile an jeder markierten Stelle"
+   ],
+   "groesse": 21,
+   "kapitel": "Zusammenfassung",
+   "sprechertext": "Fassen wir zusammen. Selectionsort holt das Minimum nach vorn, Insertionsort lässt Elemente nach links wandern, Bubblesort tauscht Nachbarn und bricht ab, wenn ein Lauf ohne Tausch bleibt. Im schlechtesten Fall brauchen alle drei n mal n minus eins halbe Vergleiche, doppelt so viele Elemente bedeuten etwa viermal so viel Arbeit. Die binäre Suche funktioniert nur auf sortierten Daten, halbiert den Bereich in jedem Schritt und braucht bei doppelter Länge nur einen Durchlauf mehr."
+  },
+  {
+   "typ": "ende",
+   "links": {
+    "Lab": "Level 2.2 „Ordnung im Ranking“, 2.3 „Das Sortier-Duell“ und 2.4 „Halbieren statt Durchsuchen“",
+    "Arbeitsblatt": "AB W2·2 „Sortieren“ und AB W2·3 „Effizienz und binäre Suche“",
+    "Online": "algoquest.frankjuchim.de/themen"
+   },
+   "naechstes": "Rekursion verstehen",
+   "sprechertext": "Und jetzt du! Im Algo Quest Lab findest du dazu Level zwei Punkt zwei, Ordnung im Ranking, das Sortier-Duell in Level zwei Punkt drei und die binäre Suche in Level zwei Punkt vier – jeweils mit sofortiger Rückmeldung. Auf den Arbeitsblättern Sortieren sowie Effizienz und binäre Suche kannst du weiter üben. Im nächsten Video geht es ins Labyrinth: Wir lernen die Rekursion kennen – Methoden, die sich selbst aufrufen. Bis dahin – viel Erfolg in der Rangliste!"
+  }
+ ]
+}

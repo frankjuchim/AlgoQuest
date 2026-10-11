@@ -1,0 +1,400 @@
+{
+ "nr": 2,
+ "kurz": "Online-IDE_und_Testrunner",
+ "titel": "Die Online-IDE: Gerüst, Testrunner und Bibliothek „Niedersachsen“",
+ "untertitel": "So programmierst und testest du in der Algo Quest",
+ "welt": 0,
+ "weltname": "Welt 0 · Die Akademie",
+ "farbe": "#7F6000",
+ "laenge": "5–6 min",
+ "zielgruppe": "Informatik eA (LK), Beginn der Einheit (DS 1–2); Wiederholung zu Beginn von Welt 4 (Bibliothek „Niedersachsen“)",
+ "einsatz": "Welt 0, DS 1–2 · Online-IDE Level 0 „Diagnose“ · AB W0·1 „Das Portal“, Aufgaben 2 und 3 · Welt 4, DS 24 (Bibliothek einschalten)",
+ "lernziele": [
+  "Einen Workspace in der Online-IDE öffnen bzw. importieren und den Aufbau eines Gerüsts verstehen (Kopfblock, GERÜST, DEIN TEIL, Tests, Hauptprogramm)",
+  "Den eigenen Teil schreiben, ohne Signatur oder Tests zu verändern",
+  "Den Testrunner starten und eine Meldung von assertEquals(erwartet, tatsächlich, Meldung) lesen",
+  "Besonderheiten der Online-IDE kennen: println ohne System.out, Hauptprogramm außerhalb von Klassen, Bibliothek „Niedersachsen“ (nicht generisch, Casts), == bei Zeichenketten"
+ ],
+ "hinweise": [
+  "Das Video ist weitgehend eine Live-Demo. Die Folien dienen als roter Faden; an den mit „Regie“ markierten Stellen in die Online-IDE wechseln. Beim Wechsel das IDE-Fenster so anordnen (Browser-Zoom 125–150 %), dass Code, Testrunner und Ausgabe nicht unten rechts liegen – die Kamera-Ecke bleibt frei. Alternativ die Kamera in den IDE-Szenen kleiner stellen.",
+  "Für die Demo einen Test-Workspace mit dem Beispiel aus dem Video anlegen (Klasse Fackellager, Testklasse FackellagerTest, Hauptprogramm) – nicht in einem Kurs-Workspace arbeiten. Der vollständige Quelltext steht unten in diesen Hinweisen bzw. ergibt sich aus den Folien.",
+  "Das Beispiel fackeln(raeume) ist eigens für das Video gewählt und kommt in Gerüsten, Lab, Arbeitsblättern, Bossen und Warm-up nicht vor.",
+  "Geprüft mit dem Prüfstand (werkzeuge/ide-pruefung/ide_pruefen.py, javac/java + Nachbau der Bibliothek): Lösung `return (raeume + 2) / 3;` → 4/4 Tests grün; erster Versuch `return raeume / 3;` → genauDrei und keinRaum grün, angebrochen rot [erwartet 3, tatsächlich 2], zehnRaeume rot [erwartet 4, tatsächlich 3]; Platzhalter `return 0;` → nur keinRaum grün. fackeln(0) = 0, fackeln(3) = 1, fackeln(7) = 3, fackeln(10) = 4.",
+  "Geprüft mit javac/java gegen den Nachbau aq.ni.Stack: push(5), push(8), (Integer) pop() → 8, danach top() = 5; pop auf leerem Stapel → IllegalStateException. Zeichenketten in echtem Java: teil = \"Dra\"; rune = teil + \"che\"; rune == \"Drache\" → false, rune.equals(\"Drache\") → true.",
+  "VOR AUFNAHME IN DER ECHTEN IDE PRÜFEN: (1) Menüpfad zum Importieren (Quelle: materialien/Online-IDE/LIESMICH.md „Workspace-Bereich → Workspace importieren“) und wie ausgeteilte Workspaces bei Schülerinnen und Schülern erscheinen; (2) genaue Beschriftung des Häkchens für die Bibliothek – die Quellen nennen „Niedersachsen“ (Gerüst W4, SPEC W4 §0) bzw. „Abiturklassen Niedersachsen“ (Testprotokoll, LIESMICH Online-IDE); auf der Folie steht deshalb nur „Niedersachsen“; (3) wie der Testrunner eine fehlgeschlagene assertEquals-Meldung genau anzeigt (erwartet/tatsächlich + eigene Meldung?); (4) dass `println(rune == \"Drache\")` in der Online-IDE tatsächlich true ausgibt (laut CLAUDE.md und Testprotokoll vergleicht == dort inhaltlich; die Probe im Testprotokoll ist noch offen); (5) Name des Startknopfs und des Ausgabebereichs.",
+  "Folie „Kurz pausieren“: im Schnitt „Video anhalten“ einblenden; die Auflösung folgt auf der nächsten Folie."
+ ],
+ "youtube": {
+  "titel": "Online-IDE für Java: Gerüst, Testrunner & Bibliothek Niedersachsen | Algo Quest #2",
+  "beschreibung": "So arbeitest du in der Online-IDE (online-ide.de): Workspace öffnen, Aufbau eines Gerüsts mit „DEIN TEIL“, eigene Methode schreiben, Tests im Testrunner starten und die Meldungen von assertEquals richtig lesen. Dazu die Besonderheiten der Online-IDE: println ohne System.out, Hauptprogramm außerhalb von Klassen, die Abitur-Bibliothek „Niedersachsen“ mit Stack, Queue, DynArray und BinTree (nicht generisch – Casts!) und warum du Zeichenketten immer mit equals vergleichst.\n\nTeil der Unterrichtsreihe „Algo Quest – Das Dungeon der Datenstrukturen“ (Informatik eA, Niedersachsen).\nÜben mit sofortiger Rückmeldung: https://algoquest.frankjuchim.de/themen",
+  "tags": [
+   "Informatik Abitur",
+   "Niedersachsen",
+   "Online-IDE",
+   "Java",
+   "Testrunner",
+   "JUnit",
+   "Informatik LK",
+   "Algo Quest"
+  ]
+ },
+ "folien": [
+  {
+   "typ": "titel",
+   "kapitel": "Einstieg",
+   "regie": "Kamera unten rechts, Titelfolie im Hintergrund.",
+   "sprechertext": "Hallo und willkommen zur Algo Quest! In diesem Video zeige ich dir die Online-IDE, mit der wir die ganze Einheit über programmieren: wie ein Gerüst aufgebaut ist, wie du deinen Teil schreibst und wie dir der Testrunner sagt, ob dein Code stimmt. Am Ende kommen die Stolpersteine, die im Abitur Punkte kosten."
+  },
+  {
+   "typ": "punkte",
+   "titel": "Warum die Online-IDE?",
+   "punkte": [
+    "Java direkt im Browser: **online-ide.de**",
+    "Je Welt ein **Workspace** mit Gerüst und Tests",
+    "**Tests** zeigen sofort, was schon klappt",
+    "Im Abitur gibt es **keinen** Compiler – erst Papier, dann IDE"
+   ],
+   "kasten": {
+    "farbe": "gold",
+    "titel": "Heute",
+    "text": [
+     "Workspace öffnen",
+     "Aufbau eines Gerüsts",
+     "Testrunner lesen",
+     "Hauptprogramm, println",
+     "Bibliothek, Stolpersteine"
+    ]
+   },
+   "sprechertext": "Die Online-IDE läuft im Browser, du musst nichts installieren. Für jede Welt gibt es einen Workspace mit Gerüst und fertigen Tests, die dir sofort sagen, was schon klappt. Aber denk daran: Im Abitur schreibst du ohne Compiler. Deshalb gilt oft: erst auf Papier, dann abtippen und testen."
+  },
+  {
+   "typ": "punkte",
+   "titel": "Schritt 1: Den Workspace öffnen",
+   "punkte": [
+    "Auf **online-ide.de** anmelden",
+    "**Ausgeteilt:** Der Workspace steht in deiner Liste",
+    "**Importieren:** Workspace-Bereich → „Workspace importieren“ → JSON-Datei",
+    "**Selbst anlegen:** neuer Workspace, neue Datei, Gerüst-Text einfügen"
+   ],
+   "kasten": {
+    "titel": "Gut zu wissen",
+    "text": [
+     "Je Welt **ein** Workspace",
+     "Gerüst-Dateien: `AQ_W0_…_Geruest.txt`"
+    ]
+   },
+   "kapitel": "Workspace öffnen",
+   "regie": "In die IDE wechseln: Anmeldung und Workspace-Liste zeigen. IDE-Fenster so anordnen, dass unten rechts (Kamera) nichts Wichtiges liegt. Menüpfade vor der Aufnahme in der echten IDE prüfen.",
+   "sprechertext": "Melde dich auf online-ide punkt de an. Meistens teilt deine Lehrkraft die Workspaces aus, dann stehen sie in deiner Liste. Eine Workspace-Datei importierst du im Workspace-Bereich. Und notfalls legst du selbst einen Workspace an und fügst den Text des Gerüsts in eine neue Datei ein."
+  },
+  {
+   "typ": "code",
+   "titel": "Der Aufbau eines Gerüsts",
+   "code": "// ===============================\n//  WELT 0 – DIE AKADEMIE – GERÜST\n//  ANLEITUNG und SPIELREGELN\n// ===============================\n\n// GERÜST – hier nichts veraendern\nclass Anzeige { … }\n\n// DEIN TEIL – hier arbeitest du!\nclass Werkstatt { … }\n\n// TESTS – hier nichts veraendern!\nclass …Test { … }\n\n// Programmstart\nprintln(…);",
+   "markiere": [
+    9,
+    10
+   ],
+   "nummern": false,
+   "groesse": 18,
+   "kasten": {
+    "titel": "Fünf Bereiche",
+    "text": [
+     "**Kopfblock**: Anleitung lesen!",
+     "**GERÜST**: Hilfsklassen",
+     "**DEIN TEIL**: nur hier schreiben",
+     "**TESTS**: nie verändern",
+     "**Programmstart**: Hauptprogramm"
+    ]
+   },
+   "kapitel": "Aufbau eines Gerüsts",
+   "sprechertext": "Jedes Gerüst ist gleich aufgebaut. Oben der Kopfblock mit Anleitung und Spielregeln – lies ihn! Im Bereich GERÜST stehen Hilfsklassen, die du nicht veränderst. Dein Arbeitsplatz ist DEIN TEIL. Darunter die Tests, die du nie veränderst. Und ganz unten der Programmstart. Teile, die mit LEVEL-START auskommentiert sind, schaltest du erst frei, wenn dein Level dran ist."
+  },
+  {
+   "typ": "code",
+   "titel": "Dein Teil: eine Methode schreiben",
+   "code": "class Fackellager {\n\n    // fackeln(raeume: Ganzzahl): Ganzzahl\n    // Eine Fackel brennt 3 Raeume lang.\n    public static int fackeln(int raeume) {\n        // TODO\n        return 0;\n    }\n}",
+   "markiere": [
+    6,
+    7
+   ],
+   "groesse": 20,
+   "kasten": {
+    "farbe": "gold",
+    "titel": "So gehst du vor",
+    "text": [
+     "Signatur in Abi-Notation steht **darüber**",
+     "`// TODO` und vorläufiges `return` **ersetzen**",
+     "Methodenkopf **nicht** ändern (**P3**)"
+    ]
+   },
+   "kapitel": "Eigener Teil",
+   "regie": "In der IDE die Klasse Fackellager im Test-Workspace zeigen.",
+   "sprechertext": "Ein eigenes Beispiel: Eine Fackel brennt drei Räume lang. Die Methode fackeln soll ausrechnen, wie viele Fackeln du brauchst. Über der Methode steht die Signatur in Abitur-Notation. Du ersetzt die TODO-Zeile und das vorläufige return null. Den Methodenkopf lässt du stehen – sonst findet ihn kein Test, und im Abitur wäre das Falle P3."
+  },
+  {
+   "typ": "code",
+   "titel": "Ein Test von innen",
+   "code": "class FackellagerTest {\n\n    @Test\n    public void angebrochen() {\n        assertEquals(3,\n                     Fackellager.fackeln(7),\n                     \"7 Raeume: 3 Fackeln\");\n    }\n}",
+   "markiere": [
+    5,
+    6,
+    7
+   ],
+   "groesse": 20,
+   "kasten": {
+    "titel": "assertEquals(…)",
+    "text": [
+     "1. **erwartet**: `3`",
+     "2. **tatsächlich**: `Fackellager.fackeln(7)`",
+     "3. **Meldung** bei Rot",
+     "`@Test` macht die Methode zum Test"
+    ]
+   },
+   "sprechertext": "So sieht ein Test aus, markiert mit at Test. assertEquals hat drei Teile: zuerst den erwarteten Wert, hier drei. Dann den tatsächlichen Wert, also das, was deine Methode liefert. Und eine Meldung, die du siehst, wenn der Test rot wird."
+  },
+  {
+   "typ": "punkte",
+   "titel": "Den Testrunner starten",
+   "punkte": [
+    "Reiter **„Testrunner“** öffnen",
+    "Grüner **Dreieckspfeil** neben der Testklasse → alle Tests",
+    "… oder neben einem einzelnen Test",
+    "**Grün** = bestanden, **rot** = Meldung lesen!"
+   ],
+   "kasten": {
+    "farbe": "gold",
+    "titel": "Schon grün?",
+    "text": [
+     "Mit `return 0;` ist **keinRaum** grün –",
+     "reiner Zufall, das zählt noch nicht."
+    ]
+   },
+   "kapitel": "Testrunner",
+   "regie": "Live in der IDE: Reiter „Testrunner“ öffnen, FackellagerTest mit dem Dreieckspfeil starten. Mit dem Platzhalter return 0 ist nur keinRaum grün.",
+   "sprechertext": "Öffne den Reiter Testrunner. Der grüne Dreieckspfeil neben der Testklasse startet alle Tests, der neben einem einzelnen Test nur diesen. Grün heißt bestanden, rot heißt: Meldung lesen! Mit dem vorläufigen return null ist ein Test übrigens schon grün – reiner Zufall."
+  },
+  {
+   "typ": "tabelle",
+   "titel": "Meldungen lesen",
+   "text": "Erster Versuch: `return raeume / 3;`",
+   "tabelle": {
+    "kopf": [
+     "Test",
+     "erwartet",
+     "tatsächlich",
+     ""
+    ],
+    "zeilen": [
+     [
+      "genauDrei",
+      "1",
+      "1",
+      "grün"
+     ],
+     [
+      "angebrochen",
+      "3",
+      "2",
+      "rot"
+     ],
+     [
+      "keinRaum",
+      "0",
+      "0",
+      "grün"
+     ]
+    ],
+    "groesse": 18,
+    "hervorheben": [
+     1
+    ],
+    "breiten": [
+     2.2,
+     1.3,
+     1.6,
+     1
+    ]
+   },
+   "tabellenbreite": 6.4,
+   "teilung": 7.5,
+   "kasten": {
+    "farbe": "rot",
+    "titel": "Rot: angebrochen",
+    "text": [
+     "„7 Raeume: 3 Fackeln“",
+     "erwartet 3, tatsächlich 2",
+     "`7 / 3` ist ganzzahlig **2** (**P4**)"
+    ]
+   },
+   "regie": "In der IDE return raeume / 3 eintippen, Tests starten, die rote Meldung zeigen.",
+   "sprechertext": "Ein erster Versuch: return raeume durch drei. Der Test angebrochen bleibt rot: sieben Räume, drei Fackeln – erwartet drei, tatsächlich zwei. Jetzt weißt du, wo du suchen musst: Sieben durch drei ist bei Ganzzahlen zwei, der Rest fällt weg. Falle P4."
+  },
+  {
+   "typ": "code",
+   "titel": "Korrigiert: alle Tests grün",
+   "code": "public static int fackeln(int raeume) {\n    return (raeume + 2) / 3;\n}",
+   "markiere": [
+    2
+   ],
+   "groesse": 22,
+   "unten": [
+    "`(7 + 2) / 3` = 3 · `(3 + 2) / 3` = 1 · `(0 + 2) / 3` = 0",
+    "Testrunner: **3 von 3 grün**"
+   ],
+   "kasten": {
+    "farbe": "gruen",
+    "titel": "Der Trick",
+    "text": [
+     "+ 2 vor dem Teilen rundet **auf**",
+     "Danach **alle** Tests noch einmal starten"
+    ]
+   },
+   "sprechertext": "Der Trick: Vor dem Teilen zwei addieren, dann wird aufgerundet. Tests noch einmal starten – jetzt sind alle grün."
+  },
+  {
+   "typ": "pause",
+   "titel": "Kurz pausieren: Jetzt du!",
+   "aufgabe": "Schreib einen **eigenen Test** `zehnRaeume` für 10 Räume. Wie lautet die Zeile mit `assertEquals`? Was hätte der erste Versuch `raeume / 3` geliefert?",
+   "kasten": {
+    "farbe": "gold",
+    "titel": "Tipp",
+    "text": [
+     "Reihenfolge: erwartet, tatsächlich, Meldung"
+    ]
+   },
+   "kapitel": "Selbst ausprobieren",
+   "pause_s": 5,
+   "sprechertext": "Jetzt du: Halte das Video an und schreib einen eigenen Test für zehn Räume. Und was hätte der erste Versuch geliefert?"
+  },
+  {
+   "typ": "code",
+   "titel": "Auflösung: der Test zehnRaeume",
+   "code": "@Test\npublic void zehnRaeume() {\n    assertEquals(4, Fackellager.fackeln(10),\n                 \"10 Raeume: 4 Fackeln\");\n}",
+   "groesse": 20,
+   "unten": [
+    "Erster Versuch: `10 / 3` = **3** → Test rot",
+    "Korrigiert: `(10 + 2) / 3` = **4** → Test grün"
+   ],
+   "kasten": {
+    "farbe": "gruen",
+    "titel": "Gute Tests",
+    "text": [
+     "prüfen auch **Grenzfälle**: 0, genau voll, angebrochen"
+    ]
+   },
+   "sprechertext": "Zehn Räume brauchen vier Fackeln. Der erste Versuch hätte drei geliefert, der Test wäre rot gewesen. Gute Tests prüfen genau solche Grenzfälle."
+  },
+  {
+   "typ": "code",
+   "titel": "Hauptprogramm und println",
+   "code": "// ausserhalb aller Klassen: Hauptprogramm\nint r = 7;\nprintln(\"Fackeln fuer \" + r + \" Raeume: \"\n        + Fackellager.fackeln(r));",
+   "groesse": 20,
+   "unten": [
+    "Ausgabe: `Fackeln fuer 7 Raeume: 3`"
+   ],
+   "kasten": {
+    "titel": "Online-IDE",
+    "text": [
+     "`println(…)` **ohne** `System.out`",
+     "Anweisungen **außerhalb** von Klassen = Hauptprogramm",
+     "Start mit dem grünen **Startknopf**"
+    ]
+   },
+   "kapitel": "Hauptprogramm",
+   "regie": "In der IDE das Programm mit dem Startknopf laufen lassen und die Ausgabe zeigen.",
+   "sprechertext": "In der Online-IDE sind alle Anweisungen außerhalb von Klassen das Hauptprogramm, eine main-Methode brauchst du nicht. Ausgeben kannst du mit println, ohne System punkt out. Mit dem grünen Startknopf läuft das Programm. So probierst du deine Methoden auch ohne Tests aus."
+  },
+  {
+   "typ": "code",
+   "titel": "Ab Welt 4: Bibliothek „Niedersachsen“",
+   "code": "Stack kisten = new Stack();\nkisten.push(5);\nkisten.push(8);\nint oben = (Integer) kisten.pop();\nprintln(oben);   // 8",
+   "markiere": [
+    4
+   ],
+   "groesse": 20,
+   "kasten": {
+    "farbe": "gold",
+    "titel": "Einschalten",
+    "text": [
+     "Rechtsklick auf den Workspace → „Einstellungen“",
+     "Häkchen bei **„Niedersachsen“**",
+     "Dann gibt es `Stack`, `Queue`, `DynArray`, `BinTree`"
+    ]
+   },
+   "unten": [
+    "Nicht generisch: Inhalt ist `Object` → **Cast** nötig (**P4**)"
+   ],
+   "kapitel": "Bibliothek „Niedersachsen“",
+   "regie": "Rechtsklick auf den Workspace → Einstellungen zeigen (Beschriftung des Häkchens vorher in der echten IDE prüfen).",
+   "sprechertext": "Ab Welt vier brauchst du die Abitur-Klassen Stack, Queue, DynArray und BinTree. Dafür schaltest du die Bibliothek Niedersachsen ein: Rechtsklick auf den Workspace, Einstellungen, Häkchen setzen. In den Workspaces ab Welt vier ist sie schon an. Diese Klassen sind nicht generisch, sie speichern Object. Was du herausholst, musst du casten."
+  },
+  {
+   "typ": "code",
+   "titel": "Stolperstein: == bei Zeichenketten",
+   "code": "String teil = \"Dra\";\nString rune = teil + \"che\";\nprintln(rune == \"Drache\");\nprintln(rune.equals(\"Drache\"));",
+   "markiere": [
+    3
+   ],
+   "groesse": 20,
+   "unten": [
+    "Zeile 3: Online-IDE **true** – echtes Java **false**",
+    "Zeile 4: überall **true**"
+   ],
+   "kasten": {
+    "farbe": "rot",
+    "titel": "P5",
+    "text": [
+     "Die Online-IDE vergleicht mit `==` den **Inhalt** – die Tests bleiben grün.",
+     "Im Abitur gilt Java: **immer** `equals`!"
+    ]
+   },
+   "kapitel": "Stolpersteine",
+   "regie": "Live zeigen, dass die Online-IDE bei Zeile 3 true ausgibt (vor der Aufnahme prüfen).",
+   "sprechertext": "Und der gemeinste Stolperstein: In der Online-IDE vergleicht das doppelte Gleichheitszeichen Zeichenketten nach ihrem Inhalt. Zeile drei gibt true aus, deine Tests bleiben grün. In echtem Java prüft es aber, ob es dasselbe Objekt ist – und dann kommt false heraus. Im Abitur zählt echtes Java: Vergleiche Zeichenketten immer mit equals. Falle P5."
+  },
+  {
+   "typ": "punkte",
+   "titel": "Typische Fehler – und wie du sie vermeidest",
+   "punkte": [
+    "**P3** Methodenkopf geändert – Tests finden ihn nicht",
+    "**P4** Cast vergessen: `(Integer) s.pop()`",
+    "**P5** `==` statt `equals` – in der IDE unsichtbar",
+    "Tests verändert, damit sie grün werden – zählt nicht",
+    "Testrunner hängt? **Endlosschleife** – Programm anhalten"
+   ],
+   "kasten": {
+    "farbe": "rot",
+    "titel": "Merksatz",
+    "text": [
+     "Grün heißt: Die Tests sind zufrieden.",
+     "Im Abi zählt, was **auf dem Papier** steht."
+    ]
+   },
+   "sprechertext": "Die typischen Fehler: P3, den Methodenkopf ändern. P4, den Cast vergessen. P5, Zeichenketten mit doppeltem Gleichheitszeichen vergleichen. Tests veränderst du nie. Und hängt der Testrunner, hast du wohl eine Endlosschleife: Programm anhalten, Schleifenbedingung prüfen."
+  },
+  {
+   "typ": "merke",
+   "titel": "Das nimmst du mit",
+   "punkte": [
+    "Nur in **DEIN TEIL** schreiben – Methodenkopf und Tests bleiben unverändert",
+    "Testrunner: grüner Pfeil, rote Meldung lesen – `assertEquals(erwartet, tatsächlich, Meldung)`",
+    "`println` ohne `System.out`, Hauptprogramm außerhalb von Klassen",
+    "Ab Welt 4 Bibliothek „Niedersachsen“: nicht generisch → Cast; Zeichenketten **immer** mit `equals`"
+   ],
+   "kapitel": "Zusammenfassung",
+   "sprechertext": "Kurz gesagt: Du schreibst nur in deinem Teil. Im Testrunner liest du bei Rot die Meldung: erwartet, tatsächlich. Ausgabe mit println, Hauptprogramm außerhalb von Klassen. Ab Welt vier Bibliothek einschalten und casten. Und Zeichenketten immer mit equals."
+  },
+  {
+   "typ": "ende",
+   "links": {
+    "Online-IDE": "Level 0 „Diagnose“ (Workspace „W0 Diagnose – Das Portal“)",
+    "Arbeitsblatt": "AB W0·1 „Das Portal“ – Aufgaben 2 und 3",
+    "Lab": "Level 0.1 „Das Portal“ – Karte „Programmieren in der Online-IDE“",
+    "Online": "algoquest.frankjuchim.de/themen"
+   },
+   "naechstes": "Klassen, Objekte, Vererbung",
+   "sprechertext": "Jetzt ab in die IDE: Starte mit Level null, der Diagnose – dazu passen die Aufgaben zwei und drei auf dem Arbeitsblatt Das Portal. Im nächsten Video geht es in die Heldenschmiede: Klassen, Objekte und Vererbung. Bis dann!"
+  }
+ ]
+}

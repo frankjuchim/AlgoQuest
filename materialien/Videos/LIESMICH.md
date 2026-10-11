@@ -13,6 +13,8 @@ NN_Kurztitel/
   AQ_VideoNN_Kurztitel_Folien.pptx    ERZEUGT: Folien zum Abfilmen, Sprechertext in den Notizen (Referentenansicht)
   AQ_VideoNN_Kurztitel_Skript.md      ERZEUGT: Drehbuch mit Lernzielen, YouTube-Text, Kapitelmarken, Folie für Folie
   bilder/                             ERZEUGT: Struktogramme, Bäume, Stapel … (mit dem Renderer des Labs) und Screenshots
+  quellbilder/                        optional: von Hand bzw. per Skript zusammengesetzte Bilder (z. B. Klassendiagramme mit
+                                      Pfeilen), eingebunden über "bilddateien" – bei Änderungen der Inhalte von Hand erneuern
 ```
 
 Nach jeder Änderung an einer `video.json`:
