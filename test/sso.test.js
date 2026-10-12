@@ -382,3 +382,15 @@ test('Datenbank-Upgrade: Schema 3 ohne Verbund-Spalten wird ergänzt', () => {
   db.close();
   fs.rmSync(dir, { recursive: true, force: true });
 });
+
+test('Konfiguration tolerant: Schlüssel mit Leerzeichen/Anführungszeichen/nur Base64, PORTAL_URL mit Punkt oder Schrägstrich', () => {
+  const { verbundKonfig } = require('../src/verbundKonfig');
+  const pem = publicKey.export({ type: 'spki', format: 'pem' }).trim();
+  const b64 = pem.split('\n').slice(1, -1).join('');
+  for (const k of [pem, PEM_EINZEILIG, pem.replace(/\n/g, ' '), `"${PEM_EINZEILIG}"`, b64, `${pem}\n${fremd.publicKey.export({ type: 'spki', format: 'pem' })}`]) {
+    const c = verbundKonfig({ ...UMGEBUNG, PORTAL_PUBLIC_KEY: k });
+    assert.equal(c.sso, true, k);
+  }
+  assert.equal(verbundKonfig({ ...UMGEBUNG, PORTAL_PUBLIC_KEY: 'unsinn' }).sso, false);
+  for (const u of ['https://portal.example.', 'https://portal.example/', ' https://portal.example ']) assert.equal(verbundKonfig({ ...UMGEBUNG, PORTAL_URL: u }).portal, PORTAL, u);
+});
