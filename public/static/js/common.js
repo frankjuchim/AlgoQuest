@@ -199,5 +199,54 @@ const AQ = (() => {
     }
   }
 
-  return { SVG_NS, h, s, clear, mount, api, toast, fmtDatum, progress, prozent, sterne, bestaetigen, download, readFile, mische, speichere, lade };
+  /* ---------- Effekte (rein dekorativ, aria-hidden; bei „Bewegung reduzieren“ aus) ---------- */
+  const ruhig = () => window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const FUNKEN_FARBEN = ['#e8b923', '#b8860b', '#ffd86b', '#548235', '#7fb35a', '#ffffff', '#5b8fc7'];
+
+  /** Funkenregen an einem Element (richtige Antwort, Boss besiegt …). stark = mehr und weiter. */
+  function funken(el, { stark = false } = {}) {
+    if (!el || ruhig()) return;
+    const r = el.getBoundingClientRect();
+    const box = h('div', { class: 'funken', 'aria-hidden': 'true' });
+    box.style.left = r.left + Math.min(r.width, 220) / 2 + 'px';
+    box.style.top = r.top + r.height / 2 + 'px';
+    const n = stark ? 70 : 28;
+    for (let i = 0; i < n; i++) {
+      const f = h('span', { class: i % 3 ? 'funke' : 'funke stern' });
+      const winkel = Math.random() * Math.PI * 2;
+      const weite = (stark ? 120 : 60) + Math.random() * (stark ? 220 : 110);
+      f.style.setProperty('--dx', Math.cos(winkel) * weite + 'px');
+      f.style.setProperty('--dy', Math.sin(winkel) * weite - (stark ? 80 : 40) + 'px');
+      f.style.setProperty('--dreh', Math.round(Math.random() * 720 - 360) + 'deg');
+      f.style.background = FUNKEN_FARBEN[i % FUNKEN_FARBEN.length];
+      f.style.animationDelay = Math.random() * 0.12 + 's';
+      f.style.animationDuration = (stark ? 1.3 : 0.9) + Math.random() * 0.5 + 's';
+      box.appendChild(f);
+    }
+    document.body.appendChild(box);
+    setTimeout(() => box.remove(), stark ? 2400 : 1700);
+  }
+
+  /** aufsteigender Text (z. B. „+8“) über einem Element */
+  function schweben(el, text) {
+    if (!el || ruhig()) return;
+    const r = el.getBoundingClientRect();
+    const t = h('div', { class: 'schweben', 'aria-hidden': 'true' }, text);
+    t.style.left = r.left + Math.min(r.width, 220) / 2 + 'px';
+    t.style.top = r.top + 'px';
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 1600);
+  }
+
+  /** kurzes Wackeln (falsche Antwort) */
+  function wackeln(el) {
+    if (!el || ruhig()) return;
+    el.classList.remove('wackeln');
+    void el.offsetWidth; // Animation neu starten
+    el.classList.add('wackeln');
+  }
+
+  const effekt = { funken, schweben, wackeln };
+
+  return { SVG_NS, h, s, clear, mount, api, toast, fmtDatum, progress, prozent, sterne, bestaetigen, download, readFile, mische, speichere, lade, effekt };
 })();

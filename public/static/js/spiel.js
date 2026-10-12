@@ -116,7 +116,12 @@
 
   function abzeichenToast(neu) {
     if (!neu || !neu.length) return;
-    neu.forEach((b, i) => setTimeout(() => toast(`${b.icon} Neues Abzeichen: ${b.name}`, 'gold'), 1800 * i + 600));
+    neu.forEach((b, i) =>
+      setTimeout(() => {
+        toast(`${b.icon} Neues Abzeichen: ${b.name}`, 'gold');
+        AQ.effekt.funken(document.getElementById('toast'), { stark: true });
+      }, 1800 * i + 600)
+    );
   }
 
   /* ---------- Weltkarte ---------- */
@@ -128,7 +133,7 @@
       einstellungen.scoreboard = w.scoreboard;
       const kopf = h(
         'section',
-        { class: 'card' },
+        { class: 'card held-kopf' },
         h(
           'div',
           { class: 'row' },
@@ -142,7 +147,8 @@
         seite('karte', kopf, h('div', { class: 'callout' }, 'Noch sind keine Welten geladen. Frag deine Lehrkraft.'));
         return;
       }
-      const karten = w.welten.map((welt) => weltKarte(welt));
+      const markierung = { gesetzt: false }; // nächstes offenes Level leuchtet („Hier geht’s weiter“)
+      const karten = w.welten.map((welt) => weltKarte(welt, markierung));
       seite('karte', kopf, h('h2', { class: 'sr-only' }, 'Weltkarte'), h('div', { class: 'karte' }, karten));
     } catch (e) {
       fehlerSeite(e, 'karte');
@@ -153,15 +159,17 @@
     return h('div', { class: 'ring', style: { '--p': Math.round(Math.max(0, Math.min(1, anteil)) * 100) + '%' } }, h('span', null, inhalt));
   }
 
-  function weltKarte(w) {
+  function weltKarte(w, markierung = { gesetzt: true }) {
     const knoten = [];
     w.levels.forEach((l, i) => {
       if (i) knoten.push(h('span', { class: 'verbinder', 'aria-hidden': 'true' }));
       const fertig = l.anzahl && l.geloest >= l.anzahl;
+      const aktuell = w.frei && !fertig && !markierung.gesetzt;
+      if (aktuell) markierung.gesetzt = true;
       knoten.push(
         h(
           'a',
-          { class: 'lvl' + (fertig ? ' fertig' : ''), href: w.frei ? `#/level/${encodeURIComponent(l.id)}` : null, 'aria-label': `Level ${l.nr} ${l.titel}: ${l.geloest} von ${l.anzahl} Aufgaben gelöst, ${l.punkte} von ${l.maxPunkte} Punkten` },
+          { class: 'lvl' + (fertig ? ' fertig' : '') + (aktuell ? ' aktuell' : ''), 'aria-current': aktuell ? 'step' : null, href: w.frei ? `#/level/${encodeURIComponent(l.id)}` : null, 'aria-label': `Level ${l.nr} ${l.titel}: ${l.geloest} von ${l.anzahl} Aufgaben gelöst, ${l.punkte} von ${l.maxPunkte} Punkten` },
           ring(l.anteil, fertig ? '✓' : l.nr || String(i + 1)),
           h('span', { class: 't' }, l.titel),
           h('span', { class: 's' }, `${l.geloest}/${l.anzahl} · ${l.punkte} P.`)
@@ -179,7 +187,7 @@
       knoten.push(
         h(
           'a',
-          { class: 'lvl boss' + (b.frei ? '' : ' gesperrt') + (b.besiegt ? ' besiegt' : ''), href: w.frei ? `#/boss/${w.nr}` : null, 'aria-label': `Boss ${b.titel}` + (b.frei ? '' : ' (gesperrt)') + (b.besiegt ? ', besiegt' : '') },
+          { class: 'lvl boss' + (b.frei ? ' bereit' : ' gesperrt') + (b.besiegt ? ' besiegt' : ''), href: w.frei ? `#/boss/${w.nr}` : null, 'aria-label': `Boss ${b.titel}` + (b.frei ? '' : ' (gesperrt)') + (b.besiegt ? ', besiegt' : '') },
           ring(anteil, b.besiegt ? '🏆' : b.frei ? '⚔️' : '🔒'),
           h('span', { class: 't' }, b.titel),
           h('span', { class: 's' }, b.bester ? `bester: ${b.bester.punkte}/${b.bester.max}` : b.frei ? 'bereit!' : 'gesperrt')
@@ -588,11 +596,12 @@
     seite(
       'karte',
       h('nav', { class: 'crumbs' }, h('a', { href: '#/' }, 'Weltkarte'), '›', h('a', { href: `#/boss/${k.welt.nr}` }, k.titel), '›', h('span', null, 'Auswertung')),
-      h('section', { class: 'card boss-ergebnis' }, h('h1', null, k.besiegt ? `🏆 ${k.titel} besiegt!` : `${k.titel} – diesmal nicht besiegt`), h('div', { class: 'gross' }, `${k.punkte} / ${k.maxPunkte}`), h('p', null, `${prozent(k.anteil)} der Punkte · ${k.aufgaben.filter((a) => a.ok).length} von ${k.aufgaben.length} Aufgaben richtig`), AQ.progress(k.anteil, 'gold'), h('p', { class: 'hint' }, 'Es zählt dein bester Versuch. Ein neuer Versuch ist nach 12 Stunden möglich.')),
+      h('section', { class: 'card boss-ergebnis' + (k.besiegt ? ' besiegt' : '') }, h('h1', null, k.besiegt ? `🏆 ${k.titel} besiegt!` : `${k.titel} – diesmal nicht besiegt`), h('div', { class: 'gross' }, `${k.punkte} / ${k.maxPunkte}`), h('p', null, `${prozent(k.anteil)} der Punkte · ${k.aufgaben.filter((a) => a.ok).length} von ${k.aufgaben.length} Aufgaben richtig`), AQ.progress(k.anteil, 'gold'), h('p', { class: 'hint' }, 'Es zählt dein bester Versuch. Ein neuer Versuch ist nach 12 Stunden möglich.')),
       h('h2', null, 'Auswertung je Aufgabe'),
       liste,
       h('a', { class: 'btn secondary', href: '#/' }, 'Zur Weltkarte')
     );
+    if (k.besiegt) setTimeout(() => AQ.effekt.funken(document.querySelector('.boss-ergebnis h1'), { stark: true }), 250);
   }
 
   /* ---------- Profil ---------- */

@@ -468,6 +468,233 @@ body.board h1, body.board h2 { color: #fff; }
 .board-erfolg .zeit { color: #9fb6cf; font-size: 0.8em; }
 .board-status { color: #f2c75c; font-size: 0.85em; margin-left: 0.75rem; }
 
+/* =====================================================================================================
+   Dungeon-Thema (2.7): Atmosphäre am Rahmen, Aufgabenflächen bleiben hell und ruhig.
+   Effekte sind rein dekorativ (aria-hidden) und entfallen bei „Bewegung reduzieren“.
+   ===================================================================================================== */
+:root {
+  --nacht: #0c1b2c;
+  --nacht-2: #13283f;
+  --glut: #e8b923;
+  --glut-hell: #ffd86b;
+  /* Mauerwerk als feines Muster (Datenstrukturen-Dungeon) */
+  --mauer: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='36'%3E%3Cg fill='none' stroke='%231f4e79' stroke-opacity='0.045' stroke-width='1.2'%3E%3Cpath d='M0 .6h72M0 18.6h72M18 .6v18M54 .6v18M0 18.6v18M36 18.6v18M72 18.6v18'/%3E%3C/g%3E%3C/svg%3E");
+  --mauer-hell: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='36'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.05' stroke-width='1.2'%3E%3Cpath d='M0 .6h72M0 18.6h72M18 .6v18M54 .6v18M0 18.6v18M36 18.6v18M72 18.6v18'/%3E%3C/g%3E%3C/svg%3E");
+}
+body { background: var(--bg) var(--mauer); }
+.aktionen { background: rgba(242, 245, 249, 0.94); }
+
+/* Kopfzeile: Nachthimmel mit glühender Goldkante */
+.topbar {
+  background: linear-gradient(100deg, var(--nacht) 0%, var(--nacht-2) 35%, var(--blue) 100%);
+  border-bottom: 2px solid var(--gold);
+  box-shadow: 0 2px 14px rgba(232, 185, 35, 0.28);
+}
+.brand-mark {
+  position: relative; overflow: hidden;
+  background: linear-gradient(145deg, var(--glut-hell), var(--gold) 55%, var(--gold-dark));
+  color: var(--nacht); box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25) inset, 0 2px 8px rgba(0, 0, 0, 0.35);
+  clip-path: polygon(50% 0, 100% 14%, 100% 62%, 50% 100%, 0 62%, 0 14%); /* Wappenschild */
+  border-radius: 0;
+}
+.brand-mark::after {
+  content: ''; position: absolute; inset: -50% auto -50% -60%; width: 40%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.75), transparent);
+  transform: rotate(20deg); animation: glanz 6s ease-in-out infinite;
+}
+@keyframes glanz { 0%, 70% { left: -60%; } 85%, 100% { left: 130%; } }
+.topnav a.active { background: rgba(232, 185, 35, 0.16); box-shadow: inset 0 -3px 0 var(--glut); }
+
+/* Karten: leicht angehoben, Überschriften mit goldenem Akzent */
+.card { border-color: #d3dce7; }
+main > h1, .card > h1 { letter-spacing: 0.005em; }
+
+/* ---------- Startseite: das Tor zum Dungeon ---------- */
+body.tor {
+  background:
+    radial-gradient(ellipse 70% 45% at 50% 0%, rgba(232, 185, 35, 0.16), transparent 70%),
+    radial-gradient(ellipse at 50% 120%, rgba(31, 78, 121, 0.6), transparent 60%),
+    var(--mauer-hell),
+    linear-gradient(180deg, var(--nacht) 0%, #102338 55%, #16314e 100%);
+  color: #e9eef5;
+  min-height: 100vh;
+}
+html:has(> body.tor) { background: #16314e; }
+body.tor .card { color: var(--text); }
+body.tor .hero { position: relative; padding: 2rem 0 1rem; }
+body.tor .hero h1 {
+  font-size: clamp(2rem, 6vw, 2.7rem); letter-spacing: 0.02em;
+  background: linear-gradient(180deg, #fff3c4 0%, var(--glut-hell) 40%, var(--gold) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 2px 10px rgba(232, 185, 35, 0.35));
+}
+body.tor .hero .muted { color: #b9c8da; }
+body.tor .hero .brand-mark { width: 4.4rem; height: 4.8rem; font-size: 1.7rem; animation: schweben 5s ease-in-out infinite; }
+@keyframes schweben { 50% { transform: translateY(-5px); } }
+/* Fackeln links und rechts */
+.fackel { position: absolute; top: 2.2rem; width: 18px; height: 54px; border-radius: 3px; background: linear-gradient(180deg, #6b4a2b, #3b2716); }
+.fackel.links { left: 0.5rem; }
+.fackel.rechts { right: 0.5rem; }
+.fackel::before {
+  content: ''; position: absolute; left: 50%; bottom: 100%; width: 26px; height: 38px; margin-left: -13px;
+  border-radius: 50% 50% 45% 45% / 65% 65% 35% 35%;
+  background: radial-gradient(ellipse at 50% 75%, #fff6c9 0%, var(--glut-hell) 30%, #f08c1c 65%, rgba(200, 60, 10, 0) 100%);
+  animation: flamme 0.9s ease-in-out infinite alternate; transform-origin: 50% 100%;
+}
+.fackel::after {
+  content: ''; position: absolute; left: 50%; top: -60px; width: 180px; height: 180px; margin-left: -90px; pointer-events: none;
+  background: radial-gradient(circle, rgba(255, 190, 70, 0.22), transparent 65%);
+  animation: schein 2.2s ease-in-out infinite alternate;
+}
+@keyframes flamme { 0% { transform: scale(1, 1) rotate(-2deg); } 50% { transform: scale(0.92, 1.08) rotate(2deg); } 100% { transform: scale(1.05, 0.94) rotate(-1deg); } }
+@keyframes schein { 0% { opacity: 0.75; } 100% { opacity: 1; transform: scale(1.06); } }
+/* aufsteigende Glut */
+.glut { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.glut i {
+  position: absolute; bottom: -10px; width: 4px; height: 4px; border-radius: 50%; background: var(--glut-hell);
+  box-shadow: 0 0 6px 2px rgba(255, 190, 70, 0.6); opacity: 0; animation: glut 7s linear infinite;
+}
+.glut i:nth-child(1) { left: 8%; animation-delay: 0s; }
+.glut i:nth-child(2) { left: 22%; animation-delay: 2.3s; animation-duration: 8s; }
+.glut i:nth-child(3) { left: 41%; animation-delay: 4.1s; }
+.glut i:nth-child(4) { left: 63%; animation-delay: 1.2s; animation-duration: 9s; }
+.glut i:nth-child(5) { left: 79%; animation-delay: 3.4s; }
+.glut i:nth-child(6) { left: 92%; animation-delay: 5.5s; animation-duration: 6.5s; }
+@keyframes glut { 0% { transform: translate(0, 0); opacity: 0; } 10% { opacity: 0.9; } 100% { transform: translate(18px, -100vh); opacity: 0; } }
+body.tor .tabs { border-bottom-color: rgba(255, 255, 255, 0.15); }
+body.tor .tabs button { color: #b9c8da; }
+body.tor .tabs button[aria-selected='true'] { color: #fff; border-bottom-color: var(--glut); }
+body.tor .card { box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(232, 185, 35, 0.18); border-color: transparent; }
+body.tor .card h2 { color: var(--blue-dark); }
+body.tor main > p a:not(.btn), body.tor .center.small a { color: #cfe0f1; }
+body.tor .btn.secondary { background: rgba(255, 255, 255, 0.06); color: #f3e3b0; border-color: rgba(232, 185, 35, 0.55); }
+body.tor .btn.secondary:hover { background: rgba(232, 185, 35, 0.16); color: #fff; }
+
+/* ---------- Weltkarte ---------- */
+.held-kopf {
+  position: relative; overflow: hidden; color: #e9eef5; border: 0;
+  background:
+    radial-gradient(circle at 92% -10%, rgba(232, 185, 35, 0.35), transparent 45%),
+    radial-gradient(circle at 0% 120%, rgba(91, 143, 199, 0.35), transparent 50%),
+    var(--mauer-hell),
+    linear-gradient(120deg, var(--nacht), var(--nacht-2) 50%, var(--blue));
+  box-shadow: 0 10px 30px rgba(12, 27, 44, 0.35);
+}
+.held-kopf h1 { color: #fff; }
+.held-kopf .muted { color: #c3d1e2; }
+.held-kopf strong { color: var(--glut-hell); }
+.held-kopf .stat { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.18); backdrop-filter: blur(2px); min-width: 6.5rem; text-align: center; }
+.held-kopf .stat .n { color: #fff; }
+.held-kopf .stat.gold .n { color: var(--glut-hell); text-shadow: 0 0 14px rgba(232, 185, 35, 0.6); }
+.held-kopf .stat .l { color: #c3d1e2; }
+.held-kopf .progress { background: rgba(255, 255, 255, 0.14); margin-top: 0.3rem; }
+
+/* Fortschrittsbalken mit Lichtschimmer */
+.progress > span { position: relative; overflow: hidden; }
+.progress.gold > span { background: linear-gradient(90deg, var(--gold-dark), var(--gold) 50%, var(--glut)); }
+.progress > span::after {
+  content: ''; position: absolute; inset: 0; width: 40%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  animation: schimmer 3.2s ease-in-out infinite;
+}
+@keyframes schimmer { 0% { transform: translateX(-120%); } 60%, 100% { transform: translateX(320%); } }
+
+.welt-karte { box-shadow: 0 2px 6px rgba(20, 40, 70, 0.08), 0 8px 24px rgba(20, 40, 70, 0.06); }
+.welt-kopf { position: relative; overflow: hidden; }
+.welt-kopf::before { content: ''; position: absolute; inset: 0; background: var(--mauer-hell); opacity: 0.9; pointer-events: none; }
+.welt-kopf::after {
+  content: ''; position: absolute; top: 0; bottom: 0; left: -30%; width: 25%; pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+  transform: skewX(-18deg); transition: left 0.9s ease;
+}
+.welt-karte:hover .welt-kopf::after { left: 115%; }
+.welt-kopf > * { position: relative; }
+.welt-nr { box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.12), 0 0 18px rgba(255, 255, 255, 0.15); }
+.welt-pfad {
+  background:
+    radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--welt) 14%, transparent) 1px, transparent 1.5px) 0 0 / 14px 14px,
+    linear-gradient(180deg, color-mix(in srgb, var(--welt) 5%, #fff), #fff);
+}
+.verbinder { height: 0; background: none; border-top: 3px dotted color-mix(in srgb, var(--welt) 45%, #c9d2de); border-radius: 0; }
+.lvl { background: #fff; box-shadow: 0 1px 2px rgba(20, 40, 70, 0.06); transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s; }
+.lvl[href]:hover { transform: translateY(-3px); box-shadow: 0 8px 18px color-mix(in srgb, var(--welt) 25%, transparent); }
+.lvl .ring { box-shadow: 0 0 0 3px #fff, 0 2px 6px rgba(20, 40, 70, 0.12); }
+.lvl.fertig .ring { box-shadow: 0 0 0 3px #fff, 0 0 14px color-mix(in srgb, var(--welt) 55%, transparent); }
+.lvl.fertig::after {
+  content: '★'; position: absolute; top: 0.25rem; right: 0.6rem; font-size: 1rem; color: var(--glut);
+  text-shadow: 0 0 6px rgba(232, 185, 35, 0.7);
+}
+/* „Hier geht’s weiter“ */
+.lvl.aktuell { border-color: var(--welt); }
+.lvl.aktuell .ring { animation: ruf 2.2s ease-in-out infinite; }
+.lvl.aktuell::before {
+  content: '▶ weiter'; position: absolute; top: -0.65rem; left: 50%; transform: translateX(-50%);
+  background: var(--welt); color: #fff; font-size: 0.68rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase;
+  padding: 0.05rem 0.5rem; border-radius: 999px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); white-space: nowrap;
+}
+@keyframes ruf {
+  0%, 100% { box-shadow: 0 0 0 3px #fff, 0 0 0 5px color-mix(in srgb, var(--welt) 0%, transparent); }
+  50% { box-shadow: 0 0 0 3px #fff, 0 0 0 9px color-mix(in srgb, var(--welt) 28%, transparent); }
+}
+/* Boss: glühende Glut, besiegt: goldene Krone */
+.lvl.boss.bereit:not(.besiegt) .ring { animation: lodern 1.8s ease-in-out infinite alternate; }
+@keyframes lodern {
+  0% { box-shadow: 0 0 0 3px #fff, 0 0 8px rgba(214, 92, 20, 0.45); }
+  100% { box-shadow: 0 0 0 3px #fff, 0 0 22px rgba(232, 140, 30, 0.8); }
+}
+.lvl.boss.besiegt .ring { box-shadow: 0 0 0 3px #fff, 0 0 18px rgba(232, 185, 35, 0.75); }
+.welt-karte.gesperrt .welt-pfad { position: relative; }
+.welt-karte.gesperrt .welt-pfad::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(240, 244, 249, 0.2), rgba(220, 228, 238, 0.65)); /* Nebel */
+}
+
+/* ---------- Aufgaben ---------- */
+.level-kopf { background: linear-gradient(90deg, color-mix(in srgb, var(--welt) 7%, #fff), #fff 60%); }
+.aufgabe-zeile { transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s; }
+.aufgabe-zeile:hover { transform: translateX(3px); }
+.aufgabe-zeile.geloest .nr { box-shadow: 0 0 10px rgba(84, 130, 53, 0.45); }
+.feedback.jubel { animation: jubel 0.55s cubic-bezier(0.2, 1.4, 0.4, 1); box-shadow: 0 0 0 4px rgba(84, 130, 53, 0.12), 0 6px 20px rgba(84, 130, 53, 0.18); }
+@keyframes jubel { 0% { transform: scale(0.94); opacity: 0.4; } 100% { transform: scale(1); opacity: 1; } }
+.wackeln { animation: wackeln 0.45s ease; }
+@keyframes wackeln { 20% { transform: translateX(-7px); } 40% { transform: translateX(6px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(2px); } }
+.erklaerung { border-color: var(--green); background: linear-gradient(180deg, #f3faee, #fbfdf9); box-shadow: 0 4px 16px rgba(84, 130, 53, 0.1); }
+
+/* Funken und aufsteigende Punkte */
+.funken { position: fixed; width: 0; height: 0; pointer-events: none; z-index: 200; }
+.funke {
+  position: absolute; left: -4px; top: -4px; width: 8px; height: 8px; border-radius: 2px;
+  animation-name: funke; animation-timing-function: cubic-bezier(0.15, 0.7, 0.3, 1); animation-fill-mode: forwards;
+}
+.funke.stern { clip-path: polygon(50% 0, 61% 38%, 100% 50%, 61% 62%, 50% 100%, 39% 62%, 0 50%, 39% 38%); width: 12px; height: 12px; border-radius: 0; }
+@keyframes funke {
+  0% { transform: translate(0, 0) rotate(0) scale(1); opacity: 1; }
+  70% { opacity: 1; }
+  100% { transform: translate(var(--dx), calc(var(--dy) + 60px)) rotate(var(--dreh)) scale(0.6); opacity: 0; }
+}
+.schweben {
+  position: fixed; transform: translate(-50%, 0); pointer-events: none; z-index: 201; font-weight: 900; font-size: 1.8rem;
+  color: var(--gold); text-shadow: 0 2px 0 #fff, 0 0 14px rgba(232, 185, 35, 0.8); animation: aufsteigen 1.5s ease-out forwards;
+}
+@keyframes aufsteigen { 0% { opacity: 0; transform: translate(-50%, 10px) scale(0.7); } 20% { opacity: 1; transform: translate(-50%, -10px) scale(1.15); } 100% { opacity: 0; transform: translate(-50%, -80px) scale(1); } }
+#toast.gold { background: linear-gradient(110deg, var(--gold-dark), var(--gold) 40%, var(--glut) 50%, var(--gold) 60%, var(--gold-dark)); background-size: 250% 100%; animation: toastglanz 2.2s linear infinite; color: #1b1203; }
+@keyframes toastglanz { 0% { background-position: 100% 0; } 100% { background-position: -150% 0; } }
+
+/* ---------- Boss ---------- */
+.boss-kopf { position: relative; overflow: hidden; box-shadow: 0 8px 26px rgba(90, 35, 8, 0.35); }
+.boss-kopf::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 60% 120% at 85% 120%, rgba(255, 150, 40, 0.45), transparent 60%);
+  animation: schein 1.6s ease-in-out infinite alternate;
+}
+.boss-kopf > * { position: relative; }
+.boss-kopf .timer { box-shadow: inset 0 0 0 1px rgba(255, 216, 107, 0.35); }
+.boss-ergebnis.besiegt { border: 2px solid var(--glut); box-shadow: 0 0 0 4px rgba(232, 185, 35, 0.15), 0 10px 40px rgba(232, 185, 35, 0.25); background: radial-gradient(circle at 50% 0%, #fff8e1, #fff 60%); }
+.boss-ergebnis.besiegt h1 { animation: jubel 0.7s cubic-bezier(0.2, 1.4, 0.4, 1); }
+
+/* Profil: Abzeichen leuchten */
+.abzeichen:not(.fehlt) .ic { filter: drop-shadow(0 0 6px rgba(232, 185, 35, 0.55)); }
+
 /* ---------- Responsiv ---------- */
 @media (max-width: 760px) {
   body { font-size: 16px; }
@@ -564,3 +791,8 @@ main.themen { max-width: 1100px; margin: 0 auto; padding: 1rem; }
 
 /* Plattform-Verbund: Kurswahl in der Kopfzeile (Portal-Schüler in mehreren Kursen) */
 .topnav .kurs-wahl { max-width: 12rem; min-height: 36px; }
+
+@media print {
+  body, body.tor { background: #fff !important; color: #000; }
+  .funken, .schweben, .fackel, .glut { display: none !important; }
+}

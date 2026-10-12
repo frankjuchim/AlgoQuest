@@ -73,7 +73,10 @@ const AQA = (() => {
 
     function geloest(r) {
       const txt = cfg.punkteText ? cfg.punkteText(r) : r.punkteErhalten ? `✔ Richtig! +${r.punkteErhalten} ${r.punkteErhalten === 1 ? 'Punkt' : 'Punkte'}` : '✔ Richtig!';
-      mount(feedbackBox, h('div', { class: 'feedback ok' }, txt, zustand && zustand.status === 'angesehen' ? ' (nach dem Ansehen der Lösung – keine Punkte)' : ''));
+      const fb = h('div', { class: 'feedback ok jubel' }, txt, zustand && zustand.status === 'angesehen' ? ' (nach dem Ansehen der Lösung – keine Punkte)' : '');
+      mount(feedbackBox, fb);
+      AQ.effekt.funken(fb);
+      if (r.punkteErhalten) AQ.effekt.schweben(fb, `+${r.punkteErhalten}`);
       if (r.loesung !== undefined) zeigeLoesung(r);
       else ctrl.sperren(true);
       if (cfg.abzeichenToast) cfg.abzeichenToast(r.neueAbzeichen);
@@ -103,7 +106,9 @@ const AQA = (() => {
           detail = ` Bis Position ${r.ersteFalschePosition} stimmt es – danach nicht mehr.`;
         }
         const rest = zustand && zustand.status === 'offen' ? ` Noch bis zu ${zustand.moeglich} Punkte möglich.` : '';
-        mount(feedbackBox, h('div', { class: 'feedback falsch' }, '✘ Leider noch nicht richtig.' + detail + rest));
+        const fb = h('div', { class: 'feedback falsch' }, '✘ Leider noch nicht richtig.' + detail + rest);
+        mount(feedbackBox, fb);
+        AQ.effekt.wackeln(fb);
       } catch (e) {
         toast(e.message, true);
       }
