@@ -365,6 +365,7 @@
       const cb = h('input', { type: 'checkbox', checked: !!e[key], dataset: { key } });
       return h('label', { class: 'check' }, cb, text);
     };
+    const kursart = h('select', { id: 'e-kursart' }, [['eA', 'Leistungskurs (eA)'], ['gA', 'Grundkurs (gA)']].map(([v, t]) => h('option', { value: v, selected: (e.kursart || 'eA') === v }, t)));
     const sb = schalter('scoreboard', 'Scoreboard für Schüler sichtbar');
     const bm = schalter('beamer', 'Beamer-Board aktiv (öffentlich unter /board/<Kurscode>)');
     const an = schalter('anmeldung', 'Anmeldung neuer Schüler offen');
@@ -375,6 +376,13 @@
       h('div', { class: 'field' }, h('label', { for: 'e-name' }, 'Kursname'), name),
       h('fieldset', { class: 'field' }, h('legend', null, h('strong', null, 'Freigeschaltete Welten')), weltBoxen.length ? weltBoxen : h('p', { class: 'muted' }, 'Noch keine Welten geladen.')),
       h('div', { class: 'field' }, h('label', { for: 'e-boss' }, 'Bosse'), boss),
+      h(
+        'div',
+        { class: 'field' },
+        h('label', { for: 'e-kursart' }, 'Kursart'),
+        kursart,
+        h('p', { class: 'hint' }, 'Grundkurs: Level und Aufgaben, die laut Kerncurriculum nur zum Leistungskurs gehören („Erweiterung eA“ – Effizienz, Rekursion, Klassendiagramme, Bäume), werden den Schülern als „im Grundkurs freiwillig“ angezeigt; Bosse ziehen dann nur Aufgaben für beide Kurse (soweit vorhanden). Reine LK-Welten (3, 5) am besten oben abwählen.')
+      ),
       sb,
       bm,
       an,
@@ -385,7 +393,7 @@
       const andere = e.welten.filter((nr) => !inhalte.welten.some((w) => w.nr === nr));
       const welten = [...andere, ...weltBoxen.map((l) => l.querySelector('input')).filter((cb) => cb.checked).map((cb) => Number(cb.dataset.nr))];
       try {
-        await api('PATCH', `/api/lehrer/kurse/${k.id}`, { name: name.value, einstellungen: { welten, boss: boss.value, scoreboard: sb.querySelector('input').checked, beamer: bm.querySelector('input').checked, anmeldung: an.querySelector('input').checked } });
+        await api('PATCH', `/api/lehrer/kurse/${k.id}`, { name: name.value, einstellungen: { welten, boss: boss.value, kursart: kursart.value, scoreboard: sb.querySelector('input').checked, beamer: bm.querySelector('input').checked, anmeldung: an.querySelector('input').checked } });
         toast('Gespeichert.');
         kurs(k.id, 'einstellungen');
       } catch (err) {
@@ -531,7 +539,7 @@
         'table',
         { class: 'liste' },
         h('thead', null, h('tr', null, h('th', null, 'Aufgabe'), h('th', null, 'Stufe'), h('th', { class: 'num' }, 'Punkte'), h('th', null, 'Kategorie'), h('th', null, 'Interaktion'), h('th', null, 'Fallen'))),
-        h('tbody', null, liste.map((a) => h('tr', null, h('td', null, h('a', { href: `#/vorschau/aufgabe/${encodeURIComponent(a.id)}` }, h('strong', null, a.titel)), h('div', { class: 'small muted' }, a.id)), h('td', null, AQ.sterne(a.stufe)), h('td', { class: 'num' }, String(a.punkte)), h('td', { class: 'small' }, a.kategorie), h('td', { class: 'small' }, a.arten.map((x) => ARTEN[x] || x).join(' + ')), h('td', { class: 'small' }, a.fallen.join(' ')))))
+        h('tbody', null, liste.map((a) => h('tr', null, h('td', null, h('a', { href: `#/vorschau/aufgabe/${encodeURIComponent(a.id)}` }, h('strong', null, a.titel)), h('div', { class: 'small muted' }, a.id)), h('td', null, AQ.sterne(a.stufe)), h('td', { class: 'num' }, String(a.punkte)), h('td', { class: 'small' }, a.kategorie, a.niveau && a.niveau !== 'alle' ? [' ', AQ.niveau(a.niveau)] : null), h('td', { class: 'small' }, a.arten.map((x) => ARTEN[x] || x).join(' + ')), h('td', { class: 'small' }, a.fallen.join(' ')))))
       )
     );
   }
@@ -553,6 +561,7 @@
               'section',
               { class: 'card level-kopf', id: 'level-' + l.id },
               h('h2', null, `Level ${l.nr} – ${l.titel}`),
+              h('p', { class: 'niveau-zeile' }, AQ.niveau(l.niveau, { gemischt: l.gemischt, alleZeigen: true })),
               h('p', { class: 'small muted' }, [l.ds && l.ds.length ? `DS ${l.ds.join(', ')}` : null, `${l.aufgaben.length} Aufgaben`, `${l.maxPunkte} Punkte`].filter(Boolean).join(' · ')),
               l.ab ? h('p', null, h('strong', null, '📄 Arbeitsblatt: '), l.ab) : null,
               l.ide ? h('p', null, h('strong', null, '💻 Online-IDE: '), l.ide) : null,
@@ -644,7 +653,7 @@
       'div',
       null,
       h('nav', { class: 'crumbs' }, h('a', { href: '#/vorschau' }, 'Aufgaben'), '›', h('a', { href: `#/vorschau/welt/${o.welt.nr}` }, `Welt ${o.welt.nr}: ${o.welt.titel}`), '›', h('span', null, o.level ? `Level ${o.level.nr} – ${o.level.titel}` : `Boss-Pool: ${o.boss ? o.boss.titel : ''}`), '›', h('span', null, `${o.index + 1} von ${o.anzahl}`)),
-      h('div', { class: 'aufgabe-kopf' }, h('h1', null, a.titel), AQ.sterne(a.stufe), h('span', { class: 'pill gold' }, `${a.punkte} Punkte`), h('span', { class: 'pill' }, a.kategorie), (a.fallen || []).map((p) => h('span', { class: 'pill red' }, '⚠ ' + p)), h('span', { class: 'pill grey' }, a.id)),
+      h('div', { class: 'aufgabe-kopf' }, h('h1', null, a.titel), AQ.sterne(a.stufe), h('span', { class: 'pill gold' }, `${a.punkte} Punkte`), h('span', { class: 'pill' }, a.kategorie), AQ.niveau(a.niveau), (a.fallen || []).map((p) => h('span', { class: 'pill red' }, '⚠ ' + p)), h('span', { class: 'pill grey' }, a.id)),
       o.level && (o.level.ab || o.level.ide) ? h('p', { class: 'small muted' }, o.level.ab ? `📄 ${o.level.ab}` : '', o.level.ab && o.level.ide ? ' · ' : '', o.level.ide ? `💻 ${o.level.ide}` : '') : null,
       h('div', { class: 'callout ok small' }, 'Vorschau mit eingesetzter Lösung (blau markiert). Nur lesend – Schülerstände werden nicht verändert.'),
       h('section', { class: 'card' }, ctrl.el),

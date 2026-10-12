@@ -44,6 +44,13 @@ wird geladen. Alles wird protokolliert und ist im Superadmin-Bereich unter „In
 
 - `id` `W<n>-L<k>` (optional ein Kleinbuchstabe, z. B. `W3-L5a`), `titel` Pflicht; `nr`, `ds`, `ab`, `ide`, `intro` optional.
 - `ide` erzeugt die Karte „Programmieren in der Online-IDE“ (nur Info + „erledigt“-Häkchen, 0 Punkte).
+- `niveau` (optional, Standard `"alle"`): Einordnung nach KC 2017, Lernfeld Algorithmen und Datenstrukturen –
+  `"alle"` = Grund- und Leistungskurs, `"eA"` = Spalte „Erweiterung eA“ (nur Leistungskurs: Effizienz mit Speicherbedarf
+  und Zahl der Operationen, Rekursion, Teile und herrsche, Klassenbeziehungen/Klassendiagramme, Binärbaum,
+  Traversierungen, binärer Suchbaum), `"plus"` = über das Kerncurriculum hinaus (z. B. Backtracking, Level-Order,
+  verkettete Knoten). Dasselbe Feld gibt es am Boss (Standard für den Pool) und an jeder Aufgabe (weicht ab, wenn ein
+  Level gemischt ist). Die Oberfläche zeigt es als „nur LK“ bzw. „Zusatz“; im Grundkurs (Kurseinstellung `kursart`
+  `"gA"`) zieht der Boss nur Aufgaben mit Niveau „alle“, sofern genug davon im Pool sind.
 - `aufgaben`: Reihenfolge der Aufgaben im Level. Jede Aufgabe darf nur in einem Level stehen; Boss-Aufgaben nie.
 
 ## 3. Boss
@@ -76,6 +83,7 @@ wird geladen. Alles wird protokolliert und ist im Superadmin-Bereich unter „In
 | `stufe` | 1, 2, 3 |
 | `punkte` | optional, Standard 10/20/30 je Stufe (Abweichung = Hinweis) |
 | `kategorie` | genau ein Wert aus LAB_KATEGORIEN (siehe unten) |
+| `niveau` | optional: `alle` · `eA` · `plus` – nur angeben, wenn die Aufgabe vom Niveau ihres Levels bzw. Bosses abweicht (siehe §2) |
 | `fallen` | Teilmenge von `P1`…`P10` (darf leer sein) – Fehlversuche werden je P gezählt („Deine Fallen“) |
 | `tipps` | optional; jeder abgerufene Tipp kostet 0,2 × Punkte |
 | `erklaerung` | wird nach dem Lösen/Aufdecken gezeigt; fehlt sie, gibt der Validator einen Hinweis |

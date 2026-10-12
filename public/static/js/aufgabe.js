@@ -177,6 +177,7 @@ const AQA = (() => {
         sterne(a.stufe),
         h('span', { class: 'pill gold' }, zustand && zustand.status === 'geloest' ? `${zustand.punkte}/${a.punkte} Punkte` : `${a.punkte} ${a.punkte === 1 ? 'Punkt' : 'Punkte'}`),
         h('span', { class: 'pill' }, a.kategorie),
+        AQ.niveau(a.niveau, { kursart: cfg.kursart }),
         (a.fallen || []).map((p) => h('span', { class: 'pill red', title: 'Typische Falle' }, '⚠ ' + p)),
         cfg.kopfZusatz || null
       ),

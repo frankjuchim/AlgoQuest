@@ -8,6 +8,7 @@
    "id": "W5-L1",
    "nr": "5.1",
    "titel": "Wegweiser im Wald – Binärbäume und Traversierungen",
+   "niveau": "eA",
    "ds": [
     31
    ],
@@ -38,6 +39,7 @@
    "id": "W5-L2",
    "nr": "5.2",
    "titel": "Rekursion im Geäst – rekursive Baumalgorithmen",
+   "niveau": "eA",
    "ds": [
     32
    ],
@@ -68,6 +70,7 @@
    "id": "W5-L3",
    "nr": "5.3",
    "titel": "Kür: Der Akinator lernt – Entscheidungsbaum und Level-Order",
+   "niveau": "plus",
    "ds": [
     33
    ],
@@ -98,6 +101,7 @@
    "id": "W5-L4",
    "nr": "5.4",
    "titel": "Die Item-Datenbank – binäre Suchbäume",
+   "niveau": "eA",
    "ds": [
     34
    ],
@@ -128,6 +132,7 @@
    "id": "W5-L5",
    "nr": "5.5",
    "titel": "Krumm oder buschig? – ausgeglichen, entartet, isBST",
+   "niveau": "eA",
    "ds": [
     35
    ],
@@ -151,13 +156,15 @@
     "W5-L5-05",
     "W5-L5-06",
     "W5-L5-07",
-    "W5-L5-08"
+    "W5-L5-08",
+    "W5-L5-09"
    ]
   },
   {
    "id": "W5-L6",
    "nr": "5.6",
    "titel": "Fremde Bäume – Transfer auf unbekannte Baumarten",
+   "niveau": "eA",
    "ds": [
     35,
     36
@@ -188,6 +195,7 @@
  "boss": {
   "id": "W5-BOSS",
   "titel": "Die drei Baumhüter – Online-Duell",
+  "niveau": "eA",
   "dauerMin": 25,
   "anzahl": 8,
   "mix": {
@@ -5861,6 +5869,63 @@
     {
      "t": "text",
      "md": "(9 − 4) · (8 / 2 + 3) = 5 · 7 = **35**. Preorder (Präfix-Schreibweise): * − 9 4 + / 8 2 3."
+    }
+   ]
+  },
+  {
+   "id": "W5-L5-09",
+   "titel": "Wie tief geht die Suche?",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Effizienz",
+   "fallen": [
+    "P7"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die rekursive Suche `enthaelt(b, x)` im binären Suchbaum steigt je Aufruf eine Ebene tiefer und ruft sich am Ende noch einmal mit dem **leeren** Teilbaum auf. Jeder offene Aufruf belegt Platz auf dem Aufrufstapel.\n\nBaum A ist ausgeglichen und vollständig mit 1023 Werten (alle Ebenen voll). Baum B entsteht, wenn man die Werte 1, 2, …, 1023 in dieser Reihenfolge einfügt.\n\n- Höhe von A [[g1]] · Höhe von B [[g2]] (leerer Baum 0, Blatt 1)\n- Erfolglose Suche nach 2000 – höchstens gleichzeitig offene Aufrufe in A [[g3]] · in B [[g4]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "zahl"
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "zahl"
+     },
+     "g4": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "10"
+    ],
+    "g2": [
+     "1023"
+    ],
+    "g3": [
+     "11"
+    ],
+    "g4": [
+     "1024"
+    ]
+   },
+   "tipps": [
+    "Ein vollständiger Baum der Höhe h hat 2^h − 1 Knoten.",
+    "Bei der erfolglosen Suche kommt zu den besuchten Knoten noch der Aufruf mit dem leeren Teilbaum."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "2¹⁰ − 1 = 1023, also hat A die Höhe **10**; B ist zur Liste entartet (jeder Knoten hat nur ein rechtes Kind): Höhe **1023**. Die Suche nach 2000 läuft ganz nach rechts unten: in A 10 Knoten + 1 leerer Aufruf = **11** offene Aufrufe, in B 1023 + 1 = **1024**. Zahl der Vergleiche **und** Speicher auf dem Aufrufstapel wachsen mit der Höhe – beim ausgeglichenen Baum etwa log₂ n, beim entarteten n. Deshalb ist Ausgeglichenheit für die Effizienz entscheidend."
     }
    ]
   }

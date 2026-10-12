@@ -7,7 +7,7 @@ const path = require('node:path');
 const Baum = require('../../public/static/js/shared/baum');
 const F = require('./format');
 const C = require('./checker');
-const { LAB_KATEGORIEN, FALLEN_IDS, STUFEN_PUNKTE } = require('../domain');
+const { LAB_KATEGORIEN, FALLEN_IDS, STUFEN_PUNKTE, NIVEAU_IDS } = require('../domain');
 
 const AUFGABE_ID = /^W(\d)-(L\d{1,2}[a-z]?|B)-\d{2,3}$/;
 const LEVEL_ID = /^W(\d)-L\d{1,2}[a-z]?$/;
@@ -82,6 +82,7 @@ function validiereWelt(data, opt = {}) {
     if (l.nr !== undefined && !istText(String(l.nr))) f('level', o, 'nr muss Text sein (z. B. "4.1").');
     if (l.ds !== undefined && (!Array.isArray(l.ds) || !l.ds.every(Number.isInteger))) f('level', o, 'ds muss eine Liste ganzer Zahlen sein.');
     for (const k of ['ab', 'ide']) if (l[k] !== undefined && typeof l[k] !== 'string') f('level', o, `${k} muss Text sein.`);
+    if (l.niveau !== undefined && !NIVEAU_IDS.includes(l.niveau)) f('level', o, `niveau muss ${NIVEAU_IDS.join(' | ')} sein.`);
     if (l.intro !== undefined) validiereBloecke(l.intro, `${o} › intro`, f, w, null, stats);
     if (!Array.isArray(l.aufgaben) || !l.aufgaben.length) {
       f('level', o, 'aufgaben (Liste der Aufgaben-ids) fehlt oder ist leer.');
@@ -111,6 +112,7 @@ function validiereWelt(data, opt = {}) {
   /* ---------- Boss ---------- */
   if (data.boss !== undefined && data.boss !== null) {
     const b = data.boss;
+    if (b && b.niveau !== undefined && !NIVEAU_IDS.includes(b.niveau)) f('boss', 'boss', `niveau muss ${NIVEAU_IDS.join(' | ')} sein.`);
     const o = 'boss';
     if (!istObjekt(b)) f('boss', o, 'boss muss ein Objekt sein.');
     else {
@@ -175,6 +177,7 @@ function validiereAufgabe(a, id, welt, f, w, stats) {
     else if (STUFEN_PUNKTE[a.stufe] && a.punkte !== STUFEN_PUNKTE[a.stufe]) wa('punkte', `punkte ${a.punkte} weicht vom Standard der Stufe ${a.stufe} (${STUFEN_PUNKTE[a.stufe]}) ab.`);
   }
   if (!LAB_KATEGORIEN.includes(a.kategorie)) fa('kategorie', `unbekannte kategorie „${a.kategorie}“ (erlaubt: ${LAB_KATEGORIEN.join(' | ')}).`);
+  if (a.niveau !== undefined && !NIVEAU_IDS.includes(a.niveau)) fa('niveau', `niveau muss ${NIVEAU_IDS.join(' | ')} sein.`);
   if (a.fallen !== undefined) {
     if (!Array.isArray(a.fallen)) fa('fallen', 'fallen muss eine Liste sein (z. B. ["P1"]).');
     else for (const p of a.fallen) if (!FALLEN_IDS.includes(p)) fa('fallen', `unbekannte Falle „${p}“ (erlaubt: P1–P10).`);

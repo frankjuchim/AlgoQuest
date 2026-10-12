@@ -16,7 +16,7 @@ test('Themenübersicht: öffentlich, alle Welten und Level, keine Lösungen/Erkl
   const d = r.body;
   assert.equal(d.welten.length, 7);
   const levels = d.welten.flatMap((w) => w.levels);
-  assert.equal(levels.length, 36);
+  assert.equal(levels.length, 37);
   const text = JSON.stringify(d);
   for (const verboten of ['"loesung"', '"erklaerung"', '"tipps"', '"inhalt"', '"interaktion"']) assert.ok(!text.includes(verboten), verboten);
   // Jedes Level ist einem Arbeitsblatt zugeordnet, und jedes Arbeitsblatt hat eine ausgelieferte PDF

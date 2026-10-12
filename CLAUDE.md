@@ -126,6 +126,14 @@ docx/pptx rendern: `soffice --headless --convert-to pdf --outdir <scratch> <date
   an der schließenden Klammer der Schleife. Struktogramm-Bilder: Stellen im Aufgabentext benennen. Zeilennummern bleiben gleich. Gilt in allen
   Materialien (auch Bosse, Klausuren, Warm-up, Folien) und im Lab. Rekursionstabellen sind davon ausgenommen.
 
+### Grund- und Leistungskurs (KC 2017)
+- Kern = Grund- und Leistungskurs; Spalte „Erweiterung eA“ = nur Leistungskurs: Effizienz beurteilen (Speicherbedarf **und**
+  Zahl der Operationen), Rekursion, Teile und herrsche, Klassenbeziehungen/Klassendiagramme, Binärbaum, Traversierungen,
+  binärer Suchbaum. Darüber hinaus (`plus`): Backtracking, Level-Order/Entscheidungsbaum, verkettete Knoten.
+- Feld `niveau` (`alle` | `eA` | `plus`) an jedem Level und Boss, an Aufgaben nur bei Abweichung (README D.5). Neue Aufgaben
+  und Materialien immer einordnen; Arbeitsblätter/Bosse tragen im Kopf „Niveau (KC 2017)“, LK-Aufgaben „◆ nur LK (eA)“.
+- Neue Aufgaben-IDs vorher auf Freiheit prüfen (bestehende Aufgaben nie überschreiben).
+
 ### Fallen P1–P10
 Verbindlich nach `quellen/specs/SPEC_AlgoQuest_W6.md` §2 (gleiche Nummern/Kurztitel überall – Lab-Feld `fallen`,
 Materialien, Warm-up, Lehrerhinweise):

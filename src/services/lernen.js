@@ -47,7 +47,7 @@ function createLernen(ctx, { inhalte, kurse, stand }) {
             if (r.status === 'geloest' || r.nachgeloest) geloest++;
           }
         }
-        return { id: l.id, nr: l.nr, titel: l.titel, anzahl: l.aufgaben.length, geloest, punkte, maxPunkte: l.maxPunkte, anteil: l.maxPunkte ? punkte / l.maxPunkte : 0 };
+        return { id: l.id, nr: l.nr, titel: l.titel, niveau: l.niveau, gemischt: l.gemischt, anzahl: l.aufgaben.length, geloest, punkte, maxPunkte: l.maxPunkte, anteil: l.maxPunkte ? punkte / l.maxPunkte : 0 };
       });
       const boss = w.boss ? bossKurz(s, w, einst, e) : null;
       out.push({
@@ -64,14 +64,14 @@ function createLernen(ctx, { inhalte, kurse, stand }) {
         training: generatorenFuerWelt(w.nr).length > 0
       });
     }
-    return { welten: out, scoreboard: !!einst.scoreboard };
+    return { welten: out, scoreboard: !!einst.scoreboard, kursart: einst.kursart === 'gA' ? 'gA' : 'eA' };
   }
 
   function bossKurz(s, w, einst, e) {
     const z = stand.bossZugang(einst, e, w.nr);
     const best = e.boss[w.nr];
     const anteil = best && best.max ? best.punkte / best.max : null;
-    return { titel: w.boss.titel, frei: z.frei, grund: z.grund || null, bester: best || null, besiegt: anteil !== null && anteil >= 0.5 - 1e-9 };
+    return { titel: w.boss.titel, niveau: w.boss.niveau, gemischt: !!w.boss.gemischt, frei: z.frei, grund: z.grund || null, bester: best || null, besiegt: anteil !== null && anteil >= 0.5 - 1e-9 };
   }
 
   function pruefeWeltFrei(s, nr) {
@@ -85,14 +85,15 @@ function createLernen(ctx, { inhalte, kurse, stand }) {
   function level(s, levelId) {
     const l = kat().levels.get(String(levelId));
     if (!l) throw new NotFoundError('Level nicht gefunden.');
-    pruefeWeltFrei(s, l.welt);
+    const einst = pruefeWeltFrei(s, l.welt);
     const w = kat().welten.get(l.welt);
     const fm = fortschrittMap(s.id);
     const idx = w.levels.findIndex((x) => x.id === l.id);
     const ide = db.prepare('SELECT 1 FROM ide_erledigt WHERE schueler_id = ? AND level_id = ?').get(s.id, l.id);
     return {
       welt: { nr: w.nr, titel: w.titel, farbe: w.farbe },
-      level: { id: l.id, nr: l.nr, titel: l.titel, ds: l.ds, ab: l.ab, ide: l.ide, intro: l.intro, maxPunkte: l.maxPunkte },
+      kursart: einst.kursart === 'gA' ? 'gA' : 'eA',
+      level: { id: l.id, nr: l.nr, titel: l.titel, niveau: l.niveau, gemischt: l.gemischt, ds: l.ds, ab: l.ab, ide: l.ide, intro: l.intro, maxPunkte: l.maxPunkte },
       aufgaben: l.aufgaben.map((id) => {
         const a = kat().aufgaben.get(id);
         const r = fm.get(id);
@@ -102,6 +103,7 @@ function createLernen(ctx, { inhalte, kurse, stand }) {
           stufe: a.stufe,
           punkte: a.punkte,
           kategorie: a.kategorie,
+          niveau: a._niveau || 'alle',
           status: statusVon(r),
           nachgeloest: !!(r && r.nachgeloest),
           erreicht: r ? r.punkte : 0,

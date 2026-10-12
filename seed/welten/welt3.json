@@ -8,6 +8,7 @@
    "id": "W3-L1",
    "nr": "3.1",
    "titel": "Spiegelsaal: Basisfall und Rekursionstabelle",
+   "niveau": "eA",
    "ds": [
     18
    ],
@@ -38,6 +39,7 @@
    "id": "W3-L2",
    "nr": "3.2",
    "titel": "Hydra: Aufrufbaum und Aufrufe zählen",
+   "niveau": "eA",
    "ds": [
     18
    ],
@@ -60,13 +62,15 @@
     "W3-L2-04",
     "W3-L2-05",
     "W3-L2-06",
-    "W3-L2-07"
+    "W3-L2-07",
+    "W3-L2-08"
    ]
   },
   {
    "id": "W3-L3",
    "nr": "3.3",
    "titel": "Wachturm: 2D-Reihung und Flood-Fill",
+   "niveau": "eA",
    "ds": [
     19
    ],
@@ -97,6 +101,7 @@
    "id": "W3-L4",
    "nr": "3.4",
    "titel": "Kür: Ariadnefaden – Backtracking",
+   "niveau": "plus",
    "ds": [
     20
    ],
@@ -126,6 +131,7 @@
    "id": "W3-L5",
    "nr": "3.5",
    "titel": "Schatzkammer: Teile und herrsche",
+   "niveau": "eA",
    "ds": [
     21
    ],
@@ -156,6 +162,7 @@
    "id": "W3-L6",
    "nr": "3.6",
    "titel": "Torwächter: Quicksort und unbekannte Verfahren",
+   "niveau": "eA",
    "ds": [
     22
    ],
@@ -179,13 +186,15 @@
     "W3-L6-05",
     "W3-L6-06",
     "W3-L6-07",
-    "W3-L6-08"
+    "W3-L6-08",
+    "W3-L6-09"
    ]
   }
  ],
  "boss": {
   "id": "W3-BOSS",
   "titel": "Das Echo der Schlucht",
+  "niveau": "eA",
   "dauerMin": 25,
   "anzahl": 8,
   "mix": {
@@ -6225,6 +6234,128 @@
     {
      "t": "text",
      "md": "n(n − 1)/2: 45 für n = 10, 190 für n = 20, 780 für n = 40 – quadratisches Wachstum, bei Verdopplung etwa der Faktor 4. Mergesort bliebe bei etwa n · log₂ n."
+    }
+   ]
+  },
+  {
+   "id": "W3-L6-09",
+   "titel": "Platzfrage im Torhaus",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Effizienz",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Vergleiche Mergesort (mit `verschmelze` in eine Hilfsreihung) und Quicksort (Pivot links, `zerlege` tauscht innerhalb der Reihung) beim Sortieren von n Werten. Welche Aussagen sind **richtig**?"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "mehrfach": true,
+    "optionen": [
+     {
+      "id": "a",
+      "md": "Mergesort braucht beim Verschmelzen Hilfsreihungen – zusätzlicher Platz für bis zu n Werte."
+     },
+     {
+      "id": "b",
+      "md": "Quicksort sortiert innerhalb der Reihung, braucht aber Platz auf dem Aufrufstapel für die offenen rekursiven Aufrufe."
+     },
+     {
+      "id": "c",
+      "md": "Bei bereits sortierter Eingabe ist die Rekursionstiefe von Quicksort etwa n – dann sind bis zu n Aufrufe gleichzeitig offen."
+     },
+     {
+      "id": "d",
+      "md": "Quicksort braucht wie Mergesort immer eine Hilfsreihung der Länge n."
+     },
+     {
+      "id": "e",
+      "md": "Rekursive Verfahren brauchen keinen zusätzlichen Speicher, weil keine neue Reihung angelegt wird."
+     }
+    ]
+   },
+   "loesung": {
+    "richtig": [
+     "a",
+     "b",
+     "c"
+    ]
+   },
+   "tipps": [
+    "Wo landen die Werte beim Verschmelzen? Und was liegt bei einer Rekursion auf dem Aufrufstapel?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Richtig: a, b, c. Mergesort schreibt beim Verschmelzen in eine **Hilfsreihung** (zusätzlicher Speicher linear in n). Quicksort tauscht innerhalb der Reihung, aber jeder offene Aufruf belegt Platz auf dem **Aufrufstapel**: Bei sortierter Eingabe (Pivot links) zerlegt jeder Aufruf nur einen Wert ab – Rekursionstiefe n − 1, also bis zu n offene Aufrufe; bei günstiger Zerlegung nur etwa log₂ n. e ist falsch: Auch Rekursion kostet Speicher."
+    }
+   ]
+  },
+  {
+   "id": "W3-L2-08",
+   "titel": "Wie viel Platz braucht die Hydra?",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Effizienz",
+   "fallen": [
+    "P7"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Zwei Methoden berechnen 1 + 2 + … + n:"
+    },
+    {
+     "t": "code",
+     "code": "public static int summeRek(int n) {\n    if (n == 0) {\n        return 0;\n    }\n    return n + summeRek(n - 1);\n}\n\npublic static int summeIt(int n) {\n    int s = 0;\n    for (int i = 1; i <= n; i++) {\n        s = s + i;\n    }\n    return s;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Jeder noch nicht beendete Aufruf belegt Platz auf dem **Aufrufstapel** (Parameter, Rücksprungstelle). Der Erstaufruf hat die Rekursionstiefe 0.\n\n- `summeRek(100)`: größte Rekursionstiefe [[g1]] · höchstens gleichzeitig offene Aufrufe [[g2]]\n- `summeRek(10000)`: höchstens gleichzeitig offene Aufrufe [[g3]]\n- `summeIt(100)`: Schleifendurchläufe [[g4]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "zahl"
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "zahl"
+     },
+     "g4": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "100"
+    ],
+    "g2": [
+     "101"
+    ],
+    "g3": [
+     "10001"
+    ],
+    "g4": [
+     "100"
+    ]
+   },
+   "tipps": [
+    "summeRek(100) ruft summeRek(99) auf, … bis summeRek(0). Keiner davon ist fertig, bevor summeRek(0) zurückkehrt.",
+    "Tiefe 0 bis 100 – wie viele Aufrufe sind das?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Die Aufrufe summeRek(100), summeRek(99), …, summeRek(0) sind gleichzeitig offen: Tiefe 0 bis **100**, also **101** Aufrufe auf dem Aufrufstapel; bei n = 10 000 sind es **10 001**. Der Speicherbedarf der rekursiven Lösung wächst **linear** mit n (bei zu großem n: StackOverflowError). `summeIt` macht ebenfalls **100** Additionen in 100 Durchläufen, braucht aber nur `s` und `i` – **konstanten** Speicher. Gleiche Zahl der Operationen, unterschiedlicher Speicherbedarf (P7: Tiefe beachten)."
     }
    ]
   }

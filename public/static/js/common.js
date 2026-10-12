@@ -248,5 +248,26 @@ const AQ = (() => {
 
   const effekt = { funken, schweben, wackeln };
 
-  return { SVG_NS, h, s, clear, mount, api, toast, fmtDatum, progress, prozent, sterne, bestaetigen, download, readFile, mische, speichere, lade, effekt };
+  /* ---------- Niveau nach KC 2017: alle (GK + LK) · eA (nur LK) · plus (über den KC hinaus) ---------- */
+  const NIVEAU_TEXT = {
+    eA: { kurz: 'LK', pill: 'nur Leistungskurs (eA)', gA: 'LK-Stoff – im Grundkurs freiwillig', titel: 'Kerncurriculum: Erweiterung eA – im Abitur nur für den Leistungskurs' },
+    plus: { kurz: '+', pill: 'Zusatz – über das Kerncurriculum hinaus', gA: 'Zusatz – über das Kerncurriculum hinaus', titel: 'Geht über das Kerncurriculum hinaus (Vertiefung, nicht abiturrelevant)' },
+    alle: { kurz: '', pill: 'Grund- und Leistungskurs', gA: 'Grund- und Leistungskurs', titel: 'Kerncurriculum: für Grund- und Leistungskurs' }
+  };
+  /**
+   * Niveau-Kennzeichnung. art: 'pill' (Text) oder 'tag' (kurzes Eck-Etikett).
+   * gemischt: Level/Boss für alle mit einzelnen eA-Aufgaben. kursart 'gA' → Hinweis „im Grundkurs freiwillig“.
+   */
+  function niveau(n, { art = 'pill', gemischt = false, kursart = 'eA', alleZeigen = false } = {}) {
+    const t = NIVEAU_TEXT[n] || NIVEAU_TEXT.alle;
+    if (art === 'tag') {
+      if (n === 'eA' || n === 'plus') return h('span', { class: `niveau-tag ${n === 'eA' ? 'ea' : 'plus'}`, title: t.titel }, t.kurz);
+      return gemischt ? h('span', { class: 'niveau-tag teils', title: 'Einzelne Aufgaben nur für den Leistungskurs (eA)' }, 'teils LK') : null;
+    }
+    if (n === 'alle' && !gemischt && !alleZeigen) return null;
+    const text = n === 'alle' && gemischt ? 'Grund- und Leistungskurs · einzelne Aufgaben nur LK' : kursart === 'gA' ? t.gA : t.pill;
+    return h('span', { class: `pill niveau ${n === 'eA' ? 'ea' : n === 'plus' ? 'plus' : 'alle'}`, title: t.titel }, text);
+  }
+
+  return { SVG_NS, h, s, clear, mount, api, toast, fmtDatum, progress, prozent, sterne, bestaetigen, download, readFile, mische, speichere, lade, effekt, niveau };
 })();

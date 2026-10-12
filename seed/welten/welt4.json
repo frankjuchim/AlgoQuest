@@ -8,6 +8,7 @@
    "id": "W4-L1",
    "nr": "4.1",
    "titel": "Kistenturm und Schiffsschlange: Stapel und Schlange",
+   "niveau": "alle",
    "ds": [
     24
    ],
@@ -38,6 +39,7 @@
    "id": "W4-L2",
    "nr": "4.2",
    "titel": "Kür: Zugbuch und Initiative – Spielmodule",
+   "niveau": "alle",
    "ds": [
     25
    ],
@@ -67,6 +69,7 @@
    "id": "W4-L3",
    "nr": "4.3",
    "titel": "Inventur: Struktur unverändert lassen",
+   "niveau": "alle",
    "ds": [
     26
    ],
@@ -90,13 +93,15 @@
     "W4-L3-05",
     "W4-L3-06",
     "W4-L3-07",
-    "W4-L3-08"
+    "W4-L3-08",
+    "W4-L3-09"
    ]
   },
   {
    "id": "W4-L4",
    "nr": "4.4",
    "titel": "Ladeliste: dynamische Reihung",
+   "niveau": "alle",
    "ds": [
     27
    ],
@@ -127,6 +132,7 @@
    "id": "W4-L5",
    "nr": "4.5",
    "titel": "Zollamt: Umformen, Klammern, Postfix",
+   "niveau": "alle",
    "ds": [
     28
    ],
@@ -157,6 +163,7 @@
    "id": "W4-L6",
    "nr": "4.6",
    "titel": "Kür: Die Flut – Schlange gegen Stapel",
+   "niveau": "alle",
    "ds": [
     29
    ],
@@ -186,6 +193,7 @@
  "boss": {
   "id": "W4-BOSS",
   "titel": "Die Postkutschenstation",
+  "niveau": "alle",
   "dauerMin": 25,
   "anzahl": 8,
   "mix": {
@@ -3182,6 +3190,7 @@
    "stufe": 3,
    "punkte": 30,
    "kategorie": "Effizienz",
+   "niveau": "eA",
    "fallen": [],
    "inhalt": [
     {
@@ -4454,6 +4463,7 @@
    "stufe": 1,
    "punkte": 10,
    "kategorie": "Effizienz",
+   "niveau": "eA",
    "fallen": [],
    "inhalt": [
     {
@@ -4511,6 +4521,7 @@
    "stufe": 3,
    "punkte": 30,
    "kategorie": "Methode implementieren",
+   "niveau": "plus",
    "fallen": [
     "P1"
    ],
@@ -5974,6 +5985,65 @@
     {
      "t": "text",
      "md": "q = Lotte, Mats, Nele; zurück in den Stapel kommt Lotte zuerst und liegt unten: s = Nele, Mats, Lotte (oben zuerst) – umgedreht. Für „unverändert“ braucht man einen Hilfsstapel statt der Schlange."
+    }
+   ]
+  },
+  {
+   "id": "W4-L3-09",
+   "titel": "Hilfsschlange oder Rotieren?",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Effizienz",
+   "niveau": "eA",
+   "fallen": [
+    "P2"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Zwei Wege, eine Schlange q mit n Elementen zu durchlaufen und **unverändert** zu lassen:\n\n- **Variante H:** alle Elemente in eine Hilfsschlange umladen, danach zurück in q (wie `summe` in Aufgabe 3).\n- **Variante R:** „Rotieren mit Zähler“ – n-mal `q.enqueue(q.dequeue())`, die Anzahl n ist bekannt.\n\nWelche Aussagen sind **richtig**? (Gezählt werden Aufrufe von `enqueue` und `dequeue`.)"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "mehrfach": true,
+    "optionen": [
+     {
+      "id": "a",
+      "md": "H braucht 4n Schlangen-Operationen, R nur 2n."
+     },
+     {
+      "id": "b",
+      "md": "H braucht eine Hilfsschlange, die bis zu n Elemente gleichzeitig aufnimmt – zusätzlicher Speicher linear in n."
+     },
+     {
+      "id": "c",
+      "md": "R braucht außer dem Zähler keinen zusätzlichen Speicher, setzt aber voraus, dass n bekannt ist."
+     },
+     {
+      "id": "d",
+      "md": "Beide Varianten brauchen gleich viel Speicher, weil die Elemente nur verschoben werden."
+     },
+     {
+      "id": "e",
+      "md": "R zerstört die Reihenfolge der Schlange."
+     }
+    ]
+   },
+   "loesung": {
+    "richtig": [
+     "a",
+     "b",
+     "c"
+    ]
+   },
+   "tipps": [
+    "Zähle für H: aus q heraus, in hilf hinein, aus hilf heraus, in q hinein."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Richtig: a, b, c. H: n × dequeue aus q, n × enqueue in hilf, n × dequeue aus hilf, n × enqueue in q = **4n** Operationen; die Hilfsschlange hält zeitweise **alle n** Elemente (linearer Zusatzspeicher). R: n × dequeue und n × enqueue = **2n**, nur ein Zähler – konstanter Zusatzspeicher; nach n Runden steht q wieder in der alten Reihenfolge (e falsch). Dafür muss n bekannt sein (sonst Endlosschleife bzw. Marker nötig, P2)."
     }
    ]
   }

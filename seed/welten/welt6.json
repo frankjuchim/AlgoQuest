@@ -8,6 +8,7 @@
    "id": "W6-L1",
    "nr": "6.1",
    "titel": "Fallenjagd I – P1 bis P5",
+   "niveau": "alle",
    "ds": [
     38
    ],
@@ -38,6 +39,7 @@
    "id": "W6-L2",
    "nr": "6.2",
    "titel": "Fallenjagd II – P6 bis P10",
+   "niveau": "alle",
    "ds": [
     38
    ],
@@ -68,6 +70,7 @@
    "id": "W6-L3",
    "nr": "6.3",
    "titel": "Abi-Mix I – Welten 0 bis 2",
+   "niveau": "alle",
    "ds": [
     39
    ],
@@ -98,6 +101,7 @@
    "id": "W6-L4",
    "nr": "6.4",
    "titel": "Abi-Mix II – Welten 3 bis 5",
+   "niveau": "alle",
    "ds": [
     39,
     40
@@ -129,6 +133,7 @@
  "boss": {
   "id": "W6-BOSS",
   "titel": "Generalprobe online",
+  "niveau": "alle",
   "dauerMin": 30,
   "anzahl": 8,
   "mix": {
@@ -1157,6 +1162,7 @@
    "stufe": 3,
    "punkte": 30,
    "kategorie": "Rekursionstabelle",
+   "niveau": "eA",
    "fallen": [
     "P7",
     "P8"
@@ -1334,6 +1340,7 @@
    "stufe": 2,
    "punkte": 20,
    "kategorie": "Fehler im Java-Code",
+   "niveau": "eA",
    "fallen": [
     "P7"
    ],
@@ -2125,6 +2132,7 @@
    "stufe": 1,
    "punkte": 10,
    "kategorie": "Klassendiagramm",
+   "niveau": "eA",
    "fallen": [
     "P10"
    ],
@@ -2351,6 +2359,7 @@
    "stufe": 2,
    "punkte": 20,
    "kategorie": "Effizienz",
+   "niveau": "eA",
    "fallen": [
     "P10"
    ],
@@ -2687,6 +2696,7 @@
    "stufe": 2,
    "punkte": 20,
    "kategorie": "Rekursionstabelle",
+   "niveau": "eA",
    "fallen": [
     "P7",
     "P8"
@@ -2889,6 +2899,7 @@
    "stufe": 1,
    "punkte": 10,
    "kategorie": "Funktionsweise erläutern",
+   "niveau": "eA",
    "fallen": [
     "P1"
    ],
@@ -3208,6 +3219,7 @@
    "stufe": 2,
    "punkte": 20,
    "kategorie": "Fehler im Java-Code",
+   "niveau": "eA",
    "fallen": [
     "P1",
     "P7"
@@ -3289,6 +3301,7 @@
    "stufe": 3,
    "punkte": 30,
    "kategorie": "Sortieren und Suchen",
+   "niveau": "eA",
    "fallen": [
     "P6"
    ],
@@ -3457,6 +3470,7 @@
    "stufe": 1,
    "punkte": 10,
    "kategorie": "Funktionsweise erläutern",
+   "niveau": "eA",
    "fallen": [
     "P10"
    ],
@@ -3814,6 +3828,7 @@
    "stufe": 1,
    "punkte": 10,
    "kategorie": "Methodenkopf und Signatur",
+   "niveau": "eA",
    "fallen": [
     "P3"
    ],
@@ -3946,6 +3961,7 @@
    "stufe": 2,
    "punkte": 20,
    "kategorie": "Rekursionstabelle",
+   "niveau": "eA",
    "fallen": [
     "P7",
     "P8"
@@ -4383,6 +4399,7 @@
    "stufe": 2,
    "punkte": 20,
    "kategorie": "Funktionsweise erläutern",
+   "niveau": "eA",
    "fallen": [
     "P10"
    ],
@@ -4488,6 +4505,7 @@
    "stufe": 3,
    "punkte": 30,
    "kategorie": "Methode implementieren",
+   "niveau": "eA",
    "fallen": [
     "P7",
     "P6"

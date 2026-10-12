@@ -27,6 +27,16 @@
         h('li', null, h('b', null, '4. Boss als Abi-Probe'), 'Je Welt ein Online-Boss im Lab (auf Zeit, Auswertung mit Erklärungen) und ein Papier-Boss als PDF – handschriftlich in 60 Minuten wie im Abitur.'),
         h('li', null, h('b', null, '5. Dranbleiben'), 'Trainingsplatz (Zufallsaufgaben) und Warm-up-Karten – im Lab mit Lösungen (Leitner) oder als PDF für 10 Minuten auf Papier.')
       ),
+      h(
+        'p',
+        { class: 'callout niveau-legende' },
+        h('strong', null, 'Grundkurs oder Leistungskurs? '),
+        'Nach dem Kerncurriculum (2017) gilt das meiste für beide Kurse. Mit ',
+        AQ.niveau('eA'),
+        ' markierte Themen stehen in der Spalte „Erweiterung eA“ und sind im Abitur nur im Leistungskurs gefordert: Effizienz (Speicherbedarf und Zahl der Operationen), Rekursion und „Teile und herrsche“, Klassenbeziehungen und Klassendiagramme, Binärbäume und binäre Suchbäume. ',
+        AQ.niveau('plus'),
+        ' geht über das Kerncurriculum hinaus (Vertiefung).'
+      ),
       d.werkzeugkarten
         ? h('p', { class: 'callout gold' }, h('strong', null, 'Immer dabei: '), pdf(d.werkzeugkarten.url, d.werkzeugkarten.titel), ' – Abi-Check vor der Abgabe, Zeitbudget, Struktogramm- und Klassendiagramm-Notation.')
         : null
@@ -55,7 +65,7 @@
               'tr',
               null,
               h('td', { class: 'lvl-nr' }, l.nr),
-              h('td', null, l.titel, l.ide ? h('div', { class: 'muted klein' }, 'Online-IDE: ', l.ide) : null),
+              h('td', null, l.titel, ' ', AQ.niveau(l.niveau, { gemischt: l.gemischt }), l.ide ? h('div', { class: 'muted klein' }, 'Online-IDE: ', l.ide) : null),
               h('td', { class: 'hide-sm klein ds' }, dsText(l.ds)),
               h('td', { class: 'klein ab' }, l.abBlatt && l.abBlatt.url ? pdf(l.abBlatt.url, l.ab) : l.ab || '–'),
               h('td', { class: 'lab' }, h('a', { href: levelLink(l), 'aria-label': `Level ${l.nr} üben` }, 'Üben →'), h('span', { class: 'muted klein' }, ` ${l.aufgaben} Aufgaben`))

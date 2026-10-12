@@ -8,6 +8,7 @@
    "id": "W2-L1",
    "nr": "2.1",
    "titel": "Die Highscore-Liste – Standardbausteine und lineare Suche",
+   "niveau": "alle",
    "ds": [
     13
    ],
@@ -38,6 +39,7 @@
    "id": "W2-L2",
    "nr": "2.2",
    "titel": "Ordnung im Ranking – Selection-, Insertion-, Bubblesort",
+   "niveau": "alle",
    "ds": [
     14
    ],
@@ -68,6 +70,7 @@
    "id": "W2-L3",
    "nr": "2.3",
    "titel": "Das Sortier-Duell – Effizienz durch Zählen",
+   "niveau": "eA",
    "ds": [
     15
    ],
@@ -98,6 +101,7 @@
    "id": "W2-L4",
    "nr": "2.4",
    "titel": "Halbieren statt Durchsuchen – binäre Suche",
+   "niveau": "alle",
    "ds": [
     16
    ],
@@ -123,11 +127,41 @@
     "W2-L4-07",
     "W2-L4-08"
    ]
+  },
+  {
+   "id": "W2-L5",
+   "nr": "2.5",
+   "titel": "Das Archiv – Speicherbedarf und Effizienz beurteilen",
+   "niveau": "eA",
+   "ds": [
+    16
+   ],
+   "ab": "AB W2·3 Effizienz und binäre Suche – Teil C (Aufgaben 8–9)",
+   "intro": [
+    {
+     "t": "text",
+     "md": "Effizienz hat **zwei** Seiten: die **Zahl der Operationen** (Vergleiche, Abfragen …) und den **Speicherbedarf** – den zusätzlichen Platz, den ein Algorithmus neben der Eingabe braucht (Variablen, neu angelegte Reihungen, später auch der Aufrufstapel bei Rekursion). Beides gibt man abhängig von n an: **konstant**, **linear** oder **quadratisch**."
+    },
+    {
+     "t": "hinweis",
+     "md": "**Achtung Abi (nur Leistungskurs):** „Beurteilen Sie die Effizienz …“ verlangt beide Größen mit Abschätzung, einen Vergleich und ein begründetes Urteil für die Situation – z. B. „mehr Speicher, dafür linear statt quadratisch viele Vergleiche“. Keine O-Notation nötig."
+    }
+   ],
+   "aufgaben": [
+    "W2-L5-01",
+    "W2-L5-02",
+    "W2-L5-03",
+    "W2-L5-04",
+    "W2-L5-05",
+    "W2-L5-06",
+    "W2-L5-07"
+   ]
   }
  ],
  "boss": {
   "id": "W2-BOSS",
   "titel": "Das Wettfischen am Drachensee",
+  "niveau": "alle",
   "dauerMin": 25,
   "anzahl": 8,
   "mix": {
@@ -150,7 +184,8 @@
    "W2-B-12",
    "W2-B-13",
    "W2-B-14",
-   "W2-B-15"
+   "W2-B-15",
+   "W2-B-16"
   ]
  },
  "aufgaben": [
@@ -2913,6 +2948,7 @@
    "stufe": 1,
    "punkte": 10,
    "kategorie": "Effizienz",
+   "niveau": "eA",
    "fallen": [],
    "inhalt": [
     {
@@ -3367,6 +3403,7 @@
    "stufe": 3,
    "punkte": 30,
    "kategorie": "Effizienz",
+   "niveau": "eA",
    "fallen": [
     "P10"
    ],
@@ -3580,6 +3617,7 @@
    "stufe": 1,
    "punkte": 10,
    "kategorie": "Effizienz",
+   "niveau": "eA",
    "fallen": [
     "P10"
    ],
@@ -4297,6 +4335,7 @@
    "stufe": 2,
    "punkte": 20,
    "kategorie": "Effizienz",
+   "niveau": "eA",
    "fallen": [],
    "inhalt": [
     {
@@ -4601,6 +4640,7 @@
    "stufe": 3,
    "punkte": 30,
    "kategorie": "Effizienz",
+   "niveau": "eA",
    "fallen": [
     "P10"
    ],
@@ -4966,6 +5006,498 @@
     {
      "t": "text",
      "md": "Die innere Schleife vergleicht von rechts nach links **Nachbarn** und tauscht, wenn das kleinere rechts steht. So wandert das kleinste Element des Restes in jedem Durchlauf nach vorn an Position i („steigt auf\") – das ist **Bubblesort** (aufsteigend). Zustände: 1, 6, 2, 8 · 1, 2, 6, 8 · 1, 2, 6, 8; 4 Vertauschungen."
+    }
+   ]
+  },
+  {
+   "id": "W2-L5-01",
+   "titel": "Wie viel Platz extra?",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Effizienz",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Ordne jeder Methode zu, wie ihr **zusätzlicher Speicherbedarf** (neben der Eingabe-Reihung `r` mit n Werten) von n abhängt. Gezählt werden Variablen und Felder neu angelegter Reihungen."
+    }
+   ],
+   "interaktion": {
+    "kind": "match",
+    "elemente": [
+     {
+      "id": "e1",
+      "md": "`hoechstePunktzahl(r)` – merkt sich das bisherige Maximum in `max` und läuft mit `i` durch r"
+     },
+     {
+      "id": "e2",
+      "md": "`kopie(r)` – legt `int[] neu = new int[r.length]` an und kopiert alle Werte"
+     },
+     {
+      "id": "e3",
+      "md": "`selectionSort(r)` – sortiert durch Vertauschen **innerhalb** von r (Hilfsvariablen `i`, `j`, `min`, `h`)"
+     },
+     {
+      "id": "e4",
+      "md": "`paarTabelle(r)` – legt `boolean[][] t = new boolean[r.length][r.length]` an"
+     },
+     {
+      "id": "e5",
+      "md": "`umgedreht(r)` – liefert eine **neue** Reihung mit den Werten in umgekehrter Reihenfolge"
+     }
+    ],
+    "kategorien": [
+     {
+      "id": "k",
+      "md": "konstant – unabhängig von n"
+     },
+     {
+      "id": "l",
+      "md": "wächst linear mit n"
+     },
+     {
+      "id": "q",
+      "md": "wächst quadratisch mit n"
+     }
+    ]
+   },
+   "loesung": {
+    "e1": "k",
+    "e2": "l",
+    "e3": "k",
+    "e4": "q",
+    "e5": "l"
+   },
+   "tipps": [
+    "Wird eine neue Reihung angelegt? Wenn ja: Wie viele Felder hat sie, abhängig von n?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Einzelne Hilfsvariablen (`max`, `i`, `min`, `h` …) brauchen **konstant** viel Platz, egal wie groß n ist – das gilt für das Maximum und für Selectionsort, das nur innerhalb von r tauscht. `kopie` und `umgedreht` legen eine Reihung mit **n** Feldern an (linear). Die Tabelle `new boolean[n][n]` hat n · n Felder (**quadratisch**): Verdoppelt man n, vervierfacht sich der Speicher."
+    }
+   ]
+  },
+  {
+   "id": "W2-L5-02",
+   "titel": "Doppelt gemoppelt",
+   "stufe": 1,
+   "punkte": 10,
+   "kategorie": "Effizienz",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Die Methode verdoppelt jeden Punktestand der Rangliste in einer **neuen** Reihung:"
+    },
+    {
+     "t": "code",
+     "code": "public static int[] verdopple(int[] r) {\n    int[] neu = new int[2 * r.length];\n    for (int i = 0; i < r.length; i++) {\n        neu[2 * i] = r[i];\n        neu[2 * i + 1] = r[i];\n    }\n    return neu;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Für `r.length = 500`: zusätzliche Reihungsfelder [[g1]] · Schleifendurchläufe [[g2]] · Zuweisungen an Felder von `neu` [[g3]]\n\nFür `r.length = 1000`: zusätzliche Reihungsfelder [[g4]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "zahl"
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "zahl"
+     },
+     "g4": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "1000"
+    ],
+    "g2": [
+     "500"
+    ],
+    "g3": [
+     "1000"
+    ],
+    "g4": [
+     "2000"
+    ]
+   },
+   "tipps": [
+    "Wie lang ist die neue Reihung? Wie oft läuft die Schleife, und wie viele Zuweisungen stehen in ihrem Rumpf?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "`neu` hat 2 · n Felder: bei n = 500 also **1000**, bei n = 1000 **2000** – der zusätzliche Speicher wächst **linear** mit n. Die Schleife läuft n = **500**-mal, mit je zwei Zuweisungen: **1000**. Zeit- und Speicherbedarf sind hier beide linear."
+    }
+   ]
+  },
+  {
+   "id": "W2-L5-03",
+   "titel": "Zwei Detektoren im Vergleich",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Effizienz",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Zwei Methoden prüfen, ob ein Punktestand doppelt vorkommt."
+    },
+    {
+     "t": "code",
+     "code": "public static boolean hatDoppelteA(int[] p) {\n    for (int i = 0; i < p.length; i++) {\n        for (int j = i + 1; j < p.length; j++) {\n            if (p[i] == p[j]) {          // Vergleich\n                return true;\n            }\n        }\n    }\n    return false;\n}",
+     "nummern": true
+    },
+    {
+     "t": "code",
+     "code": "// Alle Punktestände liegen zwischen 0 und 1000.\npublic static boolean hatDoppelteB(int[] p) {\n    boolean[] gesehen = new boolean[1001];\n    for (int i = 0; i < p.length; i++) {\n        if (gesehen[p[i]]) {             // Abfrage\n            return true;\n        }\n        gesehen[p[i]] = true;\n    }\n    return false;\n}",
+     "nummern": true
+    },
+    {
+     "t": "text",
+     "md": "Gezählt werden die markierten Vergleiche bzw. Abfragen, und zwar für Punktetabellen **ohne** doppelte Werte.\n\n- n = 200: Vergleiche in A [[g1]] · Abfragen in B [[g2]]\n- n = 400: Vergleiche in A [[g3]] · Abfragen in B [[g4]]\n- zusätzliche Reihungsfelder: A [[g5]] · B [[g6]] (gilt für jedes n)"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "zahl"
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "zahl"
+     },
+     "g4": {
+      "typ": "zahl"
+     },
+     "g5": {
+      "typ": "zahl"
+     },
+     "g6": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "19900"
+    ],
+    "g2": [
+     "200"
+    ],
+    "g3": [
+     "79800"
+    ],
+    "g4": [
+     "400"
+    ],
+    "g5": [
+     "0"
+    ],
+    "g6": [
+     "1001"
+    ]
+   },
+   "tipps": [
+    "A vergleicht jedes Paar (i, j) mit i < j genau einmal. B fragt für jeden Wert genau einmal nach.",
+    "Wie viele Felder hat `gesehen` – und hängt das von n ab?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "A prüft ohne Treffer alle Paare: n(n − 1)/2 = **19 900** bzw. **79 800** – verdoppelt man n, vervierfachen sich die Vergleiche (quadratisch). B fragt jeden Wert genau einmal ab: **200** bzw. **400** (linear). Dafür legt B die Strichliste `gesehen` mit **1001** Feldern an – unabhängig von n, aber abhängig vom Wertebereich 0 … 1000. A braucht keine zusätzliche Reihung (**0**), nur `i` und `j`."
+    }
+   ]
+  },
+  {
+   "id": "W2-L5-04",
+   "titel": "Beurteilen Sie die Detektoren",
+   "stufe": 3,
+   "punkte": 30,
+   "kategorie": "Effizienz",
+   "fallen": [
+    "P10"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Bleibe bei `hatDoppelteA` (Paarvergleich) und `hatDoppelteB` (Strichliste mit 1001 Feldern) aus der vorigen Aufgabe. Im Abitur heißt es: „**Beurteilen** Sie die Effizienz beider Verfahren unter Abschätzung des Speicherbedarfs und der Zahl der Operationen.“ Welche Aussagen gehören zu einer **richtigen** Beurteilung?"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "mehrfach": true,
+    "optionen": [
+     {
+      "id": "a",
+      "md": "B ist schneller als A, also ist B in jedem Fall das bessere Verfahren."
+     },
+     {
+      "id": "b",
+      "md": "A braucht im ungünstigsten Fall n(n − 1)/2 Vergleiche (quadratisch), aber nur konstant viel zusätzlichen Speicher; B braucht höchstens n Abfragen (linear), aber eine Hilfsreihung mit 1001 Feldern."
+     },
+     {
+      "id": "c",
+      "md": "Für eine große Rangliste mit Punkten zwischen 0 und 1000 ist B vorzuziehen: 1001 Felder sind wenig, und bei n = 100 000 spart B Milliarden Vergleiche."
+     },
+     {
+      "id": "d",
+      "md": "Wären die Punktestände beliebige int-Werte, bräuchte B eine Strichliste mit über vier Milliarden Feldern – dann ist B ungeeignet."
+     },
+     {
+      "id": "e",
+      "md": "Der Speicherbedarf von B wächst quadratisch mit n."
+     },
+     {
+      "id": "f",
+      "md": "Bei n = 10 Einträgen lohnt sich B kaum: A braucht höchstens 45 Vergleiche, B legt dafür 1001 Felder an."
+     }
+    ]
+   },
+   "loesung": {
+    "richtig": [
+     "b",
+     "c",
+     "d",
+     "f"
+    ]
+   },
+   "tipps": [
+    "Beurteilen heißt: beide Größen (Operationen und Speicher) abhängig von n angeben, vergleichen und für die Situation abwägen.",
+    "Wovon hängt die Größe der Strichliste ab – von n oder vom Wertebereich?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Richtig: b, c, d, f. Eine Beurteilung nennt **beide** Größen (Zahl der Operationen und Speicherbedarf), vergleicht sie und kommt **situationsabhängig** zu einem Urteil (P10: „beurteilen“ verlangt ein begründetes Urteil, nicht nur „schneller“). a ist kein Urteil mit Kriterien, sondern eine Behauptung. e ist falsch: Die Strichliste hat immer 1001 Felder – sie hängt vom **Wertebereich**, nicht von n ab. Typisch: Mehr Speicher kann Rechenzeit sparen (Strichliste) – das lohnt sich bei großem n und kleinem Wertebereich."
+    }
+   ]
+  },
+  {
+   "id": "W2-L5-05",
+   "titel": "Sortieren mit Sicherheitskopie",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Effizienz",
+   "fallen": [
+    "P2"
+   ],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "`selectionSort(r)` sortiert r direkt. `sortierteKopie(r)` legt zuerst `int[] k = new int[r.length]` an, kopiert alle Werte hinein, sortiert k mit Selectionsort und gibt k zurück. Welche Aussage ist richtig (n Werte, gezählt werden Vergleiche)?"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "mehrfach": false,
+    "optionen": [
+     {
+      "id": "a",
+      "md": "Beide brauchen n(n − 1)/2 Vergleiche; `sortierteKopie` braucht zusätzlich n Felder, lässt dafür r unverändert."
+     },
+     {
+      "id": "b",
+      "md": "`sortierteKopie` braucht doppelt so viele Vergleiche, weil zwei Reihungen sortiert werden."
+     },
+     {
+      "id": "c",
+      "md": "Beide brauchen gleich viel Speicher, weil Selectionsort ohnehin eine zweite Reihung anlegt."
+     },
+     {
+      "id": "d",
+      "md": "`selectionSort` braucht zusätzlich n Felder, `sortierteKopie` nicht."
+     }
+    ]
+   },
+   "loesung": {
+    "richtig": [
+     "a"
+    ]
+   },
+   "tipps": [
+    "Sortiert wird in beiden Fällen genau eine Reihung der Länge n. Was kommt bei der Kopie hinzu?"
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Verglichen wird in beiden Fällen gleich oft (Selectionsort: immer n(n − 1)/2). Die Kopie kostet **n zusätzliche Felder** und n Zuweisungen, hat aber einen Vorteil: Die Original-Reihung bleibt **unverändert** – wichtig, wenn die Aufgabe das verlangt (P2: Struktur zerstört statt unverändert). Selectionsort selbst arbeitet mit konstant viel zusätzlichem Speicher."
+    }
+   ]
+  },
+  {
+   "id": "W2-L5-06",
+   "titel": "Die Turniertabelle",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Effizienz",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Für ein Turnier „jeder gegen jeden“ mit n Spielern speichert das Spiel die Ergebnisse in `int[][] erg = new int[n][n]` (Zeile i, Spalte j: Punkte von Spieler i gegen Spieler j).\n\n- Felder von `erg` bei n = 30: [[g1]] · bei n = 60: [[g2]]\n- Verdoppelt man n, so vervielfacht sich der Speicherbedarf um den Faktor [[g3]].\n- Tatsächlich gespielt werden bei n = 30 nur [[g4]] Partien (jedes Paar einmal)."
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "zahl"
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "zahl"
+     },
+     "g4": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "900"
+    ],
+    "g2": [
+     "3600"
+    ],
+    "g3": [
+     "4"
+    ],
+    "g4": [
+     "435"
+    ]
+   },
+   "tipps": [
+    "Eine Reihung mit n Zeilen und n Spalten hat n · n Felder.",
+    "Anzahl der Paare bei n Spielern: n(n − 1)/2."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "30 · 30 = **900**, 60 · 60 = **3600** – also Faktor **4**: Der Speicherbedarf wächst **quadratisch** mit n. Gespielt werden nur 30 · 29 / 2 = **435** Partien; auch das ist quadratisch. Wer nur die Partien i < j speichert, spart etwa die Hälfte – am quadratischen Wachstum ändert das nichts."
+    }
+   ]
+  },
+  {
+   "id": "W2-L5-07",
+   "titel": "Abi-Sätze zum Speicherbedarf",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Effizienz",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Welche Aussagen sind **richtig**?"
+    }
+   ],
+   "interaktion": {
+    "kind": "choice",
+    "mehrfach": true,
+    "optionen": [
+     {
+      "id": "a",
+      "md": "Mit Speicherbedarf ist der zusätzliche Speicher gemeint, den ein Algorithmus neben der Eingabe braucht – angegeben in Abhängigkeit von n."
+     },
+     {
+      "id": "b",
+      "md": "Ein Algorithmus mit wenigen Operationen braucht immer auch wenig Speicher."
+     },
+     {
+      "id": "c",
+      "md": "Die lineare Suche braucht unabhängig von n nur konstant viel zusätzlichen Speicher."
+     },
+     {
+      "id": "d",
+      "md": "Eine Reihung mit n Zeilen und n Spalten belegt n · n Felder; verdoppelt man n, vervierfacht sich der Speicher."
+     },
+     {
+      "id": "e",
+      "md": "Selectionsort legt eine zweite Reihung der Länge n an."
+     },
+     {
+      "id": "f",
+      "md": "Die binäre Suche (iterativ) braucht zusätzlich nur die Variablen lo, hi und mid."
+     }
+    ]
+   },
+   "loesung": {
+    "richtig": [
+     "a",
+     "c",
+     "d",
+     "f"
+    ]
+   },
+   "tipps": [
+    "Denk an die Strichliste aus Aufgabe 3: wenige Operationen, aber viel Platz."
+   ],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Richtig: a, c, d, f. b ist falsch – oft ist es umgekehrt: Zusätzlicher Speicher (z. B. eine Strichliste) **spart** Operationen. e ist falsch: Selectionsort, Insertionsort und Bubblesort sortieren **innerhalb** der Reihung und brauchen nur konstant viele Hilfsvariablen."
+    }
+   ]
+  },
+  {
+   "id": "W2-B-16",
+   "titel": "Die Meldestelle am Steg",
+   "stufe": 2,
+   "punkte": 20,
+   "kategorie": "Effizienz",
+   "niveau": "eA",
+   "fallen": [],
+   "inhalt": [
+    {
+     "t": "text",
+     "md": "Zum Wettfischen melden sich n Angler mit Startnummern von 1 bis 500. Die Meldestelle prüft bei jeder neuen Meldung, ob die Nummer schon vergeben ist.\n\n- **Verfahren L:** Die bisher gemeldeten Nummern stehen unsortiert in einer Reihung; jede neue Nummer wird mit allen bisherigen verglichen (lineare Suche).\n- **Verfahren S:** Eine Strichliste `boolean[] vergeben = new boolean[501]`; pro Meldung genau eine Abfrage.\n\nBestimmen Sie für n = 300 Meldungen mit lauter verschiedenen Nummern: Vergleiche in L insgesamt [[g1]] · Abfragen in S [[g2]] · Felder der Strichliste [[g3]]"
+    }
+   ],
+   "interaktion": {
+    "kind": "gaps",
+    "felder": {
+     "g1": {
+      "typ": "zahl"
+     },
+     "g2": {
+      "typ": "zahl"
+     },
+     "g3": {
+      "typ": "zahl"
+     }
+    }
+   },
+   "loesung": {
+    "g1": [
+     "44850"
+    ],
+    "g2": [
+     "300"
+    ],
+    "g3": [
+     "501"
+    ]
+   },
+   "tipps": [],
+   "erklaerung": [
+    {
+     "t": "text",
+     "md": "Bei der k-ten Meldung vergleicht L mit den k − 1 bisherigen: 0 + 1 + … + 299 = 300 · 299 / 2 = **44 850** Vergleiche (quadratisch). S fragt jede Nummer einmal ab: **300** (linear), braucht dafür **501** Felder – unabhängig von n, abhängig vom Nummernbereich. Beurteilung: Bei vielen Meldungen und kleinem Nummernbereich ist S klar effizienter."
     }
    ]
   }

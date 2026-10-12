@@ -85,7 +85,7 @@ herrsche) · **4 Hafen** (Stapel, Schlange, dynamische Reihung) · **5 Wald** (B
 (Abi-Training, Fallen P1–P10, Probeklausur, Klausur). Einstieg für die Lehrkraft:
 `materialien/00_Lehrerhinweise/AQ_Gesamtuebersicht_DS1-40.docx`.
 
-Umfang: 36 Level, 388 Lab-Aufgaben, 7 Bosse, 107 Warm-up-Karten, Trainingsplatz-Generatoren in den Welten 0, 2, 4, 5, 6,
+Umfang: 37 Level, 400 Lab-Aufgaben, 7 Bosse, 107 Warm-up-Karten, Trainingsplatz-Generatoren in den Welten 0, 2, 4, 5, 6,
 rund 80 Word-/PowerPoint-Dateien, 9 Erklärvideo-Drehbücher.
 
 ---
@@ -162,7 +162,8 @@ PDFs unter `/arbeitsblaetter/…` aus `materialien/Arbeitsblaetter_PDF`; Zuordnu
 ### C.4 Lehrkräfte
 
 - Kurse anlegen (Kurscode, Beitritts-Link `/k/<KURSCODE>`, QR-Code als SVG), Schülerliste (umbenennen, neuer Code, löschen).
-- Einstellungen: freigeschaltete Welten, Bosse automatisch/offen/gesperrt, Scoreboard, Beamer-Board, Anmeldung offen.
+- Einstellungen: freigeschaltete Welten, Bosse automatisch/offen/gesperrt, **Kursart** (Leistungskurs eA / Grundkurs gA,
+  siehe D.5), Scoreboard, Beamer-Board, Anmeldung offen.
 - Auswertung: Matrix Schüler × Level, Boss-Ergebnisse, Aufgabenstatistik (Lösungsquote, häufige falsche Antworten),
   Fallen-Profil des Kurses, CSV-Export; Abschluss-Urkunden (A4).
 - **Aufgaben-Vorschau** mit Lösungen, Tipps und Erklärungen (inkl. Boss-Pool).
@@ -246,6 +247,27 @@ Kasten #DBE7F5; Calibri 11 pt, Consolas 10 pt.
 Jede erzeugte Sammlung hat ein `--pruefen`, das in der GitHub-Prüfung läuft (Vollständigkeit/Aktualität).
 
 ---
+
+### D.5 Grund- und Leistungskurs (KC 2017)
+
+Maßstab ist das Kerncurriculum Informatik (2017), Lernfeld „Algorithmen und Datenstrukturen“: Der Kern gilt für
+**beide Kurse**, die Spalte **„Erweiterung eA“** ist im Abitur nur im **Leistungskurs** gefordert.
+
+| Niveau | Inhalte | Wo |
+|---|---|---|
+| `alle` – Grund- und Leistungskurs | Grundbausteine, Variablen, Tracetabelle, Struktogramm, Methoden, Zeichenketten, Klassen/Objekte verwenden und implementieren, Reihungen (1D/2D) suchen und sortieren, Stapel, Schlange, dynamische Reihung | Welt 0, 1 (DS 8–10), 2 (ohne Effizienz), 4 |
+| `eA` – nur Leistungskurs | **Effizienz beurteilen (Speicherbedarf und Zahl der Operationen)**, Rekursion, Teile und herrsche, Klassenbeziehungen (Assoziation, Vererbung) und Klassendiagramme, Binärbaum, Traversierungen, binärer Suchbaum | Welt 1 DS 11, Welt 2 Level 2.3/2.5, Welt 3, Welt 5, Einzelaufgaben in Welt 4 und 6 |
+| `plus` – über den Kern hinaus | Backtracking, Entscheidungsbaum/Level-Order, verkettete Knoten | Level 3.4, 5.3, Kür W4 |
+
+- **Daten:** Feld `niveau` an Level, Boss und abweichenden Aufgaben (`docs/AUFGABENFORMAT.md` §2); Test `test/niveau.test.js`.
+- **Lab:** Etiketten „LK“ / „+“ auf der Weltkarte, „nur Leistungskurs (eA)“ bzw. „Zusatz“ an Level und Aufgaben, Legende auf
+  `/themen`. Kurseinstellung **Kursart**: Im Grundkurs heißt es „im Grundkurs freiwillig“, Online-Bosse ziehen nur
+  Aufgaben mit Niveau `alle` (sofern genug im Pool); reine LK-Welten (3, 5) wählt die Lehrkraft ab.
+- **Materialien:** Jedes Arbeitsblatt, jeder Papier-Boss und die Probeklausur trägt im Kopf „Niveau (KC 2017)“; einzelne
+  LK-Aufgaben sind mit „◆ nur LK (eA)“ markiert; Lehrerhinweise und Gesamtübersicht haben einen Abschnitt dazu.
+- **Speicherbedarf** (KC eA: „beurteilen die Effizienz von Algorithmen unter Abschätzung des Speicherbedarfs und der Zahl
+  der Operationen“): AB W2·3 Teil C mit Lösung, Lab-Level 2.5 „Das Archiv“, Aufgaben in 3.2, 3.6, 4.3, 5.5, Online-Boss 2
+  und Papier-Boss 2 c) (mit Erwartungshorizont).
 
 ## E. Qualitätssicherung
 

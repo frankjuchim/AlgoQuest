@@ -108,8 +108,20 @@ const STANDARD_EINSTELLUNGEN = {
   boss: 'auto', // auto | gesperrt | offen
   scoreboard: true,
   beamer: false,
-  anmeldung: true
+  anmeldung: true,
+  kursart: 'eA' // 'eA' Leistungskurs · 'gA' Grundkurs (Hinweise zum Niveau, Boss-Ziehung)
 };
+
+/**
+ * Niveau nach KC 2017 (Lernfeld Algorithmen und Datenstrukturen): „alle“ = Grund- und Leistungskurs,
+ * „eA“ = Spalte „Erweiterung eA“ (nur Leistungskurs), „plus“ = über das Kerncurriculum hinaus.
+ */
+const NIVEAUS = {
+  alle: { kurz: 'GK + LK', lang: 'Grund- und Leistungskurs (gA und eA)' },
+  eA: { kurz: 'nur LK', lang: 'nur Leistungskurs (eA)' },
+  plus: { kurz: 'Zusatz', lang: 'über das Kerncurriculum hinaus' }
+};
+const NIVEAU_IDS = Object.keys(NIVEAUS);
 
 const BOSS_AUTO_ANTEIL = 0.6;
 const BOSS_BESIEGT_ANTEIL = 0.5;
@@ -132,6 +144,8 @@ module.exports = {
   STUFEN_PUNKTE,
   punkteFuer,
   STANDARD_EINSTELLUNGEN,
+  NIVEAUS,
+  NIVEAU_IDS,
   BOSS_AUTO_ANTEIL,
   BOSS_BESIEGT_ANTEIL,
   BOSS_SPERRE_MS,

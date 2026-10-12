@@ -131,6 +131,7 @@
     try {
       const [w, p] = await Promise.all([api('GET', '/api/welten'), api('GET', '/api/profil')]);
       einstellungen.scoreboard = w.scoreboard;
+      einstellungen.kursart = w.kursart;
       const kopf = h(
         'section',
         { class: 'card held-kopf' },
@@ -141,7 +142,8 @@
           h('div', { class: 'stat gold' }, h('div', { class: 'n' }, String(p.punkte.gesamt)), h('div', { class: 'l' }, 'Punkte')),
           h('div', { class: 'stat' }, h('div', { class: 'n' }, String(p.abzeichen.filter((a) => a.erhalten).length)), h('div', { class: 'l' }, 'Abzeichen'))
         ),
-        AQ.progress(p.rang.anteil, 'gold')
+        AQ.progress(p.rang.anteil, 'gold'),
+        w.kursart === 'gA' ? h('p', { class: 'small kursart-hinweis' }, '📘 Grundkurs: Level mit „LK“ gehören im Abitur nur zum Leistungskurs – für dich freiwillig. „+“ geht über das Kerncurriculum hinaus.') : null
       );
       if (!w.welten.length) {
         seite('karte', kopf, h('div', { class: 'callout' }, 'Noch sind keine Welten geladen. Frag deine Lehrkraft.'));
@@ -170,6 +172,7 @@
         h(
           'a',
           { class: 'lvl' + (fertig ? ' fertig' : '') + (aktuell ? ' aktuell' : ''), 'aria-current': aktuell ? 'step' : null, href: w.frei ? `#/level/${encodeURIComponent(l.id)}` : null, 'aria-label': `Level ${l.nr} ${l.titel}: ${l.geloest} von ${l.anzahl} Aufgaben gelöst, ${l.punkte} von ${l.maxPunkte} Punkten` },
+          AQ.niveau(l.niveau, { art: 'tag', gemischt: l.gemischt }),
           ring(l.anteil, fertig ? '✓' : l.nr || String(i + 1)),
           h('span', { class: 't' }, l.titel),
           h('span', { class: 's' }, `${l.geloest}/${l.anzahl} · ${l.punkte} P.`)
@@ -188,6 +191,7 @@
         h(
           'a',
           { class: 'lvl boss' + (b.frei ? ' bereit' : ' gesperrt') + (b.besiegt ? ' besiegt' : ''), href: w.frei ? `#/boss/${w.nr}` : null, 'aria-label': `Boss ${b.titel}` + (b.frei ? '' : ' (gesperrt)') + (b.besiegt ? ', besiegt' : '') },
+          AQ.niveau(b.niveau, { art: 'tag', gemischt: b.gemischt }),
           ring(anteil, b.besiegt ? '🏆' : b.frei ? '⚔️' : '🔒'),
           h('span', { class: 't' }, b.titel),
           h('span', { class: 's' }, b.bester ? `bester: ${b.bester.punkte}/${b.bester.max}` : b.frei ? 'bereit!' : 'gesperrt')
@@ -214,6 +218,7 @@
     try {
       const d = await api('GET', `/api/levels/${encodeURIComponent(id)}`);
       const l = d.level;
+      einstellungen.kursart = d.kursart;
       const liste = h(
         'div',
         { class: 'aufgaben-liste' },
@@ -224,6 +229,7 @@
             h('span', { class: 'nr' }, a.status === 'geloest' || a.nachgeloest ? '✓' : String(i + 1)),
             h('span', { class: 'grow' }, h('div', { class: 'titel' }, a.titel), h('div', { class: 'small muted' }, sterne(a.stufe), ' · ', a.kategorie, ' · ', a.arten.map((x) => ART_NAMEN[x] || x).join(' + '))),
             statusChip(a),
+            a.niveau !== 'alle' ? AQ.niveau(a.niveau, { kursart: d.kursart }) : null,
             h('span', { class: 'pill gold' }, a.status === 'offen' ? `${a.punkte} P.` : `${a.erreicht}/${a.punkte} P.`)
           )
         )
@@ -257,6 +263,7 @@
           'section',
           { class: 'card level-kopf', style: weltStil(d.welt.farbe) },
           h('h1', null, `Level ${l.nr} – ${l.titel}`),
+          h('p', { class: 'niveau-zeile' }, AQ.niveau(l.niveau, { gemischt: l.gemischt, kursart: d.kursart, alleZeigen: true })),
           h('p', { class: 'muted small' }, [l.ds && l.ds.length ? `DS ${l.ds.join(', ')}` : null, l.ab ? `Arbeitsblatt: ${l.ab}` : null, `${l.maxPunkte} Punkte erreichbar`].filter(Boolean).join(' · ')),
           l.intro && l.intro.length ? AQR.bloecke(l.intro, null) : null
         ),
@@ -277,7 +284,7 @@
 
   /* ---------- Aufgabe (gemeinsam für Level und Training): aufgabe.js ---------- */
 
-  const aufgabenAnsicht = (cfg) => AQA.ansicht({ abzeichenToast, ...cfg });
+  const aufgabenAnsicht = (cfg) => AQA.ansicht({ abzeichenToast, kursart: einstellungen.kursart, ...cfg });
 
   async function aufgabe(id) {
     lade('karte');

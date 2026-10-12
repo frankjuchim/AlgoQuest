@@ -796,3 +796,18 @@ main.themen { max-width: 1100px; margin: 0 auto; padding: 1rem; }
   body, body.tor { background: #fff !important; color: #000; }
   .funken, .schweben, .fackel, .glut { display: none !important; }
 }
+
+/* Niveau nach KC 2017: nur LK (eA) · Zusatz (über den KC hinaus) */
+.pill.niveau.ea { background: #efe4fb; color: #5b2a86; border: 1px solid #cdb3e8; }
+.pill.niveau.plus { background: #eef1f4; color: #4a5866; border: 1px dashed #9aa8b6; }
+.pill.niveau.alle { background: var(--green-soft); color: #3c6324; }
+.niveau-zeile { margin: -0.35rem 0 0.4rem; }
+.niveau-tag {
+  position: absolute; top: 0.3rem; left: 0.45rem; font-size: 0.66rem; font-weight: 800; letter-spacing: 0.03em;
+  padding: 0.02rem 0.38rem; border-radius: 6px; line-height: 1.4; z-index: 1;
+}
+.niveau-tag.ea { background: #5b2a86; color: #fff; }
+.niveau-tag.plus { background: #fff; color: #4a5866; border: 1px dashed #9aa8b6; }
+.niveau-tag.teils { background: #efe4fb; color: #5b2a86; }
+.held-kopf .kursart-hinweis { margin: 0.6rem 0 0; color: #dce7f3; }
+.niveau-legende .pill { margin: 0 0.15rem; }

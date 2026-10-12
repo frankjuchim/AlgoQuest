@@ -8,6 +8,7 @@
    "id": "W0-L1",
    "nr": "0.1",
    "titel": "Das Portal: Notation fürs Abitur",
+   "niveau": "alle",
    "ds": [
     1
    ],
@@ -38,6 +39,7 @@
    "id": "W0-L2",
    "nr": "0.2",
    "titel": "Die Werkstatt: Datentypen und Kontrollstrukturen",
+   "niveau": "alle",
    "ds": [
     2
    ],
@@ -68,6 +70,7 @@
    "id": "W0-L3",
    "nr": "0.3",
    "titel": "Die Vorratskammer: Reihungen und Zeichenketten",
+   "niveau": "alle",
    "ds": [
     3
    ],
@@ -98,6 +101,7 @@
    "id": "W0-L4",
    "nr": "0.4",
    "titel": "Die Zauberschule: Eigene Methoden",
+   "niveau": "alle",
    "ds": [
     4
    ],
@@ -128,6 +132,7 @@
    "id": "W0-L5",
    "nr": "0.5",
    "titel": "Zauberschule II: Wert und Referenz",
+   "niveau": "alle",
    "ds": [
     5
    ],
@@ -158,6 +163,7 @@
    "id": "W0-L6",
    "nr": "0.6",
    "titel": "Die Methoden-Werkstatt: Fehlergalerie und Abi-Check",
+   "niveau": "alle",
    "ds": [
     6
    ],
@@ -188,6 +194,7 @@
  "boss": {
   "id": "W0-BOSS",
   "titel": "Aufnahmeprüfung: Die Bibliothek der Akademie",
+  "niveau": "alle",
   "dauerMin": 25,
   "anzahl": 8,
   "mix": {

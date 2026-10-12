@@ -9,7 +9,7 @@ test('Kurs anlegen: Kurscode 6 Zeichen ohne 0/O/1/I; Standard-Einstellungen; Val
   const { lk } = await H.szenario();
   const k = await H.kursAnlegen(lk, 'Kurs B');
   assert.match(k.code, /^[A-HJ-NP-Z2-9]{6}$/);
-  assert.deepEqual(k.einstellungen, { welten: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], boss: 'auto', scoreboard: true, beamer: false, anmeldung: true });
+  assert.deepEqual(k.einstellungen, { welten: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], boss: 'auto', scoreboard: true, beamer: false, anmeldung: true, kursart: 'eA' });
   assert.equal((await lk.post('/api/lehrer/kurse').send({ name: '' })).status, 400);
   assert.equal((await lk.patch(`/api/lehrer/kurse/${k.id}`).send({ einstellungen: { boss: 'irgendwie' } })).status, 400);
   assert.equal((await lk.patch(`/api/lehrer/kurse/${k.id}`).send({ einstellungen: { welten: 'alle' } })).status, 400);

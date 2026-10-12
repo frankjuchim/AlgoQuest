@@ -116,6 +116,10 @@ function createKurse(ctx) {
       out.boss = e.boss;
     }
     for (const k of ['scoreboard', 'beamer', 'anmeldung']) if (e[k] !== undefined) out[k] = V.bool(e[k], k);
+    if (e.kursart !== undefined) {
+      if (!['eA', 'gA'].includes(e.kursart)) throw new ValidationError('kursart muss eA (Leistungskurs) oder gA (Grundkurs) sein.');
+      out.kursart = e.kursart;
+    }
     return out;
   }
 
