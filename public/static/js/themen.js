@@ -9,7 +9,12 @@
   // Schüler üben im Lab; eine angemeldete Lehrkraft landet in der Aufgaben-Vorschau (mit Lösungen) der Welt
   let lehrkraft = false;
   const levelLink = (l) => (lehrkraft ? `/lehrer#/vorschau/welt/${l.welt}` : `/spiel#/level/${encodeURIComponent(l.id)}`);
-  const pdf = (url, text) => (url ? h('a', { class: 'pdf', href: url, target: '_blank', rel: 'noopener' }, text) : h('span', null, text));
+  let angemeldet = false; // Schüler oder Lehrkraft: alle PDFs; sonst nur Demo-PDFs
+  const pdf = (url, text, demo = false) => {
+    if (!url) return h('span', null, text);
+    if (!angemeldet && !demo) return h('span', { class: 'pdf gesperrt', title: 'Nach der Anmeldung im Lab abrufbar' }, '🔒 ', text);
+    return h('a', { class: 'pdf', href: url, target: '_blank', rel: 'noopener' }, text);
+  };
 
   function einleitung(d) {
     return h(
@@ -18,6 +23,7 @@
       h('h1', null, 'Themen und Arbeitsblätter'),
       h('p', null, 'Alles, was in der Einheit „Algorithmik und Datenstrukturen“ fürs Abitur wichtig ist – sortiert nach den sieben Welten. Zu jedem Thema gibt es ein Arbeitsblatt (PDF) und ein Level im Lab mit automatisch geprüften Aufgaben im Abitur-Stil.'),
       h('p', null, 'Neugierig? ', h('a', { href: '/gast' }, '👀 Im Gastmodus reinschnuppern'), ' – Probeaufgaben lösen oder einen Demo-Kurs aus Sicht der Lehrkraft ansehen, ganz ohne Anmeldung.'),
+      angemeldet ? null : h('p', { class: 'callout' }, '🔒 Die Arbeitsblätter, Papier-Bosse und Warm-up-Karten (PDF) stehen nach der ', h('a', { href: '/' }, 'Anmeldung im Lab'), ' zur Verfügung. Ohne Anmeldung sind als Beispiele das Arbeitsblatt „Das Portal“ (Welt 0) und die Werkzeugkarten abrufbar.'),
       h(
         'ol',
         { class: 'schritte' },
@@ -29,7 +35,7 @@
       ),
       h('p', { class: 'callout niveau-legende' }, h('strong', null, 'Grundkurs (gA) oder Leistungskurs (eA)? '), 'Die ', h('a', { href: '#niveaus' }, 'Niveau-Übersicht'), ' zeigt, welche Welten, Level und Materialien für welches Niveau gedacht sind.'),
       d.werkzeugkarten
-        ? h('p', { class: 'callout gold' }, h('strong', null, 'Immer dabei: '), pdf(d.werkzeugkarten.url, d.werkzeugkarten.titel), ' – Abi-Check vor der Abgabe, Zeitbudget, Struktogramm- und Klassendiagramm-Notation.')
+        ? h('p', { class: 'callout gold' }, h('strong', null, 'Immer dabei: '), pdf(d.werkzeugkarten.url, d.werkzeugkarten.titel, d.werkzeugkarten.demo), ' – Abi-Check vor der Abgabe, Zeitbudget, Struktogramm- und Klassendiagramm-Notation.')
         : null
     );
   }
@@ -58,7 +64,7 @@
               h('td', { class: 'lvl-nr' }, l.nr),
               h('td', null, l.titel, ' ', AQ.niveau(l.niveau, { gemischt: l.gemischt }), l.ide ? h('div', { class: 'muted klein' }, 'Online-IDE: ', l.ide) : null),
               h('td', { class: 'hide-sm klein ds' }, dsText(l.ds)),
-              h('td', { class: 'klein ab' }, l.abBlatt && l.abBlatt.url ? pdf(l.abBlatt.url, l.ab) : l.ab || '–'),
+              h('td', { class: 'klein ab' }, l.abBlatt && l.abBlatt.url ? pdf(l.abBlatt.url, l.ab, l.abBlatt.demo) : l.ab || '–'),
               h('td', { class: 'lab' }, h('a', { href: levelLink(l), 'aria-label': `Level ${l.nr} üben` }, 'Üben →'), h('span', { class: 'muted klein' }, ` ${l.aufgaben} Aufgaben`))
             )
           )
@@ -66,11 +72,11 @@
       )
     );
     const abs = w.arbeitsblaetter.length
-      ? h('div', null, h('h3', null, 'Arbeitsblätter (PDF)'), h('ul', { class: 'ab-liste' }, w.arbeitsblaetter.map((a) => h('li', null, pdf(a.url, `AB ${a.nr}: ${a.titel}`), a.ds.length ? h('span', { class: 'muted klein' }, ` · ${dsText(a.ds)}`) : null))))
+      ? h('div', null, h('h3', null, 'Arbeitsblätter (PDF)'), h('ul', { class: 'ab-liste' }, w.arbeitsblaetter.map((a) => h('li', null, pdf(a.url, `AB ${a.nr}: ${a.titel}`, a.demo), a.ds.length ? h('span', { class: 'muted klein' }, ` · ${dsText(a.ds)}`) : null))))
       : null;
     const symbol = { boss: '⚔️', probeklausur: '📝', warmup: '🔥' };
     const weitere = w.weitere && w.weitere.length
-      ? h('div', null, h('h3', null, 'Training auf Papier (PDF)'), h('ul', { class: 'ab-liste' }, w.weitere.map((x) => h('li', null, `${symbol[x.art] || '📄'} `, x.url ? h('a', { href: x.url, target: '_blank', rel: 'noopener' }, x.titel) : x.titel))))
+      ? h('div', null, h('h3', null, 'Training auf Papier (PDF)'), h('ul', { class: 'ab-liste' }, w.weitere.map((x) => h('li', null, `${symbol[x.art] || '📄'} `, pdf(x.url, x.titel, x.demo)))))
       : null;
     const extras = h(
       'div',
@@ -169,6 +175,7 @@
     try {
       const sitzung = await api('GET', '/api/sitzung');
       lehrkraft = !sitzung.schueler && !!sitzung.lehrkraft;
+      angemeldet = !!(sitzung.schueler || sitzung.lehrkraft);
       if (!sitzung.schueler) {
         const z = document.getElementById('zum-lab');
         z.textContent = sitzung.lehrkraft ? '▶ Lehrkraft-Bereich' : '▶ Anmelden';

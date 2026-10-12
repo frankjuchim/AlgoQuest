@@ -152,12 +152,16 @@ Altbeständen mit doppeltem Code fragt die Startseite zusätzlich den Kurscode a
 - **Warm-up-Trainer** (Leitner, 5 Fächer, ohne Punkte), **Profil** (Punkte, Rang Novize → Großmeister bei 0/10/30/55/80 %
   der Level-Punkte, Abzeichen, Fortschritt je Welt, „Deine Fallen“ P1–P10), **Scoreboard** (falls aktiviert).
 
-### C.3 Themen und Arbeitsblätter (`/themen`, öffentlich)
+### C.3 Themen und Arbeitsblätter (`/themen` öffentlich, PDFs nach Anmeldung)
 
 Je Welt alle Level mit Thema, Doppelstunde, Arbeitsblatt-PDF, Online-IDE-Datei und „Üben →“; dazu Papier-Boss
 (W6: Probeklausur) und Warm-up-Karten **ohne** Lösungsteil. Querschnitte „Nach Aufgabentyp“ und „Nach Fallen P1–P10“.
 PDFs unter `/arbeitsblaetter/…` aus `materialien/Arbeitsblaetter_PDF`; Zuordnung in `seed/arbeitsblaetter.json`.
 **Nie** Lösungen, Erwartungshorizonte oder Klausuren (Test wacht darüber).
+**Zugriff:** Die Seite ist öffentlich, die PDFs aber nur für angemeldete Schüler und Lehrkräfte (sonst 401-Hinweisseite;
+auf der Themenseite mit 🔒). Ohne Anmeldung nur die **Demo-PDFs** aus `seed/demo_materialien.json`: Schülerseite
+AB W0·1 „Das Portal“ und Werkzeugkarten, Lehrkraftseite Kickoff-Präsentation und Lehrerhinweise Welt 0 – im Gastmodus
+verlinkt. Lehrkraft-Dateien (`/lehrkraft/dateien/…`) sonst nur für angemeldete Lehrkräfte (404).
 
 ### C.4 Lehrkräfte
 
@@ -222,7 +226,7 @@ Welt<N>_<Name>/
   5_Loesungen         LSG, Erwartungshorizonte, IDE-Musterlösungen – NUR Lehrkraft
 Werkzeuge/            Werkzeugkarten, Warm-up-Karten (docx)
 Online-IDE/           Import-Workspaces (JSON) je Welt – ERZEUGT aus den .txt
-Arbeitsblaetter_PDF/  Schülerfassungen als PDF (öffentlich über /themen) – ERZEUGT
+Arbeitsblaetter_PDF/  Schülerfassungen als PDF (/arbeitsblaetter/…, nach Anmeldung; Demo-PDFs öffentlich) – ERZEUGT
 Loesungen_Portal/     Lösungen als PDF, gespiegelt zu Arbeitsblaetter_PDF – ERZEUGT, NUR Lehrkraft (im Lab nach Anmeldung)
 Loesungen_Arbeitsblaetter/  dieselben Lösungen nach Art sortiert – ERZEUGT, NUR Lehrkraft
 Lehrkraft_PDF/        Präsentationen, Lehrerhinweise, Klausuren als PDF + verzeichnis.json – ERZEUGT, NUR Lehrkraft
@@ -277,7 +281,7 @@ Grundsatz: **Jede Lösung wird programmatisch geprüft, bevor sie committet wird
 
 | Werkzeug | prüft |
 |---|---|
-| `npm test` | API, Rechte, Prüfer, Generatoren, Boss, Abzeichen, Themen, Lehrkraft-Downloads, Datenschutz-Grenzen (z. B. keine Lösungen im öffentlichen Ordner) |
+| `npm test` | API, Rechte, Prüfer, Generatoren, Boss, Abzeichen, Themen, Lehrkraft-Downloads, Datenschutz-Grenzen (z. B. keine Lösungen im Schülerordner, PDFs nur nach Anmeldung außer Demo) |
 | `npm run validate` | Lab-Inhalte: Schema, Lücken ↔ Lösungen, Klammerbäume, Struktogramm-Knoten, Punkte, Boss-Mix, Hinweis auf Bedingungsspalten in Tracetabellen |
 | `werkzeuge/ide-pruefung/ide_pruefen.py` | Online-IDE-Gerüste und LSG mit echtem `javac` gegen einen **Nachbau der Bibliothek „Niedersachsen“** (nicht generisch), Testrunner, Gerüst ↔ LSG identische Tests |
 | `werkzeuge/ide-pruefung/seed_code_pruefen.py` | Java-Codeblöcke der Lab-Aufgaben kompilieren (Bug-Hunts als absichtlich fehlerhaft markiert) |
@@ -309,12 +313,12 @@ Zusätzlich gilt: Traces, Rekursionstabellen, Sortierschritte und Bäume per ins
    | `SESSION_SECRET` | langer Zufallswert (≥ 16 Zeichen) zum Signieren der Cookies |
    | `PORT` / `DATA_DIR` | Standard 80 / `/app/data` |
    | `TRUST_PROXY` | Standard `1` (hinter CapRover/nginx) |
-   | `ARBEITSBLAETTER_DIR`, `MATERIALIEN_DIR` | optional: abweichende Ordner für öffentliche PDFs bzw. Lehrkraft-PDFs |
+   | `ARBEITSBLAETTER_DIR`, `MATERIALIEN_DIR` | optional: abweichende Ordner für Schüler-PDFs bzw. Lehrkraft-PDFs |
    | `PLATTFORM_ID`, `PLATTFORM_URL`, `PORTAL_URL`, `PORTAL_PUBLIC_KEY`, `AUTH_MODUS` | Verbund InfoLabs (Teil H.4); ohne Angabe läuft Algo Quest allein (`AUTH_MODUS=lokal`) |
 
 3. HTTPS aktivieren (Cookies dann `secure`). Healthcheck: `GET /healthz` (liefert die Version).
 4. Ins Image kommen nur `src/`, `public/`, `seed/`, `scripts/`, `docs/AUFGABENFORMAT.md`,
-   `materialien/Arbeitsblaetter_PDF` (öffentlich) sowie `materialien/Loesungen_Portal` und `materialien/Lehrkraft_PDF`
+   `materialien/Arbeitsblaetter_PDF` (Schülerfassungen, nach Anmeldung) sowie `materialien/Loesungen_Portal` und `materialien/Lehrkraft_PDF`
    (nur für Lehrkräfte) – geregelt durch `.dockerignore` und `Dockerfile`, abgesichert durch Tests.
 
 Lokal: `npm install`, `npm run dev` (Port 3000, Superadmin `admin` / `admin1234`), mit Beispielwelt:
@@ -422,7 +426,7 @@ Fachbegriffe), Bosse und Klausuren immer im nüchternen Abitur-Stil.
 
 - **`main` = live.** Nie ungefragt auf `main` pushen; während des Unterrichts gar nicht deployen. Vorher immer
   `npm run pruefen` und GitHub-Prüfung grün, danach `/healthz` prüfen.
-- **Lösungen nie öffentlich:** kein Lösungs-PDF im öffentlichen Ordner, Lösungen/Erklärungen nur serverseitig, Lehrkraft-
+- **Lösungen nie öffentlich:** kein Lösungs-PDF im Schülerordner, PDFs ohne Anmeldung nur die Demo-Auswahl, Lösungen/Erklärungen nur serverseitig, Lehrkraft-
   Downloads nur mit Anmeldung + Whitelist. Auch Erklärvideos und Beispiele dürfen keine Lab-/AB-/Klausur-Lösungen zeigen.
 - **Eine Quelle der Wahrheit:** docx/pptx und `seed/*.json` sind maßgeblich; alles andere (PDFs, Workspaces, Folien aus
   `video.json`) wird erzeugt und per `--pruefen` auf Aktualität geprüft.

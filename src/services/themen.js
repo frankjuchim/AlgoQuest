@@ -13,6 +13,8 @@ const { LAB_KATEGORIEN, FALLEN } = require('../domain');
  */
 function createThemen(ctx, { inhalte }, ab = { verzeichnis: null, pdfVorhanden: () => false }) {
   const { db } = ctx;
+  /** Demo-PDF (ohne Anmeldung abrufbar)? Alle anderen nur nach Anmeldung. */
+  const istDemo = (datei) => !!(ab.demo && datei && ab.demo(datei));
 
   function pdfLink(datei) {
     return datei && ab.pdfVorhanden(datei) ? '/arbeitsblaetter/' + datei.split('/').map(encodeURIComponent).join('/') : null;
@@ -21,14 +23,14 @@ function createThemen(ctx, { inhalte }, ab = { verzeichnis: null, pdfVorhanden: 
   function arbeitsblaetterDerWelt(nr) {
     const w = ab.verzeichnis && (ab.verzeichnis.welten || []).find((x) => x.welt === nr);
     if (!w) return [];
-    return (w.arbeitsblaetter || []).map((a) => ({ nr: a.nr, titel: a.titel, ds: a.ds || [], url: pdfLink(`${w.ordner}/${a.datei}`) }));
+    return (w.arbeitsblaetter || []).map((a) => ({ nr: a.nr, titel: a.titel, ds: a.ds || [], url: pdfLink(`${w.ordner}/${a.datei}`), demo: istDemo(`${w.ordner}/${a.datei}`) }));
   }
 
   /** Papier-Boss, Probeklausur, Warm-up-Karten (PDF) einer Welt */
   function weitereDerWelt(nr) {
     const w = ab.verzeichnis && (ab.verzeichnis.welten || []).find((x) => x.welt === nr);
     if (!w) return [];
-    return (w.weitere || []).map((x) => ({ art: x.art, titel: x.titel, url: pdfLink(`${w.ordner}/${x.datei}`) }));
+    return (w.weitere || []).map((x) => ({ art: x.art, titel: x.titel, url: pdfLink(`${w.ordner}/${x.datei}`), demo: istDemo(`${w.ordner}/${x.datei}`) }));
   }
 
   /** „AB 2 – Teil 1“, „AB W1·1 …“, „AB 1 „Das Portal“ …“ → 2 bzw. 1 */
@@ -63,7 +65,7 @@ function createThemen(ctx, { inhalte }, ab = { verzeichnis: null, pdfVorhanden: 
           gemischt: !!l.gemischt,
           ds: Array.isArray(l.ds) ? l.ds : [],
           ab: l.ab || '',
-          abBlatt: blatt ? { titel: blatt.titel, url: blatt.url } : null,
+          abBlatt: blatt ? { titel: blatt.titel, url: blatt.url, demo: blatt.demo } : null,
           ide: l.ide || '',
           aufgaben: aufgaben.length,
           punkte: l.maxPunkte
@@ -94,7 +96,7 @@ function createThemen(ctx, { inhalte }, ab = { verzeichnis: null, pdfVorhanden: 
 
     return {
       welten,
-      werkzeugkarten: wz ? { titel: wz.titel, url: pdfLink(wz.datei) } : null,
+      werkzeugkarten: wz ? { titel: wz.titel, url: pdfLink(wz.datei), demo: istDemo(wz.datei) } : null,
       kategorien: [...kategorien.entries()]
         .map(([kategorie, m]) => ({ kategorie, anzahl: [...m.values()].reduce((s, n) => s + n, 0), orte: querschnitt(m) }))
         .filter((x) => x.anzahl > 0),

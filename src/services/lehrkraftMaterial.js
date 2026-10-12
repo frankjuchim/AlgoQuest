@@ -2,8 +2,8 @@
 // Materialien für Lehrkräfte (Lehrkraft-Bereich → Materialien): Lösungen, Erwartungshorizonte, Präsentationen,
 // Lehrerhinweise, Klausuren als PDF. Grundlage ist materialien/Lehrkraft_PDF/verzeichnis.json (erzeugt von
 // werkzeuge/lehrkraft_pdf.py). Ausgeliefert werden NUR Dateien, die dort verzeichnet sind; Schülerfassungen
-// (Arbeitsblaetter_PDF/…) verweisen auf die öffentliche Route /arbeitsblaetter/…, alles andere auf /lehrkraft/dateien/…,
-// die nur angemeldete Lehrkräfte erreichen.
+// (Arbeitsblaetter_PDF/…) verweisen auf /arbeitsblaetter/… (nur nach Anmeldung, außer Demo-PDFs), alles andere auf
+// /lehrkraft/dateien/…, die nur angemeldete Lehrkräfte erreichen (außer den Demo-Dateien aus seed/demo_materialien.json).
 
 const fs = require('node:fs');
 const path = require('node:path');
@@ -16,7 +16,7 @@ const kodiert = (rel) => rel.split('/').map(encodeURIComponent).join('/');
  * @param {{materialienDir: string|null, abDir: string|null, log?: Function}} opts
  *   materialienDir: Ordner mit Lehrkraft_PDF/ und Loesungen_Portal/; abDir: öffentliche Arbeitsblatt-PDFs
  */
-function createLehrkraftMaterial({ materialienDir, abDir, log = () => {} }) {
+function createLehrkraftMaterial({ materialienDir, abDir, demo = { schueler: new Set(), lehrkraft: new Set() }, log = () => {} }) {
   let verzeichnis = null;
   const datei = materialienDir && path.join(materialienDir, 'Lehrkraft_PDF', 'verzeichnis.json');
   if (datei && fs.existsSync(datei)) {
@@ -46,7 +46,11 @@ function createLehrkraftMaterial({ materialienDir, abDir, log = () => {} }) {
     art: e.art,
     titel: e.titel,
     ds: Array.isArray(e.ds) ? e.ds : [],
-    dateien: (e.dateien || []).map((d) => ({ label: d.label, url: link(d.pfad), lehrkraft: !String(d.pfad).startsWith(OEFFENTLICH) }))
+    dateien: (e.dateien || []).map((d) => {
+      const p = String(d.pfad);
+      const istDemo = p.startsWith(OEFFENTLICH) ? demo.schueler.has(p.slice(OEFFENTLICH.length)) : demo.lehrkraft.has(p);
+      return { label: d.label, url: link(d.pfad), lehrkraft: !p.startsWith(OEFFENTLICH), demo: istDemo };
+    })
   });
 
   const uebersicht = verzeichnis

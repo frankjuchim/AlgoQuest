@@ -38,13 +38,27 @@ test('Themenübersicht: öffentlich, alle Welten und Level, keine Lösungen/Erkl
   assert.ok(d.fallen.every((f) => f.anzahl > 0));
 });
 
-test('Arbeitsblatt-PDFs: werden ausgeliefert; Verzeichnisse, andere Dateien und Pfad-Tricks nicht', async () => {
-  const app = H.makeApp({ seedDir: SEED, weltDateien: [], arbeitsblaetterDir: PDF_DIR });
+test('Arbeitsblatt-PDFs: nur Demo-PDFs ohne Anmeldung, alle anderen für Schüler und Lehrkräfte; Pfad-Tricks nicht', async () => {
+  const sz = await H.szenario({ seedDir: SEED, weltDateien: [], arbeitsblaetterDir: PDF_DIR });
+  const app = sz.app;
   const d = (await request(app).get('/api/themen')).body;
   const url = d.welten[4].arbeitsblaetter[0].url;
-  const r = await request(app).get(url).expect(200);
-  assert.equal(r.headers['content-type'], 'application/pdf');
-  assert.equal(r.body.subarray(0, 5).toString(), '%PDF-');
+  assert.equal(d.welten[4].arbeitsblaetter[0].demo, false);
+  const g = await request(app).get(url).expect(401);
+  assert.match(g.text, /Nur nach Anmeldung/);
+  for (const c of [sz.s, sz.lk]) {
+    const r = await c.get(url).expect(200);
+    assert.equal(r.headers['content-type'], 'application/pdf');
+    assert.equal(r.body.subarray(0, 5).toString(), '%PDF-');
+    assert.match(r.headers['cache-control'], /private/);
+  }
+  // Demo-PDFs (seed/demo_materialien.json): ohne Anmeldung
+  const demos = [d.werkzeugkarten, ...d.welten.flatMap((w) => [...w.arbeitsblaetter, ...(w.weitere || [])])].filter((a) => a.demo);
+  assert.deepEqual(demos.map((a) => a.url.split('/').pop()), ['AQ_Werkzeugkarten_Abi-Check_und_Notation.pdf', 'AQ_W0-AB1_Das_Portal_Notation_fuers_Abitur.pdf']);
+  for (const a of demos) await request(app).get(a.url).expect(200);
+  // Papier-Boss, Probeklausur, Warm-up-Karten: nur angemeldet
+  for (const x of d.welten.flatMap((w) => w.weitere || [])) await request(app).get(x.url).expect(401);
+  await request(app).get('/arbeitsblaetter/Welt_0_Akademie/gibt_es_nicht.pdf').expect(404);
   await request(app).get('/arbeitsblaetter/').expect(404);
   await request(app).get('/arbeitsblaetter/Welt_4_Hafen/').expect(404);
   await request(app).get('/arbeitsblaetter/..%2f..%2fpackage.json').expect(404);

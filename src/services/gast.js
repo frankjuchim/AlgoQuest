@@ -176,11 +176,12 @@ function createGast(ctx, { datei, inhalte, material, log = () => {} }) {
       welten: welten.filter((w) => w.boss).slice(0, 2).map((w) => ({ nr: w.nr, titel: w.boss.titel })),
       zeilen: schuelerListe.map((s, i) => ({ name: s.name, werte: [i < 6 ? { punkte: 100 - i * 9, max: 120, versuche: 1 + (i % 2) } : null, i < 3 ? { punkte: 80 - i * 12, max: 140, versuche: 1 } : null] }))
     };
-    // Materialien: nur Titel und Art (Welt 0), keine Dateien
+    // Materialien: Titel und Art (Welt 0); Links nur für die Demo-Dateien (seed/demo_materialien.json)
     const m = material && material.uebersicht();
     const materialien = m
       ? {
-          welt0: (m.welten.find((w) => w.nr === 0) || { eintraege: [] }).eintraege.map((e) => ({ art: e.art, titel: e.titel, dateien: e.dateien.map((d) => ({ label: d.label, lehrkraft: d.lehrkraft })) })),
+          // Demo-Dateien mit Link, alle anderen nur als Titel
+          welt0: (m.welten.find((w) => w.nr === 0) || { eintraege: [] }).eintraege.map((e) => ({ art: e.art, titel: e.titel, dateien: e.dateien.map((d) => ({ label: d.label, lehrkraft: d.lehrkraft, url: d.demo ? d.url : null })) })),
           weitere: m.welten.filter((w) => w.nr !== 0).reduce((s, w) => s + w.eintraege.length, 0)
         }
       : { welt0: [], weitere: 0 };

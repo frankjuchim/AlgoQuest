@@ -1,0 +1,11 @@
+{
+ "_hinweis": "Einzige PDFs, die ohne Anmeldung (Gastmodus /gast, Themenseite) abrufbar sind. Alle übrigen Schülerfassungen (/arbeitsblaetter/…) nur nach Anmeldung als Schüler oder Lehrkraft, Lehrkraft-Dateien (/lehrkraft/dateien/…) nur als Lehrkraft. Nie Lösungen oder Erwartungshorizonte eintragen. Pfade: schueler relativ zu materialien/Arbeitsblaetter_PDF, lehrkraft relativ zu materialien/.",
+ "schueler": [
+  "Welt_0_Akademie/AQ_W0-AB1_Das_Portal_Notation_fuers_Abitur.pdf",
+  "00_Werkzeugkarten/AQ_Werkzeugkarten_Abi-Check_und_Notation.pdf"
+ ],
+ "lehrkraft": [
+  "Lehrkraft_PDF/Welt_0_Akademie/AQ_W0-Praesentation_Kickoff.pdf",
+  "Lehrkraft_PDF/Welt_0_Akademie/AQ_W0-Lehrerhinweise.pdf"
+ ]
+}

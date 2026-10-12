@@ -56,6 +56,22 @@
 
   /* ---------- Schüler ---------- */
 
+  /** Beispiel-PDFs für Schüler (nur die Demo-PDFs sind ohne Anmeldung abrufbar) */
+  function demoPdfs(themen) {
+    if (!themen) return null;
+    const liste = [];
+    if (themen.werkzeugkarten && themen.werkzeugkarten.demo && themen.werkzeugkarten.url) liste.push({ titel: themen.werkzeugkarten.titel, url: themen.werkzeugkarten.url });
+    for (const w of themen.welten) for (const a of [...w.arbeitsblaetter, ...(w.weitere || [])]) if (a.demo && a.url) liste.push({ titel: a.nr ? `Welt ${w.nr} · AB ${a.nr}: ${a.titel}` : a.titel, url: a.url });
+    if (!liste.length) return null;
+    return h(
+      'section',
+      { class: 'card' },
+      h('h2', null, '📄 Beispiel-Arbeitsblätter (PDF)'),
+      h('p', { class: 'small muted' }, 'So sehen die Arbeitsblätter aus. Alle weiteren Arbeitsblätter, Papier-Bosse und Warm-up-Karten gibt es nach der Anmeldung im Lab.'),
+      h('ul', { class: 'ab-liste' }, liste.map((x) => h('li', null, h('a', { class: 'pdf', href: x.url, target: '_blank', rel: 'noopener' }, x.titel))))
+    );
+  }
+
   async function schueler() {
     try {
       const [d, themen] = await Promise.all([api('GET', '/api/gast/schueler'), api('GET', '/api/themen').catch(() => null)]);
@@ -77,6 +93,7 @@
             )
           )
         ),
+        demoPdfs(themen),
         welten.length
           ? h(
               'section',
@@ -251,11 +268,11 @@
         'section',
         { class: 'card' },
         h('h2', null, '📂 Materialien – Beispiel Welt 0'),
-        h('p', { class: 'small muted' }, 'Im echten Lehrkraft-Bereich stehen hier zu jeder Welt alle Dateien als PDF bereit. Im Gastmodus siehst du nur die Titel.'),
+        h('p', { class: 'small muted' }, 'Im echten Lehrkraft-Bereich stehen hier zu jeder Welt alle Dateien als PDF bereit. Im Gastmodus kannst du einzelne Beispiele öffnen (Kickoff-Präsentation, Lehrerhinweise Welt 0, Arbeitsblatt „Das Portal“); alles andere erscheint nur als Titel.'),
         m.welt0.length
-          ? h('div', { class: 'scroll-x' }, h('table', { class: 'liste material' }, h('thead', null, h('tr', null, h('th', null, 'Material'), h('th', null, 'PDF'))), h('tbody', null, m.welt0.map((e) => h('tr', null, h('td', null, `${SYMBOL[e.art] || '📄'} `, e.titel), h('td', null, h('div', { class: 'btn-row' }, e.dateien.map((x) => gesperrt((x.lehrkraft ? '🔒 ' : '') + x.label)))))))))
+          ? h('div', { class: 'scroll-x' }, h('table', { class: 'liste material' }, h('thead', null, h('tr', null, h('th', null, 'Material'), h('th', null, 'PDF'))), h('tbody', null, m.welt0.map((e) => h('tr', null, h('td', null, `${SYMBOL[e.art] || '📄'} `, e.titel), h('td', null, h('div', { class: 'btn-row' }, e.dateien.map((x) => (x.url ? h('a', { class: 'btn small secondary', href: x.url, target: '_blank', rel: 'noopener' }, '📄 ' + x.label) : gesperrt('🔒 ' + x.label))))))))))
           : h('p', { class: 'muted' }, 'Keine Materialien hinterlegt.'),
-        m.weitere ? h('p', { class: 'hint' }, `… und ${m.weitere} weitere Einträge für die Welten 1–6 (Arbeitsblätter mit Lösungen, Präsentationen, Lehrerhinweise, Bosse mit Erwartungshorizont, Probeklausur und Klausuren). Die Schülerfassungen der Arbeitsblätter sind öffentlich auf der Themenseite.`) : null
+        m.weitere ? h('p', { class: 'hint' }, `… und ${m.weitere} weitere Einträge für die Welten 1–6 (Arbeitsblätter mit Lösungen, Präsentationen, Lehrerhinweise, Bosse mit Erwartungshorizont, Probeklausur und Klausuren). Nach der Anmeldung als Lehrkraft sind alle Dateien abrufbar.`) : null
       )
     );
   }

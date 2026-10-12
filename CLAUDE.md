@@ -32,6 +32,7 @@ public/              Oberfläche: spiel.html (Schüler), lehrer.html (Lehrkraft 
 seed/welten/         welt0–6.json = Lab-Aufgaben (Format: docs/AUFGABENFORMAT.md) – maßgeblich, nicht neu generieren
 seed/warmup/         Warm-up-Karten (Leitner-Trainer), {"version":1,"karten":[…]}
 seed/gast/demo.json  Demo-Aufgaben des Gastmodus /gast (Welt 8, eigene Aufgaben – nie echte; nicht in der Datenbank)
+seed/demo_materialien.json  einzige PDFs ohne Anmeldung (Gastmodus): je zwei Schüler- und Lehrkraft-Dateien
 scripts/validate.js  Inhalts-Validator
 test/                node:test + supertest; fixtures/welt_beispiel.json (jede Interaktion/jeder Block); e2e/e2e.js (Playwright)
 docs/                AUFGABENFORMAT.md (verbindlich), Screenshots
@@ -152,12 +153,12 @@ P9 Struktogramm nicht nach EH §5 · P10 Operator verfehlt.
 - Nach jeder Änderung an einem Arbeitsblatt (`2_Arbeitsblaetter/*.docx`, Werkzeugkarten): `npm run arbeitsblaetter`
   und die PDFs mitcommitten. Neue Arbeitsblätter in `seed/arbeitsblaetter.json` eintragen (Titel, DS, Dateiname
   `AQ_W<n>-AB<k>_<Thema>.pdf` ohne Umlaute); das Feld `ab` der Level muss mit „AB <k>“ bzw. „AB W<n>·<k>“ beginnen.
-  Der PDF-Ordner ist öffentlich abrufbar: Arbeitsblätter, Werkzeugkarten, Papier-Bosse W0–W5 und die Probeklausur
-  (Entscheidung der Lehrkraft) sowie Warm-up-Karten nur ohne Lösungsteil (`ohneLoesungsteil`) – nie Lösungen,
-  Erwartungshorizonte, Klausur oder Nachschreibklausur (Test in `test/themen.test.js` wacht darüber).
+  Der PDF-Ordner (Schülerfassungen: Arbeitsblätter, Werkzeugkarten, Papier-Bosse W0–W5, Probeklausur, Warm-up-Karten nur
+  ohne Lösungsteil `ohneLoesungsteil`) ist **nur nach Anmeldung** (Schüler oder Lehrkraft) abrufbar – nie Lösungen,
+  Erwartungshorizonte, Klausur oder Nachschreibklausur (Test in `test/themen.test.js`). **Ohne Anmeldung nur die
+  Demo-PDFs aus `seed/demo_materialien.json`** (Gastmodus; einzelne Schüler- und Lehrkraft-Dateien, nie Lösungen).
 - Nach jeder Änderung an einer Lösung (`5_Loesungen/*.docx`) oder einem Warm-up-Lösungsteil: `npm run loesungen`.
-  Lösungs-PDFs liegen nur in `Loesungen_Portal`/`Loesungen_Arbeitsblaetter` – nie in `Arbeitsblaetter_PDF`
-  (öffentlich). Ins Image kommen nur `Loesungen_Portal` und `Lehrkraft_PDF` (nach `./materialien/`), ausgeliefert
+  Lösungs-PDFs liegen nur in `Loesungen_Portal`/`Loesungen_Arbeitsblaetter` – nie in `Arbeitsblaetter_PDF`. Ins Image kommen nur `Loesungen_Portal` und `Lehrkraft_PDF` (nach `./materialien/`), ausgeliefert
   ausschließlich an angemeldete Lehrkräfte und nur Dateien aus `Lehrkraft_PDF/verzeichnis.json` (sonst 404;
   Tests: `test/lehrkraft_material.test.js`, `test/themen.test.js`).
 - Nach Änderungen an Präsentationen (`1_Praesentation/*.pptx`), Lehrerhinweisen, Klausuren oder an
@@ -187,7 +188,7 @@ P9 Struktogramm nicht nach EH §5 · P10 Operator verfehlt.
   docs/AUFGABENFORMAT.md §6.10).
 - Scoreboards (Beamer-Board, Lehrkraft- und Schüleransicht) aktualisieren sich alle 20 s selbst.
 - Gastmodus `/gast` (ohne Anmeldung): Schüler = nur Demo-Aufgaben aus `seed/gast/demo.json`, nichts wird gespeichert;
-  Lehrkraft = erfundener Demo-Kurs, nur lesend, Materialien nur als Titel. Nie echte Aufgaben, Lösungen oder Dateien
+  Lehrkraft = erfundener Demo-Kurs, nur lesend, Materialien als Titel (verlinkt nur die Demo-PDFs aus `seed/demo_materialien.json`). Nie echte Aufgaben, Lösungen oder Dateien
   über die Gast-API (`test/gast.test.js`).
 
 ### Plattform-Verbund InfoLabs (README Teil H)

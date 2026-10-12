@@ -91,3 +91,20 @@ test('verzeichnis.json: nur Lehrkraft_PDF, Loesungen_Portal und Arbeitsblaetter_
     assert.ok(fs.existsSync(path.join(MAT, p)), `fehlt: ${p} (npm run lehrkraft)`);
   }
 });
+
+test('Demo-Dateien (seed/demo_materialien.json): ohne Anmeldung abrufbar, alle anderen Lehrkraft-Dateien nicht', async () => {
+  const { app, s } = await H.szenario(opts);
+  const demo = JSON.parse(require('node:fs').readFileSync(require('node:path').join(__dirname, '..', 'seed', 'demo_materialien.json'), 'utf8'));
+  assert.ok(demo.lehrkraft.length >= 1 && demo.lehrkraft.length <= 4, 'nur einzelne Demo-Dateien');
+  for (const rel of [...demo.lehrkraft, ...demo.schueler]) assert.ok(!/loesung|erwartungshorizont|klausur/i.test(rel), `keine Lösungen/Klausuren als Demo: ${rel}`);
+  for (const rel of demo.lehrkraft) {
+    const r = await request(app).get('/lehrkraft/dateien/' + rel.split('/').map(encodeURIComponent).join('/')).expect(200);
+    assert.equal(r.headers['content-type'], 'application/pdf');
+  }
+  // andere Präsentationen/Lehrerhinweise: Gäste und Schüler 404
+  for (const rel of ['Lehrkraft_PDF/Welt_0_Akademie/AQ_W0-Praesentation_Akademie.pdf', 'Lehrkraft_PDF/Welt_1_Heldenschmiede/AQ_W1-Lehrerhinweise.pdf']) {
+    const u = '/lehrkraft/dateien/' + rel.split('/').map(encodeURIComponent).join('/');
+    await request(app).get(u).expect(404);
+    await s.get(u).expect(404);
+  }
+});

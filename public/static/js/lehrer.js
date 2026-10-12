@@ -603,7 +603,7 @@
   function materialTabelle(eintraege) {
     const knopf = (d) =>
       d.url
-        ? h('a', { class: 'btn small ' + (d.lehrkraft ? '' : 'secondary'), href: d.url, target: '_blank', rel: 'noopener', title: d.lehrkraft ? 'nur für Lehrkräfte' : 'Schülerfassung (öffentlich auf /themen)' }, (d.lehrkraft ? '🔒 ' : '') + d.label)
+        ? h('a', { class: 'btn small ' + (d.lehrkraft ? '' : 'secondary'), href: d.url, target: '_blank', rel: 'noopener', title: d.lehrkraft ? 'nur für Lehrkräfte' : 'Schülerfassung (für angemeldete Schüler auf /themen)' }, (d.lehrkraft ? '🔒 ' : '') + d.label)
         : h('span', { class: 'small muted' }, `${d.label}: fehlt`);
     return h(
       'div',
@@ -624,7 +624,7 @@
       seite(
         'materialien',
         h('h1', null, '📂 Materialien für Lehrkräfte'),
-        h('p', { class: 'muted' }, 'Lösungen, Erwartungshorizonte, Präsentationen, Lehrerhinweise und Klausuren als PDF – sortiert nach Welten. 🔒 = nur für angemeldete Lehrkräfte; die Schülerfassungen sind zusätzlich öffentlich auf der Themenseite.'),
+        h('p', { class: 'muted' }, 'Lösungen, Erwartungshorizonte, Präsentationen, Lehrerhinweise und Klausuren als PDF – sortiert nach Welten. 🔒 = nur für angemeldete Lehrkräfte; die Schülerfassungen finden angemeldete Schüler zusätzlich auf der Themenseite.'),
         h('p', { class: 'callout warn' }, h('strong', null, 'Bitte nicht an Schülerinnen und Schüler weitergeben: '), 'Die 🔒-Dateien enthalten Lösungen bzw. Klausuren.'),
         !m.welten.length ? h('p', { class: 'callout' }, 'Auf diesem Server sind keine Materialien hinterlegt.') : null,
         m.allgemein.length ? h('section', { class: 'card' }, h('h2', null, 'Allgemein'), materialTabelle(m.allgemein)) : null,

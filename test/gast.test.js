@@ -62,7 +62,7 @@ test('Gastmodus gibt keine echten Lab-Aufgaben heraus', async () => {
   }
 });
 
-test('Gast-Lehrkraft: erfundener Demo-Kurs, nur lesend, keine Download-Links und keine echten Codes', async () => {
+test('Gast-Lehrkraft: erfundener Demo-Kurs, nur lesend, Download-Links nur auf Demo-Dateien, keine echten Codes', async () => {
   const app = H.makeApp(opts);
   const c = H.client(app);
   const d = (await c.get('/api/gast/lehrkraft').expect(200)).body;
@@ -72,7 +72,10 @@ test('Gast-Lehrkraft: erfundener Demo-Kurs, nur lesend, keine Download-Links und
   assert.ok(d.levels.length > 0 && d.matrix.zeilen.every((z) => z.werte.length === d.levels.length));
   assert.equal(d.fallen.length, 10);
   const text = JSON.stringify(d);
-  assert.ok(!text.includes('/lehrkraft/dateien') && !text.includes('/arbeitsblaetter/') && !text.includes('"url"'), 'keine Links auf Dateien');
+  // Links nur auf die Demo-Dateien (seed/demo_materialien.json) – nie Lösungen
+  const links = [...text.matchAll(/"url":"([^"]+)"/g)].map((m) => decodeURIComponent(m[1]));
+  assert.deepEqual(links.sort(), ['/arbeitsblaetter/Welt_0_Akademie/AQ_W0-AB1_Das_Portal_Notation_fuers_Abitur.pdf', '/lehrkraft/dateien/Lehrkraft_PDF/Welt_0_Akademie/AQ_W0-Lehrerhinweise.pdf', '/lehrkraft/dateien/Lehrkraft_PDF/Welt_0_Akademie/AQ_W0-Praesentation_Kickoff.pdf'].sort());
+  assert.ok(!/loesung|erwartungshorizont/i.test(links.join(' ')));
   assert.ok(!text.includes('"loesung"'), 'keine Lösungen');
   // Vorschau nur für Demo-Aufgaben (mit Lösung)
   const v = (await c.get('/api/gast/vorschau/W8-L1-04').expect(200)).body;

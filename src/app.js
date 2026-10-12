@@ -53,11 +53,14 @@ function createApp(opts) {
   svc.konten.sichereSuperadmin(opts.adminEmail || 'admin', opts.adminPassword || '');
   ladeInhalte(svc, opts, log);
   const abDir = arbeitsblaetterOrdner(opts);
+  // Ohne Anmeldung nur die Demo-PDFs aus seed/demo_materialien.json (Gastmodus, Themenseite)
+  const demo = ladeDemo(opts, log);
   const themen = createThemen(ctx, { inhalte: svc.inhalte }, {
     verzeichnis: ladeVerzeichnis(opts, log),
-    pdfVorhanden: (datei) => !!abDir && fs.existsSync(path.join(abDir, datei))
+    pdfVorhanden: (datei) => !!abDir && fs.existsSync(path.join(abDir, datei)),
+    demo: (datei) => demo.schueler.has(datei)
   });
-  const material = createLehrkraftMaterial({ materialienDir: materialienOrdner(opts), abDir, log });
+  const material = createLehrkraftMaterial({ materialienDir: materialienOrdner(opts), abDir, demo, log });
   const gast = createGast(ctx, { datei: gastDatei(opts), inhalte: svc.inhalte, material, log });
   const konfig = verbundKonfig(opts.umgebung || process.env, log);
   const manifest = createManifest({ inhalte: svc.inhalte, version: VERSION, konfig });
@@ -161,8 +164,27 @@ function createApp(opts) {
   app.use('/static', express.static(path.join(PUBLIC_DIR, 'static'), { maxAge: '1h', index: false }));
   // Arbeitsblätter (Schülerfassung, PDF) – nur .pdf, ohne Verzeichnislisten
   if (abDir) {
-    app.use('/arbeitsblaetter', (req, res, next) => (req.path.toLowerCase().endsWith('.pdf') ? next() : res.status(404).end()));
-    app.use('/arbeitsblaetter', express.static(abDir, { maxAge: '1h', index: false, dotfiles: 'deny' }));
+    app.use('/arbeitsblaetter', (req, res, next) => {
+      if (!req.path.toLowerCase().endsWith('.pdf')) return res.status(404).end();
+      let rel;
+      try {
+        rel = decodeURIComponent(req.path.replace(/^\//, ''));
+      } catch {
+        return res.status(404).end();
+      }
+      // nur vorhandene Dateien im Ordner (Pfad-Tricks und Fehlendes: 404, ohne die Anmeldung zu verraten)
+      const abs = path.resolve(abDir, rel);
+      if (!abs.startsWith(path.resolve(abDir) + path.sep) || !fs.existsSync(abs)) return res.status(404).end();
+      // Demo-PDFs öffentlich; alles andere nur für angemeldete Schüler und Lehrkräfte
+      if (demo.schueler.has(rel)) {
+        res.set('Cache-Control', 'public, max-age=3600');
+        return next();
+      }
+      if (!helpers.schueler(req) && !helpers.lehrkraft(req)) return nurMitAnmeldung(res);
+      res.set('Cache-Control', 'private, max-age=3600');
+      next();
+    });
+    app.use('/arbeitsblaetter', express.static(abDir, { index: false, dotfiles: 'deny', cacheControl: false }));
   }
 
   /* ---------- API ---------- */
@@ -205,7 +227,8 @@ function createApp(opts) {
   app.get(URL_LEHRKRAFT.replace(/\/$/, '') + '/*datei', (req, res) => {
     const l = helpers.lehrkraft(req);
     const rel = [].concat(req.params.datei).join('/');
-    const abs = l && !l.muss_pw_aendern ? material.datei(rel) : null;
+    // Lehrkraft-Dateien nur angemeldet – außer den wenigen Demo-Dateien des Gastmodus
+    const abs = (l && !l.muss_pw_aendern) || demo.lehrkraft.has(rel) ? material.datei(rel) : null;
     res.set('Cache-Control', 'private, no-store');
     if (!abs) return res.status(404).type('text').send('Nicht gefunden.');
     res.sendFile(abs);
@@ -238,6 +261,38 @@ function createApp(opts) {
   app.locals.services = svc;
   app.locals.ctx = ctx;
   return app;
+}
+
+/** Hinweisseite für PDFs, die nur nach Anmeldung abrufbar sind (401). */
+function nurMitAnmeldung(res) {
+  res
+    .status(401)
+    .type('html')
+    .send(
+      '<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">' +
+        '<title>Nur nach Anmeldung – Algo Quest Lab</title><link rel="stylesheet" href="/static/css/style.css"></head>' +
+        '<body><main class="narrow" id="haupt"><section class="card"><h1>🔒 Nur nach Anmeldung</h1>' +
+        '<p>Die Arbeitsblätter, Papier-Bosse und Warm-up-Karten stehen nach der Anmeldung im Lab zur Verfügung (Schüler und Lehrkräfte). Ohne Anmeldung zeigt der Gastmodus einige Beispiele.</p>' +
+        '<p class="btn-row"><a class="btn" href="/">Anmelden</a> <a class="btn secondary" href="/lehrer">Bereich für Lehrkräfte</a> <a class="btn secondary" href="/gast">👀 Gastmodus</a></p>' +
+        '</section></main></body></html>'
+    );
+}
+
+/** seedDir/demo_materialien.json: PDFs, die ohne Anmeldung abrufbar sind (sonst keine). */
+function ladeDemo(opts, log) {
+  const seedDir = opts.seedDir === undefined ? path.join(ROOT_DIR, 'seed') : opts.seedDir;
+  const kandidaten = [seedDir && path.join(seedDir, 'demo_materialien.json'), path.join(ROOT_DIR, 'seed', 'demo_materialien.json')];
+  const datei = kandidaten.find((d) => d && fs.existsSync(d));
+  const leer = { schueler: new Set(), lehrkraft: new Set() };
+  if (!datei) return leer;
+  try {
+    const d = JSON.parse(fs.readFileSync(datei, 'utf8'));
+    const ok = (x) => typeof x === 'string' && x.toLowerCase().endsWith('.pdf') && !x.includes('..') && !/loesung|erwartungshorizont/i.test(x);
+    return { schueler: new Set((d.schueler || []).filter(ok)), lehrkraft: new Set((d.lehrkraft || []).filter(ok)) };
+  } catch (e) {
+    log(`demo_materialien.json nicht lesbar: ${e.message}`);
+    return leer;
+  }
 }
 
 function arbeitsblaetterOrdner(opts) {
