@@ -458,7 +458,7 @@ Gastmodus. Angemeldet wird einmal am Portal (SSO mit Ed25519-JWT), das Portal ho
 |---|---|---|
 | 0 | Manifest `/api/plattform`, Vertragsprüfung, `AUTH_MODUS=lokal` | umgesetzt (2.5.0) |
 | 1 | SSO-Empfänger `/sso/start` + `/sso/ende`, Verbund-API, `AUTH_MODUS=beides`, Link „⌂ Portal“ | **umgesetzt (2.6.0)** |
-| 2 | Datenübernahme ins Portal (Backup → Import → Zuordnung), Lernstände auf `sub`/Kurs-ID umschreiben | offen |
+| 2 | Datenübernahme ins Portal (Backup → Import → Zuordnung), Lernstände auf `sub`/Kurs-ID umschreiben | **Zuordnung einspielen umgesetzt (2.6.2)**: Verwaltung → „Backup & Verbund“ |
 | 3 | `AUTH_MODUS=portal`: lokale Anmeldung und Registrierung aus (Sperre ist eingebaut, Superadmin vom Portal) | nach Phase 2 |
 
 ### H.2 Umsetzung (Dateien)
@@ -532,6 +532,18 @@ Details; kein Origin-Check, eigenes Rate-Limit.
    Healthcheck müssen grün sein), vorgeschlagene Rücksprung-Adresse `https://algoquest.frankjuchim.de/sso/ende`
    bestätigen, Lehrkräfte für Algo Quest freischalten.
 4. Kurs im Portal anlegen und Algo Quest freischalten → als Schüler „Weiter zu Algo Quest“ ausprobieren.
+
+### H.7a Datenübernahme (Phase 2)
+
+1. In Algo Quest (Verwaltung → „Backup & Verbund“) ein **Backup herunterladen** und im Portal importieren.
+2. Im Portal die **Zuordnung** (`verbund-zuordnung`, Vertrag §11) herunterladen und hier unter „⌂ Verbund InfoLabs:
+   Zuordnung einspielen“ erst im **Probelauf**, dann wirklich einspielen (`POST /api/admin/verbund/zuordnung
+   {zuordnung, probelauf}`, nur Superadmin).
+3. Wirkung: Lehrkräfte erhalten ihre `sub`, Kurse ihre Kurs-ID (Inhaberin bekommt Zugriff als Portal-Lehrkraft),
+   Schüler ihre `sub` – Lernstände bleiben an derselben Zeile. Schüler melden sich danach **nur noch über das Portal**
+   an (dort mit demselben Namen und Code; `neuerCode` steht in der Zuordnung). Der lokale Superadmin bleibt lokal.
+   Schon per SSO entstandene Doppel werden zusammengeführt (der bisherige Lernstand gewinnt). Mehrfaches Einspielen
+   ist unschädlich.
 
 ### H.8 Neue Plattformen
 

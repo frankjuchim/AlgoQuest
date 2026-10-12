@@ -663,7 +663,7 @@
     ['lehrkraefte', '👩‍🏫 Lehrkräfte & Anfragen'],
     ['inhalte', '📦 Inhalte'],
     ['kata', '🔥 Warm-up-Import'],
-    ['backup', '💾 Backup']
+    ['backup', '💾 Backup & Verbund']
   ];
 
   async function admin(tab = 'lehrkraefte') {
@@ -836,10 +836,43 @@
     );
   }
 
+  /** Verbund Phase 2: Zuordnung aus dem Portal (Download „Zuordnung“ im Portal) – erst Probelauf, dann einspielen */
+  function zuordnungKarte() {
+    const datei = h('input', { type: 'file', accept: '.json,application/json', 'aria-label': 'Zuordnungsdatei' });
+    const ergebnis = h('div');
+    const lauf = async (probelauf) => {
+      if (!datei.files[0]) return toast('Bitte die Zuordnungsdatei wählen.', true);
+      try {
+        const zuordnung = JSON.parse(await readFile(datei.files[0]));
+        if (!probelauf && !(await bestaetigen('Zuordnung einspielen?', 'Konten, Kurse und Schüler werden auf die Kennungen des Portals umgestellt. Schüler melden sich danach nur noch über das Portal an (gleicher Name und Code). Vorher ein Backup herunterladen!', { ok: 'Einspielen' }))) return;
+        const r = await api('POST', '/api/admin/verbund/zuordnung', { zuordnung, probelauf });
+        mount(
+          ergebnis,
+          h('div', { class: 'callout ' + (probelauf ? 'gold' : 'ok') },
+            h('p', null, h('strong', null, probelauf ? 'Probelauf (nichts geändert): ' : 'Eingespielt: '), `${r.lehrkraefte} Lehrkräfte, ${r.kurse} Kurse, ${r.schueler} Schüler umgestellt · ${r.zusammengefuehrt} zusammengeführt · ${r.unveraendert} schon aktuell.`),
+            r.hinweise.length ? h('ul', null, r.hinweise.map((t) => h('li', null, t))) : null,
+            r.uebersprungen.length ? h('p', null, h('strong', null, 'Übersprungen: '), r.uebersprungen.join(' · ')) : null
+          )
+        );
+      } catch (e) {
+        mount(ergebnis, h('p', { class: 'callout warn' }, e.message));
+      }
+    };
+    return h(
+      'section',
+      { class: 'card' },
+      h('h2', null, '⌂ Verbund InfoLabs: Zuordnung einspielen'),
+      h('p', { class: 'small muted' }, 'Nach der Datenübernahme im Portal (Backup hochladen → Import) dort die Zuordnung herunterladen und hier einspielen. Lernstände bleiben erhalten; Lehrkräfte und Schüler finden ihren Stand nach der Anmeldung über das Portal wieder. Mehrfaches Einspielen ist unschädlich.'),
+      h('div', { class: 'row' }, datei, h('button', { class: 'btn secondary', type: 'button', onclick: () => lauf(true) }, 'Probelauf'), h('button', { class: 'btn gold', type: 'button', onclick: () => lauf(false) }, 'Einspielen')),
+      ergebnis
+    );
+  }
+
   async function adminBackup(box) {
     const datei = h('input', { type: 'file', accept: '.json,application/json', 'aria-label': 'Backup-Datei' });
     mount(
       box,
+      zuordnungKarte(),
       h('section', { class: 'card' }, h('h2', null, 'Backup herunterladen'), h('p', { class: 'small muted' }, 'Vollständige Sicherung aller Tabellen als JSON (Konten, Kurse, Schüler, Lernstände, Inhalte, Warm-up-Karten).'), h('button', { class: 'btn', type: 'button', onclick: () => download('/api/admin/backup') }, '⬇ Backup (JSON)')),
       h(
         'section',

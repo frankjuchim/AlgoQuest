@@ -394,3 +394,60 @@ test('Konfiguration tolerant: Schlüssel mit Leerzeichen/Anführungszeichen/nur 
   assert.equal(verbundKonfig({ ...UMGEBUNG, PORTAL_PUBLIC_KEY: 'unsinn' }).sso, false);
   for (const u of ['https://portal.example.', 'https://portal.example/', ' https://portal.example ']) assert.equal(verbundKonfig({ ...UMGEBUNG, PORTAL_URL: u }).portal, PORTAL, u);
 });
+
+test('Phase 2: Zuordnung einspielen – Probelauf, Umstellung, Lernstand bleibt, Doppel aus SSO zusammengeführt, idempotent', async () => {
+  const sz = await H.szenario({ umgebung: UMGEBUNG });
+  const { app: a, admin, lk, kurs } = sz;
+  const db = a.locals.db;
+  const s2 = await H.schuelerClient(a, kurs.code, 'Tom K.');
+  const lena = db.prepare("SELECT * FROM schueler WHERE name = 'Lena S.'").get();
+  const tom = db.prepare("SELECT * FROM schueler WHERE name = 'Tom K.'").get();
+  db.prepare("INSERT INTO abzeichen (schueler_id, schluessel, at) VALUES (?, 'erste_schritte', '2026-10-01T10:00:00Z')").run(lena.id);
+  // Tom hat sich vorab schon über das Portal angemeldet → Doppel im SSO-Kurs k:1
+  await ssoAnmelden(a, { sub: 's:43', name: 'Tom K.', kurse: [{ id: 'k:1', name: 'LK Informatik 13', rolle: 'mitglied' }] });
+  assert.equal(db.prepare("SELECT COUNT(*) AS n FROM kurse WHERE portal_id = 'k:1'").get().n, 1);
+  const zuordnung = {
+    format: 'verbund-zuordnung', version: 1, quelle: 'algoquest', portal: PORTAL, erstellt: '2026-10-12T00:00:00Z',
+    lehrkraefte: [{ altId: 1, sub: 'a:1', art: 'superadmin' }, { altId: lk.lkId, sub: 'l:2', art: 'neu' }],
+    kurse: [{ altId: kurs.id, kursId: 'k:1', kurscode: kurs.code, art: 'neu' }],
+    schueler: [{ altId: lena.id, sub: 's:42', art: 'neu' }, { altId: tom.id, sub: 's:43', art: 'neu' }, { altId: 9999, sub: 's:44', art: 'neu' }]
+  };
+  // Prüfungen der Datei
+  assert.equal((await admin.post('/api/admin/verbund/zuordnung').send({ zuordnung: { ...zuordnung, quelle: 'andere' } })).status, 400);
+  assert.equal((await admin.post('/api/admin/verbund/zuordnung').send({ zuordnung: { ...zuordnung, portal: 'https://x.example' } })).status, 400);
+  assert.equal((await lk.post('/api/admin/verbund/zuordnung').send({ zuordnung })).status, 403);
+  // Probelauf ändert nichts
+  const p = (await admin.post('/api/admin/verbund/zuordnung').send({ zuordnung, probelauf: true }).expect(200)).body;
+  assert.equal(p.probelauf, true);
+  assert.equal(p.schueler, 2);
+  assert.equal(db.prepare('SELECT sub FROM schueler WHERE id = ?').get(lena.id).sub, null);
+  // Einspielen
+  const r = (await admin.post('/api/admin/verbund/zuordnung').send({ zuordnung, probelauf: false }).expect(200)).body;
+  assert.deepEqual([r.lehrkraefte, r.kurse, r.schueler], [1, 1, 2]);
+  assert.ok(r.zusammengefuehrt >= 1);
+  assert.ok(r.uebersprungen.some((t) => t.includes('9999')));
+  assert.ok(r.hinweise.some((t) => t.includes('Superadmin')));
+  assert.equal(db.prepare("SELECT COUNT(*) AS n FROM kurse WHERE portal_id = 'k:1'").get().n, 1);
+  assert.equal(db.prepare("SELECT portal_id FROM kurse WHERE id = ?").get(kurs.id).portal_id, 'k:1');
+  assert.equal(db.prepare("SELECT COUNT(*) AS n FROM schueler WHERE sub = 's:43'").get().n, 1);
+  assert.equal(db.prepare("SELECT id FROM schueler WHERE sub = 's:43'").get().id, tom.id);
+  // alte Sitzung endet, lokale Anmeldung mit Name + Code geht nicht mehr
+  assert.equal((await sz.s.get('/api/sitzung')).body.schueler, null);
+  assert.equal((await H.client(a).post('/api/schueler/anmelden').send({ name: 'Lena S.', code: sz.s.code })).status, 401);
+  // Anmeldung über das Portal landet auf der alten Zeile mit Lernstand
+  const { c } = await ssoAnmelden(a, { sub: 's:42', name: 'Lena S.', kurse: [{ id: 'k:1', name: 'LK Informatik 13', rolle: 'mitglied' }] });
+  assert.equal((await c.get('/api/sitzung')).body.schueler.kurs, 'LK Informatik 13');
+  assert.equal(db.prepare("SELECT COUNT(*) AS n FROM schueler WHERE sub = 's:42'").get().n, 1);
+  assert.equal((await c.get('/api/profil')).body.abzeichen.filter((x) => x.erhalten).length, 1);
+  // Lehrkraft über das Portal sieht ihren alten Kurs mit beiden Schülern
+  const { c: l } = await ssoAnmelden(a, { sub: 'l:2', rolle: 'lehrkraft', name: 'Frau Lehrer', kurse: [{ id: 'k:1', name: 'LK Informatik 13', rolle: 'lehrkraft' }] }, '/lehrer');
+  const kl = (await l.get('/api/lehrer/kurse')).body;
+  assert.deepEqual(kl.map((k) => [k.id, k.schueler]), [[kurs.id, 2]]);
+  assert.equal(db.prepare("SELECT COUNT(*) AS n FROM lehrkraefte WHERE sub = 'l:2'").get().n, 1);
+  // erneut einspielen: nichts mehr zu tun
+  const r2 = (await admin.post('/api/admin/verbund/zuordnung').send({ zuordnung, probelauf: false }).expect(200)).body;
+  assert.deepEqual([r2.lehrkraefte, r2.kurse, r2.schueler, r2.zusammengefuehrt], [0, 0, 0, 0]);
+  // lokaler Superadmin bleibt anmeldbar
+  await H.adminClient(a);
+  assert.ok(s2);
+});

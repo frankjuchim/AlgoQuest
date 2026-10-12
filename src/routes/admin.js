@@ -42,6 +42,12 @@ function adminRoutes(api, h) {
     res.json({ ok: true, counts });
   });
 
+  // Verbund Phase 2: Zuordnung aus dem Portal einspielen ({ zuordnung, probelauf })
+  r.post('/verbund/zuordnung', (req, res) => {
+    const b = req.body || {};
+    res.json(svc.verbund.zuordnungEinspielen(b.zuordnung, { plattformId: h.konfig.id, portal: h.konfig.portal, probelauf: b.probelauf !== false }));
+  });
+
   r.get('/katas', (req, res) => res.json(svc.kata.liste({ welt: req.query.welt, kategorie: req.query.kategorie })));
   r.post('/katas/import', (req, res) => res.json(svc.kata.importieren(req.body)));
   r.delete('/katas/:kataId', (req, res) => {

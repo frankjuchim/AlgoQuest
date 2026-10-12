@@ -223,7 +223,121 @@ function createVerbund(ctx, { kurse, stand, inhalte }) {
     return { ok: true };
   }
 
-  return { pruefeInhalt, lehrkraftAnmelden, schuelerAnmelden, kurseVon, kursWechseln, loeschen, uebersicht, kursAendern };
+  /* ---------- Phase 2: Zuordnung des Portals einspielen (Vertrag §11) ---------- */
+
+  /**
+   * Zuordnung { format: 'verbund-zuordnung', version: 1, quelle, portal, lehrkraefte, kurse, schueler } übernehmen:
+   * lokale Konten/Kurse/Schüler erhalten sub bzw. Kurs-ID; Lernstände bleiben. Idempotent. probelauf = nichts schreiben.
+   * Der lokale Superadmin (art „superadmin“) bleibt lokal (ADMIN_PASSWORD); als Superadmin des Portals sieht man ohnehin alle Kurse.
+   * Schon per SSO entstandene Doppel (gleiche sub bzw. Kurs-ID) werden zusammengeführt – die alte Zeile mit Lernstand bleibt.
+   */
+  function zuordnungEinspielen(z, { plattformId, portal, probelauf = false }) {
+    if (!z || z.format !== 'verbund-zuordnung' || z.version !== 1) throw new V.ValidationError('Keine Zuordnungsdatei (erwartet format „verbund-zuordnung“, version 1).');
+    if (z.quelle !== plattformId) throw new V.ValidationError(`Die Zuordnung gehört zu „${z.quelle}“, nicht zu „${plattformId}“.`);
+    if (portal && z.portal !== portal) throw new V.ValidationError(`Die Zuordnung stammt von ${z.portal}, konfiguriert ist ${portal}.`);
+    const liste = (x, name) => {
+      if (x === undefined) return [];
+      if (!Array.isArray(x) || x.length > 20000) throw new V.ValidationError(`${name} muss eine Liste sein.`);
+      return x;
+    };
+    const lk = liste(z.lehrkraefte, 'lehrkraefte');
+    const ku = liste(z.kurse, 'kurse');
+    const sc = liste(z.schueler, 'schueler');
+    const ganz = (v) => Number.isInteger(v) && v > 0;
+    for (const x of lk) if (!x || !ganz(x.altId) || typeof x.sub !== 'string' || !SUB.test(x.sub)) throw new V.ValidationError('Ungültiger Eintrag in lehrkraefte.');
+    for (const x of ku) if (!x || !ganz(x.altId) || typeof x.kursId !== 'string' || !KURS_ID.test(x.kursId)) throw new V.ValidationError('Ungültiger Eintrag in kurse.');
+    for (const x of sc) if (!x || !ganz(x.altId) || typeof x.sub !== 'string' || !/^s:\d{1,15}$/.test(x.sub)) throw new V.ValidationError('Ungültiger Eintrag in schueler.');
+
+    const bericht = { probelauf, lehrkraefte: 0, kurse: 0, schueler: 0, zusammengefuehrt: 0, unveraendert: 0, uebersprungen: [], hinweise: [] };
+    const lauf = db.transaction(() => {
+      // Lehrkräfte
+      for (const x of lk) {
+        const r = db.prepare('SELECT * FROM lehrkraefte WHERE id = ?').get(x.altId);
+        if (!r) {
+          bericht.uebersprungen.push(`Lehrkraft ${x.altId}: nicht gefunden`);
+          continue;
+        }
+        if (x.art === 'superadmin' || (r.rolle === 'superadmin' && !r.sub)) {
+          bericht.hinweise.push(`Lehrkraft ${x.altId}: lokaler Superadmin bleibt lokal (Anmeldung mit ADMIN_PASSWORD weiterhin möglich); als ${x.sub} sehen Sie über das Portal alle Kurse.`);
+          continue;
+        }
+        if (r.sub === x.sub) {
+          bericht.unveraendert++;
+          continue;
+        }
+        const doppel = db.prepare('SELECT * FROM lehrkraefte WHERE sub = ? AND id != ?').get(x.sub, r.id);
+        if (doppel) {
+          db.prepare('INSERT OR IGNORE INTO kurs_lehrkraefte (kurs_id, lehrkraft_id) SELECT kurs_id, ? FROM kurs_lehrkraefte WHERE lehrkraft_id = ?').run(r.id, doppel.id);
+          db.prepare('DELETE FROM lehrkraefte WHERE id = ?').run(doppel.id);
+          bericht.zusammengefuehrt++;
+        }
+        db.prepare("UPDATE lehrkraefte SET sub = ?, status = 'aktiv', muss_pw_aendern = 0 WHERE id = ?").run(x.sub, r.id);
+        bericht.lehrkraefte++;
+      }
+      // Kurse
+      for (const x of ku) {
+        const r = db.prepare('SELECT * FROM kurse WHERE id = ?').get(x.altId);
+        if (!r) {
+          bericht.uebersprungen.push(`Kurs ${x.altId}: nicht gefunden`);
+          continue;
+        }
+        const doppel = db.prepare('SELECT * FROM kurse WHERE portal_id = ? AND id != ?').get(x.kursId, r.id);
+        if (doppel) {
+          // per SSO angelegter Kurs: Lehrkräfte und Schüler (ohne Doppel) übernehmen, dann entfernen
+          db.prepare('INSERT OR IGNORE INTO kurs_lehrkraefte (kurs_id, lehrkraft_id) SELECT ?, lehrkraft_id FROM kurs_lehrkraefte WHERE kurs_id = ?').run(r.id, doppel.id);
+          const neueSubs = new Set(sc.map((s) => s.sub));
+          for (const s of db.prepare('SELECT * FROM schueler WHERE kurs_id = ?').all(doppel.id)) {
+            const altZeile = sc.find((q) => q.sub === s.sub);
+            if (s.sub && neueSubs.has(s.sub) && altZeile && db.prepare('SELECT 1 FROM schueler WHERE id = ? AND kurs_id = ?').get(altZeile.altId, r.id)) {
+              bericht.hinweise.push(`${s.sub}: neue Portal-Zeile in ${x.kursId} verworfen, der bisherige Lernstand bleibt.`);
+              continue; // wird mit dem Kurs gelöscht
+            }
+            const n = freierName(r.id, s.name, s.name_key, null);
+            db.prepare('UPDATE schueler SET kurs_id = ?, name = ?, name_key = ? WHERE id = ?').run(r.id, n.name, n.key, s.id);
+          }
+          db.prepare('DELETE FROM kurse WHERE id = ?').run(doppel.id);
+          bericht.zusammengefuehrt++;
+        }
+        if (r.portal_id === x.kursId) bericht.unveraendert++;
+        else {
+          db.prepare('UPDATE kurse SET portal_id = ?, aktiv = 1 WHERE id = ?').run(x.kursId, r.id);
+          bericht.kurse++;
+        }
+        // Inhaberin bekommt Zugriff als Portal-Lehrkraft (falls ihr Konto eine sub hat)
+        const owner = db.prepare('SELECT * FROM lehrkraefte WHERE id = ?').get(r.lehrkraft_id);
+        if (owner && owner.sub && owner.sub !== 'portal') db.prepare('INSERT OR IGNORE INTO kurs_lehrkraefte (kurs_id, lehrkraft_id) VALUES (?, ?)').run(r.id, owner.id);
+      }
+      // Schüler
+      for (const x of sc) {
+        const r = db.prepare('SELECT * FROM schueler WHERE id = ?').get(x.altId);
+        if (!r) {
+          bericht.uebersprungen.push(`Schüler ${x.altId}: nicht gefunden`);
+          continue;
+        }
+        if (r.sub === x.sub) {
+          bericht.unveraendert++;
+          continue;
+        }
+        const doppel = db.prepare('SELECT id FROM schueler WHERE kurs_id = ? AND sub = ? AND id != ?').get(r.kurs_id, x.sub, r.id);
+        if (doppel) {
+          db.prepare('DELETE FROM schueler WHERE id = ?').run(doppel.id);
+          bericht.zusammengefuehrt++;
+        }
+        // neue Sitzung erzwingen: Anmeldung ab jetzt über das Portal
+        db.prepare('UPDATE schueler SET sub = ?, zugang = 1, session_gen = session_gen + 1 WHERE id = ?').run(x.sub, r.id);
+        bericht.schueler++;
+      }
+      if (probelauf) throw Object.assign(new Error('probelauf'), { probelauf: true });
+    });
+    try {
+      lauf();
+    } catch (e) {
+      if (!e.probelauf) throw e;
+    }
+    return bericht;
+  }
+
+  return { zuordnungEinspielen, pruefeInhalt, lehrkraftAnmelden, schuelerAnmelden, kurseVon, kursWechseln, loeschen, uebersicht, kursAendern };
 }
 
 module.exports = { createVerbund, SUB, KURS_ID };
