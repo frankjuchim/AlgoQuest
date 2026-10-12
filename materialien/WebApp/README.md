@@ -9,7 +9,7 @@ Dieses Dokument hat drei Aufgaben:
 2. Es ist die **Blaupause** für vergleichbare Plattformen zu den übrigen Themen der Informatik-Oberstufe mit anderen
    Sachkontexten. Teil G richtet sich ausdrücklich an neue Claude-Chats, die eine solche Plattform aufbauen sollen.
 3. Es beschreibt die **Anbindung an den Plattform-Verbund InfoLabs** (Teil H): gemeinsames Login über das Portal
-   https://labs.frankjuchim.de (SSO), Verbund-API, Plattform-Manifest. Der Vertrag selbst (v1.1) liegt im Repo
+   https://labs.frankjuchim.de (SSO), Verbund-API, Plattform-Manifest. Der Vertrag selbst (v1.2) liegt im Repo
    `frankjuchim/labs` (`VERTRAG.md`) und ist für alle Plattformen verbindlich.
 
 Live: **https://algoquest.frankjuchim.de** · Themenübersicht ohne Anmeldung: `/themen` · Gastmodus zum Reinschnuppern: `/gast`
@@ -260,6 +260,8 @@ Maßstab ist das Kerncurriculum Informatik (2017), Lernfeld „Algorithmen und D
 | `plus` – über den Kern hinaus | Backtracking, Entscheidungsbaum/Level-Order, verkettete Knoten | Level 3.4, 5.3, Kür W4 |
 
 - **Daten:** Feld `niveau` an Level, Boss und abweichenden Aufgaben (`docs/AUFGABENFORMAT.md` §2); Test `test/niveau.test.js`.
+- **Niveau-Übersicht** (ohne Anmeldung): `/themen#niveaus` – Tabelle je Welt „gA und eA · nur eA · Zusatz“; im Manifest als
+  `urls.niveaus`, `niveaus: ["eA", "gA"]` (Vertrag v1.2 §7, §9) – das Portal zeigt den Link auf der Plattform-Karte.
 - **Lab:** Etiketten „LK“ / „+“ auf der Weltkarte, „nur Leistungskurs (eA)“ bzw. „Zusatz“ an Level und Aufgaben, Legende auf
   `/themen`. Kurseinstellung **Kursart**: Im Grundkurs heißt es „im Grundkurs freiwillig“, Online-Bosse ziehen nur
   Aufgaben mit Niveau `alle` (sofern genug im Pool); reine LK-Welten (3, 5) wählt die Lehrkraft ab.
@@ -448,7 +450,7 @@ Niedersachsen, Abitur ab <Jahr>, <Anzahl> Doppelstunden. Sachkontext: <Idee oder
 Programmierumgebung/Werkzeuge: <z. B. SQLite im Browser / Online-IDE / Automaten-Simulator>.
 
 Schritt 1: Lies README (Teil A–H), CLAUDE.md, docs/AUFGABENFORMAT.md, den Verbundvertrag
-https://github.com/frankjuchim/labs/blob/main/VERTRAG.md (v1.1, verbindlich) mit docs/INTEGRATION.md und
+https://github.com/frankjuchim/labs/blob/main/VERTRAG.md (v1.2, verbindlich) mit docs/INTEGRATION.md und
 quellen/specs/SPEC_AlgoQuest_W4.md.
 Schritt 2: Schlage Welten (mit Kompetenzen nach KC/EH und DS-Verteilung), Fallen-Liste P1–P10 und den Sachkontext vor
 und frage nach, bevor du etwas baust.
@@ -465,7 +467,7 @@ Vertrag von Anfang an (wie Algo Quest Teil H), Anmeldung über das Portal InfoLa
 ## H. Der Plattform-Verbund InfoLabs
 
 > **Verbindlich ist der Vertrag des Plattform-Verbunds:**
-> https://github.com/frankjuchim/labs/blob/main/VERTRAG.md (**Version 1.1**). Er hat diesen Teil H (Fassung v1.0)
+> https://github.com/frankjuchim/labs/blob/main/VERTRAG.md (**Version 1.2**). Er hat diesen Teil H (Fassung v1.0)
 > abgelöst; die Abschnittsnummern sind gleich geblieben (**Vertrag §n = früher H.n**). Anschlussanleitung:
 > `docs/INTEGRATION.md` im Repo `frankjuchim/labs`. Änderungen am Zusammenspiel werden **nur dort** gemacht
 > (neue Vertragsversion, Eintrag in §14) – nie still in einer Plattform.
@@ -490,7 +492,7 @@ Gastmodus. Angemeldet wird einmal am Portal (SSO mit Ed25519-JWT), das Portal ho
 | `src/jwt.js` | Token prüfen (Ed25519, iss, aud, Zeit, `v`), `JtiSpeicher` – **unverändert aus `frankjuchim/labs`** |
 | `scripts/vertrag_pruefen.js` | Vertragsprüfung einer laufenden Plattform – **unverändert aus `frankjuchim/labs`** |
 | `src/verbundKonfig.js` | Umgebungsvariablen (H.4); SSO ist nur aktiv bei `AUTH_MODUS` `beides`/`portal` **und** gültigem `PORTAL_URL` + `PORTAL_PUBLIC_KEY` |
-| `src/services/manifest.js` | Manifest (Vertrag §7): `vertrag 1.1`, `urls.ssoStart`/`ssoEnde`, `auth {modus, portal, sso}` |
+| `src/services/manifest.js` | Manifest (Vertrag §7): `vertrag 1.2`, `kurs` (eA und gA), `niveaus`, `urls.ssoStart`/`ssoEnde`/`niveaus` (`/themen#niveaus`), `auth {modus, portal, sso}` |
 | `src/routes/sso.js` | `/sso/start`, `/sso/ende`, `/sso/abmelden`, stille Neuanmeldung, Verbund-API `/api/verbund/…` |
 | `src/services/verbund.js` | Konten und Kurse aus dem Token abgleichen, Kurswechsel, Löschen, Kursübersicht, Kurs umbenennen/sperren |
 | `test/sso.test.js`, `test/verbund.test.js` | alle Testfälle aus `docs/INTEGRATION.md` §5, Manifest, Datenbank-Upgrade |
@@ -549,7 +551,7 @@ Details; kein Origin-Check, eigenes Rate-Limit.
 ### H.7 Eintragen im Portal
 
 1. In CapRover die Variablen aus H.4 setzen und speichern (Neustart).
-2. `node scripts/vertrag_pruefen.js https://algoquest.frankjuchim.de` → „erfüllt Vertrag v1.1 … Anmeldung: beides“.
+2. `node scripts/vertrag_pruefen.js https://algoquest.frankjuchim.de` → „erfüllt Vertrag v1.2 … Anmeldung: beides“.
 3. Im Portal als Superadmin: **Plattformen → Basis-URL `https://algoquest.frankjuchim.de` eintragen** (Manifest und
    Healthcheck müssen grün sein), vorgeschlagene Rücksprung-Adresse `https://algoquest.frankjuchim.de/sso/ende`
    bestätigen, Lehrkräfte für Algo Quest freischalten.

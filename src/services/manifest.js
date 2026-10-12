@@ -1,15 +1,17 @@
 'use strict';
-// Plattform-Manifest nach dem Verbundvertrag (VERTRAG.md v1.1 im Repo frankjuchim/labs, §7): öffentlich unter
+// Plattform-Manifest nach dem Verbundvertrag (VERTRAG.md v1.2 im Repo frankjuchim/labs, §7): öffentlich unter
 // GET /api/plattform.
 // Das Portal liest es, um Plattformen zu verlinken, ihren Stand anzuzeigen und die Vertragsversion zu prüfen.
 
-const VERTRAG = '1.1';
+const VERTRAG = '1.2';
 const PLATTFORM = {
   id: 'algoquest',
   name: 'Algo Quest',
   titel: 'Algo Quest – Das Dungeon der Datenstrukturen',
   themenfeld: 'Algorithmik und Datenstrukturen',
-  kurs: 'Informatik eA (LK), Niedersachsen, Abitur ab 2027',
+  kurs: 'Informatik eA und gA, Niedersachsen, Abitur ab 2027',
+  // Anforderungsniveaus (ab v1.2): für Leistungs- und Grundkurs; Übersicht unter urls.niveaus
+  niveaus: ['eA', 'gA'],
   beschreibung: 'Übungsplattform mit automatisch geprüften Aufgaben im Abitur-Stil: Java-Grundlagen, Klassen, Suchen und Sortieren, Rekursion, Stapel und Schlange, Bäume – mit Bossen, Trainingsplatz und Warm-up-Karten.',
   farbe: '#1F4E79'
 };
@@ -36,7 +38,8 @@ function createManifest({ inhalte, version, konfig }) {
         datenschutz: '/datenschutz',
         healthz: '/healthz',
         ssoStart: konfig.sso ? '/sso/start' : null,
-        ssoEnde: konfig.sso ? '/sso/ende' : null
+        ssoEnde: konfig.sso ? '/sso/ende' : null,
+        niveaus: '/themen#niveaus'
       },
       auth: { modus: konfig.modus, portal: konfig.portal, sso: konfig.sso },
       umfang: {

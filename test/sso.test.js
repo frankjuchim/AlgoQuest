@@ -59,7 +59,7 @@ async function ssoAnmelden(a, felder = {}, ziel = '/spiel') {
 test('Manifest mit SSO: vertragsgemäß (v1.1), ssoStart/ssoEnde, auth.sso true', async () => {
   const m = (await request(app()).get('/api/plattform').expect(200)).body;
   assert.deepEqual(pruefeManifest(m), []);
-  assert.equal(m.vertrag, '1.1');
+  assert.equal(m.vertrag, '1.2');
   assert.equal(m.urls.ssoStart, '/sso/start');
   assert.equal(m.urls.ssoEnde, '/sso/ende');
   assert.deepEqual(m.auth, { modus: 'beides', portal: PORTAL, sso: true });

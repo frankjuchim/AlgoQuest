@@ -27,16 +27,7 @@
         h('li', null, h('b', null, '4. Boss als Abi-Probe'), 'Je Welt ein Online-Boss im Lab (auf Zeit, Auswertung mit Erklärungen) und ein Papier-Boss als PDF – handschriftlich in 60 Minuten wie im Abitur.'),
         h('li', null, h('b', null, '5. Dranbleiben'), 'Trainingsplatz (Zufallsaufgaben) und Warm-up-Karten – im Lab mit Lösungen (Leitner) oder als PDF für 10 Minuten auf Papier.')
       ),
-      h(
-        'p',
-        { class: 'callout niveau-legende' },
-        h('strong', null, 'Grundkurs oder Leistungskurs? '),
-        'Nach dem Kerncurriculum (2017) gilt das meiste für beide Kurse. Mit ',
-        AQ.niveau('eA'),
-        ' markierte Themen stehen in der Spalte „Erweiterung eA“ und sind im Abitur nur im Leistungskurs gefordert: Effizienz (Speicherbedarf und Zahl der Operationen), Rekursion und „Teile und herrsche“, Klassenbeziehungen und Klassendiagramme, Binärbäume und binäre Suchbäume. ',
-        AQ.niveau('plus'),
-        ' geht über das Kerncurriculum hinaus (Vertiefung).'
-      ),
+      h('p', { class: 'callout niveau-legende' }, h('strong', null, 'Grundkurs (gA) oder Leistungskurs (eA)? '), 'Die ', h('a', { href: '#niveaus' }, 'Niveau-Übersicht'), ' zeigt, welche Welten, Level und Materialien für welches Niveau gedacht sind.'),
       d.werkzeugkarten
         ? h('p', { class: 'callout gold' }, h('strong', null, 'Immer dabei: '), pdf(d.werkzeugkarten.url, d.werkzeugkarten.titel), ' – Abi-Check vor der Abgabe, Zeitbudget, Struktogramm- und Klassendiagramm-Notation.')
         : null
@@ -92,6 +83,35 @@
   }
 
   /** „Kür: Zugbuch und Initiative – Spielmodule“ → „Zugbuch und Initiative“ */
+  /** Übersicht „Was ist für welches Niveau?“ (Vertrag v1.2 §9, Manifest urls.niveaus = /themen#niveaus) */
+  function niveauUebersicht(d) {
+    const zelle = (liste) => (liste.length ? h('ul', { class: 'niveau-liste' }, liste) : h('span', { class: 'muted' }, '–'));
+    const eintrag = (nr, titel, zusatz) => h('li', null, h('strong', null, nr), ' ', titel, zusatz ? h('span', { class: 'muted klein' }, ' ' + zusatz) : null);
+    const zeilen = d.welten.map((w) => {
+      const sp = { alle: [], eA: [], plus: [] };
+      for (const l of w.levels) sp[l.niveau || 'alle'].push(eintrag(l.nr, kurztitel(l.titel), l.gemischt ? '(einzelne Aufgaben nur eA)' : ''));
+      if (w.boss) sp[w.boss.niveau || 'alle'].push(eintrag('⚔️', `Boss: ${w.boss.titel}`, w.boss.gemischt ? '(einzelne Aufgaben nur eA)' : ''));
+      return h('tr', null, h('th', { scope: 'row' }, h('a', { href: `#welt-${w.nr}` }, `Welt ${w.nr}`), h('div', { class: 'muted klein' }, w.titel.replace(/^(Der|Die|Das)\s+/, ''))), h('td', null, zelle(sp.alle)), h('td', null, zelle(sp.eA)), h('td', null, zelle(sp.plus)));
+    });
+    return h(
+      'section',
+      { class: 'card niveau-uebersicht', id: 'niveaus' },
+      h('h2', null, '🎚️ Was ist für welches Niveau?'),
+      h('p', null, 'Algo Quest ist für den ', h('strong', null, 'Grundkurs (gA)'), ' und den ', h('strong', null, 'Leistungskurs (eA)'), ' gedacht. Maßstab ist das Kerncurriculum Informatik (2017), Lernfeld „Algorithmen und Datenstrukturen“: Der Kern gilt für beide Kurse; die Spalte „Erweiterung eA“ ist im Abitur nur im Leistungskurs gefordert – Effizienz beurteilen (Speicherbedarf und Zahl der Operationen), Rekursion und „Teile und herrsche“, Klassenbeziehungen und Klassendiagramme, Binärbäume und binäre Suchbäume.'),
+      h(
+        'div',
+        { class: 'scroll-x' },
+        h(
+          'table',
+          { class: 'liste niveau-tabelle' },
+          h('thead', null, h('tr', null, h('th', null, 'Welt'), h('th', null, AQ.niveau('alle', { alleZeigen: true }), h('div', { class: 'klein' }, 'gA und eA')), h('th', null, AQ.niveau('eA'), h('div', { class: 'klein' }, 'nur eA')), h('th', null, AQ.niveau('plus'), h('div', { class: 'klein' }, 'weder gA noch eA gefordert')))),
+          h('tbody', null, zeilen)
+        )
+      ),
+      h('p', { class: 'hint' }, 'Im Lab tragen die Level auf der Weltkarte die Etiketten „LK“ (nur eA), „teils LK“ oder „+“ (Zusatz); Aufgaben zeigen „nur Leistungskurs (eA)“. Jedes Arbeitsblatt, jeder Papier-Boss und die Probeklausur nennt im Kopf das Niveau; einzelne eA-Aufgaben sind mit „◆ nur LK (eA)“ markiert. Lehrkräfte stellen im Kurs „Kursart: Grundkurs“ ein – dann gilt eA-Stoff als freiwillig und die Online-Bosse ziehen nur Aufgaben für beide Kurse.')
+    );
+  }
+
   const kurztitel = (t) => t.replace(/^Kür:\s*/, '').split(/[:–]/)[0].trim();
 
   function ortLinks(orte, welten) {
@@ -168,6 +188,7 @@
       ziel,
       einleitung(d),
       h('nav', { class: 'card chips', 'aria-label': 'Sprung zur Welt' }, h('strong', null, 'Welten: '), d.welten.map((w) => h('a', { href: `#welt-${w.nr}`, class: 'pill', style: { borderLeft: `4px solid ${w.farbe}` } }, `${w.nr} ${w.titel.replace(/^(Der|Die|Das)\s+/, '')}`))),
+      niveauUebersicht(d),
       h('h2', { class: 'abschnitt', id: 'welten' }, '🗺️ Nach Welten'),
       d.welten.map(weltKarte),
       h('h2', { class: 'abschnitt', id: 'aufgabentypen' }, '🧩 Nach Aufgabentyp'),
