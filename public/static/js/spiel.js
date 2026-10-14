@@ -32,7 +32,8 @@
     return;
   }
   if (!sitzung.schueler) {
-    location.href = '/';
+    // als Lehrkraft angemeldet → Lehrkraft-Bereich statt Startseite
+    location.href = sitzung.lehrkraft ? '/lehrer' : '/';
     return;
   }
 

@@ -451,3 +451,18 @@ test('Phase 2: Zuordnung einspielen – Probelauf, Umstellung, Lernstand bleibt,
   await H.adminClient(a);
   assert.ok(s2);
 });
+
+test('Ziel nach der Anmeldung passt zur Rolle: Lehrkraft vom Schüler-Knopf → /lehrer, Schüler vom Lehrkraft-Knopf → /spiel', async () => {
+  const a = app();
+  let { r } = await ssoAnmelden(a, { sub: 'l:31', rolle: 'lehrkraft', name: 'Frau Muster', kurse: [] }, '/spiel');
+  assert.equal(r.headers.location, '/lehrer');
+  ({ r } = await ssoAnmelden(a, { sub: 'a:1', rolle: 'superadmin', name: 'Admin', kurse: [] }, '/spiel'));
+  assert.equal(r.headers.location, '/lehrer');
+  ({ r } = await ssoAnmelden(a, {}, '/lehrer'));
+  assert.equal(r.headers.location, '/spiel');
+  // andere Ziele bleiben erhalten
+  ({ r } = await ssoAnmelden(a, {}, '/spiel#/level/W9-L1'));
+  assert.equal(r.headers.location, '/spiel#/level/W9-L1');
+  ({ r } = await ssoAnmelden(a, { sub: 'l:31', rolle: 'lehrkraft', name: 'Frau Muster', kurse: [] }, '/lehrer/urkunden?kurs=1'));
+  assert.equal(r.headers.location, '/lehrer/urkunden?kurs=1');
+});

@@ -108,14 +108,16 @@ function ssoRoutes(app, h, konfig) {
       h.clearLehrkraft(req, res);
       h.setSchuelerCookie(req, res, r, { portal: true });
       hinweis('s');
-      return res.redirect(302, ziel === '/' ? '/spiel' : ziel);
+      // Schüler gehören ins Spiel – auch wenn der Knopf im Lehrkraft-Bereich gedrückt wurde
+      return res.redirect(302, ziel === '/' || ziel.startsWith('/lehrer') ? '/spiel' : ziel);
     }
     const r = svc.verbund.lehrkraftAnmelden(t);
     if (r.fehler) return seite(res, 403, 'Konto deaktiviert', 'Ihr Konto ist auf dieser Plattform deaktiviert. Bitte wenden Sie sich an den Administrator.', [['/', 'Zur Startseite']]);
     h.clearSchueler(req, res);
     h.setLehrkraftCookie(req, res, r, { portal: true });
     hinweis('l');
-    res.redirect(302, ziel === '/' ? '/lehrer' : ziel);
+    // Lehrkräfte und Admins in den Lehrkraft-Bereich – auch wenn der Knopf auf der Schüler-Startseite gedrückt wurde
+    res.redirect(302, ziel === '/' || ziel.startsWith('/spiel') ? '/lehrer' : ziel);
   });
 
   // „Überall abmelden“: eigene Sitzung beenden, dann Abmeldung am Portal (das zurück auf die Startseite leitet)

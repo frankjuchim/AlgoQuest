@@ -39,6 +39,13 @@
     if (s.schueler) {
       $('weiter-box').hidden = false;
       $('weiter-name').textContent = `${s.schueler.name} (Kurs „${s.schueler.kurs}“)`;
+    } else if (s.lehrkraft) {
+      // als Lehrkraft angemeldet: direkt zum Lehrkraft-Bereich anbieten
+      $('weiter-box').hidden = false;
+      $('weiter-name').textContent = `${s.lehrkraft.name} (Lehrkraft)`;
+      const los = $('weiter-box').querySelector('a');
+      los.href = '/lehrer';
+      los.textContent = '▶ Zum Lehrkraft-Bereich';
     }
   } catch {
     /* egal */
