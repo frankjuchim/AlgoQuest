@@ -1,5 +1,5 @@
 'use strict';
-// Plattform-Verbund InfoLabs (VERTRAG.md v1.1 im Repo frankjuchim/labs, Phase 1):
+// Plattform-Verbund InfoLabs (VERTRAG.md v1.3 im Repo frankjuchim/labs, Phase 1):
 //  - SSO: Konto aus dem geprüften Token übernehmen (Upsert nach sub), Kurse und Mitgliedschaften abgleichen
 //  - Verbund-API: Löschen, Kursübersicht (nur Kennzahlen), Kurs umbenennen/sperren
 // Portal-Kurse gehören dem Systemkonto „portal“; Zugriff haben die Lehrkräfte laut Token (kurs_lehrkraefte).
@@ -37,9 +37,10 @@ function createVerbund(ctx, { kurse, stand, inhalte }) {
     );
   }
 
-  /** Portal-Kurs anlegen bzw. Namen aktualisieren. Liefert die Zeile. */
+  /** Portal-Kurs anlegen bzw. Namen aktualisieren (ohne Namen: neu mit der Kurs-ID als Name, bestehend unverändert). */
   function kursUpsert(k) {
-    const name = typeof k.name === 'string' && k.name.trim() ? k.name.trim().slice(0, 80) : k.id;
+    const gegeben = typeof k.name === 'string' && k.name.trim() ? k.name.trim().slice(0, 80) : null;
+    const name = gegeben || k.id;
     let r = db.prepare('SELECT * FROM kurse WHERE portal_id = ?').get(k.id);
     if (!r) {
       // Beitritt im Lab ist für Portal-Kurse gesperrt; der Kurscode dient nur dem Beamer-Board
@@ -48,7 +49,7 @@ function createVerbund(ctx, { kurse, stand, inhalte }) {
         .prepare('INSERT INTO kurse (lehrkraft_id, name, code, einstellungen, created_at, portal_id) VALUES (?, ?, ?, ?, ?, ?)')
         .run(systemKonto(), name, kurse.neuerKursCode(), JSON.stringify(e), iso(), k.id);
       r = db.prepare('SELECT * FROM kurse WHERE id = ?').get(info.lastInsertRowid);
-    } else if (r.name !== name) {
+    } else if (gegeben && r.name !== gegeben) {
       db.prepare('UPDATE kurse SET name = ? WHERE id = ?').run(name, r.id);
       r.name = name;
     }
@@ -212,14 +213,17 @@ function createVerbund(ctx, { kurse, stand, inhalte }) {
     };
   }
 
-  /** Kurs umbenennen bzw. sperren/entsperren. Unbekannte Kurse werden bei der nächsten Anmeldung angelegt. */
+  /**
+   * Kurs umbenennen bzw. sperren/entsperren. Unbekannte Kurse werden mit Standard-Einstellungen angelegt (v1.3 §6:
+   * 200 statt 404, damit der Auftrag des Portals nicht in Wiederholungen läuft).
+   */
   function kursAendern(kursId, b) {
     if (typeof kursId !== 'string' || !KURS_ID.test(kursId)) throw new V.ValidationError('Kurs-ID ungültig.');
     const body = b || {};
-    const kr = db.prepare('SELECT * FROM kurse WHERE portal_id = ?').get(kursId);
-    if (!kr) return { ok: true };
-    if (typeof body.name === 'string' && body.name.trim()) db.prepare('UPDATE kurse SET name = ? WHERE id = ?').run(body.name.trim().slice(0, 80), kr.id);
-    if (typeof body.aktiv === 'boolean') db.prepare('UPDATE kurse SET aktiv = ? WHERE id = ?').run(body.aktiv ? 1 : 0, kr.id);
+    db.transaction(() => {
+      const kr = kursUpsert({ id: kursId, name: body.name });
+      if (typeof body.aktiv === 'boolean') db.prepare('UPDATE kurse SET aktiv = ? WHERE id = ?').run(body.aktiv ? 1 : 0, kr.id);
+    })();
     return { ok: true };
   }
 
