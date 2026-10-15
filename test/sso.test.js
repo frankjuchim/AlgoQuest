@@ -248,8 +248,19 @@ test('Fehler vom Portal: keine_berechtigung → Hinweisseite, abgebrochen → St
   let u = await start(c);
   let r = await c.get(`/sso/ende?fehler=keine_berechtigung&state=${u.searchParams.get('state')}`);
   assert.equal(r.status, 403);
-  assert.match(r.text, /deine Lehrkraft hat diese Plattform für deinen Kurs nicht freigeschaltet/);
-  assert.match(r.text, /\/gast/);
+  // rollenneutraler Text (INTEGRATION.md §3.2, v1.3), Link zum Portal, keine Sitzung
+  for (const z of [
+    'Kein Zugang.',
+    'Diese Plattform ist für dieses Konto noch nicht freigeschaltet.',
+    'Schülerinnen und Schüler: Die Lehrkraft muss die Plattform im Portal für den Kurs freischalten.',
+    'Lehrkräfte: Die Freischaltung der Plattform erteilt die Administration im Portal; danach die Plattform beim Kurs ankreuzen.'
+  ])
+    assert.ok(r.text.includes(z), z);
+  assert.ok(r.text.includes(`href="${PORTAL}/"`));
+  assert.doesNotMatch(r.text, /deine Lehrkraft|Ihr Konto/);
+  assert.ok(!(r.headers['set-cookie'] || []).some((x) => /^(aql_s|aql_l|aq_sso)=/.test(x)), 'Sitzung nicht gesetzt oder geändert');
+  assert.deepEqual((await c.get('/api/sitzung')).body.schueler, null);
+  assert.equal((await c.get('/api/sitzung')).body.lehrkraft, null);
   c = H.client(a);
   u = await start(c);
   r = await c.get(`/sso/ende?fehler=abgebrochen&state=${u.searchParams.get('state')}`);
@@ -368,9 +379,9 @@ test('Verbund-API: Kursübersicht (nur Kennzahlen) und Kurs umbenennen/sperren',
   const { c: wieder, r: r2 } = await ssoAnmelden(a);
   assert.equal(r2.status, 302);
   assert.equal((await wieder.get('/api/sitzung')).body.schueler.name, 'Lena S.');
-  // unbekannter Kurs: ok, nichts angelegt
-  assert.deepEqual((await request(a).post('/api/verbund/kurse/k%3A55').set('Authorization', `Bearer ${verbundToken('kurs-aendern')}`).send({ aktiv: false })).body, { ok: true });
-  assert.equal(a.locals.db.prepare("SELECT COUNT(*) AS n FROM kurse WHERE portal_id = 'k:55'").get().n, 0);
+  // nur sperren/entsperren ohne Namen: Name bleibt
+  await aendern({ aktiv: true }).expect(200);
+  assert.equal((await wieder.get('/api/sitzung')).body.schueler.kurs, 'LK Informatik 13');
 });
 
 test('Datenbank-Upgrade: Schema 3 ohne Verbund-Spalten wird ergänzt', () => {
@@ -482,4 +493,96 @@ test('Ziel nach der Anmeldung passt zur Rolle: Lehrkraft vom Schüler-Knopf → 
   assert.equal(r.headers.location, '/spiel#/level/W9-L1');
   ({ r } = await ssoAnmelden(a, { sub: 'l:31', rolle: 'lehrkraft', name: 'Frau Muster', kurse: [] }, '/lehrer/urkunden?kurs=1'));
   assert.equal(r.headers.location, '/lehrer/urkunden?kurs=1');
+});
+
+/* ---------- v1.3: Einstieg aus dem Portal holt immer ein frisches Token (§5, INTEGRATION.md §3.1/§3.2) ---------- */
+
+test('v1.3: /sso/start mit bestehender Sitzung → 302 zum Portal (nicht direkt auf ziel), Sitzung bleibt bis zum neuen Token', async () => {
+  const a = app();
+  const { c, r } = await ssoAnmelden(a);
+  assert.equal(r.status, 302);
+  assert.equal((await c.get('/api/sitzung')).body.schueler.name, 'Lena S.');
+  const s = await c.get('/sso/start?ziel=' + encodeURIComponent('/spiel')).expect(302);
+  const u = new URL(s.headers.location);
+  assert.equal(u.origin + u.pathname, PORTAL + '/sso/autorisieren');
+  assert.equal(u.searchParams.get('ziel'), '/spiel');
+  assert.ok(!(s.headers['set-cookie'] || []).some((x) => /^(aql_s|aql_l)=/.test(x)), 'Sitzung unangetastet');
+  assert.equal((await c.get('/api/sitzung')).body.schueler.name, 'Lena S.');
+  // Lehrkraft ebenso
+  const { c: l } = await ssoAnmelden(a, { sub: 'l:9', rolle: 'lehrkraft', name: 'Frau X', kurse: [{ id: 'k:17', name: 'LK', rolle: 'lehrkraft' }] }, '/lehrer');
+  const s2 = await l.get('/sso/start?ziel=/lehrer').expect(302);
+  assert.ok(s2.headers.location.startsWith(PORTAL + '/sso/autorisieren?'));
+});
+
+test('v1.3: bestehende Sitzung + fehlgeschlagener Rücksprung (Signatur, aud, wiederverwendet, state, fehler=…) → Sitzung gilt weiter', async () => {
+  const a = app();
+  const { c } = await ssoAnmelden(a);
+  const vorher = (await c.get('/api/sitzung')).body.schueler;
+  assert.equal(vorher.name, 'Lena S.');
+  const fremdesKonto = { sub: 's:2000', name: 'Mia K.' };
+  const versuche = [
+    async (st) => c.get(`/sso/ende?token=${token(fremdesKonto, { key: fremd.privateKey })}&state=${st}`),
+    async (st) => c.get(`/sso/ende?token=${token({ ...fremdesKonto, aud: 'andere' })}&state=${st}`),
+    async (st) => c.get(`/sso/ende?token=${token({ ...fremdesKonto, exp: jetzt() - 10, iat: jetzt() - 100 })}&state=${st}`),
+    async () => c.get(`/sso/ende?token=${token(fremdesKonto)}&state=falsch-falsch-falsch-falsch`),
+    async (st) => c.get(`/sso/ende?fehler=keine_berechtigung&state=${st}`),
+    async (st) => c.get(`/sso/ende?fehler=unbekannt&state=${st}`)
+  ];
+  for (const [i, v] of versuche.entries()) {
+    const u = await start(c);
+    const r = await v(u.searchParams.get('state'));
+    assert.ok([401, 403].includes(r.status), `Versuch ${i}: ${r.status}`);
+    assert.ok(!(r.headers['set-cookie'] || []).some((x) => /^(aql_s|aql_l|aq_sso)=/.test(x)), `Versuch ${i}: Sitzung geändert`);
+    assert.deepEqual((await c.get('/api/sitzung')).body.schueler, vorher, `Versuch ${i}`);
+  }
+  // wiederverwendetes Token: erster Rücksprung gilt, zweiter → 401, Sitzung bleibt die aus dem ersten
+  const t = token();
+  let u = await start(c);
+  await c.get(`/sso/ende?token=${t}&state=${u.searchParams.get('state')}`).expect(302);
+  u = await start(c);
+  const r = await c.get(`/sso/ende?token=${t}&state=${u.searchParams.get('state')}`);
+  assert.equal(r.status, 401);
+  assert.equal((await c.get('/api/sitzung')).body.schueler.name, 'Lena S.');
+  assert.equal(a.locals.db.prepare("SELECT COUNT(*) AS n FROM schueler WHERE sub = 's:2000'").get().n, 0, 'kein Konto aus ungültigen Tokens');
+});
+
+test('v1.3: Schüler tritt im Portal einem zweiten Kurs bei, erneut /sso/start → Plattform kennt beide Kurse; Austritt → Zugang weg, Lernstand bleibt', async () => {
+  const a = app();
+  const { c } = await ssoAnmelden(a);
+  assert.equal((await c.get('/api/sitzung')).body.schueler.kurse.length, 1);
+  const zwei = [
+    { id: 'k:17', name: 'LK Informatik 13', rolle: 'mitglied' },
+    { id: 'k:18', name: 'GK Informatik 12', rolle: 'mitglied' }
+  ];
+  let u = await start(c);
+  await c.get(`/sso/ende?token=${token({ kurse: zwei })}&state=${u.searchParams.get('state')}&ziel=%2Fspiel`).expect(302);
+  const kurse = (await c.get('/api/sitzung')).body.schueler.kurse.map((k) => k.name).sort();
+  assert.deepEqual(kurse, ['GK Informatik 12', 'LK Informatik 13']);
+  // wieder nur k:18 im Token: Mitgliedschaft in k:17 entfernt (zugang 0), Zeile und Lernstand bleiben
+  u = await start(c);
+  await c.get(`/sso/ende?token=${token({ kurse: [zwei[1]] })}&state=${u.searchParams.get('state')}`).expect(302);
+  assert.deepEqual((await c.get('/api/sitzung')).body.schueler.kurse.map((k) => k.name), ['GK Informatik 12']);
+  const z = a.locals.db.prepare("SELECT s.zugang FROM schueler s JOIN kurse k ON k.id = s.kurs_id WHERE s.sub = 's:1042' AND k.portal_id = 'k:17'").get();
+  assert.equal(z.zugang, 0);
+});
+
+test('v1.3: kurs-aendern für unbekannten Kurs → 200 { ok: true }, Kurs mit Standard-Einstellungen angelegt', async () => {
+  const a = app();
+  const aendern = (id, body) => request(a).post('/api/verbund/kurse/' + encodeURIComponent(id)).set('Authorization', `Bearer ${verbundToken('kurs-aendern')}`).send(body);
+  assert.deepEqual((await aendern('k:55', { name: 'GK Informatik 11', aktiv: false }).expect(200)).body, { ok: true });
+  const k = a.locals.db.prepare("SELECT * FROM kurse WHERE portal_id = 'k:55'").get();
+  assert.ok(k);
+  assert.equal(k.name, 'GK Informatik 11');
+  assert.equal(k.aktiv, 0);
+  const e = JSON.parse(k.einstellungen);
+  assert.equal(e.anmeldung, false); // Beitritt nur über das Portal
+  assert.equal(e.kursart, 'eA');
+  // ohne Namen: Kurs-ID als vorläufiger Name, beim ersten SSO-Login ersetzt; zweiter Aufruf idempotent
+  assert.deepEqual((await aendern('k:56', {}).expect(200)).body, { ok: true });
+  assert.deepEqual((await aendern('k:56', { aktiv: true }).expect(200)).body, { ok: true });
+  assert.equal(a.locals.db.prepare("SELECT COUNT(*) AS n FROM kurse WHERE portal_id = 'k:56'").get().n, 1);
+  const { c } = await ssoAnmelden(a, { kurse: [{ id: 'k:56', name: 'LK Informatik 12', rolle: 'mitglied' }] });
+  assert.equal((await c.get('/api/sitzung')).body.schueler.kurs, 'LK Informatik 12');
+  // ungültige Kurs-ID weiterhin 400
+  assert.equal((await aendern('kurs', { aktiv: true })).status, 400);
 });

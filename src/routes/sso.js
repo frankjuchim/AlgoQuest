@@ -1,7 +1,9 @@
 'use strict';
-// Plattform-Verbund InfoLabs (VERTRAG.md v1.1 §5, §6; Anleitung docs/INTEGRATION.md im Repo frankjuchim/labs):
-//   GET  /sso/start?ziel=/pfad      → Weiterleitung zum Portal (state im kurzlebigen Cookie)
-//   GET  /sso/ende?token&state&ziel → Token prüfen, Konto/Kurse abgleichen, eigene Sitzung, Weiterleitung auf ziel
+// Plattform-Verbund InfoLabs (VERTRAG.md v1.3 §5, §6; Anleitung docs/INTEGRATION.md im Repo frankjuchim/labs):
+//   GET  /sso/start?ziel=/pfad      → Weiterleitung zum Portal (state im kurzlebigen Cookie) – immer, auch mit Sitzung
+//                                     (v1.3: frisches Token bei jedem Wechsel aus dem Portal)
+//   GET  /sso/ende?token&state&ziel → Token prüfen, Konto/Kurse abgleichen, eigene Sitzung, Weiterleitung auf ziel;
+//                                     bei jedem Fehler bleibt eine bestehende Sitzung unverändert
 //   GET  /sso/abmelden              → Sitzung hier beenden und „Überall abmelden“ am Portal
 //   /api/verbund/…                  → Verbund-API (Bearer-Token des Portals, sub „portal“, zweck)
 // Tokens werden nie geloggt.
@@ -15,6 +17,13 @@ const STATE_COOKIE = 'aq_sso_state';
 const HINWEIS_COOKIE = 'aq_sso'; // „s“/„l“: zuletzt über das Portal angemeldet → bei abgelaufener Sitzung still neu anmelden
 const STATE_MS = 10 * 60 * 1000;
 const HINWEIS_MS = 400 * 24 * 3600 * 1000;
+// Rollenneutraler Text bei fehler=keine_berechtigung (labs docs/INTEGRATION.md §3.2, ab v1.3) – hier ist unbekannt, wer anfragt
+const KEIN_ZUGANG = [
+  'Kein Zugang.',
+  'Diese Plattform ist für dieses Konto noch nicht freigeschaltet.',
+  'Schülerinnen und Schüler: Die Lehrkraft muss die Plattform im Portal für den Kurs freischalten.',
+  'Lehrkräfte: Die Freischaltung der Plattform erteilt die Administration im Portal; danach die Plattform beim Kurs ankreuzen.'
+];
 
 /** nur relative Pfade mit genau einem führenden „/“ (kein //host, kein /\host) */
 function sicheresZiel(z) {
@@ -23,7 +32,7 @@ function sicheresZiel(z) {
 
 const esc = (t) => String(t).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 
-/** schlichte Hinweisseite (ohne Skripte, CSP-konform) */
+/** schlichte Hinweisseite (ohne Skripte, CSP-konform); text: Absatz oder Liste von Absätzen */
 function seite(res, status, titel, text, links) {
   res
     .status(status)
@@ -31,7 +40,7 @@ function seite(res, status, titel, text, links) {
     .send(
       `<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">` +
         `<title>${esc(titel)} – Algo Quest Lab</title><link rel="stylesheet" href="/static/css/style.css"></head>` +
-        `<body><main class="narrow" id="haupt"><section class="card"><h1>${esc(titel)}</h1><p>${esc(text)}</p>` +
+        `<body><main class="narrow" id="haupt"><section class="card"><h1>${esc(titel)}</h1>${[].concat(text).map((t) => `<p>${esc(t)}</p>`).join('')}` +
         `<p class="btn-row">${links.map(([href, label], i) => `<a class="btn${i ? ' secondary' : ''}" href="${esc(href)}">${esc(label)}</a>`).join(' ')}</p>` +
         `</section></main></body></html>`
     );
@@ -82,7 +91,8 @@ function ssoRoutes(app, h, konfig) {
     const fehler = req.query.fehler;
     if (fehler === 'abgebrochen') return res.redirect(302, '/');
     if (fehler === 'keine_berechtigung') {
-      return seite(res, 403, 'Kein Zugang', 'Kein Zugang – deine Lehrkraft hat diese Plattform für deinen Kurs nicht freigeschaltet. (Lehrkräfte: Die Plattform ist für Ihr Konto noch nicht freigeschaltet.) Ohne Anmeldung kannst du den Gastmodus ausprobieren.', [['/gast', '👀 Gastmodus'], [konfig.portal + '/', '⌂ Zum Portal']]);
+      // ohne Sitzung zu setzen oder zu ändern
+      return seite(res, 403, KEIN_ZUGANG[0], KEIN_ZUGANG.slice(1), [[konfig.portal + '/', '⌂ Zurück zum Portal'], ['/gast', '👀 Gastmodus']]);
     }
     if (fehler) return seite(res, 401, 'Anmeldung fehlgeschlagen', 'Das Portal hat die Anmeldung abgelehnt.', nochmal);
     const p = pruefe(req.query.token, konfig.schluessel, { iss: konfig.portal, aud: konfig.id, maxDauerSek: 120, jetztSek: jetztSek() });
@@ -103,7 +113,7 @@ function ssoRoutes(app, h, konfig) {
       })();
       const r = svc.verbund.schuelerAnmelden(t, { kursWunsch });
       if (r.fehler) {
-        return seite(res, 403, 'Kein Zugang', r.fehler === 'gesperrt' ? 'Dein Kurs ist auf dieser Plattform gerade gesperrt. Frag deine Lehrkraft.' : 'Kein Zugang – deine Lehrkraft hat diese Plattform für deinen Kurs nicht freigeschaltet.', [['/gast', '👀 Gastmodus'], [konfig.portal + '/', '⌂ Zum Portal']]);
+        return seite(res, 403, r.fehler === 'gesperrt' ? 'Kurs gesperrt' : KEIN_ZUGANG[0], r.fehler === 'gesperrt' ? 'Dein Kurs ist auf dieser Plattform gerade gesperrt. Frag deine Lehrkraft.' : KEIN_ZUGANG.slice(1), [[konfig.portal + '/', '⌂ Zurück zum Portal'], ['/gast', '👀 Gastmodus']]);
       }
       h.clearLehrkraft(req, res);
       h.setSchuelerCookie(req, res, r, { portal: true });
