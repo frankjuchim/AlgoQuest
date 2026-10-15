@@ -193,7 +193,7 @@ P9 Struktogramm nicht nach EH §5 · P10 Operator verfehlt.
 
 ### Plattform-Verbund InfoLabs (README Teil H)
 - Algo Quest ist an das Portal **InfoLabs** (https://labs.frankjuchim.de, Repo `frankjuchim/labs`) angeschlossen.
-  **Verbindlich ist dort `VERTRAG.md` (v1.2)**, Anleitung `docs/INTEGRATION.md`. Dieses Repo ändert den Vertrag nie;
+  **Verbindlich ist dort `VERTRAG.md` (Version 1.3)**, Anleitung `docs/INTEGRATION.md`. Dieses Repo ändert den Vertrag nie;
   Änderungen am Zusammenspiel als Vorschlag für den Vertrag formulieren. README Teil H beschreibt die Umsetzung hier.
 - Phase 1 umgesetzt (2.6.0): `src/routes/sso.js` (`/sso/start`, `/sso/ende`, `/sso/abmelden`, Verbund-API
   `/api/verbund/…`), `src/services/verbund.js` (Upsert nach `sub`, Kurse/Mitgliedschaften, Löschen, Übersicht),

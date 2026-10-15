@@ -9,7 +9,7 @@ Dieses Dokument hat drei Aufgaben:
 2. Es ist die **Blaupause** für vergleichbare Plattformen zu den übrigen Themen der Informatik-Oberstufe mit anderen
    Sachkontexten. Teil G richtet sich ausdrücklich an neue Claude-Chats, die eine solche Plattform aufbauen sollen.
 3. Es beschreibt die **Anbindung an den Plattform-Verbund InfoLabs** (Teil H): gemeinsames Login über das Portal
-   https://labs.frankjuchim.de (SSO), Verbund-API, Plattform-Manifest. Der Vertrag selbst (v1.2) liegt im Repo
+   https://labs.frankjuchim.de (SSO), Verbund-API, Plattform-Manifest. Der Vertrag selbst (Version 1.3) liegt im Repo
    `frankjuchim/labs` (`VERTRAG.md`) und ist für alle Plattformen verbindlich.
 
 Live: **https://algoquest.frankjuchim.de** · Themenübersicht ohne Anmeldung: `/themen` · Gastmodus zum Reinschnuppern: `/gast`
@@ -265,7 +265,7 @@ Maßstab ist das Kerncurriculum Informatik (2017), Lernfeld „Algorithmen und D
 
 - **Daten:** Feld `niveau` an Level, Boss und abweichenden Aufgaben (`docs/AUFGABENFORMAT.md` §2); Test `test/niveau.test.js`.
 - **Niveau-Übersicht** (ohne Anmeldung): `/themen#niveaus` – Tabelle je Welt „gA und eA · nur eA · Zusatz“; im Manifest als
-  `urls.niveaus`, `niveaus: ["eA", "gA"]` (Vertrag v1.2 §7, §9) – das Portal zeigt den Link auf der Plattform-Karte.
+  `urls.niveaus`, `niveaus: ["eA", "gA"]` (Vertrag ab v1.2 §7, §9) – das Portal zeigt den Link auf der Plattform-Karte.
 - **Lab:** Etiketten „LK“ / „+“ auf der Weltkarte, „nur Leistungskurs (eA)“ bzw. „Zusatz“ an Level und Aufgaben, Legende auf
   `/themen`. Kurseinstellung **Kursart**: Im Grundkurs heißt es „im Grundkurs freiwillig“, Online-Bosse ziehen nur
   Aufgaben mit Niveau `alle` (sofern genug im Pool); reine LK-Welten (3, 5) wählt die Lehrkraft ab.
@@ -454,7 +454,7 @@ Niedersachsen, Abitur ab <Jahr>, <Anzahl> Doppelstunden. Sachkontext: <Idee oder
 Programmierumgebung/Werkzeuge: <z. B. SQLite im Browser / Online-IDE / Automaten-Simulator>.
 
 Schritt 1: Lies README (Teil A–H), CLAUDE.md, docs/AUFGABENFORMAT.md, den Verbundvertrag
-https://github.com/frankjuchim/labs/blob/main/VERTRAG.md (v1.2, verbindlich) mit docs/INTEGRATION.md und
+https://github.com/frankjuchim/labs/blob/main/VERTRAG.md (Version 1.3, verbindlich) mit docs/INTEGRATION.md und
 quellen/specs/SPEC_AlgoQuest_W4.md.
 Schritt 2: Schlage Welten (mit Kompetenzen nach KC/EH und DS-Verteilung), Fallen-Liste P1–P10 und den Sachkontext vor
 und frage nach, bevor du etwas baust.
@@ -471,7 +471,7 @@ Vertrag von Anfang an (wie Algo Quest Teil H), Anmeldung über das Portal InfoLa
 ## H. Der Plattform-Verbund InfoLabs
 
 > **Verbindlich ist der Vertrag des Plattform-Verbunds:**
-> https://github.com/frankjuchim/labs/blob/main/VERTRAG.md (**Version 1.2**). Er hat diesen Teil H (Fassung v1.0)
+> https://github.com/frankjuchim/labs/blob/main/VERTRAG.md (**Version 1.3**). Er hat diesen Teil H (Fassung v1.0)
 > abgelöst; die Abschnittsnummern sind gleich geblieben (**Vertrag §n = früher H.n**). Anschlussanleitung:
 > `docs/INTEGRATION.md` im Repo `frankjuchim/labs`. Änderungen am Zusammenspiel werden **nur dort** gemacht
 > (neue Vertragsversion, Eintrag in §14) – nie still in einer Plattform.
@@ -485,7 +485,7 @@ Gastmodus. Angemeldet wird einmal am Portal (SSO mit Ed25519-JWT), das Portal ho
 | Phase (Vertrag §11) | Inhalt | Stand |
 |---|---|---|
 | 0 | Manifest `/api/plattform`, Vertragsprüfung, `AUTH_MODUS=lokal` | umgesetzt (2.5.0) |
-| 1 | SSO-Empfänger `/sso/start` + `/sso/ende`, Verbund-API, `AUTH_MODUS=beides`, Link „⌂ Portal“ | **umgesetzt (2.6.0)** |
+| 1 | SSO-Empfänger `/sso/start` + `/sso/ende`, Verbund-API, `AUTH_MODUS=beides`, Link „⌂ Portal“ | **umgesetzt (2.6.0)**, Vertrag 1.3 ab 2.9.0 |
 | 2 | Datenübernahme ins Portal (Backup → Import → Zuordnung), Lernstände auf `sub`/Kurs-ID umschreiben | **Zuordnung einspielen umgesetzt (2.6.2)**: Verwaltung → „Backup & Verbund“ |
 | 3 | `AUTH_MODUS=portal`: lokale Anmeldung und Registrierung aus (Sperre ist eingebaut, Superadmin vom Portal) | nach Phase 2 |
 
@@ -496,10 +496,10 @@ Gastmodus. Angemeldet wird einmal am Portal (SSO mit Ed25519-JWT), das Portal ho
 | `src/jwt.js` | Token prüfen (Ed25519, iss, aud, Zeit, `v`), `JtiSpeicher` – **unverändert aus `frankjuchim/labs`** |
 | `scripts/vertrag_pruefen.js` | Vertragsprüfung einer laufenden Plattform – **unverändert aus `frankjuchim/labs`** |
 | `src/verbundKonfig.js` | Umgebungsvariablen (H.4); SSO ist nur aktiv bei `AUTH_MODUS` `beides`/`portal` **und** gültigem `PORTAL_URL` + `PORTAL_PUBLIC_KEY` |
-| `src/services/manifest.js` | Manifest (Vertrag §7): `vertrag 1.2`, `kurs` (eA und gA), `niveaus`, `urls.ssoStart`/`ssoEnde`/`niveaus` (`/themen#niveaus`), `auth {modus, portal, sso}` |
+| `src/services/manifest.js` | Manifest (Vertrag §7): `vertrag 1.3`, `kurs` (eA und gA), `niveaus`, `urls.ssoStart`/`ssoEnde` (nur mit SSO), `urls.niveaus` (`/themen#niveaus`), `auth {modus, portal, sso}`, `faehigkeiten` nur mit Namen aus §7 |
 | `src/routes/sso.js` | `/sso/start`, `/sso/ende`, `/sso/abmelden`, stille Neuanmeldung, Verbund-API `/api/verbund/…` |
 | `src/services/verbund.js` | Konten und Kurse aus dem Token abgleichen, Kurswechsel, Löschen, Kursübersicht, Kurs umbenennen/sperren |
-| `test/sso.test.js`, `test/verbund.test.js` | alle Testfälle aus `docs/INTEGRATION.md` §5, Manifest, Datenbank-Upgrade |
+| `test/sso.test.js`, `test/verbund.test.js` | alle Testfälle aus `docs/INTEGRATION.md` §5 (v1.3), `pruefeManifest`/`pruefeSsoStart`, Datenbank-Upgrade |
 
 ### H.3 Abbildung der Portal-Identitäten (Schema 4)
 
@@ -529,6 +529,9 @@ Gastmodus. Angemeldet wird einmal am Portal (SSO mit Ed25519-JWT), das Portal ho
 
 ### H.5 Ablauf und Oberfläche
 
+- **Einstieg aus dem Portal (Vertrag 1.3 §5):** `/sso/start` startet den Ablauf **immer** neu, auch mit bestehender
+  Sitzung, und holt so ein frisches Token (neue Kurse gelten sofort). Die bestehende Sitzung wird erst ersetzt, wenn
+  das neue Token in `/sso/ende` vollständig geprüft ist; bei jedem Fehler bleibt sie unverändert.
 - **Schüler:** Im Portal „Weiter zu Algo Quest“ → `/sso/start` → Portal → `/sso/ende` → `/spiel`. Auf der Startseite
   zusätzlich „⌂ Über InfoLabs anmelden“. Kopfzeile: „⌂ Portal“, ggf. Kurswahl, „Abmelden“ (nur hier),
   „Überall abmelden“ (`/sso/abmelden` → `PORTAL_URL/sso/abmelden?ruecksprung=PLATTFORM_URL/`).
@@ -536,8 +539,8 @@ Gastmodus. Angemeldet wird einmal am Portal (SSO mit Ed25519-JWT), das Portal ho
 - **Stille Neuanmeldung:** Wer zuletzt über das Portal kam (Cookie `aq_sso`), wird auf `/spiel` bzw. `/lehrer` ohne
   Sitzung still über das Portal angemeldet; „Abmelden“ löscht den Hinweis nicht, „Überall abmelden“ schon. Im Modus
   `portal` gilt das immer.
-- **Fehler:** `keine_berechtigung` → Hinweisseite („deine Lehrkraft hat diese Plattform für deinen Kurs nicht
-  freigeschaltet“) mit Gastmodus; `abgebrochen` → Startseite; ungültiges Token, falscher/fehlender `state`,
+- **Fehler:** `keine_berechtigung` → Seite mit Status 403, ohne Sitzung, mit Link zum Portal und dem rollenneutralen
+  Text aus `docs/INTEGRATION.md` §3.2 („Kein Zugang. Diese Plattform ist für dieses Konto noch nicht freigeschaltet. …“); `abgebrochen` → Startseite; ungültiges Token, falscher/fehlender `state`,
   Wiederverwendung → 401-Hinweisseite. `/sso/ende` antwortet immer mit `Referrer-Policy: no-referrer` und
   `Cache-Control: no-store`; Tokens werden nie geloggt.
 
@@ -550,12 +553,23 @@ Details; kein Origin-Check, eigenes Rate-Limit.
 |---|---|---|
 | `POST /api/verbund/loeschen` `{sub}` / `{kurs}` | `loeschen` | Schülerzeilen bzw. Konto bzw. Kurs (mit allen Lernständen) löschen; idempotent, `{geloescht: n}` |
 | `GET /api/verbund/kurse/:kursId/uebersicht` | `kurs-uebersicht` | `{kurs, stand, schueler: [{sub, punkte, geloest, anteil, zuletzt}], welten: [{nr, titel, anteil}]}` – nur Kennzahlen; unbekannt → 404 |
-| `POST /api/verbund/kurse/:kursId` `{name?, aktiv?}` | `kurs-aendern` | umbenennen bzw. sperren/entsperren; unbekannter Kurs → `{ok: true}` (entsteht bei der nächsten Anmeldung) |
+| `POST /api/verbund/kurse/:kursId` `{name?, aktiv?}` | `kurs-aendern` | umbenennen bzw. sperren/entsperren; unbekannter Kurs → mit Standard-Einstellungen anlegen, `200 {ok: true}` (Vertrag 1.3); ohne `name` bleibt der Name |
+
+### H.6a Sicherheit bei ausgeführtem Schülercode (Vertrag 1.3 §9)
+
+Algo Quest führt **keinen** Code und keine Abfragen von Schülerinnen und Schülern aus: Der Prüfer
+(`src/content/checker.js`) vergleicht strukturierte Antworten (Lücken, Auswahl, Reihenfolge, Zeilen, Zuordnung,
+Baum-/Reihungs-Klicks, Tabellen, ADT-Simulation) mit den Lösungen in der Datenbank – ohne `eval`, `vm`, Kindprozesse
+oder Worker. Java-Programmieraufgaben laufen in der Online-IDE (online-ide.de) im Browser, nicht auf diesem Server.
+Die Sandbox-Regel (eigener Prozess/Worker, flüchtige oder schreibgeschützte Übungsdaten, Zeit- und Größenlimits) greift
+daher nicht; das Manifest meldet weder `sql-konsole` noch `live`. Prüfantworten enthalten vor dem Lösen keine
+Lösungsdaten (Erklärung erst nach dem Lösen bzw. Aufdecken, Tests in `test/lernen.test.js`, `test/boss.test.js`). Käme ausgeführter Schülercode
+hinzu, gilt §9 verbindlich.
 
 ### H.7 Eintragen im Portal
 
 1. In CapRover die Variablen aus H.4 setzen und speichern (Neustart).
-2. `node scripts/vertrag_pruefen.js https://algoquest.frankjuchim.de` → „erfüllt Vertrag v1.2 … Anmeldung: beides“.
+2. `node scripts/vertrag_pruefen.js https://algoquest.frankjuchim.de` → „erfüllt Vertrag v1.3 … Anmeldung: beides“ (prüft auch, dass `/sso/start` ohne Anmeldung zum Portal leitet).
 3. Im Portal als Superadmin: **Plattformen → Basis-URL `https://algoquest.frankjuchim.de` eintragen** (Manifest und
    Healthcheck müssen grün sein), vorgeschlagene Rücksprung-Adresse `https://algoquest.frankjuchim.de/sso/ende`
    bestätigen, Lehrkräfte für Algo Quest freischalten.
