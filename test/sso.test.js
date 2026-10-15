@@ -1,5 +1,5 @@
 'use strict';
-// Plattform-Verbund InfoLabs, Phase 1 (VERTRAG.md v1.1 §5–§7, Testliste docs/INTEGRATION.md §5 im Repo frankjuchim/labs):
+// Plattform-Verbund InfoLabs, Phase 1 (VERTRAG.md v1.3 §5–§7, Testliste docs/INTEGRATION.md §5 im Repo frankjuchim/labs):
 // SSO-Empfänger /sso/start + /sso/ende, Verbund-API, Manifest mit SSO.
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
@@ -7,7 +7,7 @@ const crypto = require('node:crypto');
 const request = require('supertest');
 const H = require('./helpers');
 const { signiere } = require('../src/jwt');
-const { pruefeManifest } = require('../scripts/vertrag_pruefen');
+const { pruefeManifest, pruefeSsoStart } = require('../scripts/vertrag_pruefen');
 
 const PORTAL = 'https://portal.example';
 const { publicKey, privateKey } = crypto.generateKeyPairSync('ed25519');
@@ -56,17 +56,34 @@ async function ssoAnmelden(a, felder = {}, ziel = '/spiel') {
   return { c, r };
 }
 
-test('Manifest mit SSO: vertragsgemäß (v1.1), ssoStart/ssoEnde, auth.sso true', async () => {
+test('Manifest mit SSO: vertragsgemäß (v1.3), ssoStart/ssoEnde, auth.sso true', async () => {
   const m = (await request(app()).get('/api/plattform').expect(200)).body;
   assert.deepEqual(pruefeManifest(m), []);
-  assert.equal(m.vertrag, '1.2');
+  assert.equal(m.vertrag, '1.3');
   assert.equal(m.urls.ssoStart, '/sso/start');
   assert.equal(m.urls.ssoEnde, '/sso/ende');
   assert.deepEqual(m.auth, { modus: 'beides', portal: PORTAL, sso: true });
   // ohne Schlüssel kein SSO
   const m2 = (await request(H.makeApp({ umgebung: { PORTAL_URL: PORTAL, AUTH_MODUS: 'beides' } })).get('/api/plattform')).body;
   assert.equal(m2.auth.sso, false);
-  assert.equal(m2.urls.ssoStart, null);
+  assert.ok(!('ssoStart' in m2.urls));
+});
+
+test('Vertrag v1.3: pruefeManifest leer, pruefeSsoStart ohne Fehler/Hinweise, nur bekannte Fähigkeiten (§7)', async () => {
+  const a = app();
+  const m = (await request(a).get('/api/plattform').expect(200)).body;
+  assert.deepEqual(pruefeManifest(m), []);
+  // fetch-Ersatz über supertest (ohne Netz): nur Status und Location-Kopf werden gebraucht
+  const holen = async (url, opt) => {
+    assert.equal(opt.redirect, 'manual');
+    const u = new URL(url);
+    const r = await request(a).get(u.pathname + u.search);
+    return { status: r.status, headers: { get: (n) => r.headers[n.toLowerCase()] || null } };
+  };
+  assert.deepEqual(await pruefeSsoStart(m.basis, m, holen), { fehler: [], hinweise: [] });
+  const BEKANNT = ['gast', 'themen', 'lehrkraft-materialien', 'boss', 'training', 'warmup', 'scoreboard', 'beamer', 'urkunden', 'fallen-profil', 'sql-konsole', 'live'];
+  assert.ok(m.faehigkeiten.includes('gast'));
+  for (const f of m.faehigkeiten) assert.ok(BEKANNT.includes(f), f);
 });
 
 test('/sso/start: state ≥ 22 Zeichen im Cookie, Rücksprung und ziel; unsichere Ziele → /', async () => {

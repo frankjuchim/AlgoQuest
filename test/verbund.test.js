@@ -16,11 +16,11 @@ test('Manifest: öffentlich, vertragsgemäß, Version wie /healthz, CORS für da
   const m = r.body;
   assert.deepEqual(pruefeManifest(m), []);
   assert.equal(m.id, 'algoquest');
-  assert.equal(m.vertrag, '1.2');
+  assert.equal(m.vertrag, '1.3');
   assert.deepEqual(m.niveaus, ['eA', 'gA']);
   assert.match(m.kurs, /eA und gA/);
   assert.equal(m.urls.niveaus, '/themen#niveaus');
-  assert.equal(m.urls.ssoStart, null);
+  assert.ok(!('ssoStart' in m.urls)); // ohne Portal kein SSO-Einstieg
   assert.equal(m.auth.modus, 'lokal');
   assert.equal(m.auth.sso, false);
   assert.equal(m.umfang.welten, 7);
@@ -42,6 +42,6 @@ test('Manifest: Umgebung (PORTAL_URL, AUTH_MODUS, PLATTFORM_URL) wird übernomme
 
 test('pruefeManifest erkennt Vertragsverstöße', () => {
   assert.ok(pruefeManifest(null).length);
-  const f = pruefeManifest({ vertrag: '2.0', id: 'Algo Quest', urls: {}, auth: { modus: 'x', sso: true }, faehigkeiten: [] });
+  const f = pruefeManifest({ vertrag: '2.0', id: 'Algo Quest', urls: { ssoStart: '//boese.example' }, auth: { modus: 'x', sso: true }, faehigkeiten: [] });
   for (const teil of ['vertrag', 'id:', 'urls.gast', 'auth.modus', 'urls.ssoStart', '"gast"']) assert.ok(f.some((x) => x.includes(teil)), teil);
 });
