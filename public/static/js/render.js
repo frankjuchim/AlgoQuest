@@ -372,8 +372,8 @@ const AQR = (() => {
     const breite = Math.max(1, x) * DX + 20;
     const hoehe = (maxY + 1) * DY + 10;
     const svg = s('svg', { class: 'baum-svg', viewBox: `0 0 ${breite} ${hoehe}`, width: breite, height: hoehe, role: 'img', 'aria-label': opt.label || 'Binärbaum' });
-    // Große Bäume schrumpfen höchstens auf 80 % (sonst werden Knoten auf dem iPad zu klein) – danach seitlich wischen
-    svg.style.minWidth = Math.round(breite * 0.8) + 'px';
+    // Große Bäume schrumpfen höchstens auf 90 % (sonst werden Knoten auf dem iPad zu klein) – danach seitlich wischen
+    svg.style.minWidth = Math.round(breite * 0.9) + 'px';
     // unsichtbare Trefferfläche ≥ 44 px um Knoten und leere Stellen (Touch)
     const treffer = (cx, cy) => s('circle', { class: 'treffer', cx, cy, r: R + 4 });
     const lage = new Map(pos.map((p) => [p.k, { cx: 10 + p.x * DX + DX / 2, cy: 10 + p.y * DY + R + 4 }]));

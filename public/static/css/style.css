@@ -698,7 +698,7 @@ body.tor .btn.secondary:hover { background: rgba(232, 185, 35, 0.16); color: #ff
 .abzeichen:not(.fehlt) .ic { filter: drop-shadow(0 0 6px rgba(232, 185, 35, 0.55)); }
 
 /* ---------- Responsiv ---------- */
-@media (max-width: 760px) {
+@media (max-width: 700px) { /* Smartphones; alle iPads (ab 744 px) bekommen das Tablet-Layout */
   body { font-size: 16px; }
   main { padding: 0.9rem 0.7rem 4rem; }
   .card { padding: 0.9rem 0.85rem; }
@@ -834,7 +834,9 @@ main.themen { max-width: 1100px; margin: 0 auto; padding: 1rem; }
   /* Bug-Hunt: Code-Zeilen sicher antippbar */
   .code .zeile.waehlbar { min-height: 40px; align-items: center; } /* volle Breite – 40 px Höhe genügen, Code bleibt kompakt */
   /* Brotkrumen, Sprungmarken und Verweise der Themenseite */
-  .crumbs a { display: inline-flex; align-items: center; min-height: 44px; }
+  .crumbs a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; }
+  .brand { min-height: 44px; }
+  .raster td.waehlbar { height: 44px; min-width: 44px; }
   .themen .ort-links a { display: inline-flex; align-items: center; min-height: 44px; }
   .niveau-tabelle th a { display: inline-flex; align-items: center; min-height: 44px; }
   summary { padding: 0.6rem 0; min-height: 44px; }
