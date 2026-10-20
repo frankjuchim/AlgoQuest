@@ -372,6 +372,10 @@ const AQR = (() => {
     const breite = Math.max(1, x) * DX + 20;
     const hoehe = (maxY + 1) * DY + 10;
     const svg = s('svg', { class: 'baum-svg', viewBox: `0 0 ${breite} ${hoehe}`, width: breite, height: hoehe, role: 'img', 'aria-label': opt.label || 'Binärbaum' });
+    // Große Bäume schrumpfen höchstens auf 80 % (sonst werden Knoten auf dem iPad zu klein) – danach seitlich wischen
+    svg.style.minWidth = Math.round(breite * 0.8) + 'px';
+    // unsichtbare Trefferfläche ≥ 44 px um Knoten und leere Stellen (Touch)
+    const treffer = (cx, cy) => s('circle', { class: 'treffer', cx, cy, r: R + 4 });
     const lage = new Map(pos.map((p) => [p.k, { cx: 10 + p.x * DX + DX / 2, cy: 10 + p.y * DY + R + 4 }]));
     for (const p of pos) {
       if (!p.eltern) continue;
@@ -382,7 +386,7 @@ const AQR = (() => {
     for (const p of pos) {
       const { cx, cy } = lage.get(p.k);
       if (p.k.slot) {
-        const g = s('g', { class: 'slot', tabindex: '0', role: 'button', 'aria-label': `leere Stelle ${p.k.pfad || 'Wurzel'} – Wert einfügen` }, s('circle', { cx, cy, r: R - 4 }), s('text', { x: cx, y: cy }, '+'));
+        const g = s('g', { class: 'slot', tabindex: '0', role: 'button', 'aria-label': `leere Stelle ${p.k.pfad || 'Wurzel'} – Wert einfügen` }, treffer(cx, cy), s('circle', { cx, cy, r: R - 4 }), s('text', { x: cx, y: cy }, '+'));
         const los = () => opt.slotKlick && opt.slotKlick(p.k.pfad, g);
         g.addEventListener('click', los);
         g.addEventListener('keydown', (ev) => {
@@ -395,7 +399,7 @@ const AQR = (() => {
         continue;
       }
       const m = opt.markierung ? opt.markierung.get(p.k.pfad) : null;
-      const g = s('g', { class: 'knoten' + (opt.klick ? ' klickbar' : '') + (m && m.cls ? ' ' + m.cls : ''), 'data-pfad': p.k.pfad }, s('circle', { cx, cy, r: R }), s('text', { x: cx, y: cy }, String(p.k.v)));
+      const g = s('g', { class: 'knoten' + (opt.klick ? ' klickbar' : '') + (m && m.cls ? ' ' + m.cls : ''), 'data-pfad': p.k.pfad }, opt.klick ? treffer(cx, cy) : null, s('circle', { cx, cy, r: R }), s('text', { x: cx, y: cy }, String(p.k.v)));
       if (m && m.nr !== undefined) {
         g.appendChild(s('circle', { class: 'order', cx: cx + R - 2, cy: cy - R + 2, r: 9 }));
         g.appendChild(s('text', { class: 'order', x: cx + R - 2, y: cy - R + 2 }, String(m.nr)));
