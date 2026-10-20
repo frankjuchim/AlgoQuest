@@ -827,10 +827,12 @@ main.themen { max-width: 1100px; margin: 0 auto; padding: 1rem; }
   .icon-btn { width: 44px; height: 44px; }
   .chip button { width: 44px; height: 44px; }
   /* iOS vergrößert die Seite beim Fokus auf Felder unter 16 px – Lücken daher mindestens 16 px */
-  .luecke { font-size: max(16px, 0.95em); min-height: 44px; }
-  input[type='date'], input[type='time'] { font-size: 16px; }
+  /* input.luecke: schlägt die allgemeine Regel input[type='text'] { font: inherit } */
+  .luecke, input.luecke, select.luecke { font-size: max(16px, 0.95em); min-height: 44px; }
+  input[type='date'], input[type='time'], input[type='file'] { font-size: 16px; min-height: 44px; }
+  a.pill { min-height: 44px; }
   /* Bug-Hunt: Code-Zeilen sicher antippbar */
-  .code .zeile.waehlbar { min-height: 44px; align-items: center; }
+  .code .zeile.waehlbar { min-height: 40px; align-items: center; } /* volle Breite – 40 px Höhe genügen, Code bleibt kompakt */
   /* Brotkrumen, Sprungmarken und Verweise der Themenseite */
   .crumbs a { display: inline-flex; align-items: center; min-height: 44px; }
   .themen .ort-links a { display: inline-flex; align-items: center; min-height: 44px; }
