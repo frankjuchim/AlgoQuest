@@ -186,6 +186,10 @@ P9 Struktogramm nicht nach EH §5 · P10 Operator verfehlt.
 - Bug-Hunts (mehrteilig, Teil a) = `lines`) werden gestuft angezeigt: spätere Teile erst nach richtigem Teil a)
   (Boss: nach „Teil a) festlegen“). Neue Bug-Hunts: Teil b) als eigenen Block mit „**b)**“ beginnen (Details
   docs/AUFGABENFORMAT.md §6.10).
+- **iPad zuerst:** Schülerinnen und Schüler arbeiten meist am iPad (744–1180 px, hoch und quer). Touch-Ziele ≥ 44 px
+  (Block `@media (any-pointer: coarse)` am Ende von `style.css`), Eingabefelder/Lücken ≥ 16 px Schrift (sonst zoomt iOS),
+  kein Drag & Drop, nichts nur per Hover, bewegte Hover-Effekte nur in `@media (hover: hover)`, kein seitlicher Überlauf
+  (breite Inhalte in `.scroll-x`). Smartphone-Layout erst unter 701 px. Neue Ansichten in beiden Ausrichtungen prüfen.
 - Scoreboards (Beamer-Board, Lehrkraft- und Schüleransicht) aktualisieren sich alle 20 s selbst.
 - Gastmodus `/gast` (ohne Anmeldung): Schüler = nur Demo-Aufgaben aus `seed/gast/demo.json`, nichts wird gespeichert;
   Lehrkraft = erfundener Demo-Kurs, nur lesend, Materialien als Titel (verlinkt nur die Demo-PDFs aus `seed/demo_materialien.json`). Nie echte Aufgaben, Lösungen oder Dateien
